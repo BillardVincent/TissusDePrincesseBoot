@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controlers.ChargementController">
+   <children>
+      <Label layoutX="98.0" layoutY="61.0" text="Les Tissus de Princesse">
+         <font>
+            <Font name="Calibri" size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="167.0" layoutY="142.0" text="Chargement" />
+      <Label fx:id="message" contentDisplay="CENTER" layoutX="107.0" layoutY="195.0" prefHeight="17.0" prefWidth="186.0" text="label" textAlignment="CENTER" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="252.0" prefWidth="333.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controlers.GenericChoiceBoxEditController">
+   <children>
+      <ChoiceBox fx:id="choicBox" layoutX="52.0" layoutY="92.0" prefHeight="25.0" prefWidth="230.0" />
+      <Button layoutX="91.0" layoutY="184.0" mnemonicParsing="false" onAction="#handleValidate" text="Valider" />
+      <Button layoutX="206.0" layoutY="184.0" mnemonicParsing="false" onAction="#handleCancel" text="Annuler" />
+      <Label layoutX="46.0" layoutY="27.0" text="Ancienne valeur :" />
+      <Label layoutX="46.0" layoutY="66.0" text="Selectionnez une nouvelle valeur :" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controlers.RootLayoutController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="Fichier">
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#handleSaveAs" text="Sauvegarder" />
+                  <MenuItem mnemonicParsing="false" text="Charger" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleSaveAs" text="Exporter" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleOpen" text="Importer" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edition">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Ajouter">
+              <items>
+                  <MenuItem mnemonicParsing="false" onAction="#handleNewTissu" text="Tissu" />
+                  <MenuItem mnemonicParsing="false" text="Patron" />
+                <MenuItem mnemonicParsing="false" onAction="#handleNewMatiere" text="Matière" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleNewTypeTissu" text="Type de tissu" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleNewTissage" text="Tissage" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Archives">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Tissus" />
+                  <MenuItem mnemonicParsing="false" text="Patrons" />
+                  <MenuItem mnemonicParsing="false" text="Projets" />
+              </items>
+            </Menu>
+          <Menu mnemonicParsing="false" text="A propos">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#handleAbout" text="A propos" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+</BorderPane>
