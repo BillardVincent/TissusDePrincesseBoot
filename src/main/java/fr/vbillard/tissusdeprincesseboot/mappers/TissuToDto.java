@@ -22,6 +22,9 @@ public class TissuToDto extends TypeMapConfigurer<Tissu, TissuDto> {
     @Override
     public void configure(TypeMap<Tissu, TissuDto> typeMap) {
         typeMap.addMappings(mapping -> mapping.using(new LongueurRestanteConverter()).map(src -> src, TissuDto::setLongueurRestante));
+        typeMap.addMapping(src -> src.getMatiere().getValue(), TissuDto::setMatiere);
+        typeMap.addMapping(src -> src.getTypeTissu().getValue(), TissuDto::setType);
+        typeMap.addMapping(src -> src.getTissage().getValue(), TissuDto::setTissage);
     }
 
     private class LongueurRestanteConverter extends AbstractConverter<Tissu, Integer> {

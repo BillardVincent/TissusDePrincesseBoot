@@ -3,28 +3,24 @@ package fr.vbillard.tissusdeprincesseboot.controlers;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
-import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
+import fr.vbillard.tissusdeprincesseboot.fxCustomElements.MaterialElements;
+import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
 import fr.vbillard.tissusdeprincesseboot.services.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.services.TissageService;
 import fr.vbillard.tissusdeprincesseboot.services.TissuService;
 import fr.vbillard.tissusdeprincesseboot.services.TypeTissuService;
-import fr.vbillard.tissusdeprincesseboot.utils.Constants;
 import javafx.collections.FXCollections;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -33,8 +29,10 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
+import org.modelmapper.ModelMapper;
 
 @Component
 public class TissuEditDialogController implements IController{
@@ -95,20 +93,22 @@ public class TissuEditDialogController implements IController{
 	private Stage dialogStage;
 	private TissuDto tissu;
 	private boolean okClicked = false;
-	private MaterialDesignIconView closeCircle;
-	private MaterialDesignIconView closeCircle1;
-	private MaterialDesignIconView closeCircle2;
-	@Autowired
-	private TissuService tissuService;
-	@Autowired
-	private MatiereService matiereService;
-	@Autowired
-	private TissageService tissageService;
-	@Autowired
-	private TypeTissuService typeTissuService;
-	@Autowired
+
+	private final TissuService tissuService;
+	private final MatiereService matiereService;
+	private final TissageService tissageService;
+	private final TypeTissuService typeTissuService;
 	private StageInitializer mainApp;
+	private final ModelMapper mapper;
 	private boolean edit;
+
+	public TissuEditDialogController(TissuService tissuService, MatiereService matiereService, TissageService tissageService, TypeTissuService typeTissuService, ModelMapper mapper) {
+		this.tissuService = tissuService;
+		this.matiereService = matiereService;
+		this.tissageService = tissageService;
+		this.typeTissuService = typeTissuService;
+		this.mapper = mapper;
+	}
 
 	/**
 	 * Initializes the controller class. This method is automatically called after
@@ -117,26 +117,14 @@ public class TissuEditDialogController implements IController{
 	@FXML
 	private void initialize() {
 
-		closeCircle = new MaterialDesignIconView(MaterialDesignIcon.PLUS_CIRCLE);
-		closeCircle.setSize("1em");
-		closeCircle.setFill(Constants.colorAdd);
-		closeCircle1 = new MaterialDesignIconView(MaterialDesignIcon.PLUS_CIRCLE);
-		closeCircle1.setSize("1em");
-		closeCircle1.setFill(Constants.colorAdd);
-		closeCircle2 = new MaterialDesignIconView(MaterialDesignIcon.PLUS_CIRCLE);
-		closeCircle2.setSize("1em");
-		closeCircle2.setFill(Constants.colorAdd);
-
-		addTissageButton.setGraphic(closeCircle);
-		addTypeButton.setGraphic(closeCircle1);
-		addMatiereButton.setGraphic(closeCircle2);
+		addTissageButton.setGraphic(MaterialElements.plusCircleTiny());
+		addTypeButton.setGraphic(MaterialElements.plusCircleTiny());
+		addMatiereButton.setGraphic(MaterialElements.plusCircleTiny());
 		FontAwesomeIconView magicIcon = new FontAwesomeIconView(FontAwesomeIcon.MAGIC);
 		generateReferenceButton.setGraphic(magicIcon);
 		generateReferenceButton.setTooltip(new Tooltip("Générer une référence automatiquement"));
 
-		longueurField.valueProperty().addListener((obs, oldValue, newValue) -> {
-			longueur = newValue;
-		});
+		longueurField.valueProperty().addListener((obs, oldValue, newValue) -> longueur = newValue);
 		longueurField.focusedProperty().addListener((observable, oldValue, newValue) -> {
 			if (!newValue) {
 				longueurField.increment(0); // won't change value, but will commit editor
@@ -159,11 +147,6 @@ public class TissuEditDialogController implements IController{
 		});
 	}
 
-	/**
-	 * Sets the stage of this dialog.
-	 *
-	 * @param dialogStage
-	 */
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
 	}
@@ -174,8 +157,8 @@ public class TissuEditDialogController implements IController{
 		this.tissu = tissu;
 
 		if (tissu == null || tissu.getChuteProperty() == null) {
-			tissu = new TissuDto(new Tissu(0, "", 0, 0, "", null, null, 0,
-					UnitePoids.NON_RENSEIGNE, false, "", null, false));
+			tissu = mapper.map(new Tissu(0, "", 0, 0, "", null, typeTissuService.getAll().get(0), 0,
+					UnitePoids.NON_RENSEIGNE, false, "", null, false), TissuDto.class);
 		}
 
 		longueurField.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE,
@@ -186,24 +169,24 @@ public class TissuEditDialogController implements IController{
 				tissu.getPoidseProperty() == null ? 0 : tissu.getPoids()));
 		referenceField.setText(tissu.getReferenceProperty() == null ? "" : tissu.getReference());
 		descriptionField.setText(tissu.getDescriptionProperty() == null ? "" : tissu.getDescription());
-		decatiField.setSelected(tissu.getDecatiProperty() == null ? false : tissu.isDecati());
+		decatiField.setSelected(tissu.getDecatiProperty() != null && tissu.isDecati());
 		lieuDachatField.setText(tissu.getLieuAchatProperty() == null ? "" : tissu.getLieuAchat());
-		chuteField.setSelected(tissu.getChuteProperty() == null ? false : tissu.isChute());
+		chuteField.setSelected(tissu.getChuteProperty() != null && tissu.isChute());
 
 		unitePoidsField.setItems(FXCollections.observableArrayList(UnitePoids.labels()));
 		unitePoidsField.setValue(
 				tissu.getUnitePoidsProperty() == null ? UnitePoids.NON_RENSEIGNE.label : tissu.getUnitePoids());
 
 		typeField.setItems(FXCollections.observableArrayList(
-				typeTissuService.getAll().stream().map(tt -> tt.getValue()).collect(Collectors.toList())));
+				typeTissuService.getAll().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList())));
 		typeField.setValue(tissu.getTypeProperty() == null ? "" : tissu.getType());
 
 		matiereField.setItems(FXCollections.observableArrayList(
-				matiereService.getAll().stream().map(m -> m.getValue()).collect(Collectors.toList())));
+				matiereService.getAll().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList())));
 		matiereField.setValue(tissu.getMatiereProperty() == null ? "" : tissu.getMatiere());
 
 		tissageField.setItems(FXCollections.observableArrayList(
-				tissageService.getAll().stream().map(t -> t.getValue()).collect(Collectors.toList())));
+				tissageService.getAll().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList())));
 		tissageField.setValue(tissu.getTissageProperty() == null ? "" : tissu.getTissage());
 
 		longueur = longueurField.getValue();
@@ -213,24 +196,16 @@ public class TissuEditDialogController implements IController{
 		setButton();
 	}
 
-	/**
-	 * Returns true if the user clicked OK, false otherwise.
-	 *
-	 * @return
-	 */
 	public boolean isOkClicked() {
 		return okClicked;
 	}
 
-	/**
-	 * Called when the user clicks ok.
-	 */
 	@FXML
 	private void handleOk() {
 		if (isInputValid()) {
 			if (tissu.getChuteProperty() == null) {
-				tissu = new TissuDto(new Tissu(0, "", 0, 0, "", null, typeTissuService.getAll().get(0), 0,
-						UnitePoids.NON_RENSEIGNE, false, "", null, false));
+				tissu = mapper.map(new Tissu(0, "", 0, 0, "", null, typeTissuService.getAll().get(0), 0,
+						UnitePoids.NON_RENSEIGNE, false, "", null, false), TissuDto.class);
 			}
 			tissu.setReference(referenceField.getText());
 			tissu.setLongueur(longueur);
@@ -339,12 +314,9 @@ public class TissuEditDialogController implements IController{
 
 		setTissu(mapTissu.keySet().stream().findFirst().orElse(null), mainApp);
 
-		validerButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent e) {
-				nextTissu(tissu, mapTissu);
-				setMapTissu(mapTissu, mainApp);
-			}
+		validerButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+			nextTissu(tissu, mapTissu);
+			setMapTissu(mapTissu, mainApp);
 		});
 	}
 

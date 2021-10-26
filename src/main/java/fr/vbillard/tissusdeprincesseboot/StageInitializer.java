@@ -43,8 +43,8 @@ import lombok.AllArgsConstructor;
 @Component
 public class StageInitializer implements ApplicationListener<TissusDePrincesseFxApp.StageReadyEvent> {
 
-    private Image icon = new Image("file:resources/images/cut-cloth-red.png");
-    private ApplicationContext applicationContext;
+    private final Image icon = new Image("file:resources/images/cut-cloth-red.png");
+    private final ApplicationContext applicationContext;
     private Stage stage;
     private JMetro jMetro;
     private final FxmlPathProperties pathProperties;
@@ -62,18 +62,18 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
             jMetro = new JMetro(Style.LIGHT);
 
             FXMLLoader loader = new FXMLLoader();
-            loader.setControllerFactory(aClass -> applicationContext.getBean(aClass));
+            loader.setControllerFactory(applicationContext::getBean);
             loader.setLocation(pathProperties.getMainOverview().getURL());
-            AnchorPane tissuOverview = (AnchorPane) loader.load();
+            AnchorPane tissuOverview = loader.load();
 
             MainOverviewController tissuOverviewController = loader.getController();
             tissuOverviewController.setMainApp(this);
 
             FXMLLoader rootLoader = new FXMLLoader();
             rootLoader.setLocation(pathProperties.getRoot().getURL());
-            rootLoader.setControllerFactory(aClass -> applicationContext.getBean(aClass));
+            rootLoader.setControllerFactory(applicationContext::getBean);
 
-            BorderPane rootLayout = (BorderPane) rootLoader.load();
+            BorderPane rootLayout = rootLoader.load();
             RootLayoutController rootLayoutController = rootLoader.getController();
             rootLayoutController.setMainApp(this);
 
@@ -157,7 +157,6 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
             controller.setDialogStage(holder.dialogStage);
             controller.setData(this);
 
-
             holder.dialogStage.showAndWait();
 
             return controller.isOkClicked();
@@ -222,7 +221,7 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
         try {
             Class<?>[] parameterType = new Class[] {};
             String title = "Modification : "
-                    + (String) class1.getMethod("displayClassName", parameterType).invoke(null, new Object[] {});
+                    + class1.getMethod("displayClassName", parameterType).invoke(null, new Object[] {});
             ControlerHolder holder = setStageAndLoader(pathProperties.getGenericChoiceBoxEdit().getURL(), title);
 
             GenericChoiceBoxEditController controller = holder.loader.getController();
@@ -238,8 +237,6 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
             return "Error";
         }
     }
-
-
 
     public int showSetLongueurDialog(int required, TissuDto available) {
         try {
@@ -291,14 +288,12 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
         return fileChooser.showOpenDialog(getPrimaryStage());
     }
 
-
-
     private ControlerHolder setStageAndLoader(URL path, String title) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(path);
-        loader.setControllerFactory(aClass -> applicationContext.getBean(aClass));
+        loader.setControllerFactory(applicationContext::getBean);
 
-        AnchorPane page = (AnchorPane) loader.load();
+        AnchorPane page = loader.load();
 
         Stage dialogStage = new Stage();
         dialogStage.getIcons().add(icon);

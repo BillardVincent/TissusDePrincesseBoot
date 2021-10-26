@@ -15,16 +15,16 @@ import javax.imageio.ImageIO;
 
 import org.springframework.stereotype.Component;
 
+import de.jensd.fx.glyphs.GlyphIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
-import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.exception.NoSelectionException;
+import fr.vbillard.tissusdeprincesseboot.fxCustomElements.MaterialElements;
 import fr.vbillard.tissusdeprincesseboot.fxCustomElements.TissuRequisToggleButton;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
@@ -48,8 +48,6 @@ import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
 import fr.vbillard.tissusdeprincesseboot.utils.EntityToString;
 import fr.vbillard.tissusdeprincesseboot.utils.ModelUtils;
 import fr.vbillard.tissusdeprincesseboot.utils.ShowAlert;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -64,7 +62,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
-import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
@@ -263,11 +260,9 @@ public class MainOverviewController {
 	// ------------ FXML others
 	@FXML
 	private ImageView robeImage;
-
 	@FXML
 	private Button saveAllBtn;
 
-	// References to the main application and services.
 	private TissuService tissuService;
 	private PatronService patronService;
 	private StageInitializer mainApp;
@@ -283,10 +278,8 @@ public class MainOverviewController {
 	private PreferenceService preferenceService = new PreferenceService();
 	private ModelMapper mapper = new ModelMapper();
 
-
 	private int photoIndex = 0;
 	private List<Photo> photos = new ArrayList<Photo>();
-
 
 	public MainOverviewController (TissuService tissuService, PatronService patronService, TissuUsedService tissuUsedService, ProjetService projetService, ImageService imageService) {
 		this.tissuService = tissuService;
@@ -296,10 +289,8 @@ public class MainOverviewController {
 		this.projetService = projetService;
 	}
 
-
 	@FXML
 	private void initialize() {
-		String iconeSize = "1.5em";
 		imagePanel.setVisible(true);
 
 		descriptionColonne.setCellValueFactory(cellData -> cellData.getValue().getDescriptionProperty());
@@ -324,139 +315,57 @@ public class MainOverviewController {
 		projetTable.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> showProjetPanDetails(newValue));
 
-		group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-			public void changed(ObservableValue<? extends Toggle> ov, Toggle toggle, Toggle new_toggle) {
-				if (new_toggle != null) {
+		group.selectedToggleProperty().addListener((ov, toggle, new_toggle) -> {
+			if (new_toggle != null) {
 
-					tissuRequisSelected = (TissuRequisDto) group.getSelectedToggle().getUserData();
-				} else {
-					System.out.println("deselect");
-					tissuRequisSelected = null;
-				}
+				tissuRequisSelected = (TissuRequisDto) group.getSelectedToggle().getUserData();
+			} else {
+				System.out.println("deselect");
+				tissuRequisSelected = null;
 			}
 		});
 
-		MaterialDesignIconView plusCircle = new MaterialDesignIconView(MaterialDesignIcon.PLUS_CIRCLE);
-		plusCircle.setSize(iconeSize);
-		plusCircle.setFill(Constants.colorAdd);
-		MaterialDesignIconView plusCircle2 = new MaterialDesignIconView(MaterialDesignIcon.PLUS_CIRCLE);
-		plusCircle2.setFill(Constants.colorAdd);
-		plusCircle2.setSize(iconeSize);
-		FontAwesomeIconView editIcon = new FontAwesomeIconView(FontAwesomeIcon.EDIT);
-		editIcon.setSize(iconeSize);
-		FontAwesomeIconView editIcon2 = new FontAwesomeIconView(FontAwesomeIcon.EDIT);
-		editIcon2.setSize(iconeSize);
-		FontAwesomeIconView suppressIcon = new FontAwesomeIconView(FontAwesomeIcon.TIMES_CIRCLE);
-		suppressIcon.setFill(Constants.colorDelete);
-		suppressIcon.setSize(iconeSize);
-		FontAwesomeIconView suppressIcon2 = new FontAwesomeIconView(FontAwesomeIcon.TIMES_CIRCLE);
-		suppressIcon2.setFill(Constants.colorDelete);
-		suppressIcon2.setSize("1em");
-		FontAwesomeIconView suppressIcon3 = new FontAwesomeIconView(FontAwesomeIcon.TIMES_CIRCLE);
-		suppressIcon3.setFill(Constants.colorDelete);
-		suppressIcon3.setSize(iconeSize);
-		FontAwesomeIconView suppressIcon4 = new FontAwesomeIconView(FontAwesomeIcon.TIMES_CIRCLE);
-		suppressIcon4.setFill(Constants.colorDelete);
-		suppressIcon4.setSize("1em");
-		FontAwesomeIconView suppressIcon5 = new FontAwesomeIconView(FontAwesomeIcon.TIMES_CIRCLE);
-		suppressIcon5.setFill(Constants.colorDelete);
-		suppressIcon5.setSize(iconeSize);
-		FontAwesomeIconView suppressIcon6 = new FontAwesomeIconView(FontAwesomeIcon.TIMES_CIRCLE);
-		suppressIcon6.setFill(Constants.colorDelete);
-		suppressIcon6.setSize("1em");
-		FontAwesomeIconView suppressIcon7 = new FontAwesomeIconView(FontAwesomeIcon.TIMES_CIRCLE);
-		suppressIcon7.setFill(Constants.colorDelete);
-		suppressIcon7.setSize(iconeSize);
-		FontAwesomeIconView searchIcon = new FontAwesomeIconView(FontAwesomeIcon.SEARCH);
-		searchIcon.setSize("1em");
-		FontAwesomeIconView searchIcon2 = new FontAwesomeIconView(FontAwesomeIcon.SEARCH);
-		searchIcon2.setSize(iconeSize);
-		FontAwesomeIconView searchIcon3 = new FontAwesomeIconView(FontAwesomeIcon.SEARCH);
-		searchIcon3.setSize("1em");
-		FontAwesomeIconView searchIcon4 = new FontAwesomeIconView(FontAwesomeIcon.SEARCH);
-		searchIcon4.setSize("1em");
-		FontAwesomeIconView cloneIcone = new FontAwesomeIconView(FontAwesomeIcon.CLONE);
-		cloneIcone.setSize(iconeSize);
-		FontAwesomeIconView projectIcone = new FontAwesomeIconView(FontAwesomeIcon.TASKS);
-		projectIcone.setSize(iconeSize);
-		FontAwesomeIconView addProjectIcone = new FontAwesomeIconView(FontAwesomeIcon.PLAY_CIRCLE);
-		addProjectIcone.setSize(iconeSize);
-		addProjectIcone.setFill(Constants.colorAccent);
+		GlyphIcon addProjectIcone = MaterialElements.playCircle();
 		addProjectIcone.setDisable(true);
-		FontAwesomeIconView selectProjectIcone = new FontAwesomeIconView(FontAwesomeIcon.PLAY_CIRCLE);
-		selectProjectIcone.setSize(iconeSize);
-		selectProjectIcone.setFill(Constants.colorAccent);
+		GlyphIcon selectProjectIcone = MaterialElements.playCircle();
 		selectProjectIcone.setDisable(true);
-		FontAwesomeIconView createProjectIcone = new FontAwesomeIconView(FontAwesomeIcon.PLAY_CIRCLE);
-		createProjectIcone.setSize(iconeSize);
-		createProjectIcone.setFill(Constants.colorAccent);
-		FontAwesomeIconView archiveIcone = new FontAwesomeIconView(FontAwesomeIcon.ARCHIVE);
-		archiveIcone.setSize(iconeSize);
-
-		FontAwesomeIconView warningIcone = new FontAwesomeIconView(FontAwesomeIcon.EXCLAMATION_TRIANGLE);
-		warningIcone.setSize("2em");
-		warningIcone.setFill(Constants.colorWarning);
-
-		FontAwesomeIconView pictureIcone = new FontAwesomeIconView(FontAwesomeIcon.PICTURE_ALT);
-		createProjectIcone.setSize(iconeSize);
-
-		FontAwesomeIconView previousPictureIcone = new FontAwesomeIconView(FontAwesomeIcon.ARROW_CIRCLE_ALT_LEFT);
-		previousPictureIcone.setSize("4em");
-		previousPictureIcone.setFill(Constants.colorAccent);
-
-		FontAwesomeIconView nextPictureIcone = new FontAwesomeIconView(FontAwesomeIcon.ARROW_CIRCLE_ALT_RIGHT);
-		nextPictureIcone.setSize("4em");
-		nextPictureIcone.setFill(Constants.colorAccent);
-
-		FontAwesomeIconView expandPictureIcone = new FontAwesomeIconView(FontAwesomeIcon.EXPAND);
-		expandPictureIcone.setSize(iconeSize);
-
-		FontAwesomeIconView addPictureIcone = new FontAwesomeIconView(FontAwesomeIcon.PLUS_CIRCLE);
-		addPictureIcone.setFill(Constants.colorAdd);
-		addPictureIcone.setSize(iconeSize);
-
-		FontAwesomeIconView suppressPictureIcone = new FontAwesomeIconView(FontAwesomeIcon.TIMES_CIRCLE);
-		suppressPictureIcone.setFill(Constants.colorDelete);
-		suppressPictureIcone.setSize(iconeSize);
 
 		selectProjetPanButton.setGraphic(selectProjectIcone);
-		deleteProjetPanButton.setGraphic(suppressIcon7);
-		filtrePatronPanButton.setGraphic(searchIcon4);
-		filtreResetPatronPanButton.setGraphic(suppressIcon6);
-
-		addPatronButton.setGraphic(plusCircle2);
-		editPatronButton.setGraphic(editIcon2);
-		deletePatronButton.setGraphic(suppressIcon3);
-		createProjectButton.setGraphic(createProjectIcone);
-		filtrePatronButton.setGraphic(searchIcon3);
-		filtreResetPatronButton.setGraphic(suppressIcon4);
-
-		archiveTissuButton.setGraphic(archiveIcone);
+		deleteProjetPanButton.setGraphic(MaterialElements.suppressNormal());
+		filtrePatronPanButton.setGraphic(MaterialElements.searchTiny());
+		filtreResetPatronPanButton.setGraphic(MaterialElements.suppressTiny());
+		addPatronButton.setGraphic(MaterialElements.plusCircleNormal());
+		editPatronButton.setGraphic(MaterialElements.editNormal());
+		deletePatronButton.setGraphic(MaterialElements.suppressNormal());
+		createProjectButton.setGraphic(MaterialElements.playCircle());
+		filtrePatronButton.setGraphic(MaterialElements.searchTiny());
+		filtreResetPatronButton.setGraphic(MaterialElements.suppressTiny());
+		archiveTissuButton.setGraphic(MaterialElements.archive());
 		archiveTissuButton.setTooltip(new Tooltip("Archiver ce tissu. Il pourra être retrouvé"));
-		generateCouponButton.setGraphic(cloneIcone);
+		generateCouponButton.setGraphic(MaterialElements.cloneNormal());
 		generateCouponButton.setTooltip(new Tooltip("Générer un coupon à partir de ce tissu"));
-		searchPatronButton.setGraphic(new HBox(searchIcon2, projectIcone));
+		searchPatronButton.setGraphic(new HBox(MaterialElements.searchNormal(), MaterialElements.project()));
 		searchPatronButton.setTooltip(new Tooltip("Rechercher les patrons correspondant à ce tissu"));
 		addInProjectButton.setGraphic(addProjectIcone);
 		addInProjectButton.setTooltip(new Tooltip("Ajouter le tissu sélectionné au projet"));
-		addTissuButton.setGraphic(plusCircle);
+		addTissuButton.setGraphic(MaterialElements.plusCircleNormal());
 		addTissuButton.setTooltip(new Tooltip("Ajouter un nouveau tissu"));
-		editTissuButton.setGraphic(editIcon);
+		editTissuButton.setGraphic(MaterialElements.editNormal());
 		editTissuButton.setTooltip(new Tooltip("Editer le tissu sélectionné"));
-		deleteTissuButton.setGraphic(suppressIcon);
+		deleteTissuButton.setGraphic(MaterialElements.searchNormal());
 		deleteTissuButton.setTooltip(new Tooltip("Supprimer le tissu sélectionné. Cette opération est définitive"));
-		filtreTissuButton.setGraphic(searchIcon);
-		filtreResetTissuButton.setGraphic(suppressIcon2);
+		filtreTissuButton.setGraphic(MaterialElements.searchTiny());
+		filtreResetTissuButton.setGraphic(MaterialElements.suppressTiny());
 		editProjetDescription.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.EDIT));
 		editProjetStatus.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.EDIT));
-		deselectProjetBtn.setGraphic(suppressIcon5);
-		warningUnregistredLabel.setGraphic(warningIcone);
-		addTissuPictureButton.setGraphic(pictureIcone);
-		previousPicture.setGraphic(previousPictureIcone);
-		nextPicture.setGraphic(nextPictureIcone);
-		addPicture.setGraphic(addPictureIcone);
-		deletePicture.setGraphic(suppressPictureIcone);
-		expendPicture.setGraphic(expandPictureIcone);
+		deselectProjetBtn.setGraphic(MaterialElements.suppressNormal());
+		warningUnregistredLabel.setGraphic(MaterialElements.warning());
+		addTissuPictureButton.setGraphic(MaterialElements.picture());
+		previousPicture.setGraphic(MaterialElements.previousBig());
+		nextPicture.setGraphic(MaterialElements.nextBig());
+		addPicture.setGraphic(MaterialElements.plusCircleNormal());
+		deletePicture.setGraphic(MaterialElements.suppressNormal());
+		expendPicture.setGraphic(MaterialElements.expandPicture());
 		setButtons();
 
 		// robeImage.setImage(new
@@ -583,8 +492,8 @@ public class MainOverviewController {
 
 	@FXML
 	private void handleNewTissu() {
-		TissuDto tempTissu = new TissuDto(
-				new Tissu(0, "", 0, 0, "", null, null, 0, UnitePoids.NON_RENSEIGNE, false, "", null, false));
+		TissuDto tempTissu = mapper.map(
+				new Tissu(0, "", 0, 0, "", null, null, 0, UnitePoids.NON_RENSEIGNE, false, "", null, false), TissuDto.class);
 		boolean okClicked = mainApp.showTissuEditDialog(tempTissu);
 		if (okClicked) {
 			tissuTable.setItems(tissuService.getObservableList());
@@ -641,7 +550,6 @@ public class MainOverviewController {
 
 		projetSelected = mapper.map(projetService.getById(projetSelected.getId()), ProjetDto.class);
 		showProjetDetails(projetSelected);
-		
 	}
 
 	@FXML
@@ -696,7 +604,6 @@ public class MainOverviewController {
 
 		} else {
 			throw new NoSelectionException(Tissu.class, "Selectionnez un tissu dans la table");
-
 		}
 		setButtons();
 	}
@@ -706,15 +613,11 @@ public class MainOverviewController {
 		if (patronTable.getSelectionModel() != null && patronTable.getSelectionModel().getSelectedItem() != null
 				&& patronTable.getSelectionModel().getSelectedItem().getId() >= 0) {
 			Optional<ButtonType> option = ShowAlert.suppression(mainApp.getPrimaryStage(), EntityToString.PATRON, patronTable.getSelectionModel().getSelectedItem().toString());
-
 			if (option.get() == ButtonType.OK) {
 				PatronDto selected = patronTable.getSelectionModel().getSelectedItem();
 				patronService.delete(selected);
 				patronTable.setItems(patronService.getObservableList());
-			} else if (option.get() == ButtonType.CANCEL) {
-
 			}
-
 		} else {
 			throw new NoSelectionException(Tissu.class, "Selectionnez "+ModelUtils.generateString(EntityToString.TISSU, Articles.INDEFINI)+ " dans la table");
 		}
@@ -771,8 +674,6 @@ public class MainOverviewController {
 				if (tr.getVariant() != null) {
 
 					TitledPane tp = new TitledPane();
-					// tp.setText("tissu " + tr.getGammePoids() + " - " + tr.getLongueur() + "cm x "
-					// + tr.getLaize() + "cm");
 
 					VBox content = new VBox();
 
@@ -801,7 +702,6 @@ public class MainOverviewController {
 					}
 					Text lbl = new Text(longueurFinale + "cm /" + longueurInitiale + "cm");
 					lbl.setFill(longueurFinale < longueurInitiale ? Constants.colorDelete : Constants.colorAdd);
-					;
 
 					vbox.getChildren().add(lbl);
 
@@ -919,39 +819,11 @@ public class MainOverviewController {
 	@FXML
 	private void handleDeleteProjet() {
 		DevInProgressService.notImplemented(mainApp);
-
 	}
 
 	@FXML
 	private void handleAddTissuPicture() {
-
-		Preference pref = preferenceService.getPreferences();
-		File file = mainApp.directoryChooser(pref);
-		if (file != null)
-			try {
-				String name = file.getName();
-				String extension = name.substring(name.lastIndexOf(".") + 1);
-				BufferedImage bufferedImage = ImageIO.read(file);
-				bufferedImage = Scalr.resize(bufferedImage, 900);
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				ImageIO.write(bufferedImage, extension, baos);
-				byte[] data = baos.toByteArray();
-				Photo image = new Photo();
-				image.setData(data);
-				image.setNom(name);
-				image.setFormat(ImageFormat.valueOf(extension.toUpperCase()));
-				image.setTissu(mapper.map(tissuSelected, Tissu.class));
-				imageService.saveOrUpdate(image);
-				baos.close();
-
-				pref.setPictureLastUploadPath(file.getAbsolutePath());
-				preferenceService.savePreferences(pref);
-				setPicturePanel(photos.size());
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
+		addPicture();
 	}
 
 	@FXML

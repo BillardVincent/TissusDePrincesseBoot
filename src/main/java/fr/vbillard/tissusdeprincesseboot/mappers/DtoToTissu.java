@@ -11,26 +11,23 @@ import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
-import fr.vbillard.tissusdeprincesseboot.services.MatiereService;
-import fr.vbillard.tissusdeprincesseboot.services.TissageService;
-import fr.vbillard.tissusdeprincesseboot.services.TypeTissuService;
+
+import lombok.AllArgsConstructor;
 import org.modelmapper.AbstractConverter;
 import org.modelmapper.TypeMap;
 
 @Component
+@AllArgsConstructor
 public class DtoToTissu extends TypeMapConfigurer<TissuDto, Tissu> {
-    @Lazy
     TypeTissuDao tts ;
-    @Lazy
     MatiereDao ms ;
-    @Lazy
     TissageDao ts ;
 
     @Override
     public void configure(TypeMap<TissuDto, Tissu> typeMap) {
         typeMap.addMappings(mapper -> mapper.using(new IdConverter()).map(src -> src, Tissu::setId));
         typeMap.addMappings(mapper -> mapper.using(new ReferenceConverter()).map(src -> src, Tissu::setReference));
-        typeMap.addMappings(mapper -> mapper.using(new UnitePoidsConverter()).map(src -> src, Tissu::setUnitePoids));
+        typeMap.addMappings(mapper -> mapper.using(new UnitePoidsConverter()).map(TissuDto::getUnitePoids, Tissu::setUnitePoids));
         typeMap.addMappings(mapper -> mapper.using(new MatiereConverter()).map(src -> src, Tissu::setMatiere));
 
         typeMap.setPostConverter(context -> {
