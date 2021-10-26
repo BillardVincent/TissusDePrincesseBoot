@@ -3,9 +3,11 @@ package fr.vbillard.tissusdeprincesseboot.mapper;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.github.javafaker.Faker;
+import com.github.rozidan.springboot.modelmapper.WithModelMapper;
 import fr.vbillard.tissusdeprincesseboot.dao.MatiereDao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissageDao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissusRequisDao;
@@ -38,6 +40,10 @@ public class VariantMapper {
     @Mock
     TissusRequisDao tissusRequisDao;
 
+    @Configuration
+    @WithModelMapper(basePackages = "fr.vbillard.tissusdeprincesseboot")
+    public static class Application {
+    }
 
     @Test
     public void DtoToVariant(){

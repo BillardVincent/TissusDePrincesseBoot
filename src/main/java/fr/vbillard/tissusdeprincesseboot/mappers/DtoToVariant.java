@@ -2,6 +2,7 @@ package fr.vbillard.tissusdeprincesseboot.mappers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import com.github.rozidan.springboot.modelmapper.TypeMapConfigurer;
@@ -12,22 +13,24 @@ import fr.vbillard.tissusdeprincesseboot.dao.TissageDao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissusRequisDao;
 import fr.vbillard.tissusdeprincesseboot.dao.TypeTissuDao;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuVariantDto;
+import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
+import lombok.AllArgsConstructor;
+import org.modelmapper.AbstractConverter;
 import org.modelmapper.TypeMap;
 
 @Component
+@AllArgsConstructor
 public class DtoToVariant extends TypeMapConfigurer<TissuVariantDto, TissuVariant> {
-    @Autowired
     MatiereDao ms;
-    @Autowired
     TypeTissuDao tts;
-    @Autowired
     TissageDao ts;
-    @Autowired
     TissusRequisDao trs;
 
+
+
     @Configuration
-    @WithModelMapper(basePackages = {"fr.vbillard.tissusdeprincesseboot"},
+    @WithModelMapper(basePackages = {"fr.vbillard.tissusdeprincesseboot.mappers"},
             basePackageClasses = {ModelMapperConfig.class})
     public static class Application {
     }
@@ -41,5 +44,14 @@ public class DtoToVariant extends TypeMapConfigurer<TissuVariantDto, TissuVarian
             context.getDestination().setTissuRequis(trs.getById(context.getSource().getTissuRequisId()));
             return context.getDestination();
         });
+        typeMap.addMappings(mapper -> mapper.using(new MatiereConverter()).map(TissuVariantDto::getMatiere, TissuVariant::setMatiere));
+    }
+
+    private class MatiereConverter extends AbstractConverter<String, Matiere> {
+        @Override
+        protected Matiere convert(String source) {
+            Matiere m = ms.getByValue(source);
+            return m;
+        }
     }
 }

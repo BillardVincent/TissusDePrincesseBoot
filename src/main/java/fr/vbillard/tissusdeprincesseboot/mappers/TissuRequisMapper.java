@@ -17,7 +17,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class TissuRequisMapper implements IMapper<TissuRequis, TissuRequisDto>{
 	@Lazy
-	TissuVariantService tvs ;
+	private TissuVariantService tvs ;
 
 	public static TissuRequis map(TissuRequisDto dto, Patron p) {
 		TissuRequis tr = new TissuRequis();

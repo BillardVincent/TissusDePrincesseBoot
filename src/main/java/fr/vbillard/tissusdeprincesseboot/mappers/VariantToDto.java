@@ -11,8 +11,8 @@ import org.modelmapper.TypeMap;
 public class VariantToDto extends TypeMapConfigurer<TissuVariant, TissuVariantDto> {
     @Override
     public void configure(TypeMap<TissuVariant, TissuVariantDto> typeMap) {
-        typeMap.addMapping(TissuVariant::getTissuRequis, (dest, v) -> dest.setTissuRequisId((int)v));
         typeMap.setPostConverter(context -> {
+            context.getDestination().setTissuRequisId(context.getSource().getTissuRequis() == null ? 0 : context.getSource().getTissuRequis().getId());
             context.getDestination().setMatiere(context.getSource().getMatiere() == null ? "" : context.getSource().getMatiere().getValue());
             context.getDestination().setTissage(context.getSource().getTissage() == null ? "" :  context.getSource().getTissage().getValue());
             context.getDestination().setType(context.getSource().getTypeTissu() == null ? "" :  context.getSource().getTypeTissu().getValue());

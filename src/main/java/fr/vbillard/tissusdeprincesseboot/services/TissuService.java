@@ -18,7 +18,7 @@ import org.modelmapper.ModelMapper;
 public class TissuService extends AbstractService<Tissu>{
 	
 	private ModelMapper mapper;
-	TissuDao dao;
+	private TissuDao dao;
 
 	public ObservableList<TissuDto> getObservableList(){
 		return FXCollections.observableArrayList(dao.findAll().stream().map(t -> mapper.map(t, TissuDto.class)).collect(Collectors.toList()));
