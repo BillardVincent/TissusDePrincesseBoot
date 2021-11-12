@@ -11,6 +11,7 @@ import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuVariantDto;
+import fr.vbillard.tissusdeprincesseboot.fxCustomElements.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
 import fr.vbillard.tissusdeprincesseboot.services.MatiereService;
@@ -19,11 +20,9 @@ import fr.vbillard.tissusdeprincesseboot.services.TissageService;
 import fr.vbillard.tissusdeprincesseboot.services.TissuRequisService;
 import fr.vbillard.tissusdeprincesseboot.services.TissuVariantService;
 import fr.vbillard.tissusdeprincesseboot.services.TypeTissuService;
-import fr.vbillard.tissusdeprincesseboot.utils.Constants;
 import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -103,16 +102,10 @@ public class PatronEditDialogController implements IController{
 	
 	@FXML
 	private void initialize() {
-		FontAwesomeIconView addIcon1 = new FontAwesomeIconView(FontAwesomeIcon.PLUS_CIRCLE);
-		addIcon1.setFill(Constants.colorAdd);
-		addTissuButton.setGraphic(addIcon1);
+		addTissuButton.setGraphic(GlyphIconUtil.plusCircleNormal());
+		addFournitureButton.setGraphic(GlyphIconUtil.plusCircleNormal());
 
-		FontAwesomeIconView addIcon2 = new FontAwesomeIconView(FontAwesomeIcon.PLUS_CIRCLE);
-		addIcon2.setFill(Constants.colorAdd);
-		addFournitureButton.setGraphic(addIcon2);
-
-		FontAwesomeIconView magicIcon = new FontAwesomeIconView(FontAwesomeIcon.MAGIC);
-		generateReferenceButton.setGraphic(magicIcon);
+		generateReferenceButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.MAGIC));
 		generateReferenceButton.setTooltip(new Tooltip("Générer une référence automatiquement"));
 	}
 
@@ -136,15 +129,12 @@ public class PatronEditDialogController implements IController{
 
 		setDisabledButton();
 
-		patron.setTissusRequis(tissuRequisService.getAllTissuRequisByPatron(patron.getId()).stream().map(tr -> mapper.map(tr, TissuRequisDto.class)).collect(Collectors.toList()));
-
 		referenceField.setText(patron.getReferenceProperty() == null ? "" : patron.getReference());
 		marqueField.setText(patron.getMarqueProperty() == null ? "" : patron.getMarque());
 		modeleField.setText(patron.getModeleProperty() == null ? "" : patron.getModele());
 		typeVetementField.setText(patron.getTypeVetementProperty() == null ? "" : patron.getTypeVetement());
 
 		loadTissuRequisForPatron();
-
 	}
 
 	/**
@@ -153,7 +143,7 @@ public class PatronEditDialogController implements IController{
 	 */
 	private void loadTissuRequisForPatron() {
 		tissusPatronListGrid.getChildren().clear();
-		patron.setTissusRequis(tissuRequisService.getAsObservableAllTissuRequisByPatron(patron.getId()));
+		patron.setTissusRequis(tissuRequisService.getAllTissuRequisByPatron(patron.getId()).stream().map(tr-> mapper.map(tr, TissuRequisDto.class)).collect(Collectors.toList()));
 
 		if (patron.getTissusRequisProperty() != null && patron.getTissusRequis() != null) {
 
@@ -162,25 +152,12 @@ public class PatronEditDialogController implements IController{
 				TissuRequisDto tissu = patron.getTissusRequis().get(i);
 
 				Button editButton = new Button();
-				FontAwesomeIconView editIcon = new FontAwesomeIconView(FontAwesomeIcon.EDIT);
-				editButton.setGraphic(editIcon);
-				editButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-					@Override
-					public void handle(MouseEvent e) {
-						displayTissuRequis(tissu);
-					}
-				});
+				editButton.setGraphic(GlyphIconUtil.editNormal());
+				editButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> displayTissuRequis(tissu));
 
 				Button deleteButton = new Button();
-				FontAwesomeIconView suppressIcon = new FontAwesomeIconView(FontAwesomeIcon.TIMES_CIRCLE);
-				suppressIcon.setFill(Constants.colorDelete);
-				deleteButton.setGraphic(suppressIcon);
-				deleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-					@Override
-					public void handle(MouseEvent e) {
-						deleteTissuRequis(tissu);
-					}
-				});
+				deleteButton.setGraphic(GlyphIconUtil.suppressNormal());
+				deleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> deleteTissuRequis(tissu));
 
 				HBox hbox = new HBox(editButton, deleteButton);
 				hbox.setSpacing(10);
@@ -207,7 +184,7 @@ public class PatronEditDialogController implements IController{
 		tvList = FXCollections.observableArrayList(new ArrayList<TissuVariantDto>());
 		bottomRightVbox = new VBox();
 
-		Label titre = new Label("Tissus recommendés : ");
+		Label titre = new Label("Tissus recommandés : ");
 
 		GridPane topGrid = new GridPane();
 		topGrid.setVgap(10);
@@ -259,17 +236,12 @@ public class PatronEditDialogController implements IController{
 		topGrid.add(gammePoidsChBx, 1, 2);
 
 		Button validateBtn = new Button("Valider");
-		validateBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent e) {
-
-				tissu.setGammePoids(gammePoidsChBx.getValue());
-				tissu.setLaize(laize);
-				tissu.setLongueur(longueur);
-				tissu.setGammePoids(gammePoidsChBx.getValue());
-				saveTissuRequis(tissu);
-
-			}
+		validateBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+			tissu.setGammePoids(gammePoidsChBx.getValue());
+			tissu.setLaize(laize);
+			tissu.setLongueur(longueur);
+			tissu.setGammePoids(gammePoidsChBx.getValue());
+			saveTissuRequis(tissu);
 		});
 
 		Button cancelBtn = new Button("Annuler");
@@ -291,8 +263,6 @@ public class PatronEditDialogController implements IController{
 
 		loadBottomRightVbox(tissu);
 
-		// if (tissuget.)
-
 	}
 
 	private void loadBottomRightVbox(TissuRequisDto tissu) {
@@ -304,23 +274,19 @@ public class PatronEditDialogController implements IController{
 			GridPane bottomGrid = new GridPane();
 			bottomGrid.setPadding(new Insets(5, 0, 5, 0));
 			bottomRightVbox.getChildren().add(bottomGrid);
-			// bottomGrid.setGridLinesVisible( true );
 			bottomGrid.getColumnConstraints().addAll(new ColumnConstraints(300), new ColumnConstraints(100));
 
 			for (int i = 0; i < tvList.size(); i++) {
 				TissuVariantDto tv = tvList.get(i);
 				Button editButton = new Button();
-				FontAwesomeIconView editIcon = new FontAwesomeIconView(FontAwesomeIcon.EDIT);
-				editButton.setGraphic(editIcon);
+				editButton.setGraphic(GlyphIconUtil.editNormal());
 				editButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
 					editingVariant = true;
 					DevInProgressService.notImplemented(mainApp);
 				});
 
 				Button deleteButton = new Button();
-				FontAwesomeIconView suppressIcon = new FontAwesomeIconView(FontAwesomeIcon.TIMES_CIRCLE);
-				suppressIcon.setFill(Constants.colorDelete);
-				deleteButton.setGraphic(suppressIcon);
+				deleteButton.setGraphic(GlyphIconUtil.suppressNormal());
 				deleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> DevInProgressService.notImplemented(mainApp));
 				HBox btns = new HBox(editButton, deleteButton);
 				btns.setAlignment(Pos.CENTER_RIGHT);
@@ -356,9 +322,7 @@ public class PatronEditDialogController implements IController{
 			tissageField.setValue(variantSelected.getTissageProperty() == null ? "" : variantSelected.getTissage());
 
 			Button addTvBtn = new Button();
-			FontAwesomeIconView addIcon = new FontAwesomeIconView(FontAwesomeIcon.PLUS_CIRCLE);
-			addIcon.setFill(Constants.colorAdd);
-			addTvBtn.setGraphic(addIcon);
+			addTvBtn.setGraphic(GlyphIconUtil.plusCircleNormal());
 			addTvBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
 				variantSelected.setMatiere(matiereField.getValue());
 				variantSelected.setTissage(tissageField.getValue());
@@ -444,7 +408,6 @@ public class PatronEditDialogController implements IController{
 	@FXML
 	private void handleGenerateReference() {
 		StringBuilder sb = new StringBuilder();
-		String bla = marqueField.getText();
 		sb.append(marqueField.getText().trim().isEmpty() ? "X" : marqueField.getText().toUpperCase().charAt(0))
 				.append(modeleField.getText().trim().isEmpty() ? "X" : modeleField.getText().toUpperCase().charAt(0))
 				.append(typeVetementField.getText().trim().isEmpty() ? "X"
@@ -495,7 +458,6 @@ public class PatronEditDialogController implements IController{
 		if (errorMessage.length() == 0) {
 			return true;
 		} else {
-			// Show the error message.
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.initOwner(dialogStage);
 			alert.setTitle("Champ(s) invalide(s)");
@@ -506,5 +468,10 @@ public class PatronEditDialogController implements IController{
 
 			return false;
 		}
+	}
+
+	@Override
+	public void setStageInitializer(StageInitializer initializer) {
+
 	}
 }

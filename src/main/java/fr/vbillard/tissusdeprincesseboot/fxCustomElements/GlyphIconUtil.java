@@ -9,7 +9,7 @@ import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import fr.vbillard.tissusdeprincesseboot.utils.Constants;
 import javafx.scene.paint.Paint;
 
-public class MaterialElements {
+public class GlyphIconUtil {
 
     private static final String NORMAL_ICON_SIZE = "1.5em";
     private static final String TINY_ICONE_SIZE = "1em";
@@ -67,7 +67,7 @@ public class MaterialElements {
     }
 
     public static GlyphIcon warning(){
-        return generateIcon(new FontAwesomeIconView(FontAwesomeIcon.PLAY_CIRCLE), NORMAL_ICON_SIZE, null);
+        return generateIcon(new FontAwesomeIconView(FontAwesomeIcon.EXCLAMATION_TRIANGLE), BIG_ICONE_SIZE, Constants.colorWarning);
     }
 
     public static GlyphIcon picture(){

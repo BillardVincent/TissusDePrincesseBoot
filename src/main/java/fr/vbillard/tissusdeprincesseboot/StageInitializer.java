@@ -8,8 +8,13 @@ import java.util.Map;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
+import fr.vbillard.tissusdeprincesseboot.controlers.IController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.CardWPicture;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.TissusController;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
@@ -19,25 +24,26 @@ import fr.vbillard.tissusdeprincesseboot.services.PreferenceService;
 import fr.vbillard.tissusdeprincesseboot.controlers.FxmlPathProperties;
 import fr.vbillard.tissusdeprincesseboot.controlers.GenericChoiceBoxEditController;
 import fr.vbillard.tissusdeprincesseboot.controlers.GenericTextEditController;
-import fr.vbillard.tissusdeprincesseboot.controlers.MainOverviewController;
 import fr.vbillard.tissusdeprincesseboot.controlers.MatiereEditController;
 import fr.vbillard.tissusdeprincesseboot.controlers.PatronEditDialogController;
 import fr.vbillard.tissusdeprincesseboot.controlers.PictureExpended;
-import fr.vbillard.tissusdeprincesseboot.controlers.RootLayoutController;
 import fr.vbillard.tissusdeprincesseboot.controlers.SetLongueurDialogController;
 import fr.vbillard.tissusdeprincesseboot.controlers.TissageEditController;
 import fr.vbillard.tissusdeprincesseboot.controlers.TissuEditDialogController;
 import fr.vbillard.tissusdeprincesseboot.controlers.TypeEditController;
+import fr.vbillard.tissusdeprincesseboot.utils.FxData;
+import fr.vbillard.tissusdeprincesseboot.utils.History;
+import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import jfxtras.styles.jmetro.JMetro;
-import jfxtras.styles.jmetro.Style;
 import lombok.AllArgsConstructor;
 
 @Component
@@ -46,9 +52,11 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
     private final Image icon = new Image("file:resources/images/cut-cloth-red.png");
     private final ApplicationContext applicationContext;
     private Stage stage;
-    private JMetro jMetro;
     private final FxmlPathProperties pathProperties;
     private final PreferenceService preferenceService;
+    private static History history;
+    private FxData fxData;
+
 
     public StageInitializer(ApplicationContext applicationContext, FxmlPathProperties pathProperties, PreferenceService preferenceService){
         this.applicationContext = applicationContext;
@@ -59,34 +67,19 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
     @Override
     public void onApplicationEvent(TissusDePrincesseFxApp.StageReadyEvent event) {
         try {
-            jMetro = new JMetro(Style.LIGHT);
-
-            FXMLLoader loader = new FXMLLoader();
-            loader.setControllerFactory(applicationContext::getBean);
-            loader.setLocation(pathProperties.getMainOverview().getURL());
-            AnchorPane tissuOverview = loader.load();
-
-            MainOverviewController tissuOverviewController = loader.getController();
-            tissuOverviewController.setMainApp(this);
-
             FXMLLoader rootLoader = new FXMLLoader();
-            rootLoader.setLocation(pathProperties.getRoot().getURL());
+            rootLoader.setLocation(pathProperties.getRoot2().getURL());
             rootLoader.setControllerFactory(applicationContext::getBean);
+            Parent rootLayout = rootLoader.load();
 
-            BorderPane rootLayout = rootLoader.load();
-            RootLayoutController rootLayoutController = rootLoader.getController();
-            rootLayoutController.setMainApp(this);
+            RootController rootController = rootLoader.getController();
+            rootController.setStageInitializer(this);
 
             stage = event.getStage();
             Scene scene = new Scene(rootLayout);
-            jMetro.setScene(scene);
-
             stage.setScene(scene);
-            stage.getIcons().add(icon);
             stage.setMaximized(true);
             stage.show();
-
-            rootLayout.setCenter(tissuOverview);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -95,6 +88,53 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
     public Stage getPrimaryStage(){
         return stage;
     }
+
+    public FxData getData() {
+        return fxData;
+    }
+
+    public Pane displayPane(PathEnum path){
+        FXMLLoader loader = new FXMLLoader();
+        Pane layout = null;
+        try {
+            PathHolder holder = PathEnumToURL(path);
+            loader.setLocation(holder.url);
+            loader.setControllerFactory(applicationContext::getBean);
+            layout = loader.load();
+
+            IController controller = loader.getController();
+            controller.setStageInitializer(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return layout;
+    }
+
+    private PathHolder PathEnumToURL(PathEnum pathEnum) throws IOException {
+        switch (pathEnum) {
+            case ROOT:
+                return new PathHolder(pathProperties.getRoot2().getURL(), RootController.class);
+            case TISSUS:
+                return new PathHolder(pathProperties.getTissus2().getURL(), TissusController.class);
+            case TISSUS_CARD:
+                return new PathHolder(pathProperties.getTissuCard().getURL(), CardWPicture.class);
+            default:
+                return null;
+        }
+    }
+
+
+    private class PathHolder{
+        URL url;
+        Class controller;
+
+        public PathHolder(URL url, Class controller){
+            this.url = url;
+            this.controller = controller;
+        }
+    }
+    /*
 
     public boolean showTissuEditDialog(TissuDto tissu) {
         try {
@@ -287,25 +327,24 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
 
         return fileChooser.showOpenDialog(getPrimaryStage());
     }
+    */
 
-    private ControlerHolder setStageAndLoader(URL path, String title) throws IOException {
+    private ControlerHolder setStageAndLoader(URL path) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(path);
         loader.setControllerFactory(applicationContext::getBean);
 
         AnchorPane page = loader.load();
 
-        Stage dialogStage = new Stage();
-        dialogStage.getIcons().add(icon);
-        dialogStage.setTitle(title);
+        Stage stage = new Stage();
+        stage.getIcons().add(icon);
 
-        dialogStage.initModality(Modality.WINDOW_MODAL);
-        dialogStage.initOwner(getPrimaryStage());
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(getPrimaryStage());
         Scene scene = new Scene(page);
-        jMetro.setScene(scene);
-        dialogStage.setScene(scene);
+        stage.setScene(scene);
 
-        return new ControlerHolder(dialogStage, loader);
+        return new ControlerHolder(stage, loader);
     }
 
     @AllArgsConstructor

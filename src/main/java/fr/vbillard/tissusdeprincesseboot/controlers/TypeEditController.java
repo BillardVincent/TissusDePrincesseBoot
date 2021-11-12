@@ -146,4 +146,8 @@ public class TypeEditController implements IController {
 		return okClicked;
 	}
 
+	@Override
+	public void setStageInitializer(StageInitializer initializer) {
+
+	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import fr.vbillard.tissusdeprincesseboot.model.AbstractEntity;
+import javafx.collections.ObservableList;
 
 public abstract class AbstractService<T extends AbstractEntity> {
 
@@ -25,6 +26,5 @@ public abstract class AbstractService<T extends AbstractEntity> {
 	}
 	
 	protected abstract JpaRepository getDao();
-
 
 }

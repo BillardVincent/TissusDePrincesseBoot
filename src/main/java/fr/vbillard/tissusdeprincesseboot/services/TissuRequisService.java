@@ -2,7 +2,6 @@ package fr.vbillard.tissusdeprincesseboot.services;
 
 import java.util.List;
 
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import fr.vbillard.tissusdeprincesseboot.dao.TissusRequisDao;
@@ -11,6 +10,8 @@ import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.mappers.TissuRequisMapper;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 
@@ -45,9 +46,8 @@ public class TissuRequisService {
 
 	}
 
-	public List<TissuRequisDto> getAsObservableAllTissuRequisByPatron(int id) {
-		//return mapper.getAsObservable(getAllTissuRequisByPatron(id));
-		return null;
+	public ObservableList<TissuRequis> getAsObservableAllTissuRequisByPatron(int id) {
+		return FXCollections.observableArrayList(getAllTissuRequisByPatron(id));
 	}
 
 

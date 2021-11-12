@@ -1,8 +1,9 @@
 package fr.vbillard.tissusdeprincesseboot.controlers;
 
+import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import javafx.stage.Stage;
 
 public interface IController {
 
-	void setDialogStage(Stage dialogStage);
+	void setStageInitializer(StageInitializer initializer);
 }

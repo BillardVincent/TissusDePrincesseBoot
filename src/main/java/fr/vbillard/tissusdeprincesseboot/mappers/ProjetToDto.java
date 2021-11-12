@@ -18,8 +18,6 @@ import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
-import fr.vbillard.tissusdeprincesseboot.services.TissuRequisService;
-import fr.vbillard.tissusdeprincesseboot.services.TissuUsedService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
@@ -38,10 +36,12 @@ public class ProjetToDto extends TypeMapConfigurer<Projet, ProjetDto> {
         typeMap.addMapping(Projet::getStatus, (ProjetDto dest, ProjectStatus v) -> dest.setProjectStatus(v));
         typeMap.setPostConverter(context -> {
             Map<TissuRequisDto, List<Integer>> tuMap = new HashMap<TissuRequisDto, List<Integer>>();
-            List<TissuRequis> trLst = trs.getAllByPatronId(context.getSource().getPatron().getId());
-            for (TissuRequis tr : trLst) {
-                List<TissuUsed> tu = tus.getAllByTissuRequisAndProjet(tr, context.getSource());
-                tuMap.put(new ModelMapper().map(tr, TissuRequisDto.class), tu == null ? new ArrayList<Integer>() : tu.stream().map(t -> t.getId()).collect(Collectors.toList()));
+            if (context.getSource().getId() != 0){
+                List<TissuRequis> trLst = trs.getAllByPatronId(context.getSource().getPatron().getId());
+                for (TissuRequis tr : trLst) {
+                    List<TissuUsed> tu = tus.getAllByTissuRequisAndProjet(tr, context.getSource());
+                    tuMap.put(new ModelMapper().map(tr, TissuRequisDto.class), tu == null ? new ArrayList<Integer>() : tu.stream().map(t -> t.getId()).collect(Collectors.toList()));
+                }
             }
             context.getDestination().setTissuUsed(tuMap);
 

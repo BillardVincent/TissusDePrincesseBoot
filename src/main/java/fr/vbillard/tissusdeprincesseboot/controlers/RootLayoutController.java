@@ -99,7 +99,7 @@ public class RootLayoutController {
 
     	alert.showAndWait();
     }
-    
+    /*
     @FXML
     private void handleNewMatiere() {
     	mainApp.showMatiereEditDialog();
@@ -119,6 +119,8 @@ public class RootLayoutController {
     private void handleNewTypeTissu() {
     	mainApp.showTypeTissuEditDialog();
     }
+
+     */
 
     /**
      * Closes the application.

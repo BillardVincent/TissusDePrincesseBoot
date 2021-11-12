@@ -25,4 +25,8 @@ public class FxmlPathProperties {
 	private Resource longueur;
 	private Resource pictureExpended;
 
+	private Resource root2;
+	private Resource tissus2;
+	private Resource tissuCard;
+
 }

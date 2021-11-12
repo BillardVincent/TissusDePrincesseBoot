@@ -158,4 +158,8 @@ public class MatiereEditController implements IController {
 		return okClicked;
 	}
 
+	@Override
+	public void setStageInitializer(StageInitializer initializer) {
+
+	}
 }
