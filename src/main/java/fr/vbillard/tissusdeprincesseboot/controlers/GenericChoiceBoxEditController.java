@@ -80,4 +80,8 @@ public class GenericChoiceBoxEditController implements IController{
 		return result;
 	}
 
+	@Override
+	public void setStageInitializer(StageInitializer initializer) {
+
+	}
 }

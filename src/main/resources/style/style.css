@@ -1,0 +1,72 @@
+* {
+    -fx-primary: #9c27b0;
+    -fx-primary-contrast: #ffffff;
+    -fx-primary-dark:#6a0080;
+    -fx-primary-dark-contrast: #ffffff;
+    -fx-primary-light:#d05ce3;
+    -fx-primary-light-contrast: #000000;
+    -fx-secondary: #ffc107;
+    -fx-secondary-contrast: #000000;
+    -fx-secondary-dark: #c79100;
+    -fx-secondary-dark-contrast: #000000;
+    -fx-secondary-light: #fff350;
+    -fx-secondary-light-contrast: #000000;
+}
+
+.global{
+    -fx-font-family: Calibri;
+}
+
+.aside-element:hover{
+    -fx-background-color: -fx-primary-light;
+    -fx-text-fill: -fx-primary-light-contrast;
+    -fx-font-family: Calibri;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.corner-left{
+    -fx-background-color: -fx-primary;
+}
+.text-corner-left {
+    -fx-text-fill: -fx-primary-contrast;
+}
+
+.search-box{
+    -fx-border-radius: 10px;
+    -fx-border-width: 1px;
+    -fx-border-color: #a0a0a0;
+    -fx-border-style: solid;
+}
+
+.title-main-pane{
+    -fx-fill: -fx-primary;
+    -fx-font-weight: bold;
+    -fx-font-size: 30px;
+}
+
+.card{
+    -fx-border-color: -fx-primary;
+    -fx-border-width: 1px;
+}
+.card :hover{
+    -fx-border-color: -fx-primary-light-contrast;
+    -fx-border-width: 3px;
+}
+.title{
+    -fx-background-color: -fx-primary;
+    -fx-text-fill: -fx-primary-contrast;
+    -fx-fill: -fx-primary-contrast;
+    -fx-font-weight: bold;
+    -fx-font-size: 30px;
+}
+.card .title{
+    -fx-background-color: -fx-primary;
+    -fx-text-fill: -fx-primary-contrast;
+    -fx-fill: -fx-primary-contrast;
+    -fx-font-weight: bold;
+    -fx-font-size: 30px;
+}
+
+
+

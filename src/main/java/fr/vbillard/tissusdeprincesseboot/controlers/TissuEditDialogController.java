@@ -9,7 +9,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
-import fr.vbillard.tissusdeprincesseboot.fxCustomElements.MaterialElements;
+import fr.vbillard.tissusdeprincesseboot.fxCustomElements.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
@@ -117,9 +117,9 @@ public class TissuEditDialogController implements IController{
 	@FXML
 	private void initialize() {
 
-		addTissageButton.setGraphic(MaterialElements.plusCircleTiny());
-		addTypeButton.setGraphic(MaterialElements.plusCircleTiny());
-		addMatiereButton.setGraphic(MaterialElements.plusCircleTiny());
+		addTissageButton.setGraphic(GlyphIconUtil.plusCircleTiny());
+		addTypeButton.setGraphic(GlyphIconUtil.plusCircleTiny());
+		addMatiereButton.setGraphic(GlyphIconUtil.plusCircleTiny());
 		FontAwesomeIconView magicIcon = new FontAwesomeIconView(FontAwesomeIcon.MAGIC);
 		generateReferenceButton.setGraphic(magicIcon);
 		generateReferenceButton.setTooltip(new Tooltip("Générer une référence automatiquement"));
@@ -233,6 +233,7 @@ public class TissuEditDialogController implements IController{
 	private void handleCancel() {
 		dialogStage.close();
 	}
+	/*
 
 	@FXML
 	private void handleAddMatiere() {
@@ -344,5 +345,10 @@ public class TissuEditDialogController implements IController{
 		decatiField.setDisable(edit);
 		lieuDachatField.setDisable(edit);
 		chuteField.setDisable(edit);
+	}
+
+	@Override
+	public void setStageInitializer(StageInitializer initializer) {
+
 	}
 }

@@ -2,6 +2,9 @@ package fr.vbillard.tissusdeprincesseboot.services;
 
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -74,7 +77,10 @@ public class TissuService extends AbstractService<Tissu>{
 	protected JpaRepository getDao() {
 		return dao;
 	}
-	
 
-		
+	public ObservableList<TissuDto> getObservablePage(int page, int pageSize) {
+		return FXCollections.observableArrayList(dao.findAll(PageRequest.of(page, pageSize)).stream().map(t -> mapper.map(t, TissuDto.class)).collect(Collectors.toList()));
+	}
+
+
 }

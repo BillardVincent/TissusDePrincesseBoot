@@ -145,5 +145,8 @@ public void handleSuppressElement() {
 	}
 
 
-	    
+	@Override
+	public void setStageInitializer(StageInitializer initializer) {
+
+	}
 }

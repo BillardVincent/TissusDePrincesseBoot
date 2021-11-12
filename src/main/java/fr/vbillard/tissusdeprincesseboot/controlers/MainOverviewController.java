@@ -24,7 +24,7 @@ import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.exception.NoSelectionException;
-import fr.vbillard.tissusdeprincesseboot.fxCustomElements.MaterialElements;
+import fr.vbillard.tissusdeprincesseboot.fxCustomElements.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.fxCustomElements.TissuRequisToggleButton;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
@@ -42,14 +42,12 @@ import fr.vbillard.tissusdeprincesseboot.services.PreferenceService;
 import fr.vbillard.tissusdeprincesseboot.services.ProjetService;
 import fr.vbillard.tissusdeprincesseboot.services.TissuService;
 import fr.vbillard.tissusdeprincesseboot.services.TissuUsedService;
-import fr.vbillard.tissusdeprincesseboot.utils.Articles;
+import fr.vbillard.tissusdeprincesseboot.utils.modelToString.Articles;
 import fr.vbillard.tissusdeprincesseboot.utils.Constants;
 import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
-import fr.vbillard.tissusdeprincesseboot.utils.EntityToString;
-import fr.vbillard.tissusdeprincesseboot.utils.ModelUtils;
+import fr.vbillard.tissusdeprincesseboot.utils.modelToString.EntityToString;
+import fr.vbillard.tissusdeprincesseboot.utils.modelToString.ModelUtils;
 import fr.vbillard.tissusdeprincesseboot.utils.ShowAlert;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -305,7 +303,7 @@ public class MainOverviewController {
 
 		showTissuDetails(null);
 		showPatronDetails(null);
-		showProjetDetails(null);
+		//showProjetDetails(null);
 		showProjetPanDetails(null);
 
 		tissuTable.getSelectionModel().selectedItemProperty()
@@ -325,47 +323,47 @@ public class MainOverviewController {
 			}
 		});
 
-		GlyphIcon addProjectIcone = MaterialElements.playCircle();
+		GlyphIcon addProjectIcone = GlyphIconUtil.playCircle();
 		addProjectIcone.setDisable(true);
-		GlyphIcon selectProjectIcone = MaterialElements.playCircle();
+		GlyphIcon selectProjectIcone = GlyphIconUtil.playCircle();
 		selectProjectIcone.setDisable(true);
 
 		selectProjetPanButton.setGraphic(selectProjectIcone);
-		deleteProjetPanButton.setGraphic(MaterialElements.suppressNormal());
-		filtrePatronPanButton.setGraphic(MaterialElements.searchTiny());
-		filtreResetPatronPanButton.setGraphic(MaterialElements.suppressTiny());
-		addPatronButton.setGraphic(MaterialElements.plusCircleNormal());
-		editPatronButton.setGraphic(MaterialElements.editNormal());
-		deletePatronButton.setGraphic(MaterialElements.suppressNormal());
-		createProjectButton.setGraphic(MaterialElements.playCircle());
-		filtrePatronButton.setGraphic(MaterialElements.searchTiny());
-		filtreResetPatronButton.setGraphic(MaterialElements.suppressTiny());
-		archiveTissuButton.setGraphic(MaterialElements.archive());
+		deleteProjetPanButton.setGraphic(GlyphIconUtil.suppressNormal());
+		filtrePatronPanButton.setGraphic(GlyphIconUtil.searchTiny());
+		filtreResetPatronPanButton.setGraphic(GlyphIconUtil.suppressTiny());
+		addPatronButton.setGraphic(GlyphIconUtil.plusCircleNormal());
+		editPatronButton.setGraphic(GlyphIconUtil.editNormal());
+		deletePatronButton.setGraphic(GlyphIconUtil.suppressNormal());
+		createProjectButton.setGraphic(GlyphIconUtil.playCircle());
+		filtrePatronButton.setGraphic(GlyphIconUtil.searchTiny());
+		filtreResetPatronButton.setGraphic(GlyphIconUtil.suppressTiny());
+		archiveTissuButton.setGraphic(GlyphIconUtil.archive());
 		archiveTissuButton.setTooltip(new Tooltip("Archiver ce tissu. Il pourra être retrouvé"));
-		generateCouponButton.setGraphic(MaterialElements.cloneNormal());
+		generateCouponButton.setGraphic(GlyphIconUtil.cloneNormal());
 		generateCouponButton.setTooltip(new Tooltip("Générer un coupon à partir de ce tissu"));
-		searchPatronButton.setGraphic(new HBox(MaterialElements.searchNormal(), MaterialElements.project()));
+		searchPatronButton.setGraphic(new HBox(GlyphIconUtil.searchNormal(), GlyphIconUtil.project()));
 		searchPatronButton.setTooltip(new Tooltip("Rechercher les patrons correspondant à ce tissu"));
 		addInProjectButton.setGraphic(addProjectIcone);
 		addInProjectButton.setTooltip(new Tooltip("Ajouter le tissu sélectionné au projet"));
-		addTissuButton.setGraphic(MaterialElements.plusCircleNormal());
+		addTissuButton.setGraphic(GlyphIconUtil.plusCircleNormal());
 		addTissuButton.setTooltip(new Tooltip("Ajouter un nouveau tissu"));
-		editTissuButton.setGraphic(MaterialElements.editNormal());
+		editTissuButton.setGraphic(GlyphIconUtil.editNormal());
 		editTissuButton.setTooltip(new Tooltip("Editer le tissu sélectionné"));
-		deleteTissuButton.setGraphic(MaterialElements.searchNormal());
+		deleteTissuButton.setGraphic(GlyphIconUtil.searchNormal());
 		deleteTissuButton.setTooltip(new Tooltip("Supprimer le tissu sélectionné. Cette opération est définitive"));
-		filtreTissuButton.setGraphic(MaterialElements.searchTiny());
-		filtreResetTissuButton.setGraphic(MaterialElements.suppressTiny());
+		filtreTissuButton.setGraphic(GlyphIconUtil.searchTiny());
+		filtreResetTissuButton.setGraphic(GlyphIconUtil.suppressTiny());
 		editProjetDescription.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.EDIT));
 		editProjetStatus.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.EDIT));
-		deselectProjetBtn.setGraphic(MaterialElements.suppressNormal());
-		warningUnregistredLabel.setGraphic(MaterialElements.warning());
-		addTissuPictureButton.setGraphic(MaterialElements.picture());
-		previousPicture.setGraphic(MaterialElements.previousBig());
-		nextPicture.setGraphic(MaterialElements.nextBig());
-		addPicture.setGraphic(MaterialElements.plusCircleNormal());
-		deletePicture.setGraphic(MaterialElements.suppressNormal());
-		expendPicture.setGraphic(MaterialElements.expandPicture());
+		deselectProjetBtn.setGraphic(GlyphIconUtil.suppressNormal());
+		warningUnregistredLabel.setGraphic(GlyphIconUtil.warning());
+		addTissuPictureButton.setGraphic(GlyphIconUtil.picture());
+		previousPicture.setGraphic(GlyphIconUtil.previousBig());
+		nextPicture.setGraphic(GlyphIconUtil.nextBig());
+		addPicture.setGraphic(GlyphIconUtil.plusCircleNormal());
+		deletePicture.setGraphic(GlyphIconUtil.suppressNormal());
+		expendPicture.setGraphic(GlyphIconUtil.expandPicture());
 		setButtons();
 
 		// robeImage.setImage(new
@@ -492,6 +490,7 @@ public class MainOverviewController {
 
 	@FXML
 	private void handleNewTissu() {
+		/*
 		TissuDto tempTissu = mapper.map(
 				new Tissu(0, "", 0, 0, "", null, null, 0, UnitePoids.NON_RENSEIGNE, false, "", null, false), TissuDto.class);
 		boolean okClicked = mainApp.showTissuEditDialog(tempTissu);
@@ -499,10 +498,12 @@ public class MainOverviewController {
 			tissuTable.setItems(tissuService.getObservableList());
 		}
 		setButtons();
+*/
 	}
 
 	@FXML
 	private void handleEditTissu() {
+		/*
 		tissuSelected = tissuTable.getSelectionModel().getSelectedItem();
 		System.out.println(tissuSelected);
 		if (tissuSelected != null) {
@@ -518,6 +519,8 @@ public class MainOverviewController {
 			throw new NoSelectionException(Tissu.class, "Selectionnez un tissu dans la table");
 		}
 		setButtons();
+
+		 */
 	}
 
 	@FXML
@@ -532,6 +535,7 @@ public class MainOverviewController {
 
 	@FXML
 	private void handleAddInProject() {
+		/*
 		int longueurRequiseRestante = tissuRequisSelected.getLongueur();
 		if (projetSelected.getTissuUsed() != null && projetSelected.getTissuUsed().get(tissuRequisSelected) != null) {
 			for (int id : projetSelected.getTissuUsed().get(tissuRequisSelected)) {
@@ -671,16 +675,16 @@ public class MainOverviewController {
 				vb.setBorder(new Border(new BorderStroke(Color.GREY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY,
 						BorderWidths.DEFAULT)));
 
-				if (tr.getVariant() != null) {
+				if (tr.getVariant() != null && tr.getVariant().size() != 0) {
 
 					TitledPane tp = new TitledPane();
 
 					VBox content = new VBox();
 
 					if (tr.getVariant().size() == 1)
-						tp.setText("Tissu conseilé ");
+						tp.setText("Tissu conseillé ");
 					else if (tr.getVariant().size() > 1) {
-						tp.setText("Tissus conseilés :");
+						tp.setText("Tissus conseillés :");
 					}
 					tp.setContent(content);
 
@@ -705,21 +709,14 @@ public class MainOverviewController {
 
 					vbox.getChildren().add(lbl);
 
-					FontAwesomeIconView plusOne = new FontAwesomeIconView(FontAwesomeIcon.PLUS_CIRCLE);
-					plusOne.setFill(Constants.colorAdd);
 					TissuRequisToggleButton rb1 = new TissuRequisToggleButton(tr);
 					rb1.setDisable(projetSelected.getId() != 0);
 					rb1.setToggleGroup(group);
-					rb1.setGraphic(plusOne);
+					rb1.setGraphic(GlyphIconUtil.plusCircleNormal());
 					rb1.setUserData(tr);
 
 					Button filter = new Button();
-					filter.setOnAction(new EventHandler<ActionEvent>() {
-						@Override
-						public void handle(ActionEvent e) {
-							filterTissusByTissuRequis(tr);
-						}
-					});
+					filter.setOnAction(e -> filterTissusByTissuRequis(tr));
 					filter.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.SEARCH));
 
 					HBox hb = new HBox(rb1, filter);
@@ -777,6 +774,7 @@ public class MainOverviewController {
 					projetStatusLabel.setText(newData);
 					projetSelected.setProjectStatus(newData);
 					projetSelected = projetService.saveOrUpdate(projetSelected);
+					projetTable.setItems(projetService.getObservableList());
 					warningUnregistredLabel.setVisible(false);
 					setButtons();
 				}
@@ -802,6 +800,7 @@ public class MainOverviewController {
 			projetStatusLabel.setText(newData);
 			projetSelected.setProjectStatus(newData);
 			projetSelected = projetService.saveOrUpdate(projetSelected);
+			projetTable.setItems(projetService.getObservableList());
 			setButtons();
 		}
 	}
@@ -883,8 +882,10 @@ public class MainOverviewController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
+ */
 	}
+
+
 
 	private void setButtons() {
 		addTissuButton.setDisable(false);
@@ -939,7 +940,6 @@ public class MainOverviewController {
 	}
 
 	private boolean istissuUsedValid() {
-
 		for (TissuRequisDto tr : projetSelected.getTissuUsed().keySet()) {
 			int longueur = tr.getLongueur();
 			for (int id : projetSelected.getTissuUsed().get(tr)) {

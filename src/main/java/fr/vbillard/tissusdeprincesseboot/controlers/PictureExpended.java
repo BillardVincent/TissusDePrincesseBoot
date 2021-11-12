@@ -35,6 +35,10 @@ public class PictureExpended implements IController{
 	public boolean isOkClicked() {
 		return false;
 	}
-	
-	
+
+
+	@Override
+	public void setStageInitializer(StageInitializer initializer) {
+
+	}
 }

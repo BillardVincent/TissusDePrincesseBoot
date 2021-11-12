@@ -1,4 +1,4 @@
-package fr.vbillard.tissusdeprincesseboot.utils;
+package fr.vbillard.tissusdeprincesseboot.utils.modelToString;
 
 import lombok.Getter;
 

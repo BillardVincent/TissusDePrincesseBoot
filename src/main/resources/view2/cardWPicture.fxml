@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<Pane prefHeight="250.0" prefWidth="232.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controlers_v2.CardWPicture">
+   <children>
+      <VBox prefHeight="250.0" prefWidth="232.0" stylesheets="@../style/style.css">
+         <children>
+            <ImageView fitHeight="109.0" fitWidth="232.0" pickOnBounds="true" preserveRatio="true" />
+            <Label alignment="CENTER" prefHeight="35.0" prefWidth="233.0" styleClass="title" text="TITRE" textAlignment="CENTER" />
+            <HBox prefHeight="39.0" prefWidth="200.0">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <FontAwesomeIconView glyphName="ARROWS_H" size="1.5em">
+                           <HBox.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </HBox.margin>
+                        </FontAwesomeIconView>
+                        <Label text="Label" />
+                        <Label text="cm">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <FontAwesomeIconView glyphName="ARROWS_V" size="1.5em">
+                           <HBox.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </HBox.margin>
+                        </FontAwesomeIconView>
+                        <Label text="Label" />
+                        <Label text="cm">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets top="5.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="38.0" prefWidth="200.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="79.0" text="Matiere" textAlignment="CENTER" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="79.0" text="Tissage" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="80.0" text="Type" textAlignment="CENTER" />
+               </children>
+               <padding>
+                  <Insets top="5.0" />
+               </padding>
+            </HBox>
+            <Label prefHeight="78.0" prefWidth="231.0" text="Description" />
+            <HBox prefHeight="37.0" prefWidth="200.0">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <MaterialDesignIconView glyphName="WEIGHT_KILOGRAM" size="1.5em">
+                           <HBox.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </HBox.margin>
+                        </MaterialDesignIconView>
+                        <Label prefHeight="20.0" prefWidth="26.0" text="Label" />
+                        <Label prefHeight="24.0" prefWidth="25.0" text="mass">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <FontAwesomeIconView glyphName="TINT" size="1.5em">
+                     <HBox.margin>
+                        <Insets left="25.0" right="25.0" />
+                     </HBox.margin></FontAwesomeIconView>
+               </children>
+            </HBox>
+         </children>
+         <styleClass>
+            <String fx:value="global" />
+            <String fx:value="card" />
+         </styleClass>
+      </VBox>
+   </children>
+</Pane>
