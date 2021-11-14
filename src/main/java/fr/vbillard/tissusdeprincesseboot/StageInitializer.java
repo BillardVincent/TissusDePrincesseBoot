@@ -1,47 +1,28 @@
 package fr.vbillard.tissusdeprincesseboot;
 
-import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
-import java.util.Map;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.controlers.IController;
-import fr.vbillard.tissusdeprincesseboot.controlers_v2.CardWPicture;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.TissuCardController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.TissuDetailController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.TissusController;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
-import fr.vbillard.tissusdeprincesseboot.model.Photo;
-import fr.vbillard.tissusdeprincesseboot.model.Preference;
-import fr.vbillard.tissusdeprincesseboot.model.enums.ImageFormat;
 import fr.vbillard.tissusdeprincesseboot.services.PreferenceService;
 import fr.vbillard.tissusdeprincesseboot.controlers.FxmlPathProperties;
-import fr.vbillard.tissusdeprincesseboot.controlers.GenericChoiceBoxEditController;
-import fr.vbillard.tissusdeprincesseboot.controlers.GenericTextEditController;
-import fr.vbillard.tissusdeprincesseboot.controlers.MatiereEditController;
-import fr.vbillard.tissusdeprincesseboot.controlers.PatronEditDialogController;
-import fr.vbillard.tissusdeprincesseboot.controlers.PictureExpended;
-import fr.vbillard.tissusdeprincesseboot.controlers.SetLongueurDialogController;
-import fr.vbillard.tissusdeprincesseboot.controlers.TissageEditController;
-import fr.vbillard.tissusdeprincesseboot.controlers.TissuEditDialogController;
-import fr.vbillard.tissusdeprincesseboot.controlers.TypeEditController;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.History;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.AllArgsConstructor;
@@ -58,10 +39,12 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
     private FxData fxData;
 
 
-    public StageInitializer(ApplicationContext applicationContext, FxmlPathProperties pathProperties, PreferenceService preferenceService){
+    public StageInitializer(ApplicationContext applicationContext, FxmlPathProperties pathProperties, PreferenceService preferenceService, History history, FxData data){
         this.applicationContext = applicationContext;
         this.pathProperties = pathProperties;
         this.preferenceService = preferenceService;
+        StageInitializer.history = history;
+        this.fxData = data;
     }
 
     @Override
@@ -93,7 +76,7 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
         return fxData;
     }
 
-    public Pane displayPane(PathEnum path){
+    public Pane displayPane(PathEnum path, Object... data){
         FXMLLoader loader = new FXMLLoader();
         Pane layout = null;
         try {
@@ -103,7 +86,7 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
             layout = loader.load();
 
             IController controller = loader.getController();
-            controller.setStageInitializer(this);
+            controller.setStageInitializer(this, data);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -117,13 +100,14 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
                 return new PathHolder(pathProperties.getRoot2().getURL(), RootController.class);
             case TISSUS:
                 return new PathHolder(pathProperties.getTissus2().getURL(), TissusController.class);
+            case TISSUS_DETAILS:
+                return new PathHolder(pathProperties.getTissuDetail().getURL(), TissuDetailController.class);
             case TISSUS_CARD:
-                return new PathHolder(pathProperties.getTissuCard().getURL(), CardWPicture.class);
+                return new PathHolder(pathProperties.getTissuCard().getURL(), TissuCardController.class);
             default:
                 return null;
         }
     }
-
 
     private class PathHolder{
         URL url;

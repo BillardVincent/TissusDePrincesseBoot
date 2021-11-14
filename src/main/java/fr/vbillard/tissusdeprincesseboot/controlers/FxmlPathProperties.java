@@ -1,5 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.controlers;
 
+import java.net.URLConnection;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
@@ -28,5 +30,6 @@ public class FxmlPathProperties {
 	private Resource root2;
 	private Resource tissus2;
 	private Resource tissuCard;
+	private Resource tissuDetail;
 
 }

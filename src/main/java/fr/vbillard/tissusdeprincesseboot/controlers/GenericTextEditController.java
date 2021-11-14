@@ -59,7 +59,7 @@ public class GenericTextEditController implements IController{
 	}
 
 	@Override
-	public void setStageInitializer(StageInitializer initializer) {
+	public void setStageInitializer(StageInitializer initializer, Object... data) {
 
 	}
 }
