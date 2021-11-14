@@ -5,5 +5,5 @@ import javafx.stage.Stage;
 
 public interface IController {
 
-	void setStageInitializer(StageInitializer initializer);
+	void setStageInitializer(StageInitializer initializer, Object...data);
 }

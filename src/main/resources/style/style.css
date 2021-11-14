@@ -49,8 +49,8 @@
     -fx-border-color: -fx-primary;
     -fx-border-width: 1px;
 }
-.card :hover{
-    -fx-border-color: -fx-primary-light-contrast;
+.card:hover{
+    -fx-border-color: -fx-primary-light;
     -fx-border-width: 3px;
 }
 .title{
@@ -68,5 +68,15 @@
     -fx-font-size: 30px;
 }
 
+.heavy-weight{
+    -fx-fill: -fx-primary-dark;
+}
 
+.standard-weight{
+    -fx-fill: -fx-primary;
+}
+
+.light-weight{
+    -fx-fill: -fx-primary-light;
+}
 
