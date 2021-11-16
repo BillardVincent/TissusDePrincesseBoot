@@ -11,6 +11,57 @@
     -fx-secondary-dark-contrast: #000000;
     -fx-secondary-light: #fff350;
     -fx-secondary-light-contrast: #000000;
+    -fx-accent: -fx-secondary;
+    
+    -fx-basic-text: #000000;
+}
+    
+.root{
+	-fx-accent: -fx-primary;
+	-fx-focus-color:-fx-primary;
+	-fx-pressed-based: -fx-primary-dark;
+	-fx-hover-base: -fx-primary-light;
+	-fx-text-background-color:-fx-basic-text;
+	-fx-box-border: transparent;
+	-fx-text-box-border: transparent;
+	
+	-fx-body-color:  transparent;
+    -fx-body-color-bottomup:  transparent;
+    -fx-body-color-to-right:  transparent;
+    
+    /* The color to use as -fx-text-fill when painting text on top of
+     * backgrounds filled with -fx-base, -fx-color, and -fx-body-color.
+     */
+    -fx-text-base-color: -fx-basic-text;
+    /* The color to use as -fx-text-fill when painting text on top of
+     * backgrounds filled with -fx-control-inner-background.
+     */
+    -fx-text-inner-color: -fx-basic-text;
+
+    /* The color to use for small mark-like objects such as checks on check
+     * boxes, filled in circles in radio buttons, arrows on scroll bars, etc.
+     */
+    -fx-mark-color: -fx-primary;
+
+    /* The small thin light "shadow" for mark-like objects. Typically used in
+     * conjunction with -fx-mark-color with an insets of 1 0 -1 0. */
+    -fx-mark-highlight-color: -fx-primary-light;
+    
+    -fx-focus-color: -fx-primary-light;
+    -fx-faint-focus-color: -fx-primary-light;
+	-fx-selection-bar: -fx-primary-light;
+	-fx-default-button : traparent;
+}
+
+.toggle-button:selected {
+        -fx-background-color: -fx-primary-dark;
+        -fx-text-fill: -fx-primary-dark-contrast;
+}
+.toggle-button:focused {
+
+}
+.toggle-button:selected:focused {
+
 }
 
 .global{
@@ -78,5 +129,39 @@
 
 .light-weight{
     -fx-fill: -fx-primary-light;
+}
+
+.spinner{
+	-fx-background-color: transparent;
+	-fx-border-color: transparent;
+	
+}
+
+.spinner:focus,
+.spinner:contains-focus{
+	-fx-background-color: transparent;
+}
+
+.spinner .increment-arrow-button,
+.spinner .decrement-arrow-button {
+    -fx-body-color: transparent;
+}
+
+.spinner .increment-arrow-button:hover,
+.spinner .decrement-arrow-button:hover {
+	-fx-background-color: -fx-primary-light;
+}
+
+.spinner .increment-arrow-button:hover:pressed,
+.spinner .decrement-arrow-button:hover:pressed,
+.spinner .increment-arrow-button:pressed,
+.spinner .decrement-arrow-button:pressed {
+	-fx-background-color: -fx-primary-dark;
+	
+}
+
+.spinner .increment-arrow-button .increment-arrow,
+.spinner .decrement-arrow-button .decrement-arrow{
+	-fx-background-color: -fx-primary;
 }
 
