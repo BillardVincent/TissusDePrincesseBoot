@@ -6,8 +6,13 @@ import lombok.Getter;
 public enum PathEnum {
     ROOT ,
     TISSUS,
-    PROJETS,
     TISSUS_CARD,
-    TISSUS_DETAILS;
+    TISSUS_DETAILS,
+    PROJET_LIST,
+    PROJET_DETAILS,
+    PROJET_CARD,
+    PATRON_LIST,
+    PATRON_DETAILS,
+    PATRON_CARD;
 
 }
