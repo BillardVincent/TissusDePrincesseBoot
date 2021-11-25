@@ -74,6 +74,8 @@
     -fx-font-family: Calibri;
     -fx-font-size: 18px;
     -fx-font-weight: bold;
+    -fx-border-color: -fx-primary-light-contrast;
+    -fx-border-width: 0, 5px, 10px, 15px;
 }
 
 .corner-left{

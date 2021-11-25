@@ -65,7 +65,7 @@
                                           <Insets />
                                        </HBox.margin>
                                     </HBox>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="14.0" prefWidth="225.0" styleClass="aside-element">
+                                    <HBox alignment="CENTER_LEFT" onMouseClicked="#displayPatrons" prefHeight="14.0" prefWidth="225.0" styleClass="aside-element">
                                        <children>
                                           <HBox prefHeight="84.0" prefWidth="66.0">
                                              <children>

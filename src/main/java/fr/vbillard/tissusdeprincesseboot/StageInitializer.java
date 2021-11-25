@@ -3,6 +3,12 @@ package fr.vbillard.tissusdeprincesseboot;
 import java.io.IOException;
 import java.net.URL;
 
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.patron.PatronCardController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.patron.PatronDetailController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.patron.PatronListController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.projet.ProjetCardController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.projet.ProjetDetailController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.projet.ProjetListController;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -104,8 +110,20 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
                 return new PathHolder(pathProperties.getTissuDetail().getURL(), TissuDetailController.class);
             case TISSUS_CARD:
                 return new PathHolder(pathProperties.getTissuCard().getURL(), TissuCardController.class);
+            case PROJET_LIST:
+                return new PathHolder(pathProperties.getProjetList().getURL(), ProjetListController.class);
+            case PROJET_DETAILS:
+                return new PathHolder(pathProperties.getProjetDetail().getURL(), ProjetDetailController.class);
+            case PROJET_CARD:
+                return new PathHolder(pathProperties.getProjetCard().getURL(), ProjetCardController.class);
+            case PATRON_LIST:
+                return new PathHolder(pathProperties.getPatronList().getURL(), PatronListController.class);
+            case PATRON_DETAILS:
+                return new PathHolder(pathProperties.getPatronDetail().getURL(), PatronDetailController.class);
+            case PATRON_CARD:
+                return new PathHolder(pathProperties.getPatronCard().getURL(), PatronCardController.class);
             default:
-                return null;
+                throw new IllegalStateException("Unexpected value: " + pathEnum);
         }
     }
 

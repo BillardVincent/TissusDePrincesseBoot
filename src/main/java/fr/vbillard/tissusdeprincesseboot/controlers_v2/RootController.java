@@ -37,7 +37,13 @@ public class RootController implements IController {
     @FXML
     public void displayProjets(){
         mainWindow.getChildren().clear();
-        mainWindow.getChildren().add(initializer.displayPane(PathEnum.PROJETS));
+        mainWindow.getChildren().add(initializer.displayPane(PathEnum.PROJET_LIST));
+    }
+
+    @FXML
+    public void displayPatrons(){
+        mainWindow.getChildren().clear();
+        mainWindow.getChildren().add(initializer.displayPane(PathEnum.PATRON_LIST));
     }
 
     @Override
