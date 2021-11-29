@@ -4,4 +4,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PatronDetailController {
+	
+	/*
+	txtInput.setEditable(false);
+	txtInput.setMouseTransparent(true);
+	txtInput.setFocusTraversable(false);
+	*/
 }

@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="900.0" prefWidth="1600.0" styleClass="global" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController">
+<Pane prefHeight="1080.0" prefWidth="1920" styleClass="global" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController">
    <children>
-      <VBox prefHeight="900.0" prefWidth="1600.0">
+      <VBox prefHeight="1080.0" prefWidth="1920">
          <children>
             <HBox prefHeight="100.0">
                <children>
