@@ -1,5 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.controlers_v2;
 
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
@@ -15,10 +16,12 @@ import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
 import fr.vbillard.tissusdeprincesseboot.services.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.services.TissageService;
+import fr.vbillard.tissusdeprincesseboot.services.TissuService;
 import fr.vbillard.tissusdeprincesseboot.services.TypeTissuService;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -27,6 +30,8 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.RowConstraints;
 import org.modelmapper.ModelMapper;
 
@@ -82,14 +87,19 @@ public class TissuDetailController implements IController {
     StageInitializer initializer;
 
     TissuDto tissu;
+	private boolean edit;
+	private boolean okClicked = false;
+
 
     ModelMapper mapper;
     TypeTissuService typeTissuService;
     MatiereService matiereService;
     TissageService tissageService;
+    TissuService tissuService;
 
-    public TissuDetailController(ModelMapper mapper, TypeTissuService typeTissuService, MatiereService matiereService, TissageService tissageService) {
+    public TissuDetailController(ModelMapper mapper, TissuService tissuService, TypeTissuService typeTissuService, MatiereService matiereService, TissageService tissageService) {
         this.mapper = mapper;
+        this.tissuService = tissuService;
         this.typeTissuService = typeTissuService;
         this.matiereService = matiereService;
         this.tissageService = tissageService;
@@ -171,21 +181,154 @@ public class TissuDetailController implements IController {
         });
     }
 
-    public void handleAddTypeTissu(ActionEvent actionEvent) {
-    }
+    public boolean isOkClicked() {
+		return okClicked;
+	}
 
-    public void handleAddMatiere(ActionEvent actionEvent) {
-    }
+	@FXML
+	private void handleOk() {
+		if (isInputValid()) {
+			if (tissu.getChuteProperty() == null) {
+				tissu = mapper.map(new Tissu(0, "", 0, 0, "", null, typeTissuService.getAll().get(0), 0,
+						UnitePoids.NON_RENSEIGNE, false, "", null, false), TissuDto.class);
+			}
+			tissu.setReference(referenceField.getText());
+			tissu.setLongueur(longueur);
+			tissu.setLaize(laizeField.getValue());
+			tissu.setDescription(descriptionField.getText());
+			tissu.setMatiere(matiereField.getValue());
+			tissu.setType(typeField.getValue());
+			tissu.setPoids(poidsField.getValue());
+			tissu.setUnitePoids(unitePoidsField.getValue());
+			tissu.setDecati(Boolean.parseBoolean(decatiField.getText()));
+			tissu.setLieuAchat(lieuDachatField.getText());
+			tissu.setChute(Boolean.parseBoolean(chuteField.getText()));
+			tissu.setTissage(tissageField.getValue());
 
-    public void handleAddTissage(ActionEvent actionEvent) {
-    }
+			tissuService.saveOrUpdate(tissu);
+			okClicked = true;
+		}
+	}
 
-    public void handleGenerateReference(ActionEvent actionEvent) {
-    }
+	/**
+	 * Called when the user clicks cancel.
+	 */
+	@FXML
+	private void handleCancel() {
+		//dialogStage.close();
+	}
+	
 
-    public void handleOk(ActionEvent actionEvent) {
-    }
+	@FXML
+	private void handleAddMatiere() {
+		//mainApp.showMatiereEditDialog();
+	}
 
-    public void handleCancel(ActionEvent actionEvent) {
-    }
+	@FXML
+	private void handleAddTissage() {
+		//mainApp.showTissageEditDialog();
+	}
+
+	@FXML
+	private void handleAddTypeTissu() {
+		//mainApp.showTypeTissuEditDialog();
+	}
+
+	/**
+	 * Validates the user input in the text fields.
+	 *
+	 * @return true if the input is valid
+	 */
+	private boolean isInputValid() {
+		String errorMessage = "";
+
+		if (referenceField.getText() == null || referenceField.getText().length() == 0) {
+			errorMessage += "Référence non renseignée.\n";
+		}
+		if (matiereField.getValue() == null) {
+			errorMessage += "Matière non renseignée.\n";
+		}
+		if (unitePoidsField.getValue() == null) {
+			errorMessage += "Unité de poids non renseignée.\n";
+		}
+		if (poidsField.getValue() == null) {
+			errorMessage += "Poids non renseigné.\n";
+		}
+		if (tissageField.getValue() == null) {
+			errorMessage += "Poids non renseigné.\n";
+		}
+
+		if (errorMessage.length() == 0) {
+			return true;
+		} else {
+			// Show the error message.
+			Alert alert = new Alert(AlertType.ERROR);
+			//alert.initOwner(dialogStage);
+			alert.setTitle("Invalid Fields");
+			alert.setHeaderText("Please correct invalid fields");
+			alert.setContentText(errorMessage);
+
+			alert.showAndWait();
+
+			return false;
+		}
+	}
+
+	@FXML
+	private void handleGenerateReference() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(typeField.getValue().trim().isEmpty() ? "X" : typeField.getValue().toUpperCase().charAt(0))
+				.append(matiereField.getValue().trim().isEmpty() ? "X"
+						: matiereField.getValue().toUpperCase().charAt(0))
+				.append(tissageField.getValue().trim().isEmpty() ? "X"
+						: tissageField.getValue().toUpperCase().charAt(0))
+				.append("-");
+		if (Boolean.parseBoolean(chuteField.getText()))
+			sb.append("cp-");
+		boolean ref = true;
+		int refNb = 0;
+		while (ref) {
+			refNb++;
+			ref = tissuService.existByReference(sb.toString() + refNb);
+		}
+		referenceField.setText(sb.append(refNb).toString());
+	}
+
+	public void setMapTissu(Map<TissuDto, Integer> mapTissu, StageInitializer mainApp) {
+		this.edit = true;
+/*
+		setTissu(mapTissu.keySet().stream().findFirst().orElse(null), mainApp);
+
+		validerButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+			nextTissu(tissu, mapTissu);
+			setMapTissu(mapTissu, mainApp);
+		});
+		*/
+	}
+
+	private void nextTissu(TissuDto tissu, Map<TissuDto, Integer> mapTissu) {
+		mapTissu.remove(tissu);
+	}
+
+	public void setButton() {
+		int height = edit ? 30 : 0;
+		ancienneValeurRow.setMaxHeight(height);
+		ancienneValeurRow.setMinHeight(height);
+		ancienneValeurRow.setPrefHeight(height);
+		consommeRow.setMaxHeight(height);
+		consommeRow.setMinHeight(height);
+		consommeRow.setPrefHeight(height);
+		ancienneValeurLabel.setVisible(edit);
+		consommeLabel.setVisible(edit);
+		ancienneValeurInfo.setVisible(edit);
+		consommeIndo.setVisible(edit);
+
+		laizeField.setDisable(edit);
+		poidsField.setDisable(edit);
+		referenceField.setDisable(edit);
+		descriptionField.setDisable(edit);
+		decatiField.setDisable(edit);
+		lieuDachatField.setDisable(edit);
+		chuteField.setDisable(edit);
+	}
 }
