@@ -29,10 +29,13 @@ public class FxmlPathProperties {
 	private Resource tissus2;
 	private Resource tissuCard;
 	private Resource tissuDetail;
+	private Resource tissuEdit;
 	private Resource projetList;
 	private Resource projetCard;
 	private Resource projetDetail;
+	private Resource projetEdit;
 	private Resource patronList;
 	private Resource patronCard;
 	private Resource patronDetail;
+	private Resource patronEdit;
 }

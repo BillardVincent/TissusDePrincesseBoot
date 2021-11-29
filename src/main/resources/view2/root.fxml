@@ -106,7 +106,7 @@
                                     </HBox>
                                     <HBox prefHeight="100.0" prefWidth="200.0">
                                        <children>
-                                          <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="225.0" styleClass="aside-element">
+                                          <HBox alignment="CENTER_LEFT" onMouseClicked="#displayProjets" prefHeight="100.0" prefWidth="225.0" styleClass="aside-element">
                                              <children>
                                                 <HBox prefHeight="100.0" prefWidth="77.0">
                                                    <children>
