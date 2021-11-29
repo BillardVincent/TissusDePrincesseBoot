@@ -8,11 +8,14 @@ public enum PathEnum {
     TISSUS,
     TISSUS_CARD,
     TISSUS_DETAILS,
+    TISSUS_EDIT,
     PROJET_LIST,
     PROJET_DETAILS,
+    PROJET_EDIT,
     PROJET_CARD,
     PATRON_LIST,
     PATRON_DETAILS,
+    PATRON_EDIT,
     PATRON_CARD;
 
 }

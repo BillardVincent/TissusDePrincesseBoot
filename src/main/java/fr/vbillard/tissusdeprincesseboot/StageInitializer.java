@@ -5,19 +5,23 @@ import java.net.URL;
 
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.patron.PatronCardController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.patron.PatronDetailController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.patron.PatronEditController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.patron.PatronListController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.projet.ProjetCardController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.projet.ProjetDetailController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.projet.ProjetEditController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.projet.ProjetListController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu.TissuCardController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu.TissuDetailController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu.TissuEditController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu.TissusController;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.controlers.IController;
-import fr.vbillard.tissusdeprincesseboot.controlers_v2.TissuCardController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController;
-import fr.vbillard.tissusdeprincesseboot.controlers_v2.TissuDetailController;
-import fr.vbillard.tissusdeprincesseboot.controlers_v2.TissusController;
 import fr.vbillard.tissusdeprincesseboot.services.PreferenceService;
 import fr.vbillard.tissusdeprincesseboot.controlers.FxmlPathProperties;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
@@ -108,22 +112,29 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
                 return new PathHolder(pathProperties.getTissus2().getURL(), TissusController.class);
             case TISSUS_DETAILS:
                 return new PathHolder(pathProperties.getTissuDetail().getURL(), TissuDetailController.class);
+            case TISSUS_EDIT:
+                return new PathHolder(pathProperties.getTissuEdit().getURL(), TissuEditController.class);
             case TISSUS_CARD:
                 return new PathHolder(pathProperties.getTissuCard().getURL(), TissuCardController.class);
             case PROJET_LIST:
                 return new PathHolder(pathProperties.getProjetList().getURL(), ProjetListController.class);
             case PROJET_DETAILS:
                 return new PathHolder(pathProperties.getProjetDetail().getURL(), ProjetDetailController.class);
+            case PROJET_EDIT:
+                return new PathHolder(pathProperties.getProjetEdit().getURL(), ProjetEditController.class);
             case PROJET_CARD:
                 return new PathHolder(pathProperties.getProjetCard().getURL(), ProjetCardController.class);
             case PATRON_LIST:
                 return new PathHolder(pathProperties.getPatronList().getURL(), PatronListController.class);
             case PATRON_DETAILS:
                 return new PathHolder(pathProperties.getPatronDetail().getURL(), PatronDetailController.class);
+            case PATRON_EDIT:
+                return new PathHolder(pathProperties.getPatronEdit().getURL(), PatronEditController.class);
             case PATRON_CARD:
                 return new PathHolder(pathProperties.getPatronCard().getURL(), PatronCardController.class);
             default:
-                throw new IllegalStateException("Unexpected value: " + pathEnum);
+            	return null;
+
         }
     }
 

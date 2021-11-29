@@ -1,4 +1,4 @@
-package fr.vbillard.tissusdeprincesseboot.controlers_v2;
+package fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu;
 
 import org.springframework.stereotype.Component;
 

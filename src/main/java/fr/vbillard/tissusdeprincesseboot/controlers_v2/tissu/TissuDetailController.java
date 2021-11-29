@@ -1,4 +1,4 @@
-package fr.vbillard.tissusdeprincesseboot.controlers_v2;
+package fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu;
 
 import java.util.Map;
 import java.util.stream.Collectors;
