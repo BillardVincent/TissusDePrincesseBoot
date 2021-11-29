@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane prefHeight="585.0" prefWidth="794.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controlers_v2.patron.PatronEditController">
+    <GridPane layoutX="54.0" layoutY="14.0" prefHeight="515.0" prefWidth="578.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="236.0" minWidth="10.0" prefWidth="155.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="376.0" minWidth="10.0" prefWidth="327.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints fx:id="ancienneValeurRow" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints fx:id="consommeRow" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+        <children>
+            <Label text="Longueur" GridPane.rowIndex="6" />
+            <Label text="Laize" GridPane.rowIndex="7" />
+            <Label text="Description" GridPane.rowIndex="9" />
+            <ToggleButton fx:id="decatiField" mnemonicParsing="false" text="Décati" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+            <Label text="Matiere" GridPane.rowIndex="3" />
+            <Label text="Type" GridPane.rowIndex="1" />
+            <Label text="Poids" GridPane.rowIndex="8" />
+            <Label text="Lieu d'achat" GridPane.rowIndex="10" />
+            <Label text="Décati" GridPane.rowIndex="11" />
+            <TextField fx:id="descriptionField" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            <TextField fx:id="lieuDachatField" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+            <HBox fillHeight="false" prefHeight="0.0" prefWidth="324.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                <children>
+                    <Spinner fx:id="poidsField" editable="true" prefHeight="26.0" prefWidth="239.0" />
+                    <ChoiceBox fx:id="unitePoidsField" prefHeight="26.0" prefWidth="94.0" />
+                </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                <children>
+                    <Spinner fx:id="laizeField" editable="true" prefHeight="23.0" prefWidth="248.0" />
+                    <Label prefHeight="43.0" prefWidth="65.0" text="cm">
+                        <HBox.margin>
+                            <Insets left="15.0" />
+                        </HBox.margin>
+                    </Label>
+                </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                <children>
+                    <Spinner fx:id="longueurField" editable="true" prefHeight="26.0" prefWidth="250.0" />
+                    <Label prefHeight="43.0" prefWidth="65.0" text="cm">
+                        <HBox.margin>
+                            <Insets left="15.0" />
+                        </HBox.margin>
+                    </Label>
+                </children>
+            </HBox>
+            <Label text="Tissage" GridPane.rowIndex="2" />
+            <Label text="Chute" GridPane.rowIndex="12" />
+            <ToggleButton fx:id="chuteField" mnemonicParsing="false" text="Chute" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <children>
+                    <ChoiceBox fx:id="typeField" prefHeight="25.0" prefWidth="241.0" />
+                    <Button fx:id="addTypeButton" mnemonicParsing="false" onAction="#handleAddTypeTissu">
+                        <HBox.margin>
+                            <Insets left="10.0" />
+                        </HBox.margin>
+                    </Button>
+                </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                <children>
+                    <ChoiceBox fx:id="matiereField" prefHeight="25.0" prefWidth="241.0" />
+                    <Button fx:id="addMatiereButton" mnemonicParsing="false" onAction="#handleAddMatiere">
+                        <HBox.margin>
+                            <Insets left="10.0" />
+                        </HBox.margin>
+                    </Button>
+                </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <children>
+                    <ChoiceBox fx:id="tissageField" prefHeight="25.0" prefWidth="241.0" />
+                    <Button fx:id="addTissageButton" mnemonicParsing="false" onAction="#handleAddTissage">
+                        <HBox.margin>
+                            <Insets left="10.0" />
+                        </HBox.margin>
+                    </Button>
+                </children>
+            </HBox>
+            <Label text="Reference" />
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+                <children>
+                    <TextField fx:id="referenceField" prefHeight="26.0" prefWidth="242.0" />
+                    <Button fx:id="generateReferenceButton" mnemonicParsing="false" onAction="#handleGenerateReference">
+                        <HBox.margin>
+                            <Insets left="10.0" />
+                        </HBox.margin>
+                    </Button>
+                </children>
+            </HBox>
+            <Label fx:id="ancienneValeurLabel" text="Longueur avant" GridPane.rowIndex="4" />
+            <Label fx:id="ancienneValeurInfo" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                <padding>
+                    <Insets left="10.0" />
+                </padding>
+            </Label>
+            <Label fx:id="consommeLabel" text="Longueur consommée" GridPane.rowIndex="5" />
+            <Label fx:id="consommeIndo" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                <padding>
+                    <Insets left="10.0" />
+                </padding>
+            </Label>
+        </children>
+    </GridPane>
+    <ButtonBar layoutX="304.0" layoutY="557.0" prefHeight="40.0" prefWidth="214.0">
+        <buttons>
+            <Button mnemonicParsing="false" onAction="#handleOk" prefHeight="25.0" prefWidth="123.0" text="Valider" />
+            <Button mnemonicParsing="false" onAction="#handleCancel" text="Annuler" />
+        </buttons>
+    </ButtonBar>
+   <padding>
+      <Insets bottom="75.0" left="75.0" right="75.0" top="75.0" />
+   </padding>
+</AnchorPane>
