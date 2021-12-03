@@ -38,37 +38,29 @@ import org.modelmapper.ModelMapper;
 @Component
 public class TissuDetailController implements IController {
     @FXML
-    public ToggleButton decatiField;
+    public Label decatiField;
     @FXML
-    public TextField descriptionField;
+    public Label descriptionField;
     @FXML
-    public TextField lieuDachatField;
+    public Label lieuDachatField;
     @FXML
-    public Spinner<Integer> poidsField;
+    public Label poidsField;
     @FXML
-    public ChoiceBox<String> unitePoidsField;
+    public Label unitePoidsField;
     @FXML
-    public Spinner<Integer> laizeField;
+    public Label laizeField;
     @FXML
-    public Spinner<Integer> longueurField;
+    public Label longueurField;
     @FXML
-    public ToggleButton chuteField;
+    public Label chuteField;
     @FXML
-    public Button addTypeButton;
+    public Label typeField;
     @FXML
-    public ChoiceBox<String> typeField;
+    public Label matiereField;
     @FXML
-    public ChoiceBox<String> matiereField;
+    public Label tissageField;
     @FXML
-    public Button addMatiereButton;
-    @FXML
-    public ChoiceBox<String> tissageField;
-    @FXML
-    public Button addTissageButton;
-    @FXML
-    public TextField referenceField;
-    @FXML
-    public Button generateReferenceButton;
+    public Label referenceField;
     @FXML
     public Label ancienneValeurLabel;
     @FXML
@@ -80,16 +72,10 @@ public class TissuDetailController implements IController {
     public RowConstraints ancienneValeurRow;
     public RowConstraints consommeRow;
 
-    private int longueur;
-    private int laize;
-    private int poids;
-
     StageInitializer initializer;
 
     TissuDto tissu;
-	private boolean edit;
 	private boolean okClicked = false;
-
 
     ModelMapper mapper;
     TypeTissuService typeTissuService;
@@ -115,220 +101,30 @@ public class TissuDetailController implements IController {
                         UnitePoids.NON_RENSEIGNE, false, "", null, false), TissuDto.class);
             }
 
-            longueurField.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE,
-                    tissu.getLongueurProperty() == null ? 0 : tissu.getLongueur()));
-            laizeField.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE,
-                    tissu.getLaizeProperty() == null ? 0 : tissu.getLaize()));
-            poidsField.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE,
-                    tissu.getPoidseProperty() == null ? 0 : tissu.getPoids()));
+            longueurField.setText(tissu.getLongueurProperty() == null ? "0" : Integer.toString(tissu.getLongueur()));
+            laizeField.setText(tissu.getLaizeProperty() == null ? "0" : Integer.toString(tissu.getLaize()));
+            poidsField.setText(tissu.getPoidseProperty() == null ? "0" : Integer.toString(tissu.getPoids()));
             referenceField.setText(tissu.getReferenceProperty() == null ? "" : tissu.getReference());
             descriptionField.setText(tissu.getDescriptionProperty() == null ? "" : tissu.getDescription());
-            decatiField.setSelected(tissu.getDecatiProperty() != null && tissu.isDecati());
+            decatiField.setText(tissu.getDecatiProperty() != null && tissu.isDecati() ? "Décati" : "Non décati");
             lieuDachatField.setText(tissu.getLieuAchatProperty() == null ? "" : tissu.getLieuAchat());
-            chuteField.setSelected(tissu.getChuteProperty() != null && tissu.isChute());
+            chuteField.setText(tissu.getChuteProperty() != null && tissu.isChute() ? "Chute" : "Coupon");
 
-            unitePoidsField.setItems(FXCollections.observableArrayList(UnitePoids.labels()));
-            unitePoidsField.setValue(
-                    tissu.getUnitePoidsProperty() == null ? UnitePoids.NON_RENSEIGNE.label : tissu.getUnitePoids());
+            unitePoidsField.setText(tissu.getUnitePoidsProperty() == null ? UnitePoids.NON_RENSEIGNE.label : tissu.getUnitePoids());
 
-            typeField.setItems(FXCollections.observableArrayList(
-                    typeTissuService.getAll().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList())));
-            typeField.setValue(tissu.getTypeProperty() == null ? "" : tissu.getType());
+			typeField.setText(tissu.getTypeProperty() == null ? "" : tissu.getType());
 
-            matiereField.setItems(FXCollections.observableArrayList(
-                    matiereService.getAll().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList())));
-            matiereField.setValue(tissu.getMatiereProperty() == null ? "" : tissu.getMatiere());
+			 matiereField.setText(tissu.getMatiereProperty() == null ? "" : tissu.getMatiere());
 
-            tissageField.setItems(FXCollections.observableArrayList(
-                    tissageService.getAll().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList())));
-            tissageField.setValue(tissu.getTissageProperty() == null ? "" : tissu.getTissage());
-
-            longueur = longueurField.getValue();
-            laize = laizeField.getValue();
-            poids = poidsField.getValue();        }
-    }
-
-    @FXML
-    private void initialize() {
-
-        addTissageButton.setGraphic(GlyphIconUtil.plusCircleTiny());
-        addTypeButton.setGraphic(GlyphIconUtil.plusCircleTiny());
-        addMatiereButton.setGraphic(GlyphIconUtil.plusCircleTiny());
-        FontAwesomeIconView magicIcon = new FontAwesomeIconView(FontAwesomeIcon.MAGIC);
-        generateReferenceButton.setGraphic(magicIcon);
-        generateReferenceButton.setTooltip(new Tooltip("Générer une référence automatiquement"));
-
-        longueurField.valueProperty().addListener((obs, oldValue, newValue) -> longueur = newValue);
-        longueurField.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue) {
-                longueurField.increment(0); // won't change value, but will commit editor
-                longueur = longueurField.getValue();
-            }
-        });
-        laizeField.valueProperty().addListener((obs, oldValue, newValue) -> laize = newValue);
-        laizeField.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue) {
-                laizeField.increment(0); // won't change value, but will commit editor
-                laize = laizeField.getValue();
-            }
-        });
-        poidsField.valueProperty().addListener((obs, oldValue, newValue) -> poids = newValue);
-        poidsField.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue) {
-                poidsField.increment(0); // won't change value, but will commit editor
-                poids = poidsField.getValue();
-            }
-        });
+			tissageField.setText(tissu.getTissageProperty() == null ? "" : tissu.getTissage());
+      }
     }
 
     public boolean isOkClicked() {
 		return okClicked;
 	}
 
-	@FXML
-	private void handleOk() {
-		if (isInputValid()) {
-			if (tissu.getChuteProperty() == null) {
-				tissu = mapper.map(new Tissu(0, "", 0, 0, "", null, typeTissuService.getAll().get(0), 0,
-						UnitePoids.NON_RENSEIGNE, false, "", null, false), TissuDto.class);
-			}
-			tissu.setReference(referenceField.getText());
-			tissu.setLongueur(longueur);
-			tissu.setLaize(laizeField.getValue());
-			tissu.setDescription(descriptionField.getText());
-			tissu.setMatiere(matiereField.getValue());
-			tissu.setType(typeField.getValue());
-			tissu.setPoids(poidsField.getValue());
-			tissu.setUnitePoids(unitePoidsField.getValue());
-			tissu.setDecati(Boolean.parseBoolean(decatiField.getText()));
-			tissu.setLieuAchat(lieuDachatField.getText());
-			tissu.setChute(Boolean.parseBoolean(chuteField.getText()));
-			tissu.setTissage(tissageField.getValue());
+    public void edit(){
 
-			tissuService.saveOrUpdate(tissu);
-			okClicked = true;
-		}
-	}
-
-	/**
-	 * Called when the user clicks cancel.
-	 */
-	@FXML
-	private void handleCancel() {
-		//dialogStage.close();
-	}
-	
-
-	@FXML
-	private void handleAddMatiere() {
-		//mainApp.showMatiereEditDialog();
-	}
-
-	@FXML
-	private void handleAddTissage() {
-		//mainApp.showTissageEditDialog();
-	}
-
-	@FXML
-	private void handleAddTypeTissu() {
-		//mainApp.showTypeTissuEditDialog();
-	}
-
-	/**
-	 * Validates the user input in the text fields.
-	 *
-	 * @return true if the input is valid
-	 */
-	private boolean isInputValid() {
-		String errorMessage = "";
-
-		if (referenceField.getText() == null || referenceField.getText().length() == 0) {
-			errorMessage += "Référence non renseignée.\n";
-		}
-		if (matiereField.getValue() == null) {
-			errorMessage += "Matière non renseignée.\n";
-		}
-		if (unitePoidsField.getValue() == null) {
-			errorMessage += "Unité de poids non renseignée.\n";
-		}
-		if (poidsField.getValue() == null) {
-			errorMessage += "Poids non renseigné.\n";
-		}
-		if (tissageField.getValue() == null) {
-			errorMessage += "Poids non renseigné.\n";
-		}
-
-		if (errorMessage.length() == 0) {
-			return true;
-		} else {
-			// Show the error message.
-			Alert alert = new Alert(AlertType.ERROR);
-			//alert.initOwner(dialogStage);
-			alert.setTitle("Invalid Fields");
-			alert.setHeaderText("Please correct invalid fields");
-			alert.setContentText(errorMessage);
-
-			alert.showAndWait();
-
-			return false;
-		}
-	}
-
-	@FXML
-	private void handleGenerateReference() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(typeField.getValue().trim().isEmpty() ? "X" : typeField.getValue().toUpperCase().charAt(0))
-				.append(matiereField.getValue().trim().isEmpty() ? "X"
-						: matiereField.getValue().toUpperCase().charAt(0))
-				.append(tissageField.getValue().trim().isEmpty() ? "X"
-						: tissageField.getValue().toUpperCase().charAt(0))
-				.append("-");
-		if (Boolean.parseBoolean(chuteField.getText()))
-			sb.append("cp-");
-		boolean ref = true;
-		int refNb = 0;
-		while (ref) {
-			refNb++;
-			ref = tissuService.existByReference(sb.toString() + refNb);
-		}
-		referenceField.setText(sb.append(refNb).toString());
-	}
-
-	public void setMapTissu(Map<TissuDto, Integer> mapTissu, StageInitializer mainApp) {
-		this.edit = true;
-/*
-		setTissu(mapTissu.keySet().stream().findFirst().orElse(null), mainApp);
-
-		validerButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-			nextTissu(tissu, mapTissu);
-			setMapTissu(mapTissu, mainApp);
-		});
-		*/
-	}
-
-	private void nextTissu(TissuDto tissu, Map<TissuDto, Integer> mapTissu) {
-		mapTissu.remove(tissu);
-	}
-
-	public void setButton() {
-		int height = edit ? 30 : 0;
-		ancienneValeurRow.setMaxHeight(height);
-		ancienneValeurRow.setMinHeight(height);
-		ancienneValeurRow.setPrefHeight(height);
-		consommeRow.setMaxHeight(height);
-		consommeRow.setMinHeight(height);
-		consommeRow.setPrefHeight(height);
-		ancienneValeurLabel.setVisible(edit);
-		consommeLabel.setVisible(edit);
-		ancienneValeurInfo.setVisible(edit);
-		consommeIndo.setVisible(edit);
-
-		laizeField.setDisable(edit);
-		poidsField.setDisable(edit);
-		referenceField.setDisable(edit);
-		descriptionField.setDisable(edit);
-		decatiField.setDisable(edit);
-		lieuDachatField.setDisable(edit);
-		chuteField.setDisable(edit);
-	}
+    }
 }

@@ -68,6 +68,16 @@
     -fx-font-family: Calibri;
 }
 
+.aside {
+    -fx-background-color: -fx-primary;
+
+}
+.aside-element{
+    -fx-background-color: -fx-primary;
+    -fx-text-fill: -fx-primary-contrast;
+
+}
+
 .aside-element:hover{
     -fx-background-color: -fx-primary-light;
     -fx-text-fill: -fx-primary-light-contrast;
