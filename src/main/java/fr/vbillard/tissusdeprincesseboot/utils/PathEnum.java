@@ -16,6 +16,9 @@ public enum PathEnum {
     PATRON_LIST,
     PATRON_DETAILS,
     PATRON_EDIT,
-    PATRON_CARD;
+    PATRON_CARD,
+    MATIERE,
+    TYPE_TISSU,
+    TISSAGE;
 
 }
