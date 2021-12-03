@@ -1,5 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu;
 
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController;
 import org.springframework.stereotype.Component;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -18,6 +19,7 @@ public class TissusController implements IController {
 
     private StageInitializer initializer;
     private TissuService tissuService;
+    private RootController rootController;
     private int page;
     private final static int PAGE_SIZE = 15;
 
@@ -28,9 +30,10 @@ public class TissusController implements IController {
     @FXML
     public FontAwesomeIconView nextIcon;
 
-    public TissusController(TissuService tissuService){
+    public TissusController(TissuService tissuService, RootController rootController){
         page = 0;
         this.tissuService = tissuService;
+        this.rootController = rootController;
     }
 
     private void setTissus() {
@@ -50,11 +53,18 @@ public class TissusController implements IController {
     }
 
     public void AddNewTissu(MouseEvent mouseEvent) {
+        rootController.displayTissusEdit(new TissuDto());
     }
 
     public void PreviousPage(MouseEvent mouseEvent) {
+        page ++;
+        setTissus();
     }
 
     public void NextPage(MouseEvent mouseEvent) {
+        if (page > 0) {
+            page --;
+        }
+        setTissus();
     }
 }

@@ -1,8 +1,7 @@
-package fr.vbillard.tissusdeprincesseboot.controlers;
-
-import org.springframework.stereotype.Component;
+package fr.vbillard.tissusdeprincesseboot.controlers_v2.caracteristiques;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.controlers.IController;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.services.MatiereService;
 import javafx.collections.ObservableList;
@@ -13,8 +12,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.springframework.stereotype.Component;
 
-//@Component
+@Component
 public class MatiereEditController implements IController {
 
 	@FXML

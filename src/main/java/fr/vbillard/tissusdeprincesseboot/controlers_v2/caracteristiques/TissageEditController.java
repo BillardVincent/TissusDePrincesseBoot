@@ -1,9 +1,7 @@
-package fr.vbillard.tissusdeprincesseboot.controlers;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+package fr.vbillard.tissusdeprincesseboot.controlers_v2.caracteristiques;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.controlers.IController;
 import fr.vbillard.tissusdeprincesseboot.model.Tissage;
 import fr.vbillard.tissusdeprincesseboot.services.TissageService;
 import javafx.collections.ObservableList;
@@ -14,9 +12,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-//@Component
-public class TissageEditController implements IController{
+@Component
+public class TissageEditController implements IController {
 
 	@FXML
 	private ListView<String> listTissages;
