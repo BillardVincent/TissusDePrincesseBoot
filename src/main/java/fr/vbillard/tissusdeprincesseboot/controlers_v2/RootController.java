@@ -77,6 +77,24 @@ public class RootController implements IController {
         mainWindow.getChildren().add(initializer.displayPane(PathEnum.PATRON_EDIT, patron));
     }
 
+    @FXML
+    public void displayMatiereEdit(){
+        mainWindow.getChildren().clear();
+        mainWindow.getChildren().add(initializer.displayPane(PathEnum.MATIERE));
+    }
+
+    @FXML
+    public void displayTissageEdit(){
+        mainWindow.getChildren().clear();
+        mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSAGE));
+    }
+
+    @FXML
+    public void displayTypeEdit(){
+        mainWindow.getChildren().clear();
+        mainWindow.getChildren().add(initializer.displayPane(PathEnum.TYPE_TISSU));
+    }
+
     @Override
     public void setStageInitializer(StageInitializer initializer, Object... data) {
         this.initializer = initializer;

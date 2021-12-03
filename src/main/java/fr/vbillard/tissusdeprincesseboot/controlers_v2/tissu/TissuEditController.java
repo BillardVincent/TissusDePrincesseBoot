@@ -3,6 +3,8 @@ package fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController;
+import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
 import org.springframework.stereotype.Component;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
@@ -84,25 +86,26 @@ public class TissuEditController implements IController {
     private int laize;
     private int poids;
 
-    StageInitializer initializer;
+    private RootController root;
+	private StageInitializer initializer;
 
-    TissuDto tissu;
+    private TissuDto tissu;
 	private boolean edit;
 	private boolean okClicked = false;
 
+	private ModelMapper mapper;
+	private TypeTissuService typeTissuService;
+	private MatiereService matiereService;
+	private TissageService tissageService;
+	private TissuService tissuService;
 
-    ModelMapper mapper;
-    TypeTissuService typeTissuService;
-    MatiereService matiereService;
-    TissageService tissageService;
-    TissuService tissuService;
-
-    public TissuEditController(ModelMapper mapper, TissuService tissuService, TypeTissuService typeTissuService, MatiereService matiereService, TissageService tissageService) {
+    public TissuEditController(ModelMapper mapper, TissuService tissuService, TypeTissuService typeTissuService, MatiereService matiereService, TissageService tissageService, RootController root) {
         this.mapper = mapper;
         this.tissuService = tissuService;
         this.typeTissuService = typeTissuService;
         this.matiereService = matiereService;
         this.tissageService = tissageService;
+		this.root = root;
     }
 
     @Override
@@ -215,23 +218,21 @@ public class TissuEditController implements IController {
 	 */
 	@FXML
 	private void handleCancel() {
-		//dialogStage.close();
 	}
-	
 
 	@FXML
 	private void handleAddMatiere() {
-		//mainApp.showMatiereEditDialog();
+		root.displayMatiereEdit();
 	}
 
 	@FXML
 	private void handleAddTissage() {
-		//mainApp.showTissageEditDialog();
+		root.displayTissageEdit();
 	}
 
 	@FXML
 	private void handleAddTypeTissu() {
-		//mainApp.showTypeTissuEditDialog();
+		root.displayTypeEdit();
 	}
 
 	/**

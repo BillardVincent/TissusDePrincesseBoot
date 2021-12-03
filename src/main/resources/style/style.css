@@ -77,6 +77,10 @@
     -fx-text-fill: -fx-primary-contrast;
 
 }
+.aside-element-text {
+    -fx-text-fill: -fx-primary-contrast;
+    -fx-fill: -fx-primary-contrast;
+}
 
 .aside-element:hover{
     -fx-background-color: -fx-primary-light;

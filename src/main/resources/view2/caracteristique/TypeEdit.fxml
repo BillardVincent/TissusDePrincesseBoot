@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controlers.TypeEditController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controlers_v2.caracteristiques.TypeEditController">
    <children>
       <ListView fx:id="listTypeTissus" layoutX="21.0" layoutY="43.0" prefHeight="327.0" prefWidth="264.0" />
       <Button fx:id="ajouterButton" layoutX="518.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleAddElement" text="Ajouter" />
