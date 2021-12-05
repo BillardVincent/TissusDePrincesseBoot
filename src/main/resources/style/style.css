@@ -12,6 +12,7 @@
     -fx-secondary-light: #fff350;
     -fx-secondary-light-contrast: #000000;
     -fx-accent: -fx-secondary;
+    -fx-background-accent: #d0d0d0;
     
     -fx-basic-text: #000000;
 }
@@ -54,8 +55,8 @@
 }
 
 .toggle-button:selected {
-        -fx-background-color: -fx-primary-dark;
-        -fx-text-fill: -fx-primary-dark-contrast;
+        -fx-background-color: -fx-primary;
+        -fx-text-fill: -fx-primary-contrast;
 }
 .toggle-button:focused {
 
@@ -68,21 +69,21 @@
     -fx-font-family: Calibri;
 }
 
-.aside {
+.mainmenu {
     -fx-background-color: -fx-primary;
 
 }
-.aside-element{
+.mainmenu-element{
     -fx-background-color: -fx-primary;
     -fx-text-fill: -fx-primary-contrast;
 
 }
-.aside-element-text {
+.mainmenu-element-text {
     -fx-text-fill: -fx-primary-contrast;
     -fx-fill: -fx-primary-contrast;
 }
 
-.aside-element:hover{
+.mainmenu-element:hover{
     -fx-background-color: -fx-primary-light;
     -fx-text-fill: -fx-primary-light-contrast;
     -fx-font-family: Calibri;
@@ -99,12 +100,26 @@
     -fx-text-fill: -fx-primary-contrast;
 }
 
+.aside{
+    -fx-background-color: -fx-background-accent;
+}
+
+.aside {
+    -fx-background-color: -fx-background-accent;
+}
+
 .search-box{
     -fx-border-radius: 10px;
     -fx-border-width: 1px;
     -fx-border-color: #a0a0a0;
     -fx-border-style: solid;
 }
+
+.search-box :selected{
+   -fx-background-color: white;
+}
+
+
 
 .title-main-pane{
     -fx-fill: -fx-primary;

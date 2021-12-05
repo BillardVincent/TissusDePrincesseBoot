@@ -21,7 +21,7 @@ public class TissusController implements IController {
     private TissuService tissuService;
     private RootController rootController;
     private int page;
-    private final static int PAGE_SIZE = 15;
+    private final static int PAGE_SIZE = 10;
 
     @FXML
     private TilePane cardPane;
@@ -37,8 +37,8 @@ public class TissusController implements IController {
     }
 
     private void setTissus() {
+        cardPane.getChildren().clear();
         initializer.getData().setTissuList(tissuService.getObservablePage(page, PAGE_SIZE));
-        System.out.println(initializer.getData().getTissuList().size());
         for (TissuDto t : initializer.getData().getTissuList()){
             Pane card = initializer.displayPane(PathEnum.TISSUS_CARD, t);
             cardPane.getChildren().add(card);
@@ -47,6 +47,7 @@ public class TissusController implements IController {
 
     @Override
     public void setStageInitializer(StageInitializer initializer, Object... data) {
+        page = 0;
         this.initializer = initializer;
         setTissus();
 
@@ -57,14 +58,14 @@ public class TissusController implements IController {
     }
 
     public void PreviousPage(MouseEvent mouseEvent) {
-        page ++;
-        setTissus();
-    }
-
-    public void NextPage(MouseEvent mouseEvent) {
         if (page > 0) {
             page --;
         }
         setTissus();
+    }
+
+    public void NextPage(MouseEvent mouseEvent) {
+        page ++;
+    setTissus();
     }
 }

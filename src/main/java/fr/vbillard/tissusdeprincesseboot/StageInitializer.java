@@ -1,5 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -19,6 +20,9 @@ import fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu.TissuDetailControll
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu.TissuEditController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu.TissusController;
 
+import fr.vbillard.tissusdeprincesseboot.model.Preference;
+import fr.vbillard.tissusdeprincesseboot.model.enums.ImageFormat;
+import javafx.stage.FileChooser;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -140,8 +144,25 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
                 return new PathHolder(pathProperties.getTissageEdit().getURL(), TissageEditController.class);
             default:
             	return null;
-
         }
+    }
+
+    public File directoryChooser(Preference pref) {
+        FileChooser fileChooser = new FileChooser();
+        pref = preferenceService.getPreferences();
+        String path = pref.getPictureLastUploadPath();
+
+        fileChooser.setInitialDirectory(new File(path));
+
+        ImageFormat[] values = ImageFormat.values();
+        String[] extensions = new String[values.length];
+        for (int i = 0; i < values.length; i++) {
+            extensions[i] = values[i].getExtension();
+        }
+        fileChooser.getExtensionFilters()
+                .add(new FileChooser.ExtensionFilter("Images (" + String.join(", ", extensions) + ")", extensions));
+
+        return fileChooser.showOpenDialog(stage);
     }
 
     @AllArgsConstructor

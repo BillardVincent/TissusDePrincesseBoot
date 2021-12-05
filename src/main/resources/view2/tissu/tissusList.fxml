@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="720.0" prefWidth="1320.0" styleClass="global" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu.TissusController">
+<Pane prefHeight="720.0" prefWidth="1620.0" styleClass="global" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu.TissusController">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="-1.0" prefHeight="720.0" prefWidth="1320.0">
+      <VBox alignment="TOP_CENTER" layoutX="-1.0" prefHeight="720.0" prefWidth="1620.0">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="75.0" prefWidth="1280.0" styleClass="title-main-pane" text="Tissus" textAlignment="CENTER">
                <VBox.margin>
@@ -56,7 +56,7 @@
             </HBox>
             <HBox prefHeight="550.0" prefWidth="1320.0">
                <children>
-                  <TilePane fx:id="cardPane" hgap="40.0" prefHeight="539.0" prefWidth="1322.0" vgap="40.0">
+                  <TilePane fx:id="cardPane" hgap="40.0" prefHeight="539.0" prefWidth="1622.0" vgap="40.0">
                      <padding>
                         <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
                      </padding>
