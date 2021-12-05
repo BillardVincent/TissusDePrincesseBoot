@@ -37,12 +37,12 @@
                            </children>
                         </HBox>
                      </children></HBox>
-                  <VBox prefHeight="100.0" prefWidth="1326.0" styleClass="aside">
+                  <VBox prefHeight="100.0" prefWidth="1646.0" styleClass="aside">
                      <children>
                         <HBox prefHeight="100.0" prefWidth="200.0" />
-                        <HBox prefHeight="100.0" prefWidth="200.0" >
+                        <HBox prefHeight="13.0" prefWidth="1646.0">
                            <children>
-                              <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="1327.0">
+                              <HBox alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="1658.0">
                                  <children>
                                     <HBox alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="225.0" styleClass="aside-element">
                                        <children>
@@ -153,6 +153,7 @@
                               </HBox>
                            </children>
                         </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" />
                      </children>
                   </VBox>
                </children></HBox>
@@ -182,7 +183,7 @@
                         </HBox>
                      </children>
                   </VBox>
-                  <Pane fx:id="mainWindow" prefHeight="795.0" prefWidth="1334.0" />
+                  <Pane fx:id="mainWindow" prefHeight="795.0" prefWidth="1641.0" />
                </children>
             </HBox>
          </children>
