@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="1080.0" prefWidth="1920" styleClass="global" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController">
+<Pane prefHeight="1080.0" prefWidth="1920" styleClass="global" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController">
    <children>
       <VBox prefHeight="1080.0" prefWidth="1920">
          <children>
@@ -37,25 +37,25 @@
                            </children>
                         </HBox>
                      </children></HBox>
-                  <VBox prefHeight="100.0" prefWidth="1646.0" styleClass="aside">
+                  <VBox prefHeight="100.0" prefWidth="1646.0" styleClass="mainmenu">
                      <children>
                         <HBox prefHeight="100.0" prefWidth="200.0" />
                         <HBox prefHeight="13.0" prefWidth="1646.0">
                            <children>
                               <HBox alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="1658.0">
                                  <children>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="225.0" styleClass="aside-element">
+                                    <HBox alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="225.0" styleClass="mainmenu-element">
                                        <children>
                                           <HBox prefHeight="89.0" prefWidth="77.0">
                                              <children>
-                                                <FontAwesomeIconView glyphName="CUBES" size="2em" styleClass="aside-element-text">
+                                                <FontAwesomeIconView glyphName="CUBES" size="2em" styleClass="mainmenu-element-text">
                                                    <HBox.margin>
                                                       <Insets bottom="25.0" left="25.0" right="15.0" top="25.0" />
                                                    </HBox.margin>
                                                 </FontAwesomeIconView>
                                              </children>
                                           </HBox>
-                                          <Label prefHeight="22.0" prefWidth="166.0" style="-fx-font-family: Calibri;" styleClass="aside-element-text" text="FOURNITURES">
+                                          <Label prefHeight="22.0" prefWidth="166.0" style="-fx-font-family: Calibri;" styleClass="mainmenu-element-text" text="FOURNITURES">
                                              <font>
                                                 <Font size="18.0" />
                                              </font>
@@ -65,11 +65,11 @@
                                           <Insets />
                                        </HBox.margin>
                                     </HBox>
-                                    <HBox alignment="CENTER_LEFT" onMouseClicked="#displayPatrons" prefHeight="14.0" prefWidth="225.0" styleClass="aside-element">
+                                    <HBox alignment="CENTER_LEFT" onMouseClicked="#displayPatrons" prefHeight="14.0" prefWidth="225.0" styleClass="mainmenu-element">
                                        <children>
                                           <HBox prefHeight="84.0" prefWidth="66.0">
                                              <children>
-                                                <FontAwesomeIconView glyphName="NEWSPAPER_ALT" size="2em" styleClass="aside-element-text">
+                                                <FontAwesomeIconView glyphName="NEWSPAPER_ALT" size="2em" styleClass="mainmenu-element-text">
                                                    <HBox.margin>
                                                       <Insets bottom="25.0" left="25.0" right="15.0" top="25.0" />
                                                    </HBox.margin>
@@ -79,25 +79,25 @@
                                                 <Insets />
                                              </HBox.margin>
                                           </HBox>
-                                          <Label style="-fx-font-family: Calibri;" styleClass="aside-element-text" text="PATRON">
+                                          <Label style="-fx-font-family: Calibri;" styleClass="mainmenu-element-text" text="PATRON">
                                              <font>
                                                 <Font size="18.0" />
                                              </font>
                                           </Label>
                                        </children>
                                     </HBox>
-                                    <HBox alignment="CENTER_LEFT" onMouseClicked="#displayTissus" prefHeight="74.0" prefWidth="225.0" styleClass="aside-element">
+                                    <HBox alignment="CENTER_LEFT" onMouseClicked="#displayTissus" prefHeight="74.0" prefWidth="225.0" styleClass="mainmenu-element">
                                        <children>
                                           <HBox prefHeight="77.0" prefWidth="77.0">
                                              <children>
-                                                <FontAwesomeIconView glyphName="FILE_ALT" size="2em" styleClass="aside-element-text">
+                                                <FontAwesomeIconView glyphName="FILE_ALT" size="2em" styleClass="mainmenu-element-text">
                                                    <HBox.margin>
                                                       <Insets bottom="25.0" left="25.0" right="15.0" top="25.0" />
                                                    </HBox.margin>
                                                 </FontAwesomeIconView>
                                              </children>
                                           </HBox>
-                                          <Label style="-fx-font-family: Calibri;" styleClass="aside-element-text" text="TISSU">
+                                          <Label style="-fx-font-family: Calibri;" styleClass="mainmenu-element-text" text="TISSU">
                                              <font>
                                                 <Font size="18.0" />
                                              </font>
@@ -106,18 +106,18 @@
                                     </HBox>
                                     <HBox prefHeight="100.0" prefWidth="200.0">
                                        <children>
-                                          <HBox alignment="CENTER_LEFT" onMouseClicked="#displayProjets" prefHeight="100.0" prefWidth="225.0" styleClass="aside-element">
+                                          <HBox alignment="CENTER_LEFT" onMouseClicked="#displayProjets" prefHeight="100.0" prefWidth="225.0" styleClass="mainmenu-element">
                                              <children>
                                                 <HBox prefHeight="100.0" prefWidth="77.0">
                                                    <children>
-                                                      <FontAwesomeIconView glyphName="WRENCH" size="2em" styleClass="aside-element-text">
+                                                      <FontAwesomeIconView glyphName="WRENCH" size="2em" styleClass="mainmenu-element-text">
                                                          <HBox.margin>
                                                             <Insets bottom="25.0" left="25.0" right="15.0" top="25.0" />
                                                          </HBox.margin>
                                                       </FontAwesomeIconView>
                                                    </children>
                                                 </HBox>
-                                                <Label alignment="BOTTOM_LEFT" contentDisplay="CENTER" style="-fx-font-family: Calibri;" styleClass="aside-element-text" text="PROJET">
+                                                <Label alignment="BOTTOM_LEFT" contentDisplay="CENTER" style="-fx-font-family: Calibri;" styleClass="mainmenu-element-text" text="PROJET">
                                                    <font>
                                                       <Font size="18.0" />
                                                    </font>
@@ -126,14 +126,14 @@
                                           </HBox>
                                        </children>
                                     </HBox>
-                                    <HBox alignment="CENTER" prefHeight="74.0" prefWidth="225.0" styleClass="aside-element">
+                                    <HBox alignment="CENTER" prefHeight="74.0" prefWidth="225.0" styleClass="mainmenu-element">
                                        <children>
-                                          <FontAwesomeIconView glyphName="QUESTION_CIRCLE" size="2em" styleClass="aside-element-text">
+                                          <FontAwesomeIconView glyphName="QUESTION_CIRCLE" size="2em" styleClass="mainmenu-element-text">
                                              <HBox.margin>
                                                 <Insets bottom="25.0" left="25.0" right="15.0" top="25.0" />
                                              </HBox.margin>
                                           </FontAwesomeIconView>
-                                          <Label style="-fx-font-family: Calibri;" styleClass="aside-element-text" text="AIDE">
+                                          <Label style="-fx-font-family: Calibri;" styleClass="mainmenu-element-text" text="AIDE">
                                              <font>
                                                 <Font size="18.0" />
                                              </font>
@@ -157,16 +157,16 @@
                      </children>
                   </VBox>
                </children></HBox>
-            <HBox prefHeight="795.0" prefWidth="1600.0">
+            <HBox prefHeight="982.0" prefWidth="1920.0">
                <children>
-                  <VBox maxWidth="-Infinity" prefHeight="795.0" prefWidth="282.0">
+                  <VBox maxWidth="-Infinity" prefHeight="950.0" prefWidth="281.0" styleClass="aside">
                      <padding>
                         <Insets bottom="5.0" top="150.0" />
                      </padding>
                      <children>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="289.0">
                            <children>
-                              <TextField alignment="TOP_LEFT" prefHeight="31.0" prefWidth="170.0" promptText="Recherche" style="-fx-background-color: transparent;" styleClass="search-box">
+                              <TextField alignment="TOP_LEFT" prefHeight="31.0" prefWidth="170.0" promptText="Recherche" styleClass="search-box">
                                  <HBox.margin>
                                     <Insets left="10.0" />
                                  </HBox.margin>

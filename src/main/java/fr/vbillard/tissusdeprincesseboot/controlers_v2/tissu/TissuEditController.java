@@ -1,10 +1,22 @@
 package fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController;
+import fr.vbillard.tissusdeprincesseboot.model.Photo;
+import fr.vbillard.tissusdeprincesseboot.model.Preference;
+import fr.vbillard.tissusdeprincesseboot.model.enums.ImageFormat;
+import fr.vbillard.tissusdeprincesseboot.services.*;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import org.imgscalr.Scalr;
 import org.springframework.stereotype.Component;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
@@ -16,10 +28,6 @@ import fr.vbillard.tissusdeprincesseboot.fxCustomElements.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
-import fr.vbillard.tissusdeprincesseboot.services.MatiereService;
-import fr.vbillard.tissusdeprincesseboot.services.TissageService;
-import fr.vbillard.tissusdeprincesseboot.services.TissuService;
-import fr.vbillard.tissusdeprincesseboot.services.TypeTissuService;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -36,6 +44,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.RowConstraints;
 import org.modelmapper.ModelMapper;
+
+import javax.imageio.ImageIO;
 
 @Component
 public class TissuEditController implements IController {
@@ -79,6 +89,9 @@ public class TissuEditController implements IController {
     public Label consommeLabel;
     @FXML
     public Label consommeIndo;
+	@FXML
+	public ImageView imagePane;
+
     public RowConstraints ancienneValeurRow;
     public RowConstraints consommeRow;
 
@@ -98,13 +111,17 @@ public class TissuEditController implements IController {
 	private MatiereService matiereService;
 	private TissageService tissageService;
 	private TissuService tissuService;
+	private ImageService imageService;
+ 	private PreferenceService preferenceService;
 
-    public TissuEditController(ModelMapper mapper, TissuService tissuService, TypeTissuService typeTissuService, MatiereService matiereService, TissageService tissageService, RootController root) {
+    public TissuEditController(ImageService imageService, PreferenceService preferenceService, ModelMapper mapper, TissuService tissuService, TypeTissuService typeTissuService, MatiereService matiereService, TissageService tissageService, RootController root) {
         this.mapper = mapper;
+		this.imageService = imageService;
         this.tissuService = tissuService;
         this.typeTissuService = typeTissuService;
         this.matiereService = matiereService;
         this.tissageService = tissageService;
+		this.preferenceService = preferenceService;
 		this.root = root;
     }
 
@@ -148,7 +165,8 @@ public class TissuEditController implements IController {
 
             longueur = longueurField.getValue();
             laize = laizeField.getValue();
-            poids = poidsField.getValue();        }
+            poids = poidsField.getValue();
+		}
     }
 
     @FXML
@@ -331,5 +349,43 @@ public class TissuEditController implements IController {
 		decatiField.setDisable(edit);
 		lieuDachatField.setDisable(edit);
 		chuteField.setDisable(edit);
+	}
+
+	@FXML
+	private void addPicture() {
+		tissuService.saveOrUpdate(tissu);
+		Preference pref = preferenceService.getPreferences();
+		File file = initializer.directoryChooser(pref);
+		/*
+		if (file != null)
+			try {
+
+				String name = file.getName();
+				String extension = name.substring(name.lastIndexOf(".") + 1);
+				BufferedImage bufferedImage = ImageIO.read(file);
+				bufferedImage = Scalr.resize(bufferedImage, 900);
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				ImageIO.write(bufferedImage, extension, baos);
+				byte[] data = baos.toByteArray();
+				Photo image = new Photo();
+				image.setData(data);
+				image.setNom(name);
+				image.setFormat(ImageFormat.valueOf(extension.toUpperCase()));
+				image.setTissu(mapper.map(tissu, Tissu.class));
+				imageService.saveOrUpdate(image);
+				baos.close();
+				imagePane.setImage(new Image(new ByteArrayInputStream(image.getData())));
+
+				pref.setPictureLastUploadPath(file.getAbsolutePath());
+				preferenceService.savePreferences(pref);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		 */
+	}
+
+	@FXML
+	private void expandPicture(){
+
 	}
 }
