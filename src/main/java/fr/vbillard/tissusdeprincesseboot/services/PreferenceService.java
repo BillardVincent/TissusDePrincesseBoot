@@ -10,7 +10,11 @@ import fr.vbillard.tissusdeprincesseboot.model.Preference;
 @Service
 public class PreferenceService {
 
-	private PreferenceDao dao = new PreferenceDao();
+	private PreferenceDao dao;
+	
+	public PreferenceService(PreferenceDao dao) {
+		this.dao = dao;
+	}
 	
 	public Preference getPreferences() {
 		return dao.getPreference();
