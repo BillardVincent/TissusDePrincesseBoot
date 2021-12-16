@@ -356,7 +356,7 @@ public class TissuEditController implements IController {
 		tissuService.saveOrUpdate(tissu);
 		Preference pref = preferenceService.getPreferences();
 		File file = initializer.directoryChooser(pref);
-		/*
+		
 		if (file != null)
 			try {
 
@@ -372,7 +372,7 @@ public class TissuEditController implements IController {
 				image.setNom(name);
 				image.setFormat(ImageFormat.valueOf(extension.toUpperCase()));
 				image.setTissu(mapper.map(tissu, Tissu.class));
-				imageService.saveOrUpdate(image);
+				//imageService.saveOrUpdate(image);
 				baos.close();
 				imagePane.setImage(new Image(new ByteArrayInputStream(image.getData())));
 
@@ -381,7 +381,7 @@ public class TissuEditController implements IController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		 */
+		 
 	}
 
 	@FXML

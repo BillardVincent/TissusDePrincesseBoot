@@ -272,19 +272,21 @@ public class MainOverviewController {
 	private TissuUsedService tissuUsedService;
 	private ProjetService projetService;
 	private ImageService imageService;
+	private PreferenceService preferenceService;
 	private final ToggleGroup group = new ToggleGroup();
-	private PreferenceService preferenceService = new PreferenceService();
-	private ModelMapper mapper = new ModelMapper();
+	private ModelMapper mapper;
 
 	private int photoIndex = 0;
 	private List<Photo> photos = new ArrayList<Photo>();
 
-	public MainOverviewController (TissuService tissuService, PatronService patronService, TissuUsedService tissuUsedService, ProjetService projetService, ImageService imageService) {
+	public MainOverviewController (ModelMapper mapper, PreferenceService preferenceService, TissuService tissuService, PatronService patronService, TissuUsedService tissuUsedService, ProjetService projetService, ImageService imageService) {
 		this.tissuService = tissuService;
 		this.patronService = patronService;
 		this.tissuUsedService = tissuUsedService;
 		this.imageService = imageService;
 		this.projetService = projetService;
+		this.preferenceService = preferenceService;
+		this.mapper = mapper;
 	}
 
 	@FXML
