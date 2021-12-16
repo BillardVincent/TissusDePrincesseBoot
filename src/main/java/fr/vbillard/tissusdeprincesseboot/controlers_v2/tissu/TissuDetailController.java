@@ -9,6 +9,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controlers.IController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.fxCustomElements.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
@@ -82,13 +83,15 @@ public class TissuDetailController implements IController {
     MatiereService matiereService;
     TissageService tissageService;
     TissuService tissuService;
+    RootController rootController;
 
-    public TissuDetailController(ModelMapper mapper, TissuService tissuService, TypeTissuService typeTissuService, MatiereService matiereService, TissageService tissageService) {
+    public TissuDetailController(RootController rootController, ModelMapper mapper, TissuService tissuService, TypeTissuService typeTissuService, MatiereService matiereService, TissageService tissageService) {
         this.mapper = mapper;
         this.tissuService = tissuService;
         this.typeTissuService = typeTissuService;
         this.matiereService = matiereService;
         this.tissageService = tissageService;
+        this.rootController = rootController;
     }
 
     @Override
@@ -125,6 +128,7 @@ public class TissuDetailController implements IController {
 	}
 
     public void edit(){
+        rootController.displayTissusEdit(tissu);
 
     }
 }
