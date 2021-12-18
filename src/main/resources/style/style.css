@@ -13,11 +13,13 @@
     -fx-secondary-light-contrast: #000000;
     -fx-accent: -fx-secondary;
     -fx-background-accent: #d0d0d0;
-    
+    -fx-background-workspace: #e0e0e0;
+  
     -fx-basic-text: #000000;
 }
     
 .root{
+	-fx-background-color: #ffffff;
 	-fx-accent: -fx-primary;
 	-fx-focus-color:-fx-primary;
 	-fx-pressed-based: -fx-primary-dark;
@@ -81,16 +83,27 @@
 .mainmenu-element-text {
     -fx-text-fill: -fx-primary-contrast;
     -fx-fill: -fx-primary-contrast;
+
 }
 
 .mainmenu-element:hover{
-    -fx-background-color: -fx-primary-light;
+    /*-fx-background-color: -fx-primary-light;  */
     -fx-text-fill: -fx-primary-light-contrast;
     -fx-font-family: Calibri;
     -fx-font-size: 18px;
-    -fx-font-weight: bold;
-    -fx-border-color: -fx-primary-light-contrast;
-    -fx-border-width: 0, 5px, 10px, 15px;
+    -fx-font-weight: 800;
+        -fx-border-width: 1;
+    -fx-border-color: -fx-primary-contrast;
+        -fx-border-style: solid none solid none;
+
+}
+
+.mainmenu-element-selected{
+	    -fx-text-fill: -fx-primary-light-contrast;
+    -fx-font-family: Calibri;
+        -fx-border-width: 3;
+    -fx-border-color: -fx-primary-contrast;
+        -fx-border-style: solid none solid none;
 }
 
 .corner-left{
@@ -128,9 +141,23 @@
 }
 
 .card{
-    -fx-border-color: -fx-primary;
-    -fx-border-width: 1px;
-}
+    /*-fx-border-color: -fx-primary;
+    -fx-border-width: 1px;*/
+    
+  -fx-outer-border: white;
+  -fx-body-color: white;
+  -fx-background-color: 
+       -fx-outer-border, 
+       -fx-body-color;
+       
+       
+  -fx-background-insets: 0, 6;
+  -fx-background-radius: 6px, 0px;
+  -fx-effect: dropshadow(gaussian, #909090, 10, 0.5, 0.0, 0.0);
+
+  
+  }
+  
 .card:hover{
     -fx-border-color: -fx-primary-light;
     -fx-border-width: 3px;

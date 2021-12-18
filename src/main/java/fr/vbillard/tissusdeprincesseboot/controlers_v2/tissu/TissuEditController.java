@@ -385,7 +385,7 @@ public class TissuEditController implements IController {
 	}
 
 	@FXML
-	private void expandPicture(){
+	private void pictureExpend(){
 
 	}
 }
