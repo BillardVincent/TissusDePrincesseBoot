@@ -1,5 +1,8 @@
 package fr.vbillard.tissusdeprincesseboot.controlers_v2;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
@@ -9,6 +12,7 @@ import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
 import javafx.fxml.FXML;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 @Component
@@ -16,87 +20,114 @@ public class RootController implements IController {
 
     @FXML
     private Pane mainWindow;
-
+    
+    @FXML
+    private HBox tissuMenu;
+    @FXML
+    private HBox fournitureMenu;
+    @FXML
+    private HBox patronMenu;
+    @FXML
+    private HBox projetMenu;
+    
+    private static final String SELECTED = "mainmenu-element-selected";
+    
+    private List<HBox> menuElements;
     private StageInitializer initializer;
 
     public RootController (){
-
     }
 
     @FXML
     public void displayTissus(){
-        mainWindow.getChildren().clear();
+    	beforeDisplay(tissuMenu);
         mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSUS));
     }
 
     @FXML
     public void displayTissusDetails(TissuDto tissu){
-        mainWindow.getChildren().clear();
+    	beforeDisplay(tissuMenu);
         mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSUS_DETAILS, tissu));
     }
     
     @FXML
     public void displayTissusEdit(TissuDto tissu){
-        mainWindow.getChildren().clear();
+    	beforeDisplay(tissuMenu);
         mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSUS_EDIT, tissu));
     }
 
     @FXML
     public void displayProjets(){
-        mainWindow.getChildren().clear();
+    	beforeDisplay(projetMenu);
         mainWindow.getChildren().add(initializer.displayPane(PathEnum.PROJET_LIST));
     }
     
     @FXML
     public void displayProjetDetails(ProjetDto projet){
-        mainWindow.getChildren().clear();
+    	beforeDisplay(projetMenu);
         mainWindow.getChildren().add(initializer.displayPane(PathEnum.PROJET_DETAILS, projet));
     }
     
     @FXML
     public void displayProjetEdit(ProjetDto projet){
-        mainWindow.getChildren().clear();
+    	beforeDisplay(projetMenu);
         mainWindow.getChildren().add(initializer.displayPane(PathEnum.PROJET_EDIT, projet));
     }
 
     @FXML
     public void displayPatrons(){
-        mainWindow.getChildren().clear();
+    	beforeDisplay(patronMenu);
         mainWindow.getChildren().add(initializer.displayPane(PathEnum.PATRON_LIST));
     }
     
     @FXML
     public void displayPatronDetails(PatronDto patron) {
-        mainWindow.getChildren().clear();
+    	beforeDisplay(patronMenu);
         mainWindow.getChildren().add(initializer.displayPane(PathEnum.PATRON_DETAILS, patron));
     }
     
     @FXML
     public void displayPatronEdit(PatronDto patron) {
-        mainWindow.getChildren().clear();
+    	beforeDisplay(patronMenu);
         mainWindow.getChildren().add(initializer.displayPane(PathEnum.PATRON_EDIT, patron));
     }
 
     @FXML
     public void displayMatiereEdit(){
-        mainWindow.getChildren().clear();
+    	beforeDisplay(null);
         mainWindow.getChildren().add(initializer.displayPane(PathEnum.MATIERE));
     }
 
     @FXML
     public void displayTissageEdit(){
-        mainWindow.getChildren().clear();
+    	beforeDisplay(null);
         mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSAGE));
     }
 
     @FXML
     public void displayTypeEdit(){
+    	beforeDisplay(null);
+    	mainWindow.getChildren().add(initializer.displayPane(PathEnum.TYPE_TISSU));
+    }
+    
+    private void beforeDisplay(HBox menuToSelect) {
         mainWindow.getChildren().clear();
-        mainWindow.getChildren().add(initializer.displayPane(PathEnum.TYPE_TISSU));
+        for(HBox hb : menuElements) {
+        	if (hb != null && hb.getStyleClass() != null && !hb.getStyleClass().isEmpty()) {
+            	hb.getStyleClass().removeIf(style -> style.equals(SELECTED));
+
+        	}
+        }
+        if (menuToSelect != null ) {
+            menuToSelect.getStyleClass().add(SELECTED);
+        }
+
     }
 
     @Override
     public void setStageInitializer(StageInitializer initializer, Object... data) {
         this.initializer = initializer;
+    	menuElements = Arrays.asList(tissuMenu,fournitureMenu, patronMenu, projetMenu);
+
     }
 }
