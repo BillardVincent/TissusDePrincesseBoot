@@ -231,9 +231,6 @@ public class TissuEditController implements IController {
 		}
 	}
 
-	/**
-	 * Called when the user clicks cancel.
-	 */
 	@FXML
 	private void handleCancel() {
 	}
@@ -253,11 +250,6 @@ public class TissuEditController implements IController {
 		root.displayTypeEdit();
 	}
 
-	/**
-	 * Validates the user input in the text fields.
-	 *
-	 * @return true if the input is valid
-	 */
 	private boolean isInputValid() {
 		String errorMessage = "";
 
@@ -372,7 +364,7 @@ public class TissuEditController implements IController {
 				image.setNom(name);
 				image.setFormat(ImageFormat.valueOf(extension.toUpperCase()));
 				image.setTissu(mapper.map(tissu, Tissu.class));
-				//imageService.saveOrUpdate(image);
+				imageService.saveOrUpdate(image);
 				baos.close();
 				imagePane.setImage(new Image(new ByteArrayInputStream(image.getData())));
 

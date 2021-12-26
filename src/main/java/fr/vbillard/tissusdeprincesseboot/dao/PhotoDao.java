@@ -13,4 +13,6 @@ public interface PhotoDao extends JpaRepository<Photo, Integer> {
 
 	 List<Photo> getAllByTissu(Tissu tissu);
 
+	Photo getByTissu(Tissu tissu);
+
 }
