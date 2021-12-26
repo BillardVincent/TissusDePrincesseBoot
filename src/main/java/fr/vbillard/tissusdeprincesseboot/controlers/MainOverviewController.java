@@ -277,7 +277,7 @@ public class MainOverviewController {
 	private ModelMapper mapper;
 
 	private int photoIndex = 0;
-	private List<Photo> photos = new ArrayList<Photo>();
+	private Photo photo;
 
 	public MainOverviewController (ModelMapper mapper, PreferenceService preferenceService, TissuService tissuService, PatronService patronService, TissuUsedService tissuUsedService, ProjetService projetService, ImageService imageService) {
 		this.tissuService = tissuService;
@@ -909,10 +909,10 @@ public class MainOverviewController {
 		editProjetStatus.setDisable(false);
 		selectProjetPanButton.setDisable(projetPanSelected == null);
 		deleteProjetPanButton.setDisable(projetPanSelected == null);
-		nextPicture.setDisable(photoIndex >= photos.size() - 1);
-		previousPicture.setDisable(photoIndex <= 0);
-		deletePicture.setDisable(photos.size() == 0);
-		expendPicture.setDisable(photos.size() == 0);
+		//nextPicture.setDisable(photoIndex >= photos.size() - 1);
+		//previousPicture.setDisable(photoIndex <= 0);
+		deletePicture.setDisable(photo == null );
+		expendPicture.setDisable(photo == null );
 
 		group.getToggles().forEach(toggle -> {
 			Node node = (Node) toggle;
@@ -924,19 +924,19 @@ public class MainOverviewController {
 		imagePanel.setVisible(tissuSelected != null);
 		photoIndex = index <= 0 ? 0 : index;
 		if (tissuSelected != null) {
-			photos = imageService.getImages(mapper.map(tissuSelected, Tissu.class));
-			if (!photos.isEmpty()) {
+			photo = imageService.getImage(mapper.map(tissuSelected, Tissu.class));
+			if (photo == null) {
 				setPicture();
 			} else {
 				imageView.setImage(null);
 			}
 		} else {
-			photos = new ArrayList<Photo>();
+			photo = null;
 		}
 	}
 
 	private void setPicture() {
-		imageView.setImage(new Image(new ByteArrayInputStream(photos.get(photoIndex).getData())));
+		imageView.setImage(new Image(new ByteArrayInputStream(photo.getData())));
 		setButtons();
 
 	}

@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import fr.vbillard.tissusdeprincesseboot.model.enums.ImageFormat;
 import lombok.Getter;
@@ -26,10 +27,10 @@ public class Photo extends AbstractEntity{
 	@Lob
 	private byte[] data;
 	
-	@ManyToOne
+	@OneToOne
 	private Tissu tissu;
 	
-	@ManyToOne
+	@OneToOne
 	private Patron patron;
 	
 	

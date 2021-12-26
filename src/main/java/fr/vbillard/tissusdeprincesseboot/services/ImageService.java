@@ -18,8 +18,8 @@ public class ImageService extends AbstractService<Photo>{
 	public ImageService(PhotoDao dao) {
 		this.dao = dao;
 	}
-	public List<Photo> getImages(Tissu tissu) {
-		return dao.getAllByTissu(tissu);
+	public Photo getImage(Tissu tissu) {
+		return dao.getByTissu(tissu);
 	}
 	
 	@Override

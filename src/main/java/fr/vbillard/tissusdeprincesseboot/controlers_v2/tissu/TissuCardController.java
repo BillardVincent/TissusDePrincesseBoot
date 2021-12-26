@@ -3,6 +3,7 @@ package fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu;
 import java.io.ByteArrayInputStream;
 import java.util.List;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
@@ -26,6 +27,8 @@ import javafx.scene.image.WritableImage;
 import org.modelmapper.ModelMapper;
 
 @Component
+@Scope("prototype")
+
 public class TissuCardController implements IController {
 
     @FXML
@@ -70,13 +73,12 @@ public class TissuCardController implements IController {
     @Override
     public void setStageInitializer(StageInitializer initializer, Object... data) {
         if (data.length == 1 && data[0] instanceof TissuDto){
-            TissuDto tissu = (TissuDto) data[0];
-            setCardContent(tissu);
+            tissu = (TissuDto)data[0];
+            setCardContent();
         }
     }
 
-    private void setCardContent(TissuDto tissu) {
-        this.tissu = tissu;
+    private void setCardContent() {
         description.setText(tissu.getDescription());
         longueur.setText(String.valueOf(tissu.getLongueur()));
         laize.setText(String.valueOf(tissu.getLaize()));
@@ -88,14 +90,14 @@ public class TissuCardController implements IController {
         decati.setFill(tissu.isDecati() ? Constants.colorAdd : Constants.colorDelete);
         masse.setStyleClass(tissu.getPoids()> ConstantesMetier.MAX_POIDS_MOYEN ? "heavy-weight" :
                 tissu.getPoids() > ConstantesMetier.MIN_POIDS_MOYEN ? "standard-weight" : "light-weight");
-        List<Photo> pictures = imageService.getImages(mapper.map(tissu, Tissu.class));
-        if (pictures.isEmpty()){
+        Photo pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
+        if (pictures == null){
             FontAwesomeIconView iconView = new FontAwesomeIconView(FontAwesomeIcon.PICTURE_ALT);
             WritableImage writableImg = iconView.snapshot(null, null);
             Image img = SwingFXUtils.toFXImage(SwingFXUtils.fromFXImage(writableImg, null), null);
             image.setImage(img);
         } else {
-            image.setImage(new Image(new ByteArrayInputStream(pictures.get(0).getData())));
+            image.setImage(new Image(new ByteArrayInputStream(pictures.getData())));
         }
     }
 
