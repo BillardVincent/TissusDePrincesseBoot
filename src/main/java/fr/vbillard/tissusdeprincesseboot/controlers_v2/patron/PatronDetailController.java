@@ -1,5 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.controlers_v2.patron;
 
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.VBox;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -33,7 +35,7 @@ public class PatronDetailController implements IController{
 	@FXML
 	private Label descriptionPatronLabel;
 	@FXML
-	private Pane listFournitures;
+	private ScrollPane listFournitures;
 	
 	private RootController rootController;
 	private StageInitializer initializer;
@@ -54,12 +56,17 @@ public class PatronDetailController implements IController{
             marquePatronLabel.setText(patron.getMarque());
     		modelPatronLabel.setText(patron.getModele());
     		typeVetementPatronLabel.setText(patron.getTypeVetement());
-    		listFournitures.getChildren().clear();
+
+			VBox root = new VBox();
+			root.setSpacing(10);
+
             for (TissuRequisDto t : patron.getTissusRequis()){
                 Pane element = initializer.displayPane(PathEnum.LIST_ELEMENT, t);
-                listFournitures.getChildren().add(element);
+                root.getChildren().add(element);
             }
-        }
+			listFournitures.setContent(root);
+
+		}
 	}
 	
     public void edit(){
