@@ -79,7 +79,10 @@ public class TissuService extends AbstractService<Tissu>{
 	}
 
 	public ObservableList<TissuDto> getObservablePage(int page, int pageSize) {
-		return FXCollections.observableArrayList(dao.findAll(PageRequest.of(page, pageSize)).stream().map(t -> mapper.map(t, TissuDto.class)).collect(Collectors.toList()));
+		return FXCollections.observableArrayList(dao
+				.findAll(PageRequest.of(page, pageSize))
+				.stream().map(t -> mapper.map(t, TissuDto.class))
+				.collect(Collectors.toList()));
 	}
 
 

@@ -1,7 +1,5 @@
 package fr.vbillard.tissusdeprincesseboot.services;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +11,6 @@ import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 public class ImageService extends AbstractService<Photo>{
 
 	PhotoDao dao;
-	
 	
 	public ImageService(PhotoDao dao) {
 		this.dao = dao;

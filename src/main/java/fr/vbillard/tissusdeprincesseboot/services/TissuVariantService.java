@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import fr.vbillard.tissusdeprincesseboot.dao.TissuVariantDao;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuVariantDto;
+import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -24,6 +25,12 @@ public class TissuVariantService extends AbstractService<TissuVariant>{
 		List<TissuVariant> listTv = tissuVariantDao.getAllByTissuRequisId(tissu.getId());
 		return listTv.stream().map(v -> mapper.map(v, TissuVariantDto.class)).collect(Collectors.toList());
 	}
+	
+	public List<TissuVariant> getVariantByTissuRequis(TissuRequis tissu) {
+		return tissuVariantDao.getAllByTissuRequisId(tissu.getId());
+	}
+	
+	
 
 	public TissuVariantDto saveOrUpdate(TissuVariantDto variantSelected) {
 		

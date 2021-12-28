@@ -38,4 +38,5 @@ public class FxmlPathProperties {
 	private Resource patronCard;
 	private Resource patronDetail;
 	private Resource patronEdit;
+	private Resource listElement;
 }
