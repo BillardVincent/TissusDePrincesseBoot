@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+
+
+<Pane prefHeight="50.0" prefWidth="1000" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controlers_v2.ListElementController">
+   <children>
+      <HBox prefHeight="50.0" prefWidth="1000.0" stylesheets="@../style/style.css">
+         <children>
+            <Label prefHeight="50.0" prefWidth="55.0" styleClass="list-element-ref" text="Ref" />
+            <Label prefHeight="50.0" prefWidth="388.0" styleClass="list-element-titre" text="Titre" />
+            <Label prefHeight="50.0" prefWidth="415.0" styleClass="list-element-desc" text="Description" wrapText="true" />
+            <Label prefHeight="50.0" prefWidth="218.0" styleClass="list-element-dim" text="Dimentions" />
+         </children>
+      </HBox>
+   </children>
+   <styleClass>
+      <String fx:value="global" />
+      <String fx:value="list-element" />
+   </styleClass>
+</Pane>
