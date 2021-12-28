@@ -28,7 +28,6 @@ import org.modelmapper.ModelMapper;
 
 @Component
 @Scope("prototype")
-
 public class TissuCardController implements IController {
 
     @FXML

@@ -1,18 +1,73 @@
 package fr.vbillard.tissusdeprincesseboot.controlers_v2.patron;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controlers.IController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController;
+import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
+import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
+import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
+import fr.vbillard.tissusdeprincesseboot.model.Tissu;
+import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
+import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 
 @Component
 public class PatronDetailController implements IController{
 	
+	@FXML
+    public Label titre;
+    @FXML
+    private ImageView image;
+	@FXML
+	private Label marquePatronLabel;
+	@FXML
+	private Label modelPatronLabel;
+	@FXML
+	private Label typeVetementPatronLabel;
+	@FXML
+	private Label descriptionPatronLabel;
+	@FXML
+	private Pane listFournitures;
+	
+	private RootController rootController;
+	private StageInitializer initializer;
+	private PatronDto patron;
+	
+	private ModelMapper mapper;
+
+    PatronDetailController(ModelMapper mapper, RootController rootController){
+    	this.mapper = mapper;
+    }
+    
 	@Override
 	public void setStageInitializer(StageInitializer initializer, Object... data) {
-		// TODO Auto-generated method stub
-		
+		this.initializer = initializer;
+        if (data.length == 1 && data[0] instanceof PatronDto){
+            patron = (PatronDto) data[0];
+            
+            marquePatronLabel.setText(patron.getMarque());
+    		modelPatronLabel.setText(patron.getModele());
+    		typeVetementPatronLabel.setText(patron.getTypeVetement());
+    		listFournitures.getChildren().clear();
+            for (TissuRequisDto t : patron.getTissusRequis()){
+                Pane element = initializer.displayPane(PathEnum.LIST_ELEMENT, t);
+                listFournitures.getChildren().add(element);
+            }
+        }
 	}
+	
+    public void edit(){
+        rootController.displayPatronEdit(patron);
+
+    }
+    
+       
 	/*
 	txtInput.setEditable(false);
 	txtInput.setMouseTransparent(true);

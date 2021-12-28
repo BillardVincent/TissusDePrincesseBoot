@@ -28,6 +28,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.controlers.IController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.ListElementController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController;
 import fr.vbillard.tissusdeprincesseboot.services.PreferenceService;
 import fr.vbillard.tissusdeprincesseboot.controlers.FxmlPathProperties;
@@ -142,6 +143,8 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
                 return new PathHolder(pathProperties.getTypeEdit().getURL(), TypeEditController.class);
             case TISSAGE:
                 return new PathHolder(pathProperties.getTissageEdit().getURL(), TissageEditController.class);
+            case LIST_ELEMENT:
+            	return new PathHolder(pathProperties.getListElement().getURL(), ListElementController.class);
             default:
             	return null;
         }

@@ -9,28 +9,20 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="720.0" prefWidth="1320.0" styleClass="global" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controlers_v2.patron.PatronListController">
+<Pane prefHeight="730.0" prefWidth="1620.0" style="-fx-background-color: #ffffff;" styleClass="global" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controlers_v2.patron.PatronListController">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="-1.0" prefHeight="720.0" prefWidth="1320.0">
+      <VBox alignment="TOP_CENTER" layoutX="-1.0" prefHeight="720.0" prefWidth="1620.0">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="75.0" prefWidth="1280.0" styleClass="title-main-pane" text="Patrons" textAlignment="CENTER">
-               <VBox.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </VBox.margin>
-               <font>
-                  <Font size="36.0" />
-               </font>
-            </Label>
-            <HBox prefHeight="89.0" prefWidth="1320.0">
+            <HBox minHeight="90.0" prefHeight="90.0" prefWidth="1320.0">
                <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="91.0" prefWidth="1263.0" styleClass="title-main-pane" text="Patrons" textAlignment="CENTER">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Label>
                   <HBox alignment="CENTER" prefHeight="89.0" prefWidth="85.0">
                      <children>
-                        <FontAwesomeIconView glyphName="TH" size="3em" wrappingWidth="37.0" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="89.0" prefWidth="85.0">
-                     <children>
-                        <FontAwesomeIconView glyphName="PLUS_CIRCLE" onMouseClicked="#AddNewPatron" size="3em" wrappingWidth="37.0" />
+                        <FontAwesomeIconView glyphName="PLUS_CIRCLE" onMouseClicked="#AddNewElement" size="3em" wrappingWidth="37.0" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="89.0" prefWidth="85.0">
@@ -54,9 +46,9 @@
                   </HBox>
                </children>
             </HBox>
-            <HBox prefHeight="550.0" prefWidth="1320.0">
+            <HBox prefHeight="630.0" prefWidth="1620.0">
                <children>
-                  <TilePane fx:id="cardPane" hgap="40.0" prefHeight="539.0" prefWidth="1322.0" vgap="40.0">
+                  <TilePane fx:id="cardPane" hgap="40.0" prefHeight="619.0" prefWidth="1620.0" style="-fx-background-color: -fx-background-workspace;" vgap="40.0">
                      <padding>
                         <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
                      </padding>

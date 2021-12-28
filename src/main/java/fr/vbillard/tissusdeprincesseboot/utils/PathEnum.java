@@ -19,6 +19,7 @@ public enum PathEnum {
     PATRON_CARD,
     MATIERE,
     TYPE_TISSU,
-    TISSAGE;
+    TISSAGE,
+    LIST_ELEMENT;
 
 }
