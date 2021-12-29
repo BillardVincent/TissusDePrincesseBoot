@@ -45,6 +45,7 @@ public class PatronDetailController implements IController{
 
     PatronDetailController(ModelMapper mapper, RootController rootController){
     	this.mapper = mapper;
+    	this.rootController = rootController;
     }
     
 	@Override
