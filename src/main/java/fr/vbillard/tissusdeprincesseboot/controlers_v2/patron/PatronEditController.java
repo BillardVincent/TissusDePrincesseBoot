@@ -3,6 +3,7 @@ package fr.vbillard.tissusdeprincesseboot.controlers_v2.patron;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
+import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuVariantDto;
 import fr.vbillard.tissusdeprincesseboot.fxCustomElements.GlyphIconUtil;
@@ -55,7 +56,7 @@ public class PatronEditController implements IController{
 	@FXML
 	private TextField referenceField;
 
-	private Stage dialogStage;
+	private StageInitializer initializer;
 	private PatronDto patron;
 	//private TissuRequisDto tissuRequisDto;
 	private final TissuRequisService tissuRequisService;
@@ -103,27 +104,8 @@ public class PatronEditController implements IController{
 		addFournitureButton.setDisable(unregistredPatron);
 	}
 
-	public void setDialogStage(Stage dialogStage) {
-		this.dialogStage = dialogStage;
-	}
 
-	public void setPatron(PatronDto patron, StageInitializer mainApp) {
-		this.patron = patron;
-		this.mainApp = mainApp;
 
-		if (patron.getMarque() == null) {
-			patron = mapper.map(new Patron("", "", "", "", "", null), PatronDto.class);
-		}
-
-		setDisabledButton();
-
-		referenceField.setText(patron.getReferenceProperty() == null ? "" : patron.getReference());
-		marqueField.setText(patron.getMarqueProperty() == null ? "" : patron.getMarque());
-		modeleField.setText(patron.getModeleProperty() == null ? "" : patron.getModele());
-		typeVetementField.setText(patron.getTypeVetementProperty() == null ? "" : patron.getTypeVetement());
-
-		loadTissuRequisForPatron();
-	}
 
 	/**
 	 * Charge les tissusRequis, en fonction du patron sélectionné.
@@ -384,13 +366,12 @@ public class PatronEditController implements IController{
 		if (isInputValid()) {
 
 			handleSavePatron();
-			dialogStage.close();
 		}
 	}
 
 	@FXML
 	private void handleCancel() {
-		dialogStage.close();
+
 	}
 
 	@FXML
@@ -447,7 +428,6 @@ public class PatronEditController implements IController{
 			return true;
 		} else {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
-			alert.initOwner(dialogStage);
 			alert.setTitle("Champ(s) invalide(s)");
 			alert.setHeaderText("Merci de corriger :");
 			alert.setContentText(errorMessage);
@@ -460,7 +440,24 @@ public class PatronEditController implements IController{
 
 	@Override
 	public void setStageInitializer(StageInitializer initializer, Object... data) {
+		this.initializer = initializer;
 
+		if (data.length == 0 || data[0] == null){
+			patron = mapper.map(new Patron("", "", "", "", "", null), PatronDto.class);
+			setDisabledButton();
+
+		} else if (data.length == 1 && data[0] instanceof PatronDto) {
+			patron = (PatronDto) data[0];
+
+			setDisabledButton();
+
+			referenceField.setText(patron.getReferenceProperty() == null ? "" : patron.getReference());
+			marqueField.setText(patron.getMarqueProperty() == null ? "" : patron.getMarque());
+			modeleField.setText(patron.getModeleProperty() == null ? "" : patron.getModele());
+			typeVetementField.setText(patron.getTypeVetementProperty() == null ? "" : patron.getTypeVetement());
+
+			loadTissuRequisForPatron();
+		}
 	}
 	/*
 	txtInput.setEditable(false);
