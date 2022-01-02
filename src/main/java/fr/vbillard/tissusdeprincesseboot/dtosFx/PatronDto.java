@@ -28,7 +28,6 @@ public class PatronDto {
 
 	private ListProperty<TissuRequisDto> tissusRequis;
 	
-	
 	public PatronDto() {
 		this.id = new SimpleIntegerProperty();
 		this.reference = new SimpleStringProperty();

@@ -1,4 +1,4 @@
-package fr.vbillard.tissusdeprincesseboot.mappers;
+package fr.vbillard.tissusdeprincesseboot.mappers.toDto;
 
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;

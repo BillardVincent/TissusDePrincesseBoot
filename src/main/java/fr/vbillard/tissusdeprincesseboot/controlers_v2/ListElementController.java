@@ -1,6 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.controlers_v2;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -14,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 
 @Component
+@Scope("prototype")
 public class ListElementController implements IController{
 
     @FXML
@@ -41,9 +43,6 @@ public class ListElementController implements IController{
         description.setText(element.getDescription());
         dimensions.setText(element.getDimensions());
 	}
-	
-
-	
 	
     @Override
     public void setStageInitializer(StageInitializer initializer, Object... data) {

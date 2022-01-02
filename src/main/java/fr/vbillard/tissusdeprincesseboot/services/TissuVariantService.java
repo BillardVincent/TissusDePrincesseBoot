@@ -20,7 +20,6 @@ public class TissuVariantService extends AbstractService<TissuVariant>{
 	TissuVariantDao tissuVariantDao;
 	ModelMapper mapper;
 
-
 	public List<TissuVariantDto> getVariantByTissuRequis(TissuRequisDto tissu) {
 		List<TissuVariant> listTv = tissuVariantDao.getAllByTissuRequisId(tissu.getId());
 		return listTv.stream().map(v -> mapper.map(v, TissuVariantDto.class)).collect(Collectors.toList());
@@ -29,17 +28,18 @@ public class TissuVariantService extends AbstractService<TissuVariant>{
 	public List<TissuVariant> getVariantByTissuRequis(TissuRequis tissu) {
 		return tissuVariantDao.getAllByTissuRequisId(tissu.getId());
 	}
-	
-	
 
 	public TissuVariantDto saveOrUpdate(TissuVariantDto variantSelected) {
-		
 		return mapper.map(saveOrUpdate(mapper.map(variantSelected, TissuVariant.class)), TissuVariantDto.class);
 	}
 
 	@Override
 	protected JpaRepository getDao() {
 		return tissuVariantDao;
+	}
+
+	public List<TissuVariant> getVariantByTissuRequisId(int id) {
+		return tissuVariantDao.getAllByTissuRequisId(id);
 	}
 
 }

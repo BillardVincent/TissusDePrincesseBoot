@@ -1,4 +1,4 @@
-package fr.vbillard.tissusdeprincesseboot.mappers;
+package fr.vbillard.tissusdeprincesseboot.mappers.toListElement;
 
 import java.util.List;
 
@@ -11,15 +11,17 @@ import org.springframework.stereotype.Component;
 import com.github.rozidan.springboot.modelmapper.TypeMapConfigurer;
 
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ListElement;
+import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuVariantDto;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
 import fr.vbillard.tissusdeprincesseboot.services.TissuVariantService;
+import lombok.AllArgsConstructor;
 
-
+@AllArgsConstructor
 @Component
-public class TissuRequisToListElement extends TypeMapConfigurer<TissuRequis, ListElement> {
+public class TissuRequisToListElement extends TypeMapConfigurer<TissuRequisDto, ListElement> {
 	
 	@Lazy
 	private TissuVariantService tvs;
@@ -27,15 +29,15 @@ public class TissuRequisToListElement extends TypeMapConfigurer<TissuRequis, Lis
 	private final int MAX_VARIANT_DISPLAYED = 3;
 	
     @Override
-    public void configure(TypeMap<TissuRequis, ListElement> typeMap) {
+    public void configure(TypeMap<TissuRequisDto, ListElement> typeMap) {
         typeMap.addMappings(mapper -> mapper.using(new DimensionsConverter()).map(src -> src , ListElement::setDimensions));
         typeMap.addMappings(mapper -> mapper.using(new TitreConverter()).map(src -> src , ListElement::setTitre));
         typeMap.addMappings(mapper -> mapper.using(new DescConverter()).map(src -> src , ListElement::setDescription));
     }
     
-    private class DimensionsConverter extends AbstractConverter<TissuRequis, String> {
+    private class DimensionsConverter extends AbstractConverter<TissuRequisDto, String> {
         @Override
-        protected String convert(TissuRequis t) {
+        protected String convert(TissuRequisDto t) {
         	String dimension;
         	if (t.getLongueur() == 0 && t.getLaize() == 0) {
         		dimension = "non communiqué";
@@ -46,19 +48,19 @@ public class TissuRequisToListElement extends TypeMapConfigurer<TissuRequis, Lis
         }
     }
     
-    private class TitreConverter extends AbstractConverter<TissuRequis, String> {
+    private class TitreConverter extends AbstractConverter<TissuRequisDto, String> {
         @Override
-        protected String convert(TissuRequis t) {
-        	return "Tissu " + t.getGammePoids().label;
+        protected String convert(TissuRequisDto t) {
+        	return "Tissu " + t.getGammePoids();
         }
     }
     
-    private class DescConverter extends AbstractConverter<TissuRequis, String> {
+    private class DescConverter extends AbstractConverter<TissuRequisDto, String> {
         @Override
-        protected String convert(TissuRequis t) {
+        protected String convert(TissuRequisDto t) {
         	StringBuilder description = new StringBuilder();
         	
-        	List<TissuVariant> variants = tvs.getVariantByTissuRequis(t);
+        	List<TissuVariant> variants = tvs.getVariantByTissuRequisId(t.getId());
 
         	for (int i=0; i > variants.size() || i > MAX_VARIANT_DISPLAYED;) {
         		TissuVariant tv = variants.get(i++);
