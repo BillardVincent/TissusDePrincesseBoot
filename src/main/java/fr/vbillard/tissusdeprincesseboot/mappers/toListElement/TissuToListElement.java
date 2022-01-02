@@ -1,4 +1,4 @@
-package fr.vbillard.tissusdeprincesseboot.mappers;
+package fr.vbillard.tissusdeprincesseboot.mappers.toListElement;
 
 import org.modelmapper.AbstractConverter;
 import org.modelmapper.TypeMap;

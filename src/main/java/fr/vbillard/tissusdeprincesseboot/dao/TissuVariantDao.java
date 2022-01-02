@@ -12,5 +12,4 @@ public interface TissuVariantDao extends JpaRepository<TissuVariant, Integer> {
 	
 	List<TissuVariant> getAllByTissuRequisId(int id);
 	
-
 }

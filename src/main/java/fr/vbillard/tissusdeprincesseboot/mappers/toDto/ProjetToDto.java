@@ -1,4 +1,4 @@
-package fr.vbillard.tissusdeprincesseboot.mappers;
+package fr.vbillard.tissusdeprincesseboot.mappers.toDto;
 
 import java.util.ArrayList;
 import java.util.HashMap;

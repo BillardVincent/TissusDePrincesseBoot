@@ -87,7 +87,6 @@ public class ProjetDto {
 		return status;
 	}
 	
-	
 	public PatronDto getPatron() {
 		return patron.get();
 	}
