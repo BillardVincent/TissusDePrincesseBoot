@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="730.0" prefWidth="1620.0" style="-fx-background-color: #ffffff;" styleClass="global" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controlers_v2.patron.PatronListController">
+<Pane prefHeight="730.0" prefWidth="1620.0" style="-fx-background-color: #ffffff;" styleClass="global" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controlers_v2.patron.PatronListController">
    <children>
       <VBox alignment="TOP_CENTER" layoutX="-1.0" prefHeight="720.0" prefWidth="1620.0">
          <children>
