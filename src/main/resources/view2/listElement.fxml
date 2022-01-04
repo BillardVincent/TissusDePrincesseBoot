@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane prefHeight="60.0" prefWidth="1014.0" styleClass="global" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controlers_v2.ListElementController">
+<Pane prefHeight="60.0" prefWidth="1014.0" styleClass="global" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controlers_v2.ListElementController">
    <children>
       <HBox layoutX="16.0" layoutY="11.0" prefHeight="39.0" prefWidth="984.0" styleClass="list-element" stylesheets="@../style/style.css">
          <children>
