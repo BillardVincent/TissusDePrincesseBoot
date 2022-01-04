@@ -10,6 +10,7 @@ import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.mappers.TissuRequisMapper;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
+import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ import org.modelmapper.ModelMapper;
 public class TissuRequisService {
 
 	private TissusRequisDao tissuRequisDao;
+	private TissuVariantService tvs;
 	private ModelMapper mapper;
 
 	public List<TissuRequis> getAllTissuRequisByPatron(int id){
@@ -38,10 +40,14 @@ public class TissuRequisService {
 	}
 
 	public void delete(TissuRequisDto tissu) {
-		tissuRequisDao.delete(mapper.map(tissu, TissuRequis.class));
+		delete(mapper.map(tissu, TissuRequis.class));
 		
 	}
 	public void delete(TissuRequis tissu) {
+		List<TissuVariant> tvLst = tvs.getVariantByTissuRequis(tissu);
+		for (TissuVariant tv : tvLst) {
+			tvs.delete(tv);
+		}
 		tissuRequisDao.delete(tissu);
 
 	}
