@@ -11,6 +11,7 @@ import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
 import fr.vbillard.tissusdeprincesseboot.services.*;
 import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
+import fr.vbillard.tissusdeprincesseboot.utils.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -262,7 +263,7 @@ public class PatronEditController implements IController{
 				btns.setAlignment(Pos.CENTER_RIGHT);
 				btns.setSpacing(10);
 
-				bottomGrid.add(new Label(tv.getTypeTissu() + " " + tv.getMatiere() + " " + tv.getTissage()), 0, i * 2);
+				bottomGrid.add(new Label(Utils.safeString(tv.getTypeTissu()) + " " + Utils.safeString(tv.getMatiere()) + " " + Utils.safeString(tv.getTissage())), 0, i * 2);
 				bottomGrid.add(btns, 1, i * 2);
 
 				if (i != tvList.size() - 1) {
