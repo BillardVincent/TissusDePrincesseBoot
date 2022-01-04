@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.util.Strings;
 
 public class Utils {
 
@@ -28,5 +29,9 @@ public class Utils {
     public static boolean isNotEmpty(Object... objs) {
 
         return !isEmpty(objs);
+    }
+    
+    public static String safeString(String value) {
+    	return value == null ? Strings.EMPTY : value;
     }
 }
