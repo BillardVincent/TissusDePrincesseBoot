@@ -50,8 +50,7 @@ public class DtoToVariant extends TypeMapConfigurer<TissuVariantDto, TissuVarian
     private class MatiereConverter extends AbstractConverter<String, Matiere> {
         @Override
         protected Matiere convert(String source) {
-            Matiere m = ms.getByValue(source);
-            return m;
+            return ms.getByValue(source);
         }
     }
 }

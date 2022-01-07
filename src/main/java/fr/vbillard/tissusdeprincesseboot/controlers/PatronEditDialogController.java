@@ -345,9 +345,7 @@ public class PatronEditDialogController implements IController{
 	}
 
 	public void saveTissuRequis(TissuRequisDto tissu) {
-		boolean edit = false;
-		if (tissu.getId() != 0)
-			edit = true;
+		boolean edit = tissu.getId() != 0;
 		TissuRequisDto tissuReturned = tissuRequisService.createOrUpdate(tissu, patron);
 		if (!edit) {
 			patron.getTissusRequis().add(tissu);
