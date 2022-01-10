@@ -1,7 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.controlers_v2.caracteristiques;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
-import fr.vbillard.tissusdeprincesseboot.controlers.IController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.services.MatiereService;
 import javafx.collections.ObservableList;
@@ -19,7 +19,6 @@ public class MatiereEditController implements IController {
 
 	@FXML
 	private ListView<String> listMatieres;
-
 	@FXML
 	private TextField newMatiere;
 	@FXML

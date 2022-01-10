@@ -1,4 +1,4 @@
-package fr.vbillard.tissusdeprincesseboot.mappers;
+package fr.vbillard.tissusdeprincesseboot.mappers.fromDto;
 
 import org.springframework.stereotype.Component;
 

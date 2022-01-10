@@ -3,12 +3,15 @@ package fr.vbillard.tissusdeprincesseboot.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import fr.vbillard.tissusdeprincesseboot.dao.TissuVariantDao;
+import fr.vbillard.tissusdeprincesseboot.dao.TissusRequisDao;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuVariantDto;
+import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
 import lombok.AllArgsConstructor;
@@ -17,8 +20,12 @@ import org.modelmapper.ModelMapper;
 @AllArgsConstructor
 @Service
 public class TissuVariantService extends AbstractService<TissuVariant>{
-	TissuVariantDao tissuVariantDao;
-	ModelMapper mapper;
+	private TissuVariantDao tissuVariantDao;
+	private MatiereService matiereService;
+	private TypeTissuService typeTissuService;
+	private TissageService tissageService;
+	private TissusRequisDao tissuRequisDao;
+	private ModelMapper mapper;
 
 	public List<TissuVariantDto> getVariantByTissuRequis(TissuRequisDto tissu) {
 		List<TissuVariant> listTv = tissuVariantDao.getAllByTissuRequisId(tissu.getId());
@@ -30,7 +37,9 @@ public class TissuVariantService extends AbstractService<TissuVariant>{
 	}
 
 	public TissuVariantDto saveOrUpdate(TissuVariantDto variantSelected) {
-		return mapper.map(saveOrUpdate(mapper.map(variantSelected, TissuVariant.class)), TissuVariantDto.class);
+		TissuVariant tv = map(variantSelected);
+		tv = saveOrUpdate(tv);
+		return mapper.map(tv, TissuVariantDto.class);
 	}
 
 	@Override
@@ -41,5 +50,17 @@ public class TissuVariantService extends AbstractService<TissuVariant>{
 	public List<TissuVariant> getVariantByTissuRequisId(int id) {
 		return tissuVariantDao.getAllByTissuRequisId(id);
 	}
+	
+	private TissuVariant map(TissuVariantDto dto) {
+		TissuVariant tv = mapper.map(dto, TissuVariant.class);
+        tv.setMatiere(matiereService.findMatiere(dto.getMatiere()));
+        tv.setTypeTissu(typeTissuService.findTypeTissu(dto.getTypeTissu()));
+        tv.setTissage(tissageService.findTissage(dto.getTissage()));
+        tv.setTissuRequis(tissuRequisDao.getById(dto.getTissuRequisId()));
+
+		return tv;
+	}
+	
+	
 
 }

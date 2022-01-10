@@ -10,7 +10,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
-import fr.vbillard.tissusdeprincesseboot.controlers.IController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;

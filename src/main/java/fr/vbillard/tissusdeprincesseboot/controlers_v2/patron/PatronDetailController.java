@@ -6,7 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
-import fr.vbillard.tissusdeprincesseboot.controlers.IController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;

@@ -8,7 +8,7 @@ public class DevInProgressService {
 
 	public static void notImplemented(StageInitializer mainApp) {
 		Alert alert = new Alert(AlertType.INFORMATION);
-        alert.initOwner(mainApp.getPrimaryStage());
+       // alert.initOwner(mainApp.getPrimaryStage());
         alert.setTitle("NON DISPONIBLE");
         alert.setHeaderText("Fonction non implémentée");
         alert.setContentText("Nous travaillons sur cette fonctionnalité. Elle sera bientot disponible !");

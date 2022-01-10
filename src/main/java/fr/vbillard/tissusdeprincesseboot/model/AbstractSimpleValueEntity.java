@@ -12,5 +12,10 @@ import lombok.Setter;
 public abstract class AbstractSimpleValueEntity extends AbstractEntity{
 
 	protected String value;
+	
+	@Override
+	public String toString() {
+		return value;
+	}
 
 }

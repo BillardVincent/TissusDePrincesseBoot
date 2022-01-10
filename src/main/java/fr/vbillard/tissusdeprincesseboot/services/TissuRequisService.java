@@ -2,12 +2,12 @@ package fr.vbillard.tissusdeprincesseboot.services;
 
 import java.util.List;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import fr.vbillard.tissusdeprincesseboot.dao.TissusRequisDao;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
-import fr.vbillard.tissusdeprincesseboot.mappers.TissuRequisMapper;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
@@ -21,6 +21,7 @@ import org.modelmapper.ModelMapper;
 public class TissuRequisService {
 
 	private TissusRequisDao tissuRequisDao;
+	@Lazy
 	private TissuVariantService tvs;
 	private ModelMapper mapper;
 
@@ -29,8 +30,9 @@ public class TissuRequisService {
 	}
 	
 	public TissuRequisDto createOrUpdate(TissuRequisDto tissu, PatronDto patron) {
-		TissuRequis t = TissuRequisMapper.map(tissu, mapper.map(patron, Patron.class));
-		 return mapper.map(tissuRequisDao.save(t), TissuRequisDto.class);
+		TissuRequis t = mapper.map(tissu, TissuRequis.class);
+		t.setPatron(mapper.map(patron, Patron.class));
+		return mapper.map(tissuRequisDao.save(t), TissuRequisDto.class);
 
 	}
 
