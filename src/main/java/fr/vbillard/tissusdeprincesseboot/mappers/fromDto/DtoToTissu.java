@@ -1,6 +1,5 @@
-package fr.vbillard.tissusdeprincesseboot.mappers;
+package fr.vbillard.tissusdeprincesseboot.mappers.fromDto;
 
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import com.github.rozidan.springboot.modelmapper.TypeMapConfigurer;
@@ -30,14 +29,12 @@ public class DtoToTissu extends TypeMapConfigurer<TissuDto, Tissu> {
         typeMap.addMappings(mapper -> mapper.using(new UnitePoidsConverter()).map(TissuDto::getUnitePoids, Tissu::setUnitePoids));
         typeMap.addMappings(mapper -> mapper.using(new MatiereConverter()).map(src -> src, Tissu::setMatiere));
 
-        typeMap.setPostConverter(context -> {
-            context.getDestination().setTypeTissu(
-                    tts.getByValue(context.getSource().getType()));
-            return context.getDestination();
-        });
+
         typeMap.setPostConverter(context -> {
             context.getDestination().setTissage(
                     ts.getByValue(context.getSource().getTissage()));
+            context.getDestination().setTypeTissu(
+                    tts.getByValue(context.getSource().getType()));
             return context.getDestination();
         });
     }

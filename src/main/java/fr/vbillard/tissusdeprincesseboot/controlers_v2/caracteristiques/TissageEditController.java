@@ -1,7 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.controlers_v2.caracteristiques;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
-import fr.vbillard.tissusdeprincesseboot.controlers.IController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
 import fr.vbillard.tissusdeprincesseboot.model.Tissage;
 import fr.vbillard.tissusdeprincesseboot.services.TissageService;
 import javafx.collections.ObservableList;

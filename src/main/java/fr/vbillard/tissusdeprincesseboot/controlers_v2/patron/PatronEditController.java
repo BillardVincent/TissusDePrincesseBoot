@@ -30,7 +30,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
-import fr.vbillard.tissusdeprincesseboot.controlers.IController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -270,7 +270,7 @@ public class PatronEditController implements IController{
 					HBox hbox = new HBox(new Label("-------------   OU   --------------  "));
 					hbox.setAlignment(Pos.CENTER);
 					bottomGrid.add(hbox, 0, i * 2 + 1, 2, 1);
-					// displayTissuRequis(tissu);
+					//displayTissuRequis(tissu);
 				}
 			}
 		}
@@ -341,9 +341,7 @@ public class PatronEditController implements IController{
 		return okClicked;
 	}
 
-	/**
-	 * Called when the user clicks ok.
-	 */
+
 	@FXML
 	private void handleSavePatron() {
 		if (isInputValid()) {

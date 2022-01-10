@@ -27,11 +27,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
-import fr.vbillard.tissusdeprincesseboot.controlers.IController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.ListElementController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController;
 import fr.vbillard.tissusdeprincesseboot.services.PreferenceService;
-import fr.vbillard.tissusdeprincesseboot.controlers.FxmlPathProperties;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.FxmlPathProperties;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.History;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;

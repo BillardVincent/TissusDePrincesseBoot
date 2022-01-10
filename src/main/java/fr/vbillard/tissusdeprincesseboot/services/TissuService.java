@@ -68,9 +68,9 @@ public class TissuService extends AbstractService<Tissu>{
 		delete(mapper.map(dto, Tissu.class));
 	}
 	
-	public void saveOrUpdate(TissuDto dto) {
+	public TissuDto saveOrUpdate(TissuDto dto) {
 		Tissu t = mapper.map(dto, Tissu.class);
-		saveOrUpdate(t);
+		return mapper.map(saveOrUpdate(t), TissuDto.class);
 	}
 	
 	@Override

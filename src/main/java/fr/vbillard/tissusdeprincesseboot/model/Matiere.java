@@ -24,4 +24,5 @@ public class Matiere extends AbstractSimpleValueEntity {
 		this.value = value;
 	}
 
+	
 }

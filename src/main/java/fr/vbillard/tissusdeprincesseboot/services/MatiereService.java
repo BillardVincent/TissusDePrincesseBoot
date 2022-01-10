@@ -38,5 +38,5 @@ public class MatiereService extends AbstractService<Matiere>{
 	public void delete(String value) {
 		delete(findMatiere(value));
 	}
-	
+
 }
