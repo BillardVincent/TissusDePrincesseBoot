@@ -18,7 +18,7 @@ public class VariantToDto extends TypeMapConfigurer<TissuVariant, TissuVariantDt
     @Override
     public void configure(TypeMap<TissuVariant, TissuVariantDto> typeMap) {
         typeMap.addMapping(TissuVariant::getMatiere, (TissuVariantDto dest, Matiere v) -> dest.setMatiere(v == null ? Strings.EMPTY : v.getValue()));
-        typeMap.addMapping(TissuVariant::getTypeTissu, (TissuVariantDto dest, TypeTissu v) -> dest.setType(v == null ? Strings.EMPTY : v.getValue()));
+        typeMap.addMapping(TissuVariant::getTypeTissu, (TissuVariantDto dest, TypeTissu v) -> dest.setTypeTissu(v == null ? Strings.EMPTY : v.getValue()));
         typeMap.addMapping(TissuVariant::getTissage, (TissuVariantDto dest, Tissage v) -> dest.setTissage(v == null ? Strings.EMPTY : v.getValue()));
     }
 }

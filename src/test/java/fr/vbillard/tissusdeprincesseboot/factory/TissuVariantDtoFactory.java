@@ -16,7 +16,7 @@ public class TissuVariantDtoFactory {
         dto.setId(FAKER.random().nextInt(1, 100));
         dto.setTissuRequisId(context.getTissuRequis().getId());
         dto.setMatiere(FAKER.harryPotter().spell());
-        dto.setType(FAKER.harryPotter().book());
+        dto.setTypeTissu(FAKER.harryPotter().book());
         dto.setTissage(FAKER.harryPotter().house());
 
         return dto;
