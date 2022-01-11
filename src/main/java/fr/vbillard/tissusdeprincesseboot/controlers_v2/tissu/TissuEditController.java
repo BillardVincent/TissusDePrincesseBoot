@@ -223,7 +223,7 @@ public class TissuEditController implements IController {
 			tissu.setChute(Boolean.parseBoolean(chuteField.getText()));
 			tissu.setTissage(tissageField.getValue());
 
-			tissuService.saveOrUpdate(tissu);
+			tissu = tissuService.saveOrUpdate(tissu);
 			okClicked = true;
 		}
 	}
@@ -300,18 +300,6 @@ public class TissuEditController implements IController {
 			ref = tissuService.existByReference(sb.toString() + refNb);
 		}
 		referenceField.setText(sb.append(refNb).toString());
-	}
-
-	public void setMapTissu(Map<TissuDto, Integer> mapTissu, StageInitializer mainApp) {
-		this.edit = true;
-/*
-		setTissu(mapTissu.keySet().stream().findFirst().orElse(null), mainApp);
-
-		validerButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-			nextTissu(tissu, mapTissu);
-			setMapTissu(mapTissu, mainApp);
-		});
-		*/
 	}
 
 	private void nextTissu(TissuDto tissu, Map<TissuDto, Integer> mapTissu) {
