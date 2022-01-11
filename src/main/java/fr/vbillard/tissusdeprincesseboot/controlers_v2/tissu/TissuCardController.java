@@ -1,7 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu;
 
 import java.io.ByteArrayInputStream;
-import java.util.List;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;

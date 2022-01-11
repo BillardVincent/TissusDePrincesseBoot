@@ -27,7 +27,7 @@ public enum GammePoids {
 	    
     public final String label;
 
-    private GammePoids(String label) {
+    GammePoids(String label) {
         this.label = label;
     }
     

@@ -27,7 +27,7 @@ public enum Recommendation {
 	    
     public final String label;
 
-    private Recommendation(String label) {
+    Recommendation(String label) {
         this.label = label;
     }
     

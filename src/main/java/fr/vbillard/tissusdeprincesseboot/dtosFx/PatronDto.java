@@ -3,10 +3,6 @@ package fr.vbillard.tissusdeprincesseboot.dtosFx;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.vbillard.tissusdeprincesseboot.model.FounitureRequise;
-import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
-import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
-import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleIntegerProperty;

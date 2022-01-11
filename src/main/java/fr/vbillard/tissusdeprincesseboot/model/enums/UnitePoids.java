@@ -22,7 +22,7 @@ public enum UnitePoids {
 	    
     public final String label;
 
-    private UnitePoids(String label) {
+    UnitePoids(String label) {
         this.label = label;
     }
     

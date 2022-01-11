@@ -6,7 +6,6 @@ import java.util.Map;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Recommendation;
-import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
 
 public class CalculPoidsTissuService {
 

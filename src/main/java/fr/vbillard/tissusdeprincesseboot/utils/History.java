@@ -1,10 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.utils;
 
-import java.util.Dictionary;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
-import java.util.Map;
-import java.util.Objects;
 
 import org.springframework.stereotype.Component;
 

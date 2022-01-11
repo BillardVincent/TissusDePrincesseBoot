@@ -10,6 +10,6 @@ import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 @Repository
 public interface TissusRequisDao extends JpaRepository<TissuRequis, Integer> {
 
-	public List<TissuRequis> getAllByPatronId(int id);
+	List<TissuRequis> getAllByPatronId(int id);
 
 }

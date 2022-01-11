@@ -1,6 +1,5 @@
 package fr.vbillard.tissusdeprincesseboot.fxCustomElements;
 
-import com.sun.javafx.font.Glyph;
 import de.jensd.fx.glyphs.GlyphIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
