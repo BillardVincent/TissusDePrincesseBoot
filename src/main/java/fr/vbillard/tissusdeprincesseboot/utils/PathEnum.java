@@ -20,6 +20,6 @@ public enum PathEnum {
     MATIERE,
     TYPE_TISSU,
     TISSAGE,
-    LIST_ELEMENT;
+    LIST_ELEMENT
 
 }

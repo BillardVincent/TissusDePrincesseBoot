@@ -6,7 +6,7 @@ import javafx.scene.paint.Paint;
 public class Constants {
 
 
-	public final static String PERSISTENCE_UNIT = "persistUnit";
+	// --Commented out by Inspection (11/01/2022 12:05):public final static String PERSISTENCE_UNIT = "persistUnit";
 	
 	
 	public static final String NON_ENREGISTRE = "non enregistré";

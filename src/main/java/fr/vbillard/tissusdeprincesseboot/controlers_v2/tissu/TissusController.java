@@ -5,15 +5,12 @@ import fr.vbillard.tissusdeprincesseboot.controlers_v2.ViewListController;
 
 import org.springframework.stereotype.Component;
 
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.services.TissuService;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.TilePane;
 
 @Component
 public class TissusController extends ViewListController {

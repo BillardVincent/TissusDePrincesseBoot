@@ -3,7 +3,6 @@ package fr.vbillard.tissusdeprincesseboot.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +10,6 @@ import fr.vbillard.tissusdeprincesseboot.dao.TissuVariantDao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissusRequisDao;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuVariantDto;
-import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
 import lombok.AllArgsConstructor;

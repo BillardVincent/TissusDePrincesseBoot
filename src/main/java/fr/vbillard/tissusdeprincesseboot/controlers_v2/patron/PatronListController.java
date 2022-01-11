@@ -2,14 +2,10 @@ package fr.vbillard.tissusdeprincesseboot.controlers_v2.patron;
 
 import org.springframework.stereotype.Component;
 
-import fr.vbillard.tissusdeprincesseboot.StageInitializer;
-import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.ViewListController;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.services.PatronService;
-import fr.vbillard.tissusdeprincesseboot.services.TissuService;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;

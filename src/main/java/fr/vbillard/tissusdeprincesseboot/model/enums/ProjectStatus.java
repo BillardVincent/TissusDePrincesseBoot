@@ -28,7 +28,7 @@ public enum ProjectStatus {
 	    
     public final String label;
 
-    private ProjectStatus(String label) {
+    ProjectStatus(String label) {
         this.label = label;
     }
     

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import fr.vbillard.tissusdeprincesseboot.dao.PatronDao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissusRequisDao;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import javafx.collections.FXCollections;

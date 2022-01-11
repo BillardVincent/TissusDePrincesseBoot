@@ -3,7 +3,6 @@ package fr.vbillard.tissusdeprincesseboot.dtosFx;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ListProperty;
@@ -12,7 +11,6 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
-import lombok.NoArgsConstructor;
 
 public class TissuRequisDto {
 

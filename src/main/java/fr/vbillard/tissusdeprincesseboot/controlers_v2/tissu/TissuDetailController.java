@@ -1,38 +1,19 @@
 package fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu;
 
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Component;
 
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
-import fr.vbillard.tissusdeprincesseboot.fxCustomElements.GlyphIconUtil;
-import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
 import fr.vbillard.tissusdeprincesseboot.services.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.services.TissageService;
 import fr.vbillard.tissusdeprincesseboot.services.TissuService;
 import fr.vbillard.tissusdeprincesseboot.services.TypeTissuService;
-import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.Tooltip;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.RowConstraints;
 import org.modelmapper.ModelMapper;
 

@@ -12,9 +12,6 @@ import com.github.rozidan.springboot.modelmapper.TypeMapConfigurer;
 
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ListElement;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuVariantDto;
-import fr.vbillard.tissusdeprincesseboot.model.Tissu;
-import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
 import fr.vbillard.tissusdeprincesseboot.services.TissuVariantService;
 import lombok.AllArgsConstructor;

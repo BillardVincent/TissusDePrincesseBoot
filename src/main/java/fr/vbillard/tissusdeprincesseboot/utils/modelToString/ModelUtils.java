@@ -11,9 +11,7 @@ public class ModelUtils {
 	public static String generateString(EntityToString entity, Articles article, boolean pluriel, boolean withMaj) {
 		String result = "";
 		switch (article) {
-		case AUCUN:
-			break;
-		case DEFINI:
+            case DEFINI:
 			if (pluriel) result += "les ";
 			else if (VOYELLES.contains(entity.getLabel().substring(0, 1))) result += "l'";
 			else if (entity.isMasculin()) result += "le ";
