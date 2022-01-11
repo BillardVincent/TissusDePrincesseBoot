@@ -3,7 +3,6 @@ package fr.vbillard.tissusdeprincesseboot.controlers_v2.patron;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuVariantDto;
 import fr.vbillard.tissusdeprincesseboot.fxCustomElements.GlyphIconUtil;
@@ -14,7 +13,6 @@ import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
 import fr.vbillard.tissusdeprincesseboot.utils.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -25,7 +23,6 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -297,7 +294,7 @@ public class PatronEditController implements IController{
 			addTvBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
 				variantSelected.setMatiere(matiereField.getValue());
 				variantSelected.setTissage(tissageField.getValue());
-				variantSelected.setType(typeField.getValue());
+				variantSelected.setTypeTissu(typeField.getValue());
 				variantSelected.setTissuRequisId(tissu.getId());
 				variantSelected = tissuVariantService.saveOrUpdate(variantSelected);
 				if (variantSelected.getId() == 0) {
