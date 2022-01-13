@@ -1,10 +1,19 @@
 package fr.vbillard.tissusdeprincesseboot.utils;
 
+import java.awt.Image;
+import java.io.ByteArrayInputStream;
 import java.util.Collection;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.util.Strings;
+
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import fr.vbillard.tissusdeprincesseboot.model.Photo;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 
 public class Utils {
 
@@ -34,4 +43,5 @@ public class Utils {
     public static String safeString(String value) {
     	return value == null ? Strings.EMPTY : value;
     }
+    
 }

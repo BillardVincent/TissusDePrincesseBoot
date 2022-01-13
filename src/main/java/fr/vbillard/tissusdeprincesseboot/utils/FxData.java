@@ -3,6 +3,7 @@ package fr.vbillard.tissusdeprincesseboot.utils;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
+import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +21,7 @@ public class FxData implements Cloneable {
     private int projetId;
     private ObservableList<TissuDto> tissuList;
     private ObservableList<PatronDto> patronList;
+    private ObservableList<ProjetDto> projetList;
 
     public FxData(History history){
         this.history = history;
@@ -64,6 +66,11 @@ public class FxData implements Cloneable {
     
     public void setPatronList(ObservableList<PatronDto> patronList) {
         this.patronList = FXCollections.observableList(patronList);
+        history.add(this);
+    }
+    
+    public void setProjetList(ObservableList<ProjetDto> projetList) {
+        this.projetList = FXCollections.observableList(projetList);
         history.add(this);
     }
     

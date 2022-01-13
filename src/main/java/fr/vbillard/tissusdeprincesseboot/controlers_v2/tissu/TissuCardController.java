@@ -89,14 +89,8 @@ public class TissuCardController implements IController {
         masse.setStyleClass(tissu.getPoids()> ConstantesMetier.MAX_POIDS_MOYEN ? "heavy-weight" :
                 tissu.getPoids() > ConstantesMetier.MIN_POIDS_MOYEN ? "standard-weight" : "light-weight");
         Photo pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
-        if (pictures == null){
-            FontAwesomeIconView iconView = new FontAwesomeIconView(FontAwesomeIcon.PICTURE_ALT);
-            WritableImage writableImg = iconView.snapshot(null, null);
-            Image img = SwingFXUtils.toFXImage(SwingFXUtils.fromFXImage(writableImg, null), null);
-            image.setImage(img);
-        } else {
-            image.setImage(new Image(new ByteArrayInputStream(pictures.getData())));
-        }
+        image.setImage(imageService.imageOrDefault(pictures));
+
     }
 
 
