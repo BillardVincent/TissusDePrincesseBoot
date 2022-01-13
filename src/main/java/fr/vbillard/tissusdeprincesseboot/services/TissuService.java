@@ -83,5 +83,4 @@ public class TissuService extends AbstractService<Tissu>{
 				.collect(Collectors.toList()));
 	}
 
-
 }

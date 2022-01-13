@@ -93,13 +93,9 @@ public class TissuDetailController implements IController {
             decatiField.setText(tissu.getDecatiProperty() != null && tissu.isDecati() ? "Décati" : "Non décati");
             lieuDachatField.setText(tissu.getLieuAchatProperty() == null ? "" : tissu.getLieuAchat());
             chuteField.setText(tissu.getChuteProperty() != null && tissu.isChute() ? "Chute" : "Coupon");
-
             unitePoidsField.setText(tissu.getUnitePoidsProperty() == null ? UnitePoids.NON_RENSEIGNE.label : tissu.getUnitePoids());
-
 			typeField.setText(tissu.getTypeProperty() == null ? "" : tissu.getType());
-
-			 matiereField.setText(tissu.getMatiereProperty() == null ? "" : tissu.getMatiere());
-
+			matiereField.setText(tissu.getMatiereProperty() == null ? "" : tissu.getMatiere());
 			tissageField.setText(tissu.getTissageProperty() == null ? "" : tissu.getTissage());
       }
     }

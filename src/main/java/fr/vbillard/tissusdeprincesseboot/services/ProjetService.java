@@ -2,12 +2,14 @@ package fr.vbillard.tissusdeprincesseboot.services;
 
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import fr.vbillard.tissusdeprincesseboot.dao.ProjetDao;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
+import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import javafx.collections.FXCollections;
@@ -39,6 +41,13 @@ ProjetDao dao;
 		p.setPatron(mapper.map(selectedPatron, Patron.class));
 		
 		return mapper.map(p, ProjetDto.class);
+	}
+	
+	public ObservableList<ProjetDto> getObservablePage(int page, int pageSize) {
+		return FXCollections.observableArrayList(dao
+				.findAll(PageRequest.of(page, pageSize))
+				.stream().map(t -> mapper.map(t, ProjetDto.class))
+				.collect(Collectors.toList()));
 	}
 
 
