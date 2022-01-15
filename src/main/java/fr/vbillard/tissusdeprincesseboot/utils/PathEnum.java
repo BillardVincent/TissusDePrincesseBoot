@@ -20,6 +20,8 @@ public enum PathEnum {
     MATIERE,
     TYPE_TISSU,
     TISSAGE,
-    LIST_ELEMENT
+    LIST_ELEMENT,
+    TISSU_REQUIS,
+    PROJET_EDIT_LIST_ELEMENT
 
 }

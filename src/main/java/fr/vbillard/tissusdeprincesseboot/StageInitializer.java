@@ -14,6 +14,7 @@ import fr.vbillard.tissusdeprincesseboot.controlers_v2.patron.PatronListControll
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.projet.ProjetCardController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.projet.ProjetDetailController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.projet.ProjetEditController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.projet.ProjetEditListElementController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.projet.ProjetListController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu.TissuCardController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu.TissuDetailController;
@@ -30,6 +31,7 @@ import org.springframework.stereotype.Component;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.ListElementController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.TissuRequisCardController;
 import fr.vbillard.tissusdeprincesseboot.services.PreferenceService;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.FxmlPathProperties;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
@@ -145,6 +147,10 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
                 return new PathHolder(pathProperties.getTissageEdit().getURL(), TissageEditController.class);
             case LIST_ELEMENT:
             	return new PathHolder(pathProperties.getListElement().getURL(), ListElementController.class);
+            case TISSU_REQUIS:
+            	return new PathHolder(pathProperties.getTissuRequisCard().getURL(), TissuRequisCardController.class);
+            case PROJET_EDIT_LIST_ELEMENT:
+            	return new PathHolder(pathProperties.getProjetEditListElement().getURL(), ProjetEditListElementController.class);
             default:
             	return null;
         }
