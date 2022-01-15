@@ -22,30 +22,30 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class ImageService extends AbstractService<Photo>{
+public class ImageService extends AbstractService<Photo> {
 
 	PhotoDao dao;
 	PathProperties pathProperties;
-	
 
 	public Photo getImage(Projet projet) {
-				return dao.getByProjet(projet.getId()).get();
+		return dao.getByProjet(projet.getId()).get();
 	}
+
 	public Photo getImage(Tissu tissu) {
 		return dao.getByTissu(tissu);
-}
-	
+	}
+
 	public Image imageOrDefault(Photo photo) {
-		if (photo == null){
+		if (photo == null) {
 			try {
 				return new Image(pathProperties.getImageDefault().getURL().toString());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-        }
-        return new Image(new ByteArrayInputStream(photo.getData()));
+		}
+		return new Image(new ByteArrayInputStream(photo.getData()));
 	}
-	
+
 	@Override
 	protected JpaRepository getDao() {
 		return dao;

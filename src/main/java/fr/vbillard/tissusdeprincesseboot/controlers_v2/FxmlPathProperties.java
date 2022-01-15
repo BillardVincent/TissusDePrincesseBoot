@@ -31,4 +31,6 @@ public class FxmlPathProperties {
 	private Resource patronDetail;
 	private Resource patronEdit;
 	private Resource listElement;
+	private Resource projetEditListElement;
+	private Resource tissuRequisCard;
 }
