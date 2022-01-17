@@ -6,15 +6,18 @@ import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
-import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
-import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
+import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
 import javafx.fxml.FXML;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 
 @Component
 public class ProjetEditListElementController implements IController{
+	
+	@FXML
+	private HBox hbox;
 	
 	private StageInitializer initializer;
 	
@@ -39,11 +42,14 @@ public class ProjetEditListElementController implements IController{
 	}
 
 	private void setPane() {
-		// TODO Auto-generated method stub
-		
+		Pane tr = initializer.displayPane(PathEnum.TISSU_REQUIS, tissuRequis);
+		hbox.getChildren().add(tr);
+
+		for (TissuUsed tissu : lstTissus) {
+			Pane tu = initializer.displayPane(PathEnum.TISSU_USED_CARD, tissu);
+			hbox.getChildren().add(tu);
+			
+			
+		}
 	}
-	
-	
-	
-	
 }
