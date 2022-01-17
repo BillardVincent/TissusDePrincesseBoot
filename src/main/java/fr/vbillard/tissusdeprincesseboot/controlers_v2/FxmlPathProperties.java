@@ -33,4 +33,5 @@ public class FxmlPathProperties {
 	private Resource listElement;
 	private Resource projetEditListElement;
 	private Resource tissuRequisCard;
+	private Resource tissuUsedCard;
 }
