@@ -2,22 +2,17 @@ package fr.vbillard.tissusdeprincesseboot.services;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-
-import javax.imageio.ImageIO;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.vbillard.tissusdeprincesseboot.dao.PhotoDao;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.utils.PathProperties;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
-import javafx.scene.image.WritableImage;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -28,7 +23,8 @@ public class ImageService extends AbstractService<Photo> {
 	PathProperties pathProperties;
 
 	public Photo getImage(Projet projet) {
-		return dao.getByProjet(projet.getId()).get();
+		Optional<Photo> photo = dao.getByProjet(projet.getId());
+		return photo.isPresent() ? photo.get() : null;
 	}
 
 	public Photo getImage(Tissu tissu) {

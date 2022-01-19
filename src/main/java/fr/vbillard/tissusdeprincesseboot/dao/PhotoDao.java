@@ -18,7 +18,7 @@ public interface PhotoDao extends JpaRepository<Photo, Integer> {
 
 	Photo getByTissu(Tissu tissu);
 
-	@Query(value = "SELECT p FROM PHOTO p "
+	@Query(value = "SELECT FROM PHOTO p "
 			+ "INNER JOIN TISSU_USED t ON t.TISSU_ID = p.TISSU_ID "
 			+ "WHERE t.PROJET_ID = ?1 and t.LONGUEUR  = "
 			+ "(SELECT MAX(tu2.LONGUEUR) FROM TISSU_USED tu2 "
