@@ -20,7 +20,8 @@ public class RootController implements IController {
 
     @FXML
     private Pane mainWindow;
-    
+    @FXML
+    private Pane selectedElement;
     @FXML
     private HBox tissuMenu;
     @FXML
@@ -108,6 +109,13 @@ public class RootController implements IController {
     public void displayTypeEdit(){
     	beforeDisplay(null);
     	mainWindow.getChildren().add(initializer.displayPane(PathEnum.TYPE_TISSU));
+    }
+    
+    public void displaySelected() {
+    	selectedElement.getChildren().add(initializer.displayPane(PathEnum.TISSU_REQUIS_SELECTED));
+    }
+    public void deleteSelected() {
+    	selectedElement.getChildren().clear();
     }
     
     private void beforeDisplay(HBox menuToSelect) {

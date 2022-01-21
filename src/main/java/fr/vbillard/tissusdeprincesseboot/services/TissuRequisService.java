@@ -1,6 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,10 @@ public class TissuRequisService {
 
 	public List<TissuRequis> getAllTissuRequisByPatron(int id){
 		return tissuRequisDao.getAllByPatronId(id);
+	}
+	
+	public List<TissuRequisDto> getAllTissuRequisDtoByPatron(int id){
+		return tissuRequisDao.getAllByPatronId(id).stream().map(tr -> mapper.map(tr, TissuRequisDto.class)).collect(Collectors.toList());
 	}
 	
 	public TissuRequisDto createOrUpdate(TissuRequisDto tissu, PatronDto patron) {

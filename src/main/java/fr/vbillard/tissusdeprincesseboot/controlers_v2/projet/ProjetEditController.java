@@ -1,19 +1,17 @@
 package fr.vbillard.tissusdeprincesseboot.controlers_v2.projet;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
-import fr.vbillard.tissusdeprincesseboot.model.Tissu;
-import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
 import fr.vbillard.tissusdeprincesseboot.services.ProjetService;
+import fr.vbillard.tissusdeprincesseboot.services.TissuRequisService;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -28,15 +26,21 @@ public class ProjetEditController implements IController {
 	private Label description;
 	@FXML
 	private Label statut;
+	@FXML
+	private Label marque;
+	@FXML
+	private Label modele;
 
 	private StageInitializer initializer;
 
 	private ProjetService projetService;
+	private TissuRequisService tissuRequisService;
 
 	private ProjetDto projet;
 
-	public ProjetEditController(ProjetService projetService) {
+	public ProjetEditController(ProjetService projetService, TissuRequisService tissuRequisService) {
 		this.projetService = projetService;
+		this.tissuRequisService = tissuRequisService;
 	}
 
 	@Override
@@ -49,7 +53,12 @@ public class ProjetEditController implements IController {
 	}
 
 	private void setPane() {
-		for (TissuRequisDto tr : projet.getPatron().getTissusRequis()) {
+		marque.setText(projet.getPatron().getMarque());
+		modele.setText(projet.getPatron().getModele());
+		description.setText(projet.getDescription());
+		statut.setText(projet.getProjectStatus());
+		List<TissuRequisDto> lst = tissuRequisService.getAllTissuRequisDtoByPatron(projet.getPatron().getId());
+		for (TissuRequisDto tr : lst) {
 			Pane element = initializer.displayPane(PathEnum.PROJET_EDIT_LIST_ELEMENT, tr);
 			scrollContent.getChildren().add(element);
 		}
