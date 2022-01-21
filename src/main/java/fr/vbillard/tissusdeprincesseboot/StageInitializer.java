@@ -13,6 +13,7 @@ import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.ListElementController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.TissuRequisCardController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.TissuRequisSelectedController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.caracteristiques.MatiereEditController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.caracteristiques.TissageEditController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.caracteristiques.TypeEditController;
@@ -153,6 +154,8 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
             	return new PathHolder(pathProperties.getProjetEditListElement().getURL(), ProjetEditListElementController.class);
             case TISSU_USED_CARD:
             	return new PathHolder(pathProperties.getTissuUsedCard().getURL(), TissuUsedCardController.class);
+            case TISSU_REQUIS_SELECTED:
+            	return new PathHolder(pathProperties.getTissuRequisSelected().getURL(), TissuRequisSelectedController.class);
             default:
             	return null;
         }

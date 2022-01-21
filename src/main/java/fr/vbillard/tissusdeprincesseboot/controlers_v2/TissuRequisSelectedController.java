@@ -9,7 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 @Component
-public class TissuRequisCardController implements IController {
+public class TissuRequisSelectedController implements IController {
 	
 	@FXML
 	private Label longueurLabel;
@@ -22,20 +22,12 @@ public class TissuRequisCardController implements IController {
 	
 	private StageInitializer initializer;
 	private TissuRequisDto tissuRequis;
-	
-	private RootController rootController;
-	
-	
-
-	public TissuRequisCardController(RootController rootController) {
-		this.rootController = rootController;
-	}
 
 	@Override
 	public void setStageInitializer(StageInitializer initializer, Object... data) {
 		this.initializer = initializer;
 		if (data.length == 1 && data[0] instanceof TissuRequisDto) {
-			tissuRequis = (TissuRequisDto) data[0];
+			tissuRequis = (TissuRequisDto) data[1];
 			if (tissuRequis != null) {
 				longueurLabel.setText(Integer.toString(tissuRequis.getLongueur()));
 				laizeLabel.setText(Integer.toString(tissuRequis.getLaize()));
@@ -57,11 +49,5 @@ public class TissuRequisCardController implements IController {
 	private void setPane() {
 		// TODO Auto-generated method stub
 
-	}
-	
-	@FXML
-	private void chooseTissuSelected() {
-		rootController.displaySelected();
-		rootController.displayTissus();
 	}
 }

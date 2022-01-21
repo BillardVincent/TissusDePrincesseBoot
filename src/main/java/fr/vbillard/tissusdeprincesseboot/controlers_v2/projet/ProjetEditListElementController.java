@@ -1,5 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.controlers_v2.projet;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -33,10 +34,12 @@ public class ProjetEditListElementController implements IController{
         if (data.length > 0 && data[0] instanceof TissuRequisDto){
         	tissuRequis = (TissuRequisDto) data[0];
         }
-        if (data.length>1) {
+        lstTissus = new ArrayList<TissuUsed>();
+        if (data.length==1) {
         	for (int i = 1; i< data.length; i++) {
         		 lstTissus.add((TissuUsed) data[i]);
         	}
+        	
         }
         setPane();
 	}
