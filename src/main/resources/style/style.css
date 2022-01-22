@@ -155,7 +155,7 @@
   
   }
   
-.card:hover{
+.clickable:hover{
     -fx-border-color: -fx-primary-light;
     -fx-border-width: 3px;
 }

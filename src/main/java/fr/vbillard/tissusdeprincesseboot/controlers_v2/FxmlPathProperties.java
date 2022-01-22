@@ -35,4 +35,5 @@ public class FxmlPathProperties {
 	private Resource tissuRequisCard;
 	private Resource tissuUsedCard;
 	private Resource tissuRequisSelected;
+	private Resource plusCard;
 }

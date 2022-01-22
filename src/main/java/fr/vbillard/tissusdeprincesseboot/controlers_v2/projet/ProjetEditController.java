@@ -1,6 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.controlers_v2.projet;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
@@ -8,10 +9,13 @@ import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
+import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
 import fr.vbillard.tissusdeprincesseboot.services.ProjetService;
 import fr.vbillard.tissusdeprincesseboot.services.TissuRequisService;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -25,11 +29,11 @@ public class ProjetEditController implements IController {
 	@FXML
 	private Label description;
 	@FXML
-	private Label statut;
-	@FXML
 	private Label marque;
 	@FXML
 	private Label modele;
+	@FXML
+	private ChoiceBox<String> status;
 
 	private StageInitializer initializer;
 
@@ -53,10 +57,12 @@ public class ProjetEditController implements IController {
 	}
 
 	private void setPane() {
+		 status.setItems(FXCollections.observableArrayList(ProjectStatus.labels()));
+         status.setValue(projet.getProjectStatusProperty() == null ? ProjectStatus.BROUILLON.label : projet.getProjectStatus());
+
 		marque.setText(projet.getPatron().getMarque());
 		modele.setText(projet.getPatron().getModele());
 		description.setText(projet.getDescription());
-		statut.setText(projet.getProjectStatus());
 		List<TissuRequisDto> lst = tissuRequisService.getAllTissuRequisDtoByPatron(projet.getPatron().getId());
 		for (TissuRequisDto tr : lst) {
 			Pane element = initializer.displayPane(PathEnum.PROJET_EDIT_LIST_ELEMENT, tr);
@@ -68,7 +74,7 @@ public class ProjetEditController implements IController {
 	private void handleOk() {
 		
 		projet.setDescription(description.getText());
-		projet.setProjectStatus(statut.getText());
+		projet.setProjectStatus(status.getValue());
 		projet = projetService.saveOrUpdate(projet);
 		
 	}
