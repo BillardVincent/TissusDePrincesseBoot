@@ -61,7 +61,6 @@ public class TissuRequisCardController implements IController {
 	
 	@FXML
 	private void chooseTissuSelected() {
-		rootController.displaySelected();
-		rootController.displayTissus();
+		rootController.displaySelected(tissuRequis);
 	}
 }

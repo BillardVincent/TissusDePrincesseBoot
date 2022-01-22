@@ -6,7 +6,7 @@
 <?import javafx.scene.control.ButtonBar?>
 
 
-<AnchorPane prefHeight="585.0" prefWidth="794.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controlers_v2.projet.ProjetDetailController">
+<AnchorPane prefHeight="585.0" prefWidth="794.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controlers_v2.projet.ProjetDetailController">
    <children>
       <Label fx:id="descriptionProjetPanLabel" layoutX="66.0" layoutY="64.0" text="descriptionProjetPanLabel" />
       <Label fx:id="marqueProjetPanLabel" layoutX="66.0" layoutY="134.0" text="marqueProjetPanLabel" />

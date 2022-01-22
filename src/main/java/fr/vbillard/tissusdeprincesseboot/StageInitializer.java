@@ -17,6 +17,7 @@ import fr.vbillard.tissusdeprincesseboot.controlers_v2.TissuRequisSelectedContro
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.caracteristiques.MatiereEditController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.caracteristiques.TissageEditController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.caracteristiques.TypeEditController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.common.PlusCardController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.patron.PatronCardController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.patron.PatronDetailController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.patron.PatronEditController;
@@ -56,6 +57,7 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
     private final PreferenceService preferenceService;
     private static History history;
     private FxData fxData;
+    RootController rootController;
 
     public StageInitializer(ApplicationContext applicationContext, FxmlPathProperties pathProperties, PreferenceService preferenceService, History history, FxData data){
         this.applicationContext = applicationContext;
@@ -73,7 +75,7 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
             rootLoader.setControllerFactory(applicationContext::getBean);
             Parent rootLayout = rootLoader.load();
 
-            RootController rootController = rootLoader.getController();
+            rootController = rootLoader.getController();
             rootController.setStageInitializer(this);
 
             stage = event.getStage();
@@ -92,6 +94,10 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
 
     public FxData getData() {
         return fxData;
+    }
+    
+    public RootController getRoot() {
+    	return rootController;
     }
 
     public Pane displayPane(PathEnum path, Object... data){
@@ -156,9 +162,10 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
             	return new PathHolder(pathProperties.getTissuUsedCard().getURL(), TissuUsedCardController.class);
             case TISSU_REQUIS_SELECTED:
             	return new PathHolder(pathProperties.getTissuRequisSelected().getURL(), TissuRequisSelectedController.class);
-            default:
-            	return null;
+            case PLUS_CARD:
+            	return new PathHolder(pathProperties.getPlusCard().getURL(), PlusCardController.class);
         }
+		return null;
     }
 
     public File directoryChooser(Preference pref) {

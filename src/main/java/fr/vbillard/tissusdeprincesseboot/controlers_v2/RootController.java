@@ -6,10 +6,10 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
-import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
+import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
 import javafx.fxml.FXML;
 import javafx.scene.layout.HBox;
@@ -111,8 +111,9 @@ public class RootController implements IController {
     	mainWindow.getChildren().add(initializer.displayPane(PathEnum.TYPE_TISSU));
     }
     
-    public void displaySelected() {
-    	selectedElement.getChildren().add(initializer.displayPane(PathEnum.TISSU_REQUIS_SELECTED));
+    public void displaySelected(TissuRequisDto tr) {
+    	selectedElement.getChildren().add(initializer.displayPane(PathEnum.TISSU_REQUIS_SELECTED, tr));
+    	displayTissus();
     }
     public void deleteSelected() {
     	selectedElement.getChildren().clear();

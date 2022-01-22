@@ -3,18 +3,23 @@ package fr.vbillard.tissusdeprincesseboot.controlers_v2.projet;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
+import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 @Component
+@Scope("prototype")
 public class ProjetEditListElementController implements IController{
 	
 	@FXML
@@ -51,8 +56,18 @@ public class ProjetEditListElementController implements IController{
 		for (TissuUsed tissu : lstTissus) {
 			Pane tu = initializer.displayPane(PathEnum.TISSU_USED_CARD, tissu);
 			hbox.getChildren().add(tu);
-			
-			
 		}
+		
+		Pane plusCard = initializer.displayPane(PathEnum.PLUS_CARD);
+		plusCard.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() { 
+			@Override 
+			   public void handle(MouseEvent e) { 
+				DevInProgressService.notImplemented(initializer);
+				initializer.getRoot().displaySelected(tissuRequis);
+			   } 
+		});
+		hbox.getChildren().add(plusCard);
+
+		
 	}
 }

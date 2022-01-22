@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="730.0" prefWidth="1620.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controlers_v2.projet.ProjetEditController">
+<AnchorPane prefHeight="730.0" prefWidth="1620.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controlers_v2.projet.ProjetEditController">
    <HBox prefHeight="111.0" prefWidth="1610.0">
       <children>
          <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="114.0" prefWidth="150.0" text="Marque : ">
@@ -41,10 +42,11 @@
             <font>
                <Font size="14.0" />
             </font></Label>
-         <Label fx:id="statut" prefHeight="128.0" prefWidth="200.0" text="Label">
-            <font>
-               <Font size="14.0" />
-            </font></Label>
+         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <children>
+               <ChoiceBox fx:id="status" prefHeight="35.0" prefWidth="152.0" />
+            </children>
+         </HBox>
       </children>
    </HBox>
     <ButtonBar layoutX="290.0" layoutY="793.0" prefHeight="40.0" prefWidth="214.0">
