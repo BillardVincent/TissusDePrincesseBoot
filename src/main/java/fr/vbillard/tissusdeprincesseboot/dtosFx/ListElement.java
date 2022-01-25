@@ -3,7 +3,7 @@ package fr.vbillard.tissusdeprincesseboot.dtosFx;
 import lombok.Data;
 
 @Data
-public class ListElement {
+public class ListElement implements FxDto{
 	
 	private String className;
 	private String reference;

@@ -1,7 +1,11 @@
 package fr.vbillard.tissusdeprincesseboot.controlers_v2.caracteristiques;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
+import fr.vbillard.tissusdeprincesseboot.dtosFx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.model.Tissage;
 import fr.vbillard.tissusdeprincesseboot.services.TissageService;
 import javafx.collections.ObservableList;
@@ -12,8 +16,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 @Component
 public class TissageEditController implements IController {
@@ -146,7 +148,7 @@ public void handleSuppressElement() {
 
 
 	@Override
-	public void setStageInitializer(StageInitializer initializer, Object... data) {
+	public void setStageInitializer(StageInitializer initializer, FxDto... data) {
 
 	}
 }

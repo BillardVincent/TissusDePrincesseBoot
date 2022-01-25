@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController;
+import fr.vbillard.tissusdeprincesseboot.dtosFx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -43,7 +44,7 @@ public class PatronCardController implements IController{
     }
 
     @Override
-    public void setStageInitializer(StageInitializer initializer, Object... data) {
+    public void setStageInitializer(StageInitializer initializer, FxDto... data) {
         if (data.length == 1 && data[0] instanceof PatronDto){
         	patron = (PatronDto)data[0];
             setCardContent();

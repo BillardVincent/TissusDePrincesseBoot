@@ -6,7 +6,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class TissuVariantDto {
+public class TissuVariantDto implements FxDto{
 
 	private IntegerProperty id;
 	private IntegerProperty tissuRequisId;

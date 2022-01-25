@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
-import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
+import fr.vbillard.tissusdeprincesseboot.dtosFx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ListElement;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -41,7 +41,7 @@ public class ListElementController implements IController{
 	}
 	
     @Override
-    public void setStageInitializer(StageInitializer initializer, Object... data) {
+    public void setStageInitializer(StageInitializer initializer, FxDto... data) {
         this.initializer = initializer;
         element = mapper.map(data[0], ListElement.class);
         setElements();

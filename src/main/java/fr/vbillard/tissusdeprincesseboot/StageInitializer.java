@@ -32,6 +32,7 @@ import fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu.TissuCardController
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu.TissuDetailController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu.TissuEditController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu.TissusController;
+import fr.vbillard.tissusdeprincesseboot.dtosFx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.model.Preference;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ImageFormat;
 import fr.vbillard.tissusdeprincesseboot.services.PreferenceService;
@@ -100,7 +101,7 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
     	return rootController;
     }
 
-    public Pane displayPane(PathEnum path, Object... data){
+    public Pane displayPane(PathEnum path, FxDto... data){
         FXMLLoader loader = new FXMLLoader();
         Pane layout = null;
         try {
@@ -116,6 +117,24 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
             e.printStackTrace();
         }
         return layout;
+    }
+    
+    public File directoryChooser(Preference pref) {
+        FileChooser fileChooser = new FileChooser();
+        pref = preferenceService.getPreferences();
+        String path = pref.getPictureLastUploadPath();
+
+        fileChooser.setInitialDirectory(new File(path));
+
+        ImageFormat[] values = ImageFormat.values();
+        String[] extensions = new String[values.length];
+        for (int i = 0; i < values.length; i++) {
+            extensions[i] = values[i].getExtension();
+        }
+        fileChooser.getExtensionFilters()
+                .add(new FileChooser.ExtensionFilter("Images (" + String.join(", ", extensions) + ")", extensions));
+
+        return fileChooser.showOpenDialog(stage);
     }
 
     private PathHolder PathEnumToURL(PathEnum pathEnum) throws IOException {
@@ -167,25 +186,7 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
         }
 		return null;
     }
-
-    public File directoryChooser(Preference pref) {
-        FileChooser fileChooser = new FileChooser();
-        pref = preferenceService.getPreferences();
-        String path = pref.getPictureLastUploadPath();
-
-        fileChooser.setInitialDirectory(new File(path));
-
-        ImageFormat[] values = ImageFormat.values();
-        String[] extensions = new String[values.length];
-        for (int i = 0; i < values.length; i++) {
-            extensions[i] = values[i].getExtension();
-        }
-        fileChooser.getExtensionFilters()
-                .add(new FileChooser.ExtensionFilter("Images (" + String.join(", ", extensions) + ")", extensions));
-
-        return fileChooser.showOpenDialog(stage);
-    }
-
+    
     @AllArgsConstructor
     private class PathHolder{
         URL url;

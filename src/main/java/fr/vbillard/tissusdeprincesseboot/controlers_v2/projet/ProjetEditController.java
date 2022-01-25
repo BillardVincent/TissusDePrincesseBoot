@@ -1,12 +1,12 @@
 package fr.vbillard.tissusdeprincesseboot.controlers_v2.projet;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
+import fr.vbillard.tissusdeprincesseboot.dtosFx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
@@ -48,7 +48,7 @@ public class ProjetEditController implements IController {
 	}
 
 	@Override
-	public void setStageInitializer(StageInitializer initializer, Object... data) {
+	public void setStageInitializer(StageInitializer initializer, FxDto... data) {
 		this.initializer = initializer;
 		if (data.length == 1 && data[0] instanceof ProjetDto) {
 			projet = (ProjetDto) data[0];

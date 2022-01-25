@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
+import fr.vbillard.tissusdeprincesseboot.dtosFx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
@@ -34,7 +35,7 @@ public class ProjetEditListElementController implements IController{
 	}
 	
 	@Override
-	public void setStageInitializer(StageInitializer initializer, Object... data) {
+	public void setStageInitializer(StageInitializer initializer, FxDto... data) {
 		this.initializer = initializer;
         if (data.length > 0 && data[0] instanceof TissuRequisDto){
         	tissuRequis = (TissuRequisDto) data[0];
@@ -63,6 +64,7 @@ public class ProjetEditListElementController implements IController{
 			@Override 
 			   public void handle(MouseEvent e) { 
 				DevInProgressService.notImplemented(initializer);
+				
 				initializer.getRoot().displaySelected(tissuRequis);
 			   } 
 		});
