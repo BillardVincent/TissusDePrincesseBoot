@@ -12,7 +12,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 
-public class TissuRequisDto {
+public class TissuRequisDto implements FxDto{
 
 	private IntegerProperty id;
 	private IntegerProperty longueur;

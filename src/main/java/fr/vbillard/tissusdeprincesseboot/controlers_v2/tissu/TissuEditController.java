@@ -8,28 +8,36 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController;
-import fr.vbillard.tissusdeprincesseboot.model.Photo;
-import fr.vbillard.tissusdeprincesseboot.model.Preference;
-import fr.vbillard.tissusdeprincesseboot.model.enums.ImageFormat;
-import fr.vbillard.tissusdeprincesseboot.services.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javax.imageio.ImageIO;
+
 import org.imgscalr.Scalr;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController;
+import fr.vbillard.tissusdeprincesseboot.dtosFx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.fxCustomElements.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
+import fr.vbillard.tissusdeprincesseboot.model.Photo;
+import fr.vbillard.tissusdeprincesseboot.model.Preference;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
+import fr.vbillard.tissusdeprincesseboot.model.enums.ImageFormat;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
+import fr.vbillard.tissusdeprincesseboot.services.ImageService;
+import fr.vbillard.tissusdeprincesseboot.services.MatiereService;
+import fr.vbillard.tissusdeprincesseboot.services.PreferenceService;
+import fr.vbillard.tissusdeprincesseboot.services.TissageService;
+import fr.vbillard.tissusdeprincesseboot.services.TissuService;
+import fr.vbillard.tissusdeprincesseboot.services.TypeTissuService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -38,11 +46,9 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
-import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.RowConstraints;
-import org.modelmapper.ModelMapper;
-
-import javax.imageio.ImageIO;
 
 @Component
 public class TissuEditController implements IController {
@@ -123,7 +129,7 @@ public class TissuEditController implements IController {
     }
 
     @Override
-    public void setStageInitializer(StageInitializer initializer, Object... data) {
+    public void setStageInitializer(StageInitializer initializer, FxDto... data) {
         this.initializer = initializer;
         if (data.length == 1 && data[0] instanceof TissuDto){
             tissu = (TissuDto) data[0];

@@ -11,7 +11,7 @@ import lombok.Getter;
 
 @Getter
 @Component
-public class FxData implements Cloneable {
+public class FxData  {
 
     private History history;
 
@@ -19,9 +19,10 @@ public class FxData implements Cloneable {
     private int tissuId;
     private int patronId;
     private int projetId;
-    private ObservableList<TissuDto> tissuList;
-    private ObservableList<PatronDto> patronList;
-    private ObservableList<ProjetDto> projetList;
+    private int tissuUsedId;
+    private int tissuRequisId;
+    private int tissuVariantId;
+    
 
     public FxData(History history){
         this.history = history;
@@ -53,26 +54,29 @@ public class FxData implements Cloneable {
 
     }
 
+    public void setTissuUsedId(int tissuUsedId) {
+        this.tissuUsedId = tissuUsedId;
+        history.add(this);
+
+    }
+    
     public void setProjetId(int projetId) {
         this.projetId = projetId;
         history.add(this);
 
     }
+    
+    public void setTissuRequisId(int tissuRequisId) {
+        this.tissuRequisId = tissuRequisId;
+        history.add(this);
 
-    public void setTissuList(ObservableList<TissuDto> tissuList) {
-        this.tissuList = FXCollections.observableList(tissuList);
-        history.add(this);
     }
     
-    public void setPatronList(ObservableList<PatronDto> patronList) {
-        this.patronList = FXCollections.observableList(patronList);
+    public void setTissuVariantId(int tissuVariantId) {
+        this.tissuVariantId = tissuVariantId;
         history.add(this);
+
     }
-    
-    public void setProjetList(ObservableList<ProjetDto> projetList) {
-        this.projetList = FXCollections.observableList(projetList);
-        history.add(this);
-    }
-    
+  
     
 }

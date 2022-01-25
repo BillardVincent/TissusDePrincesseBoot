@@ -6,10 +6,10 @@ import org.springframework.stereotype.Component;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController;
+import fr.vbillard.tissusdeprincesseboot.dtosFx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.services.ProjetService;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 @Component
@@ -40,7 +40,7 @@ public class ProjetDetailController implements IController {
 	}
 
 	@Override
-	public void setStageInitializer(StageInitializer initializer, Object... data) {
+	public void setStageInitializer(StageInitializer initializer, FxDto... data) {
 		this.initializer = initializer;
 		if (data.length == 1 && data[0] instanceof ProjetDto) {
 			projet = (ProjetDto) data[0];

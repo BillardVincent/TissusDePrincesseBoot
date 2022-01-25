@@ -9,7 +9,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 
-public class TissuDto {
+public class TissuDto implements FxDto{
 
 	@Override
 	public String toString() {

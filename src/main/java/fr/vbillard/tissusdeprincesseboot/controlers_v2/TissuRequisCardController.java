@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.dtosFx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -32,7 +33,7 @@ public class TissuRequisCardController implements IController {
 	}
 
 	@Override
-	public void setStageInitializer(StageInitializer initializer, Object... data) {
+	public void setStageInitializer(StageInitializer initializer, FxDto... data) {
 		this.initializer = initializer;
 		if (data.length == 1 && data[0] instanceof TissuRequisDto) {
 			tissuRequis = (TissuRequisDto) data[0];
@@ -61,6 +62,7 @@ public class TissuRequisCardController implements IController {
 	
 	@FXML
 	private void chooseTissuSelected() {
-		rootController.displaySelected(tissuRequis);
+		//TODO 
+		rootController.displaySelected(null, tissuRequis);
 	}
 }

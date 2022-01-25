@@ -16,7 +16,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 
-public class ProjetDto {
+public class ProjetDto implements FxDto{
 
 	
 	private IntegerProperty id;

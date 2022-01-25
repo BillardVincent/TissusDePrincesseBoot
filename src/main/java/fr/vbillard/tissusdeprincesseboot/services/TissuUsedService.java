@@ -30,6 +30,10 @@ public class TissuUsedService extends AbstractService<TissuUsed>{
 	protected JpaRepository getDao() {
 		return dao;
 	}
+	
+	public TissuUsed SaveNew(TissuRequis tr, Projet p, int longueur) {
+		return null;
+	}
 
 	
 

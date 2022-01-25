@@ -3,6 +3,7 @@ package fr.vbillard.tissusdeprincesseboot.controlers_v2;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.dtosFx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
 import javafx.fxml.FXML;
@@ -25,7 +26,7 @@ public class SelectionController implements IController {
 	private TissuRequisDto tissuRequis;
 
 	@Override
-	public void setStageInitializer(StageInitializer initializer, Object... data) {
+	public void setStageInitializer(StageInitializer initializer, FxDto... data) {
 		this.initializer = initializer;
 		if (data.length == 2) {
 			if (data[0] instanceof ProjetDto) {

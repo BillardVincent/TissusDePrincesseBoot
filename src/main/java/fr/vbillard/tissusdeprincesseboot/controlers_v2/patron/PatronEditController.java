@@ -1,14 +1,28 @@
 package fr.vbillard.tissusdeprincesseboot.controlers_v2.patron;
 
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
+
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import fr.vbillard.tissusdeprincesseboot.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
+import fr.vbillard.tissusdeprincesseboot.dtosFx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuVariantDto;
 import fr.vbillard.tissusdeprincesseboot.fxCustomElements.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
-import fr.vbillard.tissusdeprincesseboot.services.*;
+import fr.vbillard.tissusdeprincesseboot.services.MatiereService;
+import fr.vbillard.tissusdeprincesseboot.services.PatronService;
+import fr.vbillard.tissusdeprincesseboot.services.TissageService;
+import fr.vbillard.tissusdeprincesseboot.services.TissuRequisService;
+import fr.vbillard.tissusdeprincesseboot.services.TissuVariantService;
+import fr.vbillard.tissusdeprincesseboot.services.TypeTissuService;
 import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
 import fr.vbillard.tissusdeprincesseboot.utils.Utils;
 import javafx.collections.FXCollections;
@@ -17,20 +31,20 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Component;
-
-import fr.vbillard.tissusdeprincesseboot.StageInitializer;
-import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
-
-import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 @Component
 public class PatronEditController implements IController{
@@ -433,7 +447,7 @@ public class PatronEditController implements IController{
 	}
 
 	@Override
-	public void setStageInitializer(StageInitializer initializer, Object... data) {
+	public void setStageInitializer(StageInitializer initializer, FxDto... data) {
 		this.initializer = initializer;
 
 		if (data.length == 0 || data[0] == null){
