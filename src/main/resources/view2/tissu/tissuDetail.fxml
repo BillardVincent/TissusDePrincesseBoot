@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="747.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu.TissuDetailController">
+<AnchorPane prefHeight="747.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu.TissuDetailController">
     <GridPane layoutX="54.0" layoutY="14.0" prefHeight="515.0" prefWidth="578.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="236.0" minWidth="10.0" prefWidth="155.0" />
@@ -110,6 +110,7 @@
     <ButtonBar layoutX="304.0" layoutY="557.0" prefHeight="40.0" prefWidth="214.0">
         <buttons>
             <Button mnemonicParsing="false" onAction="#edit" prefHeight="25.0" prefWidth="123.0" text="Editer" />
+         <Button fx:id="addToButton" mnemonicParsing="false" onAction="#addTo" prefHeight="25.0" prefWidth="123.0" text="Editer" />
         </buttons>
     </ButtonBar>
    <padding>

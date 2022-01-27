@@ -2,10 +2,13 @@ package fr.vbillard.tissusdeprincesseboot.services;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import fr.vbillard.tissusdeprincesseboot.dao.TissuUsedDao;
+import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
+import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
@@ -16,6 +19,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class TissuUsedService extends AbstractService<TissuUsed>{
 	
+	private ModelMapper mapper; 
 	private TissuUsedDao dao;
 
 	public List<TissuUsed> getTissuUsedByTissuRequisAndProjet(TissuRequis tr, Projet p) {
@@ -33,6 +37,10 @@ public class TissuUsedService extends AbstractService<TissuUsed>{
 	
 	public TissuUsed SaveNew(TissuRequis tr, Projet p, int longueur) {
 		return null;
+	}
+
+	public List<TissuUsed> getTissuUsedByTissuRequisAndProjet(TissuRequisDto tissuRequis, ProjetDto projet) {
+		return getTissuUsedByTissuRequisAndProjet(mapper.map(tissuRequis, TissuRequis.class), mapper.map(projet, Projet.class));
 	}
 
 	

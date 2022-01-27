@@ -8,7 +8,9 @@ import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
+import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.services.ProjetService;
+import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -40,10 +42,12 @@ public class ProjetDetailController implements IController {
 	}
 
 	@Override
-	public void setStageInitializer(StageInitializer initializer, FxDto... data) {
+	public void setStageInitializer(StageInitializer initializer, FxData data) {
 		this.initializer = initializer;
-		if (data.length == 1 && data[0] instanceof ProjetDto) {
-			projet = (ProjetDto) data[0];
+		if (data == null) {
+			throw new IllegalData();
+		}
+		projet = data.getProjet();
 			if (projet != null) {
 				descriptionProjetPanLabel.setText(projet.getDescription());
 				marqueProjetPanLabel.setText(projet.getPatron().getMarque());
@@ -58,7 +62,7 @@ public class ProjetDetailController implements IController {
 				typeVetementPanProjetLabel.setText("");
 				projetStatusPanLabel.setText("");
 			}
-		}
+		
 
 		// setButtons();
 	}

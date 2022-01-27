@@ -10,9 +10,11 @@ import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
+import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.services.ImageService;
+import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -59,11 +61,13 @@ public class ProjetCardController implements IController{
     }
 
     @Override
-    public void setStageInitializer(StageInitializer initializer, FxDto... data) {
-        if (data.length == 1 && data[0] instanceof ProjetDto){
-        	projet = (ProjetDto)data[0];
+	public void setStageInitializer(StageInitializer initializer, FxData data) {
+		if (data == null && data.getProjet() == null) {
+			throw new IllegalData();
+		}
+		projet = data.getProjet();
             setCardContent();
-        }
+        
     }
 
     private void setCardContent() {

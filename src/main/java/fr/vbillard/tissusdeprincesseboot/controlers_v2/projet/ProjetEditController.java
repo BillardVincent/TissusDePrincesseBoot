@@ -9,9 +9,11 @@ import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
+import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
 import fr.vbillard.tissusdeprincesseboot.services.ProjetService;
 import fr.vbillard.tissusdeprincesseboot.services.TissuRequisService;
+import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -48,11 +50,13 @@ public class ProjetEditController implements IController {
 	}
 
 	@Override
-	public void setStageInitializer(StageInitializer initializer, FxDto... data) {
+	public void setStageInitializer(StageInitializer initializer, FxData data) {
 		this.initializer = initializer;
-		if (data.length == 1 && data[0] instanceof ProjetDto) {
-			projet = (ProjetDto) data[0];
+		if (data == null && data.getProjet() == null) {
+			throw new IllegalData();
 		}
+		projet = data.getProjet();
+		
 		setPane();
 	}
 
@@ -65,7 +69,10 @@ public class ProjetEditController implements IController {
 		description.setText(projet.getDescription());
 		List<TissuRequisDto> lst = tissuRequisService.getAllTissuRequisDtoByPatron(projet.getPatron().getId());
 		for (TissuRequisDto tr : lst) {
-			Pane element = initializer.displayPane(PathEnum.PROJET_EDIT_LIST_ELEMENT, tr);
+			FxData data = new FxData();
+			data.setTissuRequis(tr);
+			data.setProjet(projet);
+			Pane element = initializer.displayPane(PathEnum.PROJET_EDIT_LIST_ELEMENT, data);
 			scrollContent.getChildren().add(element);
 		}
 	}

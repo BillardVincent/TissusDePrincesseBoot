@@ -10,8 +10,10 @@ import fr.vbillard.tissusdeprincesseboot.dtosFx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
+import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
 import fr.vbillard.tissusdeprincesseboot.services.ProjetService;
+import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -52,10 +54,12 @@ public class PatronDetailController implements IController {
 	}
 
 	@Override
-	public void setStageInitializer(StageInitializer initializer, FxDto... data) {
+	public void setStageInitializer(StageInitializer initializer, FxData data) {
 		this.initializer = initializer;
-		if (data.length == 1 && data[0] instanceof PatronDto) {
-			patron = (PatronDto) data[0];
+		if (data == null && data.getPatron() == null) {
+			throw new IllegalData();
+		}
+		patron = data.getPatron();
 
 			marquePatronLabel.setText(patron.getMarque());
 			modelPatronLabel.setText(patron.getModele());
@@ -65,12 +69,14 @@ public class PatronDetailController implements IController {
 			root.setSpacing(10);
 
 			for (TissuRequisDto t : patron.getTissusRequis()) {
-				Pane element = initializer.displayPane(PathEnum.LIST_ELEMENT, t);
+				FxData fxData = new FxData();
+				fxData.setTissuRequis(t);
+				Pane element = initializer.displayPane(PathEnum.LIST_ELEMENT, fxData);
 				root.getChildren().add(element);
 			}
 			listFournitures.setContent(root);
 
-		}
+		
 	}
 
 	public void edit() {

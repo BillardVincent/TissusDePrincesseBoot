@@ -4,9 +4,9 @@ import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.services.MatiereService;
+import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -160,7 +160,7 @@ public class MatiereEditController implements IController {
 	}
 
 	@Override
-	public void setStageInitializer(StageInitializer initializer, FxDto... data) {
+	public void setStageInitializer(StageInitializer initializer, FxData data) {
 
 	}
 }

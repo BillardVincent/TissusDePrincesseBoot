@@ -8,6 +8,7 @@ import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.model.Tissage;
 import fr.vbillard.tissusdeprincesseboot.services.TissageService;
+import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -148,7 +149,7 @@ public void handleSuppressElement() {
 
 
 	@Override
-	public void setStageInitializer(StageInitializer initializer, FxDto... data) {
+	public void setStageInitializer(StageInitializer initializer, FxData data) {
 
 	}
 }

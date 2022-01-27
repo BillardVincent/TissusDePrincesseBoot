@@ -14,6 +14,7 @@ import fr.vbillard.tissusdeprincesseboot.dtosFx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuVariantDto;
+import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.fxCustomElements.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
@@ -24,6 +25,7 @@ import fr.vbillard.tissusdeprincesseboot.services.TissuRequisService;
 import fr.vbillard.tissusdeprincesseboot.services.TissuVariantService;
 import fr.vbillard.tissusdeprincesseboot.services.TypeTissuService;
 import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
+import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -447,15 +449,15 @@ public class PatronEditController implements IController{
 	}
 
 	@Override
-	public void setStageInitializer(StageInitializer initializer, FxDto... data) {
+	public void setStageInitializer(StageInitializer initializer, FxData data) {
 		this.initializer = initializer;
 
-		if (data.length == 0 || data[0] == null){
+		if (data == null || data.getPatron() == null){
 			patron = mapper.map(new Patron("", "", "", "", "", null), PatronDto.class);
 			setDisabledButton();
 
-		} else if (data.length == 1 && data[0] instanceof PatronDto) {
-			patron = (PatronDto) data[0];
+		} else {
+			patron = data.getPatron();
 
 			setDisabledButton();
 

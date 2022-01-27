@@ -6,12 +6,12 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
+import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -44,7 +44,6 @@ public class RootController implements IController {
 	private ProjetDto projetSelected;
 
     public RootController (){
-    	deleteSelectedButton.setVisible(false);
     }
 
     @FXML
@@ -55,12 +54,16 @@ public class RootController implements IController {
 
     public void displayTissusDetails(TissuDto tissu){
     	beforeDisplay(tissuMenu);
-        mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSUS_DETAILS, tissu));
+    	FxData fxData = new FxData();
+    	fxData.setTissu(tissu);
+        mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSUS_DETAILS, fxData));
     }
     
     public void displayTissusEdit(TissuDto tissu){
     	beforeDisplay(tissuMenu);
-        mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSUS_EDIT, tissu));
+    	FxData fxData = new FxData();
+    	fxData.setTissu(tissu);
+        mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSUS_EDIT, fxData));
     }
 
     @FXML
@@ -71,12 +74,15 @@ public class RootController implements IController {
     
     public void displayProjetDetails(ProjetDto projet){
     	beforeDisplay(projetMenu);
-        mainWindow.getChildren().add(initializer.displayPane(PathEnum.PROJET_DETAILS, projet));
+    	FxData fxData = new FxData();
+    	fxData.setProjet(projet);
+        mainWindow.getChildren().add(initializer.displayPane(PathEnum.PROJET_DETAILS, fxData));
     }
     
     public void displayProjetEdit(ProjetDto projet){
-    	beforeDisplay(projetMenu);
-        mainWindow.getChildren().add(initializer.displayPane(PathEnum.PROJET_EDIT, projet));
+    	FxData fxData = new FxData();
+    	fxData.setProjet(projet);
+    	mainWindow.getChildren().add(initializer.displayPane(PathEnum.PROJET_EDIT, fxData));
     }
 
     @FXML
@@ -87,12 +93,16 @@ public class RootController implements IController {
     
     public void displayPatronDetails(PatronDto patron) {
     	beforeDisplay(patronMenu);
-        mainWindow.getChildren().add(initializer.displayPane(PathEnum.PATRON_DETAILS, patron));
+    	FxData fxData = new FxData();
+    	fxData.setPatron(patron);
+        mainWindow.getChildren().add(initializer.displayPane(PathEnum.PATRON_DETAILS, fxData));
     }
     
     public void displayPatronEdit(PatronDto patron) {
     	beforeDisplay(patronMenu);
-        mainWindow.getChildren().add(initializer.displayPane(PathEnum.PATRON_EDIT, patron));
+      	FxData fxData = new FxData();
+    	fxData.setPatron(patron);
+        mainWindow.getChildren().add(initializer.displayPane(PathEnum.PATRON_EDIT, fxData));
     }
 
     @FXML
@@ -116,7 +126,10 @@ public class RootController implements IController {
     public void displaySelected(ProjetDto projet, TissuRequisDto tr ) {
     	tissuRequisSelected = tr;
     	projetSelected = projet;
-    	selectedElement.getChildren().add(initializer.displayPane(PathEnum.TISSU_REQUIS_SELECTED, tr, projet));
+      	FxData fxData = new FxData();
+    	fxData.setTissuRequis(tr);
+    	fxData.setProjet(projet);
+    	selectedElement.getChildren().add(initializer.displayPane(PathEnum.TISSU_REQUIS_SELECTED, fxData));
     	beforeDisplay(tissuMenu);
         mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSUS));
     	deleteSelectedButton.setVisible(true);
@@ -146,9 +159,11 @@ public class RootController implements IController {
     }
 
     @Override
-    public void setStageInitializer(StageInitializer initializer, FxDto... data) {
+    public void setStageInitializer(StageInitializer initializer, FxData data) {
         this.initializer = initializer;
     	menuElements = Arrays.asList(tissuMenu,fournitureMenu, patronMenu, projetMenu);
+    	deleteSelectedButton.setVisible(false);
+
 
     }
 
@@ -158,7 +173,7 @@ public class RootController implements IController {
 
 	public void addToSelected(TissuDto tissu, int longueur) {
 		TissuUsed tissuUsed = new TissuUsed();
-		tissuUsed.setTissu(tissu);
+		//tissuUsed.setTissu(tissu);
 		
 		
 	}

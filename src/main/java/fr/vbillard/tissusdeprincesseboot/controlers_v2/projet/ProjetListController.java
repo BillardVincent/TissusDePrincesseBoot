@@ -1,11 +1,14 @@
 package fr.vbillard.tissusdeprincesseboot.controlers_v2.projet;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.ViewListController;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.services.ProjetService;
+import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
@@ -26,9 +29,11 @@ public class ProjetListController extends ViewListController{
     @Override
     protected void setElements() {
         cardPane.getChildren().clear();
-        initializer.getData().setProjetList(projetService.getObservablePage(page, PAGE_SIZE));
-        for (ProjetDto t : initializer.getData().getProjetList()){
-            Pane card = initializer.displayPane(PathEnum.PROJET_CARD, t);
+        List<ProjetDto> lst = projetService.getObservablePage(page, PAGE_SIZE);
+        for (ProjetDto p : lst){
+        	FxData data = new FxData();
+        	data.setProjet(p);
+            Pane card = initializer.displayPane(PathEnum.PROJET_CARD, data);
             cardPane.getChildren().add(card);
         }
     }

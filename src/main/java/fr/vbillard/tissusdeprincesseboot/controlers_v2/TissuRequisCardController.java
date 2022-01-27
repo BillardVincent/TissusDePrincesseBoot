@@ -4,8 +4,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
+import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
+import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -33,10 +34,12 @@ public class TissuRequisCardController implements IController {
 	}
 
 	@Override
-	public void setStageInitializer(StageInitializer initializer, FxDto... data) {
+	public void setStageInitializer(StageInitializer initializer, FxData data) {
 		this.initializer = initializer;
-		if (data.length == 1 && data[0] instanceof TissuRequisDto) {
-			tissuRequis = (TissuRequisDto) data[0];
+		if (data == null && data.getTissuRequis() == null) {
+			throw new IllegalData();
+		}
+			tissuRequis = data.getTissuRequis();
 			if (tissuRequis != null) {
 				longueurLabel.setText(Integer.toString(tissuRequis.getLongueur()));
 				laizeLabel.setText(Integer.toString(tissuRequis.getLaize()));
@@ -51,7 +54,7 @@ public class TissuRequisCardController implements IController {
 			}
 			
 			variantsLabel.setText(StringUtils.join(tissuRequis.getVariant(), " - "));
-		}
+		
 		setPane();
 	}
 

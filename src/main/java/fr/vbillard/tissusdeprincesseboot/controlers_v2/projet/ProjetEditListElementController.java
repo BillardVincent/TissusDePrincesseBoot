@@ -8,10 +8,12 @@ import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
+import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
+import fr.vbillard.tissusdeprincesseboot.services.TissuUsedService;
 import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
+import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -30,32 +32,39 @@ public class ProjetEditListElementController implements IController{
 	
 	private TissuRequisDto tissuRequis;
 	private List<TissuUsed> lstTissus;
+	private TissuUsedService tissuUsedService;
 	
-	public ProjetEditListElementController() {
+	public ProjetEditListElementController(TissuUsedService tissuUsedService) {
+	this.tissuUsedService = tissuUsedService;
 	}
 	
 	@Override
-	public void setStageInitializer(StageInitializer initializer, FxDto... data) {
+	public void setStageInitializer(StageInitializer initializer, FxData data) {
 		this.initializer = initializer;
-        if (data.length > 0 && data[0] instanceof TissuRequisDto){
-        	tissuRequis = (TissuRequisDto) data[0];
+        if (data == null || data.getTissuRequis() == null || data.getProjet() == null) {
+        	throw new IllegalData();
         }
-        lstTissus = new ArrayList<TissuUsed>();
-        if (data.length==1) {
-        	for (int i = 1; i< data.length; i++) {
-        		 lstTissus.add((TissuUsed) data[i]);
-        	}
-        	
-        }
+        
+        tissuRequis = data.getTissuRequis();
+        
+        lstTissus = tissuUsedService.getTissuUsedByTissuRequisAndProjet(tissuRequis, data.getProjet());
+        
+        
+        
         setPane();
 	}
 
 	private void setPane() {
-		Pane tr = initializer.displayPane(PathEnum.TISSU_REQUIS, tissuRequis);
+		FxData data = new FxData();
+		data.setTissuRequis(tissuRequis);
+		Pane tr = initializer.displayPane(PathEnum.TISSU_REQUIS, data);
 		hbox.getChildren().add(tr);
 
 		for (TissuUsed tissu : lstTissus) {
-			Pane tu = initializer.displayPane(PathEnum.TISSU_USED_CARD, tissu);
+			FxData subData = new FxData();
+			subData.setTissuRequis(tissuRequis);
+			subData.setTissuUsed(tissu);
+			Pane tu = initializer.displayPane(PathEnum.TISSU_USED_CARD, subData);
 			hbox.getChildren().add(tu);
 		}
 		
@@ -65,7 +74,7 @@ public class ProjetEditListElementController implements IController{
 			   public void handle(MouseEvent e) { 
 				DevInProgressService.notImplemented(initializer);
 				
-				initializer.getRoot().displaySelected(tissuRequis);
+				//initializer.getRoot().displaySelected(data);
 			   } 
 		});
 		hbox.getChildren().add(plusCard);
