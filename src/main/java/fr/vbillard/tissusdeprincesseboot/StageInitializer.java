@@ -77,7 +77,7 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
             Parent rootLayout = rootLoader.load();
 
             rootController = rootLoader.getController();
-            rootController.setStageInitializer(this);
+            rootController.setStageInitializer(this, null);
 
             stage = event.getStage();
             Scene scene = new Scene(rootLayout);
@@ -101,7 +101,10 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
     	return rootController;
     }
 
-    public Pane displayPane(PathEnum path, FxDto... data){
+    public Pane displayPane(PathEnum path){
+    	return displayPane(path, null);
+    }
+    public Pane displayPane(PathEnum path, FxData data){
         FXMLLoader loader = new FXMLLoader();
         Pane layout = null;
         try {

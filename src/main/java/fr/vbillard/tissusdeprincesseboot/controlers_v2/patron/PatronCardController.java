@@ -9,6 +9,8 @@ import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
+import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
+import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -44,11 +46,13 @@ public class PatronCardController implements IController{
     }
 
     @Override
-    public void setStageInitializer(StageInitializer initializer, FxDto... data) {
-        if (data.length == 1 && data[0] instanceof PatronDto){
-        	patron = (PatronDto)data[0];
+	public void setStageInitializer(StageInitializer initializer, FxData data) {
+		if (data == null && data.getPatron() == null) {
+			throw new IllegalData();
+		}
+		patron = data.getPatron();
             setCardContent();
-        }
+        
     }
 
     private void setCardContent() {

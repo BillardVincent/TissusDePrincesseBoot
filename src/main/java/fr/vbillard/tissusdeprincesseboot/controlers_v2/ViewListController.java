@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.FxDto;
+import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -35,7 +35,7 @@ public abstract class ViewListController implements IController{
 	protected abstract void setElements();
 	
     @Override
-    public void setStageInitializer(StageInitializer initializer, FxDto... data) {
+    public void setStageInitializer(StageInitializer initializer, FxData data) {
         page = 0;
         this.initializer = initializer;
         setElements();

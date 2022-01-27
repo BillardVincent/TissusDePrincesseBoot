@@ -19,8 +19,8 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
+import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.fxCustomElements.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
@@ -34,6 +34,7 @@ import fr.vbillard.tissusdeprincesseboot.services.PreferenceService;
 import fr.vbillard.tissusdeprincesseboot.services.TissageService;
 import fr.vbillard.tissusdeprincesseboot.services.TissuService;
 import fr.vbillard.tissusdeprincesseboot.services.TypeTissuService;
+import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -129,10 +130,13 @@ public class TissuEditController implements IController {
     }
 
     @Override
-    public void setStageInitializer(StageInitializer initializer, FxDto... data) {
+    public void setStageInitializer(StageInitializer initializer, FxData data) {
         this.initializer = initializer;
-        if (data.length == 1 && data[0] instanceof TissuDto){
-            tissu = (TissuDto) data[0];
+        
+        if (data==null && data.getTissu()==null){
+        	throw new IllegalData();
+		}
+            tissu = data.getTissu();
             if (tissu == null || tissu.getChuteProperty() == null) {
                 tissu = mapper.map(new Tissu(0, "", 0, 0, "", null, typeTissuService.getAll().get(0), 0,
                         UnitePoids.NON_RENSEIGNE, false, "", null, false), TissuDto.class);
@@ -170,7 +174,7 @@ public class TissuEditController implements IController {
             laize = laizeField.getValue();
             poids = poidsField.getValue();
 		}
-    }
+    
 
     @FXML
     private void initialize() {
