@@ -22,6 +22,7 @@ import fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.fxCustomElements.GlyphIconUtil;
+import fr.vbillard.tissusdeprincesseboot.fxCustomElements.IntegerSpinner;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Preference;
@@ -117,8 +118,9 @@ public class TissuEditController implements IController {
 	private TissuService tissuService;
 	private ImageService imageService;
  	private PreferenceService preferenceService;
+ 	private IntegerSpinner integerSpinner;
 
-    public TissuEditController(ImageService imageService, PreferenceService preferenceService, ModelMapper mapper, TissuService tissuService, TypeTissuService typeTissuService, MatiereService matiereService, TissageService tissageService, RootController root) {
+    public TissuEditController(IntegerSpinner integerSpinner, ImageService imageService, PreferenceService preferenceService, ModelMapper mapper, TissuService tissuService, TypeTissuService typeTissuService, MatiereService matiereService, TissageService tissageService, RootController root) {
         this.mapper = mapper;
 		this.imageService = imageService;
         this.tissuService = tissuService;
@@ -127,6 +129,7 @@ public class TissuEditController implements IController {
         this.tissageService = tissageService;
 		this.preferenceService = preferenceService;
 		this.root = root;
+		this.integerSpinner = integerSpinner;
     }
 
     @Override
@@ -186,13 +189,18 @@ public class TissuEditController implements IController {
         generateReferenceButton.setGraphic(magicIcon);
         generateReferenceButton.setTooltip(new Tooltip("Générer une référence automatiquement"));
 
-        longueurField.valueProperty().addListener((obs, oldValue, newValue) -> longueur = newValue);
+        longueurField.valueProperty().addListener((obs, oldValue, newValue) -> {
+        	longueur = newValue;
+        });
+        
+        longueurField.getEditor().setTextFormatter(integerSpinner.getFormatter());
         longueurField.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
                 longueurField.increment(0); // won't change value, but will commit editor
                 longueur = longueurField.getValue();
             }
         });
+        laizeField.getEditor().setTextFormatter(integerSpinner.getFormatter());
         laizeField.valueProperty().addListener((obs, oldValue, newValue) -> laize = newValue);
         laizeField.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
@@ -200,6 +208,7 @@ public class TissuEditController implements IController {
                 laize = laizeField.getValue();
             }
         });
+        poidsField.getEditor().setTextFormatter(integerSpinner.getFormatter());
         poidsField.valueProperty().addListener((obs, oldValue, newValue) -> poids = newValue);
         poidsField.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
@@ -375,4 +384,6 @@ public class TissuEditController implements IController {
 	private void pictureExpend(){
 
 	}
+	
+	
 }

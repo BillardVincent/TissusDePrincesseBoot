@@ -123,7 +123,7 @@ public class TissuDetailController implements IController {
 	}
 
 	public void addTo() {
-		DevInProgressService.notImplemented(initializer);
-		rootController.addToSelected(tissu, 0);
+		rootController.addToSelected(tissu);
+		 
 	}
 }

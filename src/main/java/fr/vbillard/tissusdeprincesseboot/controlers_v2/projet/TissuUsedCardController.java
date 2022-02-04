@@ -13,6 +13,7 @@ import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
+import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 import fr.vbillard.tissusdeprincesseboot.services.ImageService;
 import fr.vbillard.tissusdeprincesseboot.utils.ConstantesMetier;
 import fr.vbillard.tissusdeprincesseboot.utils.Constants;
@@ -56,6 +57,8 @@ public class TissuUsedCardController implements IController {
 
 	private ModelMapper mapper;
 
+	private TissuUsed tissuUsed;
+	
 	private TissuDto tissu;
 
 	public TissuUsedCardController(ImageService imageService, RootController rootController, ModelMapper mapper) {
@@ -66,16 +69,17 @@ public class TissuUsedCardController implements IController {
 
 	@Override
 	public void setStageInitializer(StageInitializer initializer, FxData data) {
-		if (data == null && data.getTissu() == null) {
+		if (data == null || data.getTissuUsed() == null) {
 			throw new IllegalData();
 		}
-		tissu = data.getTissu();
+		tissuUsed = data.getTissuUsed();
+		tissu = mapper.map(tissuUsed.getTissu(), TissuDto.class);
 		setCardContent();
 	}
 
 	private void setCardContent() {
 		description.setText(tissu.getDescription());
-		longueur.setText(String.valueOf(tissu.getLongueur()));
+		longueur.setText(String.valueOf(tissuUsed.getLongueur()));
 		laize.setText(String.valueOf(tissu.getLaize()));
 		matiere.setText(tissu.getMatiere());
 		type.setText(tissu.getType());

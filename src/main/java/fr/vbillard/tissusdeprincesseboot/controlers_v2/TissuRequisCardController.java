@@ -27,6 +27,8 @@ public class TissuRequisCardController implements IController {
 	
 	private RootController rootController;
 	
+	private FxData fxData;
+	
 	
 
 	public TissuRequisCardController(RootController rootController) {
@@ -66,6 +68,6 @@ public class TissuRequisCardController implements IController {
 	@FXML
 	private void chooseTissuSelected() {
 		//TODO 
-		rootController.displaySelected(null, tissuRequis);
+		rootController.displaySelected(fxData);
 	}
 }

@@ -1,18 +1,16 @@
 package fr.vbillard.tissusdeprincesseboot.utils;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-import fr.vbillard.tissusdeprincesseboot.dtosFx.ListElement;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuVariantDto;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+@Data
 @Component
 public class FxData  {
 
@@ -23,6 +21,7 @@ public class FxData  {
     private TissuUsed tissuUsed;
     private TissuRequisDto tissuRequis;
     private TissuVariantDto tissuVariant;
+    private int longueurRequise;
 
     public FxData getCopy() {
         try {
@@ -33,38 +32,7 @@ public class FxData  {
         }
     }
 
-    public void setPath(PathEnum path) {
-        this.path = path;
-    }
 
-    public void setTissu(TissuDto tissu) {
-        this.tissu = tissu;
-
-    }
-
-    public void setPatron(PatronDto patron) {
-        this.patron = patron;
-
-    }
-
-    public void setTissuUsed(TissuUsed tissuUsed) {
-        this.tissuUsed = tissuUsed;
-
-    }
-    
-    public void setProjet(ProjetDto projet) {
-        this.projet = projet;
-
-    }
-    
-    public void setTissuRequis(TissuRequisDto tissuRequis) {
-        this.tissuRequis = tissuRequis;
-
-    }
-    
-    public void setTissuVariant(TissuVariantDto tissuVariant) {
-        this.tissuVariant = tissuVariant;
-    }
 
 
 }

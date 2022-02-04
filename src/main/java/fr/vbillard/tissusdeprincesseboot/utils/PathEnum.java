@@ -25,6 +25,7 @@ public enum PathEnum {
     PROJET_EDIT_LIST_ELEMENT,
     TISSU_USED_CARD,
     TISSU_REQUIS_SELECTED,
-    PLUS_CARD
+    PLUS_CARD,
+    SET_LONGUEUR,
 
 }
