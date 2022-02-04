@@ -1,23 +1,24 @@
 package fr.vbillard.tissusdeprincesseboot.mappers.toDto;
 
+import org.modelmapper.AbstractConverter;
+import org.modelmapper.TypeMap;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import com.github.rozidan.springboot.modelmapper.TypeMapConfigurer;
+
+import fr.vbillard.tissusdeprincesseboot.dao.TissuUsedDao;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
-import fr.vbillard.tissusdeprincesseboot.services.TissuUsedService;
 import lombok.AllArgsConstructor;
-import org.modelmapper.AbstractConverter;
-import org.modelmapper.TypeMap;
 
 @Component
 @AllArgsConstructor
 public class TissuToDto extends TypeMapConfigurer<Tissu, TissuDto> {
 
     @Lazy
-    TissuUsedService tUsedService ;
+    TissuUsedDao tUsedService ;
 
     @Override
     public void configure(TypeMap<Tissu, TissuDto> typeMap) {
@@ -33,7 +34,8 @@ public class TissuToDto extends TypeMapConfigurer<Tissu, TissuDto> {
 
             int longueurRestante = source.getLongueur();
             for (
-                    TissuUsed tu : tUsedService.getByTissu(source)) {
+            		// todo only if project is in particular state
+                TissuUsed tu : tUsedService.getAllByTissu(source)) {
                 longueurRestante -= tu.getLongueur();
 
             }

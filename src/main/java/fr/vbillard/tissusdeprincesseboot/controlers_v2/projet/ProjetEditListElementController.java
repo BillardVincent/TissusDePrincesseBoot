@@ -23,40 +23,37 @@ import javafx.scene.layout.Pane;
 
 @Component
 @Scope("prototype")
-public class ProjetEditListElementController implements IController{
-	
+public class ProjetEditListElementController implements IController {
+
 	@FXML
 	private HBox hbox;
-	
+
 	private StageInitializer initializer;
-	
+
 	private TissuRequisDto tissuRequis;
 	private List<TissuUsed> lstTissus;
 	private TissuUsedService tissuUsedService;
-	
+	private FxData data;
+
 	public ProjetEditListElementController(TissuUsedService tissuUsedService) {
-	this.tissuUsedService = tissuUsedService;
+		this.tissuUsedService = tissuUsedService;
 	}
-	
+
 	@Override
 	public void setStageInitializer(StageInitializer initializer, FxData data) {
 		this.initializer = initializer;
-        if (data == null || data.getTissuRequis() == null || data.getProjet() == null) {
-        	throw new IllegalData();
-        }
-        
-        tissuRequis = data.getTissuRequis();
-        
-        lstTissus = tissuUsedService.getTissuUsedByTissuRequisAndProjet(tissuRequis, data.getProjet());
-        
-        
-        
-        setPane();
+		if (data == null || data.getTissuRequis() == null || data.getProjet() == null) {
+			throw new IllegalData();
+		}
+		this.data = data;
+		tissuRequis = data.getTissuRequis();
+
+		lstTissus = tissuUsedService.getTissuUsedByTissuRequisAndProjet(tissuRequis, data.getProjet());
+
+		setPane();
 	}
 
 	private void setPane() {
-		FxData data = new FxData();
-		data.setTissuRequis(tissuRequis);
 		Pane tr = initializer.displayPane(PathEnum.TISSU_REQUIS, data);
 		hbox.getChildren().add(tr);
 
@@ -67,18 +64,15 @@ public class ProjetEditListElementController implements IController{
 			Pane tu = initializer.displayPane(PathEnum.TISSU_USED_CARD, subData);
 			hbox.getChildren().add(tu);
 		}
-		
+
 		Pane plusCard = initializer.displayPane(PathEnum.PLUS_CARD);
-		plusCard.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() { 
-			@Override 
-			   public void handle(MouseEvent e) { 
-				DevInProgressService.notImplemented(initializer);
-				
-				//initializer.getRoot().displaySelected(data);
-			   } 
+		plusCard.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				initializer.getRoot().displaySelected(data);
+			}
 		});
 		hbox.getChildren().add(plusCard);
 
-		
 	}
 }

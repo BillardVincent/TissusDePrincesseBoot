@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.FxmlPathProperties;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.IController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.IModalController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.ListElementController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.RootController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.TissuRequisCardController;
@@ -18,6 +19,7 @@ import fr.vbillard.tissusdeprincesseboot.controlers_v2.caracteristiques.MatiereE
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.caracteristiques.TissageEditController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.caracteristiques.TypeEditController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.common.PlusCardController;
+import fr.vbillard.tissusdeprincesseboot.controlers_v2.common.SetLongueurDialogController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.patron.PatronCardController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.patron.PatronDetailController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.patron.PatronEditController;
@@ -32,19 +34,21 @@ import fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu.TissuCardController
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu.TissuDetailController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu.TissuEditController;
 import fr.vbillard.tissusdeprincesseboot.controlers_v2.tissu.TissusController;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.model.Preference;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ImageFormat;
 import fr.vbillard.tissusdeprincesseboot.services.PreferenceService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.History;
+import fr.vbillard.tissusdeprincesseboot.utils.Modale;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.AllArgsConstructor;
 
@@ -122,6 +126,40 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
         return layout;
     }
     
+    public FxData displayModale(PathEnum path, FxData data, String title) {
+    	try {
+
+            FXMLLoader loader = new FXMLLoader();
+            PathHolder holder = PathEnumToURL(path);
+
+            loader.setLocation(holder.url);
+            loader.setControllerFactory(applicationContext::getBean);
+
+            AnchorPane page = loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.getIcons().add(icon);
+            dialogStage.setTitle(title);
+
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            
+            IModalController controller = loader.getController();
+            controller.setStage(dialogStage, data);
+
+            dialogStage.showAndWait();
+
+           
+            return controller.result();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
     public File directoryChooser(Preference pref) {
         FileChooser fileChooser = new FileChooser();
         pref = preferenceService.getPreferences();
@@ -186,6 +224,9 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
             	return new PathHolder(pathProperties.getTissuRequisSelected().getURL(), TissuRequisSelectedController.class);
             case PLUS_CARD:
             	return new PathHolder(pathProperties.getPlusCard().getURL(), PlusCardController.class);
+            case SET_LONGUEUR:
+            	return new PathHolder(pathProperties.getLongueur().getURL(), SetLongueurDialogController.class);
+
         }
 		return null;
     }

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="730.0" prefWidth="1620.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controlers_v2.projet.ProjetEditController">
+<AnchorPane prefHeight="730.0" prefWidth="1620.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controlers_v2.projet.ProjetEditController">
    <HBox prefHeight="111.0" prefWidth="1610.0">
       <children>
          <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="114.0" prefWidth="150.0" text="Marque : ">

@@ -3,6 +3,7 @@ package fr.vbillard.tissusdeprincesseboot.controlers_v2;
 import java.util.Arrays;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
@@ -10,8 +11,14 @@ import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
+import fr.vbillard.tissusdeprincesseboot.model.Projet;
+import fr.vbillard.tissusdeprincesseboot.model.Tissu;
+import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
+import fr.vbillard.tissusdeprincesseboot.services.TissuUsedService;
+import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
+import fr.vbillard.tissusdeprincesseboot.utils.Modale;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -42,8 +49,12 @@ public class RootController implements IController {
     private StageInitializer initializer;
 	private TissuRequisDto tissuRequisSelected;
 	private ProjetDto projetSelected;
+	private TissuUsedService tissuUsedService;
+	private ModelMapper mapper;
 
-    public RootController (){
+    public RootController (TissuUsedService tissuUsedService, ModelMapper mapper){
+    	this.tissuUsedService=tissuUsedService;
+    	this.mapper = mapper;
     }
 
     @FXML
@@ -123,17 +134,13 @@ public class RootController implements IController {
     	mainWindow.getChildren().add(initializer.displayPane(PathEnum.TYPE_TISSU));
     }
     
-    public void displaySelected(ProjetDto projet, TissuRequisDto tr ) {
-    	tissuRequisSelected = tr;
-    	projetSelected = projet;
-      	FxData fxData = new FxData();
-    	fxData.setTissuRequis(tr);
-    	fxData.setProjet(projet);
+    public void displaySelected(FxData fxData) {
+    	tissuRequisSelected = fxData.getTissuRequis();
+    	projetSelected = fxData.getProjet();
     	selectedElement.getChildren().add(initializer.displayPane(PathEnum.TISSU_REQUIS_SELECTED, fxData));
     	beforeDisplay(tissuMenu);
         mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSUS));
     	deleteSelectedButton.setVisible(true);
-
     }
     
     @FXML
@@ -149,13 +156,11 @@ public class RootController implements IController {
         for(HBox hb : menuElements) {
         	if (hb != null && hb.getStyleClass() != null && !hb.getStyleClass().isEmpty()) {
             	hb.getStyleClass().removeIf(style -> style.equals(SELECTED));
-
         	}
         }
         if (menuToSelect != null ) {
             menuToSelect.getStyleClass().add(SELECTED);
         }
-
     }
 
     @Override
@@ -164,17 +169,38 @@ public class RootController implements IController {
     	menuElements = Arrays.asList(tissuMenu,fournitureMenu, patronMenu, projetMenu);
     	deleteSelectedButton.setVisible(false);
 
-
     }
 
 	public boolean hasTissuRequisSelected() {
 		return tissuRequisSelected != null;
 	}
 
-	public void addToSelected(TissuDto tissu, int longueur) {
+	public void addToSelected(TissuDto tissuSelected) {
+		int longueurRequiseRestante = tissuRequisSelected.getLongueur();
+		if (projetSelected.getTissuUsed() != null && projetSelected.getTissuUsed().get(tissuRequisSelected) != null) {
+			for (int id : projetSelected.getTissuUsed().get(tissuRequisSelected)) {
+				longueurRequiseRestante -= tissuUsedService.getById(id).getLongueur();
+			}
+		}
+
+		FxData data = displaySetLongueurDialog(longueurRequiseRestante, tissuSelected);
+
 		TissuUsed tissuUsed = new TissuUsed();
-		//tissuUsed.setTissu(tissu);
+		tissuUsed.setProjet(mapper.map(projetSelected, Projet.class));
+		tissuUsed.setTissuRequis(mapper.map(tissuRequisSelected, TissuRequis.class));
+		tissuUsed.setTissu(mapper.map(tissuSelected, Tissu.class));
+		tissuUsed.setLongueur(data.getLongueurRequise());
+		tissuUsedService.saveOrUpdate(tissuUsed);
+
+	    displayProjetEdit(projetSelected);
 		
-		
+	}
+
+	private FxData displaySetLongueurDialog(int longueurRequiseRestante, TissuDto tissuSelected) {
+		FxData fxData = new FxData();
+		fxData.setLongueurRequise(longueurRequiseRestante);
+		fxData.setTissu(tissuSelected);
+		fxData = initializer.displayModale(PathEnum.SET_LONGUEUR, fxData, "");
+		return fxData;
 	}
 }
