@@ -1,5 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.utils;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
@@ -14,6 +15,7 @@ import lombok.Data;
 @Component
 public class FxData  {
 
+	private Page page;
     private PathEnum path;
     private TissuDto tissu;
     private PatronDto patron;
