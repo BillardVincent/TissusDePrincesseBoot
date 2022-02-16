@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<Pane prefHeight="233.0" prefWidth="261.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.common.PlusCardController">
+	<children>
+		<VBox alignment="CENTER" layoutX="9.0" layoutY="11.0" prefHeight="214.0" prefWidth="241.0" stylesheets="@../../style/style.css">
+			<children>
+				<HBox alignment="CENTER" prefHeight="48.0" prefWidth="258.0">
+					<padding>
+						<Insets top="5.0" />
+					</padding>
+               <children>
+                  <FontAwesomeIconView glyphName="PLUS_CIRCLE" size="10em" />
+               </children>
+				</HBox>
+			</children>
+			<styleClass>
+				<String fx:value="global" />
+				<String fx:value="card" />
+				            <String fx:value="clickable" />
+				
+			</styleClass>
+		</VBox>
+	</children>
+</Pane>
