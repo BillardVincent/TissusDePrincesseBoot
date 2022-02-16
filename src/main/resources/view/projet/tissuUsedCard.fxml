@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<Pane prefHeight="347.0" prefWidth="258.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.projet.TissuUsedCardController">
+   <children>
+      <VBox layoutX="-1.0" layoutY="-1.0" onMouseClicked="#showDetail" prefHeight="347.0" prefWidth="260.0" stylesheets="@../../style/style.css">
+         <children>
+            <HBox alignment="CENTER" prefHeight="48.0" prefWidth="258.0">
+               <children>
+                  <Label fx:id="matiere" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="79.0" text="Matiere" textAlignment="CENTER" />
+                  <Label fx:id="tissage" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="79.0" text="Tissage" />
+                  <Label fx:id="type" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="80.0" text="Type" textAlignment="CENTER" />
+               </children>
+               <padding>
+                  <Insets top="5.0" />
+               </padding>
+            </HBox>
+            <ImageView fx:id="image" fitHeight="169.0" fitWidth="258.0" pickOnBounds="true" preserveRatio="true" />
+            <HBox prefHeight="26.0" prefWidth="258.0">
+               <children>
+                  <HBox prefHeight="21.0" prefWidth="158.0">
+                     <children>
+                        <FontAwesomeIconView glyphName="ARROWS_H" size="1.5em" text="">
+                           <HBox.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </HBox.margin>
+                        </FontAwesomeIconView>
+                        <Label fx:id="laize" alignment="CENTER" prefHeight="20.0" prefWidth="66.0" text="Label" textAlignment="CENTER" />
+                        <Label prefHeight="18.0" prefWidth="26.0" text="cm">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="21.0" prefWidth="144.0">
+                     <children>
+                        <FontAwesomeIconView glyphName="ARROWS_V" size="1.5em">
+                           <HBox.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </HBox.margin>
+                        </FontAwesomeIconView>
+                        <Label fx:id="longueur" alignment="CENTER" prefHeight="20.0" prefWidth="66.0" text="Label" />
+                        <Label prefHeight="18.0" prefWidth="34.0" text="cm">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets top="5.0" />
+               </padding>
+            </HBox>
+            <Label fx:id="description" prefHeight="66.0" prefWidth="257.0" text="Description" />
+            <HBox prefHeight="37.0" prefWidth="200.0">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <MaterialDesignIconView fx:id="masse" glyphName="WEIGHT_KILOGRAM" size="2em" wrappingWidth="26.000059127807617">
+                           <HBox.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </HBox.margin>
+                        </MaterialDesignIconView>
+                        <Label fx:id="poids" prefHeight="28.0" prefWidth="64.0" text="Label" />
+                        <Label fx:id="unitePoids" prefHeight="28.0" prefWidth="70.0" text="mass">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <FontAwesomeIconView fx:id="decati" glyphName="TINT" size="2em">
+                     <HBox.margin>
+                        <Insets left="25.0" right="25.0" />
+                     </HBox.margin></FontAwesomeIconView>
+               </children>
+            </HBox>
+         </children>
+         <styleClass>
+            <String fx:value="global" />
+            <String fx:value="card" />
+         </styleClass>
+      </VBox>
+   </children>
+</Pane>
