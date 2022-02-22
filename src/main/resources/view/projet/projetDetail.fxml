@@ -2,7 +2,7 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.ButtonBar?>
 
 
@@ -15,7 +15,7 @@
       <Label fx:id="projetStatusPanLabel" layoutX="66.0" layoutY="363.0" text="projetStatusPanLabel" />
       <ButtonBar layoutX="304.0" layoutY="557.0" prefHeight="40.0" prefWidth="214.0">
         <buttons>
-            <Button mnemonicParsing="false" onAction="#edit" prefHeight="25.0" prefWidth="123.0" text="Editer" />
+            <JFXButton mnemonicParsing="false" onAction="#edit" prefHeight="25.0" prefWidth="123.0" text="Editer" />
         </buttons>
     </ButtonBar>
    </children>

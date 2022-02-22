@@ -2,9 +2,9 @@
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -178,19 +178,19 @@
                         </Pane>
                         <HBox alignment="CENTER" prefHeight="29.0" prefWidth="280.0">
                            <children>
-                              <Button fx:id="deleteSelectedButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#deleteSelected" text="désélectionner" textAlignment="CENTER" />
+                              <JFXButton fx:id="deleteSelectedButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#deleteSelected" text="désélectionner" textAlignment="CENTER" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="289.0">
                            <children>
-                              <TextField alignment="TOP_LEFT" prefHeight="31.0" prefWidth="170.0" promptText="Recherche" styleClass="search-box">
+                              <JFXTextField alignment="TOP_LEFT" prefHeight="31.0" prefWidth="170.0" promptText="Recherche" styleClass="search-box">
                                  <HBox.margin>
                                     <Insets left="10.0" />
                                  </HBox.margin>
                                  <font>
                                     <Font size="14.0" />
                                  </font>
-                              </TextField>
+                              </JFXTextField>
                               <FontAwesomeIconView glyphName="SEARCH" size="2em">
                                  <HBox.margin>
                                     <Insets left="10.0" />

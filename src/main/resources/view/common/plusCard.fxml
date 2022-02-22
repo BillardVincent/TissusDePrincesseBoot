@@ -23,8 +23,7 @@
 			<styleClass>
 				<String fx:value="global" />
 				<String fx:value="card" />
-				            <String fx:value="clickable" />
-				
+				<String fx:value="clickable" />
 			</styleClass>
 		</VBox>
 	</children>

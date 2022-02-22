@@ -5,25 +5,26 @@
     -fx-primary-dark-contrast: #ffffff;
     -fx-primary-light:#d05ce3;
     -fx-primary-light-contrast: #000000;
-    -fx-secondary: #ffc107;
-    -fx-secondary-contrast: #000000;
-    -fx-secondary-dark: #c79100;
-    -fx-secondary-dark-contrast: #000000;
-    -fx-secondary-light: #fff350;
+    -fx-secondary: #b0273c;
+    -fx-secondary-contrast: #ffffff;
+    -fx-secondary-dark: #790017;
+    -fx-secondary-dark-contrast: #ffffff;
+    -fx-secondary-light: #e65b66;
     -fx-secondary-light-contrast: #000000;
     -fx-accent: -fx-secondary;
     -fx-background-accent: #d0d0d0;
     -fx-background-workspace: #e0e0e0;
   
     -fx-basic-text: #000000;
+    -fx-contrast-text: #ffffff;
 }
     
 .root{
 	-fx-background-color: #ffffff;
-	-fx-accent: -fx-primary;
-	-fx-focus-color:-fx-primary;
-	-fx-pressed-based: -fx-primary-dark;
-	-fx-hover-base: -fx-primary-light;
+	-fx-accent: -fx-secondary;
+	-fx-focus-color:-fx-secondary;
+	-fx-pressed-based: -fx-secondary-dark;
+	-fx-hover-base: -fx-secondary-light;
 	-fx-text-background-color:-fx-basic-text;
 	-fx-box-border: transparent;
 	-fx-text-box-border: transparent;
@@ -35,7 +36,7 @@
     /* The color to use as -fx-text-fill when painting text on top of
      * backgrounds filled with -fx-base, -fx-color, and -fx-body-color.
      */
-    -fx-text-base-color: -fx-basic-text;
+    -fx-text-base-color: -fx-contrast-text;
     /* The color to use as -fx-text-fill when painting text on top of
      * backgrounds filled with -fx-control-inner-background.
      */
@@ -44,18 +45,20 @@
     /* The color to use for small mark-like objects such as checks on check
      * boxes, filled in circles in radio buttons, arrows on scroll bars, etc.
      */
-    -fx-mark-color: -fx-primary;
+    -fx-mark-color: -fx-secondary;
 
     /* The small thin light "shadow" for mark-like objects. Typically used in
      * conjunction with -fx-mark-color with an insets of 1 0 -1 0. */
-    -fx-mark-highlight-color: -fx-primary-light;
+    -fx-mark-highlight-color: -fx-secondary-light;
     
-    -fx-focus-color: -fx-primary-light;
-    -fx-faint-focus-color: -fx-primary-light;
-	-fx-selection-bar: -fx-primary-light;
-	-fx-default-button : traparent;
+    -fx-focus-color: -fx-secondary-light;
+    -fx-faint-focus-color: -fx-secondary-light;
+	-fx-selection-bar: -fx-secondary-light;
+	-fx-default-button : transparent;
+	
+	-jfx-rippler-fill: -fx-secondary-light;
 }
-
+/*
 .toggle-button:selected {
         -fx-background-color: -fx-primary;
         -fx-text-fill: -fx-primary-contrast;
@@ -65,7 +68,21 @@
 }
 .toggle-button:selected:focused {
 
+}*/
+.jfx-toggle-button{
+	-jfx-toggle-color: -fx-secondary;
+	-jfx-toggle-line-color: -fx-secondary-light;
 }
+.jfx-text-field{
+	-jfx-focus-color: -fx-secondary;
+}
+.jfx-combo-box{
+	-jfx-focus-color: -fx-secondary-light;
+	-fx-prompt-text-fill: white;
+	-jfx-unfocus-color: white
+
+}
+
 
 .global{
     -fx-font-family: Calibri;
@@ -234,5 +251,16 @@
 .list-element-titre{
     -fx-font-weight: bold;
     -fx-font-size: 15px;
+}
+
+.jfx-button{
+	-fx-text-fill: -fx-secondary;
+	-fx-font-size: 1.2em;
+    -fx-font-weight: bold;
+	-fx-background-color: #ffffff;
+	
+}
+.jfx-button:hover{
+	-fx-background-color: #d0d0d0
 }
 

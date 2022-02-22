@@ -14,6 +14,11 @@ import org.imgscalr.Scalr;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXToggleButton;
+
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
@@ -40,13 +45,9 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -55,37 +56,37 @@ import javafx.scene.layout.RowConstraints;
 @Component
 public class TissuEditController implements IController {
     @FXML
-    public ToggleButton decatiField;
+    public JFXToggleButton decatiField;
     @FXML
-    public TextField descriptionField;
+    public JFXTextField descriptionField;
     @FXML
-    public TextField lieuDachatField;
+    public JFXTextField lieuDachatField;
     @FXML
     public Spinner<Integer> poidsField;
     @FXML
-    public ChoiceBox<String> unitePoidsField;
+    public JFXComboBox<String> unitePoidsField;
     @FXML
     public Spinner<Integer> laizeField;
     @FXML
     public Spinner<Integer> longueurField;
     @FXML
-    public ToggleButton chuteField;
+    public JFXToggleButton chuteField;
     @FXML
-    public Button addTypeButton;
+    public JFXButton addTypeButton;
     @FXML
-    public ChoiceBox<String> typeField;
+    public JFXComboBox<String> typeField;
     @FXML
-    public ChoiceBox<String> matiereField;
+    public JFXComboBox<String> matiereField;
     @FXML
-    public Button addMatiereButton;
+    public JFXButton addMatiereButton;
     @FXML
-    public ChoiceBox<String> tissageField;
+    public JFXComboBox<String> tissageField;
     @FXML
-    public Button addTissageButton;
+    public JFXButton addTissageButton;
     @FXML
-    public TextField referenceField;
+    public JFXTextField referenceField;
     @FXML
-    public Button generateReferenceButton;
+    public JFXButton generateReferenceButton;
     @FXML
     public Label ancienneValeurLabel;
     @FXML

@@ -2,13 +2,14 @@ package fr.vbillard.tissusdeprincesseboot.controller.common;
 
 import org.springframework.stereotype.Component;
 
+import com.jfoenix.controls.JFXButton;
+
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.IModalController;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
@@ -31,11 +32,11 @@ public class SetLongueurDialogController implements IModalController {
 	@FXML
 	private Spinner<Integer> spinner;
 	@FXML
-	private Button valdateBtn;
+	private JFXButton valdateBtn;
 	@FXML
-	private Button cancelBtn;
+	private JFXButton cancelBtn;
 	@FXML
-	private Button auto;
+	private JFXButton auto;
 
 	@FXML
 	private void initialize() {

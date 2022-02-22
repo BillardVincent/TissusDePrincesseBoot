@@ -6,6 +6,8 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import com.jfoenix.controls.JFXButton;
+
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
@@ -19,7 +21,6 @@ import fr.vbillard.tissusdeprincesseboot.services.TissuUsedService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
@@ -39,7 +40,7 @@ public class RootController implements IController {
     @FXML
     private HBox projetMenu;
     @FXML
-    private Button deleteSelectedButton;
+    private JFXButton deleteSelectedButton;
     
     private static final String SELECTED = "mainmenu-element-selected";
     

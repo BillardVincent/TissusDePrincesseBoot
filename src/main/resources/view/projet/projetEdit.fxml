@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
@@ -44,15 +45,15 @@
             </font></Label>
          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
             <children>
-               <ChoiceBox fx:id="status" prefHeight="35.0" prefWidth="152.0" />
+               <JFXComboBox fx:id="status" prefHeight="35.0" prefWidth="152.0" />
             </children>
          </HBox>
       </children>
    </HBox>
     <ButtonBar layoutX="290.0" layoutY="793.0" prefHeight="40.0" prefWidth="214.0">
         <buttons>
-            <Button mnemonicParsing="false" onAction="#handleOk" prefHeight="25.0" prefWidth="123.0" text="Valider" />
-            <Button mnemonicParsing="false" onAction="#handleCancel" text="Annuler" />
+            <JFXButton mnemonicParsing="false" onAction="#handleOk" prefHeight="25.0" prefWidth="123.0" text="Valider" />
+            <JFXButton mnemonicParsing="false" onAction="#handleCancel" text="Annuler" />
         </buttons>
     </ButtonBar>
    <ScrollPane layoutX="15.0" layoutY="117.0" prefHeight="668.0" prefWidth="1600.0">

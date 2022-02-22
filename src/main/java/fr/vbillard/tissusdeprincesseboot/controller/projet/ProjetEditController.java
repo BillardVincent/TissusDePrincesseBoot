@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.jfoenix.controls.JFXComboBox;
+
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.IController;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
@@ -16,7 +18,6 @@ import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -34,7 +35,7 @@ public class ProjetEditController implements IController {
 	@FXML
 	private Label modele;
 	@FXML
-	private ChoiceBox<String> status;
+	private JFXComboBox<String> status;
 
 	private StageInitializer initializer;
 
