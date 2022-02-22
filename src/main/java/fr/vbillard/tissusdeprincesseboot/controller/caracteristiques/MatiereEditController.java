@@ -2,6 +2,10 @@ package fr.vbillard.tissusdeprincesseboot.controller.caracteristiques;
 
 import org.springframework.stereotype.Component;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXTextField;
+
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.IController;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
@@ -11,29 +15,26 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 @Component
 public class MatiereEditController implements IController {
 
 	@FXML
-	private ListView<String> listMatieres;
+	private JFXListView<String> listMatieres;
 	@FXML
-	private TextField newMatiere;
+	private JFXTextField newMatiere;
 	@FXML
-	private TextField editMatiere;
+	private JFXTextField editMatiere;
 
 	@FXML
-	private Button ajouterButton;
+	private JFXButton ajouterButton;
 	@FXML
-	private Button editerButton;
+	private JFXButton editerButton;
 	@FXML
-	private Button supprimerButton;
+	private JFXButton supprimerButton;
 	@FXML
-	private Button fermerButton;
+	private JFXButton fermerButton;
 
 	private Stage dialogStage;
 	private boolean okClicked = false;

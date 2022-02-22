@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -44,8 +44,8 @@
                         </GridPane>
     <ButtonBar layoutX="304.0" layoutY="557.0" prefHeight="40.0" prefWidth="258.0">
         <buttons>
-                    <Button mnemonicParsing="false" onAction="#edit" prefHeight="25.0" prefWidth="123.0" text="Editer" />
-         <Button mnemonicParsing="false" onAction="#createProject" prefHeight="26.0" prefWidth="123.0" text="Créer un projet" />
+         <JFXButton mnemonicParsing="false" onAction="#edit" prefHeight="25.0" prefWidth="123.0" text="Editer" />
+         <JFXButton mnemonicParsing="false" onAction="#createProject" prefHeight="26.0" prefWidth="123.0" text="Créer un projet" />
         </buttons>
     </ButtonBar>
    <ScrollPane fx:id="listFournitures" layoutX="14.0" layoutY="150.0" prefHeight="398.0" prefWidth="1107.0">

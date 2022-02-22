@@ -6,6 +6,10 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextField;
+
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
@@ -32,13 +36,11 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
@@ -47,30 +49,30 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 @Component
-public class PatronEditController implements IController{
+public class PatronEditController implements IController {
 
 	@FXML
-	private TextField marqueField;
+	private JFXTextField marqueField;
 	@FXML
-	private TextField modeleField;
+	private JFXTextField modeleField;
 	@FXML
-	private TextField typeVetementField;
+	private JFXTextField typeVetementField;
 	@FXML
-	private Button addTissuButton;
+	private JFXButton addTissuButton;
 	@FXML
-	private Button addFournitureButton;
+	private JFXButton addFournitureButton;
 	@FXML
 	private VBox rightContainer;
 	@FXML
 	private GridPane tissusPatronListGrid;
 	@FXML
-	private Button generateReferenceButton;
+	private JFXButton generateReferenceButton;
 	@FXML
-	private TextField referenceField;
+	private JFXTextField referenceField;
 
 	private StageInitializer initializer;
 	private PatronDto patron;
-	//private TissuRequisDto tissuRequisDto;
+	// private TissuRequisDto tissuRequisDto;
 	private final TissuRequisService tissuRequisService;
 	private final TissuVariantService tissuVariantService;
 	private final MatiereService matiereService;
@@ -79,18 +81,20 @@ public class PatronEditController implements IController{
 	private final ModelMapper mapper;
 	private boolean okClicked = false;
 	private StageInitializer mainApp;
-	//private ObservableList<TissuRequisDto> listTissuRequis;
+	// private ObservableList<TissuRequisDto> listTissuRequis;
 	private boolean unregistredPatron;
 	private final PatronService patronService;
 	private int longueur;
 	private int laize;
-	//private HBox tissuRequisDisplayHbox;
+	// private HBox tissuRequisDisplayHbox;
 	private TissuVariantDto variantSelected;
 	boolean editingVariant = false;
 	private ObservableList<TissuVariantDto> tvList;
 	private VBox bottomRightVbox;
 
-	public PatronEditController(TissuRequisService tissuRequisService, TissuVariantService tissuVariantService, MatiereService matiereService, TissageService tissageService, TypeTissuService typeTissuService, ModelMapper mapper, PatronService patronService) {
+	public PatronEditController(TissuRequisService tissuRequisService, TissuVariantService tissuVariantService,
+			MatiereService matiereService, TissageService tissageService, TypeTissuService typeTissuService,
+			ModelMapper mapper, PatronService patronService) {
 
 		this.tissuRequisService = tissuRequisService;
 		this.tissuVariantService = tissuVariantService;
@@ -116,16 +120,14 @@ public class PatronEditController implements IController{
 		addFournitureButton.setDisable(unregistredPatron);
 	}
 
-
-
-
 	/**
-	 * Charge les tissusRequis, en fonction du patron sélectionné.
-	 * tableau sous le patron : tissusRequis.toString() - boutons
+	 * Charge les tissusRequis, en fonction du patron sélectionné. tableau sous le
+	 * patron : tissusRequis.toString() - boutons
 	 */
 	private void loadTissuRequisForPatron() {
 		tissusPatronListGrid.getChildren().clear();
-		patron.setTissusRequis(tissuRequisService.getAllTissuRequisByPatron(patron.getId()).stream().map(tr-> mapper.map(tr, TissuRequisDto.class)).collect(Collectors.toList()));
+		patron.setTissusRequis(tissuRequisService.getAllTissuRequisByPatron(patron.getId()).stream()
+				.map(tr -> mapper.map(tr, TissuRequisDto.class)).collect(Collectors.toList()));
 
 		if (patron.getTissusRequisProperty() != null && patron.getTissusRequis() != null) {
 
@@ -133,11 +135,11 @@ public class PatronEditController implements IController{
 
 				TissuRequisDto tissu = patron.getTissusRequis().get(i);
 
-				Button editButton = new Button();
+				JFXButton editButton = new JFXButton();
 				editButton.setGraphic(GlyphIconUtil.editNormal());
 				editButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> displayTissuRequis(tissu));
 
-				Button deleteButton = new Button();
+				JFXButton deleteButton = new JFXButton();
 				deleteButton.setGraphic(GlyphIconUtil.suppressNormal());
 				deleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> deleteTissuRequis(tissu));
 
@@ -211,13 +213,13 @@ public class PatronEditController implements IController{
 		});
 		laizeSpinner.valueProperty().addListener((obs, oldValue, newValue) -> laize = newValue);
 
-		ChoiceBox<String> gammePoidsChBx = new ChoiceBox<String>();
+		JFXComboBox<String> gammePoidsChBx = new JFXComboBox<String>();
 		gammePoidsChBx.setItems(FXCollections.observableArrayList(GammePoids.labels()));
 		gammePoidsChBx.setValue(tissu.getGammePoidsProperty() == null || tissu.getGammePoids() == null
 				|| tissu.getGammePoids().equals("") ? GammePoids.NON_RENSEIGNE.label : tissu.getGammePoids());
 		topGrid.add(gammePoidsChBx, 1, 2);
 
-		Button validateBtn = new Button("Valider");
+		JFXButton validateBtn = new JFXButton("Valider");
 		validateBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
 			tissu.setGammePoids(gammePoidsChBx.getValue());
 			tissu.setLaize(laize);
@@ -226,10 +228,10 @@ public class PatronEditController implements IController{
 			saveTissuRequis(tissu);
 		});
 
-		Button cancelBtn = new Button("Annuler");
+		JFXButton cancelBtn = new JFXButton("Annuler");
 		cancelBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> rightContainer.getChildren().clear());
 
-		Button deleteBtn = new Button("Supprimer");
+		JFXButton deleteBtn = new JFXButton("Supprimer");
 		deleteBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> deleteTissuRequis(tissu));
 
 		HBox hboxBtn = new HBox(validateBtn, cancelBtn, deleteBtn);
@@ -260,50 +262,52 @@ public class PatronEditController implements IController{
 
 			for (int i = 0; i < tvList.size(); i++) {
 				TissuVariantDto tv = tvList.get(i);
-				Button editButton = new Button();
+				JFXButton editButton = new JFXButton();
 				editButton.setGraphic(GlyphIconUtil.editNormal());
 				editButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
 					editingVariant = true;
 					DevInProgressService.notImplemented(mainApp);
 				});
 
-				Button deleteButton = new Button();
+				JFXButton deleteButton = new JFXButton();
 				deleteButton.setGraphic(GlyphIconUtil.suppressNormal());
-				deleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> DevInProgressService.notImplemented(mainApp));
+				deleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+						e -> DevInProgressService.notImplemented(mainApp));
 				HBox btns = new HBox(editButton, deleteButton);
 				btns.setAlignment(Pos.CENTER_RIGHT);
 				btns.setSpacing(10);
 
-				bottomGrid.add(new Label(Utils.safeString(tv.getTypeTissu()) + " " + Utils.safeString(tv.getMatiere()) + " " + Utils.safeString(tv.getTissage())), 0, i * 2);
+				bottomGrid.add(new Label(Utils.safeString(tv.getTypeTissu()) + " " + Utils.safeString(tv.getMatiere())
+						+ " " + Utils.safeString(tv.getTissage())), 0, i * 2);
 				bottomGrid.add(btns, 1, i * 2);
 
 				if (i != tvList.size() - 1) {
 					HBox hbox = new HBox(new Label("-------------   OU   --------------  "));
 					hbox.setAlignment(Pos.CENTER);
 					bottomGrid.add(hbox, 0, i * 2 + 1, 2, 1);
-					//displayTissuRequis(tissu);
+					// displayTissuRequis(tissu);
 				}
 			}
 		}
 
 		if (tissu != null && tissu.getId() != 0) {
 
-			ChoiceBox<String> typeField = new ChoiceBox<String>();
+			JFXComboBox<String> typeField = new JFXComboBox<String>();
 			typeField.setItems(FXCollections.observableArrayList(
 					typeTissuService.getAll().stream().map(tt -> tt.getValue()).collect(Collectors.toList())));
 			typeField.setValue(variantSelected.getTypeTissuProperty() == null ? "" : variantSelected.getTypeTissu());
 
-			ChoiceBox<String> matiereField = new ChoiceBox<String>();
+			JFXComboBox<String> matiereField = new JFXComboBox<String>();
 			matiereField.setItems(FXCollections.observableArrayList(
 					matiereService.getAll().stream().map(m -> m.getValue()).collect(Collectors.toList())));
 			matiereField.setValue(variantSelected.getMatiereProperty() == null ? "" : variantSelected.getMatiere());
 
-			ChoiceBox<String> tissageField = new ChoiceBox<String>();
+			JFXComboBox<String> tissageField = new JFXComboBox<String>();
 			tissageField.setItems(FXCollections.observableArrayList(
 					tissageService.getAll().stream().map(t -> t.getValue()).collect(Collectors.toList())));
 			tissageField.setValue(variantSelected.getTissageProperty() == null ? "" : variantSelected.getTissage());
 
-			Button addTvBtn = new Button();
+			JFXButton addTvBtn = new JFXButton();
 			addTvBtn.setGraphic(GlyphIconUtil.plusCircleNormal());
 			addTvBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
 				variantSelected.setMatiere(matiereField.getValue());
@@ -351,7 +355,6 @@ public class PatronEditController implements IController{
 	public boolean isOkClicked() {
 		return okClicked;
 	}
-
 
 	@FXML
 	private void handleSavePatron() {
@@ -450,7 +453,7 @@ public class PatronEditController implements IController{
 	public void setStageInitializer(StageInitializer initializer, FxData data) {
 		this.initializer = initializer;
 
-		if (data == null || data.getPatron() == null){
+		if (data == null || data.getPatron() == null) {
 			patron = mapper.map(new Patron("", "", "", "", "", null), PatronDto.class);
 			setDisabledButton();
 
@@ -468,8 +471,7 @@ public class PatronEditController implements IController{
 		}
 	}
 	/*
-	txtInput.setEditable(false);
-	txtInput.setMouseTransparent(true);
-	txtInput.setFocusTraversable(false);
-	*/
+	 * txtInput.setEditable(false); txtInput.setMouseTransparent(true);
+	 * txtInput.setFocusTraversable(false);
+	 */
 }
