@@ -67,7 +67,7 @@ public class TissuRequisDto implements FxDto{
 	}
 
 	public void setVariant(List<TissuVariantDto> variants) {
-		this.variants.set(FXCollections.observableArrayList(variants.stream().map(v-> v.toString()).collect(Collectors.toList())));
+		this.variants.set(FXCollections.observableArrayList(variants.stream().map(TissuVariantDto::toString).collect(Collectors.toList())));
 	}
 	
 	public List<String> getVariant() {

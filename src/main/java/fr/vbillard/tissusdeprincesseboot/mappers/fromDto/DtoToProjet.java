@@ -1,5 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.mappers.fromDto;
 
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
 
 import com.github.rozidan.springboot.modelmapper.TypeMapConfigurer;
@@ -24,7 +25,7 @@ public class DtoToProjet extends TypeMapConfigurer<ProjetDto, Projet> {
     private class StatusConverter extends AbstractConverter<ProjetDto, ProjectStatus> {
         @Override
         protected ProjectStatus convert(ProjetDto dto) {
-            return dto.getProjectStatusProperty() == null || dto.getProjectStatus() == "" ? ProjectStatus.BROUILLON : ProjectStatus.getEnum(dto.getProjectStatus());
+            return dto.getProjectStatusProperty() == null || dto.getProjectStatus().equals(Strings.EMPTY) ? ProjectStatus.BROUILLON : ProjectStatus.getEnum(dto.getProjectStatus());
         }
     }
 

@@ -35,7 +35,7 @@ public class TissuUsedService extends AbstractService<TissuUsed>{
 		return dao;
 	}
 	
-	public TissuUsed SaveNew(TissuRequis tr, Projet p, int longueur) {
+	public TissuUsed saveNew(TissuRequis tr, Projet p, int longueur) {
 		return null;
 	}
 

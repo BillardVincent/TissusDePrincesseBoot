@@ -5,16 +5,11 @@ import javafx.scene.paint.Paint;
 
 public class Constants {
 
-
-	// --Commented out by Inspection (11/01/2022 12:05):public final static String PERSISTENCE_UNIT = "persistUnit";
-	
-	
 	public static final String NON_ENREGISTRE = "non enregistré";
 
-	
-	public static Paint colorAdd = Color.GREEN;
-	public static Paint colorDelete = Color.RED;
-	public static Paint colorAccent = Color.BLUE;
-	public static Paint colorWarning = Color.ORANGE;
+	public static final Paint colorAdd = Color.GREEN;
+	public static final Paint colorDelete = Color.RED;
+	public static final Paint colorAccent = Color.BLUE;
+	public static final Paint colorWarning = Color.ORANGE;
 
 }

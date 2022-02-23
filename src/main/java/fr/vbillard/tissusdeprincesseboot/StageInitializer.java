@@ -111,7 +111,7 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
         FXMLLoader loader = new FXMLLoader();
         Pane layout = null;
         try {
-            PathHolder holder = PathEnumToURL(path);
+            PathHolder holder = pathEnumToURL(path);
             loader.setLocation(holder.url);
             loader.setControllerFactory(applicationContext::getBean);
             layout = loader.load();
@@ -129,7 +129,7 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
     	try {
 
             FXMLLoader loader = new FXMLLoader();
-            PathHolder holder = PathEnumToURL(path);
+            PathHolder holder = pathEnumToURL(path);
 
             loader.setLocation(holder.url);
             loader.setControllerFactory(applicationContext::getBean);
@@ -177,7 +177,7 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
         return fileChooser.showOpenDialog(stage);
     }
 
-    private PathHolder PathEnumToURL(PathEnum pathEnum) throws IOException {
+    private PathHolder pathEnumToURL(PathEnum pathEnum) throws IOException {
         switch (pathEnum) {
             case ROOT:
                 return new PathHolder(pathProperties.getRoot2().getURL(), RootController.class);

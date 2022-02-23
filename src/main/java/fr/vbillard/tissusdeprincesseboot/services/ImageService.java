@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Optional;
 
+import fr.vbillard.tissusdeprincesseboot.exception.PersistanceException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +38,7 @@ public class ImageService extends AbstractService<Photo> {
 				return new Image(pathProperties.getImageDefault().getURL().toString());
 			} catch (IOException e) {
 				e.printStackTrace();
+				throw new PersistanceException("Erreur de chargement de l'image");
 			}
 		}
 		return new Image(new ByteArrayInputStream(photo.getData()));

@@ -7,7 +7,6 @@ import lombok.Data;
 @Data
 public class Modale {
 	public Modale(Stage dialogStage, IModalController controller, FxData result) {
-		// TODO Auto-generated constructor stub
 	}
 	private IModalController controler;
 	private Stage stage;

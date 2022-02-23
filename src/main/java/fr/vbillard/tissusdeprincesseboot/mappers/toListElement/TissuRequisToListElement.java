@@ -23,7 +23,7 @@ public class TissuRequisToListElement extends TypeMapConfigurer<TissuRequisDto, 
 	@Lazy
 	private TissuVariantService tvs;
 	
-	private final int MAX_VARIANT_DISPLAYED = 3;
+	private final static int MAX_VARIANT_DISPLAYED = 3;
 	
     @Override
     public void configure(TypeMap<TissuRequisDto, ListElement> typeMap) {
