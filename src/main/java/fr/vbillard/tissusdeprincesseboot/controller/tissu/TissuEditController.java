@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 
+import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
 import org.imgscalr.Scalr;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -137,7 +138,7 @@ public class TissuEditController implements IController {
     public void setStageInitializer(StageInitializer initializer, FxData data) {
         this.initializer = initializer;
         
-        if (data==null && data.getTissu()==null){
+        if (data==null || data.getTissu()==null){
         	throw new IllegalData();
 		}
             tissu = data.getTissu();
@@ -146,16 +147,13 @@ public class TissuEditController implements IController {
                         UnitePoids.NON_RENSEIGNE, false, "", null, false), TissuDto.class);
             }
 
-            longueurField.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE,
-                    tissu.getLongueurProperty() == null ? 0 : tissu.getLongueur()));
-            laizeField.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE,
-                    tissu.getLaizeProperty() == null ? 0 : tissu.getLaize()));
-            poidsField.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE,
-                    tissu.getPoidseProperty() == null ? 0 : tissu.getPoids()));
-            referenceField.setText(tissu.getReferenceProperty() == null ? "" : tissu.getReference());
-            descriptionField.setText(tissu.getDescriptionProperty() == null ? "" : tissu.getDescription());
+            longueurField.setValueFactory(FxUtils.setSpinner(tissu.getLongueurProperty()));
+            laizeField.setValueFactory(FxUtils.setSpinner(tissu.getLaizeProperty()));
+            poidsField.setValueFactory(FxUtils.setSpinner(tissu.getPoidseProperty()));
+            referenceField.setText(FxUtils.safePropertyToString(tissu.getReferenceProperty()));
+            descriptionField.setText(FxUtils.safePropertyToString(tissu.getDescriptionProperty()));
             decatiField.setSelected(tissu.getDecatiProperty() != null && tissu.isDecati());
-            lieuDachatField.setText(tissu.getLieuAchatProperty() == null ? "" : tissu.getLieuAchat());
+            lieuDachatField.setText(FxUtils.safePropertyToString(tissu.getLieuAchatProperty()));
             chuteField.setSelected(tissu.getChuteProperty() != null && tissu.isChute());
 
             unitePoidsField.setItems(FXCollections.observableArrayList(UnitePoids.labels()));
@@ -164,15 +162,15 @@ public class TissuEditController implements IController {
 
             typeField.setItems(FXCollections.observableArrayList(
                     typeTissuService.getAll().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList())));
-            typeField.setValue(tissu.getTypeProperty() == null ? "" : tissu.getType());
+            typeField.setValue(FxUtils.safePropertyToString(tissu.getTypeProperty()));
 
             matiereField.setItems(FXCollections.observableArrayList(
                     matiereService.getAll().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList())));
-            matiereField.setValue(tissu.getMatiereProperty() == null ? "" : tissu.getMatiere());
+            matiereField.setValue(FxUtils.safePropertyToString(tissu.getMatiereProperty()));
 
             tissageField.setItems(FXCollections.observableArrayList(
                     tissageService.getAll().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList())));
-            tissageField.setValue(tissu.getTissageProperty() == null ? "" : tissu.getTissage());
+            tissageField.setValue(FxUtils.safePropertyToString(tissu.getTissageProperty()));
 
             longueur = longueurField.getValue();
             laize = laizeField.getValue();

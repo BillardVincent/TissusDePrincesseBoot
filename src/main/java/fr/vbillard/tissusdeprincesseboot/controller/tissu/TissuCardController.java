@@ -1,5 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.controller.tissu;
 
+import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -76,12 +77,13 @@ public class TissuCardController implements IController {
 
 	private void setCardContent() {
 		description.setText(tissu.getDescription());
-		longueur.setText(String.valueOf(tissu.getLongueur()));
-		laize.setText(String.valueOf(tissu.getLaize()));
-		matiere.setText(tissu.getMatiere());
-		type.setText(tissu.getType());
-		tissage.setText(tissu.getTissage());
-		poids.setText(String.valueOf(tissu.getPoids()));
+		longueur.setText(FxUtils.safePropertyToString(tissu.getLongueurProperty()));
+		laize.setText(FxUtils.safePropertyToString(tissu.getLaizeProperty()));
+		matiere.setText(FxUtils.safePropertyToString(tissu.getMatiereProperty()));
+		type.setText(FxUtils.safePropertyToString(tissu.getTypeProperty()));
+		tissage.setText(FxUtils.safePropertyToString(tissu.getTissageProperty()));
+		poids.setText(FxUtils.safePropertyToString(tissu.getPoidseProperty()));
+		//TODO sécuriser si null
 		unitePoids.setText(tissu.getUnitePoids());
 		decati.setFill(tissu.isDecati() ? Constants.colorAdd : Constants.colorDelete);
 		masse.setStyleClass(tissu.getPoids() > ConstantesMetier.MAX_POIDS_MOYEN ? "heavy-weight"

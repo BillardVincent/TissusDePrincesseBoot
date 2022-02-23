@@ -2,6 +2,7 @@ package fr.vbillard.tissusdeprincesseboot.services;
 
 import java.util.stream.Collectors;
 
+import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class TissageService extends AbstractService<Tissage>{
 	}
 	
 	public ObservableList<String> getAllObs() {
-		return FXCollections.observableArrayList(getAll().stream().map(t -> t.getValue()).collect(Collectors.toList()));
+		return FXCollections.observableArrayList(getAll().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList()));
 	}
 
 	public boolean validate(String value) {

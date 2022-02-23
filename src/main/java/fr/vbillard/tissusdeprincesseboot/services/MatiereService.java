@@ -3,6 +3,7 @@ package fr.vbillard.tissusdeprincesseboot.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,7 @@ public class MatiereService extends AbstractService<Matiere>{
 
 	public ObservableList<String>getAllMatieresValues(){
 		List<Matiere> lst = getAll();
-		return FXCollections.observableArrayList(lst.stream().map(m -> m.getValue()).collect(Collectors.toList()));
+		return FXCollections.observableArrayList(lst.stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList()));
 	}
 	
 	public boolean validate(String value) {

@@ -1,20 +1,15 @@
 package fr.vbillard.tissusdeprincesseboot.mappers.fromDto;
 
-import org.modelmapper.AbstractConverter;
-import org.modelmapper.TypeMap;
-import org.springframework.stereotype.Component;
-
 import com.github.rozidan.springboot.modelmapper.TypeMapConfigurer;
-
 import fr.vbillard.tissusdeprincesseboot.dao.PatronDao;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
-import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
-import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
-import javafx.beans.property.SimpleIntegerProperty;
 import lombok.AllArgsConstructor;
+import org.modelmapper.AbstractConverter;
+import org.modelmapper.TypeMap;
+import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
@@ -28,7 +23,7 @@ public class DtoToRequis extends TypeMapConfigurer<TissuRequisDto, TissuRequis>{
 		typeMap.addMappings(mapper -> mapper.using(new IdConverter()).map(src -> src, TissuRequis::setId));
         typeMap.addMappings(mapper -> mapper.using(new GammePoidsConverter()).map(TissuRequisDto::getGammePoids, TissuRequis::setGammePoids));
 
-
+        //TODO ??!!
         typeMap.setPostConverter(context -> {
     		Patron patron = patronDao.getById(context.getSource().getPatronId());
             return context.getDestination();

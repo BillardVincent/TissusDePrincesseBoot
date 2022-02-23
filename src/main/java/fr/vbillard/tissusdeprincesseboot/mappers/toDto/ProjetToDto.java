@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import fr.vbillard.tissusdeprincesseboot.model.AbstractEntity;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -40,7 +41,7 @@ public class ProjetToDto extends TypeMapConfigurer<Projet, ProjetDto> {
                 List<TissuRequis> trLst = trs.getAllByPatronId(context.getSource().getPatron().getId());
                 for (TissuRequis tr : trLst) {
                     List<TissuUsed> tu = tus.getAllByTissuRequisAndProjet(tr, context.getSource());
-                    tuMap.put(new ModelMapper().map(tr, TissuRequisDto.class), tu == null ? new ArrayList<Integer>() : tu.stream().map(t -> t.getId()).collect(Collectors.toList()));
+                    tuMap.put(new ModelMapper().map(tr, TissuRequisDto.class), tu == null ? new ArrayList<Integer>() : tu.stream().map(AbstractEntity::getId).collect(Collectors.toList()));
                 }
             }
             context.getDestination().setTissuUsed(tuMap);
