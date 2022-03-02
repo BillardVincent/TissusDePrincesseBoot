@@ -1,5 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.controller.common;
 
+import com.jfoenix.controls.JFXTextField;
+import fr.vbillard.tissusdeprincesseboot.fxCustomElements.IntegerSpinner;
 import org.springframework.stereotype.Component;
 
 import com.jfoenix.controls.JFXButton;
@@ -11,8 +13,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
+//import javafx.scene.control.Spinner;
+//import javafx.scene.control.SpinnerValueFactory;
 import javafx.stage.Stage;
 
 @Component
@@ -30,7 +32,7 @@ public class SetLongueurDialogController implements IModalController {
 	@FXML
 	private Label dispoLabel;
 	@FXML
-	private Spinner<Integer> spinner;
+	private JFXTextField longueurValue;
 	@FXML
 	private JFXButton valdateBtn;
 	@FXML
@@ -40,15 +42,7 @@ public class SetLongueurDialogController implements IModalController {
 
 	@FXML
 	private void initialize() {
-		spinner.valueProperty().addListener((obs, oldValue, newValue) -> {
-			value = newValue;
-		});
-		spinner.focusedProperty().addListener((observable, oldValue, newValue) -> {
-			if (!newValue) {
-				spinner.increment(0); // won't change value, but will commit editor
-				value = spinner.getValue();
-			}
-		});
+		longueurValue.setTextFormatter(IntegerSpinner.getFormatter());
 	}
 
 	@FXML
@@ -75,8 +69,7 @@ public class SetLongueurDialogController implements IModalController {
 
 	@FXML
 	public void handleAuto() {
-		spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE,
-				required > available ? available : required));
+		longueurValue.setText(Integer.toString(required > available ? available : required));
 	}
 
 	@Override
@@ -94,7 +87,7 @@ public class SetLongueurDialogController implements IModalController {
 		requisLabel.setText(required + "cm");
 		dispoLabel.setText(available + "cm");
 
-		spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, 0));
+		longueurValue.setText("0");
 
 	}
 

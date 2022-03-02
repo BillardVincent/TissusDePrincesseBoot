@@ -17,8 +17,4 @@ public class FxUtils {
         return property ==  null ? Strings.EMPTY : property.getValue();
     }
 
-    public static SpinnerValueFactory setSpinner(IntegerProperty property){
-        return new SpinnerValueFactory.IntegerSpinnerValueFactory( 0, Integer.MAX_VALUE,
-                property == null ? 0 : property.getValue());
-    }
 }

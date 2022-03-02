@@ -47,7 +47,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
-import javafx.scene.control.Spinner;
+//import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
@@ -63,13 +63,13 @@ public class TissuEditController implements IController {
     @FXML
     public JFXTextField lieuDachatField;
     @FXML
-    public Spinner<Integer> poidsField;
+    public JFXTextField poidsField;
     @FXML
     public JFXComboBox<String> unitePoidsField;
     @FXML
-    public Spinner<Integer> laizeField;
+    public JFXTextField laizeField;
     @FXML
-    public Spinner<Integer> longueurField;
+    public JFXTextField longueurField;
     @FXML
     public JFXToggleButton chuteField;
     @FXML
@@ -120,9 +120,8 @@ public class TissuEditController implements IController {
 	private TissuService tissuService;
 	private ImageService imageService;
  	private PreferenceService preferenceService;
- 	private IntegerSpinner integerSpinner;
 
-    public TissuEditController(IntegerSpinner integerSpinner, ImageService imageService, PreferenceService preferenceService, ModelMapper mapper, TissuService tissuService, TypeTissuService typeTissuService, MatiereService matiereService, TissageService tissageService, RootController root) {
+    public TissuEditController(ImageService imageService, PreferenceService preferenceService, ModelMapper mapper, TissuService tissuService, TypeTissuService typeTissuService, MatiereService matiereService, TissageService tissageService, RootController root) {
         this.mapper = mapper;
 		this.imageService = imageService;
         this.tissuService = tissuService;
@@ -131,7 +130,6 @@ public class TissuEditController implements IController {
         this.tissageService = tissageService;
 		this.preferenceService = preferenceService;
 		this.root = root;
-		this.integerSpinner = integerSpinner;
     }
 
     @Override
@@ -147,9 +145,9 @@ public class TissuEditController implements IController {
                         UnitePoids.NON_RENSEIGNE, false, "", null, false), TissuDto.class);
             }
 
-            longueurField.setValueFactory(FxUtils.setSpinner(tissu.getLongueurProperty()));
-            laizeField.setValueFactory(FxUtils.setSpinner(tissu.getLaizeProperty()));
-            poidsField.setValueFactory(FxUtils.setSpinner(tissu.getPoidseProperty()));
+            longueurField.setText(FxUtils.safePropertyToString(tissu.getLongueurProperty()));
+            laizeField.setText(FxUtils.safePropertyToString(tissu.getLaizeProperty()));
+            poidsField.setText(FxUtils.safePropertyToString(tissu.getPoidseProperty()));
             referenceField.setText(FxUtils.safePropertyToString(tissu.getReferenceProperty()));
             descriptionField.setText(FxUtils.safePropertyToString(tissu.getDescriptionProperty()));
             decatiField.setSelected(tissu.getDecatiProperty() != null && tissu.isDecati());
@@ -172,9 +170,6 @@ public class TissuEditController implements IController {
                     tissageService.getAll().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList())));
             tissageField.setValue(FxUtils.safePropertyToString(tissu.getTissageProperty()));
 
-            longueur = longueurField.getValue();
-            laize = laizeField.getValue();
-            poids = poidsField.getValue();
 		}
     
 
@@ -188,33 +183,10 @@ public class TissuEditController implements IController {
         generateReferenceButton.setGraphic(magicIcon);
         generateReferenceButton.setTooltip(new Tooltip("Générer une référence automatiquement"));
 
-        longueurField.valueProperty().addListener((obs, oldValue, newValue) -> {
-        	longueur = newValue;
-        });
-        
-        longueurField.getEditor().setTextFormatter(integerSpinner.getFormatter());
-        longueurField.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue) {
-                longueurField.increment(0); // won't change value, but will commit editor
-                longueur = longueurField.getValue();
-            }
-        });
-        laizeField.getEditor().setTextFormatter(integerSpinner.getFormatter());
-        laizeField.valueProperty().addListener((obs, oldValue, newValue) -> laize = newValue);
-        laizeField.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue) {
-                laizeField.increment(0); // won't change value, but will commit editor
-                laize = laizeField.getValue();
-            }
-        });
-        poidsField.getEditor().setTextFormatter(integerSpinner.getFormatter());
-        poidsField.valueProperty().addListener((obs, oldValue, newValue) -> poids = newValue);
-        poidsField.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue) {
-                poidsField.increment(0); // won't change value, but will commit editor
-                poids = poidsField.getValue();
-            }
-        });
+        longueurField.setTextFormatter(IntegerSpinner.getFormatter());
+        laizeField.setTextFormatter(IntegerSpinner.getFormatter());
+        poidsField.setTextFormatter(IntegerSpinner.getFormatter());
+
     }
 
     public boolean isOkClicked() {
@@ -230,11 +202,11 @@ public class TissuEditController implements IController {
 			}
 			tissu.setReference(referenceField.getText());
 			tissu.setLongueur(longueur);
-			tissu.setLaize(laizeField.getValue());
+			tissu.setLaize(Integer.valueOf(laizeField.getText()));
 			tissu.setDescription(descriptionField.getText());
 			tissu.setMatiere(matiereField.getValue());
 			tissu.setType(typeField.getValue());
-			tissu.setPoids(poidsField.getValue());
+			tissu.setPoids(Integer.valueOf(poidsField.getText()));
 			tissu.setUnitePoids(unitePoidsField.getValue());
 			tissu.setDecati(Boolean.parseBoolean(decatiField.getText()));
 			tissu.setLieuAchat(lieuDachatField.getText());
@@ -277,7 +249,7 @@ public class TissuEditController implements IController {
 		if (unitePoidsField.getValue() == null) {
 			errorMessage += "Unité de poids non renseignée.\n";
 		}
-		if (poidsField.getValue() == null) {
+		if (poidsField.getText() == null) {
 			errorMessage += "Poids non renseigné.\n";
 		}
 		if (tissageField.getValue() == null) {

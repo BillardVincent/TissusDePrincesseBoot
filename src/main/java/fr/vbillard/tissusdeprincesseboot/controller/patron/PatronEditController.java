@@ -3,6 +3,8 @@ package fr.vbillard.tissusdeprincesseboot.controller.patron;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+import fr.vbillard.tissusdeprincesseboot.fxCustomElements.IntegerSpinner;
+import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -39,8 +41,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
+
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
@@ -179,39 +180,15 @@ public class PatronEditController implements IController {
 		topGrid.add(new Label("Laize"), 0, 1);
 		topGrid.add(new Label("Gamme de poids"), 0, 2);
 
-		Spinner<Integer> longueurSpinner = new Spinner<Integer>();
-		longueurSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE,
-				tissu.getLongueurProperty() == null ? 0 : tissu.getLongueur()));
-		longueurSpinner.setEditable(true);
-		longueurSpinner.valueProperty().addListener((obs, oldValue, newValue) -> {
-			longueur = newValue;
-		});
-		longueurSpinner.focusedProperty().addListener((observable, oldValue, newValue) -> {
-			if (!newValue) {
-				longueurSpinner.increment(0); // won't change value, but will commit editor
-				longueur = longueurSpinner.getValue();
-			}
-		});
+		JFXTextField longueurSpinner = new JFXTextField(FxUtils.safePropertyToString(tissu.getLongueurProperty()));
+		longueurSpinner.setTextFormatter(IntegerSpinner.getFormatter());
 
 		topGrid.add(longueurSpinner, 1, 0);
 
-		Spinner<Integer> laizeSpinner = new Spinner<Integer>();
-		laizeSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE,
-				tissu.getLaizeProperty() == null ? 0 : tissu.getLaize()));
-		laizeSpinner.setEditable(true);
-		laizeSpinner.valueProperty().addListener((obs, oldValue, newValue) -> laize = newValue);
-		laizeSpinner.focusedProperty().addListener((observable, oldValue, newValue) -> {
-			if (!newValue) {
-				laizeSpinner.increment(0); // won't change value, but will commit editor
-				laize = laizeSpinner.getValue();
-			}
-		});
-		topGrid.add(laizeSpinner, 1, 1);
+		JFXTextField laizeSpinner = new JFXTextField(FxUtils.safePropertyToString(tissu.getLaizeProperty()));
+		laizeSpinner.setTextFormatter(IntegerSpinner.getFormatter());
 
-		longueurSpinner.valueProperty().addListener((obs, oldValue, newValue) -> {
-			longueur = newValue;
-		});
-		laizeSpinner.valueProperty().addListener((obs, oldValue, newValue) -> laize = newValue);
+		topGrid.add(laizeSpinner, 1, 1);
 
 		JFXComboBox<String> gammePoidsChBx = new JFXComboBox<String>();
 		gammePoidsChBx.setItems(FXCollections.observableArrayList(GammePoids.labels()));
@@ -222,8 +199,8 @@ public class PatronEditController implements IController {
 		JFXButton validateBtn = new JFXButton("Valider");
 		validateBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
 			tissu.setGammePoids(gammePoidsChBx.getValue());
-			tissu.setLaize(laize);
-			tissu.setLongueur(longueur);
+			tissu.setLaize(Integer.valueOf(laizeSpinner.getText()));
+			tissu.setLongueur(Integer.valueOf(longueurSpinner.getText()));
 			tissu.setGammePoids(gammePoidsChBx.getValue());
 			saveTissuRequis(tissu);
 		});

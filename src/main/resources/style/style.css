@@ -78,9 +78,11 @@
 }
 .jfx-combo-box{
 	-jfx-focus-color: -fx-secondary-light;
-	-fx-prompt-text-fill: white;
-	-jfx-unfocus-color: white
 
+}
+
+.jfx-combo-box .cell {
+    -fx-text-fill: -basic-text;
 }
 
 
@@ -207,34 +209,6 @@
 	-fx-background-color: transparent;
 	-fx-border-color: transparent;
 	
-}
-
-.spinner:focus,
-.spinner:contains-focus{
-	-fx-background-color: transparent;
-}
-
-.spinner .increment-arrow-button,
-.spinner .decrement-arrow-button {
-    -fx-body-color: transparent;
-}
-
-.spinner .increment-arrow-button:hover,
-.spinner .decrement-arrow-button:hover {
-	-fx-background-color: -fx-primary-light;
-}
-
-.spinner .increment-arrow-button:hover:pressed,
-.spinner .decrement-arrow-button:hover:pressed,
-.spinner .increment-arrow-button:pressed,
-.spinner .decrement-arrow-button:pressed {
-	-fx-background-color: -fx-primary-dark;
-	
-}
-
-.spinner .increment-arrow-button .increment-arrow,
-.spinner .decrement-arrow-button .decrement-arrow{
-	-fx-background-color: -fx-primary;
 }
 
 .list-element{

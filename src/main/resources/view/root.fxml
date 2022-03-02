@@ -183,6 +183,9 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="289.0">
                            <children>
+                              <JFXTextField alignment="TOP_LEFT" prefHeight="31.0" prefWidth="170.0" promptText="Longueur" styleClass="search-box" fx:id="testNumber">
+                              </JFXTextField>
+
                               <JFXTextField alignment="TOP_LEFT" prefHeight="31.0" prefWidth="170.0" promptText="Recherche" styleClass="search-box">
                                  <HBox.margin>
                                     <Insets left="10.0" />

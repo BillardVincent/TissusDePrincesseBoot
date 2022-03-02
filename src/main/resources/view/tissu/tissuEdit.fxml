@@ -55,13 +55,13 @@
             <JFXTextField fx:id="lieuDachatField" GridPane.columnIndex="1" GridPane.rowIndex="10" />
             <HBox fillHeight="false" prefHeight="0.0" prefWidth="324.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
                 <children>
-                    <Spinner fx:id="poidsField" editable="true" prefHeight="26.0" prefWidth="239.0" />
+                    <JFXTextField fx:id="poidsField" editable="true" prefHeight="26.0" prefWidth="239.0" />
                     <JFXComboBox fx:id="unitePoidsField" prefHeight="26.0" prefWidth="94.0" />
                 </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                 <children>
-                    <Spinner fx:id="laizeField" editable="true" prefHeight="23.0" prefWidth="248.0" />
+                    <JFXTextField fx:id="laizeField" editable="true" prefHeight="23.0" prefWidth="248.0" />
                     <Label prefHeight="43.0" prefWidth="65.0" text="cm">
                         <HBox.margin>
                             <Insets left="15.0" />
@@ -71,7 +71,7 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                 <children>
-                    <Spinner fx:id="longueurField" editable="true" prefHeight="26.0" prefWidth="250.0" />
+                    <JFXTextField fx:id="longueurField" editable="true" prefHeight="26.0" prefWidth="250.0" />
                     <Label prefHeight="43.0" prefWidth="65.0" text="cm">
                         <HBox.margin>
                             <Insets left="15.0" />

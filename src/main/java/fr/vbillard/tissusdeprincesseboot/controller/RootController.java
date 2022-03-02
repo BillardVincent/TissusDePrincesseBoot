@@ -3,6 +3,8 @@ package fr.vbillard.tissusdeprincesseboot.controller;
 import java.util.Arrays;
 import java.util.List;
 
+import com.jfoenix.controls.JFXTextField;
+import fr.vbillard.tissusdeprincesseboot.fxCustomElements.IntegerSpinner;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -41,6 +43,8 @@ public class RootController implements IController {
     private HBox projetMenu;
     @FXML
     private JFXButton deleteSelectedButton;
+    @FXML
+    private JFXTextField testNumber;
     
     private static final String SELECTED = "mainmenu-element-selected";
     
@@ -50,6 +54,7 @@ public class RootController implements IController {
 	private ProjetDto projetSelected;
 	private TissuUsedService tissuUsedService;
 	private ModelMapper mapper;
+
 
     public RootController (TissuUsedService tissuUsedService, ModelMapper mapper){
     	this.tissuUsedService=tissuUsedService;
@@ -167,6 +172,9 @@ public class RootController implements IController {
         this.initializer = initializer;
     	menuElements = Arrays.asList(tissuMenu,fournitureMenu, patronMenu, projetMenu);
     	deleteSelectedButton.setVisible(false);
+
+        testNumber.setTextFormatter(IntegerSpinner.getFormatter());
+
 
     }
 
