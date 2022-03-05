@@ -9,8 +9,10 @@ import fr.vbillard.tissusdeprincesseboot.controller.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
+import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
+import fr.vbillard.tissusdeprincesseboot.services.ImageService;
 import fr.vbillard.tissusdeprincesseboot.services.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.services.TissageService;
 import fr.vbillard.tissusdeprincesseboot.services.TissuService;
@@ -19,6 +21,7 @@ import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.RowConstraints;
 
 @Component
@@ -55,6 +58,9 @@ public class TissuDetailController implements IController {
 	public Label consommeLabel;
 	@FXML
 	public Label consommeIndo;
+	@FXML
+	public ImageView imagePane;
+	
 	public RowConstraints ancienneValeurRow;
 	public RowConstraints consommeRow;
 
@@ -72,8 +78,9 @@ public class TissuDetailController implements IController {
 	TissageService tissageService;
 	TissuService tissuService;
 	RootController rootController;
+	ImageService imageService;
 
-	public TissuDetailController(RootController rootController, ModelMapper mapper, TissuService tissuService,
+	public TissuDetailController(ImageService imageService, RootController rootController, ModelMapper mapper, TissuService tissuService,
 			TypeTissuService typeTissuService, MatiereService matiereService, TissageService tissageService) {
 		this.mapper = mapper;
 		this.tissuService = tissuService;
@@ -81,6 +88,7 @@ public class TissuDetailController implements IController {
 		this.matiereService = matiereService;
 		this.tissageService = tissageService;
 		this.rootController = rootController;
+		this.imageService = imageService;
 	}
 
 	@Override
@@ -108,7 +116,8 @@ public class TissuDetailController implements IController {
 			typeField.setText(tissu.getTypeProperty() == null ? "" : tissu.getType());
 			matiereField.setText(tissu.getMatiereProperty() == null ? "" : tissu.getMatiere());
 			tissageField.setText(tissu.getTissageProperty() == null ? "" : tissu.getTissage());
-
+    		Photo pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
+    		imagePane.setImage(imageService.imageOrDefault(pictures));
 		
 		addToButton.setVisible(rootController.hasTissuRequisSelected());
 	}

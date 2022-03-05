@@ -170,6 +170,8 @@ public class TissuEditController implements IController {
                     tissageService.getAll().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList())));
             tissageField.setValue(FxUtils.safePropertyToString(tissu.getTissageProperty()));
 
+    		Photo pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
+    		imagePane.setImage(imageService.imageOrDefault(pictures));
 		}
     
 

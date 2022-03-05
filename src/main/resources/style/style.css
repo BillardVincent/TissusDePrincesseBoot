@@ -82,7 +82,7 @@
 }
 
 .jfx-combo-box .cell {
-    -fx-text-fill: -basic-text;
+    -fx-text-fill: -fx-basic-text;
 }
 
 
