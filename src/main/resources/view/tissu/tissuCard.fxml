@@ -24,7 +24,11 @@
                   <Insets top="5.0" />
                </padding>
             </HBox>
-            <ImageView fx:id="image" fitHeight="169.0" fitWidth="258.0" pickOnBounds="true" preserveRatio="true" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ImageView fx:id="image" fitHeight="169.0" fitWidth="258.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
             <HBox prefHeight="26.0" prefWidth="258.0">
                <children>
                   <HBox prefHeight="21.0" prefWidth="158.0">
@@ -71,7 +75,7 @@
             <Label fx:id="description" prefHeight="66.0" prefWidth="257.0" text="Description" />
             <HBox prefHeight="37.0" prefWidth="200.0">
                <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <HBox prefHeight="38.0" prefWidth="259.0">
                      <children>
                         <MaterialDesignIconView fx:id="masse" glyphName="WEIGHT_KILOGRAM" size="2em" wrappingWidth="26.000059127807617">
                            <HBox.margin>
@@ -79,17 +83,14 @@
                            </HBox.margin>
                         </MaterialDesignIconView>
                         <Label fx:id="poids" prefHeight="28.0" prefWidth="64.0" text="Label" />
-                        <Label fx:id="unitePoids" prefHeight="28.0" prefWidth="70.0" text="mass">
+                        <Label fx:id="unitePoids" prefHeight="28.0" prefWidth="103.0" text="mass">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>
                         </Label>
+                        <ImageView id="decatiIcn" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </HBox>
-                  <FontAwesomeIconView fx:id="decati" glyphName="TINT" size="2em">
-                     <HBox.margin>
-                        <Insets left="25.0" right="25.0" />
-                     </HBox.margin></FontAwesomeIconView>
                </children>
             </HBox>
          </children>

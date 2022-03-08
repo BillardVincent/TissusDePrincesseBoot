@@ -84,4 +84,5 @@ public class GlyphIconUtil {
     public static GlyphIcon expandPicture(){
         return generateIcon(new FontAwesomeIconView(FontAwesomeIcon.EXPAND), NORMAL_ICON_SIZE, null);
     }
+    
 }

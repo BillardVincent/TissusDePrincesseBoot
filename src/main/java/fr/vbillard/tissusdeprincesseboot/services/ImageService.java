@@ -8,11 +8,11 @@ import fr.vbillard.tissusdeprincesseboot.exception.PersistanceException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import fr.vbillard.tissusdeprincesseboot.config.PathImgProperties;
 import fr.vbillard.tissusdeprincesseboot.dao.PhotoDao;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
-import fr.vbillard.tissusdeprincesseboot.utils.PathProperties;
 import javafx.scene.image.Image;
 import lombok.AllArgsConstructor;
 
@@ -21,7 +21,7 @@ import lombok.AllArgsConstructor;
 public class ImageService extends AbstractService<Photo> {
 
 	PhotoDao dao;
-	PathProperties pathProperties;
+	PathImgProperties pathProperties;
 
 	public Photo getImage(Projet projet) {
 		Optional<Photo> photo = dao.getByProjet(projet.getId());

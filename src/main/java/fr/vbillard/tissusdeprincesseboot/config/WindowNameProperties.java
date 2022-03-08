@@ -1,4 +1,4 @@
-package fr.vbillard.tissusdeprincesseboot.utils;
+package fr.vbillard.tissusdeprincesseboot.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.io.Resource;

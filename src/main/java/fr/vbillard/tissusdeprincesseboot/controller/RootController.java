@@ -43,8 +43,6 @@ public class RootController implements IController {
     private HBox projetMenu;
     @FXML
     private JFXButton deleteSelectedButton;
-    @FXML
-    private JFXTextField testNumber;
     
     private static final String SELECTED = "mainmenu-element-selected";
     
@@ -172,9 +170,6 @@ public class RootController implements IController {
         this.initializer = initializer;
     	menuElements = Arrays.asList(tissuMenu,fournitureMenu, patronMenu, projetMenu);
     	deleteSelectedButton.setVisible(false);
-
-        testNumber.setTextFormatter(IntegerSpinner.getFormatter());
-
 
     }
 

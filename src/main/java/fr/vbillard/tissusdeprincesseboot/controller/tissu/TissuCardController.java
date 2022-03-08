@@ -12,6 +12,7 @@ import fr.vbillard.tissusdeprincesseboot.controller.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
+import fr.vbillard.tissusdeprincesseboot.fxCustomElements.CustomIcon;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.services.ImageService;
@@ -47,7 +48,7 @@ public class TissuCardController implements IController {
 	@FXML
 	private MaterialDesignIconView masse;
 	@FXML
-	private FontAwesomeIconView decati;
+	private ImageView decatiIcn;
 	@FXML
 	private ImageView image;
 
@@ -58,11 +59,14 @@ public class TissuCardController implements IController {
 	private ModelMapper mapper;
 
 	private TissuDto tissu;
+	
+	private CustomIcon customIcon;
 
-	public TissuCardController(ImageService imageService, RootController rootController, ModelMapper mapper) {
+	public TissuCardController(CustomIcon customIcon, ImageService imageService, RootController rootController, ModelMapper mapper) {
 		this.imageService = imageService;
 		this.rootController = rootController;
 		this.mapper = mapper;
+		this.customIcon = customIcon;
 	}
 
 	@Override
@@ -85,7 +89,8 @@ public class TissuCardController implements IController {
 		poids.setText(FxUtils.safePropertyToString(tissu.getPoidseProperty()));
 		//TODO sécuriser si null
 		unitePoids.setText(tissu.getUnitePoids());
-		decati.setFill(tissu.isDecati() ? Constants.colorAdd : Constants.colorDelete);
+		decatiIcn = customIcon.washingMachinIcon();
+		decatiIcn.setVisible(tissu.isDecati());
 		masse.setStyleClass(tissu.getPoids() > ConstantesMetier.MAX_POIDS_MOYEN ? "heavy-weight"
 				: tissu.getPoids() > ConstantesMetier.MIN_POIDS_MOYEN ? "standard-weight" : "light-weight");
 		Photo pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
