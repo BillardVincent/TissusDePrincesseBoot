@@ -7,6 +7,7 @@ import java.net.URL;
 import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 
@@ -30,27 +31,22 @@ public class CustomIcon {
 
 	PathIconsProperties pathProperties;
 
-	private ImageView setIcone(ImageView view, String path, Paint color, double size) {
-		BufferedImageTranscoder trans = new BufferedImageTranscoder();
-		trans.createImage(25, 25);
 
-		try (InputStream file = new ClassPathResource(path).getInputStream()) {
-
-			TranscoderInput transIn = new TranscoderInput(file);
-			trans.transcode(transIn, null);
-
-		} catch (IOException | TranscoderException e) {
-			throw new PersistanceException(path);
-		}
-		Image img = SwingFXUtils.toFXImage(trans.getBufferedImage(), null);
-
-		view = recolor(img, view, color);
-		return view;
+	public void washingMachinIcon(WebView view, double size, Paint color) {
+		Resource path = pathProperties.getWashingMachine();
+		loadSVG(view, path, color, size);
 	}
 
-	public ImageView washingMachinIcon(ImageView view, double size, Paint color) {
-		String path = pathProperties.getWashingMachine().toString();
-		return setIcone(view, path, color, size);
+	private void loadSVG(WebView view, Resource path, Paint color, double size) {
+
+		view.setMinSize(50, 50);
+		view.setPrefSize(50, 50);
+		try {
+			view.getEngine().load(path.getURL().toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new PersistanceException(path.getFilename());
+		}
 	}
 
 	public ImageView recolor(Image source, ImageView view, Paint color) {
@@ -61,19 +57,6 @@ public class CustomIcon {
 		view.setImage(source);
 		view.setEffect(blush);
 		return view;
-	}
-
-	public WebView loadSVG() {
-		WebView view = new WebView();
-		view.setMinSize(50, 50);
-		view.setPrefSize(50, 50);
-		try {
-			view.getEngine().load(pathProperties.getWashingMachine().getURL().toString());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	return view;
 	}
 
 }
