@@ -95,10 +95,12 @@ public class TissuCardController implements IController {
 		poids.setText(FxUtils.safePropertyToString(tissu.getPoidseProperty()));
 		//TODO sécuriser si null
 		unitePoids.setText(tissu.getUnitePoids());
-		
-		footer.getChildren().add(customIcon.loadSVG());
-		footer.setVisible(true);
-		//decatiIcnContainer.setVisible(tissu.isDecati());
+		if (tissu.isDecati()){
+			WebView view = new WebView();
+			customIcon.washingMachinIcon(view, 25, Constants.colorDelete);
+			footer.getChildren().add(view);
+		}
+
 		masse.setStyleClass(tissu.getPoids() > ConstantesMetier.MAX_POIDS_MOYEN ? "heavy-weight"
 				: tissu.getPoids() > ConstantesMetier.MIN_POIDS_MOYEN ? "standard-weight" : "light-weight");
 		Photo pictures = imageService.getImage(mapper.map(tissu, Tissu.class));

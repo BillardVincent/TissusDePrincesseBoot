@@ -210,9 +210,9 @@ public class TissuEditController implements IController {
 			tissu.setType(typeField.getValue());
 			tissu.setPoids(Integer.valueOf(poidsField.getText()));
 			tissu.setUnitePoids(unitePoidsField.getValue());
-			tissu.setDecati(Boolean.parseBoolean(decatiField.getText()));
+			tissu.setDecati(decatiField.isSelected());
 			tissu.setLieuAchat(lieuDachatField.getText());
-			tissu.setChute(Boolean.parseBoolean(chuteField.getText()));
+			tissu.setChute(chuteField.isSelected());
 			tissu.setTissage(tissageField.getValue());
 
 			tissu = tissuService.saveOrUpdate(tissu);

@@ -39,8 +39,8 @@ public class CustomIcon {
 
 	private void loadSVG(WebView view, Resource path, Paint color, double size) {
 
-		view.setMinSize(50, 50);
-		view.setPrefSize(50, 50);
+		view.setMinSize(size, size);
+		view.setPrefSize(size, size);
 		try {
 			view.getEngine().load(path.getURL().toString());
 		} catch (IOException e) {
