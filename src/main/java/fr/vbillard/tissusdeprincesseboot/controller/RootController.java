@@ -3,8 +3,6 @@ package fr.vbillard.tissusdeprincesseboot.controller;
 import java.util.Arrays;
 import java.util.List;
 
-import com.jfoenix.controls.JFXTextField;
-import fr.vbillard.tissusdeprincesseboot.fxCustomElements.IntegerSpinner;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +13,7 @@ import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
+import fr.vbillard.tissusdeprincesseboot.fxCustomElements.CustomIcon;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
@@ -23,155 +22,158 @@ import fr.vbillard.tissusdeprincesseboot.services.TissuUsedService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
 import javafx.fxml.FXML;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 @Component
 public class RootController implements IController {
 
-    @FXML
-    private Pane mainWindow;
-    @FXML
-    private Pane selectedElement;
-    @FXML
-    private HBox tissuMenu;
-    @FXML
-    private HBox fournitureMenu;
-    @FXML
-    private HBox patronMenu;
-    @FXML
-    private HBox projetMenu;
-    @FXML
-    private JFXButton deleteSelectedButton;
-    
-    private static final String SELECTED = "mainmenu-element-selected";
-    
-    private List<HBox> menuElements;
-    private StageInitializer initializer;
+	@FXML
+	private Pane mainWindow;
+	@FXML
+	private Pane selectedElement;
+	@FXML
+	private HBox tissuMenu;
+	@FXML
+	private HBox fournitureMenu;
+	@FXML
+	private HBox patronMenu;
+	@FXML
+	private HBox projetMenu;
+	@FXML
+	private JFXButton deleteSelectedButton;
+
+	private static final String SELECTED = "mainmenu-element-selected";
+
+	private List<HBox> menuElements;
+	private StageInitializer initializer;
 	private TissuRequisDto tissuRequisSelected;
 	private ProjetDto projetSelected;
 	private TissuUsedService tissuUsedService;
 	private ModelMapper mapper;
+	CustomIcon customIcon;
 
+	public RootController(TissuUsedService tissuUsedService, ModelMapper mapper, CustomIcon customIcon) {
+		this.tissuUsedService = tissuUsedService;
+		this.mapper = mapper;
+		this.customIcon = customIcon;
+	}
 
-    public RootController (TissuUsedService tissuUsedService, ModelMapper mapper){
-    	this.tissuUsedService=tissuUsedService;
-    	this.mapper = mapper;
-    }
+	@FXML
+	public void displayTissus() {
+		beforeDisplay(tissuMenu);
+		mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSUS));
+	}
 
-    @FXML
-    public void displayTissus(){
-    	beforeDisplay(tissuMenu);
-        mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSUS));
-    }
+	public void displayTissusDetails(TissuDto tissu) {
+		beforeDisplay(tissuMenu);
+		FxData fxData = new FxData();
+		fxData.setTissu(tissu);
+		mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSUS_DETAILS, fxData));
+	}
 
-    public void displayTissusDetails(TissuDto tissu){
-    	beforeDisplay(tissuMenu);
-    	FxData fxData = new FxData();
-    	fxData.setTissu(tissu);
-        mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSUS_DETAILS, fxData));
-    }
-    
-    public void displayTissusEdit(TissuDto tissu){
-    	beforeDisplay(tissuMenu);
-    	FxData fxData = new FxData();
-    	fxData.setTissu(tissu);
-        mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSUS_EDIT, fxData));
-    }
+	public void displayTissusEdit(TissuDto tissu) {
+		beforeDisplay(tissuMenu);
+		FxData fxData = new FxData();
+		fxData.setTissu(tissu);
+		mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSUS_EDIT, fxData));
+	}
 
-    @FXML
-    public void displayProjets(){
-    	beforeDisplay(projetMenu);
-        mainWindow.getChildren().add(initializer.displayPane(PathEnum.PROJET_LIST));
-    }
-    
-    public void displayProjetDetails(ProjetDto projet){
-    	beforeDisplay(projetMenu);
-    	FxData fxData = new FxData();
-    	fxData.setProjet(projet);
-        mainWindow.getChildren().add(initializer.displayPane(PathEnum.PROJET_DETAILS, fxData));
-    }
-    
-    public void displayProjetEdit(ProjetDto projet){
-    	FxData fxData = new FxData();
-    	fxData.setProjet(projet);
-    	mainWindow.getChildren().add(initializer.displayPane(PathEnum.PROJET_EDIT, fxData));
-    }
+	@FXML
+	public void displayProjets() {
+		beforeDisplay(projetMenu);
+		mainWindow.getChildren().add(initializer.displayPane(PathEnum.PROJET_LIST));
+	}
 
-    @FXML
-    public void displayPatrons(){
-    	beforeDisplay(patronMenu);
-        mainWindow.getChildren().add(initializer.displayPane(PathEnum.PATRON_LIST));
-    }
-    
-    public void displayPatronDetails(PatronDto patron) {
-    	beforeDisplay(patronMenu);
-    	FxData fxData = new FxData();
-    	fxData.setPatron(patron);
-        mainWindow.getChildren().add(initializer.displayPane(PathEnum.PATRON_DETAILS, fxData));
-    }
-    
-    public void displayPatronEdit(PatronDto patron) {
-    	beforeDisplay(patronMenu);
-      	FxData fxData = new FxData();
-    	fxData.setPatron(patron);
-        mainWindow.getChildren().add(initializer.displayPane(PathEnum.PATRON_EDIT, fxData));
-    }
+	public void displayProjetDetails(ProjetDto projet) {
+		beforeDisplay(projetMenu);
+		FxData fxData = new FxData();
+		fxData.setProjet(projet);
+		mainWindow.getChildren().add(initializer.displayPane(PathEnum.PROJET_DETAILS, fxData));
+	}
 
-    @FXML
-    public void displayMatiereEdit(){
-    	beforeDisplay(null);
-        mainWindow.getChildren().add(initializer.displayPane(PathEnum.MATIERE));
-    }
+	public void displayProjetEdit(ProjetDto projet) {
+		FxData fxData = new FxData();
+		fxData.setProjet(projet);
+		mainWindow.getChildren().add(initializer.displayPane(PathEnum.PROJET_EDIT, fxData));
+	}
 
-    @FXML
-    public void displayTissageEdit(){
-    	beforeDisplay(null);
-        mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSAGE));
-    }
+	@FXML
+	public void displayPatrons() {
+		beforeDisplay(patronMenu);
+		mainWindow.getChildren().add(initializer.displayPane(PathEnum.PATRON_LIST));
+	}
 
-    @FXML
-    public void displayTypeEdit(){
-    	beforeDisplay(null);
-    	mainWindow.getChildren().add(initializer.displayPane(PathEnum.TYPE_TISSU));
-    }
-    
-    public void displaySelected(FxData fxData) {
-    	tissuRequisSelected = fxData.getTissuRequis();
-    	projetSelected = fxData.getProjet();
-    	selectedElement.getChildren().add(initializer.displayPane(PathEnum.TISSU_REQUIS_SELECTED, fxData));
-    	beforeDisplay(tissuMenu);
-        mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSUS));
-    	deleteSelectedButton.setVisible(true);
-    }
-    
-    @FXML
-    public void deleteSelected() {
-    	deleteSelectedButton.setVisible(false);
-    	tissuRequisSelected = null;
-    	projetSelected = null;
-    	selectedElement.getChildren().clear();
-    }
-    
-    private void beforeDisplay(HBox menuToSelect) {
-        mainWindow.getChildren().clear();
-        for(HBox hb : menuElements) {
-        	if (hb != null && hb.getStyleClass() != null && !hb.getStyleClass().isEmpty()) {
-            	hb.getStyleClass().removeIf(style -> style.equals(SELECTED));
-        	}
-        }
-        if (menuToSelect != null ) {
-            menuToSelect.getStyleClass().add(SELECTED);
-        }
-    }
+	public void displayPatronDetails(PatronDto patron) {
+		beforeDisplay(patronMenu);
+		FxData fxData = new FxData();
+		fxData.setPatron(patron);
+		mainWindow.getChildren().add(initializer.displayPane(PathEnum.PATRON_DETAILS, fxData));
+	}
 
-    @Override
-    public void setStageInitializer(StageInitializer initializer, FxData data) {
-        this.initializer = initializer;
-    	menuElements = Arrays.asList(tissuMenu,fournitureMenu, patronMenu, projetMenu);
-    	deleteSelectedButton.setVisible(false);
+	public void displayPatronEdit(PatronDto patron) {
+		beforeDisplay(patronMenu);
+		FxData fxData = new FxData();
+		fxData.setPatron(patron);
+		mainWindow.getChildren().add(initializer.displayPane(PathEnum.PATRON_EDIT, fxData));
+	}
 
-    }
+	@FXML
+	public void displayMatiereEdit() {
+		beforeDisplay(null);
+		mainWindow.getChildren().add(initializer.displayPane(PathEnum.MATIERE));
+	}
+
+	@FXML
+	public void displayTissageEdit() {
+		beforeDisplay(null);
+		mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSAGE));
+	}
+
+	@FXML
+	public void displayTypeEdit() {
+		beforeDisplay(null);
+		mainWindow.getChildren().add(initializer.displayPane(PathEnum.TYPE_TISSU));
+	}
+
+	public void displaySelected(FxData fxData) {
+		tissuRequisSelected = fxData.getTissuRequis();
+		projetSelected = fxData.getProjet();
+		selectedElement.getChildren().add(initializer.displayPane(PathEnum.TISSU_REQUIS_SELECTED, fxData));
+		beforeDisplay(tissuMenu);
+		mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSUS));
+		deleteSelectedButton.setVisible(true);
+	}
+
+	@FXML
+	public void deleteSelected() {
+		deleteSelectedButton.setVisible(false);
+		tissuRequisSelected = null;
+		projetSelected = null;
+		selectedElement.getChildren().clear();
+	}
+
+	private void beforeDisplay(HBox menuToSelect) {
+		mainWindow.getChildren().clear();
+		for (HBox hb : menuElements) {
+			if (hb != null && hb.getStyleClass() != null && !hb.getStyleClass().isEmpty()) {
+				hb.getStyleClass().removeIf(style -> style.equals(SELECTED));
+			}
+		}
+		if (menuToSelect != null) {
+			menuToSelect.getStyleClass().add(SELECTED);
+		}
+	}
+
+	@Override
+	public void setStageInitializer(StageInitializer initializer, FxData data) {
+		this.initializer = initializer;
+		menuElements = Arrays.asList(tissuMenu, fournitureMenu, patronMenu, projetMenu);
+		deleteSelectedButton.setVisible(false);
+
+	}
 
 	public boolean hasTissuRequisSelected() {
 		return tissuRequisSelected != null;
@@ -194,8 +196,8 @@ public class RootController implements IController {
 		tissuUsed.setLongueur(data.getLongueurRequise());
 		tissuUsedService.saveOrUpdate(tissuUsed);
 
-	    displayProjetEdit(projetSelected);
-		
+		displayProjetEdit(projetSelected);
+
 	}
 
 	private FxData displaySetLongueurDialog(int longueurRequiseRestante, TissuDto tissuSelected) {

@@ -1,11 +1,11 @@
 package fr.vbillard.tissusdeprincesseboot.controller.tissu;
 
-import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import com.sun.prism.paint.Color;
+
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.IController;
@@ -19,9 +19,13 @@ import fr.vbillard.tissusdeprincesseboot.services.ImageService;
 import fr.vbillard.tissusdeprincesseboot.utils.ConstantesMetier;
 import fr.vbillard.tissusdeprincesseboot.utils.Constants;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
+import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Paint;
+import javafx.scene.web.WebView;
 
 @Component
 @Scope("prototype")
@@ -47,6 +51,8 @@ public class TissuCardController implements IController {
 	private Label unitePoids;
 	@FXML
 	private MaterialDesignIconView masse;
+	@FXML
+	private HBox footer;
 	@FXML
 	private ImageView decatiIcn;
 	@FXML
@@ -89,8 +95,10 @@ public class TissuCardController implements IController {
 		poids.setText(FxUtils.safePropertyToString(tissu.getPoidseProperty()));
 		//TODO sécuriser si null
 		unitePoids.setText(tissu.getUnitePoids());
-		decatiIcn = customIcon.washingMachinIcon();
-		decatiIcn.setVisible(tissu.isDecati());
+		
+		footer.getChildren().add(customIcon.loadSVG());
+		footer.setVisible(true);
+		//decatiIcnContainer.setVisible(tissu.isDecati());
 		masse.setStyleClass(tissu.getPoids() > ConstantesMetier.MAX_POIDS_MOYEN ? "heavy-weight"
 				: tissu.getPoids() > ConstantesMetier.MIN_POIDS_MOYEN ? "standard-weight" : "light-weight");
 		Photo pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
