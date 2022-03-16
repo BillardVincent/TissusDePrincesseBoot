@@ -23,6 +23,8 @@ public abstract class AbstractService<T extends AbstractEntity> {
 	public T getById(int id) {
 		return (T) getDao().findById(id).get();
 	}
+
+	public long count(){return getDao().count();}
 	
 	protected abstract JpaRepository getDao();
 

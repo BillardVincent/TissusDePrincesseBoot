@@ -1,5 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.controller;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -33,6 +34,12 @@ public abstract class ViewListController implements IController{
     
     
 	protected abstract void setElements();
+
+    protected void setPageInfo(long totalElement){
+        start.setText(Integer.toString((page) * PAGE_SIZE +1));
+        end.setText(Long.toString(Math.min((page+1) * PAGE_SIZE , totalElement)));
+        total.setText(Long.toString(totalElement));
+    }
 	
     @Override
     public void setStageInitializer(StageInitializer initializer, FxData data) {
@@ -44,6 +51,7 @@ public abstract class ViewListController implements IController{
    
     public abstract void AddNewElement(MouseEvent mouseEvent);
 
+    @FXML
     public void PreviousPage(MouseEvent mouseEvent) {
         if (page > 0) {
             page --;
@@ -51,6 +59,7 @@ public abstract class ViewListController implements IController{
         setElements();
     }
 
+    @FXML
     public void NextPage(MouseEvent mouseEvent) {
         page ++;
         setElements();
