@@ -16,4 +16,6 @@ public class PathIconsProperties {
 	public static final String PROPERTY_PREFIX = "svg";
 
 	private Resource washingMachine;
+	private Resource noWashingMachine;
+
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+import com.sun.javafx.webkit.Accessor;
 import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.springframework.core.io.ClassPathResource;
@@ -32,12 +33,17 @@ public class CustomIcon {
 	PathIconsProperties pathProperties;
 
 
-	public void washingMachinIcon(WebView view, double size, Paint color) {
+	public void washingMachinIcon(WebView view, double size) {
 		Resource path = pathProperties.getWashingMachine();
-		loadSVG(view, path, color, size);
+		loadSVG(view, path, size);
+	}
+	public void noWashingMachinIcon(WebView view, double size) {
+		Resource path = pathProperties.getNoWashingMachine();
+		loadSVG(view, path, size);
 	}
 
-	private void loadSVG(WebView view, Resource path, Paint color, double size) {
+	private void loadSVG(WebView view, Resource path, double size) {
+		Accessor.getPageFor(view.getEngine()).setBackgroundColor(0);
 
 		view.setMinSize(size, size);
 		view.setPrefSize(size, size);
@@ -49,14 +55,5 @@ public class CustomIcon {
 		}
 	}
 
-	public ImageView recolor(Image source, ImageView view, Paint color) {
-		ColorAdjust monochrome = new ColorAdjust();
-		monochrome.setSaturation(-1.0);
-		Blend blush = new Blend(BlendMode.SRC_ATOP, monochrome,
-				new ColorInput(0, 0, source.getWidth(), source.getHeight(), color));
-		view.setImage(source);
-		view.setEffect(blush);
-		return view;
-	}
 
 }

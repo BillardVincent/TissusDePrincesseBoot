@@ -1,5 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.controller.tissu;
 
+import com.sun.javafx.webkit.Accessor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -95,11 +96,14 @@ public class TissuCardController implements IController {
 		poids.setText(FxUtils.safePropertyToString(tissu.getPoidseProperty()));
 		//TODO sécuriser si null
 		unitePoids.setText(tissu.getUnitePoids());
+		WebView view = new WebView();
 		if (tissu.isDecati()){
-			WebView view = new WebView();
-			customIcon.washingMachinIcon(view, 25, Constants.colorDelete);
-			footer.getChildren().add(view);
+			customIcon.washingMachinIcon(view, 20);
+		} else {
+			customIcon.noWashingMachinIcon(view, 20);
 		}
+		footer.getChildren().add(view);
+
 
 		masse.setStyleClass(tissu.getPoids() > ConstantesMetier.MAX_POIDS_MOYEN ? "heavy-weight"
 				: tissu.getPoids() > ConstantesMetier.MIN_POIDS_MOYEN ? "standard-weight" : "light-weight");
