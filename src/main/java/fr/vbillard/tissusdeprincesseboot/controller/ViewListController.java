@@ -1,5 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.controller;
 
+import fr.vbillard.tissusdeprincesseboot.utils.Constants;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
@@ -31,14 +32,25 @@ public abstract class ViewListController implements IController{
 
     protected int page;
     protected final static int PAGE_SIZE = 10;
-    
+    private long totalElement;
     
 	protected abstract void setElements();
 
     protected void setPageInfo(long totalElement){
+        this.totalElement = totalElement;
         start.setText(Integer.toString((page) * PAGE_SIZE +1));
         end.setText(Long.toString(Math.min((page+1) * PAGE_SIZE , totalElement)));
         total.setText(Long.toString(totalElement));
+        if (page ==0){
+            previousIcon.setFill(Constants.colorGrey);
+        }else {
+            previousIcon.setFill(Constants.colorBlack);
+        }
+        if ((page+1) * PAGE_SIZE > totalElement){
+            nextIcon.setFill(Constants.colorGrey);
+        }else {
+            nextIcon.setFill(Constants.colorBlack);
+        }
     }
 	
     @Override
@@ -61,7 +73,10 @@ public abstract class ViewListController implements IController{
 
     @FXML
     public void NextPage(MouseEvent mouseEvent) {
-        page ++;
-        setElements();
+        if ((page+1) * PAGE_SIZE < totalElement){
+            page ++;
+            setElements();
+        }
+
     }
 }
