@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
-import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 
 @Repository
@@ -16,7 +15,7 @@ public interface PhotoDao extends JpaRepository<Photo, Integer> {
 
 	 List<Photo> getAllByTissu(Tissu tissu);
 
-	Photo getByTissu(Tissu tissu);
+	Optional<Photo> getByTissu(Tissu tissu);
 
 	@Query(value = "SELECT FROM PHOTO p "
 			+ "INNER JOIN TISSU_USED t ON t.TISSU_ID = p.TISSU_ID "

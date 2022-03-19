@@ -24,6 +24,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.RowConstraints;
 
+import java.util.Optional;
+
 @Component
 public class TissuDetailController implements IController {
 	@FXML
@@ -116,7 +118,7 @@ public class TissuDetailController implements IController {
 			typeField.setText(tissu.getTypeProperty() == null ? "" : tissu.getType());
 			matiereField.setText(tissu.getMatiereProperty() == null ? "" : tissu.getMatiere());
 			tissageField.setText(tissu.getTissageProperty() == null ? "" : tissu.getTissage());
-    		Photo pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
+    		Optional<Photo> pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
     		imagePane.setImage(imageService.imageOrDefault(pictures));
 		
 		addToButton.setVisible(rootController.hasTissuRequisSelected());

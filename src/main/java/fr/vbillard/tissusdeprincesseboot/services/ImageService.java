@@ -23,25 +23,31 @@ public class ImageService extends AbstractService<Photo> {
 	PhotoDao dao;
 	PathImgProperties pathProperties;
 
-	public Photo getImage(Projet projet) {
-		Optional<Photo> photo = dao.getByProjet(projet.getId());
-		return photo.isPresent() ? photo.get() : null;
+	public Optional<Photo> getImage(Projet projet) {
+		if (projet.getId() == 0){
+			return Optional.empty();
+		}
+		return dao.getByProjet(projet.getId());
 	}
 
-	public Photo getImage(Tissu tissu) {
+	public Optional<Photo> getImage(Tissu tissu) {
+		if (tissu.getId() == 0){
+			return Optional.empty();
+		}
 		return dao.getByTissu(tissu);
 	}
 
-	public Image imageOrDefault(Photo photo) {
-		if (photo == null) {
+	public Image imageOrDefault(Optional<Photo> photo) {
+		if (photo.isPresent()) {
+			return new Image(new ByteArrayInputStream(photo.get().getData()));
+		}
 			try {
 				return new Image(pathProperties.getImageDefault().getURL().toString());
 			} catch (IOException e) {
 				e.printStackTrace();
 				throw new PersistanceException("Erreur de chargement de l'image");
 			}
-		}
-		return new Image(new ByteArrayInputStream(photo.getData()));
+
 	}
 
 	@Override

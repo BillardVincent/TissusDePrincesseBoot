@@ -56,12 +56,14 @@ public class TissusDePrincesseFxApp extends Application {
 		e.printStackTrace();
 		if (Platform.isFxApplicationThread()) {
 			Alert alert;
-			if (e instanceof AbstractTissuDePricesseException) {
-				alert = new Alert(((AbstractTissuDePricesseException) e).getAlertType());
+
+			Throwable e1 = e.getCause().getCause();
+			if (e1 instanceof AbstractTissuDePricesseException) {
+				alert = new Alert(((AbstractTissuDePricesseException) e1).getAlertType());
 				alert.initOwner(primaryStage);
-				alert.setTitle(((AbstractTissuDePricesseException) e).getTitle());
-				alert.setHeaderText(((AbstractTissuDePricesseException) e).getHeader());
-				alert.setContentText(((AbstractTissuDePricesseException) e).getContent());
+				alert.setTitle(((AbstractTissuDePricesseException) e1).getTitle());
+				alert.setHeaderText(((AbstractTissuDePricesseException) e1).getHeader());
+				alert.setContentText(((AbstractTissuDePricesseException) e1).getContent());
 			} else {
 				alert = new Alert(AlertType.ERROR);
 				alert.initOwner(primaryStage);

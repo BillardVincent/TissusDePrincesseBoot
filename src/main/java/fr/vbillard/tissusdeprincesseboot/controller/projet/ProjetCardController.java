@@ -18,6 +18,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 
+import java.util.Optional;
+
 @Component
 public class ProjetCardController implements IController{
     @FXML
@@ -70,9 +72,7 @@ public class ProjetCardController implements IController{
     }
 
     private void setCardContent() {
-    	
-    	
-        Photo pictures = imageService.getImage(mapper.map(projet, Projet.class));
+        Optional<Photo> pictures = imageService.getImage(mapper.map(projet, Projet.class));
         image.setImage(imageService.imageOrDefault(pictures));
         
     }

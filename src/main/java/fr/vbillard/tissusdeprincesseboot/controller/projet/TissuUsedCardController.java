@@ -22,6 +22,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 
+import java.util.Optional;
+
 @Component
 @Scope("prototype")
 public class TissuUsedCardController implements IController {
@@ -89,7 +91,7 @@ public class TissuUsedCardController implements IController {
 		decati.setFill(tissu.isDecati() ? Constants.colorAdd : Constants.colorDelete);
 		masse.setStyleClass(tissu.getPoids() > ConstantesMetier.MAX_POIDS_MOYEN ? "heavy-weight"
 				: tissu.getPoids() > ConstantesMetier.MIN_POIDS_MOYEN ? "standard-weight" : "light-weight");
-		Photo pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
+		Optional<Photo> pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
 		image.setImage(imageService.imageOrDefault(pictures));
 
 	}

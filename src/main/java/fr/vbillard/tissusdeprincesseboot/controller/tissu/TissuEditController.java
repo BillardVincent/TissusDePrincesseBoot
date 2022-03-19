@@ -6,6 +6,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
@@ -170,7 +171,7 @@ public class TissuEditController implements IController {
                     tissageService.getAll().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList())));
             tissageField.setValue(FxUtils.safePropertyToString(tissu.getTissageProperty()));
 
-    		Photo pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
+    		Optional<Photo> pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
     		imagePane.setImage(imageService.imageOrDefault(pictures));
 		}
     

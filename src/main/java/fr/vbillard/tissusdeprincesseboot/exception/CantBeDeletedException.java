@@ -4,11 +4,10 @@ import javafx.scene.control.Alert;
 
 public class CantBeDeletedException extends AbstractTissuDePricesseException {
 
-
     public CantBeDeletedException(Object o, String message) {
-        super(message);
+        super(o.toString() +"ne peut pas être supprimé. Il est utilisé pour caractériser des tissus");
         alertType = Alert.AlertType.WARNING;
         title = o.toString() + "ne peut pas être supprimé";
-        header = o.toString() + "ne peut pas être supprimé. Il est utilisé pour caractériser des tissus";
+        header = o.toString() + "ne peut pas être supprimé";
     }
 }

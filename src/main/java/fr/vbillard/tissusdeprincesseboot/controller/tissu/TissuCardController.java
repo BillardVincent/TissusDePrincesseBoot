@@ -28,6 +28,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.web.WebView;
 
+import java.util.Optional;
+
 @Component
 @Scope("prototype")
 public class TissuCardController implements IController {
@@ -107,7 +109,7 @@ public class TissuCardController implements IController {
 
 		masse.setStyleClass(tissu.getPoids() > ConstantesMetier.MAX_POIDS_MOYEN ? "heavy-weight"
 				: tissu.getPoids() > ConstantesMetier.MIN_POIDS_MOYEN ? "standard-weight" : "light-weight");
-		Photo pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
+		Optional<Photo> pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
 		image.setImage(imageService.imageOrDefault(pictures));
 
 	}
