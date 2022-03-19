@@ -54,6 +54,8 @@ public class TissageEditController implements IController {
 	 */
 	@FXML
 	private void initialize() {
+		allTissages = tissageService.getAllObs();
+		listTissages.setItems(allTissages);
 		listTissages.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> handleSelectElement(newValue));
 	}
@@ -64,8 +66,7 @@ public class TissageEditController implements IController {
 
 	public void setData(StageInitializer mainApp) {
 		this.mainApp = mainApp;
-		allTissages = tissageService.getAllObs();
-		listTissages.setItems(allTissages);
+
 
 	}
 
@@ -132,7 +133,13 @@ public class TissageEditController implements IController {
 	}
 
 	public void handleSuppressElement() {
-
+		tissageService.delete(editTissage.getText());
+		allTissages = tissageService.getAllObs();
+		listTissages.setItems(allTissages);
+		this.editedTissage = null;
+		this.editTissage.setText("");
+		this.editTissage.setDisable(true);
+		this.editerButton.setDisable(true);
 	}
 
 	public void handleClose() {

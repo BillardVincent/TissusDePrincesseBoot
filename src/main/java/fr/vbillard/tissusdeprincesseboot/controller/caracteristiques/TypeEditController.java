@@ -56,6 +56,8 @@ public class TypeEditController implements IController {
 	 */
 	@FXML
 	private void initialize() {
+		allTypeTissus = typeTissuService.getAllTypeTissuValues();
+		listTypeTissus.setItems(allTypeTissus);
 		listTypeTissus.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> handleSelectElement(newValue));
 	}
@@ -66,8 +68,7 @@ public class TypeEditController implements IController {
 
 	public void setData(StageInitializer mainApp) {
 		this.mainApp = mainApp;
-		allTypeTissus = typeTissuService.getAllTypeTissuValues();
-		listTypeTissus.setItems(allTypeTissus);
+
 	}
 
 	public void handleAddElement() {

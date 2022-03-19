@@ -1,11 +1,8 @@
 package fr.vbillard.tissusdeprincesseboot.controller.caracteristiques;
 
-import org.springframework.stereotype.Component;
-
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
-
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.IController;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
@@ -16,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import org.springframework.stereotype.Component;
 
 @Component
 public class MatiereEditController implements IController {
@@ -39,13 +37,12 @@ public class MatiereEditController implements IController {
 	private Stage dialogStage;
 	private boolean okClicked = false;
 
-	final
-	MatiereService matiereService;
-	StageInitializer mainApp;
+	private MatiereService matiereService;
+	private StageInitializer mainApp;
 
-	String editedMatiere;
+	private String editedMatiere;
 
-	ObservableList<String> allMatieres;
+	private ObservableList<String> allMatieres;
 
 	public MatiereEditController(MatiereService matiereService) {
 		this.matiereService = matiereService;
@@ -57,6 +54,8 @@ public class MatiereEditController implements IController {
 	 */
 	@FXML
 	private void initialize() {
+		allMatieres = matiereService.getAllMatieresValues();
+		listMatieres.setItems(allMatieres);
 		listMatieres.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> handleSelectElement(newValue));
 
@@ -71,9 +70,6 @@ public class MatiereEditController implements IController {
 
 	public void setData(StageInitializer mainApp) {
 		this.mainApp = mainApp;
-		allMatieres = matiereService.getAllMatieresValues();
-		listMatieres.setItems(allMatieres);
-
 	}
 
 	public void handleAddElement() {

@@ -1,21 +1,24 @@
 package fr.vbillard.tissusdeprincesseboot.services;
 
-import java.util.stream.Collectors;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Service;
-
+import fr.vbillard.tissusdeprincesseboot.dao.TissuDao;
+import fr.vbillard.tissusdeprincesseboot.dao.TissuVariantDao;
 import fr.vbillard.tissusdeprincesseboot.dao.TypeTissuDao;
+import fr.vbillard.tissusdeprincesseboot.exception.CantBeDeletedException;
 import fr.vbillard.tissusdeprincesseboot.model.TypeTissu;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.AllArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class TypeTissuService extends AbstractService<TypeTissu> {
-	TypeTissuDao typeTissuDao;
-
+	private TypeTissuDao typeTissuDao;
+	private TissuDao tissuDao;
+	private TissuVariantDao tissuVariantDao;
 
 	public TypeTissu findTypeTissu(String typeTissu) {
 		return typeTissuDao.getByValue(typeTissu);
@@ -30,13 +33,24 @@ public class TypeTissuService extends AbstractService<TypeTissu> {
 	}
 
 	public void delete(String text) {
-		delete(findTypeTissu(text));
+		TypeTissu typeTissu = findTypeTissu(text);
+		checkIfTypeTissuIsUsed(typeTissu);
+		delete(typeTissu);
 
+	}
+
+	public void checkIfTypeTissuIsUsed(TypeTissu typeTissu) {
+		if (tissuDao.existsTissuByTypeTissu(typeTissu)){
+			throw new CantBeDeletedException(typeTissu, null);
+		}
+		if (tissuVariantDao.existsTissuVariantByTypeTissu(typeTissu)){
+			throw new CantBeDeletedException(typeTissu, null);
+		}
 	}
 
 	public ObservableList<String> getAllTypeTissuValues() {
 		return FXCollections
-				.observableArrayList(getAll().stream().map(tt -> tt.getValue()).collect(Collectors.toList()));
+				.observableArrayList(getAll().stream().map(TypeTissu::getValue).collect(Collectors.toList()));
 	}
 
 	@Override

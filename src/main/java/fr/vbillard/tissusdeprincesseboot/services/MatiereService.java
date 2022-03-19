@@ -3,6 +3,9 @@ package fr.vbillard.tissusdeprincesseboot.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import fr.vbillard.tissusdeprincesseboot.dao.TissuDao;
+import fr.vbillard.tissusdeprincesseboot.dao.TissuVariantDao;
+import fr.vbillard.tissusdeprincesseboot.exception.CantBeDeletedException;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class MatiereService extends AbstractService<Matiere>{
 	private MatiereDao dao;
+	private TissuDao tissuDao;
+	private TissuVariantDao tissuVariantDao;
 
 	@Override
 	protected JpaRepository getDao() {
@@ -37,7 +42,17 @@ public class MatiereService extends AbstractService<Matiere>{
 	}
 	
 	public void delete(String value) {
-		delete(findMatiere(value));
+		Matiere matiere = findMatiere(value);
+		checkIfMatiereIsUsed(matiere);
+		delete(matiere);
 	}
 
+	public void checkIfMatiereIsUsed(Matiere matiere) {
+		if (tissuDao.existsTissuByMatiere(matiere)){
+			throw new CantBeDeletedException(matiere, null);
+		}
+		if (tissuVariantDao.existsTissuVariantByMatiere(matiere)){
+			throw new CantBeDeletedException(matiere, null);
+		}
+	}
 }
