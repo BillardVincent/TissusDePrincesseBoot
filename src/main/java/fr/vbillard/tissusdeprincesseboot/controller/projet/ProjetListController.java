@@ -36,6 +36,7 @@ public class ProjetListController extends ViewListController{
             Pane card = initializer.displayPane(PathEnum.PROJET_CARD, data);
             cardPane.getChildren().add(card);
         }
+        setPageInfo(projetService.count());
     }
 
     @Override

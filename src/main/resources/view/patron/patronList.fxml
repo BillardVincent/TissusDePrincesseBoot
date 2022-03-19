@@ -32,11 +32,11 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="78.0" prefWidth="98.0">
                      <children>
-                        <Label text="start" />
+                        <Label text="start" fx:id="start"/>
                         <Label text="-" />
-                        <Label text="end" />
+                        <Label text="end" fx:id="end"/>
                         <Label text="/" />
-                        <Label text="Total" />
+                        <Label text="Total" fx:id="total"/>
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="89.0" prefWidth="85.0">

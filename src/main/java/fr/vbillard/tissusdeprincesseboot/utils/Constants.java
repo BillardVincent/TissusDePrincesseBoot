@@ -13,5 +13,4 @@ public class Constants {
 	public static final Paint colorAccent = Color.BLUE;
 	public static final Paint colorWarning = Color.ORANGE;
 
-    public static final Paint colorGrey = Color.GREY;
 }

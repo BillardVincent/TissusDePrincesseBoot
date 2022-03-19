@@ -36,6 +36,7 @@ public class PatronListController extends ViewListController{
             Pane card = initializer.displayPane(PathEnum.PATRON_CARD, fxData);
             cardPane.getChildren().add(card);
         }
+        setPageInfo(patronService.count());
     }
 
     @Override

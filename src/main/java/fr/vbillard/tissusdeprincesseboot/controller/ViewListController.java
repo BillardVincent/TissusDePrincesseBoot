@@ -33,7 +33,7 @@ public abstract class ViewListController implements IController{
     protected int page;
     protected final static int PAGE_SIZE = 10;
     private long totalElement;
-    
+
 	protected abstract void setElements();
 
     protected void setPageInfo(long totalElement){
@@ -41,16 +41,11 @@ public abstract class ViewListController implements IController{
         start.setText(Integer.toString((page) * PAGE_SIZE +1));
         end.setText(Long.toString(Math.min((page+1) * PAGE_SIZE , totalElement)));
         total.setText(Long.toString(totalElement));
-        if (page ==0){
-            previousIcon.setFill(Constants.colorGrey);
-        }else {
-            previousIcon.setFill(Constants.colorBlack);
-        }
-        if ((page+1) * PAGE_SIZE > totalElement){
-            nextIcon.setFill(Constants.colorGrey);
-        }else {
-            nextIcon.setFill(Constants.colorBlack);
-        }
+        previousIcon.setVisible (page >0);
+        previousIcon.setDisable (page <=0);
+        nextIcon.setVisible((page+1) * PAGE_SIZE <= totalElement);
+        nextIcon.setDisable((page+1) * PAGE_SIZE > totalElement);
+
     }
 	
     @Override
@@ -60,7 +55,6 @@ public abstract class ViewListController implements IController{
         setElements();
     }
 
-   
     public abstract void AddNewElement(MouseEvent mouseEvent);
 
     @FXML
