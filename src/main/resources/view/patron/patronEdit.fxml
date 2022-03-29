@@ -76,10 +76,7 @@
 												<JFXTextField fx:id="referenceField"
 													prefHeight="25.0" prefWidth="185.0" />
 												<JFXButton fx:id="generateReferenceButton"
-													mnemonicParsing="false" onAction="#handleGenerateReference">
-													<HBox.margin>
-														<Insets left="10.0" />
-													</HBox.margin>
+													onAction="#handleGenerateReference">
 												</JFXButton>
 											</children>
 										</HBox>
@@ -94,10 +91,7 @@
 									<children>
 										<Label prefHeight="26.0" prefWidth="121.0" text="Tissus" />
 										<JFXButton fx:id="addTissuButton"
-											mnemonicParsing="false" onAction="#handleTissuListedit">
-											<HBox.margin>
-												<Insets />
-											</HBox.margin>
+											 onAction="#handleTissuListedit">
 										</JFXButton>
 									</children>
 									<padding>
@@ -126,10 +120,7 @@
 										<Label prefHeight="26.0" prefWidth="121.0"
 											text="Fournitures" />
 										<JFXButton fx:id="addFournitureButton"
-											mnemonicParsing="false" onAction="#handleFournitureListedit">
-											<HBox.margin>
-												<Insets />
-											</HBox.margin>
+											onAction="#handleFournitureListedit">
 										</JFXButton>
 									</children>
 									<padding>
@@ -151,13 +142,13 @@
 							</children>
 						</VBox>
 						<JFXButton layoutX="53.0" layoutY="492.0"
-							mnemonicParsing="false" onAction="#handleSavePatron"
+							onAction="#handleSavePatron"
 							prefHeight="25.0" prefWidth="69.0" text="Sauver" />
 						<JFXButton layoutX="159.0" layoutY="492.0"
-							mnemonicParsing="false" onAction="#handleSaveAndQuitPatron"
-							text="Sauver &amp; quitter" />
+							onAction="#handleSaveAndQuitPatron"
+							text="Sauver et quitter" />
 						<JFXButton layoutX="316.0" layoutY="492.0"
-							mnemonicParsing="false" onAction="#handleCancel" text="Annuler" />
+							onAction="#handleCancel" text="Annuler" />
 					</children>
 				</AnchorPane>
 				<AnchorPane minHeight="0.0" minWidth="0.0"

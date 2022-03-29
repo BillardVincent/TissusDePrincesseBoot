@@ -30,8 +30,6 @@ public class PatronCardController implements IController{
 	private Label modelPatronLabel;
 	@FXML
 	private Label typeVetementPatronLabel;
-	@FXML
-	private Label descriptionPatronLabel;
 	
 	private RootController rootController;
 	 

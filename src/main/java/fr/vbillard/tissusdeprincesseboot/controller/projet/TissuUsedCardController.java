@@ -28,28 +28,11 @@ import java.util.Optional;
 @Scope("prototype")
 public class TissuUsedCardController implements IController {
 
-	@FXML
-	public Label description;
-	@FXML
+	
 	public Label titre;
 	@FXML
 	private Label longueur;
-	@FXML
-	private Label laize;
-	@FXML
-	private Label matiere;
-	@FXML
-	private Label type;
-	@FXML
-	private Label tissage;
-	@FXML
-	private Label poids;
-	@FXML
-	private Label unitePoids;
-	@FXML
-	private MaterialDesignIconView masse;
-	@FXML
-	private FontAwesomeIconView decati;
+	
 	@FXML
 	private ImageView image;
 
@@ -80,17 +63,7 @@ public class TissuUsedCardController implements IController {
 	}
 
 	private void setCardContent() {
-		description.setText(tissu.getDescription());
 		longueur.setText(String.valueOf(tissuUsed.getLongueur()));
-		laize.setText(String.valueOf(tissu.getLaize()));
-		matiere.setText(tissu.getMatiere());
-		type.setText(tissu.getType());
-		tissage.setText(tissu.getTissage());
-		poids.setText(String.valueOf(tissu.getPoids()));
-		unitePoids.setText(tissu.getUnitePoids());
-		decati.setFill(tissu.isDecati() ? Constants.colorAdd : Constants.colorDelete);
-		masse.setStyleClass(tissu.getPoids() > ConstantesMetier.MAX_POIDS_MOYEN ? "heavy-weight"
-				: tissu.getPoids() > ConstantesMetier.MIN_POIDS_MOYEN ? "standard-weight" : "light-weight");
 		Optional<Photo> pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
 		image.setImage(imageService.imageOrDefault(pictures));
 
