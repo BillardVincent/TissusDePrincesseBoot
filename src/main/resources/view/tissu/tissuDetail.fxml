@@ -34,7 +34,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
         <children>
-            <Label text="Longueur" GridPane.rowIndex="6" />
+            <Label text="Longueur utilisable" GridPane.rowIndex="6" />
             <Label text="Laize" GridPane.rowIndex="7" />
             <Label text="Description" GridPane.rowIndex="9" />
             <Label fx:id="decatiField" mnemonicParsing="false" text="Décati" GridPane.columnIndex="1" GridPane.rowIndex="11" />
@@ -95,13 +95,13 @@
                     <Label fx:id="referenceField" prefHeight="26.0" prefWidth="242.0" />
                 </children>
             </HBox>
-            <Label fx:id="ancienneValeurLabel" text="Longueur avant" GridPane.rowIndex="4" />
+            <Label fx:id="ancienneValeurLabel" text="Longueur (réelle en stock)" GridPane.rowIndex="4" />
             <Label fx:id="ancienneValeurInfo" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
                 <padding>
                     <Insets left="10.0" />
                 </padding>
             </Label>
-            <Label fx:id="consommeLabel" text="Longueur consommée" GridPane.rowIndex="5" />
+            <Label fx:id="consommeLabel" text="Longueur alloués dans des projets" GridPane.rowIndex="5" />
             <Label fx:id="consommeIndo" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5">
                 <padding>
                     <Insets left="10.0" />
