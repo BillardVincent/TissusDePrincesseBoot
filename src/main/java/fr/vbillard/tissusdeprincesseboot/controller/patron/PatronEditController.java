@@ -180,12 +180,14 @@ public class PatronEditController implements IController {
 		topGrid.add(new Label("Laize"), 0, 1);
 		topGrid.add(new Label("Gamme de poids"), 0, 2);
 
-		JFXTextField longueurSpinner = new JFXTextField(FxUtils.safePropertyToString(tissu.getLongueurProperty()));
+		JFXTextField longueurSpinner = new JFXTextField();
+		longueurSpinner.setText(FxUtils.safePropertyToString(tissu.getLongueurProperty()));
 		longueurSpinner.setTextFormatter(IntegerSpinner.getFormatter());
 
 		topGrid.add(longueurSpinner, 1, 0);
 
-		JFXTextField laizeSpinner = new JFXTextField(FxUtils.safePropertyToString(tissu.getLaizeProperty()));
+		JFXTextField laizeSpinner = new JFXTextField();
+		longueurSpinner.setText(FxUtils.safePropertyToString(tissu.getLaizeProperty()));
 		laizeSpinner.setTextFormatter(IntegerSpinner.getFormatter());
 
 		topGrid.add(laizeSpinner, 1, 1);

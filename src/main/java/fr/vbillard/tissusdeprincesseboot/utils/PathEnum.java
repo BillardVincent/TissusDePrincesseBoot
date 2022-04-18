@@ -27,5 +27,6 @@ public enum PathEnum {
     TISSU_REQUIS_SELECTED,
     PLUS_CARD,
     SET_LONGUEUR,
+    WEB_URL,
 
 }

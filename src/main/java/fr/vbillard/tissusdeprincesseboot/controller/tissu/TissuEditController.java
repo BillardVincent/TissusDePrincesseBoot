@@ -5,6 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -12,6 +13,8 @@ import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
 
 import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
+import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
+
 import org.imgscalr.Scalr;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -28,6 +31,7 @@ import fr.vbillard.tissusdeprincesseboot.controller.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
+import fr.vbillard.tissusdeprincesseboot.exception.NotFoundException;
 import fr.vbillard.tissusdeprincesseboot.fxCustomElements.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.fxCustomElements.IntegerSpinner;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
@@ -333,18 +337,7 @@ public class TissuEditController implements IController {
 				String name = file.getName();
 				String extension = name.substring(name.lastIndexOf(".") + 1);
 				BufferedImage bufferedImage = ImageIO.read(file);
-				bufferedImage = Scalr.resize(bufferedImage, 900);
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				ImageIO.write(bufferedImage, extension, baos);
-				byte[] data = baos.toByteArray();
-				Photo image = new Photo();
-				image.setData(data);
-				image.setNom(name);
-				image.setFormat(ImageFormat.valueOf(extension.toUpperCase()));
-				image.setTissu(mapper.map(tissu, Tissu.class));
-				imageService.saveOrUpdate(image);
-				baos.close();
-				imagePane.setImage(new Image(new ByteArrayInputStream(image.getData())));
+				setImage(name, extension, bufferedImage);
 
 				pref.setPictureLastUploadPath(file.getAbsolutePath());
 				preferenceService.savePreferences(pref);
@@ -352,6 +345,42 @@ public class TissuEditController implements IController {
 				e.printStackTrace();
 			}
 		 
+	}
+	
+	@FXML
+	private void addPictureWeb() {
+		tissuService.saveOrUpdate(tissu);
+		Preference pref = preferenceService.getPreferences();
+		URL url = initializer.displayModale(PathEnum.WEB_URL, null, "URL de l'image").getUrl();
+		
+		if (url != null)
+			try {
+
+				String name = url.getHost();
+				String path = url.getPath();
+				String extension = path.substring(path.lastIndexOf('.') + 1);
+				BufferedImage bufferedImage = ImageIO.read(url);
+				setImage(name, extension, bufferedImage);
+
+			} catch (IOException e) {
+				e.printStackTrace();
+				throw new NotFoundException(url.toString());
+			}
+	}
+
+	private void setImage(String name, String extension, BufferedImage bufferedImage) throws IOException {
+		bufferedImage = Scalr.resize(bufferedImage, 900);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ImageIO.write(bufferedImage, extension, baos);
+		byte[] data = baos.toByteArray();
+		Photo image = new Photo();
+		image.setData(data);
+		image.setNom(name);
+		image.setFormat(ImageFormat.valueOf(extension.toUpperCase()));
+		image.setTissu(mapper.map(tissu, Tissu.class));
+		imageService.saveOrUpdate(image);
+		baos.close();
+		imagePane.setImage(new Image(new ByteArrayInputStream(image.getData())));
 	}
 
 	@FXML

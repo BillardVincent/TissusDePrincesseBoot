@@ -1,5 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.utils;
 
+import java.net.URL;
+
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +26,7 @@ public class FxData  {
     private TissuRequisDto tissuRequis;
     private TissuVariantDto tissuVariant;
     private int longueurRequise;
+    private URL url;
 
     public FxData getCopy() {
         try {

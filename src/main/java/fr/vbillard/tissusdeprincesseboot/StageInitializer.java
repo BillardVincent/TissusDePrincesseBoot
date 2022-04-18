@@ -20,6 +20,7 @@ import fr.vbillard.tissusdeprincesseboot.controller.caracteristiques.TissageEdit
 import fr.vbillard.tissusdeprincesseboot.controller.caracteristiques.TypeEditController;
 import fr.vbillard.tissusdeprincesseboot.controller.common.PlusCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.common.SetLongueurDialogController;
+import fr.vbillard.tissusdeprincesseboot.controller.common.SetWebUrlDialogController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronDetailController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronEditController;
@@ -225,6 +226,8 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
             	return new PathHolder(pathProperties.getPlusCard().getURL(), PlusCardController.class);
             case SET_LONGUEUR:
             	return new PathHolder(pathProperties.getLongueur().getURL(), SetLongueurDialogController.class);
+            case WEB_URL:
+            	return new PathHolder(pathProperties.getUrl().getURL(), SetWebUrlDialogController.class);
 
         }
 		return null;
