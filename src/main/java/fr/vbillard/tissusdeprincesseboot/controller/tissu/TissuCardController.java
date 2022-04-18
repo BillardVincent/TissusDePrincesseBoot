@@ -1,11 +1,10 @@
 package fr.vbillard.tissusdeprincesseboot.controller.tissu;
 
-import com.sun.javafx.webkit.Accessor;
+import java.util.Optional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-import com.sun.prism.paint.Color;
 
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
@@ -18,17 +17,13 @@ import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.services.ImageService;
 import fr.vbillard.tissusdeprincesseboot.utils.ConstantesMetier;
-import fr.vbillard.tissusdeprincesseboot.utils.Constants;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Paint;
 import javafx.scene.web.WebView;
-
-import java.util.Optional;
 
 @Component
 @Scope("prototype")
@@ -68,10 +63,11 @@ public class TissuCardController implements IController {
 	private ModelMapper mapper;
 
 	private TissuDto tissu;
-	
+
 	private CustomIcon customIcon;
 
-	public TissuCardController(CustomIcon customIcon, ImageService imageService, RootController rootController, ModelMapper mapper) {
+	public TissuCardController(CustomIcon customIcon, ImageService imageService, RootController rootController,
+			ModelMapper mapper) {
 		this.imageService = imageService;
 		this.rootController = rootController;
 		this.mapper = mapper;
@@ -96,16 +92,15 @@ public class TissuCardController implements IController {
 		type.setText(FxUtils.safePropertyToString(tissu.getTypeProperty()));
 		tissage.setText(FxUtils.safePropertyToString(tissu.getTissageProperty()));
 		poids.setText(FxUtils.safePropertyToString(tissu.getPoidseProperty()));
-		//TODO sécuriser si null
+		// TODO sécuriser si null
 		unitePoids.setText(tissu.getUnitePoids());
 		WebView view = new WebView();
-		if (tissu.isDecati()){
+		if (tissu.isDecati()) {
 			customIcon.washingMachinIcon(view, 20);
 		} else {
 			customIcon.noWashingMachinIcon(view, 20);
 		}
 		footer.getChildren().add(view);
-
 
 		masse.setStyleClass(tissu.getPoids() > ConstantesMetier.MAX_POIDS_MOYEN ? "heavy-weight"
 				: tissu.getPoids() > ConstantesMetier.MIN_POIDS_MOYEN ? "standard-weight" : "light-weight");

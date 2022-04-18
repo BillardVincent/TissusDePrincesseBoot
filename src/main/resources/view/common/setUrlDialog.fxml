@@ -7,24 +7,24 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="152.0" prefWidth="493.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.common.SetWebUrlDialogController">
+<AnchorPane prefHeight="206.0" prefWidth="631.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.common.SetWebUrlDialogController">
    <children>
-      <Label layoutX="27.0" layoutY="90.0" text="URL:" />
-      <JFXButton layoutX="146.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleValidate" text="Valider" />
-      <JFXButton layoutX="249.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleCancel" text="Annuler" />
-      <JFXTextField fx:id="urlField" layoutX="65.0" layoutY="84.0" prefHeight="26.0" prefWidth="367.0" />
-      <Label layoutX="39.0" layoutY="14.0" prefHeight="26.0" prefWidth="398.0" text="Indiquez l'URL de l'image que vous souhaitez ajouter : ">
+      <Label layoutX="39.0" layoutY="129.0" text="URL:" />
+      <JFXButton layoutX="234.0" layoutY="171.0" mnemonicParsing="false" onAction="#handleValidate" text="Valider" />
+      <JFXButton layoutX="359.0" layoutY="171.0" mnemonicParsing="false" onAction="#handleCancel" text="Annuler" />
+      <JFXTextField fx:id="urlField" layoutX="77.0" layoutY="123.0" prefHeight="26.0" prefWidth="500.0" />
+      <Label layoutX="39.0" layoutY="14.0" prefHeight="35.0" prefWidth="623.0" text="Indiquez l'URL de l'image que vous souhaitez ajouter : ">
          <font>
-            <Font size="14.0" />
+            <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="64.0" layoutY="44.0" prefHeight="18.0" prefWidth="339.0" text="clic droit sur l'image -&gt; Copier l'addresse de l'image" />
-      <FontAwesomeIconView glyphName="CHROME" layoutX="46.0" layoutY="57.0" />
-      <FontAwesomeIconView glyphName="FIREFOX" layoutX="46.0" layoutY="73.0" />
-      <Label layoutX="64.0" layoutY="60.0" prefHeight="18.0" prefWidth="339.0" text="clic droit sur l'image -&gt; Copier le lien de l'image" />
-      <JFXButton layoutX="438.0" layoutY="86.0">
+      <Label layoutX="57.0" layoutY="68.0" prefHeight="18.0" prefWidth="542.0" text="clic droit sur l'image -&gt; Copier l'addresse de l'image" />
+      <FontAwesomeIconView glyphName="CHROME" layoutX="39.0" layoutY="81.0" />
+      <FontAwesomeIconView glyphName="FIREFOX" layoutX="39.0" layoutY="97.0" />
+      <Label layoutX="57.0" layoutY="84.0" prefHeight="18.0" prefWidth="533.0" text="clic droit sur l'image -&gt; Copier le lien de l'image" />
+      <JFXButton layoutX="580.0" layoutY="123.0" mnemonicParsing="false" onAction="#pastClipboard">
          <graphic>
-            <FontAwesomeIconView glyphName="CLIPBOARD" onMouseClicked="#pastClipboard" />
+            <FontAwesomeIconView glyphName="CLIPBOARD" />
          </graphic>
       </JFXButton>
    </children>

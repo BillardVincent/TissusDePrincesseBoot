@@ -19,8 +19,8 @@ import org.modelmapper.ModelMapper;
 
 @AllArgsConstructor
 @Service
-public class PatronService extends AbstractService<Patron>{
-	
+public class PatronService extends AbstractService<Patron> {
+
 	PatronDao patronDao;
 	ModelMapper mapper;
 	TissusRequisDao tissuRequisDao;
@@ -42,7 +42,7 @@ public class PatronService extends AbstractService<Patron>{
 		delete(mapper.map(selected, Patron.class));
 	}
 
-	public ObservableList<PatronDto> getObservableList(){
+	public ObservableList<PatronDto> getObservableList() {
 		List<Patron> lstPatron = getDao().findAll();
 		List<PatronDto> list = lstPatron.stream().map(t -> mapper.map(t, PatronDto.class)).collect(Collectors.toList());
 		return FXCollections.observableArrayList(list);
@@ -54,9 +54,13 @@ public class PatronService extends AbstractService<Patron>{
 	}
 
 	public ObservableList<PatronDto> getObservablePage(int page, int pageSize) {
-		return FXCollections.observableArrayList(patronDao
-				.findAll(PageRequest.of(page, pageSize))
-				.stream().map(t -> mapper.map(t, PatronDto.class))
-				.collect(Collectors.toList()));
+		return FXCollections.observableArrayList(patronDao.findAll(PageRequest.of(page, pageSize)).stream()
+				.map(t -> mapper.map(t, PatronDto.class)).collect(Collectors.toList()));
+	}
+
+	public PatronDto saveOrUpdate(PatronDto dto) {
+		Patron patron = mapper.map(dto, Patron.class);
+		patron = saveOrUpdate(patron);
+		return mapper.map(dto, PatronDto.class);
 	}
 }

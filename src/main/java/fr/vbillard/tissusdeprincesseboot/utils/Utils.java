@@ -8,31 +8,31 @@ import java.util.Map;
 
 public class Utils {
 
-    public static boolean isEmpty(Object... objs) {
+	public static boolean isEmpty(Object... objs) {
 
-        for (Object o : objs) {
-            if (o == null || (o instanceof String && StringUtils.isBlank((String) o))
-                    || (o instanceof Collection<?> && ((Collection<?>) o).isEmpty())
-                    || (o instanceof Map && ((Map<?, ?>) o).isEmpty())) {
-                return true;
-            }
-        }
-        return false;
-    }
+		for (Object o : objs) {
+			if (o == null || (o instanceof String && StringUtils.isBlank((String) o))
+					|| (o instanceof Collection<?> && ((Collection<?>) o).isEmpty())
+					|| (o instanceof Map && ((Map<?, ?>) o).isEmpty())) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-    /**
-     * Vérifie si tous les paramètres ne sont pas vides
-     *
-     * @param objs
-     * @return
-     */
-    public static boolean isNotEmpty(Object... objs) {
+	/**
+	 * Vérifie si tous les paramètres ne sont pas vides
+	 *
+	 * @param objs
+	 * @return
+	 */
+	public static boolean isNotEmpty(Object... objs) {
 
-        return !isEmpty(objs);
-    }
-    
-    public static String safeString(String value) {
-    	return value == null ? Strings.EMPTY : value;
-    }
-    
+		return !isEmpty(objs);
+	}
+
+	public static String safeString(String value) {
+		return value == null ? Strings.EMPTY : value;
+	}
+
 }

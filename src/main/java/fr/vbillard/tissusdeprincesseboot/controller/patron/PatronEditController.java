@@ -1,10 +1,14 @@
 package fr.vbillard.tissusdeprincesseboot.controller.patron;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import fr.vbillard.tissusdeprincesseboot.fxCustomElements.IntegerSpinner;
 import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
+import fr.vbillard.tissusdeprincesseboot.utils.PictureUtils;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +25,10 @@ import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuVariantDto;
 import fr.vbillard.tissusdeprincesseboot.fxCustomElements.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
+import fr.vbillard.tissusdeprincesseboot.model.Photo;
+import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
+import fr.vbillard.tissusdeprincesseboot.services.ImageService;
 import fr.vbillard.tissusdeprincesseboot.services.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.services.PatronService;
 import fr.vbillard.tissusdeprincesseboot.services.TissageService;
@@ -43,6 +50,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -70,6 +79,8 @@ public class PatronEditController implements IController {
 	private JFXButton generateReferenceButton;
 	@FXML
 	private JFXTextField referenceField;
+	@FXML
+	public ImageView imagePane;
 
 	private StageInitializer initializer;
 	private PatronDto patron;
@@ -79,6 +90,9 @@ public class PatronEditController implements IController {
 	private final MatiereService matiereService;
 	private final TissageService tissageService;
 	private final TypeTissuService typeTissuService;
+	private final ImageService imageService;
+	private PictureUtils pictureUtils;
+	private Optional<Photo> pictures;
 	private final ModelMapper mapper;
 	private boolean okClicked = false;
 	private StageInitializer mainApp;
@@ -93,7 +107,8 @@ public class PatronEditController implements IController {
 	private ObservableList<TissuVariantDto> tvList;
 	private VBox bottomRightVbox;
 
-	public PatronEditController(TissuRequisService tissuRequisService, TissuVariantService tissuVariantService,
+	public PatronEditController(ImageService imageService, PictureUtils pictureUtils,
+			TissuRequisService tissuRequisService, TissuVariantService tissuVariantService,
 			MatiereService matiereService, TissageService tissageService, TypeTissuService typeTissuService,
 			ModelMapper mapper, PatronService patronService) {
 
@@ -104,6 +119,8 @@ public class PatronEditController implements IController {
 		this.typeTissuService = typeTissuService;
 		this.mapper = mapper;
 		this.patronService = patronService;
+		this.pictureUtils = pictureUtils;
+		this.imageService = imageService;
 	}
 
 	@FXML
@@ -446,9 +463,44 @@ public class PatronEditController implements IController {
 			modeleField.setText(patron.getModeleProperty() == null ? "" : patron.getModele());
 			typeVetementField.setText(patron.getTypeVetementProperty() == null ? "" : patron.getTypeVetement());
 
+			pictures = imageService.getImage(mapper.map(patron, Patron.class));
+			imagePane.setImage(imageService.imageOrDefault(pictures));
+
 			loadTissuRequisForPatron();
 		}
 	}
+
+	@FXML
+	private void addPicture() {
+		patronService.saveOrUpdate(mapper.map(patron, Patron.class));
+
+		Optional<Photo> imageOpt = pictureUtils.addPictureLocal(pictures);
+		if (imageOpt.isPresent()) {
+			setImage(imageOpt.get());
+		}
+	}
+
+	@FXML
+	private void addPictureWeb() {
+		Optional<Photo> imageOpt = pictureUtils.addPictureWeb(pictures);
+		if (imageOpt.isPresent()) {
+			setImage(imageOpt.get());
+		}
+
+	}
+
+	private void setImage(Photo image) {
+		patronService.saveOrUpdate(patron);
+		image.setPatron(mapper.map(patron, Patron.class));
+		imageService.saveOrUpdate(image);
+		imagePane.setImage(new Image(new ByteArrayInputStream(image.getData())));
+	}
+
+	@FXML
+	private void pictureExpend() {
+
+	}
+
 	/*
 	 * txtInput.setEditable(false); txtInput.setMouseTransparent(true);
 	 * txtInput.setFocusTraversable(false);

@@ -2,20 +2,14 @@ package fr.vbillard.tissusdeprincesseboot.controller.tissu;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 
-import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
-import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
-
-import org.imgscalr.Scalr;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -31,14 +25,12 @@ import fr.vbillard.tissusdeprincesseboot.controller.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
-import fr.vbillard.tissusdeprincesseboot.exception.NotFoundException;
 import fr.vbillard.tissusdeprincesseboot.fxCustomElements.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.fxCustomElements.IntegerSpinner;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Preference;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
-import fr.vbillard.tissusdeprincesseboot.model.enums.ImageFormat;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
 import fr.vbillard.tissusdeprincesseboot.services.ImageService;
 import fr.vbillard.tissusdeprincesseboot.services.MatiereService;
@@ -47,13 +39,13 @@ import fr.vbillard.tissusdeprincesseboot.services.TissageService;
 import fr.vbillard.tissusdeprincesseboot.services.TissuService;
 import fr.vbillard.tissusdeprincesseboot.services.TypeTissuService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
+import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
+import fr.vbillard.tissusdeprincesseboot.utils.PictureUtils;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
-//import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -61,62 +53,63 @@ import javafx.scene.layout.RowConstraints;
 
 @Component
 public class TissuEditController implements IController {
-    @FXML
-    public JFXToggleButton decatiField;
-    @FXML
-    public JFXTextField descriptionField;
-    @FXML
-    public JFXTextField lieuDachatField;
-    @FXML
-    public JFXTextField poidsField;
-    @FXML
-    public JFXComboBox<String> unitePoidsField;
-    @FXML
-    public JFXTextField laizeField;
-    @FXML
-    public JFXTextField longueurField;
-    @FXML
-    public JFXToggleButton chuteField;
-    @FXML
-    public JFXButton addTypeButton;
-    @FXML
-    public JFXComboBox<String> typeField;
-    @FXML
-    public JFXComboBox<String> matiereField;
-    @FXML
-    public JFXButton addMatiereButton;
-    @FXML
-    public JFXComboBox<String> tissageField;
-    @FXML
-    public JFXButton addTissageButton;
-    @FXML
-    public JFXTextField referenceField;
-    @FXML
-    public JFXButton generateReferenceButton;
-    @FXML
-    public Label ancienneValeurLabel;
-    @FXML
-    public Label ancienneValeurInfo;
-    @FXML
-    public Label consommeLabel;
-    @FXML
-    public Label consommeIndo;
+	@FXML
+	public JFXToggleButton decatiField;
+	@FXML
+	public JFXTextField descriptionField;
+	@FXML
+	public JFXTextField lieuDachatField;
+	@FXML
+	public JFXTextField poidsField;
+	@FXML
+	public JFXComboBox<String> unitePoidsField;
+	@FXML
+	public JFXTextField laizeField;
+	@FXML
+	public JFXTextField longueurField;
+	@FXML
+	public JFXToggleButton chuteField;
+	@FXML
+	public JFXButton addTypeButton;
+	@FXML
+	public JFXComboBox<String> typeField;
+	@FXML
+	public JFXComboBox<String> matiereField;
+	@FXML
+	public JFXButton addMatiereButton;
+	@FXML
+	public JFXComboBox<String> tissageField;
+	@FXML
+	public JFXButton addTissageButton;
+	@FXML
+	public JFXTextField referenceField;
+	@FXML
+	public JFXButton generateReferenceButton;
+	@FXML
+	public Label ancienneValeurLabel;
+	@FXML
+	public Label ancienneValeurInfo;
+	@FXML
+	public Label consommeLabel;
+	@FXML
+	public Label consommeIndo;
 	@FXML
 	public ImageView imagePane;
 
-    public RowConstraints ancienneValeurRow;
-    public RowConstraints consommeRow;
+	public RowConstraints ancienneValeurRow;
+	public RowConstraints consommeRow;
 
-    private int longueur;
-    private int laize;
-    private int poids;
+	private int longueur;
+	private int laize;
+	private int poids;
 
-    private RootController root;
+	private RootController root;
 	private StageInitializer initializer;
 
-    private TissuDto tissu;
+	private TissuDto tissu;
 	private boolean edit;
 	private boolean okClicked = false;
+	private Optional<Photo> pictures;
 
 	private ModelMapper mapper;
 	private TypeTissuService typeTissuService;
@@ -124,79 +117,80 @@ public class TissuEditController implements IController {
 	private TissageService tissageService;
 	private TissuService tissuService;
 	private ImageService imageService;
- 	private PreferenceService preferenceService;
+	private PictureUtils pictureUtils;
 
-    public TissuEditController(ImageService imageService, PreferenceService preferenceService, ModelMapper mapper, TissuService tissuService, TypeTissuService typeTissuService, MatiereService matiereService, TissageService tissageService, RootController root) {
-        this.mapper = mapper;
+	public TissuEditController(ImageService imageService, PictureUtils pictureUtils, ModelMapper mapper,
+			TissuService tissuService, TypeTissuService typeTissuService, MatiereService matiereService,
+			TissageService tissageService, RootController root) {
+		this.mapper = mapper;
 		this.imageService = imageService;
-        this.tissuService = tissuService;
-        this.typeTissuService = typeTissuService;
-        this.matiereService = matiereService;
-        this.tissageService = tissageService;
-		this.preferenceService = preferenceService;
+		this.tissuService = tissuService;
+		this.typeTissuService = typeTissuService;
+		this.matiereService = matiereService;
+		this.tissageService = tissageService;
+		this.pictureUtils = pictureUtils;
 		this.root = root;
-    }
+	}
 
-    @Override
-    public void setStageInitializer(StageInitializer initializer, FxData data) {
-        this.initializer = initializer;
-        
-        if (data==null || data.getTissu()==null){
-        	throw new IllegalData();
+	@Override
+	public void setStageInitializer(StageInitializer initializer, FxData data) {
+		this.initializer = initializer;
+
+		if (data == null || data.getTissu() == null) {
+			throw new IllegalData();
 		}
-            tissu = data.getTissu();
-            if (tissu == null || tissu.getChuteProperty() == null) {
-                tissu = mapper.map(new Tissu(0, "", 0, 0, "", null, typeTissuService.getAll().get(0), 0,
-                        UnitePoids.NON_RENSEIGNE, false, "", null, false), TissuDto.class);
-            }
-
-            longueurField.setText(FxUtils.safePropertyToString(tissu.getLongueurProperty()));
-            laizeField.setText(FxUtils.safePropertyToString(tissu.getLaizeProperty()));
-            poidsField.setText(FxUtils.safePropertyToString(tissu.getPoidseProperty()));
-            referenceField.setText(FxUtils.safePropertyToString(tissu.getReferenceProperty()));
-            descriptionField.setText(FxUtils.safePropertyToString(tissu.getDescriptionProperty()));
-            decatiField.setSelected(tissu.getDecatiProperty() != null && tissu.isDecati());
-            lieuDachatField.setText(FxUtils.safePropertyToString(tissu.getLieuAchatProperty()));
-            chuteField.setSelected(tissu.getChuteProperty() != null && tissu.isChute());
-
-            unitePoidsField.setItems(FXCollections.observableArrayList(UnitePoids.labels()));
-            unitePoidsField.setValue(
-                    tissu.getUnitePoidsProperty() == null ? UnitePoids.NON_RENSEIGNE.label : tissu.getUnitePoids());
-
-            typeField.setItems(FXCollections.observableArrayList(
-                    typeTissuService.getAll().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList())));
-            typeField.setValue(FxUtils.safePropertyToString(tissu.getTypeProperty()));
-
-            matiereField.setItems(FXCollections.observableArrayList(
-                    matiereService.getAll().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList())));
-            matiereField.setValue(FxUtils.safePropertyToString(tissu.getMatiereProperty()));
-
-            tissageField.setItems(FXCollections.observableArrayList(
-                    tissageService.getAll().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList())));
-            tissageField.setValue(FxUtils.safePropertyToString(tissu.getTissageProperty()));
-
-    		Optional<Photo> pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
-    		imagePane.setImage(imageService.imageOrDefault(pictures));
+		tissu = data.getTissu();
+		if (tissu == null || tissu.getChuteProperty() == null) {
+			tissu = mapper.map(new Tissu(0, "", 0, 0, "", null, typeTissuService.getAll().get(0), 0,
+					UnitePoids.NON_RENSEIGNE, false, "", null, false), TissuDto.class);
 		}
-    
 
-    @FXML
-    private void initialize() {
+		longueurField.setText(FxUtils.safePropertyToString(tissu.getLongueurProperty()));
+		laizeField.setText(FxUtils.safePropertyToString(tissu.getLaizeProperty()));
+		poidsField.setText(FxUtils.safePropertyToString(tissu.getPoidseProperty()));
+		referenceField.setText(FxUtils.safePropertyToString(tissu.getReferenceProperty()));
+		descriptionField.setText(FxUtils.safePropertyToString(tissu.getDescriptionProperty()));
+		decatiField.setSelected(tissu.getDecatiProperty() != null && tissu.isDecati());
+		lieuDachatField.setText(FxUtils.safePropertyToString(tissu.getLieuAchatProperty()));
+		chuteField.setSelected(tissu.getChuteProperty() != null && tissu.isChute());
 
-        addTissageButton.setGraphic(GlyphIconUtil.plusCircleTiny());
-        addTypeButton.setGraphic(GlyphIconUtil.plusCircleTiny());
-        addMatiereButton.setGraphic(GlyphIconUtil.plusCircleTiny());
-        FontAwesomeIconView magicIcon = new FontAwesomeIconView(FontAwesomeIcon.MAGIC);
-        generateReferenceButton.setGraphic(magicIcon);
-        generateReferenceButton.setTooltip(new Tooltip("Générer une référence automatiquement"));
+		unitePoidsField.setItems(FXCollections.observableArrayList(UnitePoids.labels()));
+		unitePoidsField.setValue(
+				tissu.getUnitePoidsProperty() == null ? UnitePoids.NON_RENSEIGNE.label : tissu.getUnitePoids());
 
-        longueurField.setTextFormatter(IntegerSpinner.getFormatter());
-        laizeField.setTextFormatter(IntegerSpinner.getFormatter());
-        poidsField.setTextFormatter(IntegerSpinner.getFormatter());
+		typeField.setItems(FXCollections.observableArrayList(typeTissuService.getAll().stream()
+				.map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList())));
+		typeField.setValue(FxUtils.safePropertyToString(tissu.getTypeProperty()));
 
-    }
+		matiereField.setItems(FXCollections.observableArrayList(matiereService.getAll().stream()
+				.map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList())));
+		matiereField.setValue(FxUtils.safePropertyToString(tissu.getMatiereProperty()));
 
-    public boolean isOkClicked() {
+		tissageField.setItems(FXCollections.observableArrayList(tissageService.getAll().stream()
+				.map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList())));
+		tissageField.setValue(FxUtils.safePropertyToString(tissu.getTissageProperty()));
+
+		pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
+		imagePane.setImage(imageService.imageOrDefault(pictures));
+	}
+
+	@FXML
+	private void initialize() {
+
+		addTissageButton.setGraphic(GlyphIconUtil.plusCircleTiny());
+		addTypeButton.setGraphic(GlyphIconUtil.plusCircleTiny());
+		addMatiereButton.setGraphic(GlyphIconUtil.plusCircleTiny());
+		FontAwesomeIconView magicIcon = new FontAwesomeIconView(FontAwesomeIcon.MAGIC);
+		generateReferenceButton.setGraphic(magicIcon);
+		generateReferenceButton.setTooltip(new Tooltip("Générer une référence automatiquement"));
+
+		IntegerSpinner.setSpinner(longueurField);
+		IntegerSpinner.setSpinner(laizeField);
+		IntegerSpinner.setSpinner(poidsField);
+
+	}
+
+	public boolean isOkClicked() {
 		return okClicked;
 	}
 
@@ -268,7 +262,7 @@ public class TissuEditController implements IController {
 		} else {
 			// Show the error message.
 			Alert alert = new Alert(AlertType.ERROR);
-			//alert.initOwner(dialogStage);
+			// alert.initOwner(dialogStage);
 			alert.setTitle("Invalid Fields");
 			alert.setHeaderText("Please correct invalid fields");
 			alert.setContentText(errorMessage);
@@ -328,65 +322,32 @@ public class TissuEditController implements IController {
 	@FXML
 	private void addPicture() {
 		tissuService.saveOrUpdate(tissu);
-		Preference pref = preferenceService.getPreferences();
-		File file = initializer.directoryChooser(pref);
-		
-		if (file != null)
-			try {
 
-				String name = file.getName();
-				String extension = name.substring(name.lastIndexOf(".") + 1);
-				BufferedImage bufferedImage = ImageIO.read(file);
-				setImage(name, extension, bufferedImage);
-
-				pref.setPictureLastUploadPath(file.getAbsolutePath());
-				preferenceService.savePreferences(pref);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		 
+		Optional<Photo> imageOpt = pictureUtils.addPictureLocal(pictures);
+		if (imageOpt.isPresent()) {
+			setImage(imageOpt.get());
+		}
 	}
-	
+
 	@FXML
 	private void addPictureWeb() {
-		tissuService.saveOrUpdate(tissu);
-		Preference pref = preferenceService.getPreferences();
-		URL url = initializer.displayModale(PathEnum.WEB_URL, null, "URL de l'image").getUrl();
-		
-		if (url != null)
-			try {
+		Optional<Photo> imageOpt = pictureUtils.addPictureWeb(pictures);
+		if (imageOpt.isPresent()) {
+			setImage(imageOpt.get());
+		}
 
-				String name = url.getHost();
-				String path = url.getPath();
-				String extension = path.substring(path.lastIndexOf('.') + 1);
-				BufferedImage bufferedImage = ImageIO.read(url);
-				setImage(name, extension, bufferedImage);
-
-			} catch (IOException e) {
-				e.printStackTrace();
-				throw new NotFoundException(url.toString());
-			}
 	}
 
-	private void setImage(String name, String extension, BufferedImage bufferedImage) throws IOException {
-		bufferedImage = Scalr.resize(bufferedImage, 900);
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ImageIO.write(bufferedImage, extension, baos);
-		byte[] data = baos.toByteArray();
-		Photo image = new Photo();
-		image.setData(data);
-		image.setNom(name);
-		image.setFormat(ImageFormat.valueOf(extension.toUpperCase()));
+	private void setImage(Photo image) {
+		tissuService.saveOrUpdate(tissu);
 		image.setTissu(mapper.map(tissu, Tissu.class));
 		imageService.saveOrUpdate(image);
-		baos.close();
 		imagePane.setImage(new Image(new ByteArrayInputStream(image.getData())));
 	}
 
 	@FXML
-	private void pictureExpend(){
+	private void pictureExpend() {
 
 	}
-	
-	
+
 }

@@ -5,17 +5,14 @@ import lombok.Getter;
 @Getter
 public enum ImageFormat {
 
-	JPEG ("JPEG", "*.jpeg"),
-	JPG("JPG","*.jpg"),
-	GIF("GIF", "*.gif"),
-	TIFF("TIFF", "*.tiff");
-	
+	JPEG("JPEG", "*.jpeg"), JPG("JPG", "*.jpg"), GIF("GIF", "*.gif"), PNG("PNG", "*.png"), TIFF("TIFF", "*.tiff");
+
 	private String value;
 	private String extension;
-	
-	ImageFormat(String value, String extension){
+
+	ImageFormat(String value, String extension) {
 		this.value = value;
 		this.extension = extension;
 	}
-	
+
 }
