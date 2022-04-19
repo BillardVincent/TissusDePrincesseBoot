@@ -67,9 +67,8 @@ public class SetWebUrlDialogController implements IModalController {
 
 	@FXML
 	public void pastClipboard() {
-		int i = 0;
-		i = 1;
 		try {
+			System.setProperty("java.awt.headless", "false");
 			String data = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
 			urlField.setText(data);
 		} catch (HeadlessException | UnsupportedFlavorException | IOException e) {

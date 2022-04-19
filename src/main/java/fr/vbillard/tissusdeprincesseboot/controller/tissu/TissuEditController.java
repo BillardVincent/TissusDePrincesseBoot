@@ -1,14 +1,8 @@
 package fr.vbillard.tissusdeprincesseboot.controller.tissu;
 
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
-
-import javax.imageio.ImageIO;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -23,24 +17,23 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
+import fr.vbillard.tissusdeprincesseboot.controller.pictureHelper.PictureHelper;
+import fr.vbillard.tissusdeprincesseboot.controller.pictureHelper.TissuPictureHelper;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.fxCustomElements.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.fxCustomElements.IntegerSpinner;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
-import fr.vbillard.tissusdeprincesseboot.model.Preference;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
 import fr.vbillard.tissusdeprincesseboot.services.ImageService;
 import fr.vbillard.tissusdeprincesseboot.services.MatiereService;
-import fr.vbillard.tissusdeprincesseboot.services.PreferenceService;
 import fr.vbillard.tissusdeprincesseboot.services.TissageService;
 import fr.vbillard.tissusdeprincesseboot.services.TissuService;
 import fr.vbillard.tissusdeprincesseboot.services.TypeTissuService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
-import fr.vbillard.tissusdeprincesseboot.utils.PictureUtils;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -109,26 +102,23 @@ public class TissuEditController implements IController {
 	private TissuDto tissu;
 	private boolean edit;
 	private boolean okClicked = false;
-	private Optional<Photo> pictures;
 
 	private ModelMapper mapper;
 	private TypeTissuService typeTissuService;
 	private MatiereService matiereService;
 	private TissageService tissageService;
 	private TissuService tissuService;
-	private ImageService imageService;
-	private PictureUtils pictureUtils;
+	private TissuPictureHelper pictureHelper;
 
-	public TissuEditController(ImageService imageService, PictureUtils pictureUtils, ModelMapper mapper,
+	public TissuEditController(ImageService imageService, TissuPictureHelper pictureHelper, ModelMapper mapper,
 			TissuService tissuService, TypeTissuService typeTissuService, MatiereService matiereService,
 			TissageService tissageService, RootController root) {
 		this.mapper = mapper;
-		this.imageService = imageService;
 		this.tissuService = tissuService;
 		this.typeTissuService = typeTissuService;
 		this.matiereService = matiereService;
 		this.tissageService = tissageService;
-		this.pictureUtils = pictureUtils;
+		this.pictureHelper = pictureHelper;
 		this.root = root;
 	}
 
@@ -170,8 +160,8 @@ public class TissuEditController implements IController {
 				.map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList())));
 		tissageField.setValue(FxUtils.safePropertyToString(tissu.getTissageProperty()));
 
-		pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
-		imagePane.setImage(imageService.imageOrDefault(pictures));
+		pictureHelper.setPane(imagePane, tissu);
+
 	}
 
 	@FXML
@@ -322,27 +312,13 @@ public class TissuEditController implements IController {
 	@FXML
 	private void addPicture() {
 		tissuService.saveOrUpdate(tissu);
-
-		Optional<Photo> imageOpt = pictureUtils.addPictureLocal(pictures);
-		if (imageOpt.isPresent()) {
-			setImage(imageOpt.get());
-		}
+		pictureHelper.addPictureLocal();
 	}
 
 	@FXML
 	private void addPictureWeb() {
-		Optional<Photo> imageOpt = pictureUtils.addPictureWeb(pictures);
-		if (imageOpt.isPresent()) {
-			setImage(imageOpt.get());
-		}
-
-	}
-
-	private void setImage(Photo image) {
 		tissuService.saveOrUpdate(tissu);
-		image.setTissu(mapper.map(tissu, Tissu.class));
-		imageService.saveOrUpdate(image);
-		imagePane.setImage(new Image(new ByteArrayInputStream(image.getData())));
+		pictureHelper.addPictureWeb();
 	}
 
 	@FXML

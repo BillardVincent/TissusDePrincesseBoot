@@ -1,4 +1,4 @@
-package fr.vbillard.tissusdeprincesseboot.utils;
+package fr.vbillard.tissusdeprincesseboot.controller.pictureHelper;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import javax.imageio.ImageIO;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
@@ -16,17 +17,28 @@ import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Preference;
 import fr.vbillard.tissusdeprincesseboot.services.ImageService;
 import fr.vbillard.tissusdeprincesseboot.services.PreferenceService;
-import lombok.AllArgsConstructor;
+import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
+import javafx.scene.image.ImageView;
 
-@Component
-@AllArgsConstructor
-public class PictureUtils {
+public abstract class PictureHelper {
 
-	PreferenceService preferenceService;
-	StageInitializer initializer;
-	ImageService imageService;
+	protected PreferenceService preferenceService;
+	protected StageInitializer initializer;
+	protected ImageService imageService;
+	protected ModelMapper mapper;
+	protected ImageView imagePane;
 
-	public Optional<Photo> addPictureWeb(Optional<Photo> image) {
+	protected Optional<Photo> picture;
+
+	public PictureHelper(ModelMapper mapper, PreferenceService preferenceService, StageInitializer initializer,
+			ImageService imageService) {
+		this.preferenceService = preferenceService;
+		this.initializer = initializer;
+		this.imageService = imageService;
+		this.mapper = mapper;
+	}
+
+	public void addPictureWeb() {
 
 		URL url = initializer.displayModale(PathEnum.WEB_URL, null, "URL de l'image").getUrl();
 
@@ -36,21 +48,18 @@ public class PictureUtils {
 				String path = url.getPath();
 				String extension = path.substring(path.lastIndexOf('.') + 1);
 				BufferedImage bufferedImage = ImageIO.read(url);
-				return Optional.of(imageService.setImage(image, name, extension, bufferedImage));
+				picture = Optional.of(imageService.setImage(picture, name, extension, bufferedImage));
 			} catch (IOException e) {
 				e.printStackTrace();
 				throw new NotFoundException(url.toString());
 			}
 		}
-		return Optional.empty();
-
+		setImage();
 	}
 
-	public Optional<Photo> addPictureLocal(Optional<Photo> image) {
+	public void addPictureLocal() {
 		Preference pref = preferenceService.getPreferences();
 		File file = initializer.directoryChooser(pref);
-
-		Optional<Photo> imageOpt = Optional.empty();
 
 		if (file != null) {
 			try {
@@ -59,16 +68,16 @@ public class PictureUtils {
 				BufferedImage bufferedImage = ImageIO.read(file);
 				pref.setPictureLastUploadPath(file.getAbsolutePath());
 				preferenceService.savePreferences(pref);
-				imageOpt = Optional.of(imageService.setImage(image, name, extension, bufferedImage));
+				picture = Optional.of(imageService.setImage(picture, name, extension, bufferedImage));
 
 			} catch (IOException e) {
 				e.printStackTrace();
 				throw new NotFoundException(file.getName());
-
 			}
 		}
-		return imageOpt;
-
+		setImage();
 	}
+
+	protected abstract void setImage();
 
 }
