@@ -60,18 +60,21 @@ public class TissuCardController implements IController {
 
 	private RootController rootController;
 
+	private ConstantesMetier constanteMetier;
+
 	private ModelMapper mapper;
 
 	private TissuDto tissu;
 
 	private CustomIcon customIcon;
 
-	public TissuCardController(CustomIcon customIcon, ImageService imageService, RootController rootController,
-			ModelMapper mapper) {
+	public TissuCardController(ConstantesMetier constanteMetier, CustomIcon customIcon, ImageService imageService,
+			RootController rootController, ModelMapper mapper) {
 		this.imageService = imageService;
 		this.rootController = rootController;
 		this.mapper = mapper;
 		this.customIcon = customIcon;
+		this.constanteMetier = constanteMetier;
 	}
 
 	@Override
@@ -102,8 +105,8 @@ public class TissuCardController implements IController {
 		}
 		footer.getChildren().add(view);
 
-		masse.setStyleClass(tissu.getPoids() > ConstantesMetier.MAX_POIDS_MOYEN ? "heavy-weight"
-				: tissu.getPoids() > ConstantesMetier.MIN_POIDS_MOYEN ? "standard-weight" : "light-weight");
+		masse.setStyleClass(tissu.getPoids() > constanteMetier.getMaxPoidsMoyen() ? "heavy-weight"
+				: tissu.getPoids() > constanteMetier.getMinPoidsMoyen() ? "standard-weight" : "light-weight");
 		Optional<Photo> pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
 		image.setImage(imageService.imageOrDefault(pictures));
 
