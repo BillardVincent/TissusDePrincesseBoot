@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
@@ -24,7 +23,7 @@
                   <Insets top="5.0" />
                </padding>
             </HBox>
-            <VBox prefHeight="169.0" prefWidth="258.0">
+            <VBox prefHeight="169.0" prefWidth="258.0" styleClass="light-background">
                <children>
                   <HBox alignment="CENTER" prefHeight="169.0" prefWidth="258.0">
                      <children>
@@ -33,49 +32,11 @@
                   </HBox>
                </children>
             </VBox>
-            <HBox prefHeight="26.0" prefWidth="258.0">
+            <VBox alignment="CENTER" prefHeight="22.0" prefWidth="260.0">
                <children>
-                  <HBox prefHeight="21.0" prefWidth="158.0">
-                     <children>
-                        <FontAwesomeIconView glyphName="ARROWS_H" size="1.5em" text="">
-                           <HBox.margin>
-                              <Insets left="5.0" right="5.0" />
-                           </HBox.margin>
-                        </FontAwesomeIconView>
-                        <Label fx:id="laize" alignment="CENTER" prefHeight="20.0" prefWidth="66.0" text="Label" textAlignment="CENTER" />
-                        <Label prefHeight="18.0" prefWidth="26.0" text="cm">
-                           <HBox.margin>
-                              <Insets left="5.0" />
-                           </HBox.margin>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="21.0" prefWidth="144.0">
-                     <children>
-                        <FontAwesomeIconView glyphName="ARROWS_V" size="1.5em">
-                           <HBox.margin>
-                              <Insets left="5.0" right="5.0" />
-                           </HBox.margin>
-                        </FontAwesomeIconView>
-                        <Label fx:id="longueur" alignment="CENTER" prefHeight="20.0" prefWidth="66.0" text="Label" />
-                        <Label prefHeight="18.0" prefWidth="34.0" text="cm">
-                           <HBox.margin>
-                              <Insets left="5.0" />
-                           </HBox.margin>
-                        </Label>
-                     </children>
-                  </HBox>
+                  <Label fx:id="laizeXlongueur" text="Label" />
                </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-               <padding>
-                  <Insets top="5.0" />
-               </padding>
-            </HBox>
+            </VBox>
             <Label fx:id="description" prefHeight="66.0" prefWidth="257.0" text="Description" />
             <HBox prefHeight="37.0" prefWidth="200.0">
                <children>
@@ -86,7 +47,7 @@
                               <Insets left="5.0" right="5.0" />
                            </HBox.margin>
                         </MaterialDesignIconView>
-                        <Label fx:id="poids" prefHeight="28.0" prefWidth="64.0" text="Label" />
+                        <Label fx:id="poids" prefHeight="28.0" prefWidth="38.0" text="Label" textAlignment="RIGHT" />
                         <Label fx:id="unitePoids" prefHeight="28.0" prefWidth="103.0" text="mass">
                            <HBox.margin>
                               <Insets left="5.0" />

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.util.Strings;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.IController;
+import fr.vbillard.tissusdeprincesseboot.controller.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.pictureHelper.PatronPictureHelper;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
@@ -77,6 +79,7 @@ public class PatronEditController implements IController {
 	public ImageView imagePane;
 
 	private StageInitializer initializer;
+	private RootController root;
 	private PatronDto patron;
 	// private TissuRequisDto tissuRequisDto;
 	private final TissuRequisService tissuRequisService;
@@ -101,7 +104,7 @@ public class PatronEditController implements IController {
 	private ObservableList<TissuVariantDto> tvList;
 	private VBox bottomRightVbox;
 
-	public PatronEditController(ImageService imageService, PatronPictureHelper pictureUtils,
+	public PatronEditController(RootController root, ImageService imageService, PatronPictureHelper pictureUtils,
 			TissuRequisService tissuRequisService, TissuVariantService tissuVariantService,
 			MatiereService matiereService, TissageService tissageService, TypeTissuService typeTissuService,
 			ModelMapper mapper, PatronService patronService) {
@@ -115,6 +118,7 @@ public class PatronEditController implements IController {
 		this.patronService = patronService;
 		this.pictureUtils = pictureUtils;
 		this.imageService = imageService;
+		this.root = root;
 	}
 
 	@FXML
@@ -285,17 +289,20 @@ public class PatronEditController implements IController {
 			JFXComboBox<String> typeField = new JFXComboBox<String>();
 			typeField.setItems(FXCollections.observableArrayList(
 					typeTissuService.getAll().stream().map(tt -> tt.getValue()).collect(Collectors.toList())));
-			typeField.setValue(variantSelected.getTypeTissuProperty() == null ? "" : variantSelected.getTypeTissu());
+			typeField.setValue(
+					variantSelected.getTypeTissuProperty() == null ? Strings.EMPTY : variantSelected.getTypeTissu());
 
 			JFXComboBox<String> matiereField = new JFXComboBox<String>();
 			matiereField.setItems(FXCollections.observableArrayList(
 					matiereService.getAll().stream().map(m -> m.getValue()).collect(Collectors.toList())));
-			matiereField.setValue(variantSelected.getMatiereProperty() == null ? "" : variantSelected.getMatiere());
+			matiereField.setValue(
+					variantSelected.getMatiereProperty() == null ? Strings.EMPTY : variantSelected.getMatiere());
 
 			JFXComboBox<String> tissageField = new JFXComboBox<String>();
 			tissageField.setItems(FXCollections.observableArrayList(
 					tissageService.getAll().stream().map(t -> t.getValue()).collect(Collectors.toList())));
-			tissageField.setValue(variantSelected.getTissageProperty() == null ? "" : variantSelected.getTissage());
+			tissageField.setValue(
+					variantSelected.getTissageProperty() == null ? Strings.EMPTY : variantSelected.getTissage());
 
 			JFXButton addTvBtn = new JFXButton();
 			addTvBtn.setGraphic(GlyphIconUtil.plusCircleNormal());
@@ -359,6 +366,7 @@ public class PatronEditController implements IController {
 			setDisabledButton();
 
 			okClicked = true;
+
 		}
 	}
 
@@ -367,11 +375,14 @@ public class PatronEditController implements IController {
 		if (isInputValid()) {
 
 			handleSavePatron();
+			root.displayPatronDetails(patron);
+
 		}
 	}
 
 	@FXML
 	private void handleCancel() {
+		root.displayPatronDetails(patron);
 
 	}
 

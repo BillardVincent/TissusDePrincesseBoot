@@ -206,11 +206,14 @@ public class TissuEditController implements IController {
 
 			tissu = tissuService.saveOrUpdate(tissu);
 			okClicked = true;
+
+			root.displayTissusDetails(tissu);
 		}
 	}
 
 	@FXML
 	private void handleCancel() {
+		root.displayTissusDetails(tissu);
 	}
 
 	@FXML

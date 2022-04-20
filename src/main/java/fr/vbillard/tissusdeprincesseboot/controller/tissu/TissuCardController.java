@@ -17,6 +17,7 @@ import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.services.ImageService;
 import fr.vbillard.tissusdeprincesseboot.utils.ConstantesMetier;
+import fr.vbillard.tissusdeprincesseboot.utils.Constants;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
 import javafx.fxml.FXML;
@@ -34,9 +35,7 @@ public class TissuCardController implements IController {
 	@FXML
 	public Label titre;
 	@FXML
-	private Label longueur;
-	@FXML
-	private Label laize;
+	private Label laizeXlongueur;
 	@FXML
 	private Label matiere;
 	@FXML
@@ -62,19 +61,22 @@ public class TissuCardController implements IController {
 
 	private ConstantesMetier constanteMetier;
 
+	private Constants constants;
+
 	private ModelMapper mapper;
 
 	private TissuDto tissu;
 
 	private CustomIcon customIcon;
 
-	public TissuCardController(ConstantesMetier constanteMetier, CustomIcon customIcon, ImageService imageService,
-			RootController rootController, ModelMapper mapper) {
+	public TissuCardController(Constants constants, ConstantesMetier constanteMetier, CustomIcon customIcon,
+			ImageService imageService, RootController rootController, ModelMapper mapper) {
 		this.imageService = imageService;
 		this.rootController = rootController;
 		this.mapper = mapper;
 		this.customIcon = customIcon;
 		this.constanteMetier = constanteMetier;
+		this.constants = constants;
 	}
 
 	@Override
@@ -89,8 +91,8 @@ public class TissuCardController implements IController {
 
 	private void setCardContent() {
 		description.setText(tissu.getDescription());
-		longueur.setText(FxUtils.safePropertyToString(tissu.getLongueurProperty()));
-		laize.setText(FxUtils.safePropertyToString(tissu.getLaizeProperty()));
+		laizeXlongueur.setText(FxUtils.safePropertyToString(tissu.getLongueurProperty()) + " cm x "
+				+ FxUtils.safePropertyToString(tissu.getLaizeProperty()) + " cm");
 		matiere.setText(FxUtils.safePropertyToString(tissu.getMatiereProperty()));
 		type.setText(FxUtils.safePropertyToString(tissu.getTypeProperty()));
 		tissage.setText(FxUtils.safePropertyToString(tissu.getTissageProperty()));
