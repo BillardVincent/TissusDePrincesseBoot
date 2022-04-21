@@ -14,6 +14,7 @@ import org.w3c.dom.Document;
 
 import fr.vbillard.tissusdeprincesseboot.config.PathIconsProperties;
 import fr.vbillard.tissusdeprincesseboot.exception.PersistanceException;
+import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.utils.svg.BufferedImageTranscoder;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.effect.Blend;
@@ -32,14 +33,38 @@ public class CustomIcon {
 
 	PathIconsProperties pathProperties;
 
-
 	public void washingMachinIcon(WebView view, double size) {
 		Resource path = pathProperties.getWashingMachine();
 		loadSVG(view, path, size);
 	}
+
 	public void noWashingMachinIcon(WebView view, double size) {
 		Resource path = pathProperties.getNoWashingMachine();
 		loadSVG(view, path, size);
+	}
+
+	public WebView typeTissu(TypeTissuEnum typeTissu) {
+		Resource path = null;
+		switch (typeTissu) {
+		case CHAINE_ET_TRAME:
+			path = pathProperties.getWashingMachine();
+			break;
+		case MAILLE:
+			path = pathProperties.getWashingMachine();
+			break;
+		case MIXILIGNE:
+			path = pathProperties.getWashingMachine();
+			break;
+		case NON_TISSE:
+			path = pathProperties.getWashingMachine();
+			break;
+		case NON_RENSEIGNE:
+			path = pathProperties.getWashingMachine();
+		}
+
+		WebView view = new WebView();
+		loadSVG(view, path, 20);
+		return view;
 	}
 
 	private void loadSVG(WebView view, Resource path, double size) {
@@ -54,6 +79,5 @@ public class CustomIcon {
 			throw new PersistanceException(path.getFilename());
 		}
 	}
-
 
 }

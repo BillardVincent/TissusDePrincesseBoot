@@ -17,29 +17,29 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class TissuToDto extends TypeMapConfigurer<Tissu, TissuDto> {
 
-    @Lazy
-    TissuUsedDao tUsedService ;
+	@Lazy
+	TissuUsedDao tUsedService;
 
-    @Override
-    public void configure(TypeMap<Tissu, TissuDto> typeMap) {
-        typeMap.addMappings(mapping -> mapping.using(new LongueurRestanteConverter()).map(src -> src, TissuDto::setLongueurRestante));
-        typeMap.addMapping(src -> src.getMatiere().getValue(), TissuDto::setMatiere);
-        typeMap.addMapping(src -> src.getTypeTissu().getValue(), TissuDto::setType);
-        typeMap.addMapping(src -> src.getTissage().getValue(), TissuDto::setTissage);
-    }
+	@Override
+	public void configure(TypeMap<Tissu, TissuDto> typeMap) {
+		typeMap.addMappings(mapping -> mapping.using(new LongueurRestanteConverter()).map(src -> src,
+				TissuDto::setLongueurRestante));
+		typeMap.addMapping(src -> src.getMatiere().getValue(), TissuDto::setMatiere);
+		typeMap.addMapping(src -> src.getTissage().getValue(), TissuDto::setTissage);
+	}
 
-    private class LongueurRestanteConverter extends AbstractConverter<Tissu, Integer> {
-        @Override
-        protected Integer convert(Tissu source) {
+	private class LongueurRestanteConverter extends AbstractConverter<Tissu, Integer> {
+		@Override
+		protected Integer convert(Tissu source) {
 
-            int longueurRestante = source.getLongueur();
-            for (
-            		// todo only if project is in particular state
-                TissuUsed tu : tUsedService.getAllByTissu(source)) {
-                longueurRestante -= tu.getLongueur();
+			int longueurRestante = source.getLongueur();
+			for (
+			// todo only if project is in particular state
+			TissuUsed tu : tUsedService.getAllByTissu(source)) {
+				longueurRestante -= tu.getLongueur();
 
-            }
-            return longueurRestante;
-        }
-    }
+			}
+			return longueurRestante;
+		}
+	}
 }

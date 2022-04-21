@@ -132,12 +132,6 @@ public class RootController implements IController {
 		mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSAGE));
 	}
 
-	@FXML
-	public void displayTypeEdit() {
-		beforeDisplay(null);
-		mainWindow.getChildren().add(initializer.displayPane(PathEnum.TYPE_TISSU));
-	}
-
 	public void displaySelected(FxData fxData) {
 		tissuRequisSelected = fxData.getTissuRequis();
 		projetSelected = fxData.getProjet();

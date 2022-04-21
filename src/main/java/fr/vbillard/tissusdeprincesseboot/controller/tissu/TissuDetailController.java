@@ -1,8 +1,11 @@
 package fr.vbillard.tissusdeprincesseboot.controller.tissu;
 
-import com.jfoenix.controls.JFXButton;
+import java.util.Optional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+
+import com.jfoenix.controls.JFXButton;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.IController;
@@ -11,20 +14,17 @@ import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
+import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
 import fr.vbillard.tissusdeprincesseboot.services.ImageService;
 import fr.vbillard.tissusdeprincesseboot.services.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.services.TissageService;
 import fr.vbillard.tissusdeprincesseboot.services.TissuService;
-import fr.vbillard.tissusdeprincesseboot.services.TypeTissuService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.RowConstraints;
-
-import java.util.Optional;
 
 @Component
 public class TissuDetailController implements IController {
@@ -62,7 +62,7 @@ public class TissuDetailController implements IController {
 	public Label consommeIndo;
 	@FXML
 	public ImageView imagePane;
-	
+
 	public RowConstraints ancienneValeurRow;
 	public RowConstraints consommeRow;
 
@@ -75,18 +75,16 @@ public class TissuDetailController implements IController {
 	private boolean okClicked = false;
 
 	ModelMapper mapper;
-	TypeTissuService typeTissuService;
 	MatiereService matiereService;
 	TissageService tissageService;
 	TissuService tissuService;
 	RootController rootController;
 	ImageService imageService;
 
-	public TissuDetailController(ImageService imageService, RootController rootController, ModelMapper mapper, TissuService tissuService,
-			TypeTissuService typeTissuService, MatiereService matiereService, TissageService tissageService) {
+	public TissuDetailController(ImageService imageService, RootController rootController, ModelMapper mapper,
+			TissuService tissuService, MatiereService matiereService, TissageService tissageService) {
 		this.mapper = mapper;
 		this.tissuService = tissuService;
-		this.typeTissuService = typeTissuService;
 		this.matiereService = matiereService;
 		this.tissageService = tissageService;
 		this.rootController = rootController;
@@ -100,27 +98,27 @@ public class TissuDetailController implements IController {
 			throw new IllegalData();
 		}
 		tissu = data.getTissu();
-			if (tissu == null || tissu.getChuteProperty() == null) {
-				tissu = mapper.map(new Tissu(0, "", 0, 0, "", null, typeTissuService.getAll().get(0), 0,
-						UnitePoids.NON_RENSEIGNE, false, "", null, false), TissuDto.class);
-			}
+		if (tissu == null || tissu.getChuteProperty() == null) {
+			tissu = mapper.map(new Tissu(0, "", 0, 0, "", null, TypeTissuEnum.NON_RENSEIGNE, 0,
+					UnitePoids.NON_RENSEIGNE, false, "", null, false), TissuDto.class);
+		}
 
-			longueurField.setText(tissu.getLongueurProperty() == null ? "0" : Integer.toString(tissu.getLongueur()));
-			laizeField.setText(tissu.getLaizeProperty() == null ? "0" : Integer.toString(tissu.getLaize()));
-			poidsField.setText(tissu.getPoidseProperty() == null ? "0" : Integer.toString(tissu.getPoids()));
-			referenceField.setText(tissu.getReferenceProperty() == null ? "" : tissu.getReference());
-			descriptionField.setText(tissu.getDescriptionProperty() == null ? "" : tissu.getDescription());
-			decatiField.setText(tissu.getDecatiProperty() != null && tissu.isDecati() ? "Décati" : "Non décati");
-			lieuDachatField.setText(tissu.getLieuAchatProperty() == null ? "" : tissu.getLieuAchat());
-			chuteField.setText(tissu.getChuteProperty() != null && tissu.isChute() ? "Chute" : "Coupon");
-			unitePoidsField.setText(
-					tissu.getUnitePoidsProperty() == null ? UnitePoids.NON_RENSEIGNE.label : tissu.getUnitePoids());
-			typeField.setText(tissu.getTypeProperty() == null ? "" : tissu.getType());
-			matiereField.setText(tissu.getMatiereProperty() == null ? "" : tissu.getMatiere());
-			tissageField.setText(tissu.getTissageProperty() == null ? "" : tissu.getTissage());
-    		Optional<Photo> pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
-    		imagePane.setImage(imageService.imageOrDefault(pictures));
-		
+		longueurField.setText(tissu.getLongueurProperty() == null ? "0" : Integer.toString(tissu.getLongueur()));
+		laizeField.setText(tissu.getLaizeProperty() == null ? "0" : Integer.toString(tissu.getLaize()));
+		poidsField.setText(tissu.getPoidseProperty() == null ? "0" : Integer.toString(tissu.getPoids()));
+		referenceField.setText(tissu.getReferenceProperty() == null ? "" : tissu.getReference());
+		descriptionField.setText(tissu.getDescriptionProperty() == null ? "" : tissu.getDescription());
+		decatiField.setText(tissu.getDecatiProperty() != null && tissu.isDecati() ? "Décati" : "Non décati");
+		lieuDachatField.setText(tissu.getLieuAchatProperty() == null ? "" : tissu.getLieuAchat());
+		chuteField.setText(tissu.getChuteProperty() != null && tissu.isChute() ? "Chute" : "Coupon");
+		unitePoidsField.setText(
+				tissu.getUnitePoidsProperty() == null ? UnitePoids.NON_RENSEIGNE.label : tissu.getUnitePoids());
+		typeField.setText(tissu.getTypeProperty() == null ? TypeTissuEnum.NON_RENSEIGNE.label : tissu.getType());
+		matiereField.setText(tissu.getMatiereProperty() == null ? "" : tissu.getMatiere());
+		tissageField.setText(tissu.getTissageProperty() == null ? "" : tissu.getTissage());
+		Optional<Photo> pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
+		imagePane.setImage(imageService.imageOrDefault(pictures));
+
 		addToButton.setVisible(rootController.hasTissuRequisSelected());
 	}
 
@@ -135,6 +133,6 @@ public class TissuDetailController implements IController {
 
 	public void addTo() {
 		rootController.addToSelected(tissu);
-		 
+
 	}
 }

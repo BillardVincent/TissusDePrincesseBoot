@@ -26,13 +26,13 @@ import fr.vbillard.tissusdeprincesseboot.fxCustomElements.IntegerSpinner;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
+import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.services.ImageService;
 import fr.vbillard.tissusdeprincesseboot.services.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.services.PatronService;
 import fr.vbillard.tissusdeprincesseboot.services.TissageService;
 import fr.vbillard.tissusdeprincesseboot.services.TissuRequisService;
 import fr.vbillard.tissusdeprincesseboot.services.TissuVariantService;
-import fr.vbillard.tissusdeprincesseboot.services.TypeTissuService;
 import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
@@ -86,7 +86,6 @@ public class PatronEditController implements IController {
 	private final TissuVariantService tissuVariantService;
 	private final MatiereService matiereService;
 	private final TissageService tissageService;
-	private final TypeTissuService typeTissuService;
 	private final ImageService imageService;
 	private PatronPictureHelper pictureUtils;
 	private Optional<Photo> pictures;
@@ -106,14 +105,13 @@ public class PatronEditController implements IController {
 
 	public PatronEditController(RootController root, ImageService imageService, PatronPictureHelper pictureUtils,
 			TissuRequisService tissuRequisService, TissuVariantService tissuVariantService,
-			MatiereService matiereService, TissageService tissageService, TypeTissuService typeTissuService,
-			ModelMapper mapper, PatronService patronService) {
+			MatiereService matiereService, TissageService tissageService, ModelMapper mapper,
+			PatronService patronService) {
 
 		this.tissuRequisService = tissuRequisService;
 		this.tissuVariantService = tissuVariantService;
 		this.matiereService = matiereService;
 		this.tissageService = tissageService;
-		this.typeTissuService = typeTissuService;
 		this.mapper = mapper;
 		this.patronService = patronService;
 		this.pictureUtils = pictureUtils;
@@ -287,10 +285,9 @@ public class PatronEditController implements IController {
 		if (tissu != null && tissu.getId() != 0) {
 
 			JFXComboBox<String> typeField = new JFXComboBox<String>();
-			typeField.setItems(FXCollections.observableArrayList(
-					typeTissuService.getAll().stream().map(tt -> tt.getValue()).collect(Collectors.toList())));
-			typeField.setValue(
-					variantSelected.getTypeTissuProperty() == null ? Strings.EMPTY : variantSelected.getTypeTissu());
+			typeField.setItems(FXCollections.observableArrayList(TypeTissuEnum.labels()));
+			typeField.setValue(variantSelected.getTypeTissuProperty() == null ? TypeTissuEnum.NON_RENSEIGNE.label
+					: variantSelected.getTypeTissu());
 
 			JFXComboBox<String> matiereField = new JFXComboBox<String>();
 			matiereField.setItems(FXCollections.observableArrayList(
@@ -382,7 +379,11 @@ public class PatronEditController implements IController {
 
 	@FXML
 	private void handleCancel() {
-		root.displayPatronDetails(patron);
+		if (patron.getId() != 0) {
+			root.displayPatronDetails(patron);
+		} else {
+			root.displayPatrons();
+		}
 
 	}
 

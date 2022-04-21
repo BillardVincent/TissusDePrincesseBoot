@@ -80,11 +80,6 @@
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                 <children>
                     <JFXComboBox fx:id="typeField" prefHeight="25.0" prefWidth="241.0" />
-                    <JFXButton fx:id="addTypeButton" mnemonicParsing="false" onAction="#handleAddTypeTissu">
-                        <HBox.margin>
-                            <Insets left="10.0" />
-                        </HBox.margin>
-                    </JFXButton>
                 </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">

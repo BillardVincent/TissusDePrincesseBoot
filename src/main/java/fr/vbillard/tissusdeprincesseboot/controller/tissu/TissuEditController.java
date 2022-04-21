@@ -1,6 +1,5 @@
 package fr.vbillard.tissusdeprincesseboot.controller.tissu;
 
-import java.io.ByteArrayInputStream;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -17,21 +16,19 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
-import fr.vbillard.tissusdeprincesseboot.controller.pictureHelper.PictureHelper;
 import fr.vbillard.tissusdeprincesseboot.controller.pictureHelper.TissuPictureHelper;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.fxCustomElements.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.fxCustomElements.IntegerSpinner;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
-import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
+import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
 import fr.vbillard.tissusdeprincesseboot.services.ImageService;
 import fr.vbillard.tissusdeprincesseboot.services.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.services.TissageService;
 import fr.vbillard.tissusdeprincesseboot.services.TissuService;
-import fr.vbillard.tissusdeprincesseboot.services.TypeTissuService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
 import javafx.collections.FXCollections;
@@ -40,7 +37,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.RowConstraints;
 
@@ -62,8 +58,6 @@ public class TissuEditController implements IController {
 	public JFXTextField longueurField;
 	@FXML
 	public JFXToggleButton chuteField;
-	@FXML
-	public JFXButton addTypeButton;
 	@FXML
 	public JFXComboBox<String> typeField;
 	@FXML
@@ -104,18 +98,16 @@ public class TissuEditController implements IController {
 	private boolean okClicked = false;
 
 	private ModelMapper mapper;
-	private TypeTissuService typeTissuService;
 	private MatiereService matiereService;
 	private TissageService tissageService;
 	private TissuService tissuService;
 	private TissuPictureHelper pictureHelper;
 
 	public TissuEditController(ImageService imageService, TissuPictureHelper pictureHelper, ModelMapper mapper,
-			TissuService tissuService, TypeTissuService typeTissuService, MatiereService matiereService,
-			TissageService tissageService, RootController root) {
+			TissuService tissuService, MatiereService matiereService, TissageService tissageService,
+			RootController root) {
 		this.mapper = mapper;
 		this.tissuService = tissuService;
-		this.typeTissuService = typeTissuService;
 		this.matiereService = matiereService;
 		this.tissageService = tissageService;
 		this.pictureHelper = pictureHelper;
@@ -131,7 +123,7 @@ public class TissuEditController implements IController {
 		}
 		tissu = data.getTissu();
 		if (tissu == null || tissu.getChuteProperty() == null) {
-			tissu = mapper.map(new Tissu(0, "", 0, 0, "", null, typeTissuService.getAll().get(0), 0,
+			tissu = mapper.map(new Tissu(0, "", 0, 0, "", null, TypeTissuEnum.NON_RENSEIGNE, 0,
 					UnitePoids.NON_RENSEIGNE, false, "", null, false), TissuDto.class);
 		}
 
@@ -148,9 +140,8 @@ public class TissuEditController implements IController {
 		unitePoidsField.setValue(
 				tissu.getUnitePoidsProperty() == null ? UnitePoids.NON_RENSEIGNE.label : tissu.getUnitePoids());
 
-		typeField.setItems(FXCollections.observableArrayList(typeTissuService.getAll().stream()
-				.map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList())));
-		typeField.setValue(FxUtils.safePropertyToString(tissu.getTypeProperty()));
+		typeField.setItems(FXCollections.observableArrayList(TypeTissuEnum.labels()));
+		typeField.setValue(tissu.getUnitePoidsProperty() == null ? TypeTissuEnum.NON_RENSEIGNE.label : tissu.getType());
 
 		matiereField.setItems(FXCollections.observableArrayList(matiereService.getAll().stream()
 				.map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList())));
@@ -168,7 +159,6 @@ public class TissuEditController implements IController {
 	private void initialize() {
 
 		addTissageButton.setGraphic(GlyphIconUtil.plusCircleTiny());
-		addTypeButton.setGraphic(GlyphIconUtil.plusCircleTiny());
 		addMatiereButton.setGraphic(GlyphIconUtil.plusCircleTiny());
 		FontAwesomeIconView magicIcon = new FontAwesomeIconView(FontAwesomeIcon.MAGIC);
 		generateReferenceButton.setGraphic(magicIcon);
@@ -188,7 +178,7 @@ public class TissuEditController implements IController {
 	private void handleOk() {
 		if (isInputValid()) {
 			if (tissu.getChuteProperty() == null) {
-				tissu = mapper.map(new Tissu(0, "", 0, 0, "", null, typeTissuService.getAll().get(0), 0,
+				tissu = mapper.map(new Tissu(0, "", 0, 0, "", null, TypeTissuEnum.NON_RENSEIGNE, 0,
 						UnitePoids.NON_RENSEIGNE, false, "", null, false), TissuDto.class);
 			}
 			tissu.setReference(referenceField.getText());
@@ -213,7 +203,12 @@ public class TissuEditController implements IController {
 
 	@FXML
 	private void handleCancel() {
-		root.displayTissusDetails(tissu);
+		if (tissu.getId() != 0) {
+			root.displayTissusDetails(tissu);
+		} else {
+			root.displayTissus();
+
+		}
 	}
 
 	@FXML
@@ -224,11 +219,6 @@ public class TissuEditController implements IController {
 	@FXML
 	private void handleAddTissage() {
 		root.displayTissageEdit();
-	}
-
-	@FXML
-	private void handleAddTypeTissu() {
-		root.displayTypeEdit();
 	}
 
 	private boolean isInputValid() {
@@ -247,7 +237,7 @@ public class TissuEditController implements IController {
 			errorMessage += "Poids non renseigné.\n";
 		}
 		if (tissageField.getValue() == null) {
-			errorMessage += "Poids non renseigné.\n";
+			errorMessage += "Tissage non renseigné.\n";
 		}
 
 		if (errorMessage.length() == 0) {

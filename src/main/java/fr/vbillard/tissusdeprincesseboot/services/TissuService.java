@@ -53,8 +53,8 @@ public class TissuService extends AbstractService<Tissu> {
 		for (TissuDto t : getObservableList()) {
 			if (t.getDescription().contains(tissuDto.getDescription())
 					|| t.getLieuAchat().contains(tissuDto.getLieuAchat())
-					|| t.getMatiere().contains(tissuDto.getMatiere()) || t.getTissage().contains(tissuDto.getMatiere())
-					|| t.getType().contains(tissuDto.getMatiere()))
+					|| t.getMatiere().contains(tissuDto.getMatiere()) || t.getTissage().contains(tissuDto.getTissage())
+					|| t.getType().contains(tissuDto.getType()))
 				result.add(t);
 		}
 		return result;

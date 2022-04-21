@@ -8,6 +8,7 @@ import com.jfoenix.controls.JFXComboBox;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.IController;
+import fr.vbillard.tissusdeprincesseboot.controller.RootController;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
@@ -39,14 +40,17 @@ public class ProjetEditController implements IController {
 
 	private StageInitializer initializer;
 
+	private RootController root;
 	private ProjetService projetService;
 	private TissuRequisService tissuRequisService;
 
 	private ProjetDto projet;
 
-	public ProjetEditController(ProjetService projetService, TissuRequisService tissuRequisService) {
+	public ProjetEditController(RootController root, ProjetService projetService,
+			TissuRequisService tissuRequisService) {
 		this.projetService = projetService;
 		this.tissuRequisService = tissuRequisService;
+		this.root = root;
 	}
 
 	@Override
@@ -56,13 +60,14 @@ public class ProjetEditController implements IController {
 			throw new IllegalData();
 		}
 		projet = data.getProjet();
-		
+
 		setPane();
 	}
 
 	private void setPane() {
-		 status.setItems(FXCollections.observableArrayList(ProjectStatus.labels()));
-         status.setValue(projet.getProjectStatusProperty() == null ? ProjectStatus.BROUILLON.label : projet.getProjectStatus());
+		status.setItems(FXCollections.observableArrayList(ProjectStatus.labels()));
+		status.setValue(
+				projet.getProjectStatusProperty() == null ? ProjectStatus.BROUILLON.label : projet.getProjectStatus());
 
 		marque.setText(projet.getPatron().getMarque());
 		modele.setText(projet.getPatron().getModele());
@@ -79,16 +84,20 @@ public class ProjetEditController implements IController {
 
 	@FXML
 	private void handleOk() {
-		
+
 		projet.setDescription(description.getText());
 		projet.setProjectStatus(status.getValue());
 		projet = projetService.saveOrUpdate(projet);
-		
+
 	}
 
 	@FXML
 	private void handleCancel() {
+		if (projet.getId() != 0) {
+			root.displayProjetDetails(projet);
+		} else {
+			root.displayPatrons();
+		}
 	}
 
-	
 }

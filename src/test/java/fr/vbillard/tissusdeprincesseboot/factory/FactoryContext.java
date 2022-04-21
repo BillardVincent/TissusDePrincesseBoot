@@ -5,43 +5,38 @@ import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.Tissage;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
-import fr.vbillard.tissusdeprincesseboot.model.TypeTissu;
 import lombok.Setter;
 
 @Setter
 public class FactoryContext {
-    private TissuVariantDto variantDto;
+	private TissuVariantDto variantDto;
 
-    public TissuVariantDto getTissuVariantDto(){
-        return variantDto == null ? TissuVariantDtoFactory.newDto(this) : variantDto;
-    }
+	public TissuVariantDto getTissuVariantDto() {
+		return variantDto == null ? TissuVariantDtoFactory.newDto(this) : variantDto;
+	}
 
-    private Matiere matiere;
+	private Matiere matiere;
 
-    public Matiere getMatiere() {
-        return matiere == null ? MatiereFactory.newMatiere(this): matiere;
-    }
+	public Matiere getMatiere() {
+		return matiere == null ? MatiereFactory.newMatiere(this) : matiere;
+	}
 
-    private TypeTissu type;
+	private Tissage tissage;
 
-    public TypeTissu getTypeTissu() {
-        return type == null ? TypeTissuFactory.newType(this):type;
-    }
+	public Tissage getTissage() {
+		return tissage == null ? TissageFactory.newTissage(this) : tissage;
+	}
 
-    private Tissage tissage;
+	private TissuRequis tissuRequis;
 
-    public Tissage getTissage() {
-        return tissage == null? TissageFactory.newTissage(this):tissage;
-    }
+	public TissuRequis getTissuRequis() {
+		return tissuRequis == null ? TissuRequisFactory.newTissuRequis(this) : tissuRequis;
+	}
 
-    private TissuRequis tissuRequis;
-    public TissuRequis getTissuRequis() {
-        return tissuRequis == null ? TissuRequisFactory.newTissuRequis(this):tissuRequis;
-    }
+	private Patron patron;
 
-    private Patron patron;
-    public Patron getPatron() {
-        return patron == null ? PatronFactory.newPatron(this):patron;
+	public Patron getPatron() {
+		return patron == null ? PatronFactory.newPatron(this) : patron;
 
-    }
+	}
 }

@@ -94,10 +94,9 @@ public class TissuCardController implements IController {
 		laizeXlongueur.setText(FxUtils.safePropertyToString(tissu.getLongueurProperty()) + " cm x "
 				+ FxUtils.safePropertyToString(tissu.getLaizeProperty()) + " cm");
 		matiere.setText(FxUtils.safePropertyToString(tissu.getMatiereProperty()));
-		type.setText(FxUtils.safePropertyToString(tissu.getTypeProperty()));
+		type.setText(tissu.getType());
 		tissage.setText(FxUtils.safePropertyToString(tissu.getTissageProperty()));
 		poids.setText(FxUtils.safePropertyToString(tissu.getPoidseProperty()));
-		// TODO sécuriser si null
 		unitePoids.setText(tissu.getUnitePoids());
 		WebView view = new WebView();
 		if (tissu.isDecati()) {

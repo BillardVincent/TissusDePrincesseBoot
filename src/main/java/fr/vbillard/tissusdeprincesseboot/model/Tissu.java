@@ -5,6 +5,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 
+import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Tissu extends AbstractEntity{
+public class Tissu extends AbstractEntity {
 
 	@Override
 	public String toString() {
@@ -29,8 +30,8 @@ public class Tissu extends AbstractEntity{
 	protected Tissage tissage;
 	private String reference;
 	private String description;
-	@ManyToOne
-	private TypeTissu typeTissu;
+	@Enumerated(EnumType.STRING)
+	private TypeTissuEnum typeTissu;
 	private boolean chute;
 	private int poids;
 	@Enumerated(EnumType.STRING)
@@ -38,9 +39,10 @@ public class Tissu extends AbstractEntity{
 	private boolean decati;
 	private String lieuAchat;
 	private Boolean archived;
-	
-	
-	public Tissu(int id, String reference , int longueur, int laize, String description, Matiere matiere, TypeTissu typeTissu, int poids, UnitePoids unitePoids, boolean decati, String lieuAchat, Tissage tissage, boolean chute) {
+
+	public Tissu(int id, String reference, int longueur, int laize, String description, Matiere matiere,
+			TypeTissuEnum typeTissu, int poids, UnitePoids unitePoids, boolean decati, String lieuAchat,
+			Tissage tissage, boolean chute) {
 		super();
 		this.id = id;
 		this.reference = reference;
@@ -56,9 +58,5 @@ public class Tissu extends AbstractEntity{
 		this.chute = chute;
 		this.tissage = tissage;
 	}
-	
-	
-	
-	
-	
+
 }

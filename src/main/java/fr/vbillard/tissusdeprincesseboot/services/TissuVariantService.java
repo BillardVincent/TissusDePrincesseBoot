@@ -17,10 +17,9 @@ import org.modelmapper.ModelMapper;
 
 @AllArgsConstructor
 @Service
-public class TissuVariantService extends AbstractService<TissuVariant>{
+public class TissuVariantService extends AbstractService<TissuVariant> {
 	private TissuVariantDao tissuVariantDao;
 	private MatiereService matiereService;
-	private TypeTissuService typeTissuService;
 	private TissageService tissageService;
 	private TissusRequisDao tissuRequisDao;
 	private ModelMapper mapper;
@@ -29,7 +28,7 @@ public class TissuVariantService extends AbstractService<TissuVariant>{
 		List<TissuVariant> listTv = tissuVariantDao.getAllByTissuRequisId(tissu.getId());
 		return listTv.stream().map(v -> mapper.map(v, TissuVariantDto.class)).collect(Collectors.toList());
 	}
-	
+
 	public List<TissuVariant> getVariantByTissuRequis(TissuRequis tissu) {
 		return tissuVariantDao.getAllByTissuRequisId(tissu.getId());
 	}
@@ -48,17 +47,14 @@ public class TissuVariantService extends AbstractService<TissuVariant>{
 	public List<TissuVariant> getVariantByTissuRequisId(int id) {
 		return tissuVariantDao.getAllByTissuRequisId(id);
 	}
-	
+
 	private TissuVariant map(TissuVariantDto dto) {
 		TissuVariant tv = mapper.map(dto, TissuVariant.class);
-        tv.setMatiere(matiereService.findMatiere(dto.getMatiere()));
-        tv.setTypeTissu(typeTissuService.findTypeTissu(dto.getTypeTissu()));
-        tv.setTissage(tissageService.findTissage(dto.getTissage()));
-        tv.setTissuRequis(tissuRequisDao.getById(dto.getTissuRequisId()));
+		tv.setMatiere(matiereService.findMatiere(dto.getMatiere()));
+		tv.setTissage(tissageService.findTissage(dto.getTissage()));
+		tv.setTissuRequis(tissuRequisDao.getById(dto.getTissuRequisId()));
 
 		return tv;
 	}
-	
-	
 
 }
