@@ -11,6 +11,8 @@ import fr.vbillard.tissusdeprincesseboot.dao.TissuUsedDao;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
+import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
+
 import lombok.AllArgsConstructor;
 
 @Component
@@ -26,6 +28,8 @@ public class TissuToDto extends TypeMapConfigurer<Tissu, TissuDto> {
 				TissuDto::setLongueurRestante));
 		typeMap.addMapping(src -> src.getMatiere().getValue(), TissuDto::setMatiere);
 		typeMap.addMapping(src -> src.getTissage().getValue(), TissuDto::setTissage);
+		typeMap.addMapping(Tissu::getTypeTissu, (TissuDto dest, TypeTissuEnum v) -> dest.setTypeTissu(v));
+
 	}
 
 	private class LongueurRestanteConverter extends AbstractConverter<Tissu, Integer> {

@@ -113,7 +113,7 @@ public class TissuDetailController implements IController {
 		chuteField.setText(tissu.getChuteProperty() != null && tissu.isChute() ? "Chute" : "Coupon");
 		unitePoidsField.setText(
 				tissu.getUnitePoidsProperty() == null ? UnitePoids.NON_RENSEIGNE.label : tissu.getUnitePoids());
-		typeField.setText(tissu.getTypeProperty() == null ? TypeTissuEnum.NON_RENSEIGNE.label : tissu.getType());
+		typeField.setText(tissu.getTypeTissuProperty() == null ? TypeTissuEnum.NON_RENSEIGNE.label : tissu.getTypeTissu());
 		matiereField.setText(tissu.getMatiereProperty() == null ? "" : tissu.getMatiere());
 		tissageField.setText(tissu.getTissageProperty() == null ? "" : tissu.getTissage());
 		Optional<Photo> pictures = imageService.getImage(mapper.map(tissu, Tissu.class));

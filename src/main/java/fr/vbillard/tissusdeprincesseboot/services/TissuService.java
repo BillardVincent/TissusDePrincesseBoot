@@ -42,7 +42,7 @@ public class TissuService extends AbstractService<Tissu> {
 		ObservableList<TissuDto> result = FXCollections.observableArrayList();
 		for (TissuDto t : getObservableList()) {
 			if (t.getDescription().contains(text) || t.getLieuAchat().contains(text) || t.getMatiere().contains(text)
-					|| t.getTissage().contains(text) || t.getType().contains(text))
+					|| t.getTissage().contains(text) || t.getTypeTissu().contains(text))
 				result.add(t);
 		}
 		return result;
@@ -54,7 +54,7 @@ public class TissuService extends AbstractService<Tissu> {
 			if (t.getDescription().contains(tissuDto.getDescription())
 					|| t.getLieuAchat().contains(tissuDto.getLieuAchat())
 					|| t.getMatiere().contains(tissuDto.getMatiere()) || t.getTissage().contains(tissuDto.getTissage())
-					|| t.getType().contains(tissuDto.getType()))
+					|| t.getTypeTissu().contains(tissuDto.getTypeTissu()))
 				result.add(t);
 		}
 		return result;

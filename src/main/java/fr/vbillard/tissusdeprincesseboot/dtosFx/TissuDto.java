@@ -1,5 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.dtosFx;
 
+import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -8,40 +9,39 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-
-public class TissuDto implements FxDto{
+public class TissuDto implements FxDto {
 
 	@Override
 	public String toString() {
-		String unit = unitePoids.get().equals(UnitePoids.NON_RENSEIGNE.label)?"":unitePoids.get();
-		return "tissu [ longueur=" + longueur.get() + "cm, laize=" + laize.get() + "cm, description=" + description.get() +
-				", type=" + type.get() +  ", matiere=" + matiere.get() + ", tissage=" + tissage.get() + 
-				", poids=" + poids.get() + unit + "]";
+		String unit = unitePoids.get().equals(UnitePoids.NON_RENSEIGNE.label) ? "" : unitePoids.get();
+		return "tissu [ longueur=" + longueur.get() + "cm, laize=" + laize.get() + "cm, description="
+				+ description.get() + ", type=" + typeTissu.get() + ", matiere=" + matiere.get() + ", tissage="
+				+ tissage.get() + ", poids=" + poids.get() + unit + "]";
 	}
 
 	private IntegerProperty id;
-	private StringProperty  reference;
+	private StringProperty reference;
 	private IntegerProperty longueur;
 	private IntegerProperty longueurRestante;
 	private IntegerProperty laize;
-	private StringProperty  description;
-	private StringProperty  matiere;
-	private StringProperty  type;
-	private StringProperty  unitePoids;
+	private StringProperty description;
+	private StringProperty matiere;
+	private StringProperty typeTissu;
+	private StringProperty unitePoids;
 	private IntegerProperty poids;
-	private StringProperty  lieuAchat;
+	private StringProperty lieuAchat;
 	private BooleanProperty decati;
-	private StringProperty  tissage;
+	private StringProperty tissage;
 	private BooleanProperty chute;
 
-	public TissuDto(){
+	public TissuDto() {
 		this.id = new SimpleIntegerProperty();
 		this.reference = new SimpleStringProperty();
 		this.longueur = new SimpleIntegerProperty();
 		this.laize = new SimpleIntegerProperty();
 		this.description = new SimpleStringProperty();
 		this.matiere = new SimpleStringProperty();
-		this.type = new SimpleStringProperty();
+		this.typeTissu = new SimpleStringProperty();
 		this.laize = new SimpleIntegerProperty();
 		this.poids = new SimpleIntegerProperty();
 		this.lieuAchat = new SimpleStringProperty();
@@ -52,11 +52,11 @@ public class TissuDto implements FxDto{
 		this.longueurRestante = new SimpleIntegerProperty();
 
 	}
-	
+
 	public int getId() {
 		return id.get();
 	}
-	
+
 	public IntegerProperty getIdProperty() {
 		return id;
 	}
@@ -68,7 +68,7 @@ public class TissuDto implements FxDto{
 	public String getReference() {
 		return reference.get();
 	}
-	
+
 	public StringProperty getReferenceProperty() {
 		return reference;
 	}
@@ -76,15 +76,14 @@ public class TissuDto implements FxDto{
 	public void setReference(String reference) {
 		this.reference.set(reference);
 	}
-	
+
 	public int getLongueurRestante() {
 		return longueurRestante.get();
 	}
-	
+
 	public IntegerProperty getLongueurRestanteProperty() {
 		return longueurRestante;
 	}
-
 
 	public void setLongueurRestante(int longueurRestante) {
 		this.longueurRestante.set(longueurRestante);
@@ -93,6 +92,7 @@ public class TissuDto implements FxDto{
 	public int getLongueur() {
 		return longueur.get();
 	}
+
 	public IntegerProperty getLongueurProperty() {
 		return longueur;
 	}
@@ -100,10 +100,11 @@ public class TissuDto implements FxDto{
 	public void setLongueur(int longueur) {
 		this.longueur.set(longueur);
 	}
-	
+
 	public int getLaize() {
 		return laize.get();
 	}
+
 	public IntegerProperty getLaizeProperty() {
 		return laize;
 	}
@@ -112,14 +113,13 @@ public class TissuDto implements FxDto{
 		this.laize.set(laize);
 	}
 
-
 	public String getDescription() {
 		return description.get();
 	}
+
 	public StringProperty getDescriptionProperty() {
 		return description;
 	}
-
 
 	public void setDescription(String description) {
 		this.description.set(description);
@@ -128,36 +128,39 @@ public class TissuDto implements FxDto{
 	public String getMatiere() {
 		return matiere.get();
 	}
-	
+
 	public StringProperty getMatiereProperty() {
 		return matiere;
 	}
-
 
 	public void setMatiere(String matiere) {
 		this.matiere.set(matiere);
 	}
 
-
-	public String getType() {
-		return type.get();
-	}
-	public StringProperty getTypeProperty() {
-		return type;
+	public String getTypeTissu() {
+		return typeTissu.get();
 	}
 
-	public void setType(String type) {
-		this.type.set(type);
+	public StringProperty getTypeTissuProperty() {
+		return typeTissu;
+	}
+
+	public void setTypeTissu(TypeTissuEnum type) {
+		this.typeTissu.set(type.label);
+	}
+
+	public void setTypeTissu(String type) {
+		this.typeTissu.set(type);
 	}
 
 	public int getPoids() {
 		return poids.get();
 	}
-	
+
 	public IntegerProperty getPoidseProperty() {
 		return poids;
 	}
-	
+
 	public void setPoids(int poids) {
 		this.poids.set(poids);
 	}
@@ -165,22 +168,23 @@ public class TissuDto implements FxDto{
 	public void setUnitePoids(UnitePoids unitePoids) {
 		this.unitePoids.set(unitePoids.label);
 	}
+
 	public void setUnitePoids(String label) {
-		this.unitePoids.set(label);		
+		this.unitePoids.set(label);
 	}
-	
+
 	public String getUnitePoids() {
 		return unitePoids.get();
 	}
-	
+
 	public StringProperty getUnitePoidsProperty() {
 		return unitePoids;
 	}
-	
+
 	public StringProperty getLieuAchatProperty() {
 		return lieuAchat;
 	}
-	
+
 	public String getLieuAchat() {
 		return lieuAchat.get();
 	}
@@ -192,7 +196,7 @@ public class TissuDto implements FxDto{
 	public BooleanProperty getDecatiProperty() {
 		return decati;
 	}
-	
+
 	public boolean isDecati() {
 		return decati.get();
 	}
@@ -200,22 +204,23 @@ public class TissuDto implements FxDto{
 	public void setDecati(boolean decati) {
 		this.decati.set(decati);
 	}
-	
+
 	public void setChute(boolean chute) {
 		this.chute.set(chute);
 	}
-	
+
 	public BooleanProperty getChuteProperty() {
 		return chute;
 	}
-	
+
 	public boolean isChute() {
 		return chute.get();
 	}
-	
+
 	public StringProperty getTissageProperty() {
 		return tissage;
 	}
+
 	public String getTissage() {
 		return tissage.get();
 	}

@@ -1,29 +1,17 @@
 package fr.vbillard.tissusdeprincesseboot.fxCustomElements;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 
-import com.sun.javafx.webkit.Accessor;
-import org.apache.batik.transcoder.TranscoderException;
-import org.apache.batik.transcoder.TranscoderInput;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
-import org.w3c.dom.Document;
+
+import com.sun.javafx.webkit.Accessor;
 
 import fr.vbillard.tissusdeprincesseboot.config.PathIconsProperties;
 import fr.vbillard.tissusdeprincesseboot.exception.PersistanceException;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
-import fr.vbillard.tissusdeprincesseboot.utils.svg.BufferedImageTranscoder;
-import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.effect.Blend;
-import javafx.scene.effect.BlendMode;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.ColorInput;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Paint;
+import javafx.scene.Node;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.web.WebView;
 import lombok.AllArgsConstructor;
 
@@ -43,27 +31,26 @@ public class CustomIcon {
 		loadSVG(view, path, size);
 	}
 
-	public WebView typeTissu(TypeTissuEnum typeTissu) {
+	public WebView typeTissu(WebView view, TypeTissuEnum typeTissu) {
 		Resource path = null;
 		switch (typeTissu) {
 		case CHAINE_ET_TRAME:
-			path = pathProperties.getWashingMachine();
+			path = pathProperties.getChaineEtTrame();
 			break;
 		case MAILLE:
-			path = pathProperties.getWashingMachine();
+			path = pathProperties.getMaille();
 			break;
 		case MIXILIGNE:
-			path = pathProperties.getWashingMachine();
+			path = pathProperties.getMultiligne();
 			break;
 		case NON_TISSE:
-			path = pathProperties.getWashingMachine();
+			path = pathProperties.getNonTisse();
 			break;
 		case NON_RENSEIGNE:
-			path = pathProperties.getWashingMachine();
+			return new WebView();
 		}
 
-		WebView view = new WebView();
-		loadSVG(view, path, 20);
+		loadSVG(view, path, 40);
 		return view;
 	}
 
@@ -77,6 +64,17 @@ public class CustomIcon {
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new PersistanceException(path.getFilename());
+		}
+		for (Node content : view.getChildrenUnmodifiable()) {
+			if (content instanceof ScrollBar) {
+
+				double currentHeight = ((ScrollBar) content).getHeight();
+
+				double scale = size / currentHeight;
+
+				view.setZoom(scale);
+
+			}
 		}
 	}
 

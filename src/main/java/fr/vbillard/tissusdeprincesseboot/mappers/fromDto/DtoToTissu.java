@@ -29,7 +29,7 @@ public class DtoToTissu extends TypeMapConfigurer<TissuDto, Tissu> {
 				mapper -> mapper.using(new UnitePoidsConverter()).map(TissuDto::getUnitePoids, Tissu::setUnitePoids));
 		typeMap.addMappings(mapper -> mapper.using(new MatiereConverter()).map(src -> src, Tissu::setMatiere));
 		typeMap.addMappings(
-				mapper -> mapper.using(new TypeTissuConverter()).map(TissuDto::getType, Tissu::setTypeTissu));
+				mapper -> mapper.using(new TypeTissuConverter()).map(TissuDto::getTypeTissu, Tissu::setTypeTissu));
 
 		typeMap.setPostConverter(context -> {
 			context.getDestination().setTissage(ts.getByValue(context.getSource().getTissage()));

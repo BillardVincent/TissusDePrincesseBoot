@@ -141,7 +141,7 @@ public class TissuEditController implements IController {
 				tissu.getUnitePoidsProperty() == null ? UnitePoids.NON_RENSEIGNE.label : tissu.getUnitePoids());
 
 		typeField.setItems(FXCollections.observableArrayList(TypeTissuEnum.labels()));
-		typeField.setValue(tissu.getUnitePoidsProperty() == null ? TypeTissuEnum.NON_RENSEIGNE.label : tissu.getType());
+		typeField.setValue(tissu.getUnitePoidsProperty() == null ? TypeTissuEnum.NON_RENSEIGNE.label : tissu.getTypeTissu());
 
 		matiereField.setItems(FXCollections.observableArrayList(matiereService.getAll().stream()
 				.map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList())));
@@ -186,7 +186,7 @@ public class TissuEditController implements IController {
 			tissu.setLaize(Integer.valueOf(laizeField.getText()));
 			tissu.setDescription(descriptionField.getText());
 			tissu.setMatiere(matiereField.getValue());
-			tissu.setType(typeField.getValue());
+			tissu.setTypeTissu(typeField.getValue());
 			tissu.setPoids(Integer.valueOf(poidsField.getText()));
 			tissu.setUnitePoids(unitePoidsField.getValue());
 			tissu.setDecati(decatiField.isSelected());

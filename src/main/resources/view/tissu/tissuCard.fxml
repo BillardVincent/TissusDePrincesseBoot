@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.web.WebView?>
 
 <Pane prefHeight="347.0" prefWidth="258.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuCardController">
    <children>
@@ -15,9 +16,13 @@
          <children>
             <HBox alignment="CENTER" prefHeight="48.0" prefWidth="258.0">
                <children>
-                  <Label fx:id="matiere" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="79.0" text="Matiere" textAlignment="CENTER" />
+                  <WebView fx:id="typeView" prefHeight="40.0" prefWidth="40.0">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </WebView>
                   <Label fx:id="tissage" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="79.0" text="Tissage" />
-                  <Label fx:id="type" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="80.0" text="Type" textAlignment="CENTER" />
+                  <Label fx:id="matiere" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="79.0" text="Matiere" textAlignment="CENTER" />
                </children>
                <padding>
                   <Insets top="5.0" />

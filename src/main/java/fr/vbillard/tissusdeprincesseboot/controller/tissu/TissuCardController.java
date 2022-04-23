@@ -15,6 +15,7 @@ import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.fxCustomElements.CustomIcon;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
+import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.services.ImageService;
 import fr.vbillard.tissusdeprincesseboot.utils.ConstantesMetier;
 import fr.vbillard.tissusdeprincesseboot.utils.Constants;
@@ -39,7 +40,7 @@ public class TissuCardController implements IController {
 	@FXML
 	private Label matiere;
 	@FXML
-	private Label type;
+	private WebView typeView;
 	@FXML
 	private Label tissage;
 	@FXML
@@ -94,7 +95,7 @@ public class TissuCardController implements IController {
 		laizeXlongueur.setText(FxUtils.safePropertyToString(tissu.getLongueurProperty()) + " cm x "
 				+ FxUtils.safePropertyToString(tissu.getLaizeProperty()) + " cm");
 		matiere.setText(FxUtils.safePropertyToString(tissu.getMatiereProperty()));
-		type.setText(tissu.getType());
+		customIcon.typeTissu(typeView, TypeTissuEnum.getEnum(tissu.getTypeTissu()));
 		tissage.setText(FxUtils.safePropertyToString(tissu.getTissageProperty()));
 		poids.setText(FxUtils.safePropertyToString(tissu.getPoidseProperty()));
 		unitePoids.setText(tissu.getUnitePoids());

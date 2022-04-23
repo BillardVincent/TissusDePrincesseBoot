@@ -17,5 +17,9 @@ public class PathIconsProperties {
 
 	private Resource washingMachine;
 	private Resource noWashingMachine;
+	private Resource chaineEtTrame;
+	private Resource nonTisse;
+	private Resource maille;
+	private Resource multiligne;
 
 }
