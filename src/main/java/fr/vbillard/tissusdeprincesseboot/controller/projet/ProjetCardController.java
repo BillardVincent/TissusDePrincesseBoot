@@ -1,10 +1,13 @@
 package fr.vbillard.tissusdeprincesseboot.controller.projet;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
@@ -13,13 +16,14 @@ import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
+import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
 import fr.vbillard.tissusdeprincesseboot.services.ImageService;
+import fr.vbillard.tissusdeprincesseboot.utils.Constants;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-
-import java.util.Optional;
+import javafx.scene.paint.Color;
 
 @Component
 public class ProjetCardController implements IController {
@@ -47,6 +51,8 @@ public class ProjetCardController implements IController {
 
 	private ProjetDto projet;
 
+	private List<FontAwesomeIconView> listIcn;
+
 	public ProjetCardController(ImageService imageService, RootController rootController, ModelMapper mapper) {
 		this.imageService = imageService;
 		this.rootController = rootController;
@@ -59,6 +65,8 @@ public class ProjetCardController implements IController {
 			throw new IllegalData();
 		}
 		projet = data.getProjet();
+		listIcn = Arrays.asList(iconeIdee, iconePlan, iconeEnCours, iconeFini);
+
 		setCardContent();
 
 	}
@@ -69,6 +77,24 @@ public class ProjetCardController implements IController {
 		Optional<Photo> picturePatron = imageService.getImage(mapper.map(projet.getPatron(), Patron.class));
 		imagePatron.setImage(imageService.imageOrDefault(picturePatron));
 
+		for (FontAwesomeIconView icon : listIcn) {
+			icon.setFill(Color.GRAY);
+
+			switch (ProjectStatus.getEnum(projet.getProjectStatus())) {
+			case BROUILLON:
+				iconeIdee.setFill(Constants.colorSecondary);
+				break;
+			case EN_COURS:
+				iconePlan.setFill(Constants.colorSecondary);
+				break;
+			case PANIFIE:
+				iconeEnCours.setFill(Constants.colorSecondary);
+				break;
+			case TERMINE:
+				iconeFini.setFill(Constants.colorSecondary);
+				break;
+			}
+		}
 	}
 
 	@FXML

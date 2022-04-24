@@ -25,4 +25,6 @@ public class Constants {
 	public static final Paint colorAccent = Color.BLUE;
 	public static final Paint colorWarning = Color.ORANGE;
 
+	public static final Paint colorSecondary = new Color(0.69019607843f, 0.15294117647f, 0.23529411764f, 1);
+
 }
