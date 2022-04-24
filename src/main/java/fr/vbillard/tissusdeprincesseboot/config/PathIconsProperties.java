@@ -16,10 +16,16 @@ public class PathIconsProperties {
 	public static final String PROPERTY_PREFIX = "svg";
 
 	private Resource washingMachine;
+	private double washingMachineSize;
 	private Resource noWashingMachine;
+	private double noWashingMachineSize;
 	private Resource chaineEtTrame;
+	private double chaineEtTrameSize;
 	private Resource nonTisse;
+	private double nonTisseSize;
 	private Resource maille;
+	private double mailleSize;
 	private Resource multiligne;
+	private double multiligneSize;
 
 }

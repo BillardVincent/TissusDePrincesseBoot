@@ -23,38 +23,45 @@ public class CustomIcon {
 
 	public void washingMachinIcon(WebView view, double size) {
 		Resource path = pathProperties.getWashingMachine();
-		loadSVG(view, path, size);
+		double originalSize = pathProperties.getWashingMachineSize();
+		loadSVG(view, path, size, originalSize);
 	}
 
 	public void noWashingMachinIcon(WebView view, double size) {
 		Resource path = pathProperties.getNoWashingMachine();
-		loadSVG(view, path, size);
+		double originalSize = pathProperties.getNoWashingMachineSize();
+		loadSVG(view, path, size, originalSize);
 	}
 
 	public WebView typeTissu(WebView view, TypeTissuEnum typeTissu) {
 		Resource path = null;
+		double originalSize = 100;
 		switch (typeTissu) {
 		case CHAINE_ET_TRAME:
 			path = pathProperties.getChaineEtTrame();
+			originalSize = pathProperties.getChaineEtTrameSize();
 			break;
 		case MAILLE:
 			path = pathProperties.getMaille();
+			originalSize = pathProperties.getMailleSize();
 			break;
 		case MIXILIGNE:
 			path = pathProperties.getMultiligne();
+			originalSize = pathProperties.getMultiligneSize();
 			break;
 		case NON_TISSE:
 			path = pathProperties.getNonTisse();
+			originalSize = pathProperties.getNonTisseSize();
 			break;
 		case NON_RENSEIGNE:
 			return new WebView();
 		}
 
-		loadSVG(view, path, 40);
+		loadSVG(view, path, 40, originalSize);
 		return view;
 	}
 
-	private void loadSVG(WebView view, Resource path, double size) {
+	private void loadSVG(WebView view, Resource path, double size, double originalSize) {
 		Accessor.getPageFor(view.getEngine()).setBackgroundColor(0);
 
 		view.setMinSize(size, size);
@@ -65,17 +72,10 @@ public class CustomIcon {
 			e.printStackTrace();
 			throw new PersistanceException(path.getFilename());
 		}
-		for (Node content : view.getChildrenUnmodifiable()) {
-			if (content instanceof ScrollBar) {
 
-				double currentHeight = ((ScrollBar) content).getHeight();
+		double scale = size / originalSize;
 
-				double scale = size / currentHeight;
-
-				view.setZoom(scale);
-
-			}
-		}
+		view.setZoom(scale);
 	}
 
 }

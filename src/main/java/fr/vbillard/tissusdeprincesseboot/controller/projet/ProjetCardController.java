@@ -10,6 +10,7 @@ import fr.vbillard.tissusdeprincesseboot.controller.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
+import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.services.ImageService;
@@ -21,65 +22,57 @@ import javafx.scene.image.ImageView;
 import java.util.Optional;
 
 @Component
-public class ProjetCardController implements IController{
-    @FXML
-    public Label description;
-    @FXML
-    public Label titre;
-    @FXML
-    private Label longueur;
-    @FXML
-    private Label laize;
-    @FXML
-    private Label matiere;
-    @FXML
-    private Label type;
-    @FXML
-    private Label tissage;
-    @FXML
-    private Label poids;
-    @FXML
-    private Label unitePoids;
-    @FXML
-    private MaterialDesignIconView masse;
-    @FXML
-    private FontAwesomeIconView decati;
-    @FXML
-    private ImageView image;
+public class ProjetCardController implements IController {
+	@FXML
+	public Label titre;
 
-    private ImageService imageService;
+	@FXML
+	private FontAwesomeIconView iconeIdee;
+	@FXML
+	private FontAwesomeIconView iconePlan;
+	@FXML
+	private FontAwesomeIconView iconeEnCours;
+	@FXML
+	private FontAwesomeIconView iconeFini;
+	@FXML
+	private ImageView imagePatron;
+	@FXML
+	private ImageView imageTissu;
 
-    private RootController rootController;
+	private ImageService imageService;
 
-    private ModelMapper mapper;
+	private RootController rootController;
 
-    private ProjetDto projet;
+	private ModelMapper mapper;
 
-    public ProjetCardController(ImageService imageService, RootController rootController, ModelMapper mapper) {
-        this.imageService = imageService;
-        this.rootController = rootController;
-        this.mapper = mapper;
-    }
+	private ProjetDto projet;
 
-    @Override
+	public ProjetCardController(ImageService imageService, RootController rootController, ModelMapper mapper) {
+		this.imageService = imageService;
+		this.rootController = rootController;
+		this.mapper = mapper;
+	}
+
+	@Override
 	public void setStageInitializer(StageInitializer initializer, FxData data) {
 		if (data == null && data.getProjet() == null) {
 			throw new IllegalData();
 		}
 		projet = data.getProjet();
-            setCardContent();
-        
-    }
+		setCardContent();
 
-    private void setCardContent() {
-        Optional<Photo> pictures = imageService.getImage(mapper.map(projet, Projet.class));
-        image.setImage(imageService.imageOrDefault(pictures));
-        
-    }
+	}
 
+	private void setCardContent() {
+		Optional<Photo> pictureTissu = imageService.getImage(mapper.map(projet, Projet.class));
+		imageTissu.setImage(imageService.imageOrDefault(pictureTissu));
+		Optional<Photo> picturePatron = imageService.getImage(mapper.map(projet.getPatron(), Patron.class));
+		imagePatron.setImage(imageService.imageOrDefault(picturePatron));
 
-    @FXML
-    public void showDetail() {
-        rootController.displayProjetDetails(projet);
-    }
+	}
+
+	@FXML
+	public void showDetail() {
+		rootController.displayProjetDetails(projet);
+	}
 }

@@ -2,6 +2,7 @@ package fr.vbillard.tissusdeprincesseboot.controller.tissu;
 
 import java.util.Optional;
 
+import org.apache.logging.log4j.util.Strings;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -91,7 +92,8 @@ public class TissuCardController implements IController {
 	}
 
 	private void setCardContent() {
-		description.setText(tissu.getDescription());
+		boolean isDescription = tissu.getDescription() != null && !tissu.getDescription().equals(Strings.EMPTY);
+		description.setText(isDescription ? tissu.getDescription() : constants.getAucuneDescription());
 		laizeXlongueur.setText(FxUtils.safePropertyToString(tissu.getLongueurProperty()) + " cm x "
 				+ FxUtils.safePropertyToString(tissu.getLaizeProperty()) + " cm");
 		matiere.setText(FxUtils.safePropertyToString(tissu.getMatiereProperty()));
@@ -112,6 +114,10 @@ public class TissuCardController implements IController {
 		Optional<Photo> pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
 		image.setImage(imageService.imageOrDefault(pictures));
 
+	}
+
+	public void setPrefHeight(Double height) {
+		System.out.println(height);
 	}
 
 	@FXML

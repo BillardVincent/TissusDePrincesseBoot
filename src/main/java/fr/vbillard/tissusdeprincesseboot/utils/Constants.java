@@ -14,9 +14,10 @@ import lombok.Data;
 @ConfigurationProperties(prefix = Constants.PROPERTY_PREFIX)
 public class Constants {
 
-	public static final String PROPERTY_PREFIX = "poids";
+	public static final String PROPERTY_PREFIX = "string";
 
 	private String nonEnregistre;
+	private String aucuneDescription;
 
 	public static final Paint colorBlack = Color.BLACK;
 	public static final Paint colorAdd = Color.GREEN;

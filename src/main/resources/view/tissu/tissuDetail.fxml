@@ -4,16 +4,15 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.image.ImageView?>
 
-
-<AnchorPane prefHeight="747.0" prefWidth="1150.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuDetailController">
-    <GridPane layoutX="54.0" layoutY="14.0" prefHeight="515.0" prefWidth="578.0">
+<AnchorPane prefHeight="747.0" prefWidth="1150.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuDetailController">
+    <GridPane layoutX="54.0" layoutY="95.0" prefHeight="501.0" prefWidth="594.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="236.0" minWidth="10.0" prefWidth="155.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="376.0" minWidth="10.0" prefWidth="327.0" />
@@ -53,7 +52,7 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                 <children>
-                    <Label fx:id="laizeField" prefHeight="23.0" prefWidth="248.0" />
+                    <Label fx:id="laizeField" prefHeight="23.0" prefWidth="104.0" />
                     <Label prefHeight="43.0" prefWidth="65.0" text="cm">
                         <HBox.margin>
                             <Insets left="15.0" />
@@ -63,7 +62,7 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                 <children>
-                    <Label fx:id="longueurField" prefHeight="26.0" prefWidth="250.0" />
+                    <Label fx:id="longueurField" prefHeight="26.0" prefWidth="104.0" />
                     <Label prefHeight="43.0" prefWidth="65.0" text="cm">
                         <HBox.margin>
                             <Insets left="15.0" />
@@ -109,7 +108,7 @@
             </Label>
         </children>
     </GridPane>
-    <ButtonBar layoutX="304.0" layoutY="557.0" prefHeight="40.0" prefWidth="214.0">
+    <ButtonBar layoutX="292.0" layoutY="639.0" prefHeight="40.0" prefWidth="214.0">
         <buttons>
          <JFXButton onAction="#edit" text="Editer" />
          <JFXButton fx:id="addToButton" onAction="#addTo" text="Selectionner" />
