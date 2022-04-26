@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -12,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="730.0" prefWidth="1620.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetEditController">
+<AnchorPane prefHeight="730.0" prefWidth="1620.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetEditController">
    <HBox prefHeight="111.0" prefWidth="1610.0">
       <children>
          <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="114.0" prefWidth="150.0" text="Marque : ">
@@ -56,7 +55,7 @@
             <JFXButton mnemonicParsing="false" onAction="#handleCancel" text="Annuler" />
         </buttons>
     </ButtonBar>
-   <ScrollPane layoutX="15.0" layoutY="117.0" prefHeight="668.0" prefWidth="1600.0">
+   <ScrollPane focusTraversable="false" layoutX="15.0" layoutY="117.0" pickOnBounds="false" prefHeight="668.0" prefWidth="1600.0">
       <padding>
          <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
       </padding>

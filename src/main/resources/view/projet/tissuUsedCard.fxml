@@ -8,20 +8,15 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane prefHeight="177.0" prefWidth="170.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.projet.TissuUsedCardController">
+<Pane prefHeight="125.0" prefWidth="125.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.projet.TissuUsedCardController">
    <children>
-      <VBox layoutX="-1.0" layoutY="-1.0" onMouseClicked="#showDetail" prefHeight="173.0" prefWidth="170.0" stylesheets="@../../style/style.css">
+      <VBox layoutX="-1.0" layoutY="-1.0" onMouseClicked="#showDetail" prefHeight="125.0" prefWidth="125.0" stylesheets="@../../style/style.css">
          <children>
-            <HBox alignment="CENTER" prefHeight="32.0" prefWidth="258.0">
+            <HBox alignment="CENTER" prefHeight="25.0" prefWidth="125.0">
                <children>
                   <HBox prefHeight="10.0" prefWidth="158.0">
                      <children>
-                        <Label fx:id="longueur" alignment="CENTER" prefHeight="20.0" prefWidth="66.0" text="Label" textAlignment="CENTER" />
-                        <Label prefHeight="18.0" prefWidth="26.0" text="cm">
-                           <HBox.margin>
-                              <Insets left="5.0" />
-                           </HBox.margin>
-                        </Label>
+                        <Label fx:id="longueur" alignment="CENTER" prefHeight="20.0" prefWidth="127.0" text="Label" textAlignment="CENTER" />
                      </children>
                   </HBox>
                </children>
@@ -29,9 +24,9 @@
                   <Insets top="5.0" />
                </padding>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="125.0">
                <children>
-                  <ImageView fx:id="image" fitHeight="166.0" fitWidth="177.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="image" fitHeight="100.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" styleClass="light-background" />
                </children>
             </HBox>
          </children>

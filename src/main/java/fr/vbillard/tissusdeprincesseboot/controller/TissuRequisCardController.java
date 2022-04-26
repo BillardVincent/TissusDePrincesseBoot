@@ -12,7 +12,7 @@ import javafx.scene.control.Label;
 
 @Component
 public class TissuRequisCardController implements IController {
-	
+
 	@FXML
 	private Label longueurLabel;
 	@FXML
@@ -21,15 +21,13 @@ public class TissuRequisCardController implements IController {
 	private Label gammePoidsLabel;
 	@FXML
 	private Label variantsLabel;
-	
+
 	private StageInitializer initializer;
 	private TissuRequisDto tissuRequis;
-	
+
 	private RootController rootController;
-	
+
 	private FxData fxData;
-	
-	
 
 	public TissuRequisCardController(RootController rootController) {
 		this.rootController = rootController;
@@ -41,22 +39,21 @@ public class TissuRequisCardController implements IController {
 		if (data == null && data.getTissuRequis() == null) {
 			throw new IllegalData();
 		}
-			tissuRequis = data.getTissuRequis();
-			if (tissuRequis != null) {
-				longueurLabel.setText(Integer.toString(tissuRequis.getLongueur()));
-				laizeLabel.setText(Integer.toString(tissuRequis.getLaize()));
-				gammePoidsLabel.setText(tissuRequis.getGammePoids());
-				
+		tissuRequis = data.getTissuRequis();
+		if (tissuRequis != null) {
+			longueurLabel.setText(Integer.toString(tissuRequis.getLongueur()) + " cm");
+			laizeLabel.setText(Integer.toString(tissuRequis.getLaize()) + " cm");
+			gammePoidsLabel.setText(tissuRequis.getGammePoids());
 
-			} else {
-				longueurLabel.setText("");
-				laizeLabel.setText("");
-				gammePoidsLabel.setText("");
-				variantsLabel.setText("");
-			}
-			
-			variantsLabel.setText(StringUtils.join(tissuRequis.getVariant(), " - "));
-		
+		} else {
+			longueurLabel.setText("");
+			laizeLabel.setText("");
+			gammePoidsLabel.setText("");
+			variantsLabel.setText("");
+		}
+
+		variantsLabel.setText(StringUtils.join(tissuRequis.getVariant(), " - "));
+
 		setPane();
 	}
 
@@ -64,10 +61,10 @@ public class TissuRequisCardController implements IController {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	@FXML
 	private void chooseTissuSelected() {
-		//TODO 
+		// TODO
 		rootController.displaySelected(fxData);
 	}
 }
