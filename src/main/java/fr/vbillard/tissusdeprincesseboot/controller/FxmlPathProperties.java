@@ -15,9 +15,9 @@ public class FxmlPathProperties {
 
 	public static final String PROPERTY_PREFIX = "fx.controller";
 
-	private Resource matiereEdit ;
-	private Resource typeEdit ;
-	private Resource tissageEdit ;
+	private Resource matiereEdit;
+	private Resource typeEdit;
+	private Resource tissageEdit;
 
 	private Resource root2;
 	private Resource tissus2;

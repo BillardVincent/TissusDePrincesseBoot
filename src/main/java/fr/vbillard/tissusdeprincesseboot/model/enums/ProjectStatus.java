@@ -1,36 +1,29 @@
 package fr.vbillard.tissusdeprincesseboot.model.enums;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.vbillard.tissusdeprincesseboot.utils.worflow.BrouillonWorkFlow;
-import fr.vbillard.tissusdeprincesseboot.utils.worflow.EnCoursWorkFlow;
-import fr.vbillard.tissusdeprincesseboot.utils.worflow.PlanifieWorkFlow;
-import fr.vbillard.tissusdeprincesseboot.utils.worflow.TermineWorkFlow;
-import fr.vbillard.tissusdeprincesseboot.utils.worflow.Workflow;
-
 public enum ProjectStatus {
 
-	BROUILLON("brouillon", BrouillonWorkFlow.class) {
+	BROUILLON("brouillon") {
 		@Override
 		public String toString() {
 			return "brouillon";
 		}
 	},
-	PANIFIE("planifé", PlanifieWorkFlow.class) {
+	PLANIFIE("planifié") {
 		@Override
 		public String toString() {
-			return "planifé";
+			return "planifié";
 		}
 	},
-	EN_COURS("en cours", EnCoursWorkFlow.class) {
+	EN_COURS("en cours") {
 		@Override
 		public String toString() {
 			return "en cours";
 		}
 	},
-	TERMINE("terminé", TermineWorkFlow.class) {
+	TERMINE("terminé") {
 		@Override
 		public String toString() {
 			return "terminé";
@@ -39,17 +32,8 @@ public enum ProjectStatus {
 
 	public final String label;
 
-	public Workflow workflow;
-
-	ProjectStatus(String label, Class<? extends Workflow> workflowClass) {
+	ProjectStatus(String label) {
 		this.label = label;
-		try {
-			this.workflow = workflowClass.getConstructor().newInstance();
-		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-				| NoSuchMethodException | SecurityException e) {
-			this.workflow = null;
-			e.printStackTrace();
-		}
 	}
 
 	public String getLabel() {

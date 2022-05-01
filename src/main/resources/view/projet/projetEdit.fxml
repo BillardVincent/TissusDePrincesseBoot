@@ -1,66 +1,147 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXComboBox?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="730.0" prefWidth="1620.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetEditController">
-   <HBox prefHeight="111.0" prefWidth="1610.0">
+<AnchorPane prefHeight="868.0" prefWidth="1665.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetEditController">
+   <HBox prefHeight="192.0" prefWidth="1610.0">
       <children>
-         <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="114.0" prefWidth="150.0" text="Marque : ">
-            <font>
-               <Font size="14.0" />
-            </font></Label>
-         <Label fx:id="marque" prefHeight="111.0" prefWidth="200.0" text="marque">
-            <font>
-               <Font size="14.0" />
-            </font></Label>
-         <Label alignment="CENTER_RIGHT" prefHeight="111.0" prefWidth="150.0" text="Modèle : ">
-            <font>
-               <Font size="14.0" />
-            </font></Label>
-         <Label fx:id="modele" prefHeight="111.0" prefWidth="200.0" text="Label">
-            <font>
-               <Font size="14.0" />
-            </font></Label>
-         <Label alignment="CENTER_RIGHT" prefHeight="111.0" prefWidth="150.0" text="Description : ">
-            <font>
-               <Font size="14.0" />
-            </font></Label>
-         <Label fx:id="description" prefHeight="111.0" prefWidth="401.0" text="Label">
-            <font>
-               <Font size="14.0" />
-            </font></Label>
-         <Label alignment="CENTER_RIGHT" prefHeight="138.0" prefWidth="150.0" text="Statut : ">
-            <font>
-               <Font size="14.0" />
-            </font></Label>
-         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <VBox prefHeight="194.0" prefWidth="532.0">
             <children>
-               <JFXComboBox fx:id="status" prefHeight="35.0" prefWidth="152.0" />
+               <HBox prefHeight="100.0" prefWidth="200.0">
+                  <children>
+                     <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="114.0" prefWidth="150.0" text="Marque : ">
+                        <font>
+                           <Font size="14.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="marque" prefHeight="111.0" prefWidth="200.0" text="marque">
+                        <font>
+                           <Font size="14.0" />
+                        </font>
+                     </Label>
+                  </children>
+               </HBox>
+               <HBox prefHeight="100.0" prefWidth="200.0">
+                  <children>
+                     <Label alignment="CENTER_RIGHT" prefHeight="111.0" prefWidth="150.0" text="Modèle : ">
+                        <font>
+                           <Font size="14.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="modele" prefHeight="111.0" prefWidth="200.0" text="Label">
+                        <font>
+                           <Font size="14.0" />
+                        </font>
+                     </Label>
+                  </children>
+               </HBox>
+               <HBox prefHeight="100.0" prefWidth="200.0">
+                  <children>
+                     <Label alignment="CENTER_RIGHT" prefHeight="65.0" prefWidth="150.0" text="Description : ">
+                        <font>
+                           <Font size="14.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="description" prefHeight="65.0" prefWidth="182.0" text="Label">
+                        <font>
+                           <Font size="14.0" />
+                        </font>
+                     </Label>
+                  </children>
+               </HBox>
             </children>
-         </HBox>
+         </VBox>
+         <VBox alignment="CENTER" prefHeight="194.0" prefWidth="530.0">
+            <children>
+               <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="64.0" prefWidth="530.0" text="Statut : " textAlignment="CENTER">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </Label>
+            <HBox alignment="CENTER" prefHeight="89.0" prefWidth="530.0" spacing="20.0">
+   					<opaqueInsets>
+   						<Insets />
+   					</opaqueInsets>
+   					<VBox.margin>
+   						<Insets />
+   					</VBox.margin>
+   					<padding>
+   						<Insets top="5.0" />
+   					</padding>
+   					<children>
+                     <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                        <children>
+         						<FontAwesomeIconView fx:id="iconeIdee" glyphName="LIGHTBULB_ALT" size="40" wrappingWidth="24.457242488861084" />
+                           <Label text="Label" />
+                        </children>
+                     </VBox>
+   						<FontAwesomeIconView glyphName="CHEVRON_RIGHT" size="24" />
+                     <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                        <children>
+         						<FontAwesomeIconView fx:id="iconePlan" glyphName="MAP_ALT" size="40" />
+                           <Label text="Label" />
+                        </children>
+                     </VBox>
+   						<FontAwesomeIconView glyphName="CHEVRON_RIGHT" size="24" />
+                     <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                        <children>
+         						<FontAwesomeIconView fx:id="iconeEnCours" glyphName="COGS" size="40" wrappingWidth="44.05709362030029" />
+                           <Label text="Label" />
+                        </children>
+                     </VBox>
+   						<FontAwesomeIconView glyphName="CHEVRON_RIGHT" size="24" />
+                     <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                        <children>
+         						<FontAwesomeIconView fx:id="iconeFini" glyphName="FLAG_CHECKERED" size="40" wrappingWidth="41.60003852844238" />
+                           <Label text="Label" />
+                        </children>
+                     </VBox>
+   					</children>
+   					</HBox>
+               <HBox alignment="CENTER" prefHeight="56.0" prefWidth="530.0" spacing="50.0">
+                  <padding>
+                     <Insets left="15.0" />
+                  </padding>
+                  <children>
+                     <JFXButton text="précédente" fx:id="previousStep" onAction="#previousStep"/>
+                     <JFXButton text="suivante" fx:id="nextStep" onAction="#nextStep"/>
+                  </children>
+                  <opaqueInsets>
+                     <Insets />
+                  </opaqueInsets>
+               </HBox>
+            </children></VBox>
+         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+            <children>
+               <ImageView fx:id="patronPicture" fitHeight="193.0" fitWidth="274.0" pickOnBounds="true" preserveRatio="true">
+                  <VBox.margin>
+                     <Insets left="200.0" />
+                  </VBox.margin>
+               </ImageView>
+            </children>
+         </VBox>
       </children>
    </HBox>
-    <ButtonBar layoutX="290.0" layoutY="793.0" prefHeight="40.0" prefWidth="214.0">
+    <ButtonBar layoutX="287.0" layoutY="812.0" prefHeight="40.0" prefWidth="214.0">
         <buttons>
             <JFXButton mnemonicParsing="false" onAction="#handleOk" prefHeight="25.0" prefWidth="123.0" text="Valider" />
             <JFXButton mnemonicParsing="false" onAction="#handleCancel" text="Annuler" />
         </buttons>
     </ButtonBar>
-   <ScrollPane focusTraversable="false" layoutX="15.0" layoutY="117.0" pickOnBounds="false" prefHeight="668.0" prefWidth="1600.0">
-      <padding>
-         <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
-      </padding>
+   <ScrollPane focusTraversable="false" layoutX="15.0" layoutY="213.0" pickOnBounds="false" prefHeight="604.0" prefWidth="1600.0">
       <content>
-         <VBox fx:id="scrollContent" prefHeight="611.0" prefWidth="1544.0" spacing="10.0" />
+         <VBox fx:id="scrollContent" prefHeight="594.0" prefWidth="1571.0" spacing="10.0" />
       </content>
    </ScrollPane>
    <padding>

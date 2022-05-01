@@ -13,7 +13,10 @@ import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 @Repository
 public interface TissuUsedDao extends JpaRepository<TissuUsed, Integer> {
 
-	 List<TissuUsed> getAllByTissu(Tissu tissu);
-	 List<TissuUsed> getAllByTissuRequisAndProjet(TissuRequis tissuRequis, Projet projet);
+	List<TissuUsed> getAllByTissu(Tissu tissu);
+
+	List<TissuUsed> getAllByTissuRequisAndProjet(TissuRequis tissuRequis, Projet projet);
+
+	List<TissuUsed> getAllByProjet(Projet projet);
 
 }

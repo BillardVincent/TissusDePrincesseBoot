@@ -1,32 +1,30 @@
-package fr.vbillard.tissusdeprincesseboot.utils.worflow;
+package fr.vbillard.tissusdeprincesseboot.services.workflow;
 
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.exception.NotAllowed;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
+import fr.vbillard.tissusdeprincesseboot.services.ProjetService;
 
 @Component
-public class PlanifieWorkFlow extends Workflow {
+public class TermineWorkFlow extends Workflow {
+
+	public TermineWorkFlow(ProjetService projetService) {
+		super(projetService);
+		cancelPossible = false;
+		nextPossible = false;
+	}
 
 	@Override
 	public void nextStep(Projet projet) {
-		projet.setStatus(ProjectStatus.PANIFIE);
+		throw new NotAllowed();
 	}
 
 	@Override
 	public void cancel(Projet projet) {
 		throw new NotAllowed();
-	}
 
-	@Override
-	public boolean IsNextPossible() {
-		return true;
-	}
-
-	@Override
-	public boolean IsCancelPossible() {
-		return false;
 	}
 
 }

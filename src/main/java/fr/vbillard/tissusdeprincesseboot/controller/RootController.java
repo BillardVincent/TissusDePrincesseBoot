@@ -53,7 +53,7 @@ public class RootController implements IController {
 	private ProjetDto projetSelected;
 	private TissuUsedService tissuUsedService;
 	private ModelMapper mapper;
-	CustomIcon customIcon;
+	private CustomIcon customIcon;
 
 	public RootController(TissuUsedService tissuUsedService, ModelMapper mapper, CustomIcon customIcon) {
 		this.tissuUsedService = tissuUsedService;
@@ -87,14 +87,8 @@ public class RootController implements IController {
 		mainWindow.getChildren().add(initializer.displayPane(PathEnum.PROJET_LIST));
 	}
 
-	public void displayProjetDetails(ProjetDto projet) {
-		beforeDisplay(projetMenu);
-		FxData fxData = new FxData();
-		fxData.setProjet(projet);
-		mainWindow.getChildren().add(initializer.displayPane(PathEnum.PROJET_DETAILS, fxData));
-	}
-
 	public void displayProjetEdit(ProjetDto projet) {
+		beforeDisplay(projetMenu);
 		FxData fxData = new FxData();
 		fxData.setProjet(projet);
 		mainWindow.getChildren().add(initializer.displayPane(PathEnum.PROJET_EDIT, fxData));

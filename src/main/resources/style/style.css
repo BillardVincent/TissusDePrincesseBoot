@@ -242,3 +242,9 @@
 	-fx-background-color: #f0f0f0
 }
 
+.scroll-pane:focused{
+	-fx-border-color: -fx-primary-light;
+    -fx-border-width: 0px;
+}
+
+

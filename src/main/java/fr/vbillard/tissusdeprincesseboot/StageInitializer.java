@@ -25,7 +25,6 @@ import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronDetailControlle
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronEditController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronListController;
 import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetCardController;
-import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetDetailController;
 import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetEditController;
 import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetEditListElementController;
 import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetListController;
@@ -192,8 +191,6 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
 			return new PathHolder(pathProperties.getTissuCard().getURL(), TissuCardController.class);
 		case PROJET_LIST:
 			return new PathHolder(pathProperties.getProjetList().getURL(), ProjetListController.class);
-		case PROJET_DETAILS:
-			return new PathHolder(pathProperties.getProjetDetail().getURL(), ProjetDetailController.class);
 		case PROJET_EDIT:
 			return new PathHolder(pathProperties.getProjetEdit().getURL(), ProjetEditController.class);
 		case PROJET_CARD:

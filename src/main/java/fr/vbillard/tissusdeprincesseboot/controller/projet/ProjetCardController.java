@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -26,6 +27,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
 @Component
+@Scope("prototype")
 public class ProjetCardController implements IController {
 	@FXML
 	public Label titre;
@@ -85,10 +87,10 @@ public class ProjetCardController implements IController {
 				iconeIdee.setFill(Constants.colorSecondary);
 				break;
 			case EN_COURS:
-				iconePlan.setFill(Constants.colorSecondary);
-				break;
-			case PANIFIE:
 				iconeEnCours.setFill(Constants.colorSecondary);
+				break;
+			case PLANIFIE:
+				iconePlan.setFill(Constants.colorSecondary);
 				break;
 			case TERMINE:
 				iconeFini.setFill(Constants.colorSecondary);
@@ -99,6 +101,6 @@ public class ProjetCardController implements IController {
 
 	@FXML
 	public void showDetail() {
-		rootController.displayProjetDetails(projet);
+		rootController.displayProjetEdit(projet);
 	}
 }
