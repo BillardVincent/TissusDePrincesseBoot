@@ -68,7 +68,9 @@ public class PatronEditController implements IController {
 	@FXML
 	private JFXButton addFournitureButton;
 	@FXML
-	private VBox rightContainer;
+	private VBox tissuEtFournitureContainer;
+	@FXML
+	private VBox conseilleContainer;
 	@FXML
 	private GridPane tissusPatronListGrid;
 	@FXML
@@ -167,7 +169,7 @@ public class PatronEditController implements IController {
 	}
 
 	/**
-	 * Détails d'un tissu requis, pour édition
+	 * Détails d'un tissu requis, pour création ou édition
 	 *
 	 * @param tissu
 	 */
@@ -175,10 +177,7 @@ public class PatronEditController implements IController {
 		variantSelected = new TissuVariantDto();
 		longueur = tissu.getLongueur();
 		laize = tissu.getLaize();
-		/*
-		 * if (tissu == null) { tissu = new TissuRequisDto(); }
-		 */
-		rightContainer.getChildren().clear();
+		tissuEtFournitureContainer.getChildren().clear();
 		tvList = FXCollections.observableArrayList(new ArrayList<TissuVariantDto>());
 		bottomRightVbox = new VBox();
 
@@ -221,7 +220,7 @@ public class PatronEditController implements IController {
 		});
 
 		JFXButton cancelBtn = new JFXButton("Annuler");
-		cancelBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> rightContainer.getChildren().clear());
+		cancelBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> tissuEtFournitureContainer.getChildren().clear());
 
 		JFXButton deleteBtn = new JFXButton("Supprimer");
 		deleteBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> deleteTissuRequis(tissu));
@@ -231,7 +230,7 @@ public class PatronEditController implements IController {
 		hboxBtn.setAlignment(Pos.CENTER);
 		hboxBtn.setPadding(new Insets(20, 20, 20, 20));
 
-		rightContainer.getChildren().addAll(titre, topGrid, hboxBtn, bottomRightVbox);
+		tissuEtFournitureContainer.getChildren().addAll(titre, topGrid, hboxBtn, bottomRightVbox);
 
 		if (tissu != null) {
 			tvList = FXCollections.observableArrayList(tissuVariantService.getVariantByTissuRequis(tissu));
@@ -333,7 +332,6 @@ public class PatronEditController implements IController {
 		loadTissuRequisForPatron();
 		displayTissuRequis(tissuReturned);
 
-		// DevInProgressService.notImplemented(mainApp);
 	}
 
 	private void deleteTissuRequis(TissuRequisDto tissu) {

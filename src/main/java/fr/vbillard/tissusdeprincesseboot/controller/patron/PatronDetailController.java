@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
+import fr.vbillard.tissusdeprincesseboot.controller.pictureHelper.PatronPictureHelper;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
@@ -45,11 +46,14 @@ public class PatronDetailController implements IController {
 
 	private ModelMapper mapper;
 	private ProjetService projetService;
+	private PatronPictureHelper pictureUtils;
 
-	PatronDetailController(ModelMapper mapper, RootController rootController, ProjetService projetService) {
+	PatronDetailController(PatronPictureHelper pictureUtils, ModelMapper mapper, RootController rootController,
+			ProjetService projetService) {
 		this.mapper = mapper;
 		this.rootController = rootController;
 		this.projetService = projetService;
+		this.pictureUtils = pictureUtils;
 	}
 
 	@Override
@@ -60,22 +64,23 @@ public class PatronDetailController implements IController {
 		}
 		patron = data.getPatron();
 
-			marquePatronLabel.setText(patron.getMarque());
-			modelPatronLabel.setText(patron.getModele());
-			typeVetementPatronLabel.setText(patron.getTypeVetement());
+		marquePatronLabel.setText(patron.getMarque());
+		modelPatronLabel.setText(patron.getModele());
+		typeVetementPatronLabel.setText(patron.getTypeVetement());
 
-			VBox root = new VBox();
-			root.setSpacing(10);
+		VBox root = new VBox();
+		root.setSpacing(10);
 
-			for (TissuRequisDto t : patron.getTissusRequis()) {
-				FxData fxData = new FxData();
-				fxData.setTissuRequis(t);
-				Pane element = initializer.displayPane(PathEnum.LIST_ELEMENT, fxData);
-				root.getChildren().add(element);
-			}
-			listFournitures.setContent(root);
+		for (TissuRequisDto t : patron.getTissusRequis()) {
+			FxData fxData = new FxData();
+			fxData.setTissuRequis(t);
+			Pane element = initializer.displayPane(PathEnum.LIST_ELEMENT, fxData);
+			root.getChildren().add(element);
+		}
+		pictureUtils.setPane(image, patron);
 
-		
+		listFournitures.setContent(root);
+
 	}
 
 	public void edit() {
