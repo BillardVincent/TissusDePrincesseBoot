@@ -184,6 +184,8 @@ public class RootController implements IController {
 		tissuUsed.setLongueur(data.getLongueurRequise());
 		tissuUsedService.saveOrUpdate(tissuUsed);
 
+		deleteSelected();
+
 		displayProjetEdit(projetSelected);
 
 	}

@@ -123,7 +123,7 @@ public class TissuDetailController implements IController {
 		imagePane.setImage(imageService.imageOrDefault(pictures));
 
 		addToButton.setVisible(rootController.hasTissuRequisSelected());
-		editButton.setVisible(rootController.hasTissuRequisSelected());
+		editButton.setVisible(!rootController.hasTissuRequisSelected());
 
 	}
 
