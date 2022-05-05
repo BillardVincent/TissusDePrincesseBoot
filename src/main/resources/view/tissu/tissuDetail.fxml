@@ -110,7 +110,7 @@
     </GridPane>
     <ButtonBar layoutX="292.0" layoutY="639.0" prefHeight="40.0" prefWidth="214.0">
         <buttons>
-         <JFXButton onAction="#edit" text="Editer" />
+         <JFXButton fx:id="editButton" onAction="#edit" text="Editer" />
          <JFXButton fx:id="addToButton" onAction="#addTo" text="Selectionner" />
         </buttons>
     </ButtonBar>

@@ -30,6 +30,7 @@ import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -39,7 +40,7 @@ import javafx.scene.paint.Color;
 public class ProjetEditController implements IController {
 
 	@FXML
-	private VBox scrollContent;
+	private ScrollPane scrollContent;
 
 	@FXML
 	private Label description;
@@ -100,7 +101,8 @@ public class ProjetEditController implements IController {
 	}
 
 	private void setPane() {
-		scrollContent.getChildren().clear();
+		VBox content = new VBox();
+		content.setSpacing(10);
 
 		marque.setText(projet.getPatron().getMarque());
 		modele.setText(projet.getPatron().getModele());
@@ -111,8 +113,10 @@ public class ProjetEditController implements IController {
 			data.setTissuRequis(tr);
 			data.setProjet(projet);
 			Pane element = initializer.displayPane(PathEnum.PROJET_EDIT_LIST_ELEMENT, data);
-			scrollContent.getChildren().add(element);
+			content.getChildren().add(element);
 		}
+		scrollContent.setContent(content);
+
 		Optional<Photo> picturePatron = imageService.getImage(mapper.map(projet.getPatron(), Patron.class));
 		patronPicture.setImage(imageService.imageOrDefault(picturePatron));
 

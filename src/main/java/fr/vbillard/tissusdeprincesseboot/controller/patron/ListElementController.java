@@ -1,10 +1,11 @@
-package fr.vbillard.tissusdeprincesseboot.controller;
+package fr.vbillard.tissusdeprincesseboot.controller.patron;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.controller.IController;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ListElement;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import javafx.fxml.FXML;
@@ -46,13 +47,12 @@ public class ListElementController implements IController {
 		if (data.getTissuRequis() != null) {
 			element = mapper.map(data.getTissuRequis(), ListElement.class);
 
-		}else if (data.getTissuUsed() != null) {
+		} else if (data.getTissuUsed() != null) {
 			element = mapper.map(data.getTissuUsed(), ListElement.class);
 
 		}
-		
-			setElements();
+
+		setElements();
 	}
 
-	
 }

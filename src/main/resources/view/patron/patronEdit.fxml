@@ -20,7 +20,6 @@
 		<HBox prefHeight="798.0" prefWidth="1634.0">
 			<children>
 				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="702.0" prefWidth="438.0">
-					<ImageView fx:id="imagePane" fitHeight="400.0" fitWidth="413.0" layoutX="13.0" layoutY="155.0" pickOnBounds="true" preserveRatio="true" />
 					<JFXButton layoutX="95.0" layoutY="674.0" mnemonicParsing="false" onMouseClicked="#addPicture">
 						<graphic>
 							<FontAwesomeIconView glyphName="FOLDER" size="20px" />
@@ -36,6 +35,11 @@
 							<FontAwesomeIconView glyphName="DOWNLOAD" size="20" />
 						</graphic>
 					</JFXButton>
+               <VBox alignment="CENTER" layoutX="-3.0" layoutY="238.0" prefHeight="400.0" prefWidth="431.0">
+                  <children>
+      					<ImageView fx:id="imagePane" fitHeight="400.0" fitWidth="413.0" pickOnBounds="true" preserveRatio="true" />
+                  </children>
+               </VBox>
 				</AnchorPane>
 				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="702.0" prefWidth="470.0">
 					<children>

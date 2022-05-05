@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<Pane prefHeight="110.0" prefWidth="254.0" styleClass="global" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.patron.ListElementController">
+   <children>
+      <VBox layoutX="4.0" layoutY="7.0" prefHeight="96.0" prefWidth="245.0" styleClass="list-element">
+         <children>
+            <HBox prefHeight="55.0" prefWidth="237.0">
+               <children>
+                  <Label fx:id="ref" prefHeight="25.0" prefWidth="69.0" styleClass="list-element-titre" text="Ref" />
+                  <Label fx:id="titre" prefHeight="25.0" prefWidth="170.0" text="Titre" />
+               </children>
+            </HBox>
+            <Label fx:id="dimensions" alignment="CENTER" prefHeight="18.0" prefWidth="246.0" styleClass="list-element-dim" text="Dimensions" />
+            <HBox prefHeight="85.0" prefWidth="271.0" stylesheets="@../style/style.css">
+               <children>
+                  <Label fx:id="description" prefHeight="54.0" prefWidth="246.0" styleClass="list-element-desc" text="Description" wrapText="true" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</Pane>

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import fr.vbillard.tissusdeprincesseboot.controller.FxmlPathProperties;
 import fr.vbillard.tissusdeprincesseboot.controller.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.IModalController;
-import fr.vbillard.tissusdeprincesseboot.controller.ListElementController;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.TissuRequisCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.TissuRequisSelectedController;
@@ -20,6 +19,7 @@ import fr.vbillard.tissusdeprincesseboot.controller.caracteristiques.TissageEdit
 import fr.vbillard.tissusdeprincesseboot.controller.common.PlusCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.common.SetLongueurDialogController;
 import fr.vbillard.tissusdeprincesseboot.controller.common.SetWebUrlDialogController;
+import fr.vbillard.tissusdeprincesseboot.controller.patron.ListElementController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronDetailController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronEditController;

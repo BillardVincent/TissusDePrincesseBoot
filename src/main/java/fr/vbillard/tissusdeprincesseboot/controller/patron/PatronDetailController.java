@@ -17,10 +17,9 @@ import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.TilePane;
 
 @Component
 public class PatronDetailController implements IController {
@@ -38,7 +37,7 @@ public class PatronDetailController implements IController {
 	@FXML
 	private Label descriptionPatronLabel;
 	@FXML
-	private ScrollPane listFournitures;
+	private TilePane listFournitures;
 
 	private RootController rootController;
 	private StageInitializer initializer;
@@ -68,18 +67,13 @@ public class PatronDetailController implements IController {
 		modelPatronLabel.setText(patron.getModele());
 		typeVetementPatronLabel.setText(patron.getTypeVetement());
 
-		VBox root = new VBox();
-		root.setSpacing(10);
-
 		for (TissuRequisDto t : patron.getTissusRequis()) {
 			FxData fxData = new FxData();
 			fxData.setTissuRequis(t);
 			Pane element = initializer.displayPane(PathEnum.LIST_ELEMENT, fxData);
-			root.getChildren().add(element);
+			listFournitures.getChildren().add(element);
 		}
 		pictureUtils.setPane(image, patron);
-
-		listFournitures.setContent(root);
 
 	}
 
