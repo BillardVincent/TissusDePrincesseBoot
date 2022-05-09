@@ -91,7 +91,7 @@ public class ProjetEditController implements IController {
 	@Override
 	public void setStageInitializer(StageInitializer initializer, FxData data) {
 		this.initializer = initializer;
-		if (data == null && data.getProjet() == null) {
+		if (data == null || data.getProjet() == null) {
 			throw new IllegalData();
 		}
 		projet = data.getProjet();

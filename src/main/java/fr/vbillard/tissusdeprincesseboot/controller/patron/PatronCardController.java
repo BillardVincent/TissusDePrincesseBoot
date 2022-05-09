@@ -51,7 +51,7 @@ public class PatronCardController implements IController {
 
 	@Override
 	public void setStageInitializer(StageInitializer initializer, FxData data) {
-		if (data == null && data.getPatron() == null) {
+		if (data == null || data.getPatron() == null) {
 			throw new IllegalData();
 		}
 		patron = data.getPatron();

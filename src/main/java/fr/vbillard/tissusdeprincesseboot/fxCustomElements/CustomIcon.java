@@ -10,8 +10,6 @@ import com.sun.javafx.webkit.Accessor;
 import fr.vbillard.tissusdeprincesseboot.config.PathIconsProperties;
 import fr.vbillard.tissusdeprincesseboot.exception.PersistanceException;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
-import javafx.scene.Node;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.web.WebView;
 import lombok.AllArgsConstructor;
 
@@ -34,6 +32,9 @@ public class CustomIcon {
 	}
 
 	public WebView typeTissu(WebView view, TypeTissuEnum typeTissu) {
+		if (typeTissu == null) {
+			return new WebView();
+		}
 		Resource path = null;
 		double originalSize = 100;
 		switch (typeTissu) {
@@ -53,7 +54,7 @@ public class CustomIcon {
 			path = pathProperties.getNonTisse();
 			originalSize = pathProperties.getNonTisseSize();
 			break;
-		case NON_RENSEIGNE:
+		default:
 			return new WebView();
 		}
 

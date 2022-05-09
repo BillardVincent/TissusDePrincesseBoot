@@ -22,8 +22,6 @@ import fr.vbillard.tissusdeprincesseboot.services.TissuUsedService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
 import javafx.fxml.FXML;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 

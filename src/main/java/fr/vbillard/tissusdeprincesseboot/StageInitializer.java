@@ -225,6 +225,10 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
 			return new PathHolder(pathProperties.getLongueur().getURL(), SetLongueurDialogController.class);
 		case WEB_URL:
 			return new PathHolder(pathProperties.getUrl().getURL(), SetWebUrlDialogController.class);
+		case PROJET_DETAILS:
+			break;
+		default:
+			break;
 
 		}
 		return null;

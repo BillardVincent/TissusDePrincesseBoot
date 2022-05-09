@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
-import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.services.ImageService;
 import fr.vbillard.tissusdeprincesseboot.services.PreferenceService;

@@ -7,7 +7,9 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
 
 import com.jfoenix.controls.JFXButton;
@@ -16,6 +18,7 @@ import com.jfoenix.controls.JFXTextField;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.IModalController;
 import fr.vbillard.tissusdeprincesseboot.exception.NotFoundException;
+import fr.vbillard.tissusdeprincesseboot.model.enums.ImageFormat;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -46,7 +49,14 @@ public class SetWebUrlDialogController implements IModalController {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.setTitle("Aucune valeur renseignée");
 			alert.setHeaderText("Aucune valeur renseignée");
-			alert.setContentText("Veuillez renseigner une URL correcte");
+			alert.setContentText("Veuillez renseigner une URL");
+			alert.showAndWait();
+		} else if (!validateAsPicture()) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Non supporté");
+			alert.setHeaderText("Le format n'est pas supporté");
+			alert.setContentText("Le format n'est pas supporté. L'URL doit terminer par "
+					+ Strings.join(ImageFormat.extensions(), ' '));
 			alert.showAndWait();
 		} else {
 			result = new FxData();
@@ -58,6 +68,22 @@ public class SetWebUrlDialogController implements IModalController {
 			}
 			dialogStage.close();
 		}
+	}
+
+	private boolean validateAsPicture() {
+		ImageFormat[] imagesFormats = ImageFormat.values();
+		String URLtrimmed = urlField.getText().trim();
+		int dotIndex = URLtrimmed.lastIndexOf(".");
+		if (dotIndex == -1) {
+			return false;
+		}
+		String extension = URLtrimmed.substring(dotIndex);
+		for (ImageFormat format : imagesFormats) {
+			if (format.getValue().equals(extension)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@FXML

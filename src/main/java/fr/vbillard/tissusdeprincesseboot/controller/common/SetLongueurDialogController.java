@@ -54,6 +54,13 @@ public class SetLongueurDialogController implements IModalController {
 			alert.setHeaderText("Valeur supérieur au stock");
 			alert.setContentText("On ne coud pas des tissus qu'on ne possède pas");
 			alert.showAndWait();
+		} else if (value <= 0) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.initOwner(initializer.getPrimaryStage());
+			alert.setTitle("Vous devez spécifier une valeur");
+			alert.setHeaderText("Vous devez spécifier une valeur");
+			alert.setContentText("On ne peux pas coudre une longueur nulle");
+			alert.showAndWait();
 		} else {
 			result = new FxData();
 			result.setLongueurRequise(value);

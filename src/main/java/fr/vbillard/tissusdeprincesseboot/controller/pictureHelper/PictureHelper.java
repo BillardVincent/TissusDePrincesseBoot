@@ -9,7 +9,7 @@ import java.util.Optional;
 import javax.imageio.ImageIO;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.exception.NotFoundException;
@@ -42,7 +42,7 @@ public abstract class PictureHelper {
 
 		URL url = initializer.displayModale(PathEnum.WEB_URL, null, "URL de l'image").getUrl();
 
-		if (url != null) {
+		if (url != null && StringUtils.hasLength(url.toString())) {
 			try {
 				String name = url.getHost();
 				String path = url.getPath();

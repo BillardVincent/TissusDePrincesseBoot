@@ -1,30 +1,18 @@
 package fr.vbillard.tissusdeprincesseboot.services;
 
-import fr.vbillard.tissusdeprincesseboot.dao.TissuDao;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
-import fr.vbillard.tissusdeprincesseboot.model.Photo;
-import fr.vbillard.tissusdeprincesseboot.model.Preference;
-import fr.vbillard.tissusdeprincesseboot.model.Tissu;
-import fr.vbillard.tissusdeprincesseboot.model.enums.ImageFormat;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.image.Image;
-import lombok.AllArgsConstructor;
+import java.util.stream.Collectors;
 
-import org.imgscalr.Scalr;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.util.stream.Collectors;
-
-import javax.imageio.ImageIO;
+import fr.vbillard.tissusdeprincesseboot.dao.TissuDao;
+import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
+import fr.vbillard.tissusdeprincesseboot.model.Tissu;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor

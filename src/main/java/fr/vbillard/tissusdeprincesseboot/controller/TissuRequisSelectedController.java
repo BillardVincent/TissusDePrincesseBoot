@@ -12,7 +12,7 @@ import javafx.scene.control.Label;
 
 @Component
 public class TissuRequisSelectedController implements IController {
-	
+
 	@FXML
 	private Label longueurLabel;
 	@FXML
@@ -21,32 +21,31 @@ public class TissuRequisSelectedController implements IController {
 	private Label gammePoidsLabel;
 	@FXML
 	private Label variantsLabel;
-	
+
 	private StageInitializer initializer;
 	private TissuRequisDto tissuRequis;
 
 	@Override
 	public void setStageInitializer(StageInitializer initializer, FxData data) {
 		this.initializer = initializer;
-		if (data == null && data.getTissuRequis() == null) {
+		if (data == null || data.getTissuRequis() == null) {
 			throw new IllegalData();
 		}
-			tissuRequis = data.getTissuRequis();
-			if (tissuRequis != null) {
-				longueurLabel.setText(Integer.toString(tissuRequis.getLongueur()));
-				laizeLabel.setText(Integer.toString(tissuRequis.getLaize()));
-				gammePoidsLabel.setText(tissuRequis.getGammePoids());
-				
+		tissuRequis = data.getTissuRequis();
+		if (tissuRequis != null) {
+			longueurLabel.setText(Integer.toString(tissuRequis.getLongueur()));
+			laizeLabel.setText(Integer.toString(tissuRequis.getLaize()));
+			gammePoidsLabel.setText(tissuRequis.getGammePoids());
 
-			} else {
-				longueurLabel.setText("");
-				laizeLabel.setText("");
-				gammePoidsLabel.setText("");
-				variantsLabel.setText("");
-			}
-			
-			variantsLabel.setText(StringUtils.join(tissuRequis.getVariant(), " - "));
-		
+		} else {
+			longueurLabel.setText("");
+			laizeLabel.setText("");
+			gammePoidsLabel.setText("");
+			variantsLabel.setText("");
+		}
+
+		variantsLabel.setText(StringUtils.join(tissuRequis.getVariant(), " - "));
+
 		setPane();
 	}
 

@@ -31,11 +31,11 @@ public class Tissu extends AbstractEntity {
 	private String reference;
 	private String description;
 	@Enumerated(EnumType.STRING)
-	private TypeTissuEnum typeTissu;
+	private TypeTissuEnum typeTissu = TypeTissuEnum.NON_RENSEIGNE;
 	private boolean chute;
 	private int poids;
 	@Enumerated(EnumType.STRING)
-	private UnitePoids unitePoids;
+	private UnitePoids unitePoids = UnitePoids.NON_RENSEIGNE;
 	private boolean decati;
 	private String lieuAchat;
 	private Boolean archived;

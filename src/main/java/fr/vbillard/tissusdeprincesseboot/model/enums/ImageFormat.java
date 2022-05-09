@@ -1,5 +1,8 @@
 package fr.vbillard.tissusdeprincesseboot.model.enums;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.Getter;
 
 @Getter
@@ -13,6 +16,14 @@ public enum ImageFormat {
 	ImageFormat(String value, String extension) {
 		this.value = value;
 		this.extension = extension;
+	}
+
+	public static List<String> extensions() {
+		List<String> list = new ArrayList();
+		for (ImageFormat e : ImageFormat.values()) {
+			list.add(e.extension);
+		}
+		return list;
 	}
 
 }

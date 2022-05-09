@@ -1,5 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.dtosFx;
 
+import org.springframework.util.StringUtils;
+
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
 import javafx.beans.property.BooleanProperty;
@@ -146,11 +148,19 @@ public class TissuDto implements FxDto {
 	}
 
 	public void setTypeTissu(TypeTissuEnum type) {
+		if (type == null) {
+			type = TypeTissuEnum.NON_RENSEIGNE;
+		}
+
 		this.typeTissu.set(type.label);
 	}
 
 	public void setTypeTissu(String type) {
+		if (!StringUtils.hasLength(type)) {
+			type = TypeTissuEnum.NON_RENSEIGNE.getLabel();
+		}
 		this.typeTissu.set(type);
+
 	}
 
 	public int getPoids() {
@@ -166,10 +176,16 @@ public class TissuDto implements FxDto {
 	}
 
 	public void setUnitePoids(UnitePoids unitePoids) {
+		if (unitePoids == null) {
+			unitePoids = UnitePoids.NON_RENSEIGNE;
+		}
 		this.unitePoids.set(unitePoids.label);
 	}
 
 	public void setUnitePoids(String label) {
+		if (!StringUtils.hasLength(label)) {
+			label = UnitePoids.NON_RENSEIGNE.getLabel();
+		}
 		this.unitePoids.set(label);
 	}
 

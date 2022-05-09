@@ -3,13 +3,10 @@ package fr.vbillard.tissusdeprincesseboot.services;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
 import javax.imageio.ImageIO;
-
-import fr.vbillard.tissusdeprincesseboot.exception.PersistanceException;
 
 import org.imgscalr.Scalr;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,10 +14,9 @@ import org.springframework.stereotype.Service;
 
 import fr.vbillard.tissusdeprincesseboot.config.PathImgProperties;
 import fr.vbillard.tissusdeprincesseboot.dao.PhotoDao;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
+import fr.vbillard.tissusdeprincesseboot.exception.PersistanceException;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
-import fr.vbillard.tissusdeprincesseboot.model.Preference;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ImageFormat;

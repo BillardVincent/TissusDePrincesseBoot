@@ -24,9 +24,9 @@
                   <Insets top="5.0" />
                </padding>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="125.0">
+            <HBox alignment="CENTER" prefHeight="83.0" prefWidth="126.0">
                <children>
-                  <ImageView fx:id="image" fitHeight="100.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" styleClass="light-background" />
+                  <ImageView fx:id="image" fitHeight="95.0" fitWidth="118.0" pickOnBounds="true" preserveRatio="true" styleClass="light-background" />
                </children>
             </HBox>
          </children>
@@ -36,4 +36,7 @@
          </styleClass>
       </VBox>
    </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
 </Pane>

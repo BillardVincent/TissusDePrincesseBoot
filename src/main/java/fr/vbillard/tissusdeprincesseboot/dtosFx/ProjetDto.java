@@ -7,7 +7,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
-import fr.vbillard.tissusdeprincesseboot.utils.ConstantesMetier;
 import fr.vbillard.tissusdeprincesseboot.utils.Constants;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.MapProperty;

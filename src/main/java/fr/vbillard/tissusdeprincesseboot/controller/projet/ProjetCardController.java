@@ -63,7 +63,7 @@ public class ProjetCardController implements IController {
 
 	@Override
 	public void setStageInitializer(StageInitializer initializer, FxData data) {
-		if (data == null && data.getProjet() == null) {
+		if (data == null || data.getProjet() == null) {
 			throw new IllegalData();
 		}
 		projet = data.getProjet();
