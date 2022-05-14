@@ -6,7 +6,7 @@ import com.jfoenix.controls.JFXTextField;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.IController;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
-import fr.vbillard.tissusdeprincesseboot.services.MatiereService;
+import fr.vbillard.tissusdeprincesseboot.service.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

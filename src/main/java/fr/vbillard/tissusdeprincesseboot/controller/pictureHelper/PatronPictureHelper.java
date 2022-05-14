@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
-import fr.vbillard.tissusdeprincesseboot.services.ImageService;
-import fr.vbillard.tissusdeprincesseboot.services.PatronService;
-import fr.vbillard.tissusdeprincesseboot.services.PreferenceService;
+import fr.vbillard.tissusdeprincesseboot.service.ImageService;
+import fr.vbillard.tissusdeprincesseboot.service.PatronService;
+import fr.vbillard.tissusdeprincesseboot.service.PreferenceService;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 

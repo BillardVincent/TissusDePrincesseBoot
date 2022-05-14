@@ -35,7 +35,7 @@ import fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuEditController;
 import fr.vbillard.tissusdeprincesseboot.controller.tissu.TissusController;
 import fr.vbillard.tissusdeprincesseboot.model.Preference;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ImageFormat;
-import fr.vbillard.tissusdeprincesseboot.services.PreferenceService;
+import fr.vbillard.tissusdeprincesseboot.service.PreferenceService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.History;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;

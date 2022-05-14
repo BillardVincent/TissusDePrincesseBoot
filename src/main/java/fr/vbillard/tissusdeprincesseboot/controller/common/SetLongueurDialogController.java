@@ -1,13 +1,14 @@
 package fr.vbillard.tissusdeprincesseboot.controller.common;
 
 import com.jfoenix.controls.JFXTextField;
-import fr.vbillard.tissusdeprincesseboot.fxCustomElements.IntegerSpinner;
+
 import org.springframework.stereotype.Component;
 
 import com.jfoenix.controls.JFXButton;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.IModalController;
+import fr.vbillard.tissusdeprincesseboot.fxCustomElement.IntegerSpinner;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

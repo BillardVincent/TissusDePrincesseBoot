@@ -15,8 +15,8 @@ import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.exception.NotFoundException;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Preference;
-import fr.vbillard.tissusdeprincesseboot.services.ImageService;
-import fr.vbillard.tissusdeprincesseboot.services.PreferenceService;
+import fr.vbillard.tissusdeprincesseboot.service.ImageService;
+import fr.vbillard.tissusdeprincesseboot.service.PreferenceService;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
 import javafx.scene.image.ImageView;
 
