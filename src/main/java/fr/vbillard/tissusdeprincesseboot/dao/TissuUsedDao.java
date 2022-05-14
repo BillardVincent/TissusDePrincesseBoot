@@ -19,4 +19,6 @@ public interface TissuUsedDao extends JpaRepository<TissuUsed, Integer> {
 
 	List<TissuUsed> getAllByProjet(Projet projet);
 
+	boolean existsByTissuId(int id);
+
 }

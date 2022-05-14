@@ -94,10 +94,9 @@ public class TissuCardController implements IController {
 	private void setCardContent() {
 		boolean isDescription = tissu.getDescription() != null && !tissu.getDescription().equals(Strings.EMPTY);
 		description.setText(isDescription ? tissu.getDescription() : constants.getAucuneDescription());
-		laizeXlongueur.setText(FxUtils.safePropertyToString(tissu.getLongueurProperty()) + " cm x "
+		laizeXlongueur.setText(FxUtils.safePropertyToString(tissu.getLongueurRestanteProperty()) + " cm x "
 				+ FxUtils.safePropertyToString(tissu.getLaizeProperty()) + " cm");
 		matiere.setText(FxUtils.safePropertyToString(tissu.getMatiereProperty()));
-		String test = tissu.getTypeTissu();
 		customIcon.typeTissu(typeView, TypeTissuEnum.getEnum(tissu.getTypeTissu()));
 		tissage.setText(FxUtils.safePropertyToString(tissu.getTissageProperty()));
 		poids.setText(FxUtils.safePropertyToString(tissu.getPoidseProperty()));

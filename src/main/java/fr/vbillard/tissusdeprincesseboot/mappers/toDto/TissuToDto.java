@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.github.rozidan.springboot.modelmapper.TypeMapConfigurer;
 
+import fr.vbillard.tissusdeprincesseboot.dao.TissuDao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissuUsedDao;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
@@ -19,8 +20,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class TissuToDto extends TypeMapConfigurer<Tissu, TissuDto> {
 
-	@Lazy
-	TissuUsedDao tUsedService;
+	TissuDao tissuDao;
 
 	@Override
 	public void configure(TypeMap<Tissu, TissuDto> typeMap) {
@@ -37,12 +37,8 @@ public class TissuToDto extends TypeMapConfigurer<Tissu, TissuDto> {
 		protected Integer convert(Tissu source) {
 
 			int longueurRestante = source.getLongueur();
-			for (
-			// todo only if project is in particular state
-			TissuUsed tu : tUsedService.getAllByTissu(source)) {
-				longueurRestante -= tu.getLongueur();
-
-			}
+			int longueurUtilisee = tissuDao.longueurUtilisee(source.getId());
+			longueurRestante -= longueurUtilisee;
 			return longueurRestante;
 		}
 	}

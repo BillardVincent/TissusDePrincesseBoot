@@ -79,4 +79,8 @@ public class TissuService extends AbstractService<Tissu> {
 				.map(t -> mapper.map(t, TissuDto.class)).collect(Collectors.toList()));
 	}
 
+	public int getLongueurUtilisée(int tissuId) {
+		return dao.longueurUtilisee(tissuId);
+	}
+
 }

@@ -101,20 +101,22 @@
                 </padding>
             </Label>
             <Label fx:id="consommeLabel" text="Longueur alloués dans des projets" GridPane.rowIndex="5" />
-            <Label fx:id="consommeIndo" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <Label fx:id="consommeInfo" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5">
                 <padding>
                     <Insets left="10.0" />
                 </padding>
             </Label>
         </children>
     </GridPane>
-    <ButtonBar layoutX="292.0" layoutY="639.0" prefHeight="40.0" prefWidth="214.0">
+    <ButtonBar layoutX="292.0" layoutY="639.0" prefHeight="40.0" prefWidth="521.0">
         <buttons>
-         <JFXButton fx:id="editButton" onAction="#edit" text="Editer" />
+         <JFXButton fx:id="editButton" onAction="#edit" prefHeight="26.0" prefWidth="160.0" text="Editer" />
          <JFXButton fx:id="addToButton" onAction="#addTo" text="Selectionner" />
+         <JFXButton fx:id="genererChuteButton" onAction="#createChuteFromThis" text="Créer chute" />
+         <JFXButton fx:id="supprimerButton" onAction="#delete" text="Supprimer" />
         </buttons>
     </ButtonBar>
-       <ImageView fx:id="imagePane" fitHeight="400.0" fitWidth="600.0" layoutX="681.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true" />
+       <ImageView fx:id="imagePane" fitHeight="400.0" fitWidth="800.0" layoutX="681.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true" />
     
    <padding>
       <Insets bottom="75.0" left="75.0" right="75.0" top="75.0" />

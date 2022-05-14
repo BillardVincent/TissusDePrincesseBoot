@@ -48,4 +48,8 @@ public class TissuUsedService extends AbstractService<TissuUsed> {
 				mapper.map(projet, Projet.class));
 	}
 
+	public boolean existsByTissuId(int id) {
+		return dao.existsByTissuId(id);
+	}
+
 }

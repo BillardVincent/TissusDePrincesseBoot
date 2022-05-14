@@ -3,6 +3,7 @@ package fr.vbillard.tissusdeprincesseboot.dao;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.Tissage;
@@ -20,4 +21,11 @@ public interface TissuDao extends JpaRepository<Tissu, Integer> {
 	boolean existsTissuByTypeTissu(TypeTissuEnum typeTissu);
 
 	boolean existsTissuByTissage(Tissage tissage);
+
+	// TODO
+	@Query(value = "SELECT SUM(t.longueur) FROM TISSU_USED tu INNER JOIN TISSU t ON tu.TISSU_ID = t.ID "
+			+ "INNER JOIN PROJET p ON p.ID = tu.PROJET_ID WHERE p.STATUS = 'EN_COURS' OR p.STATUS = 'PLANIFIE' "
+			+ "AND t.ID = ?1", nativeQuery = true)
+	int longueurUtilisee(int tissuId);
+
 }

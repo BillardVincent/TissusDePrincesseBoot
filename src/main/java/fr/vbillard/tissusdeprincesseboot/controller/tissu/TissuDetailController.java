@@ -20,8 +20,12 @@ import fr.vbillard.tissusdeprincesseboot.services.ImageService;
 import fr.vbillard.tissusdeprincesseboot.services.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.services.TissageService;
 import fr.vbillard.tissusdeprincesseboot.services.TissuService;
+import fr.vbillard.tissusdeprincesseboot.services.TissuUsedService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
+import fr.vbillard.tissusdeprincesseboot.utils.ShowAlert;
+import fr.vbillard.tissusdeprincesseboot.utils.modelToString.EntityToString;
 import javafx.fxml.FXML;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.RowConstraints;
@@ -59,7 +63,7 @@ public class TissuDetailController implements IController {
 	@FXML
 	public Label consommeLabel;
 	@FXML
-	public Label consommeIndo;
+	public Label consommeInfo;
 	@FXML
 	public ImageView imagePane;
 
@@ -70,27 +74,31 @@ public class TissuDetailController implements IController {
 	private JFXButton addToButton;
 	@FXML
 	private JFXButton editButton;
+	@FXML
+	private JFXButton genererChuteButton;
+	@FXML
+	private JFXButton supprimerButton;
 
-	StageInitializer initializer;
+	private Optional<Photo> pictures;
 
-	TissuDto tissu;
+	private StageInitializer initializer;
+
+	private TissuDto tissu;
 	private boolean okClicked = false;
 
-	ModelMapper mapper;
-	MatiereService matiereService;
-	TissageService tissageService;
-	TissuService tissuService;
-	RootController rootController;
-	ImageService imageService;
+	private ModelMapper mapper;
+	private TissuService tissuService;
+	private RootController rootController;
+	private ImageService imageService;
+	private TissuUsedService tissuUsedService;
 
 	public TissuDetailController(ImageService imageService, RootController rootController, ModelMapper mapper,
-			TissuService tissuService, MatiereService matiereService, TissageService tissageService) {
+			TissuService tissuService, TissuUsedService tissuUsedService) {
 		this.mapper = mapper;
 		this.tissuService = tissuService;
-		this.matiereService = matiereService;
-		this.tissageService = tissageService;
 		this.rootController = rootController;
 		this.imageService = imageService;
+		this.tissuUsedService = tissuUsedService;
 	}
 
 	@Override
@@ -105,7 +113,11 @@ public class TissuDetailController implements IController {
 					UnitePoids.NON_RENSEIGNE, false, "", null, false), TissuDto.class);
 		}
 
-		longueurField.setText(tissu.getLongueurProperty() == null ? "0" : Integer.toString(tissu.getLongueur()));
+		longueurField
+				.setText(tissu.getLongueurRestanteProperty() == null ? "0" : Integer.toString(tissu.getLongueur()));
+		ancienneValeurInfo.setText(tissu.getLongueurProperty() == null ? "0" : Integer.toString(tissu.getLongueur()));
+		consommeInfo.setText(Integer.toString(tissuService.getLongueurUtilisée(tissu.getId())));
+
 		laizeField.setText(tissu.getLaizeProperty() == null ? "0" : Integer.toString(tissu.getLaize()));
 		poidsField.setText(tissu.getPoidseProperty() == null ? "0" : Integer.toString(tissu.getPoids()));
 		referenceField.setText(tissu.getReferenceProperty() == null ? "" : tissu.getReference());
@@ -119,11 +131,12 @@ public class TissuDetailController implements IController {
 				tissu.getTypeTissuProperty() == null ? TypeTissuEnum.NON_RENSEIGNE.label : tissu.getTypeTissu());
 		matiereField.setText(tissu.getMatiereProperty() == null ? "" : tissu.getMatiere());
 		tissageField.setText(tissu.getTissageProperty() == null ? "" : tissu.getTissage());
-		Optional<Photo> pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
+		pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
 		imagePane.setImage(imageService.imageOrDefault(pictures));
 
 		addToButton.setVisible(rootController.hasTissuRequisSelected());
 		editButton.setVisible(!rootController.hasTissuRequisSelected());
+		genererChuteButton.setVisible(!rootController.hasTissuRequisSelected());
 
 	}
 
@@ -139,5 +152,36 @@ public class TissuDetailController implements IController {
 	public void addTo() {
 		rootController.addToSelected(tissu);
 
+	}
+
+	public void createChuteFromThis() {
+		tissu.setId(0);
+		tissu.setReference(tissu.getReference() + "-chute");
+		tissu.setChute(true);
+		tissu = tissuService.saveOrUpdate(tissu);
+		if (pictures.isPresent()) {
+			Photo photo = pictures.get();
+			photo.setTissu(mapper.map(tissu, Tissu.class));
+			photo.setId(0);
+			imageService.saveOrUpdate(photo);
+		}
+		rootController.displayTissusEdit(tissu);
+
+	}
+
+	public void delete() {
+		Optional<ButtonType> result = ShowAlert.suppression(initializer.getPrimaryStage(), EntityToString.TISSU,
+				tissu.toString());
+		if (result.isPresent() && result.get().equals(ButtonType.OK)) {
+			if (tissuUsedService.existsByTissuId(tissu.getId())) {
+				ShowAlert.suppressionImpossible(initializer.getPrimaryStage(), EntityToString.TISSU, tissu.toString());
+			} else {
+				if (pictures.isPresent()) {
+					imageService.delete(pictures.get());
+				}
+				tissuService.delete(tissu);
+			}
+			rootController.displayTissus();
+		}
 	}
 }
