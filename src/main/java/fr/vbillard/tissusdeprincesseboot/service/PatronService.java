@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import fr.vbillard.tissusdeprincesseboot.dao.Idao;
 import fr.vbillard.tissusdeprincesseboot.dao.PatronDao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissusRequisDao;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
@@ -49,7 +50,7 @@ public class PatronService extends AbstractService<Patron> {
 	}
 
 	@Override
-	protected JpaRepository getDao() {
+	protected Idao getDao() {
 		return patronDao;
 	}
 

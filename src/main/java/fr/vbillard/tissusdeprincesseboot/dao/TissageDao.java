@@ -6,7 +6,8 @@ import org.springframework.stereotype.Repository;
 import fr.vbillard.tissusdeprincesseboot.model.Tissage;
 
 @Repository
-public interface TissageDao extends JpaRepository<Tissage, Integer> {
-    Tissage getByValue(String value);
-    boolean existsByValue(String value);
+public interface TissageDao extends Idao<Tissage, Integer> {
+	Tissage getByValue(String value);
+
+	boolean existsByValue(String value);
 }

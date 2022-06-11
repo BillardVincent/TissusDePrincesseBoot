@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 
 @Repository
-public interface PatronDao extends JpaRepository<Patron, Integer> {
+public interface PatronDao extends Idao<Patron, Integer> {
 
-	 boolean existsByReference(String ref);
+	boolean existsByReference(String ref);
 
 }

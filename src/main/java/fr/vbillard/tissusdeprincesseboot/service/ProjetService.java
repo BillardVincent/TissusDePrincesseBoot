@@ -1,5 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.service;
 
+import fr.vbillard.tissusdeprincesseboot.dao.Idao;
 import fr.vbillard.tissusdeprincesseboot.dao.ProjetDao;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
@@ -23,7 +24,7 @@ public class ProjetService extends AbstractService<Projet> {
 	ProjetDao dao;
 
 	@Override
-	protected JpaRepository getDao() {
+	protected Idao getDao() {
 		return dao;
 	}
 

@@ -12,7 +12,7 @@ import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 
 @Repository
-public interface PhotoDao extends JpaRepository<Photo, Integer> {
+public interface PhotoDao extends Idao<Photo, Integer> {
 
 	List<Photo> getAllByTissu(Tissu tissu);
 

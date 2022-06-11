@@ -21,15 +21,14 @@ public class TissusDePrincesseFxApp extends Application {
 	private Image icon = new Image("file:resources/images/cut-cloth-red.png");
 
 	@Override
-	public void init(){
+	public void init() {
 
 		applicationContext = new SpringApplicationBuilder(TissuDePrincesseBootApplication.class).run();
 
 	}
 
-
 	@Override
-	public void stop(){
+	public void stop() {
 		applicationContext.close();
 		Platform.exit();
 	}
@@ -57,7 +56,7 @@ public class TissusDePrincesseFxApp extends Application {
 		if (Platform.isFxApplicationThread()) {
 			Alert alert;
 
-			Throwable e1 = e.getCause().getCause();
+			Throwable e1 = e.getCause();
 			if (e1 instanceof AbstractTissuDePricesseException) {
 				alert = new Alert(((AbstractTissuDePricesseException) e1).getAlertType());
 				alert.initOwner(primaryStage);
@@ -69,7 +68,8 @@ public class TissusDePrincesseFxApp extends Application {
 				alert.initOwner(primaryStage);
 				alert.setTitle("Erreur inatendue");
 				alert.setHeaderText("Une erreur est survenue");
-				alert.setContentText("Veuillez nous excuser de la gène occasionnée. Contactez nous si le problème se répète");
+				alert.setContentText(
+						"Veuillez nous excuser de la gène occasionnée. Contactez nous si le problème se répète");
 			}
 			alert.showAndWait();
 		}

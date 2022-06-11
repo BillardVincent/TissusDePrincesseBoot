@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import fr.vbillard.tissusdeprincesseboot.dao.Idao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissuVariantDao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissusRequisDao;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
@@ -40,7 +41,7 @@ public class TissuVariantService extends AbstractService<TissuVariant> {
 	}
 
 	@Override
-	protected JpaRepository getDao() {
+	protected Idao getDao() {
 		return tissuVariantDao;
 	}
 

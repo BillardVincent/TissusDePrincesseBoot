@@ -2,11 +2,17 @@ package fr.vbillard.tissusdeprincesseboot.controller;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.util.Strings;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXMasonryPane;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
@@ -21,15 +27,29 @@ import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 import fr.vbillard.tissusdeprincesseboot.service.TissuUsedService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 @Component
 public class RootController implements IController {
 
 	@FXML
 	private Pane mainWindow;
+	@FXML
+	private Pane searchPane;
 	@FXML
 	private Pane selectedElement;
 	@FXML
@@ -42,6 +62,9 @@ public class RootController implements IController {
 	private HBox projetMenu;
 	@FXML
 	private JFXButton deleteSelectedButton;
+
+	@FXML
+	private VBox test;
 
 	private static final String SELECTED = "mainmenu-element-selected";
 
@@ -62,6 +85,7 @@ public class RootController implements IController {
 	@FXML
 	public void displayTissus() {
 		beforeDisplay(tissuMenu);
+		searchPane.getChildren().add(initializer.displayPane(PathEnum.TISSU_SEARCH));
 		mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSUS));
 	}
 
@@ -143,6 +167,7 @@ public class RootController implements IController {
 
 	private void beforeDisplay(HBox menuToSelect) {
 		mainWindow.getChildren().clear();
+		searchPane.getChildren().clear();
 		for (HBox hb : menuElements) {
 			if (hb != null && hb.getStyleClass() != null && !hb.getStyleClass().isEmpty()) {
 				hb.getStyleClass().removeIf(style -> style.equals(SELECTED));
@@ -158,6 +183,54 @@ public class RootController implements IController {
 		this.initializer = initializer;
 		menuElements = Arrays.asList(tissuMenu, fournitureMenu, patronMenu, projetMenu);
 		deleteSelectedButton.setVisible(false);
+
+		/*
+		 * JFXComboBox<JFXCheckBox> box = new JFXComboBox<JFXCheckBox>() {
+		 * 
+		 * }; JFXCheckBox label1 = new JFXCheckBox("Test1"); JFXCheckBox label2 = new
+		 * JFXCheckBox("Test2"); JFXCheckBox label3 = new JFXCheckBox("Test3");
+		 * JFXCheckBox label4 = new JFXCheckBox("Test4"); label1.setDisable(true);
+		 * label1.setOpacity(1); label2.setDisable(true); label2.setOpacity(1);
+		 * 
+		 * label3.setDisable(true); label3.setOpacity(1);
+		 * 
+		 * label4.setDisable(true); label4.setOpacity(1);
+		 * 
+		 * List<JFXCheckBox> checkList = Arrays.asList(label1, label2, label3, label4);
+		 * 
+		 * box.setItems(FXCollections.observableArrayList(checkList)); Label label = new
+		 * Label();
+		 * 
+		 * box.setOnAction(new EventHandler<ActionEvent>() {
+		 * 
+		 * @Override public void handle(ActionEvent event) { if
+		 * (!box.getSelectionModel().isEmpty()) {
+		 * box.getValue().setSelected(!box.getValue().isSelected());
+		 * label.setText(checkList.stream().filter(c -> c.isSelected()).map(c ->
+		 * c.getText()) .collect(Collectors.joining(" - ")));
+		 * box.setStyle("-fx-text-fill: red");
+		 * 
+		 * } else { box.getSelectionModel().clearSelection();
+		 * 
+		 * }
+		 * 
+		 * } });
+		 * 
+		 * box.setButtonCell(new ListCell<JFXCheckBox>() {
+		 * 
+		 * @Override protected void updateItem(JFXCheckBox item, boolean empty) {
+		 * super.updateItem(item, empty); if (empty || item == null) { // styled like
+		 * -fx-prompt-text-fill: setText("Aucun sélectionné");
+		 * 
+		 * } else { setText(checkList.stream().filter(c -> c.isSelected()).map(c ->
+		 * c.getText()) .collect(Collectors.joining(" - ")));
+		 * 
+		 * } }
+		 * 
+		 * });
+		 * 
+		 * test.getChildren().addAll(label, box);
+		 */
 
 	}
 

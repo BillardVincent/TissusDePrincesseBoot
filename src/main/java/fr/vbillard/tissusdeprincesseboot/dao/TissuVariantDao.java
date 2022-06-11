@@ -11,7 +11,7 @@ import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 
 @Repository
-public interface TissuVariantDao extends JpaRepository<TissuVariant, Integer> {
+public interface TissuVariantDao extends Idao<TissuVariant, Integer> {
 
 	List<TissuVariant> getAllByTissuRequisId(int id);
 

@@ -13,6 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import fr.vbillard.tissusdeprincesseboot.config.PathImgProperties;
+import fr.vbillard.tissusdeprincesseboot.dao.Idao;
 import fr.vbillard.tissusdeprincesseboot.dao.PhotoDao;
 import fr.vbillard.tissusdeprincesseboot.exception.PersistanceException;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
@@ -65,7 +66,7 @@ public class ImageService extends AbstractService<Photo> {
 	}
 
 	@Override
-	protected JpaRepository getDao() {
+	protected Idao getDao() {
 		return dao;
 	}
 

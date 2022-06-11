@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.common.CheckBoxChoiceController">
+   <children>
+      <VBox prefHeight="198.0" prefWidth="449.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="450.0" spacing="20.0">
+               <children>
+                  <JFXCheckBox fx:id="selectAll" text="Tous" />
+                  <JFXButton onAction="#deselectAll" text="Déselectionner" />
+               </children>
+            </HBox>
+            <FlowPane fx:id="content" columnHalignment="CENTER" hgap="5.0" prefHeight="122.0" prefWidth="450.0" vgap="5.0">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </FlowPane>
+            <HBox alignment="CENTER" prefHeight="38.0" prefWidth="450.0" spacing="20.0">
+               <children>
+            		
+                  <JFXButton mnemonicParsing="false" onAction="#handleValidate" text="Valider" />
+                  <JFXButton mnemonicParsing="false" onAction="#handleCancel" text="Annuler" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

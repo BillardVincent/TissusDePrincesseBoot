@@ -11,7 +11,7 @@ import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 
 @Repository
-public interface TissuUsedDao extends JpaRepository<TissuUsed, Integer> {
+public interface TissuUsedDao extends Idao<TissuUsed, Integer> {
 
 	List<TissuUsed> getAllByTissu(Tissu tissu);
 

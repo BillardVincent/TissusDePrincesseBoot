@@ -6,6 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import fr.vbillard.tissusdeprincesseboot.dao.Idao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissuUsedDao;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
@@ -35,7 +36,7 @@ public class TissuUsedService extends AbstractService<TissuUsed> {
 	}
 
 	@Override
-	protected JpaRepository getDao() {
+	protected Idao getDao() {
 		return dao;
 	}
 

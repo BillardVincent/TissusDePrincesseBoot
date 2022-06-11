@@ -3,6 +3,7 @@ package fr.vbillard.tissusdeprincesseboot;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
@@ -16,6 +17,7 @@ import fr.vbillard.tissusdeprincesseboot.controller.TissuRequisCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.TissuRequisSelectedController;
 import fr.vbillard.tissusdeprincesseboot.controller.caracteristiques.MatiereEditController;
 import fr.vbillard.tissusdeprincesseboot.controller.caracteristiques.TissageEditController;
+import fr.vbillard.tissusdeprincesseboot.controller.common.CheckBoxChoiceController;
 import fr.vbillard.tissusdeprincesseboot.controller.common.PlusCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.common.SetLongueurDialogController;
 import fr.vbillard.tissusdeprincesseboot.controller.common.SetWebUrlDialogController;
@@ -32,7 +34,10 @@ import fr.vbillard.tissusdeprincesseboot.controller.projet.TissuUsedCardControll
 import fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuDetailController;
 import fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuEditController;
+import fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuSearchController;
 import fr.vbillard.tissusdeprincesseboot.controller.tissu.TissusController;
+import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
+import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.Preference;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ImageFormat;
 import fr.vbillard.tissusdeprincesseboot.service.PreferenceService;
@@ -227,6 +232,10 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
 			return new PathHolder(pathProperties.getUrl().getURL(), SetWebUrlDialogController.class);
 		case PROJET_DETAILS:
 			break;
+		case TISSU_SEARCH:
+			return new PathHolder(pathProperties.getTissuSearch().getURL(), TissuSearchController.class);
+		case CHECKBOX_CHOICE:
+			return new PathHolder(pathProperties.getCheckBoxChoice().getURL(), CheckBoxChoiceController.class);
 		default:
 			break;
 

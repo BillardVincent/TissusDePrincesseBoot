@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import fr.vbillard.tissusdeprincesseboot.dao.Idao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissuDao;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
@@ -70,7 +71,7 @@ public class TissuService extends AbstractService<Tissu> {
 	}
 
 	@Override
-	protected JpaRepository getDao() {
+	protected Idao getDao() {
 		return dao;
 	}
 

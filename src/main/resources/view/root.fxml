@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="1080.0" prefWidth="1920" styleClass="global" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.RootController">
+<Pane prefHeight="1080.0" prefWidth="1920" styleClass="global" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.RootController">
    <children>
       <VBox prefHeight="1080.0" prefWidth="1920">
          <children>
             <HBox prefHeight="100.0">
                <children>
-                  <HBox prefHeight="100.0" prefWidth="275.0" styleClass="corner-left">
+                  <HBox prefHeight="100.0" prefWidth="312.0" styleClass="corner-left">
                      <children>
-                        <HBox prefHeight="96.0" prefWidth="275.0">
+                        <HBox prefHeight="99.0" prefWidth="320.0">
                            <children>
                               <HBox prefHeight="100.0" prefWidth="93.0" />
                               <VBox alignment="CENTER" prefHeight="100.0" prefWidth="137.0">
@@ -38,12 +37,12 @@
                            </children>
                         </HBox>
                      </children></HBox>
-                  <VBox prefHeight="100.0" prefWidth="1646.0" styleClass="mainmenu">
+                  <VBox prefHeight="99.0" prefWidth="1609.0" styleClass="mainmenu">
                      <children>
                         <HBox prefHeight="100.0" prefWidth="200.0" />
-                        <HBox prefHeight="13.0" prefWidth="1646.0">
+                        <HBox prefHeight="74.0" prefWidth="1612.0">
                            <children>
-                              <HBox alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="1658.0">
+                              <HBox alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="1535.0">
                                  <children>
                                     <HBox fx:id="fournitureMenu" alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="225.0" styleClass="mainmenu-element">
                                        <children>
@@ -160,9 +159,9 @@
                </children></HBox>
             <HBox prefHeight="982.0" prefWidth="1920.0">
                <children>
-                  <VBox maxWidth="-Infinity" prefHeight="950.0" prefWidth="281.0" styleClass="aside">
+                  <VBox maxWidth="-Infinity" prefHeight="950.0" prefWidth="320.0" styleClass="aside">
                      <padding>
-                        <Insets bottom="5.0" top="50.0" />
+                        <Insets bottom="5.0" />
                      </padding>
                      <children>
                         <Pane fx:id="selectedElement" prefHeight="220.0" prefWidth="260.0">
@@ -170,7 +169,7 @@
                               <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-13.0" layoutY="14.0" prefHeight="24.0" prefWidth="286.0" text="Aucune selection" textAlignment="CENTER" />
                            </children>
                            <padding>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                              <Insets left="10.0" right="10.0" top="10.0" />
                            </padding>
                            <VBox.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -181,26 +180,13 @@
                               <JFXButton fx:id="deleteSelectedButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#deleteSelected" text="désélectionner" textAlignment="CENTER" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="289.0">
-                           <children>
-                              <JFXTextField alignment="TOP_LEFT" prefHeight="31.0" prefWidth="170.0" promptText="Recherche" styleClass="search-box">
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </JFXTextField>
-                              <FontAwesomeIconView glyphName="SEARCH" size="2em">
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </FontAwesomeIconView>
-                           </children>
-                        </HBox>
+                        <Pane fx:id="searchPane" prefHeight="713.0" prefWidth="320.0">
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding></Pane>
                      </children>
                   </VBox>
-                  <Pane fx:id="mainWindow" prefHeight="795.0" prefWidth="1641.0" />
+                  <Pane fx:id="mainWindow" prefHeight="795.0" prefWidth="1600.0" />
                </children>
             </HBox>
          </children>

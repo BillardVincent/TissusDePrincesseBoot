@@ -40,4 +40,7 @@ public class FxmlPathProperties {
 	private Resource plusCard;
 	private Resource longueur;
 	private Resource url;
+	private Resource tissuSearch;
+	private Resource checkBoxChoice;
+
 }
