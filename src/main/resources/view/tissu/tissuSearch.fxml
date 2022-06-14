@@ -11,12 +11,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="551.0" prefWidth="312.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuSearchController">
-	<VBox prefHeight="566.0" prefWidth="312.0" spacing="5.0">
+<AnchorPane prefHeight="594.0" prefWidth="312.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuSearchController">
+	<VBox prefHeight="594.0" prefWidth="312.0" spacing="5.0">
 		<children>
          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="310.0" text="Recherche" textAlignment="CENTER" />
-         <HBox alignment="CENTER" prefHeight="32.0" prefWidth="302.0">
+         <HBox alignment="CENTER" prefHeight="32.0" prefWidth="302.0" spacing="30.0">
             <children>
+               <JFXButton text="Annuler" />
                <JFXButton onAction="#handleOk" text="Appliquer les filtres" />
             </children>
          </HBox>
@@ -24,23 +25,26 @@
 				<children>
 					<JFXTextField fx:id="referenceField" prefHeight="26.0" prefWidth="308.0" promptText="Reference" />
 				</children>
+            <VBox.margin>
+               <Insets top="10.0" />
+            </VBox.margin>
 			</HBox>
 						<HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="302.0" spacing="5.0">
             <children>
-               <JFXButton fx:id="typeButton" onAction="#choiceType" text="Types de tissu" />
-               <Label fx:id="typeLbl" prefHeight="37.0" prefWidth="28.0" text="Label" wrapText="true" />
+               <JFXButton fx:id="typeButton" onAction="#choiceType" prefHeight="26.0" prefWidth="80.0" text="Type" />
+               <Label fx:id="typeLbl" prefHeight="36.0" prefWidth="200.0" text="Label" wrapText="true" />
             </children>
 			</HBox>
-			<HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="302.0" spacing="5.0">
+			<HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="302.0" spacing="5.0">
             <children>
-               <JFXButton fx:id="tissageButton" onAction="#choiceTissage" text="Tissage" />
-               <Label fx:id="tissageLbl" prefHeight="34.0" prefWidth="28.0" text="Label" wrapText="true" />
+               <JFXButton fx:id="tissageButton" onAction="#choiceTissage" prefHeight="26.0" prefWidth="80.0" text="Tissage" />
+               <Label fx:id="tissageLbl" prefHeight="34.0" prefWidth="200.0" text="Label" wrapText="true" />
             </children>
 			</HBox>
-			<HBox alignment="CENTER_LEFT" prefHeight="28.0" prefWidth="302.0" spacing="5.0">
+			<HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="302.0" spacing="5.0">
             <children>
-               <JFXButton fx:id="matierButton" onAction="#choiceMatiere" text="Matière" />
-               <Label fx:id="matiereLbl" prefHeight="29.0" prefWidth="28.0" text="Label" wrapText="true" />
+               <JFXButton fx:id="matierButton" onAction="#choiceMatiere" prefHeight="26.0" prefWidth="80.0" text="Matière" />
+               <Label fx:id="matiereLbl" prefHeight="28.0" prefWidth="200.0" text="Label" wrapText="true" />
             </children>
 			</HBox>
          <HBox alignment="CENTER_LEFT" prefHeight="24.0" prefWidth="302.0" spacing="10.0">

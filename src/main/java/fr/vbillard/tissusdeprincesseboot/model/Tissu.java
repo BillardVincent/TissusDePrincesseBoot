@@ -23,6 +23,7 @@ public class Tissu extends AbstractEntity {
 	}
 
 	protected int longueur;
+	private int longueurDisponible;
 	protected int laize;
 	@ManyToOne
 	protected Matiere matiere;

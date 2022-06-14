@@ -41,6 +41,7 @@ import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.Preference;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ImageFormat;
 import fr.vbillard.tissusdeprincesseboot.service.PreferenceService;
+import fr.vbillard.tissusdeprincesseboot.service.TissuService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.History;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
@@ -66,14 +67,17 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
 	private static History history;
 	private FxData fxData;
 	RootController rootController;
+	private TissuService tissuService;
 
 	public StageInitializer(ApplicationContext applicationContext, FxmlPathProperties pathProperties,
-			PreferenceService preferenceService, History history, FxData data) {
+			PreferenceService preferenceService, History history, FxData data, TissuService tissuService) {
 		this.applicationContext = applicationContext;
 		this.pathProperties = pathProperties;
 		this.preferenceService = preferenceService;
 		StageInitializer.history = history;
 		this.fxData = data;
+
+		tissuService.batchTissuDisponible();
 	}
 
 	@Override
@@ -125,6 +129,7 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
 
 			IController controller = loader.getController();
 			controller.setStageInitializer(this, data);
+			// TODO Fil d'ariane ici
 
 		} catch (IOException e) {
 			e.printStackTrace();

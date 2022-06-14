@@ -48,13 +48,12 @@ public class TissuSpecification implements Specification<Tissu> {
 	public CharacterSearch reference;
 	public String description;
 	public List<TypeTissuEnum> typeTissu;
-	public boolean chute;
+	public Boolean chute;
 	public NumericSearch<Integer> poids;
 	public UnitePoids unitePoids;
-	public GammePoids gammePoids;
-	public boolean decati;
+	public Boolean decati;
 	public CharacterSearch lieuAchat;
-	public boolean archived;
+	public Boolean archived;
 
 	private static class Joins {
 		private Join<Tissu, Matiere> joinMatiere;
@@ -102,11 +101,12 @@ public class TissuSpecification implements Specification<Tissu> {
 		if (matieres != null) {
 			predicateList.add(tissu.get(Tissu_.MATIERE).in(matieres));
 		}
-		/*
-		 * if (tissages != null) {
-		 * predicateList.add(cb.equal(joins.joinTissage(tissu).get(Tissage_.id),
-		 * tissageId)); }
-		 */
+		if (typeTissu != null) {
+			predicateList.add(tissu.get(Tissu_.TYPE_TISSU).in(typeTissu));
+		}
+		if (tissages != null) {
+			predicateList.add(tissu.get(Tissu_.TISSAGE).in(tissages));
+		}
 
 		if (longueur != null) {
 			predicateList.add(SpecificationUtils.getNumericSearchPredicate(longueur, tissu.get(Tissu_.LONGUEUR), cb));
@@ -115,7 +115,12 @@ public class TissuSpecification implements Specification<Tissu> {
 		if (laize != null) {
 			predicateList.add(SpecificationUtils.getNumericSearchPredicate(laize, tissu.get(Tissu_.LAIZE), cb));
 		}
-		cb.and(predicateList.toArray(new Predicate[] {}));
+
+		if (poids != null) {
+			predicateList.add(SpecificationUtils.getNumericSearchPredicate(poids, tissu.get(Tissu_.POIDS), cb));
+
+		}
+
 		return cb.and(predicateList.toArray(new Predicate[] {}));
 	}
 

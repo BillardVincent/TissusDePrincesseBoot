@@ -1,5 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.controller;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -27,6 +28,7 @@ public abstract class ViewListController implements IController {
 	protected Label total;
 
 	protected StageInitializer initializer;
+	protected Specification specification;
 
 	protected int page;
 	protected final static int PAGE_SIZE = 10;
@@ -50,6 +52,9 @@ public abstract class ViewListController implements IController {
 	public void setStageInitializer(StageInitializer initializer, FxData data) {
 		page = 0;
 		this.initializer = initializer;
+		if (data != null) {
+			this.specification = data.getSpecification();
+		}
 		setElements();
 	}
 

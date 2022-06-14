@@ -35,4 +35,13 @@ public class ShowAlert {
 		return alert.showAndWait();
 	}
 
+	public static Optional<ButtonType> information(Stage stage, String titre, String header, String content) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.initOwner(stage);
+		alert.setTitle(titre);
+		alert.setHeaderText(header);
+		alert.setContentText(content);
+		return alert.showAndWait();
+	}
+
 }

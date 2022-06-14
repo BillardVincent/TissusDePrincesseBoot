@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
@@ -29,6 +30,7 @@ public class FxData {
 	private int longueurRequise;
 	private URL url;
 	private List<String> listValues;
+	private Specification specification;
 
 	public FxData getCopy() {
 		try {

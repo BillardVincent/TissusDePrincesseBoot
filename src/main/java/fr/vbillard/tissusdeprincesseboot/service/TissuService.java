@@ -1,8 +1,10 @@
 package fr.vbillard.tissusdeprincesseboot.service;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import fr.vbillard.tissusdeprincesseboot.dao.Idao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissuDao;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
+import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -82,6 +85,19 @@ public class TissuService extends AbstractService<Tissu> {
 
 	public int getLongueurUtilisée(int tissuId) {
 		return dao.longueurUtilisee(tissuId);
+	}
+
+	public List<TissuDto> getObservablePage(int page, int pageSize, TissuSpecification specification) {
+		return FXCollections.observableArrayList(dao.findAll(specification, PageRequest.of(page, pageSize)).stream()
+				.map(t -> mapper.map(t, TissuDto.class)).collect(Collectors.toList()));
+	}
+
+	public void batchTissuDisponible() {
+		for (Tissu t : getAll()) {
+			int longueurRestante = t.getLongueur() - getLongueurUtilisée(t.getId());
+			t.setLongueurDisponible(longueurRestante < 0 ? 0 : longueurRestante);
+			saveOrUpdate(t);
+		}
 	}
 
 }

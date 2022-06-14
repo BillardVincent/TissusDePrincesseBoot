@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.util.Strings;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import com.jfoenix.controls.JFXButton;
@@ -84,9 +85,15 @@ public class RootController implements IController {
 
 	@FXML
 	public void displayTissus() {
+		displayTissu(null);
+	}
+
+	public void displayTissu(Specification spec) {
+		FxData fxData = new FxData();
+		fxData.setSpecification(spec);
 		beforeDisplay(tissuMenu);
-		searchPane.getChildren().add(initializer.displayPane(PathEnum.TISSU_SEARCH));
-		mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSUS));
+		searchPane.getChildren().add(initializer.displayPane(PathEnum.TISSU_SEARCH, fxData));
+		mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSUS, fxData));
 	}
 
 	public void displayTissusDetails(TissuDto tissu) {
