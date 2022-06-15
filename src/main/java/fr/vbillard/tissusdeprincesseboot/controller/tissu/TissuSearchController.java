@@ -23,6 +23,7 @@ import fr.vbillard.tissusdeprincesseboot.controller.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification;
+import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.CharacterSearch;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
 import fr.vbillard.tissusdeprincesseboot.fxCustomElement.IntegerSpinner;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
@@ -80,7 +81,6 @@ public class TissuSearchController implements IController {
 	public JFXTextField laizeFieldMax;
 	@FXML
 	public JFXCheckBox longueurUtilisableCBox;
-
 	@FXML
 	public JFXTextField longueurFieldMin;
 	@FXML
@@ -163,6 +163,10 @@ public class TissuSearchController implements IController {
 		matiereLbl.setText(AUCUN_FILTRE);
 		tissageLbl.setText(AUCUN_FILTRE);
 
+		lourdCBox.setSelected(true);
+		moyenCBox.setSelected(true);
+		legerCBox.setSelected(true);
+		ncCBox.setSelected(true);
 	}
 
 	@FXML
@@ -204,6 +208,18 @@ public class TissuSearchController implements IController {
 
 		NumericSearch<Integer> laizeSearch = setNumericSearch(laizeFieldMin, laizeFieldMax);
 
+		CharacterSearch description =null;
+		if (!descriptionField.getText().isEmpty()){
+			description = new CharacterSearch();
+			description.setContains(descriptionField.getText());
+		}
+
+		CharacterSearch reference =null;
+		if (!referenceField.getText().isEmpty()){
+			reference = new CharacterSearch();
+			reference.setContains(referenceField.getText());
+		}
+
 		NumericSearch<Integer> poidsSearch = null;
 		if (!lourdCBox.isSelected()) {
 			poidsSearch = new NumericSearch<>(null);
@@ -224,6 +240,13 @@ public class TissuSearchController implements IController {
 				poidsSearch.setGreaterThanEqual(margeBasseLourd);
 			}
 		}
+		if (ncCBox.isSelected()) {
+			//TODO vérifier que NC marche en plus d'une sélection ?
+			if (poidsSearch == null) {
+				poidsSearch = new NumericSearch<>(null);
+			}
+			poidsSearch.setEquals(0);
+		}
 
 		Boolean decati = null;
 		if (decatiTrue.isSelected()) {
@@ -239,7 +262,8 @@ public class TissuSearchController implements IController {
 			chuteOuCoupon = false;
 		}
 
-		specification = TissuSpecification.builder().chute(chuteOuCoupon).decati(decati).laize(laizeSearch)
+		specification =
+				TissuSpecification.builder().reference(reference).description(description).chute(chuteOuCoupon).decati(decati).laize(laizeSearch)
 				.poids(poidsSearch).longueur(longueurSearch).typeTissu(types).matieres(matieres).tissages(tissages)
 				.build();
 
@@ -258,7 +282,7 @@ public class TissuSearchController implements IController {
 
 		NumericSearch<Integer> search = null;
 		if (!max.getText().isEmpty()) {
-			int value = Integer.valueOf(max.getText());
+			int value = Integer.parseInt(max.getText());
 			if (value > 0) {
 				search = new NumericSearch<>(null);
 				search.setLessThanEqual(value);
@@ -267,7 +291,7 @@ public class TissuSearchController implements IController {
 		}
 
 		if (!min.getText().isEmpty()) {
-			int value = Integer.valueOf(min.getText());
+			int value = Integer.parseInt(min.getText());
 			if (value > 0) {
 				if (search == null) {
 					search = new NumericSearch<>(null);
@@ -281,7 +305,7 @@ public class TissuSearchController implements IController {
 	private int getIntFromJFXTextField(JFXTextField field) {
 		int value = 0;
 		if (!field.getText().isEmpty()) {
-			value = Integer.valueOf(field.getText());
+			value = Integer.parseInt(field.getText());
 		}
 		return value;
 	}
@@ -291,7 +315,6 @@ public class TissuSearchController implements IController {
 		if (!moyenCBox.isSelected() && legerCBox.isSelected()) {
 			moyenCBox.setSelected(true);
 		}
-
 	}
 
 	@FXML
@@ -310,12 +333,10 @@ public class TissuSearchController implements IController {
 
 	@FXML
 	private void poidsHelp() {
-
-		ShowAlert.information(initializer.getPrimaryStage(), "Aide", "Poids des tissus", new StringBuilder()
-				.append("Définissez une plage de poids à filtrer. La plage doit être continue. Léger = inférieur à ")
-				.append(df.format(margeHauteLeger)).append(", Moyen = entre ").append(df.format(margeBasseMoyen))
-				.append(" et ").append(df.format(margeHauteMoyen)).append(", Lourd = supérieur à ")
-				.append(df.format(margeBasseLourd)).toString());
+		ShowAlert.information(initializer.getPrimaryStage(), "Aide", "Poids des tissus",
+				"Définissez une plage de poids à filtrer. La plage doit être continue. Léger = inférieur à " + df.format(
+						margeHauteLeger) + ", Moyen = entre " + df.format(margeBasseMoyen) + " et " + df.format(margeHauteMoyen)
+						+ ", Lourd = supérieur à " + df.format(margeBasseLourd));
 	}
 
 	@FXML
@@ -333,9 +354,7 @@ public class TissuSearchController implements IController {
 		if (result != null) {
 			typeValuesSelected = result.getListValues();
 			typeLbl.setText(StringUtils.defaultIfEmpty(FxUtils.joinValues(result), AUCUN_FILTRE));
-
 		}
-
 	}
 
 	@FXML

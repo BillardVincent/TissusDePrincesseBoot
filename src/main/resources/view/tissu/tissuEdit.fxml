@@ -48,10 +48,15 @@
             <Label text="Décati" GridPane.rowIndex="11" />
             <JFXTextField fx:id="descriptionField" GridPane.columnIndex="1" GridPane.rowIndex="9" />
             <JFXTextField fx:id="lieuDachatField" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-            <HBox fillHeight="false" prefHeight="0.0" prefWidth="324.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+            <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="0.0" prefWidth="324.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
                 <children>
                     <JFXTextField fx:id="poidsField" editable="true" prefHeight="26.0" prefWidth="239.0" />
                     <JFXComboBox fx:id="unitePoidsField" prefHeight="26.0" prefWidth="94.0" />
+               <FontAwesomeIconView glyphName="QUESTION_CIRCLE" onMouseClicked="#poidsHelp" size="24" wrappingWidth="26.171464920043945">
+                  <HBox.margin>
+                     <Insets left="10.0" />
+                  </HBox.margin>
+               </FontAwesomeIconView>
                 </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">

@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 import fr.vbillard.tissusdeprincesseboot.dao.Idao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissuDao;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
+import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
+import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.AllArgsConstructor;
@@ -71,6 +73,18 @@ public class TissuService extends AbstractService<Tissu> {
 	public TissuDto saveOrUpdate(TissuDto dto) {
 		Tissu t = mapper.map(dto, Tissu.class);
 		return mapper.map(saveOrUpdate(t), TissuDto.class);
+	}
+
+	@Override
+	protected void beforeSaveOrUpdate(Tissu entity) {
+		if (UnitePoids.GRAMME_M.equals(entity.getUnitePoids())){
+			if (entity.getLaize() == 0){
+				throw new IllegalData("La laize doit être renseignée pour calculer le poids en g/m² à partir du poids en g"
+						+ ".m².");
+			}
+			entity.setPoids(entity.getPoids()/(entity.getLaize()*100));
+			entity.setUnitePoids(UnitePoids.GRAMME_M_CARRE);
+		}
 	}
 
 	@Override

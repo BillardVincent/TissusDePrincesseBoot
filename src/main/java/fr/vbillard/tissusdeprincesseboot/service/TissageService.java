@@ -39,6 +39,11 @@ public class TissageService extends AbstractService<Tissage> {
 	}
 
 	@Override
+	protected void beforeSaveOrUpdate(Tissage entity) {
+
+	}
+
+	@Override
 	protected Idao getDao() {
 		return dao;
 	}

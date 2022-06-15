@@ -26,6 +26,11 @@ public class MatiereService extends AbstractService<Matiere> {
 	private TissuVariantDao tissuVariantDao;
 
 	@Override
+	protected void beforeSaveOrUpdate(Matiere entity) {
+
+	}
+
+	@Override
 	protected Idao getDao() {
 		return dao;
 	}

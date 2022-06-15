@@ -50,6 +50,11 @@ public class PatronService extends AbstractService<Patron> {
 	}
 
 	@Override
+	protected void beforeSaveOrUpdate(Patron entity) {
+
+	}
+
+	@Override
 	protected Idao getDao() {
 		return patronDao;
 	}

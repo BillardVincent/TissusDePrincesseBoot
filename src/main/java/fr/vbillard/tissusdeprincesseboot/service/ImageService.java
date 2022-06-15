@@ -66,6 +66,11 @@ public class ImageService extends AbstractService<Photo> {
 	}
 
 	@Override
+	protected void beforeSaveOrUpdate(Photo entity) {
+
+	}
+
+	@Override
 	protected Idao getDao() {
 		return dao;
 	}

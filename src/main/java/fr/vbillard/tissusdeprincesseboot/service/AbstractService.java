@@ -12,7 +12,10 @@ import fr.vbillard.tissusdeprincesseboot.model.AbstractEntity;
 
 public abstract class AbstractService<T extends AbstractEntity> {
 
+	protected abstract void beforeSaveOrUpdate(T entity);
+
 	public T saveOrUpdate(T entity) {
+		beforeSaveOrUpdate(entity);
 		return (T) getDao().save(entity);
 	}
 

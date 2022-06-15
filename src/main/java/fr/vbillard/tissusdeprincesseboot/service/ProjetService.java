@@ -24,6 +24,11 @@ public class ProjetService extends AbstractService<Projet> {
 	ProjetDao dao;
 
 	@Override
+	protected void beforeSaveOrUpdate(Projet entity) {
+
+	}
+
+	@Override
 	protected Idao getDao() {
 		return dao;
 	}

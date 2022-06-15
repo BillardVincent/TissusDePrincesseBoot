@@ -36,6 +36,11 @@ public class TissuUsedService extends AbstractService<TissuUsed> {
 	}
 
 	@Override
+	protected void beforeSaveOrUpdate(TissuUsed entity) {
+
+	}
+
+	@Override
 	protected Idao getDao() {
 		return dao;
 	}

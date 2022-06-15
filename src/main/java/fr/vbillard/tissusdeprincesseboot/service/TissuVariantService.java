@@ -41,6 +41,11 @@ public class TissuVariantService extends AbstractService<TissuVariant> {
 	}
 
 	@Override
+	protected void beforeSaveOrUpdate(TissuVariant entity) {
+
+	}
+
+	@Override
 	protected Idao getDao() {
 		return tissuVariantDao;
 	}
