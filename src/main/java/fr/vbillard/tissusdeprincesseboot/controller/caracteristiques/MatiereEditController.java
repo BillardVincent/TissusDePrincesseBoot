@@ -13,11 +13,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MatiereEditController implements IController {
 
+	public static final String PAS_DE_VALEUR = "Pas de valeur";
 	@FXML
 	private JFXListView<String> listMatieres;
 	@FXML
@@ -77,14 +80,14 @@ public class MatiereEditController implements IController {
 		if (newMatiere.getText().trim().equals("")) {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.initOwner(mainApp.getPrimaryStage());
-			alert.setTitle("Pas de valeur");
-			alert.setHeaderText("Pas de valeur");
+			alert.setTitle(PAS_DE_VALEUR);
+			alert.setHeaderText(PAS_DE_VALEUR);
 			alert.setContentText("Veuillez remplir une valeur");
 
 			alert.showAndWait();
 		} else if (matiereService.validate(newMatiere.getText())) {
 			matiereService.saveOrUpdate(new Matiere(newMatiere.getText()));
-			newMatiere.setText("");
+			newMatiere.setText(Strings.EMPTY);
 			allMatieres = matiereService.getAllMatieresValues();
 			listMatieres.setItems(allMatieres);
 		} else {
@@ -111,8 +114,8 @@ public class MatiereEditController implements IController {
 		if (editMatiere.getText().trim().equals("")) {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.initOwner(mainApp.getPrimaryStage());
-			alert.setTitle("Pas de valeur");
-			alert.setHeaderText("Pas de valeur");
+			alert.setTitle(PAS_DE_VALEUR);
+			alert.setHeaderText(PAS_DE_VALEUR);
 			alert.setContentText("Veuillez remplir une valeur");
 
 			alert.showAndWait();

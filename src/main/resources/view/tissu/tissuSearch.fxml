@@ -43,7 +43,7 @@
 			</HBox>
 			<HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="302.0" spacing="5.0">
             <children>
-               <JFXButton fx:id="matierButton" onAction="#choiceMatiere" prefHeight="26.0" prefWidth="80.0" text="Matière" />
+               <JFXButton onAction="#choiceMatiere" prefHeight="26.0" prefWidth="80.0" text="Matière" />
                <Label fx:id="matiereLbl" prefHeight="28.0" prefWidth="200.0" text="Label" wrapText="true" />
             </children>
 			</HBox>
@@ -111,7 +111,7 @@
       							<Insets />
       						</HBox.margin>
       					</JFXCheckBox>
-                     <JFXCheckBox fx:id="ncCBox" onAction="#ncAction" prefHeight="20.0" prefWidth="46.0" text="NC" />
+                     <JFXCheckBox fx:id="ncCBox" prefHeight="20.0" prefWidth="46.0" text="NC" />
                   </children>
                </HBox>
             </children>

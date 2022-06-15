@@ -63,10 +63,10 @@ public class CheckBoxChoiceController implements IModalController {
 			cb.setText(s);
 			cb.setSelected(true);
 			cb.selectedProperty()
-					.addListener((ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
-						if (new_val && areAllCheckBoxChecked()) {
+					.addListener((ObservableValue<? extends Boolean> ov, Boolean oldVal, Boolean newVal) -> {
+						if (Boolean.TRUE.equals(newVal) && areAllCheckBoxChecked()) {
 							selectAll.setSelected(true);
-						} else if (!new_val) {
+						} else if (Boolean.FALSE.equals(newVal)) {
 							selectAll.setSelected(false);
 						}
 					});
@@ -75,8 +75,8 @@ public class CheckBoxChoiceController implements IModalController {
 
 		selectAll.setSelected(true);
 		selectAll.selectedProperty()
-				.addListener((ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
-					if (new_val) {
+				.addListener((ObservableValue<? extends Boolean> ov, Boolean oldVal, Boolean newVal) -> {
+					if (Boolean.TRUE.equals(newVal)) {
 						for (Node cb : content.getChildren()) {
 							((JFXCheckBox) cb).setSelected(true);
 						}

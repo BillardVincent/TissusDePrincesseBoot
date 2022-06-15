@@ -20,7 +20,7 @@ public class FxUtils {
 	}
 
 	public static String joinValues(FxData data) {
-		if (data == null && data.getListValues() == null) {
+		if (data == null || data.getListValues() == null) {
 			return null;
 		}
 		StringJoiner sj = new StringJoiner(", ");

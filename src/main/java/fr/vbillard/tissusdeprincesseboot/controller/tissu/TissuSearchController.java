@@ -47,6 +47,7 @@ import javafx.scene.layout.RowConstraints;
 public class TissuSearchController implements IController {
 
 	private static final String AUCUN_FILTRE = "Aucun filtre";
+	public static final String CHOIX = "Choix";
 	private TissuSpecification specification;
 
 	@FXML
@@ -59,8 +60,6 @@ public class TissuSearchController implements IController {
 	public JFXButton tissageButton;
 	@FXML
 	public Label tissageLbl;
-	@FXML
-	public JFXButton matiereButton;
 	@FXML
 	public Label matiereLbl;
 	@FXML
@@ -86,7 +85,6 @@ public class TissuSearchController implements IController {
 	public JFXTextField longueurFieldMin;
 	@FXML
 	public JFXTextField longueurFieldMax;
-
 	@FXML
 	public JFXRadioButton decatiTrue;
 	@FXML
@@ -99,14 +97,10 @@ public class TissuSearchController implements IController {
 	public JFXRadioButton coupon;
 	@FXML
 	public JFXRadioButton chuteEtCoupon;
-
 	@FXML
 	public JFXCheckBox archiveTrue;
 	@FXML
 	public JFXCheckBox archiveFalse;
-
-	public RowConstraints ancienneValeurRow;
-	public RowConstraints consommeRow;
 
 	private RootController root;
 	private StageInitializer initializer;
@@ -115,8 +109,7 @@ public class TissuSearchController implements IController {
 
 	private MatiereService matiereService;
 	private TissageService tissageService;
-	private TissuService tissuService;
-	private ConstantesMetier constantesMetier;
+
 
 	private final ToggleGroup decatiGroup = new ToggleGroup();
 	private final ToggleGroup chuteGroup = new ToggleGroup();
@@ -131,13 +124,11 @@ public class TissuSearchController implements IController {
 	private int margeBasseLourd;
 	private DecimalFormat df = new DecimalFormat("#.##");
 
-	public TissuSearchController(TissuService tissuService, MatiereService matiereService,
+	public TissuSearchController(MatiereService matiereService,
 			TissageService tissageService, RootController root, ConstantesMetier constantesMetier) {
-		this.tissuService = tissuService;
 		this.matiereService = matiereService;
 		this.tissageService = tissageService;
 		this.root = root;
-		this.constantesMetier = constantesMetier;
 		margeHauteLeger = Math.round(constantesMetier.getMinPoidsMoyen()
 				+ constantesMetier.getMinPoidsMoyen() * constantesMetier.getMargePoidsErreur());
 		margeBasseMoyen = Math.round(constantesMetier.getMinPoidsMoyen()
@@ -318,11 +309,6 @@ public class TissuSearchController implements IController {
 	}
 
 	@FXML
-	private void ncAction() {
-
-	}
-
-	@FXML
 	private void poidsHelp() {
 
 		ShowAlert.information(initializer.getPrimaryStage(), "Aide", "Poids des tissus", new StringBuilder()
@@ -342,7 +328,8 @@ public class TissuSearchController implements IController {
 	private void choiceType() {
 		FxData data = new FxData();
 		data.setListValues(TypeTissuEnum.labels());
-		FxData result = initializer.displayModale(PathEnum.CHECKBOX_CHOICE, data, "Choix");
+		FxData result = initializer.displayModale(PathEnum.CHECKBOX_CHOICE, data,
+				CHOIX);
 		if (result != null) {
 			typeValuesSelected = result.getListValues();
 			typeLbl.setText(StringUtils.defaultIfEmpty(FxUtils.joinValues(result), AUCUN_FILTRE));
@@ -355,7 +342,7 @@ public class TissuSearchController implements IController {
 	private void choiceMatiere() {
 		FxData data = new FxData();
 		data.setListValues(matiereService.getAllValues());
-		FxData result = initializer.displayModale(PathEnum.CHECKBOX_CHOICE, data, "Choix");
+		FxData result = initializer.displayModale(PathEnum.CHECKBOX_CHOICE, data, CHOIX);
 		matiereValuesSelected = result.getListValues();
 		matiereLbl.setText(StringUtils.defaultIfEmpty(FxUtils.joinValues(result), AUCUN_FILTRE));
 	}
@@ -364,7 +351,7 @@ public class TissuSearchController implements IController {
 	private void choiceTissage() {
 		FxData data = new FxData();
 		data.setListValues(tissageService.getAllValues());
-		FxData result = initializer.displayModale(PathEnum.CHECKBOX_CHOICE, data, "Choix");
+		FxData result = initializer.displayModale(PathEnum.CHECKBOX_CHOICE, data, CHOIX);
 		tissageValuesSelected = result.getListValues();
 		tissageLbl.setText(StringUtils.defaultIfEmpty(FxUtils.joinValues(result), AUCUN_FILTRE));
 	}

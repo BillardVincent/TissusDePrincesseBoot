@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
+
 import com.sun.javafx.webkit.Accessor;
 
 import fr.vbillard.tissusdeprincesseboot.config.PathIconsProperties;
@@ -35,8 +36,8 @@ public class CustomIcon {
 		if (typeTissu == null) {
 			return new WebView();
 		}
-		Resource path = null;
-		double originalSize = 100;
+		Resource path;
+		double originalSize;
 		switch (typeTissu) {
 		case CHAINE_ET_TRAME:
 			path = pathProperties.getChaineEtTrame();

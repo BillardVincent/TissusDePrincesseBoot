@@ -24,8 +24,9 @@ public enum GammePoids {
 	    public String toString() {
 	      return "lourd";
 	    }};
-	    
-    public final String label;
+
+	public static final String GAMME_DE_POIDS = "Gamme de poids";
+	public final String label;
 
     GammePoids(String label) {
         this.label = label;
@@ -43,7 +44,7 @@ public enum GammePoids {
     }
     
     public static List<String> labels(){
-    	List<String> list = new ArrayList();
+    	List<String> list = new ArrayList<String>();
         for(GammePoids e : GammePoids.values()){
             list.add(e.label);
         }
@@ -51,6 +52,6 @@ public enum GammePoids {
     }
     
     public static String displayClassName() {
-    	return "Gamme de poids";
+    	return GAMME_DE_POIDS;
     }
 }

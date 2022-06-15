@@ -1,5 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.utils;
 
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +31,7 @@ public class CalculPoidsTissuService {
 	}
 
 	public Map<GammePoids, Recommendation> setRecommendations(Tissu tissu) {
-		Map<GammePoids, Recommendation> result = new HashMap<GammePoids, Recommendation>();
+		Map<GammePoids, Recommendation> result = new EnumMap<GammePoids, Recommendation>(GammePoids.class);
 		for (GammePoids gp : GammePoids.values()) {
 			result.put(gp, getRecommendation(gp, tissu));
 		}
