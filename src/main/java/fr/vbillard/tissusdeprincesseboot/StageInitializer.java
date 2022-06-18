@@ -26,10 +26,12 @@ import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronDetailController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronEditController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronListController;
+import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronSearchController;
 import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetEditController;
 import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetEditListElementController;
 import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetListController;
+import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetSearchController;
 import fr.vbillard.tissusdeprincesseboot.controller.projet.TissuUsedCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuDetailController;
@@ -239,6 +241,10 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
 			break;
 		case TISSU_SEARCH:
 			return new PathHolder(pathProperties.getTissuSearch().getURL(), TissuSearchController.class);
+		case PROJET_SEARCH:
+			return new PathHolder(pathProperties.getProjetSearch().getURL(), ProjetSearchController.class);
+		case PATRON_SEARCH:
+			return new PathHolder(pathProperties.getPatronSearch().getURL(), PatronSearchController.class);
 		case CHECKBOX_CHOICE:
 			return new PathHolder(pathProperties.getCheckBoxChoice().getURL(), CheckBoxChoiceController.class);
 		default:

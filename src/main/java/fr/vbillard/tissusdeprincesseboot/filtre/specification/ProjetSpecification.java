@@ -24,6 +24,7 @@ import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed_;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu_;
+import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
 import lombok.AllArgsConstructor;
@@ -35,60 +36,21 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @Setter
-public class TissuSpecification implements Specification<Tissu> {
+public class ProjetSpecification implements Specification<Projet> {
 
 	private static final long serialVersionUID = -6956433248687682190L;
 
-	public NumericSearch<Integer> longueur;
-	public NumericSearch<Integer> laize;
-	public List<Matiere> matieres;
-	public List<Tissage> tissages;
-	public CharacterSearch reference;
-	public CharacterSearch description;
-	public List<TypeTissuEnum> typeTissu;
-	public Boolean chute;
-	public NumericSearch<Integer> poids;
-	public UnitePoids unitePoids;
-	public Boolean decati;
-	public CharacterSearch lieuAchat;
+	public List<ProjectStatus> projectStatus;
 	public Boolean archived;
 
 	@Override
-	public Predicate toPredicate(Root<Tissu> tissu, CriteriaQuery<?> query, CriteriaBuilder cb) {
+	public Predicate toPredicate(Root<Projet> projet, CriteriaQuery<?> query, CriteriaBuilder cb) {
 		query.distinct(true);
 
 		List<Predicate> predicateList = new ArrayList<>();
 
-		if (matieres != null) {
-			predicateList.add(tissu.get(Tissu_.MATIERE).in(matieres));
-		}
-		if (typeTissu != null) {
-			predicateList.add(tissu.get(Tissu_.TYPE_TISSU).in(typeTissu));
-		}
-		if (tissages != null) {
-			predicateList.add(tissu.get(Tissu_.TISSAGE).in(tissages));
-		}
-
-		if (longueur != null) {
-			predicateList.add(SpecificationUtils.getNumericSearchPredicate(longueur, tissu.get(Tissu_.LONGUEUR), cb));
-		}
-
-		if (laize != null) {
-			predicateList.add(SpecificationUtils.getNumericSearchPredicate(laize, tissu.get(Tissu_.LAIZE), cb));
-		}
-
-		if (poids != null) {
-			predicateList.add(SpecificationUtils.getNumericSearchPredicate(poids, tissu.get(Tissu_.POIDS), cb));
-		}
-
-		if (reference != null) {
-			predicateList
-					.add(SpecificationUtils.getCharacterSearchPredicate(reference, tissu.get(Tissu_.REFERENCE), cb));
-		}
-
-		if (description != null) {
-			predicateList.add(
-					SpecificationUtils.getCharacterSearchPredicate(description, tissu.get(Tissu_.DESCRIPTION), cb));
+		if (projectStatus != null) {
+			predicateList.add(projet.get(Projet_.STATUS).in(projectStatus));
 		}
 
 		return cb.and(predicateList.toArray(new Predicate[] {}));

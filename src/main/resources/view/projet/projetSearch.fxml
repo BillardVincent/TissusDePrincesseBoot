@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="594.0" prefWidth="312.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetSearchController">
+	<VBox prefHeight="594.0" prefWidth="312.0" spacing="5.0">
+		<children>
+         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="310.0" text="Recherche" textAlignment="CENTER" />
+         <HBox alignment="CENTER" prefHeight="32.0" prefWidth="302.0" spacing="30.0">
+            <children>
+               <JFXButton text="Annuler" />
+               <JFXButton onAction="#handleOk" text="Appliquer les filtres" />
+            </children>
+         </HBox>
+         <VBox prefHeight="52.0" prefWidth="302.0" spacing="10.0">
+            <children>
+      						<HBox alignment="CENTER" fillHeight="false" prefHeight="17.0" prefWidth="302.0" spacing="5.0">
+      				<children>
+            			
+            			<Label text="Statut" />
+      				</children>
+      			</HBox>
+               <HBox alignment="CENTER" prefHeight="26.0" prefWidth="302.0" spacing="20.0">
+                  <children>
+      					<JFXCheckBox fx:id="etudeCBox" prefHeight="18.0" prefWidth="90.0" text="A l'étude">
+      						<HBox.margin>
+      							<Insets />
+      						</HBox.margin>
+      					</JFXCheckBox>
+      					<JFXCheckBox fx:id="planedCBox" prefHeight="18.0" prefWidth="90.0" text="Planifié">
+      						<HBox.margin>
+      							<Insets />
+      						</HBox.margin>
+      					</JFXCheckBox>
+                  </children>
+               </HBox>
+               <HBox alignment="CENTER" prefHeight="26.0" prefWidth="302.0" spacing="20.0">
+                  <children>
+      					<JFXCheckBox fx:id="inProgressCBox" prefHeight="19.0" prefWidth="90.0" text="En cours ">
+      						<HBox.margin>
+      							<Insets />
+      						</HBox.margin>
+      					</JFXCheckBox>
+                     <JFXCheckBox fx:id="finishedCBox" prefHeight="19.0" prefWidth="90.0" text="Terminé" />
+                  </children>
+               </HBox>
+            </children>
+         </VBox>
+
+		</children>
+      <padding>
+         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+      </padding>
+	</VBox>
+</AnchorPane>

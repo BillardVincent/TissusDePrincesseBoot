@@ -17,7 +17,7 @@
       <children>
          <VBox prefHeight="194.0" prefWidth="532.0">
             <children>
-               <HBox prefHeight="100.0" prefWidth="200.0">
+               <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                   <children>
                      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="114.0" prefWidth="150.0" text="Marque : ">
                         <font>
@@ -31,7 +31,7 @@
                      </Label>
                   </children>
                </HBox>
-               <HBox prefHeight="100.0" prefWidth="200.0">
+               <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                   <children>
                      <Label alignment="CENTER_RIGHT" prefHeight="111.0" prefWidth="150.0" text="Modèle : ">
                         <font>
@@ -45,7 +45,7 @@
                      </Label>
                   </children>
                </HBox>
-               <HBox prefHeight="100.0" prefWidth="200.0">
+               <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                   <children>
                      <Label alignment="CENTER_RIGHT" prefHeight="65.0" prefWidth="150.0" text="Description : ">
                         <font>
@@ -63,11 +63,18 @@
          </VBox>
          <VBox alignment="CENTER" prefHeight="194.0" prefWidth="530.0">
             <children>
-               <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="64.0" prefWidth="530.0" text="Statut : " textAlignment="CENTER">
-                  <font>
-                     <Font size="14.0" />
-                  </font>
-               </Label>
+               <HBox alignment="CENTER" prefHeight="65.0" prefWidth="530.0" spacing="50.0">
+                  <padding>
+                     <Insets left="15.0" />
+                  </padding>
+                  <children>
+                     <JFXButton fx:id="previousStep" onAction="#previousStep" text="Précédent" />
+                     <JFXButton fx:id="nextStep" onAction="#nextStep" text="Suivant" />
+                  </children>
+                  <opaqueInsets>
+                     <Insets />
+                  </opaqueInsets>
+               </HBox>
             <HBox alignment="CENTER" prefHeight="89.0" prefWidth="530.0" spacing="20.0">
    					<opaqueInsets>
    						<Insets />
@@ -82,43 +89,36 @@
                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                         <children>
          						<FontAwesomeIconView fx:id="iconeIdee" glyphName="LIGHTBULB_ALT" size="40" wrappingWidth="24.457242488861084" />
-                           <Label text="Label" />
+                           <Label text="A l'étude" />
                         </children>
                      </VBox>
    						<FontAwesomeIconView glyphName="CHEVRON_RIGHT" size="24" />
                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                         <children>
          						<FontAwesomeIconView fx:id="iconePlan" glyphName="MAP_ALT" size="40" />
-                           <Label text="Label" />
+                           <Label text="Planifié" />
                         </children>
                      </VBox>
    						<FontAwesomeIconView glyphName="CHEVRON_RIGHT" size="24" />
                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                         <children>
          						<FontAwesomeIconView fx:id="iconeEnCours" glyphName="COGS" size="40" wrappingWidth="44.05709362030029" />
-                           <Label text="Label" />
+                           <Label text="En cours" />
                         </children>
                      </VBox>
    						<FontAwesomeIconView glyphName="CHEVRON_RIGHT" size="24" />
                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                         <children>
          						<FontAwesomeIconView fx:id="iconeFini" glyphName="FLAG_CHECKERED" size="40" wrappingWidth="41.60003852844238" />
-                           <Label text="Label" />
+                           <Label text="Terminé" />
                         </children>
                      </VBox>
    					</children>
    					</HBox>
-               <HBox alignment="CENTER" prefHeight="56.0" prefWidth="530.0" spacing="50.0">
-                  <padding>
-                     <Insets left="15.0" />
-                  </padding>
+               <HBox alignment="CENTER" prefHeight="61.0" prefWidth="530.0">
                   <children>
-                     <JFXButton fx:id="previousStep" onAction="#previousStep" text="précédente" />
-                     <JFXButton fx:id="nextStep" onAction="#nextStep" text="suivante" />
+                     <FontAwesomeIconView glyphName="TRASH_ALT" onMouseClicked="#delete" size="40" />
                   </children>
-                  <opaqueInsets>
-                     <Insets />
-                  </opaqueInsets>
                </HBox>
             </children></VBox>
          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">

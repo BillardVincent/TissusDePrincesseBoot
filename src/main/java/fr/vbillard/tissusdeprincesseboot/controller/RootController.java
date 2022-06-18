@@ -112,8 +112,15 @@ public class RootController implements IController {
 
 	@FXML
 	public void displayProjets() {
+		displayProjets(null);
+	}
+
+	public void displayProjets(Specification spec) {
+		FxData fxData = new FxData();
+		fxData.setSpecification(spec);
 		beforeDisplay(projetMenu);
-		mainWindow.getChildren().add(initializer.displayPane(PathEnum.PROJET_LIST));
+		searchPane.getChildren().add(initializer.displayPane(PathEnum.PROJET_SEARCH));
+		mainWindow.getChildren().add(initializer.displayPane(PathEnum.PROJET_LIST, fxData));
 	}
 
 	public void displayProjetEdit(ProjetDto projet) {
@@ -125,7 +132,14 @@ public class RootController implements IController {
 
 	@FXML
 	public void displayPatrons() {
+		displayPatrons(null);
+	}
+
+	public void displayPatrons(Specification spec) {
+		FxData fxData = new FxData();
+		fxData.setSpecification(spec);
 		beforeDisplay(patronMenu);
+		searchPane.getChildren().add(initializer.displayPane(PathEnum.PATRON_SEARCH, fxData));
 		mainWindow.getChildren().add(initializer.displayPane(PathEnum.PATRON_LIST));
 	}
 

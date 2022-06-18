@@ -4,6 +4,9 @@ import fr.vbillard.tissusdeprincesseboot.dao.Idao;
 import fr.vbillard.tissusdeprincesseboot.dao.ProjetDao;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
+import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
+import fr.vbillard.tissusdeprincesseboot.filtre.specification.ProjetSpecification;
+import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.service.workflow.Workflow;
@@ -15,6 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -51,6 +55,11 @@ public class ProjetService extends AbstractService<Projet> {
 
 	public ObservableList<ProjetDto> getObservablePage(int page, int pageSize) {
 		return FXCollections.observableArrayList(dao.findAll(PageRequest.of(page, pageSize)).stream()
+				.map(t -> mapper.map(t, ProjetDto.class)).collect(Collectors.toList()));
+	}
+
+	public List<ProjetDto> getObservablePage(int page, int pageSize, ProjetSpecification specification) {
+		return FXCollections.observableArrayList(dao.findAll(specification, PageRequest.of(page, pageSize)).stream()
 				.map(t -> mapper.map(t, ProjetDto.class)).collect(Collectors.toList()));
 	}
 

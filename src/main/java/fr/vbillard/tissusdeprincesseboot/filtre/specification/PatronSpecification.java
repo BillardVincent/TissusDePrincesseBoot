@@ -16,6 +16,8 @@ import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSear
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.SpecificationUtils;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere_;
+import fr.vbillard.tissusdeprincesseboot.model.Patron;
+import fr.vbillard.tissusdeprincesseboot.model.Patron_;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.model.Projet_;
 import fr.vbillard.tissusdeprincesseboot.model.Tissage;
@@ -35,62 +37,45 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @Setter
-public class TissuSpecification implements Specification<Tissu> {
+public class PatronSpecification implements Specification<Patron> {
 
 	private static final long serialVersionUID = -6956433248687682190L;
 
-	public NumericSearch<Integer> longueur;
-	public NumericSearch<Integer> laize;
-	public List<Matiere> matieres;
-	public List<Tissage> tissages;
-	public CharacterSearch reference;
-	public CharacterSearch description;
-	public List<TypeTissuEnum> typeTissu;
-	public Boolean chute;
-	public NumericSearch<Integer> poids;
-	public UnitePoids unitePoids;
-	public Boolean decati;
-	public CharacterSearch lieuAchat;
+	private CharacterSearch reference;
+	private CharacterSearch marque;
+	private CharacterSearch modele;
+	private CharacterSearch typeVetement;
+	private CharacterSearch description;
 	public Boolean archived;
 
 	@Override
-	public Predicate toPredicate(Root<Tissu> tissu, CriteriaQuery<?> query, CriteriaBuilder cb) {
+	public Predicate toPredicate(Root<Patron> patron, CriteriaQuery<?> query, CriteriaBuilder cb) {
 		query.distinct(true);
 
 		List<Predicate> predicateList = new ArrayList<>();
 
-		if (matieres != null) {
-			predicateList.add(tissu.get(Tissu_.MATIERE).in(matieres));
-		}
-		if (typeTissu != null) {
-			predicateList.add(tissu.get(Tissu_.TYPE_TISSU).in(typeTissu));
-		}
-		if (tissages != null) {
-			predicateList.add(tissu.get(Tissu_.TISSAGE).in(tissages));
-		}
-
-		if (longueur != null) {
-			predicateList.add(SpecificationUtils.getNumericSearchPredicate(longueur, tissu.get(Tissu_.LONGUEUR), cb));
-		}
-
-		if (laize != null) {
-			predicateList.add(SpecificationUtils.getNumericSearchPredicate(laize, tissu.get(Tissu_.LAIZE), cb));
-		}
-
-		if (poids != null) {
-			predicateList.add(SpecificationUtils.getNumericSearchPredicate(poids, tissu.get(Tissu_.POIDS), cb));
-		}
-
 		if (reference != null) {
 			predicateList
-					.add(SpecificationUtils.getCharacterSearchPredicate(reference, tissu.get(Tissu_.REFERENCE), cb));
+					.add(SpecificationUtils.getCharacterSearchPredicate(reference, patron.get(Patron_.REFERENCE), cb));
+		}
+
+		if (marque != null) {
+			predicateList.add(SpecificationUtils.getCharacterSearchPredicate(marque, patron.get(Patron_.MARQUE), cb));
+		}
+
+		if (modele != null) {
+			predicateList.add(SpecificationUtils.getCharacterSearchPredicate(modele, patron.get(Patron_.MODELE), cb));
 		}
 
 		if (description != null) {
 			predicateList.add(
-					SpecificationUtils.getCharacterSearchPredicate(description, tissu.get(Tissu_.DESCRIPTION), cb));
+					SpecificationUtils.getCharacterSearchPredicate(description, patron.get(Patron_.DESCRIPTION), cb));
 		}
 
+		if (typeVetement != null) {
+			predicateList.add(SpecificationUtils.getCharacterSearchPredicate(typeVetement,
+					patron.get(Patron_.TYPE_VETEMENT), cb));
+		}
 		return cb.and(predicateList.toArray(new Predicate[] {}));
 	}
 

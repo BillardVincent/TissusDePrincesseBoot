@@ -15,17 +15,15 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Patron extends AbstractEntity{
-	
+public class Patron extends AbstractEntity {
 
 	private String reference;
 	private String marque;
 	private String modele;
 	private String typeVetement;
 	private String description;
-	
+
 	@Transient
 	private List<FounitureRequise> fournituresRequises;
-	
 
 }

@@ -41,6 +41,8 @@ public class FxmlPathProperties {
 	private Resource longueur;
 	private Resource url;
 	private Resource tissuSearch;
+	private Resource projetSearch;
+	private Resource patronSearch;
 	private Resource checkBoxChoice;
 
 }

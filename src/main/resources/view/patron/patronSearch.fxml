@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="594.0" prefWidth="312.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.patron.PatronSearchController">
+	<VBox prefHeight="594.0" prefWidth="312.0" spacing="10.0">
+		<children>
+         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="310.0" text="Recherche" textAlignment="CENTER" />
+         <HBox alignment="CENTER" prefHeight="32.0" prefWidth="302.0" spacing="30.0">
+            <children>
+               <JFXButton text="Annuler" />
+               <JFXButton onAction="#handleOk" text="Appliquer les filtres" />
+            </children>
+         </HBox>
+         <VBox prefHeight="52.0" prefWidth="302.0" spacing="10.0">
+            <children>
+               <JFXTextField prefHeight="26.0" prefWidth="304.0" promptText="Reference" />
+               <JFXTextField prefHeight="26.0" prefWidth="304.0" promptText="Reference" text="Marque" />
+               <JFXTextField prefHeight="26.0" prefWidth="304.0" promptText="Reference" text="Modele" />
+               <JFXTextField prefHeight="26.0" prefWidth="304.0" promptText="Reference" text="Type" />
+               <JFXTextField prefHeight="26.0" prefWidth="304.0" promptText="Reference" text="Descripion " />
+            </children>
+         </VBox>
+         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="310.0" text="Tissu" textAlignment="CENTER" />
+         <Accordion />
+         <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="302.0" spacing="5.0">
+            <children>
+               <JFXButton fx:id="typeButton" onAction="#choiceType" prefHeight="26.0" prefWidth="80.0" text="Type" />
+               <Label fx:id="typeLbl" prefHeight="36.0" prefWidth="200.0" text="Label" wrapText="true" />
+            </children>
+         </HBox>
+         <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="302.0" spacing="5.0">
+            <children>
+               <JFXButton fx:id="tissageButton" onAction="#choiceTissage" prefHeight="26.0" prefWidth="80.0" text="Tissage" />
+               <Label fx:id="tissageLbl" prefHeight="34.0" prefWidth="200.0" text="Label" wrapText="true" />
+            </children>
+         </HBox>
+         <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="302.0" spacing="5.0">
+            <children>
+               <JFXButton onAction="#choiceMatiere" prefHeight="26.0" prefWidth="80.0" text="Matière" />
+               <Label fx:id="matiereLbl" prefHeight="28.0" prefWidth="200.0" text="Label" wrapText="true" />
+            </children>
+         </HBox>
+         <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="302.0">
+            <children>
+               <Label prefHeight="43.0" prefWidth="80.0" text="Longueur: " />
+               <JFXTextField fx:id="longueurFieldMax" editable="true" prefHeight="26.0" prefWidth="80.0" />
+               <Label prefHeight="43.0" prefWidth="50.0" text="cm" />
+            </children>
+         </HBox>
+         <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="302.0">
+            <children>
+               <Label prefHeight="40.0" prefWidth="80.0" text="Laize :" />
+               <JFXTextField fx:id="laizeFieldMax" editable="true" prefHeight="26.0" prefWidth="80.0" />
+               <Label prefHeight="43.0" prefWidth="50.0" text="cm" />
+            </children>
+         </HBox>
+         <VBox prefHeight="52.0" prefWidth="302.0" spacing="5.0">
+            <children>
+               <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="17.0" prefWidth="302.0" spacing="5.0">
+                  <children>
+                     <Label text="Poids: " />
+                     <FontAwesomeIconView glyphName="QUESTION_CIRCLE" onMouseClicked="#poidsHelp" size="20" />
+                  </children>
+               </HBox>
+               <HBox alignment="CENTER" prefHeight="26.0" prefWidth="302.0" spacing="5.0">
+                  <children>
+                     <JFXCheckBox fx:id="lourdCBox" prefHeight="20.0" prefWidth="62.0" text="Lourd">
+                        <HBox.margin>
+                           <Insets />
+                        </HBox.margin>
+                     </JFXCheckBox>
+                     <JFXCheckBox fx:id="moyenCBox" prefHeight="22.0" prefWidth="72.0" text="Moyen">
+                        <HBox.margin>
+                           <Insets />
+                        </HBox.margin>
+                     </JFXCheckBox>
+                     <JFXCheckBox fx:id="legerCBox" prefHeight="20.0" prefWidth="60.0" text="Léger">
+                        <HBox.margin>
+                           <Insets />
+                        </HBox.margin>
+                     </JFXCheckBox>
+                     <JFXCheckBox fx:id="ncCBox" prefHeight="20.0" prefWidth="46.0" text="NC" />
+                  </children>
+               </HBox>
+            </children>
+         </VBox>
+
+		</children>
+      <padding>
+         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+      </padding>
+	</VBox>
+</AnchorPane>

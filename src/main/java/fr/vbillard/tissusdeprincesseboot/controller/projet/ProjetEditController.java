@@ -123,7 +123,7 @@ public class ProjetEditController implements IController {
 		ProjectStatus status = ProjectStatus.getEnum(projet.getProjectStatus());
 
 		for (FontAwesomeIconView icon : listIcn) {
-			icon.setFill(Color.GRAY);
+			icon.setFill(Color.LIGHTGRAY);
 
 			switch (status) {
 			case BROUILLON:
@@ -174,6 +174,11 @@ public class ProjetEditController implements IController {
 		workflow.cancel(mapper.map(projet, Projet.class));
 		projet = mapper.map(projetService.getById(projet.getId()), ProjetDto.class);
 		root.displayProjetEdit(projet);
+
+	}
+
+	@FXML
+	private void delete() {
 
 	}
 
