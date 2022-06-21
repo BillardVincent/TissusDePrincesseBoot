@@ -16,8 +16,10 @@ import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.fxCustomElement.CustomIcon;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
+import fr.vbillard.tissusdeprincesseboot.model.UserPref;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.service.ImageService;
+import fr.vbillard.tissusdeprincesseboot.service.UserPrefService;
 import fr.vbillard.tissusdeprincesseboot.utils.ConstantesMetier;
 import fr.vbillard.tissusdeprincesseboot.utils.Constants;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
@@ -61,8 +63,6 @@ public class TissuCardController implements IController {
 
 	private RootController rootController;
 
-	private ConstantesMetier constanteMetier;
-
 	private Constants constants;
 
 	private ModelMapper mapper;
@@ -71,13 +71,15 @@ public class TissuCardController implements IController {
 
 	private CustomIcon customIcon;
 
-	public TissuCardController(Constants constants, ConstantesMetier constanteMetier, CustomIcon customIcon,
+	private UserPrefService userPrefService;
+
+	public TissuCardController(Constants constants, UserPrefService userPrefService, CustomIcon customIcon,
 			ImageService imageService, RootController rootController, ModelMapper mapper) {
 		this.imageService = imageService;
 		this.rootController = rootController;
 		this.mapper = mapper;
 		this.customIcon = customIcon;
-		this.constanteMetier = constanteMetier;
+		this.userPrefService = userPrefService;
 		this.constants = constants;
 	}
 
@@ -109,8 +111,10 @@ public class TissuCardController implements IController {
 		}
 		footer.getChildren().add(view);
 
-		masse.setStyleClass(tissu.getPoids() > constanteMetier.getMaxPoidsMoyen() ? "heavy-weight"
-				: tissu.getPoids() > constanteMetier.getMinPoidsMoyen() ? "standard-weight" : "light-weight");
+		UserPref pref = userPrefService.getUser();
+
+		masse.setStyleClass(tissu.getPoids() > pref.getMaxPoidsMoyen() ? "heavy-weight"
+				: tissu.getPoids() > pref.getMinPoidsMoyen() ? "standard-weight" : "light-weight");
 		Optional<Photo> pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
 		image.setImage(imageService.imageOrDefault(pictures));
 

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import fr.vbillard.tissusdeprincesseboot.controller.FxmlPathProperties;
 import fr.vbillard.tissusdeprincesseboot.controller.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.IModalController;
+import fr.vbillard.tissusdeprincesseboot.controller.PreferenceController;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.TissuRequisCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.TissuRequisSelectedController;
@@ -148,7 +149,7 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
 			loader.setLocation(holder.url);
 			loader.setControllerFactory(applicationContext::getBean);
 
-			AnchorPane page = loader.load();
+			Pane page = loader.load();
 
 			Stage dialogStage = new Stage();
 			dialogStage.getIcons().add(icon);
@@ -247,6 +248,8 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
 			return new PathHolder(pathProperties.getPatronSearch().getURL(), PatronSearchController.class);
 		case CHECKBOX_CHOICE:
 			return new PathHolder(pathProperties.getCheckBoxChoice().getURL(), CheckBoxChoiceController.class);
+		case PREF:
+			return new PathHolder(pathProperties.getPreference().getURL(), PreferenceController.class);
 		default:
 			break;
 

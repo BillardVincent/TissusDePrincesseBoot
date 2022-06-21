@@ -247,4 +247,15 @@
     -fx-border-width: 0px;
 }
 
+.title1{
+	-fx-text-fill: -fx-primary;
+	-fx-font-size: 1.2em;
+    -fx-font-weight: bold;
+}
+
+.separator{
+	-fx-background-color: -fx-primary;
+    -fx-background-radius: 2;
+}
+
 

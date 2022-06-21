@@ -4,18 +4,24 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.PatronSpecification;
+import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.CharacterSearch;
+import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
+import fr.vbillard.tissusdeprincesseboot.model.UserPref;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.service.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.service.TissageService;
+import fr.vbillard.tissusdeprincesseboot.service.UserPrefService;
 import fr.vbillard.tissusdeprincesseboot.utils.ConstantesMetier;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
@@ -29,7 +35,6 @@ public class PatronSearchController implements IController {
 
 	private static final String AUCUN_FILTRE = "Aucun filtre";
 	public static final String CHOIX = "Choix";
-	private PatronSpecification specification;
 
 	@FXML
 	public JFXTextField referenceField;
@@ -51,6 +56,18 @@ public class PatronSearchController implements IController {
 	public Label tissageLbl;
 	@FXML
 	public Label matiereLbl;
+	@FXML
+	public JFXCheckBox lourdCBox;
+	@FXML
+	public JFXCheckBox moyenCBox;
+	@FXML
+	public JFXCheckBox legerCBox;
+	@FXML
+	public JFXCheckBox ncCBox;
+	@FXML
+	public JFXTextField longueurFieldMax;
+	@FXML
+	public JFXTextField laizeFieldMax;
 
 	private RootController root;
 	private StageInitializer initializer;
@@ -59,7 +76,7 @@ public class PatronSearchController implements IController {
 
 	private MatiereService matiereService;
 	private TissageService tissageService;
-	private ConstantesMetier constantesMetier;
+	private UserPrefService userPrefService;
 
 	private List<String> tissageValuesSelected;
 	private List<String> typeValuesSelected;
@@ -72,32 +89,50 @@ public class PatronSearchController implements IController {
 	private DecimalFormat df = new DecimalFormat("#.##");
 
 	public PatronSearchController(RootController root, MatiereService matiereService, TissageService tissageService,
-			ConstantesMetier constantesMetier) {
+			UserPrefService userPrefService) {
 		this.root = root;
 		this.matiereService = matiereService;
 		this.tissageService = tissageService;
-		this.constantesMetier = constantesMetier;
+		this.userPrefService = userPrefService;
 
 	}
 
 	@Override
 	public void setStageInitializer(StageInitializer initializer, FxData data) {
 		this.initializer = initializer;
-		specification = new PatronSpecification();
 
-		typeLbl.setText(AUCUN_FILTRE);
-		matiereLbl.setText(AUCUN_FILTRE);
-		tissageLbl.setText(AUCUN_FILTRE);
+		if (data != null && data.getSpecification() != null && data.getSpecification() instanceof PatronSpecification) {
+			PatronSpecification spec = (PatronSpecification) data.getSpecification();
+			setTextFieldFromCharacterSearch(descriptionField, spec.getDescription());
+			setTextFieldFromCharacterSearch(typeVetementField, spec.getTypeVetement());
+			setTextFieldFromCharacterSearch(marqueField, spec.getMarque());
+			setTextFieldFromCharacterSearch(modeleField, spec.getModele());
 
-		margeHauteLeger = Math.round(constantesMetier.getMinPoidsMoyen()
-				+ constantesMetier.getMinPoidsMoyen() * constantesMetier.getMargePoidsErreur());
-		margeBasseMoyen = Math.round(constantesMetier.getMinPoidsMoyen()
-				- constantesMetier.getMinPoidsMoyen() * constantesMetier.getMargePoidsErreur());
-		margeHauteMoyen = Math.round(constantesMetier.getMaxPoidsMoyen()
-				+ constantesMetier.getMaxPoidsMoyen() * constantesMetier.getMargePoidsErreur());
-		margeBasseLourd = Math.round(constantesMetier.getMaxPoidsMoyen()
-				- constantesMetier.getMaxPoidsMoyen() * constantesMetier.getMargePoidsErreur());
+		} else {
 
+			typeLbl.setText(AUCUN_FILTRE);
+			matiereLbl.setText(AUCUN_FILTRE);
+			tissageLbl.setText(AUCUN_FILTRE);
+
+			lourdCBox.setSelected(true);
+			moyenCBox.setSelected(true);
+			legerCBox.setSelected(true);
+			ncCBox.setSelected(true);
+		}
+
+		UserPref pref = userPrefService.getUser();
+
+		margeHauteLeger = Math.round(pref.getMinPoidsMoyen() + pref.getMinPoidsMoyen() * pref.getPoidsMargePercent());
+		margeBasseMoyen = Math.round(pref.getMinPoidsMoyen() - pref.getMinPoidsMoyen() * pref.getPoidsMargePercent());
+		margeHauteMoyen = Math.round(pref.getMaxPoidsMoyen() + pref.getMaxPoidsMoyen() * pref.getPoidsMargePercent());
+		margeBasseLourd = Math.round(pref.getMaxPoidsMoyen() - pref.getMaxPoidsMoyen() * pref.getPoidsMargePercent());
+
+	}
+
+	private void setTextFieldFromCharacterSearch(JFXTextField field, CharacterSearch charSearch) {
+		if (charSearch != null && Strings.isNotBlank(charSearch.getContains())) {
+			field.setText(charSearch.getContains());
+		}
 	}
 
 	@FXML
@@ -112,9 +147,37 @@ public class PatronSearchController implements IController {
 	@FXML
 	private void handleOk() {
 
-		PatronSpecification specification = PatronSpecification.builder().build();
+		CharacterSearch description = FxUtils.textFieldToCharacterSearch(descriptionField);
 
-		root.displayTissu(specification);
+		CharacterSearch reference = FxUtils.textFieldToCharacterSearch(referenceField);
+
+		CharacterSearch marque = FxUtils.textFieldToCharacterSearch(marqueField);
+
+		CharacterSearch modele = FxUtils.textFieldToCharacterSearch(modeleField);
+
+		CharacterSearch typeVetement = FxUtils.textFieldToCharacterSearch(typeVetementField);
+
+		NumericSearch<Integer> longueur = FxUtils.textFieldToMaxNumericSearch(longueurFieldMax);
+
+		PatronSpecification specification = PatronSpecification.builder().description(description).reference(reference)
+				.marque(marque).modele(modele).typeVetement(typeVetement).longueur(longueur).build();
+
+		root.displayPatrons(specification);
+	}
+
+	@FXML
+	private void lourdAction() {
+
+	}
+
+	@FXML
+	private void moyenAction() {
+
+	}
+
+	@FXML
+	private void legerAction() {
+
 	}
 
 	@FXML

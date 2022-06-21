@@ -7,16 +7,18 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
+import fr.vbillard.tissusdeprincesseboot.model.UserPref;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Recommendation;
+import fr.vbillard.tissusdeprincesseboot.service.UserPrefService;
 
 @Component
 public class CalculPoidsTissuService {
 
-	private ConstantesMetier constantesMetier;
+	private UserPrefService userPrefService;
 
-	public CalculPoidsTissuService(ConstantesMetier constantesMetier) {
-		this.constantesMetier = constantesMetier;
+	public CalculPoidsTissuService(UserPrefService userPrefService) {
+		this.userPrefService = userPrefService;
 	}
 
 	public int poidFromTissu(Tissu tissu) {
@@ -40,6 +42,7 @@ public class CalculPoidsTissuService {
 	}
 
 	private Recommendation getRecommendation(GammePoids gp, Tissu tissu) {
+		UserPref pref = userPrefService.getUser();
 		int poidsGM2 = poidFromTissu(tissu);
 
 		if (poidsGM2 == -1) {
@@ -48,27 +51,24 @@ public class CalculPoidsTissuService {
 
 		switch (gp) {
 		case LOURD:
-			if (poidsGM2 > constantesMetier.getMaxPoidsMoyen()) {
+			if (poidsGM2 > pref.getMaxPoidsMoyen()) {
 				return Recommendation.IDEAL;
-			} else if (poidsGM2 > constantesMetier.getMaxPoidsMoyen()
-					+ constantesMetier.getMaxPoidsMoyen() * constantesMetier.getMargePoidsErreur())
+			} else if (poidsGM2 > pref.getMaxPoidsMoyen() + pref.getMaxPoidsMoyen() * pref.getPoidsMargePercent())
 				return Recommendation.POSSIBLE;
 			else
 				return Recommendation.NON_RECOMMANDE;
 		case MOYEN:
-			if (poidsGM2 <= constantesMetier.getMaxPoidsMoyen() && poidsGM2 > constantesMetier.getMinPoidsMoyen()) {
+			if (poidsGM2 <= pref.getMaxPoidsMoyen() && poidsGM2 > pref.getMinPoidsMoyen()) {
 				return Recommendation.IDEAL;
-			} else if (poidsGM2 > constantesMetier.getMaxPoidsMoyen()
-					+ constantesMetier.getMaxPoidsMoyen() * constantesMetier.getMargePoidsErreur())
+			} else if (poidsGM2 > pref.getMaxPoidsMoyen() + pref.getMaxPoidsMoyen() * pref.getPoidsMargePercent())
 				return Recommendation.POSSIBLE;
 			else
 				return Recommendation.NON_RECOMMANDE;
 
 		case LEGER:
-			if (poidsGM2 > constantesMetier.getMaxPoidsMoyen()) {
+			if (poidsGM2 > pref.getMaxPoidsMoyen()) {
 				return Recommendation.IDEAL;
-			} else if (poidsGM2 > constantesMetier.getMaxPoidsMoyen()
-					+ constantesMetier.getMaxPoidsMoyen() * constantesMetier.getMargePoidsErreur())
+			} else if (poidsGM2 > pref.getMaxPoidsMoyen() + pref.getMaxPoidsMoyen() * pref.getPoidsMargePercent())
 				return Recommendation.POSSIBLE;
 			else
 				return Recommendation.NON_RECOMMANDE;

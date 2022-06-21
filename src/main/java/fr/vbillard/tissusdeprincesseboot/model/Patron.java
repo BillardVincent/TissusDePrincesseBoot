@@ -3,6 +3,7 @@ package fr.vbillard.tissusdeprincesseboot.model;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
@@ -22,6 +23,9 @@ public class Patron extends AbstractEntity {
 	private String modele;
 	private String typeVetement;
 	private String description;
+
+	@OneToMany
+	private List<TissuRequis> tissuRequis;
 
 	@Transient
 	private List<FounitureRequise> fournituresRequises;

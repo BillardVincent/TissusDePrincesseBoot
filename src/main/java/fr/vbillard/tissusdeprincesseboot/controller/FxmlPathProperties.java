@@ -44,5 +44,6 @@ public class FxmlPathProperties {
 	private Resource projetSearch;
 	private Resource patronSearch;
 	private Resource checkBoxChoice;
+	private Resource preference;
 
 }

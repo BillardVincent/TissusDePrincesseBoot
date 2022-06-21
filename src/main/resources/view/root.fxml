@@ -42,7 +42,7 @@
                         <HBox prefHeight="100.0" prefWidth="200.0" />
                         <HBox prefHeight="74.0" prefWidth="1612.0">
                            <children>
-                              <HBox alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="1535.0">
+                              <HBox alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="1610.0">
                                  <children>
                                     <HBox fx:id="fournitureMenu" alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="225.0" styleClass="mainmenu-element">
                                        <children>
@@ -143,8 +143,25 @@
                                           <Insets />
                                        </opaqueInsets>
                                        <HBox.margin>
-                                          <Insets left="250.0" right="50.0" />
+                                          <Insets left="250.0" />
                                        </HBox.margin>
+                                    </HBox>
+                                    <HBox alignment="CENTER" onMouseClicked="#displayPref" prefHeight="74.0" prefWidth="225.0" styleClass="mainmenu-element">
+                                       <children>
+                                          <FontAwesomeIconView glyphName="COG" size="2em" styleClass="mainmenu-element-text">
+                                             <HBox.margin>
+                                                <Insets bottom="25.0" left="25.0" right="15.0" top="25.0" />
+                                             </HBox.margin>
+                                          </FontAwesomeIconView>
+                                          <Label style="-fx-font-family: Calibri;" styleClass="mainmenu-element-text" text="PREFERENCES">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
                                     </HBox>
                                  </children>
                                  <padding>

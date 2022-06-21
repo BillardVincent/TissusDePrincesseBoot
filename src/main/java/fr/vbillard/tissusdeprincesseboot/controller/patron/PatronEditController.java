@@ -454,7 +454,7 @@ public class PatronEditController implements IController {
 		this.initializer = initializer;
 
 		if (data == null || data.getPatron() == null) {
-			patron = mapper.map(new Patron("", "", "", "", "", null), PatronDto.class);
+			patron = mapper.map(new Patron("", "", "", "", "", null, null), PatronDto.class);
 			setDisabledButton();
 
 		} else {

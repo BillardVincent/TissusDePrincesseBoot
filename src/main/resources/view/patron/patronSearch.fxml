@@ -21,13 +21,13 @@
                <JFXButton onAction="#handleOk" text="Appliquer les filtres" />
             </children>
          </HBox>
-         <VBox prefHeight="52.0" prefWidth="302.0" spacing="10.0">
+         <VBox prefHeight="52.0" prefWidth="302.0" spacing="15.0">
             <children>
-               <JFXTextField prefHeight="26.0" prefWidth="304.0" promptText="Reference" />
-               <JFXTextField prefHeight="26.0" prefWidth="304.0" promptText="Reference" text="Marque" />
-               <JFXTextField prefHeight="26.0" prefWidth="304.0" promptText="Reference" text="Modele" />
-               <JFXTextField prefHeight="26.0" prefWidth="304.0" promptText="Reference" text="Type" />
-               <JFXTextField prefHeight="26.0" prefWidth="304.0" promptText="Reference" text="Descripion " />
+               <JFXTextField fx:id="referenceField" prefHeight="26.0" prefWidth="304.0" promptText="Reference" />
+               <JFXTextField fx:id="marqueField" prefHeight="26.0" prefWidth="304.0" promptText="Marque" />
+               <JFXTextField fx:id="modeleField" prefHeight="26.0" prefWidth="304.0" promptText="Modele" />
+               <JFXTextField fx:id="typeVetementField" prefHeight="26.0" prefWidth="304.0" promptText="Type" />
+               <JFXTextField fx:id="descriptionField" prefHeight="26.0" prefWidth="304.0" promptText="Descripion" />
             </children>
          </VBox>
          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="310.0" text="Tissu" textAlignment="CENTER" />
@@ -74,17 +74,17 @@
                </HBox>
                <HBox alignment="CENTER" prefHeight="26.0" prefWidth="302.0" spacing="5.0">
                   <children>
-                     <JFXCheckBox fx:id="lourdCBox" prefHeight="20.0" prefWidth="62.0" text="Lourd">
+                     <JFXCheckBox fx:id="lourdCBox" onAction="#lourdAction" prefHeight="20.0" prefWidth="62.0" text="Lourd">
                         <HBox.margin>
                            <Insets />
                         </HBox.margin>
                      </JFXCheckBox>
-                     <JFXCheckBox fx:id="moyenCBox" prefHeight="22.0" prefWidth="72.0" text="Moyen">
+                     <JFXCheckBox fx:id="moyenCBox" onAction="#moyenAction" prefHeight="22.0" prefWidth="72.0" text="Moyen">
                         <HBox.margin>
                            <Insets />
                         </HBox.margin>
                      </JFXCheckBox>
-                     <JFXCheckBox fx:id="legerCBox" prefHeight="20.0" prefWidth="60.0" text="Léger">
+                     <JFXCheckBox fx:id="legerCBox" onAction="#legerAction" prefHeight="20.0" prefWidth="60.0" text="Léger">
                         <HBox.margin>
                            <Insets />
                         </HBox.margin>

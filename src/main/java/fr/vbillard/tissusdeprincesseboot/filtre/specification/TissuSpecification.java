@@ -48,7 +48,6 @@ public class TissuSpecification implements Specification<Tissu> {
 	public List<TypeTissuEnum> typeTissu;
 	public Boolean chute;
 	public NumericSearch<Integer> poids;
-	public UnitePoids unitePoids;
 	public Boolean decati;
 	public CharacterSearch lieuAchat;
 	public Boolean archived;

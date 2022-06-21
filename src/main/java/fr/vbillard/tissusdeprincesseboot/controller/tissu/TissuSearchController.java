@@ -29,10 +29,12 @@ import fr.vbillard.tissusdeprincesseboot.fxCustomElement.IntegerSpinner;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.Tissage;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
+import fr.vbillard.tissusdeprincesseboot.model.UserPref;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.service.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.service.TissageService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuService;
+import fr.vbillard.tissusdeprincesseboot.service.UserPrefService;
 import fr.vbillard.tissusdeprincesseboot.utils.ConstantesMetier;
 import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
@@ -110,7 +112,6 @@ public class TissuSearchController implements IController {
 	private MatiereService matiereService;
 	private TissageService tissageService;
 
-
 	private final ToggleGroup decatiGroup = new ToggleGroup();
 	private final ToggleGroup chuteGroup = new ToggleGroup();
 
@@ -124,19 +125,15 @@ public class TissuSearchController implements IController {
 	private int margeBasseLourd;
 	private DecimalFormat df = new DecimalFormat("#.##");
 
-	public TissuSearchController(MatiereService matiereService,
-			TissageService tissageService, RootController root, ConstantesMetier constantesMetier) {
+	private UserPrefService prefService;
+
+	public TissuSearchController(MatiereService matiereService, TissageService tissageService, RootController root,
+			UserPrefService prefService) {
 		this.matiereService = matiereService;
 		this.tissageService = tissageService;
 		this.root = root;
-		margeHauteLeger = Math.round(constantesMetier.getMinPoidsMoyen()
-				+ constantesMetier.getMinPoidsMoyen() * constantesMetier.getMargePoidsErreur());
-		margeBasseMoyen = Math.round(constantesMetier.getMinPoidsMoyen()
-				- constantesMetier.getMinPoidsMoyen() * constantesMetier.getMargePoidsErreur());
-		margeHauteMoyen = Math.round(constantesMetier.getMaxPoidsMoyen()
-				+ constantesMetier.getMaxPoidsMoyen() * constantesMetier.getMargePoidsErreur());
-		margeBasseLourd = Math.round(constantesMetier.getMaxPoidsMoyen()
-				- constantesMetier.getMaxPoidsMoyen() * constantesMetier.getMargePoidsErreur());
+		this.prefService = prefService;
+
 	}
 
 	@Override
@@ -167,6 +164,7 @@ public class TissuSearchController implements IController {
 		moyenCBox.setSelected(true);
 		legerCBox.setSelected(true);
 		ncCBox.setSelected(true);
+
 	}
 
 	@FXML
@@ -208,17 +206,24 @@ public class TissuSearchController implements IController {
 
 		NumericSearch<Integer> laizeSearch = setNumericSearch(laizeFieldMin, laizeFieldMax);
 
-		CharacterSearch description =null;
-		if (!descriptionField.getText().isEmpty()){
+		CharacterSearch description = null;
+		if (!descriptionField.getText().isEmpty()) {
 			description = new CharacterSearch();
 			description.setContains(descriptionField.getText());
 		}
 
-		CharacterSearch reference =null;
-		if (!referenceField.getText().isEmpty()){
+		CharacterSearch reference = null;
+		if (!referenceField.getText().isEmpty()) {
 			reference = new CharacterSearch();
 			reference.setContains(referenceField.getText());
 		}
+
+		UserPref pref = prefService.getUser();
+
+		margeHauteLeger = Math.round(pref.getMinPoidsMoyen() + pref.getMinPoidsMoyen() * pref.getPoidsMargePercent());
+		margeBasseMoyen = Math.round(pref.getMinPoidsMoyen() - pref.getMinPoidsMoyen() * pref.getPoidsMargePercent());
+		margeHauteMoyen = Math.round(pref.getMaxPoidsMoyen() + pref.getMaxPoidsMoyen() * pref.getPoidsMargePercent());
+		margeBasseLourd = Math.round(pref.getMaxPoidsMoyen() - pref.getMaxPoidsMoyen() * pref.getPoidsMargePercent());
 
 		NumericSearch<Integer> poidsSearch = null;
 		if (!lourdCBox.isSelected()) {
@@ -241,7 +246,7 @@ public class TissuSearchController implements IController {
 			}
 		}
 		if (ncCBox.isSelected()) {
-			//TODO vérifier que NC marche en plus d'une sélection ?
+			// TODO vérifier que NC marche en plus d'une sélection ?
 			if (poidsSearch == null) {
 				poidsSearch = new NumericSearch<>(null);
 			}
@@ -262,10 +267,9 @@ public class TissuSearchController implements IController {
 			chuteOuCoupon = false;
 		}
 
-		specification =
-				TissuSpecification.builder().reference(reference).description(description).chute(chuteOuCoupon).decati(decati).laize(laizeSearch)
-				.poids(poidsSearch).longueur(longueurSearch).typeTissu(types).matieres(matieres).tissages(tissages)
-				.build();
+		specification = TissuSpecification.builder().reference(reference).description(description).chute(chuteOuCoupon)
+				.decati(decati).laize(laizeSearch).poids(poidsSearch).longueur(longueurSearch).typeTissu(types)
+				.matieres(matieres).tissages(tissages).build();
 
 		root.displayTissu(specification);
 	}
@@ -275,7 +279,7 @@ public class TissuSearchController implements IController {
 		int minValue = getIntFromJFXTextField(min);
 		int maxValue = getIntFromJFXTextField(max);
 
-		if (minValue < 0 || maxValue < 0 || minValue >= maxValue) {
+		if (minValue < 0 || maxValue < 0 || (maxValue != 0 && minValue >= maxValue)) {
 			throw new IllegalData(
 					"Les valeurs ne doivent pas être négatives. La valeur minimale doit être strictement inférieure à la valeur maximale");
 		}
@@ -334,9 +338,9 @@ public class TissuSearchController implements IController {
 	@FXML
 	private void poidsHelp() {
 		ShowAlert.information(initializer.getPrimaryStage(), "Aide", "Poids des tissus",
-				"Définissez une plage de poids à filtrer. La plage doit être continue. Léger = inférieur à " + df.format(
-						margeHauteLeger) + ", Moyen = entre " + df.format(margeBasseMoyen) + " et " + df.format(margeHauteMoyen)
-						+ ", Lourd = supérieur à " + df.format(margeBasseLourd));
+				"Définissez une plage de poids à filtrer. La plage doit être continue. Léger = inférieur à "
+						+ df.format(margeHauteLeger) + ", Moyen = entre " + df.format(margeBasseMoyen) + " et "
+						+ df.format(margeHauteMoyen) + ", Lourd = supérieur à " + df.format(margeBasseLourd));
 	}
 
 	@FXML
@@ -349,8 +353,7 @@ public class TissuSearchController implements IController {
 	private void choiceType() {
 		FxData data = new FxData();
 		data.setListValues(TypeTissuEnum.labels());
-		FxData result = initializer.displayModale(PathEnum.CHECKBOX_CHOICE, data,
-				CHOIX);
+		FxData result = initializer.displayModale(PathEnum.CHECKBOX_CHOICE, data, CHOIX);
 		if (result != null) {
 			typeValuesSelected = result.getListValues();
 			typeLbl.setText(StringUtils.defaultIfEmpty(FxUtils.joinValues(result), AUCUN_FILTRE));

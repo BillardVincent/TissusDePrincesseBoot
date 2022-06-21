@@ -199,6 +199,11 @@ public class RootController implements IController {
 		}
 	}
 
+	@FXML
+	public void displayPref() {
+		initializer.displayModale(PathEnum.PREF, null, "");
+	}
+
 	@Override
 	public void setStageInitializer(StageInitializer initializer, FxData data) {
 		this.initializer = initializer;

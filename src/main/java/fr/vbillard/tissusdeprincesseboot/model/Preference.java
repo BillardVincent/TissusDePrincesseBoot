@@ -10,5 +10,5 @@ public class Preference {
 	private String dataBasePath;
 	private String pictureLastUploadPath;
 	private boolean isFirstLaunch;
-	
+
 }

@@ -23,13 +23,19 @@ import fr.vbillard.tissusdeprincesseboot.model.Projet_;
 import fr.vbillard.tissusdeprincesseboot.model.Tissage;
 import fr.vbillard.tissusdeprincesseboot.model.Tissage_;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
+import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
+import fr.vbillard.tissusdeprincesseboot.model.TissuRequis_;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed_;
+import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
+import fr.vbillard.tissusdeprincesseboot.model.TissuVariant_;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu_;
+import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
@@ -37,6 +43,7 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @Setter
+@Getter
 public class PatronSpecification implements Specification<Patron> {
 
 	private static final long serialVersionUID = -6956433248687682190L;
@@ -46,10 +53,44 @@ public class PatronSpecification implements Specification<Patron> {
 	private CharacterSearch modele;
 	private CharacterSearch typeVetement;
 	private CharacterSearch description;
+
+	// TissuRequis
+	public NumericSearch<Integer> longueur;
+	public NumericSearch<Integer> laize;
+	public List<GammePoids> poids;
+
+	// TissuVariant
+	public List<Matiere> matieres;
+	public List<Tissage> tissages;
+	public List<TypeTissuEnum> typeTissu;
+
 	public Boolean archived;
+
+	private static class Joins {
+		private Join<Patron, TissuRequis> joinTissuRequis;
+		private Join<Patron, TissuVariant> joinTissuVariant;
+
+		private Join<Patron, TissuRequis> joinTissuRequis(Root<Patron> root) {
+			if (joinTissuRequis == null) {
+				joinTissuRequis = root.join(Patron_.TISSU_REQUIS);
+			}
+			return joinTissuRequis;
+		}
+
+		private Join<Patron, TissuVariant> joinTissuVariant(Root<Patron> root) {
+			if (joinTissuVariant == null) {
+				joinTissuVariant = joinTissuRequis(root).join(TissuVariant_.TISSU_REQUIS);
+			}
+
+			return joinTissuVariant;
+
+		}
+	}
 
 	@Override
 	public Predicate toPredicate(Root<Patron> patron, CriteriaQuery<?> query, CriteriaBuilder cb) {
+		Joins joins = new Joins();
+
 		query.distinct(true);
 
 		List<Predicate> predicateList = new ArrayList<>();
@@ -76,6 +117,21 @@ public class PatronSpecification implements Specification<Patron> {
 			predicateList.add(SpecificationUtils.getCharacterSearchPredicate(typeVetement,
 					patron.get(Patron_.TYPE_VETEMENT), cb));
 		}
+
+		if (longueur != null) {
+			predicateList.add(SpecificationUtils.getNumericSearchPredicate(longueur,
+					joins.joinTissuRequis(patron).get(TissuRequis_.LONGUEUR), cb));
+		}
+
+		if (laize != null) {
+			predicateList.add(SpecificationUtils.getNumericSearchPredicate(laize,
+					joins.joinTissuRequis(patron).get(TissuRequis_.LAIZE), cb));
+		}
+
+		if (poids != null) {
+			predicateList.add(joins.joinTissuRequis(patron).get(TissuRequis_.GAMME_POIDS).in(poids));
+		}
+
 		return cb.and(predicateList.toArray(new Predicate[] {}));
 	}
 
