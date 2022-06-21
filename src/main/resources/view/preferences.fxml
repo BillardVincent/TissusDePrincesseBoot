@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<Pane prefHeight="433.0" prefWidth="323.0" styleClass="global" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.PreferenceController">
+   <children>
+      <VBox layoutX="2.0" layoutY="1.0" prefHeight="381.0" prefWidth="316.0" spacing="10.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="364.0" styleClass="title1" text="Préférences" textAlignment="CENTER" />
+            <Separator prefWidth="200.0" />
+            <Label prefHeight="62.0" prefWidth="296.0" text="Valeurs seuils entre les catégories de poids des tissus. Un poid &quot;Léger&quot; sera  entre 0 et la limite léger/moyen. Un poid lourd sera supérieur à la limite moyen/lourd" textAlignment="JUSTIFY" wrapText="true">
+               <font>
+                  <Font size="11.0" />
+               </font></Label>
+            <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="364.0">
+               <children>
+                  <Label prefHeight="14.0" prefWidth="140.0" text="Limite léger/moyen" />
+                  <JFXTextField fx:id="poidsMoyenMin" prefWidth="70.0" />
+                  <Label prefHeight="14.0" prefWidth="62.0" text="g/m²" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="364.0">
+               <children>
+                  <Label prefHeight="14.0" prefWidth="140.0" text="Limite moyen/lourd" />
+                  <JFXTextField fx:id="poidsMoyenMax" prefWidth="70.0" />
+                  <Label prefHeight="14.0" prefWidth="64.0" text="g/m²" />
+               </children>
+            </HBox>
+            <Label prefHeight="43.0" prefWidth="296.0" text="Lors des recherches, une marge est appliquée sur le poids pour que les tissus proches des limites soient affichés" textAlignment="JUSTIFY" wrapText="true">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="364.0">
+               <children>
+                  <Label prefHeight="14.0" prefWidth="140.0" text="Marge poids" />
+                  <JFXTextField fx:id="margePoids" prefWidth="70.0" />
+                  <Label prefHeight="14.0" prefWidth="60.0" text="\%" />
+               </children>
+            </HBox>
+            <Separator prefWidth="200.0" />
+            <Label prefHeight="59.0" prefWidth="296.0" text="Lors des recherches, une marge est appliquée sur la longueur pour que les tissus proches des limites soient affichés" textAlignment="JUSTIFY" wrapText="true">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="364.0">
+               <children>
+                  <Label prefHeight="14.0" prefWidth="140.0" text="Marge Longueur" />
+                  <JFXTextField fx:id="margeLongueur" prefHeight="22.0" prefWidth="70.0" />
+                  <Label prefHeight="14.0" prefWidth="57.0" text="\%" />
+               </children>
+            </HBox>
+            <Separator prefWidth="200.0" />
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </VBox>
+      <JFXButton layoutX="127.0" layoutY="394.0" onAction="#handleOk" text="Accepter" />
+   </children>
+</Pane>
