@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.IController;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.ListElement;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.ListElement;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

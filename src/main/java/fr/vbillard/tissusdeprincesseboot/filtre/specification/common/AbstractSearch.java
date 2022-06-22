@@ -15,7 +15,7 @@ public abstract class AbstractSearch<T extends Comparable<? super T>> {
 
     private Boolean isNull;
 
-    public AbstractSearch(T equals) {
+    protected AbstractSearch(T equals) {
         this.equals = equals;
     }
 }

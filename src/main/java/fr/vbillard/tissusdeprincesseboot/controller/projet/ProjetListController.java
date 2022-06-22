@@ -6,10 +6,8 @@ import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.ViewListController;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.ProjetSpecification;
-import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification;
 import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
@@ -52,7 +50,7 @@ public class ProjetListController extends ViewListController {
 
 	@Override
 	@FXML
-	public void AddNewElement(MouseEvent mouseEvent) {
+	public void addNewElement(MouseEvent mouseEvent) {
 		rootController.displayProjetEdit(new ProjetDto());
 	}
 

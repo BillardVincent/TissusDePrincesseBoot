@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.ViewListController;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.service.PatronService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
@@ -41,7 +41,7 @@ public class PatronListController extends ViewListController{
 
     @Override
     @FXML
-    public void AddNewElement(MouseEvent mouseEvent) {
+    public void addNewElement(MouseEvent mouseEvent) {
         rootController.displayPatronEdit(new PatronDto());
     }
 }

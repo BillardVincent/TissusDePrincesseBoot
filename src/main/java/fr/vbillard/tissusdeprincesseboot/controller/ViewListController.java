@@ -58,10 +58,10 @@ public abstract class ViewListController implements IController {
 		setElements();
 	}
 
-	public abstract void AddNewElement(MouseEvent mouseEvent);
+	public abstract void addNewElement(MouseEvent mouseEvent);
 
 	@FXML
-	public void PreviousPage(MouseEvent mouseEvent) {
+	public void previousPage(MouseEvent mouseEvent) {
 		if (page > 0) {
 			page--;
 		}
@@ -69,7 +69,7 @@ public abstract class ViewListController implements IController {
 	}
 
 	@FXML
-	public void NextPage(MouseEvent mouseEvent) {
+	public void nextPage(MouseEvent mouseEvent) {
 		if ((page + 1) * PAGE_SIZE < totalElement) {
 			page++;
 			setElements();

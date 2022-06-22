@@ -1,6 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.factory;
 
-import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuVariantDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuVariantDto;
 
 import static fr.vbillard.tissusdeprincesseboot.utils.RandomUtils.FAKER;
 
