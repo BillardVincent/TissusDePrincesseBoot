@@ -32,11 +32,15 @@ public class TissuToDto extends TypeMapConfigurer<Tissu, TissuDto> {
 	private class LongueurRestanteConverter extends AbstractConverter<Tissu, Integer> {
 		@Override
 		protected Integer convert(Tissu source) {
-
 			int longueurRestante = source.getLongueur();
-			int longueurUtilisee = tissuDao.longueurUtilisee(source.getId());
-			longueurRestante -= longueurUtilisee;
-			return longueurRestante;
+					if (source.getId() != 0){
+						try {
+							longueurRestante -= tissuDao.longueurUtilisee(source.getId());
+						}catch(Exception e){
+							e.printStackTrace();
+						}
+					}
+					return longueurRestante;
 		}
 	}
 }

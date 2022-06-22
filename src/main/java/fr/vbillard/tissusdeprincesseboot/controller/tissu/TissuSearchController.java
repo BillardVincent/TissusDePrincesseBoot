@@ -340,31 +340,35 @@ public class TissuSearchController implements IController {
 
 	@FXML
 	private void choiceType() {
-		FxData data = new FxData();
-		data.setListValues(TypeTissuEnum.labels());
-		FxData result = initializer.displayModale(PathEnum.CHECKBOX_CHOICE, data, CHOIX);
-		if (result != null) {
-			typeValuesSelected = result.getListValues();
-			typeLbl.setText(StringUtils.defaultIfEmpty(FxUtils.joinValues(result), AUCUN_FILTRE));
-		}
+		List<String> values = typeValuesSelected == null ? TypeTissuEnum.labels() : typeValuesSelected;
+		getSelectionFromChoiceBoxModale(values, typeValuesSelected, typeLbl);
 	}
 
 	@FXML
 	private void choiceMatiere() {
+		List<String> values = matiereValuesSelected == null ? matiereService.getAllValues() : matiereValuesSelected;
+		getSelectionFromChoiceBoxModale(values, matiereValuesSelected, matiereLbl);
+	}
+
+	private void getSelectionFromChoiceBoxModale(List<String> values, List<String> selectionDestination, Label lbl) {
 		FxData data = new FxData();
-		data.setListValues(matiereService.getAllValues());
+		data.setListValues(values);
 		FxData result = initializer.displayModale(PathEnum.CHECKBOX_CHOICE, data, CHOIX);
-		matiereValuesSelected = result.getListValues();
-		matiereLbl.setText(StringUtils.defaultIfEmpty(FxUtils.joinValues(result), AUCUN_FILTRE));
+		if (result != null) {
+			if (selectionDestination == null){
+				selectionDestination = new ArrayList<>();
+			} else{
+				selectionDestination.clear();
+			}
+			selectionDestination.addAll(result.getListValues());
+			lbl.setText(StringUtils.defaultIfEmpty(FxUtils.joinValues(result), AUCUN_FILTRE));
+		}
 	}
 
 	@FXML
 	private void choiceTissage() {
-		FxData data = new FxData();
-		data.setListValues(tissageService.getAllValues());
-		FxData result = initializer.displayModale(PathEnum.CHECKBOX_CHOICE, data, CHOIX);
-		tissageValuesSelected = result.getListValues();
-		tissageLbl.setText(StringUtils.defaultIfEmpty(FxUtils.joinValues(result), AUCUN_FILTRE));
+		List<String> values = tissageValuesSelected == null ? tissageService.getAllValues() : tissageValuesSelected;
+		getSelectionFromChoiceBoxModale(values, tissageValuesSelected, tissageLbl);
 	}
 
 }

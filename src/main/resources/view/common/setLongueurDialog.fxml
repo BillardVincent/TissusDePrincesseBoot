@@ -5,7 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="267.0" prefWidth="448.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.common.SetLongueurDialogController">
+<AnchorPane prefHeight="267.0" prefWidth="448.0" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.common.SetLongueurDialogController">
    <children>
       <Label layoutX="137.0" layoutY="60.0" text="Requis" />
       <Label fx:id="requisLabel" layoutX="137.0" layoutY="88.0" text="Label" />

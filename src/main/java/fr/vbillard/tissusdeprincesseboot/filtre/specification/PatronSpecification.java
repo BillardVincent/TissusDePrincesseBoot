@@ -2,7 +2,6 @@ package fr.vbillard.tissusdeprincesseboot.filtre.specification;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
@@ -15,24 +14,16 @@ import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.CharacterSe
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.SpecificationUtils;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
-import fr.vbillard.tissusdeprincesseboot.model.Matiere_;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.Patron_;
-import fr.vbillard.tissusdeprincesseboot.model.Projet;
-import fr.vbillard.tissusdeprincesseboot.model.Projet_;
 import fr.vbillard.tissusdeprincesseboot.model.Tissage;
-import fr.vbillard.tissusdeprincesseboot.model.Tissage_;
-import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis_;
-import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
-import fr.vbillard.tissusdeprincesseboot.model.TissuUsed_;
 import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
 import fr.vbillard.tissusdeprincesseboot.model.TissuVariant_;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu_;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
-import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -81,9 +72,7 @@ public class PatronSpecification implements Specification<Patron> {
 			if (joinTissuVariant == null) {
 				joinTissuVariant = joinTissuRequis(root).join(TissuVariant_.TISSU_REQUIS);
 			}
-
 			return joinTissuVariant;
-
 		}
 	}
 
@@ -130,6 +119,18 @@ public class PatronSpecification implements Specification<Patron> {
 
 		if (poids != null) {
 			predicateList.add(joins.joinTissuRequis(patron).get(TissuRequis_.GAMME_POIDS).in(poids));
+		}
+
+		if (matieres != null) {
+			predicateList.add(joins.joinTissuVariant(patron).get(TissuVariant_.MATIERE).in(matieres));
+		}
+
+		if (typeTissu != null) {
+			predicateList.add(joins.joinTissuVariant(patron).get(TissuVariant_.TYPE_TISSU).in(typeTissu));
+		}
+
+		if (tissages != null) {
+			predicateList.add(joins.joinTissuVariant(patron).get(TissuVariant_.TISSAGE).in(tissages));
 		}
 
 		return cb.and(predicateList.toArray(new Predicate[] {}));

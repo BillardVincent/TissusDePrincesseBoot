@@ -30,6 +30,7 @@ import fr.vbillard.tissusdeprincesseboot.service.TissuService;
 import fr.vbillard.tissusdeprincesseboot.utils.ConstantesMetier;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
+import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
 import fr.vbillard.tissusdeprincesseboot.utils.ShowAlert;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -83,18 +84,10 @@ public class TissuEditController implements IController {
   @FXML
   public ImageView imagePane;
 
-  public RowConstraints ancienneValeurRow;
-  public RowConstraints consommeRow;
-
-  private int longueur;
-  private int laize;
-  private int poids;
-
   private RootController root;
   private StageInitializer initializer;
 
   private TissuDto tissu;
-  private boolean edit;
   private boolean okClicked = false;
 
   private ModelMapper mapper;
@@ -180,29 +173,29 @@ public class TissuEditController implements IController {
   @FXML
   private void handleOk() {
     if (isInputValid()) {
-      if (tissu.getChuteProperty() == null) {
-        tissu = mapper.map(
-            new Tissu(0, "", 0, 0, "", null, TypeTissuEnum.NON_RENSEIGNE, 0, UnitePoids.NON_RENSEIGNE, false, "", null,
-                false), TissuDto.class);
-      }
-      tissu.setReference(referenceField.getText());
-      tissu.setLongueur(longueur);
-      tissu.setLaize(Integer.parseInt(laizeField.getText()));
-      tissu.setDescription(descriptionField.getText());
-      tissu.setMatiere(matiereField.getValue());
-      tissu.setTypeTissu(typeField.getValue());
-      tissu.setPoids(Integer.parseInt(poidsField.getText()));
-      tissu.setUnitePoids(unitePoidsField.getValue());
-      tissu.setDecati(decatiField.isSelected());
-      tissu.setLieuAchat(lieuDachatField.getText());
-      tissu.setChute(chuteField.isSelected());
-      tissu.setTissage(tissageField.getValue());
 
-      tissu = tissuService.saveOrUpdate(tissu);
+      setTissuFromFields();
       okClicked = true;
 
       root.displayTissusDetails(tissu);
     }
+  }
+
+  private void setTissuFromFields() {
+    tissu.setReference(referenceField.getText());
+    tissu.setLongueur(Integer.parseInt(longueurField.getText()));
+    tissu.setLaize(Integer.parseInt(laizeField.getText()));
+    tissu.setDescription(descriptionField.getText());
+    tissu.setMatiere(matiereField.getValue());
+    tissu.setTypeTissu(typeField.getValue());
+    tissu.setPoids(Integer.parseInt(poidsField.getText()));
+    tissu.setUnitePoids(unitePoidsField.getValue());
+    tissu.setDecati(decatiField.isSelected());
+    tissu.setLieuAchat(lieuDachatField.getText());
+    tissu.setChute(chuteField.isSelected());
+    tissu.setTissage(tissageField.getValue());
+
+    tissu = tissuService.saveOrUpdate(tissu);
   }
 
   @FXML
@@ -211,18 +204,17 @@ public class TissuEditController implements IController {
       root.displayTissusDetails(tissu);
     } else {
       root.displayTissus();
-
     }
   }
 
   @FXML
   private void handleAddMatiere() {
-    root.displayMatiereEdit();
+    initializer.displayModale(PathEnum.MATIERE, null, "Matière");
   }
 
   @FXML
   private void handleAddTissage() {
-    root.displayTissageEdit();
+    initializer.displayModale(PathEnum.TISSAGE, null, "Tissage");
   }
 
   private boolean isInputValid() {
@@ -250,8 +242,8 @@ public class TissuEditController implements IController {
       // Show the error message.
       Alert alert = new Alert(AlertType.ERROR);
       // alert.initOwner(dialogStage);
-      alert.setTitle("Invalid Fields");
-      alert.setHeaderText("Please correct invalid fields");
+      alert.setTitle("Valeurs incorrectes");
+      alert.setHeaderText("Merci de renseigner les champs suivants:");
       alert.setContentText(errorMessage);
 
       alert.showAndWait();
@@ -260,12 +252,16 @@ public class TissuEditController implements IController {
     }
   }
 
+  private String getFirstCharOrX(JFXComboBox<String> field){
+    return field.getValue().trim().isEmpty() ? "X" : field.getValue().toUpperCase().substring(0, 1);
+  }
+
   @FXML
   private void handleGenerateReference() {
     StringBuilder sb = new StringBuilder();
-    sb.append(typeField.getValue().trim().isEmpty() ? "X" : typeField.getValue().toUpperCase().charAt(0))
-        .append(matiereField.getValue().trim().isEmpty() ? "X" : matiereField.getValue().toUpperCase().charAt(0))
-        .append(tissageField.getValue().trim().isEmpty() ? "X" : tissageField.getValue().toUpperCase().charAt(0))
+    sb.append(getFirstCharOrX(typeField))
+        .append(getFirstCharOrX(matiereField))
+        .append(getFirstCharOrX(tissageField))
         .append("-");
     if (Boolean.parseBoolean(chuteField.getText()))
       sb.append("cp-");
@@ -283,41 +279,30 @@ public class TissuEditController implements IController {
   }
 
   public void setButton() {
-    int height = edit ? 30 : 0;
-    ancienneValeurRow.setMaxHeight(height);
-    ancienneValeurRow.setMinHeight(height);
-    ancienneValeurRow.setPrefHeight(height);
-    consommeRow.setMaxHeight(height);
-    consommeRow.setMinHeight(height);
-    consommeRow.setPrefHeight(height);
-    ancienneValeurLabel.setVisible(edit);
-    consommeLabel.setVisible(edit);
-    ancienneValeurInfo.setVisible(edit);
-    consommeIndo.setVisible(edit);
 
-    laizeField.setDisable(edit);
-    poidsField.setDisable(edit);
-    referenceField.setDisable(edit);
-    descriptionField.setDisable(edit);
-    decatiField.setDisable(edit);
-    lieuDachatField.setDisable(edit);
-    chuteField.setDisable(edit);
   }
 
   @FXML
   private void addPicture() {
-    tissuService.saveOrUpdate(tissu);
-    pictureHelper.addPictureLocal();
+    if (isInputValid()) {
+      setTissuFromFields();
+
+      pictureHelper.addPictureLocal();
+    }
   }
 
   @FXML
   private void addPictureWeb() {
-    tissuService.saveOrUpdate(tissu);
-    pictureHelper.addPictureWeb();
+    if (isInputValid()) {
+      setTissuFromFields();
+
+      pictureHelper.addPictureWeb();
+    }
   }
 
   @FXML
   private void pictureExpend() {
+
 
   }
 

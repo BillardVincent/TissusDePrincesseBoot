@@ -96,7 +96,15 @@ public class TissuService extends AbstractService<Tissu> {
 	}
 
 	public int getLongueurUtilisee(int tissuId) {
-		return dao.longueurUtilisee(tissuId);
+		Integer result = null;
+		if (tissuId != 0){
+			try{
+				result = dao.longueurUtilisee(tissuId);
+			} catch (Exception e){
+				e.printStackTrace();
+			}
+		}
+		return result == null ? 0 : result;
 	}
 
 	public List<TissuDto> getObservablePage(int page, int pageSize, TissuSpecification specification) {
