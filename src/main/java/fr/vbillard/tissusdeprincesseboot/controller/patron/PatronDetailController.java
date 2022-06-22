@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
-import fr.vbillard.tissusdeprincesseboot.controller.pictureHelper.PatronPictureHelper;
+import fr.vbillard.tissusdeprincesseboot.controller.picture_helper.PatronPictureHelper;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;

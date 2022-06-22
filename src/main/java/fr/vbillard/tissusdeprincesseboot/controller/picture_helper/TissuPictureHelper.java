@@ -1,4 +1,4 @@
-package fr.vbillard.tissusdeprincesseboot.controller.pictureHelper;
+package fr.vbillard.tissusdeprincesseboot.controller.picture_helper;
 
 import java.io.ByteArrayInputStream;
 
@@ -7,38 +7,38 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
-import fr.vbillard.tissusdeprincesseboot.model.Patron;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
+import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.service.ImageService;
-import fr.vbillard.tissusdeprincesseboot.service.PatronService;
 import fr.vbillard.tissusdeprincesseboot.service.PreferenceService;
+import fr.vbillard.tissusdeprincesseboot.service.TissuService;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 @Component
 @Scope("prototype")
-public class PatronPictureHelper extends PictureHelper {
+public class TissuPictureHelper extends PictureHelper {
 
-	private PatronService patronService;
+	private TissuService tissuService;
 
-	private Patron patron;
+	private Tissu tissu;
 
-	public PatronPictureHelper(PatronService patronService, ModelMapper mapper, PreferenceService preferenceService,
+	public TissuPictureHelper(TissuService tissuService, ModelMapper mapper, PreferenceService preferenceService,
 			StageInitializer initializer, ImageService imageService) {
 		super(mapper, preferenceService, initializer, imageService);
-		this.patronService = patronService;
+		this.tissuService = tissuService;
 	}
 
-	public void setPane(ImageView imagePane, PatronDto dto) {
-		patron = mapper.map(dto, Patron.class);
-		picture = imageService.getImage(patron);
+	public void setPane(ImageView imagePane, TissuDto dto) {
+		tissu = mapper.map(dto, Tissu.class);
+		picture = imageService.getImage(tissu);
 		this.imagePane = imagePane;
 		imagePane.setImage(imageService.imageOrDefault(picture));
 	}
 
 	protected void setImage() {
-		patronService.saveOrUpdate(patron);
-		picture.get().setPatron(patron);
+		tissuService.saveOrUpdate(tissu);
+		picture.get().setTissu(tissu);
 		imageService.saveOrUpdate(picture.get());
 		imagePane.setImage(new Image(new ByteArrayInputStream(picture.get().getData())));
 	}

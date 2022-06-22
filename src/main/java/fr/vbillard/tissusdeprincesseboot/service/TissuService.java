@@ -95,7 +95,7 @@ public class TissuService extends AbstractService<Tissu> {
 				.map(t -> mapper.map(t, TissuDto.class)).collect(Collectors.toList()));
 	}
 
-	public int getLongueurUtilisée(int tissuId) {
+	public int getLongueurUtilisee(int tissuId) {
 		return dao.longueurUtilisee(tissuId);
 	}
 
@@ -106,7 +106,7 @@ public class TissuService extends AbstractService<Tissu> {
 
 	public void batchTissuDisponible() {
 		for (Tissu t : getAll()) {
-			int longueurRestante = t.getLongueur() - getLongueurUtilisée(t.getId());
+			int longueurRestante = t.getLongueur() - getLongueurUtilisee(t.getId());
 			t.setLongueurDisponible(longueurRestante < 0 ? 0 : longueurRestante);
 			saveOrUpdate(t);
 		}

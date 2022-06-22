@@ -44,6 +44,8 @@ public class TissuRequisCardController implements IController {
 			longueurLabel.setText(Integer.toString(tissuRequis.getLongueur()) + " cm");
 			laizeLabel.setText(Integer.toString(tissuRequis.getLaize()) + " cm");
 			gammePoidsLabel.setText(tissuRequis.getGammePoids());
+			variantsLabel.setText(StringUtils.join(tissuRequis.getVariant(), " - "));
+
 
 		} else {
 			longueurLabel.setText("");
@@ -52,7 +54,6 @@ public class TissuRequisCardController implements IController {
 			variantsLabel.setText("");
 		}
 
-		variantsLabel.setText(StringUtils.join(tissuRequis.getVariant(), " - "));
 
 		setPane();
 	}

@@ -1,4 +1,4 @@
-package fr.vbillard.tissusdeprincesseboot.controller.pictureHelper;
+package fr.vbillard.tissusdeprincesseboot.controller.picture_helper;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

@@ -31,7 +31,7 @@ public class TissusController extends ViewListController {
 	protected void setElements() {
 		cardPane.getChildren().clear();
 		List<TissuDto> lstTissu;
-		if (specification != null && specification instanceof TissuSpecification) {
+		if (specification instanceof TissuSpecification) {
 			lstTissu = tissuService.getObservablePage(page, PAGE_SIZE, (TissuSpecification) specification);
 		} else {
 			lstTissu = tissuService.getObservablePage(page, PAGE_SIZE);

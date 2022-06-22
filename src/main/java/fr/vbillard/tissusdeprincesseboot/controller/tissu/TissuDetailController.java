@@ -114,7 +114,7 @@ public class TissuDetailController implements IController {
 		longueurField
 				.setText(tissu.getLongueurRestanteProperty() == null ? "0" : Integer.toString(tissu.getLongueur()));
 		ancienneValeurInfo.setText(tissu.getLongueurProperty() == null ? "0" : Integer.toString(tissu.getLongueur()));
-		consommeInfo.setText(Integer.toString(tissuService.getLongueurUtilisée(tissu.getId())));
+		consommeInfo.setText(Integer.toString(tissuService.getLongueurUtilisee(tissu.getId())));
 
 		laizeField.setText(tissu.getLaizeProperty() == null ? "0" : Integer.toString(tissu.getLaize()));
 		poidsField.setText(tissu.getPoidseProperty() == null ? "0" : Integer.toString(tissu.getPoids()));
