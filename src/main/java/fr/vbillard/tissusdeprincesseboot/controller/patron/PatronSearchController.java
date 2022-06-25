@@ -159,6 +159,8 @@ public class PatronSearchController implements IController {
 
 		NumericSearch<Integer> longueur = FxUtils.textFieldToMaxNumericSearch(longueurFieldMax);
 
+		// TODO
+
 		PatronSpecification specification = PatronSpecification.builder().description(description).reference(reference)
 				.marque(marque).modele(modele).typeVetement(typeVetement).longueur(longueur).build();
 
