@@ -2,9 +2,9 @@ package fr.vbillard.tissusdeprincesseboot.utils;
 
 import java.util.Optional;
 
-import fr.vbillard.tissusdeprincesseboot.utils.modelToString.Articles;
-import fr.vbillard.tissusdeprincesseboot.utils.modelToString.EntityToString;
-import fr.vbillard.tissusdeprincesseboot.utils.modelToString.ModelUtils;
+import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.Articles;
+import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.EntityToString;
+import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.ModelUtils;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;

@@ -16,7 +16,7 @@ import com.github.rozidan.springboot.modelmapper.WithModelMapper;
 import fr.vbillard.tissusdeprincesseboot.dao.MatiereDao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissageDao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissusRequisDao;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuVariantDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuVariantDto;
 import fr.vbillard.tissusdeprincesseboot.factory.FactoryContext;
 import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
 

@@ -8,10 +8,12 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.Separator?>
 <AnchorPane prefHeight="594.0" prefWidth="312.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetSearchController">
 	<VBox prefHeight="594.0" prefWidth="312.0" spacing="5.0">
 		<children>
-         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="310.0" text="Recherche" textAlignment="CENTER" />
+			<Separator prefWidth="200.0" />
+			<Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="310.0" text="Recherche" textAlignment="CENTER" />
          <HBox alignment="CENTER" prefHeight="32.0" prefWidth="302.0" spacing="30.0">
             <children>
                <JFXButton text="Annuler" />

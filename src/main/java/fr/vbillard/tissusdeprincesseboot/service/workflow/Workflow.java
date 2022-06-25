@@ -12,15 +12,15 @@ public abstract class Workflow {
 	protected boolean nextPossible;
 	protected boolean cancelPossible;
 
-	public Workflow(ProjetService projetService) {
+	protected Workflow(ProjetService projetService) {
 		this.projetService = projetService;
 	}
 
-	public final boolean IsNextPossible() {
+	public final boolean isNextPossible() {
 		return nextPossible;
 	}
 
-	public final boolean IsCancelPossible() {
+	public final boolean isCancelPossible() {
 		return cancelPossible;
 	}
 

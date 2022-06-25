@@ -7,11 +7,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
-import fr.vbillard.tissusdeprincesseboot.dtosFx.PatronDto;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuVariantDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuVariantDto;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 import lombok.Data;
 

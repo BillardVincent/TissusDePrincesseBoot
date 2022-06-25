@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.ViewListController;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification;
 import fr.vbillard.tissusdeprincesseboot.service.TissuService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
@@ -31,7 +31,7 @@ public class TissusController extends ViewListController {
 	protected void setElements() {
 		cardPane.getChildren().clear();
 		List<TissuDto> lstTissu;
-		if (specification != null && specification instanceof TissuSpecification) {
+		if (specification instanceof TissuSpecification) {
 			lstTissu = tissuService.getObservablePage(page, PAGE_SIZE, (TissuSpecification) specification);
 		} else {
 			lstTissu = tissuService.getObservablePage(page, PAGE_SIZE);
@@ -48,7 +48,7 @@ public class TissusController extends ViewListController {
 
 	@Override
 	@FXML
-	public void AddNewElement(MouseEvent mouseEvent) {
+	public void addNewElement(MouseEvent mouseEvent) {
 		rootController.displayTissusEdit(new TissuDto());
 	}
 

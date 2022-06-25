@@ -4,14 +4,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import fr.vbillard.tissusdeprincesseboot.dao.Idao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissuDao;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
@@ -97,8 +95,16 @@ public class TissuService extends AbstractService<Tissu> {
 				.map(t -> mapper.map(t, TissuDto.class)).collect(Collectors.toList()));
 	}
 
-	public int getLongueurUtilisée(int tissuId) {
-		return dao.longueurUtilisee(tissuId);
+	public int getLongueurUtilisee(int tissuId) {
+		Integer result = null;
+		if (tissuId != 0){
+			try{
+				result = dao.longueurUtilisee(tissuId);
+			} catch (Exception e){
+				e.printStackTrace();
+			}
+		}
+		return result == null ? 0 : result;
 	}
 
 	public List<TissuDto> getObservablePage(int page, int pageSize, TissuSpecification specification) {
@@ -108,7 +114,7 @@ public class TissuService extends AbstractService<Tissu> {
 
 	public void batchTissuDisponible() {
 		for (Tissu t : getAll()) {
-			int longueurRestante = t.getLongueur() - getLongueurUtilisée(t.getId());
+			int longueurRestante = t.getLongueur() - getLongueurUtilisee(t.getId());
 			t.setLongueurDisponible(longueurRestante < 0 ? 0 : longueurRestante);
 			saveOrUpdate(t);
 		}

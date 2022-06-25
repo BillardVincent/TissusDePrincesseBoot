@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.IController;
+import fr.vbillard.tissusdeprincesseboot.controller.IModalController;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.service.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
@@ -18,7 +19,7 @@ import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MatiereEditController implements IController {
+public class MatiereEditController implements IModalController {
 
 	public static final String PAS_DE_VALEUR = "Pas de valeur";
 	@FXML
@@ -65,10 +66,6 @@ public class MatiereEditController implements IController {
 		this.editMatiere.setDisable(true);
 		this.editerButton.setDisable(true);
 
-	}
-
-	public void setDialogStage(Stage dialogStage) {
-		this.dialogStage = dialogStage;
 	}
 
 	public void setData(StageInitializer mainApp) {
@@ -160,7 +157,13 @@ public class MatiereEditController implements IController {
 	}
 
 	@Override
-	public void setStageInitializer(StageInitializer initializer, FxData data) {
+	public FxData result() {
+		return null;
+	}
+
+	@Override
+	public void setStage(Stage dialogStage, FxData data) {
+		this.dialogStage = dialogStage;
 
 	}
 }

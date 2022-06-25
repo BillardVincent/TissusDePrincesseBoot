@@ -3,18 +3,12 @@ package fr.vbillard.tissusdeprincesseboot.controller.tissu;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringJoiner;
 
 import org.apache.commons.lang3.StringUtils;
-import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXMasonryPane;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 
@@ -25,18 +19,14 @@ import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.CharacterSearch;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
-import fr.vbillard.tissusdeprincesseboot.fxCustomElement.IntegerSpinner;
+import fr.vbillard.tissusdeprincesseboot.fx_custom_element.IntegerSpinner;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.Tissage;
-import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.UserPref;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.service.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.service.TissageService;
-import fr.vbillard.tissusdeprincesseboot.service.TissuService;
 import fr.vbillard.tissusdeprincesseboot.service.UserPrefService;
-import fr.vbillard.tissusdeprincesseboot.utils.ConstantesMetier;
-import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
@@ -44,7 +34,6 @@ import fr.vbillard.tissusdeprincesseboot.utils.ShowAlert;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.RowConstraints;
 
 @Component
 public class TissuSearchController implements IController {
@@ -351,31 +340,35 @@ public class TissuSearchController implements IController {
 
 	@FXML
 	private void choiceType() {
-		FxData data = new FxData();
-		data.setListValues(TypeTissuEnum.labels());
-		FxData result = initializer.displayModale(PathEnum.CHECKBOX_CHOICE, data, CHOIX);
-		if (result != null) {
-			typeValuesSelected = result.getListValues();
-			typeLbl.setText(StringUtils.defaultIfEmpty(FxUtils.joinValues(result), AUCUN_FILTRE));
-		}
+		List<String> values = typeValuesSelected == null ? TypeTissuEnum.labels() : typeValuesSelected;
+		getSelectionFromChoiceBoxModale(values, typeValuesSelected, typeLbl);
 	}
 
 	@FXML
 	private void choiceMatiere() {
+		List<String> values = matiereValuesSelected == null ? matiereService.getAllValues() : matiereValuesSelected;
+		getSelectionFromChoiceBoxModale(values, matiereValuesSelected, matiereLbl);
+	}
+
+	private void getSelectionFromChoiceBoxModale(List<String> values, List<String> selectionDestination, Label lbl) {
 		FxData data = new FxData();
-		data.setListValues(matiereService.getAllValues());
+		data.setListValues(values);
 		FxData result = initializer.displayModale(PathEnum.CHECKBOX_CHOICE, data, CHOIX);
-		matiereValuesSelected = result.getListValues();
-		matiereLbl.setText(StringUtils.defaultIfEmpty(FxUtils.joinValues(result), AUCUN_FILTRE));
+		if (result != null) {
+			if (selectionDestination == null){
+				selectionDestination = new ArrayList<>();
+			} else{
+				selectionDestination.clear();
+			}
+			selectionDestination.addAll(result.getListValues());
+			lbl.setText(StringUtils.defaultIfEmpty(FxUtils.joinValues(result), AUCUN_FILTRE));
+		}
 	}
 
 	@FXML
 	private void choiceTissage() {
-		FxData data = new FxData();
-		data.setListValues(tissageService.getAllValues());
-		FxData result = initializer.displayModale(PathEnum.CHECKBOX_CHOICE, data, CHOIX);
-		tissageValuesSelected = result.getListValues();
-		tissageLbl.setText(StringUtils.defaultIfEmpty(FxUtils.joinValues(result), AUCUN_FILTRE));
+		List<String> values = tissageValuesSelected == null ? tissageService.getAllValues() : tissageValuesSelected;
+		getSelectionFromChoiceBoxModale(values, tissageValuesSelected, tissageLbl);
 	}
 
 }

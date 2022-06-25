@@ -26,7 +26,7 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="89.0" prefWidth="85.0">
                      <children>
-                        <FontAwesomeIconView fx:id="previousIcon" glyphName="CHEVRON_LEFT" onMouseClicked="#PreviousPage" size="3em" wrappingWidth="37.0" />
+                        <FontAwesomeIconView fx:id="previousIcon" glyphName="CHEVRON_LEFT" onMouseClicked="#previousPage" size="3em" wrappingWidth="37.0" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="78.0" prefWidth="98.0">
@@ -40,7 +40,7 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="89.0" prefWidth="85.0">
                      <children>
-                        <FontAwesomeIconView fx:id="nextIcon" glyphName="CHEVRON_RIGHT" onMouseClicked="#NextPage" size="3em" wrappingWidth="37.0" />
+                        <FontAwesomeIconView fx:id="nextIcon" glyphName="CHEVRON_RIGHT" onMouseClicked="#nextPage" size="3em" wrappingWidth="37.0" />
                      </children>
                   </HBox>
                </children>

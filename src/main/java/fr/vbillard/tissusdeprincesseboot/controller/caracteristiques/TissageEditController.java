@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXTextField;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.IController;
+import fr.vbillard.tissusdeprincesseboot.controller.IModalController;
 import fr.vbillard.tissusdeprincesseboot.model.Tissage;
 import fr.vbillard.tissusdeprincesseboot.service.TissageService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
@@ -19,7 +20,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 @Component
-public class TissageEditController implements IController {
+public class TissageEditController implements IModalController {
 
 	@FXML
 	private JFXListView<String> listTissages;
@@ -153,7 +154,13 @@ public class TissageEditController implements IController {
 	}
 
 	@Override
-	public void setStageInitializer(StageInitializer initializer, FxData data) {
+	public FxData result() {
+		return null;
+	}
+
+	@Override
+	public void setStage(Stage dialogStage, FxData data) {
+		this.dialogStage = dialogStage;
 
 	}
 }

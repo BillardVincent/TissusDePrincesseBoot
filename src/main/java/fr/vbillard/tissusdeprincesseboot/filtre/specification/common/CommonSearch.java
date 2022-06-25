@@ -17,7 +17,7 @@ public abstract class CommonSearch<T extends Comparable<? super T>> extends Abst
 
     private T greaterThanEqual;
 
-    public CommonSearch(T equals) {
+    protected CommonSearch(T equals) {
         super(equals);
     }
 }

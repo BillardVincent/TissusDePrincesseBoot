@@ -13,8 +13,8 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.ProjetDto;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
@@ -143,8 +143,8 @@ public class ProjetEditController implements IController {
 
 		workflow = workflowService.getWorkflow(status);
 
-		nextStep.setDisable(!workflow.IsNextPossible());
-		previousStep.setDisable(!workflow.IsCancelPossible());
+		nextStep.setDisable(!workflow.isNextPossible());
+		previousStep.setDisable(!workflow.isCancelPossible());
 	}
 
 	@FXML

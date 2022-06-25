@@ -4,7 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
-import fr.vbillard.tissusdeprincesseboot.dtosFx.TissuRequisDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import javafx.fxml.FXML;
@@ -36,6 +36,8 @@ public class TissuRequisSelectedController implements IController {
 			longueurLabel.setText(Integer.toString(tissuRequis.getLongueur()));
 			laizeLabel.setText(Integer.toString(tissuRequis.getLaize()));
 			gammePoidsLabel.setText(tissuRequis.getGammePoids());
+			variantsLabel.setText(StringUtils.join(tissuRequis.getVariant(), " - "));
+
 
 		} else {
 			longueurLabel.setText("");
@@ -44,7 +46,6 @@ public class TissuRequisSelectedController implements IController {
 			variantsLabel.setText("");
 		}
 
-		variantsLabel.setText(StringUtils.join(tissuRequis.getVariant(), " - "));
 
 		setPane();
 	}
