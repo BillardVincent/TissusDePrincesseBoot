@@ -39,6 +39,14 @@ public class MatiereService extends AbstractService<Matiere> {
 		return dao.getByValue(value);
 	}
 
+	public List<Matiere> findMatiere(List<String> values) {
+		List<Matiere> matieres = null;
+		if (values != null && !values.isEmpty()) {
+			matieres = dao.findByValueIn(values);
+		}
+		return matieres;
+	}
+
 	public ObservableList<String> getAllMatieresValues() {
 		List<Matiere> lst = getAll();
 		return FXCollections.observableArrayList(

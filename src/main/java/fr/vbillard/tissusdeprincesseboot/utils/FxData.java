@@ -30,6 +30,7 @@ public class FxData {
 	private int longueurRequise;
 	private URL url;
 	private List<String> listValues;
+	private List<String> listDataCBox;
 	private Specification specification;
 
 	public FxData getCopy() {

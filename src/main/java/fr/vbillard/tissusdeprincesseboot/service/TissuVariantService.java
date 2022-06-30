@@ -12,6 +12,7 @@ import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuVariantDto;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
+import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 
@@ -58,6 +59,7 @@ public class TissuVariantService extends AbstractService<TissuVariant> {
 		tv.setMatiere(matiereService.findMatiere(dto.getMatiere()));
 		tv.setTissage(tissageService.findTissage(dto.getTissage()));
 		tv.setTissuRequis(tissuRequisDao.getById(dto.getTissuRequisId()));
+		tv.setTypeTissu(TypeTissuEnum.getEnum(dto.getTypeTissu()));
 
 		return tv;
 	}

@@ -71,4 +71,12 @@ public class TissageService extends AbstractService<Tissage> {
 		return result;
 	}
 
+	public List<Tissage> tissageValuesSelected(List<String> values) {
+		List<Tissage> tissages = null;
+		if (values != null && !values.isEmpty()) {
+			tissages = dao.findByValueIn(values);
+		}
+		return tissages;
+	}
+
 }

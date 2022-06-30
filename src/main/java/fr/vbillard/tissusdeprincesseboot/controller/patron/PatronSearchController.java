@@ -3,6 +3,7 @@ package fr.vbillard.tissusdeprincesseboot.controller.patron;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.util.Strings;
@@ -18,12 +19,14 @@ import fr.vbillard.tissusdeprincesseboot.controller.RootController;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.PatronSpecification;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.CharacterSearch;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
+import fr.vbillard.tissusdeprincesseboot.model.Matiere;
+import fr.vbillard.tissusdeprincesseboot.model.Tissage;
 import fr.vbillard.tissusdeprincesseboot.model.UserPref;
+import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.service.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.service.TissageService;
 import fr.vbillard.tissusdeprincesseboot.service.UserPrefService;
-import fr.vbillard.tissusdeprincesseboot.utils.ConstantesMetier;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
@@ -73,15 +76,13 @@ public class PatronSearchController implements IController {
 	private RootController root;
 	private StageInitializer initializer;
 
-	private boolean okClicked = false;
-
 	private MatiereService matiereService;
 	private TissageService tissageService;
 	private UserPrefService userPrefService;
 
-	private List<String> tissageValuesSelected;
-	private List<String> typeValuesSelected;
-	private List<String> matiereValuesSelected;
+	private List<String> tissageValuesSelected = new ArrayList();
+	private List<String> typeValuesSelected = new ArrayList();
+	private List<String> matiereValuesSelected = new ArrayList();
 
 	private int margeHauteLeger;
 	private int margeBasseMoyen;
@@ -89,13 +90,14 @@ public class PatronSearchController implements IController {
 	private int margeBasseLourd;
 	private DecimalFormat df = new DecimalFormat("#.##");
 
+	private boolean okClicked = false;
+
 	public PatronSearchController(RootController root, MatiereService matiereService, TissageService tissageService,
 			UserPrefService userPrefService) {
 		this.root = root;
 		this.matiereService = matiereService;
 		this.tissageService = tissageService;
 		this.userPrefService = userPrefService;
-
 	}
 
 	@Override
@@ -104,10 +106,38 @@ public class PatronSearchController implements IController {
 
 		if (data != null && data.getSpecification() != null && data.getSpecification() instanceof PatronSpecification) {
 			PatronSpecification spec = (PatronSpecification) data.getSpecification();
-			setTextFieldFromCharacterSearch(descriptionField, spec.getDescription());
-			setTextFieldFromCharacterSearch(typeVetementField, spec.getTypeVetement());
-			setTextFieldFromCharacterSearch(marqueField, spec.getMarque());
-			setTextFieldFromCharacterSearch(modeleField, spec.getModele());
+			FxUtils.setTextFieldFromCharacterSearch(descriptionField, spec.getDescription());
+			FxUtils.setTextFieldFromCharacterSearch(typeVetementField, spec.getTypeVetement());
+			FxUtils.setTextFieldFromCharacterSearch(marqueField, spec.getMarque());
+			FxUtils.setTextFieldFromCharacterSearch(modeleField, spec.getModele());
+
+			List<String> types = null;
+			if (spec.getTypeTissu() != null) {
+				types = spec.getTypeTissu().stream().map(m -> m.getLabel()).collect(Collectors.toList());
+			}
+			FxUtils.setSelection(types, typeValuesSelected, typeLbl);
+
+			List<String> matieres = null;
+			if (spec.getMatieres() != null) {
+				matieres = spec.getMatieres().stream().map(m -> m.getValue()).collect(Collectors.toList());
+			}
+			FxUtils.setSelection(matieres, matiereValuesSelected, matiereLbl);
+
+			List<String> tissages = null;
+			if (spec.getTissages() != null) {
+				tissages = spec.getTissages().stream().map(m -> m.getValue()).collect(Collectors.toList());
+			}
+			FxUtils.setSelection(tissages, tissageValuesSelected, tissageLbl);
+
+			FxUtils.setTextFieldMaxFromNumericSearch(longueurFieldMax, spec.getLongueur());
+			FxUtils.setTextFieldMaxFromNumericSearch(laizeFieldMax, spec.getLaize());
+
+			if (spec.getPoids() != null && !spec.getPoids().isEmpty()) {
+				lourdCBox.setSelected(spec.getPoids().contains(GammePoids.LOURD));
+				moyenCBox.setSelected(spec.getPoids().contains(GammePoids.MOYEN));
+				legerCBox.setSelected(spec.getPoids().contains(GammePoids.LEGER));
+				ncCBox.setSelected(spec.getPoids().contains(GammePoids.NON_RENSEIGNE));
+			}
 
 		} else {
 
@@ -130,12 +160,6 @@ public class PatronSearchController implements IController {
 
 	}
 
-	private void setTextFieldFromCharacterSearch(JFXTextField field, CharacterSearch charSearch) {
-		if (charSearch != null && Strings.isNotBlank(charSearch.getContains())) {
-			field.setText(charSearch.getContains());
-		}
-	}
-
 	@FXML
 	private void initialize() {
 
@@ -147,6 +171,18 @@ public class PatronSearchController implements IController {
 
 	@FXML
 	private void handleOk() {
+
+		List<Matiere> matieres = matiereService.findMatiere(matiereValuesSelected);
+
+		List<Tissage> tissages = tissageService.tissageValuesSelected(tissageValuesSelected);
+
+		List<TypeTissuEnum> types = null;
+		if (typeValuesSelected != null && !typeValuesSelected.isEmpty()) {
+			types = new ArrayList<>();
+			for (String s : typeValuesSelected) {
+				types.add(TypeTissuEnum.getEnum(s));
+			}
+		}
 
 		CharacterSearch description = FxUtils.textFieldToCharacterSearch(descriptionField);
 
@@ -160,10 +196,9 @@ public class PatronSearchController implements IController {
 
 		NumericSearch<Integer> longueur = FxUtils.textFieldToMaxNumericSearch(longueurFieldMax);
 
-		// TODO
-
 		PatronSpecification specification = PatronSpecification.builder().description(description).reference(reference)
-				.marque(marque).modele(modele).typeVetement(typeVetement).longueur(longueur).build();
+				.matieres(matieres).typeTissu(types).tissages(tissages).marque(marque).modele(modele)
+				.typeVetement(typeVetement).longueur(longueur).build();
 
 		root.displayPatrons(specification);
 	}
@@ -185,35 +220,17 @@ public class PatronSearchController implements IController {
 
 	@FXML
 	private void choiceType() {
-		List<String> values = typeValuesSelected == null ? TypeTissuEnum.labels() : typeValuesSelected;
-		getSelectionFromChoiceBoxModale(values, typeValuesSelected, typeLbl);
+		FxUtils.setSelectionFromChoiceBoxModale(TypeTissuEnum.labels(), typeValuesSelected, typeLbl);
 	}
 
 	@FXML
 	private void choiceMatiere() {
-		List<String> values = matiereValuesSelected == null ? matiereService.getAllValues() : matiereValuesSelected;
-		getSelectionFromChoiceBoxModale(values, matiereValuesSelected, matiereLbl);
-	}
-
-	private void getSelectionFromChoiceBoxModale(List<String> values, List<String> selectionDestination, Label lbl) {
-		FxData data = new FxData();
-		data.setListValues(values);
-		FxData result = initializer.displayModale(PathEnum.CHECKBOX_CHOICE, data, CHOIX);
-		if (result != null) {
-			if (selectionDestination == null){
-				selectionDestination = new ArrayList<>();
-			} else{
-				selectionDestination.clear();
-			}
-			selectionDestination.addAll(result.getListValues());
-			lbl.setText(StringUtils.defaultIfEmpty(FxUtils.joinValues(result), AUCUN_FILTRE));
-		}
+		FxUtils.setSelectionFromChoiceBoxModale(matiereService.getAllValues(), matiereValuesSelected, matiereLbl);
 	}
 
 	@FXML
 	private void choiceTissage() {
-		List<String> values = tissageValuesSelected == null ? tissageService.getAllValues() : tissageValuesSelected;
-		getSelectionFromChoiceBoxModale(values, tissageValuesSelected, tissageLbl);
+		FxUtils.setSelectionFromChoiceBoxModale(tissageService.getAllValues(), tissageValuesSelected, tissageLbl);
 	}
 
 	@FXML

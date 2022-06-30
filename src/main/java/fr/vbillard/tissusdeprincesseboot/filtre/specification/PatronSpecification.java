@@ -46,14 +46,14 @@ public class PatronSpecification implements Specification<Patron> {
 	private CharacterSearch description;
 
 	// TissuRequis
-	public NumericSearch<Integer> longueur;
-	public NumericSearch<Integer> laize;
-	public List<GammePoids> poids;
+	private NumericSearch<Integer> longueur;
+	private NumericSearch<Integer> laize;
+	private List<GammePoids> poids;
 
 	// TissuVariant
-	public List<Matiere> matieres;
-	public List<Tissage> tissages;
-	public List<TypeTissuEnum> typeTissu;
+	private List<Matiere> matieres;
+	private List<Tissage> tissages;
+	private List<TypeTissuEnum> typeTissu;
 
 	public Boolean archived;
 

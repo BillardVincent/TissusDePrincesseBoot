@@ -28,6 +28,7 @@ import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
@@ -35,6 +36,7 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @Setter
+@Getter
 public class TissuSpecification implements Specification<Tissu> {
 
 	private static final long serialVersionUID = -6956433248687682190L;

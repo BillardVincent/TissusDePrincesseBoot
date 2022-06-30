@@ -3,8 +3,10 @@ package fr.vbillard.tissusdeprincesseboot.controller.tissu;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
 
 import com.jfoenix.controls.JFXButton;
@@ -23,6 +25,7 @@ import fr.vbillard.tissusdeprincesseboot.fx_custom_element.IntegerSpinner;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.Tissage;
 import fr.vbillard.tissusdeprincesseboot.model.UserPref;
+import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.service.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.service.TissageService;
@@ -39,7 +42,7 @@ import javafx.scene.control.ToggleGroup;
 public class TissuSearchController implements IController {
 
 	private static final String AUCUN_FILTRE = "Aucun filtre";
-	public static final String CHOIX = "Choix";
+	private static final String CHOIX = "Choix";
 	private TissuSpecification specification;
 
 	@FXML
@@ -104,9 +107,9 @@ public class TissuSearchController implements IController {
 	private final ToggleGroup decatiGroup = new ToggleGroup();
 	private final ToggleGroup chuteGroup = new ToggleGroup();
 
-	private List<String> tissageValuesSelected;
-	private List<String> typeValuesSelected;
-	private List<String> matiereValuesSelected;
+	private List<String> tissageValuesSelected = new ArrayList();
+	private List<String> typeValuesSelected = new ArrayList();
+	private List<String> matiereValuesSelected = new ArrayList();
 
 	private int margeHauteLeger;
 	private int margeBasseMoyen;
@@ -128,8 +131,6 @@ public class TissuSearchController implements IController {
 	@Override
 	public void setStageInitializer(StageInitializer initializer, FxData data) {
 		this.initializer = initializer;
-		specification = new TissuSpecification();
-
 		IntegerSpinner.setSpinner(longueurFieldMax);
 		IntegerSpinner.setSpinner(longueurFieldMin);
 		IntegerSpinner.setSpinner(laizeFieldMax);
@@ -154,6 +155,70 @@ public class TissuSearchController implements IController {
 		legerCBox.setSelected(true);
 		ncCBox.setSelected(true);
 
+		if (data != null && data.getSpecification() != null && data.getSpecification() instanceof TissuSpecification) {
+
+			specification = (TissuSpecification) data.getSpecification();
+
+			FxUtils.setTextFieldFromCharacterSearch(descriptionField, specification.getDescription());
+			FxUtils.setTextFieldFromCharacterSearch(referenceField, specification.getReference());
+
+			FxUtils.setTextFieldMaxFromNumericSearch(longueurFieldMax, specification.getLongueur());
+			FxUtils.setTextFieldMinFromNumericSearch(longueurFieldMin, specification.getLongueur());
+			FxUtils.setTextFieldMaxFromNumericSearch(laizeFieldMax, specification.getLaize());
+			FxUtils.setTextFieldMinFromNumericSearch(laizeFieldMin, specification.getLaize());
+
+			List<String> types = null;
+			if (specification.getTypeTissu() != null) {
+				types = specification.getTypeTissu().stream().map(m -> m.getLabel()).collect(Collectors.toList());
+			}
+			FxUtils.setSelection(types, typeValuesSelected, typeLbl);
+
+			List<String> matieres = null;
+			if (specification.getMatieres() != null) {
+				matieres = specification.getMatieres().stream().map(m -> m.getValue()).collect(Collectors.toList());
+			}
+			FxUtils.setSelection(matieres, matiereValuesSelected, matiereLbl);
+
+			List<String> tissages = null;
+			if (specification.getTissages() != null) {
+				tissages = specification.getTissages().stream().map(m -> m.getValue()).collect(Collectors.toList());
+			}
+			FxUtils.setSelection(tissages, tissageValuesSelected, tissageLbl);
+
+			FxUtils.setTextFieldMaxFromNumericSearch(longueurFieldMax, specification.getLongueur());
+			FxUtils.setTextFieldMaxFromNumericSearch(laizeFieldMax, specification.getLaize());
+
+			setPoidsFromSpec();
+
+		} else {
+			specification = new TissuSpecification();
+		}
+
+	}
+
+	private void setPoidsFromSpec() {
+		if (specification.getPoids() != null) {
+
+			UserPref pref = prefService.getUser();
+
+			int margeHauteLeger = Math
+					.round(pref.getMinPoidsMoyen() + pref.getMinPoidsMoyen() * pref.getPoidsMargePercent());
+			int margeBasseMoyen = Math
+					.round(pref.getMinPoidsMoyen() - pref.getMinPoidsMoyen() * pref.getPoidsMargePercent());
+			int margeHauteMoyen = Math
+					.round(pref.getMaxPoidsMoyen() + pref.getMaxPoidsMoyen() * pref.getPoidsMargePercent());
+			int margeBasseLourd = Math
+					.round(pref.getMaxPoidsMoyen() - pref.getMaxPoidsMoyen() * pref.getPoidsMargePercent());
+
+			Integer min = specification.getPoids().getGreaterThanEqual();
+			Integer max = specification.getPoids().getLessThanEqual();
+
+			// TODO
+			lourdCBox.setSelected(specification.getPoids().contains(GammePoids.LOURD));
+			moyenCBox.setSelected(specification.getPoids().contains(GammePoids.MOYEN));
+			legerCBox.setSelected(specification.getPoids().contains(GammePoids.LEGER));
+			ncCBox.setSelected(specification.getPoids().contains(GammePoids.NON_RENSEIGNE));
+		}
 	}
 
 	@FXML
@@ -167,21 +232,9 @@ public class TissuSearchController implements IController {
 
 	@FXML
 	private void handleOk() {
-		List<Matiere> matieres = null;
-		if (matiereValuesSelected != null && !matiereValuesSelected.isEmpty()) {
-			matieres = new ArrayList<>();
-			for (String s : matiereValuesSelected) {
-				matieres.add(matiereService.findMatiere(s));
-			}
-		}
+		List<Matiere> matieres = matiereService.findMatiere(matiereValuesSelected);
 
-		List<Tissage> tissages = null;
-		if (tissageValuesSelected != null && !tissageValuesSelected.isEmpty()) {
-			tissages = new ArrayList<>();
-			for (String s : tissageValuesSelected) {
-				tissages.add(tissageService.findTissage(s));
-			}
-		}
+		List<Tissage> tissages = tissageService.tissageValuesSelected(tissageValuesSelected);
 
 		List<TypeTissuEnum> types = null;
 		if (typeValuesSelected != null && !typeValuesSelected.isEmpty()) {
@@ -191,116 +244,26 @@ public class TissuSearchController implements IController {
 			}
 		}
 
-		NumericSearch<Integer> longueurSearch = setNumericSearch(longueurFieldMin, longueurFieldMax);
+		NumericSearch<Integer> longueurSearch = FxUtils.setNumericSearch(longueurFieldMin, longueurFieldMax);
 
-		NumericSearch<Integer> laizeSearch = setNumericSearch(laizeFieldMin, laizeFieldMax);
+		NumericSearch<Integer> laizeSearch = FxUtils.setNumericSearch(laizeFieldMin, laizeFieldMax);
 
-		CharacterSearch description = null;
-		if (!descriptionField.getText().isEmpty()) {
-			description = new CharacterSearch();
-			description.setContains(descriptionField.getText());
-		}
+		CharacterSearch description = FxUtils.textFieldToCharacterSearch(descriptionField);
 
-		CharacterSearch reference = null;
-		if (!referenceField.getText().isEmpty()) {
-			reference = new CharacterSearch();
-			reference.setContains(referenceField.getText());
-		}
+		CharacterSearch reference = FxUtils.textFieldToCharacterSearch(referenceField);
 
-		UserPref pref = prefService.getUser();
+		NumericSearch<Integer> poidsSearch = FxUtils.NumericSearch(lourdCBox, moyenCBox, legerCBox, ncCBox,
+				prefService.getUser());
 
-		margeHauteLeger = Math.round(pref.getMinPoidsMoyen() + pref.getMinPoidsMoyen() * pref.getPoidsMargePercent());
-		margeBasseMoyen = Math.round(pref.getMinPoidsMoyen() - pref.getMinPoidsMoyen() * pref.getPoidsMargePercent());
-		margeHauteMoyen = Math.round(pref.getMaxPoidsMoyen() + pref.getMaxPoidsMoyen() * pref.getPoidsMargePercent());
-		margeBasseLourd = Math.round(pref.getMaxPoidsMoyen() - pref.getMaxPoidsMoyen() * pref.getPoidsMargePercent());
+		Boolean decati = FxUtils.getBooleanFromRadioButtons(decatiTrue, decatiFalse, decatiAll);
 
-		NumericSearch<Integer> poidsSearch = null;
-		if (!lourdCBox.isSelected()) {
-			poidsSearch = new NumericSearch<>(null);
-			if (moyenCBox.isSelected()) {
-				poidsSearch.setLessThanEqual(margeHauteMoyen);
-			} else if (legerCBox.isSelected()) {
-				poidsSearch.setLessThanEqual(margeHauteLeger);
-
-			}
-		}
-		if (!legerCBox.isSelected()) {
-			if (poidsSearch == null) {
-				poidsSearch = new NumericSearch<>(null);
-			}
-			if (moyenCBox.isSelected()) {
-				poidsSearch.setGreaterThanEqual(margeBasseMoyen);
-			} else if (lourdCBox.isSelected()) {
-				poidsSearch.setGreaterThanEqual(margeBasseLourd);
-			}
-		}
-		if (ncCBox.isSelected()) {
-			// TODO vérifier que NC marche en plus d'une sélection ?
-			if (poidsSearch == null) {
-				poidsSearch = new NumericSearch<>(null);
-			}
-			poidsSearch.setEquals(0);
-		}
-
-		Boolean decati = null;
-		if (decatiTrue.isSelected()) {
-			decati = true;
-		} else if (decatiFalse.isSelected()) {
-			decati = false;
-		}
-
-		Boolean chuteOuCoupon = null;
-		if (chute.isSelected()) {
-			chuteOuCoupon = true;
-		} else if (coupon.isSelected()) {
-			chuteOuCoupon = false;
-		}
+		Boolean chuteOuCoupon = FxUtils.getBooleanFromRadioButtons(chute, coupon, chuteEtCoupon);
 
 		specification = TissuSpecification.builder().reference(reference).description(description).chute(chuteOuCoupon)
 				.decati(decati).laize(laizeSearch).poids(poidsSearch).longueur(longueurSearch).typeTissu(types)
 				.matieres(matieres).tissages(tissages).build();
 
 		root.displayTissu(specification);
-	}
-
-	private NumericSearch<Integer> setNumericSearch(JFXTextField min, JFXTextField max) {
-
-		int minValue = getIntFromJFXTextField(min);
-		int maxValue = getIntFromJFXTextField(max);
-
-		if (minValue < 0 || maxValue < 0 || (maxValue != 0 && minValue >= maxValue)) {
-			throw new IllegalData(
-					"Les valeurs ne doivent pas être négatives. La valeur minimale doit être strictement inférieure à la valeur maximale");
-		}
-
-		NumericSearch<Integer> search = null;
-		if (!max.getText().isEmpty()) {
-			int value = Integer.parseInt(max.getText());
-			if (value > 0) {
-				search = new NumericSearch<>(null);
-				search.setLessThanEqual(value);
-			}
-
-		}
-
-		if (!min.getText().isEmpty()) {
-			int value = Integer.parseInt(min.getText());
-			if (value > 0) {
-				if (search == null) {
-					search = new NumericSearch<>(null);
-				}
-				search.setGreaterThanEqual(value);
-			}
-		}
-		return search;
-	}
-
-	private int getIntFromJFXTextField(JFXTextField field) {
-		int value = 0;
-		if (!field.getText().isEmpty()) {
-			value = Integer.parseInt(field.getText());
-		}
-		return value;
 	}
 
 	@FXML
@@ -340,35 +303,17 @@ public class TissuSearchController implements IController {
 
 	@FXML
 	private void choiceType() {
-		List<String> values = typeValuesSelected == null ? TypeTissuEnum.labels() : typeValuesSelected;
-		getSelectionFromChoiceBoxModale(values, typeValuesSelected, typeLbl);
+		FxUtils.setSelectionFromChoiceBoxModale(TypeTissuEnum.labels(), typeValuesSelected, typeLbl);
 	}
 
 	@FXML
 	private void choiceMatiere() {
-		List<String> values = matiereValuesSelected == null ? matiereService.getAllValues() : matiereValuesSelected;
-		getSelectionFromChoiceBoxModale(values, matiereValuesSelected, matiereLbl);
-	}
-
-	private void getSelectionFromChoiceBoxModale(List<String> values, List<String> selectionDestination, Label lbl) {
-		FxData data = new FxData();
-		data.setListValues(values);
-		FxData result = initializer.displayModale(PathEnum.CHECKBOX_CHOICE, data, CHOIX);
-		if (result != null) {
-			if (selectionDestination == null){
-				selectionDestination = new ArrayList<>();
-			} else{
-				selectionDestination.clear();
-			}
-			selectionDestination.addAll(result.getListValues());
-			lbl.setText(StringUtils.defaultIfEmpty(FxUtils.joinValues(result), AUCUN_FILTRE));
-		}
+		FxUtils.setSelectionFromChoiceBoxModale(matiereService.getAllValues(), matiereValuesSelected, matiereLbl);
 	}
 
 	@FXML
 	private void choiceTissage() {
-		List<String> values = tissageValuesSelected == null ? tissageService.getAllValues() : tissageValuesSelected;
-		getSelectionFromChoiceBoxModale(values, tissageValuesSelected, tissageLbl);
+		FxUtils.setSelectionFromChoiceBoxModale(tissageService.getAllValues(), tissageValuesSelected, tissageLbl);
 	}
 
 }

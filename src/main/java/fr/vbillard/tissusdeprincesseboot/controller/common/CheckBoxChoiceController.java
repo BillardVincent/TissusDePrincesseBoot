@@ -30,7 +30,7 @@ public class CheckBoxChoiceController implements IModalController {
 	private FxData result;
 
 	@FXML
-	private FlowPane content;
+	public FlowPane content;
 
 	/**
 	 * return null if all selected. no selection impossible
@@ -58,10 +58,14 @@ public class CheckBoxChoiceController implements IModalController {
 	@Override
 	public void setStage(Stage dialogStage, FxData data) {
 		this.dialogStage = dialogStage;
-		for (String s : data.getListValues()) {
+		for (String s : data.getListDataCBox()) {
 			JFXCheckBox cb = new JFXCheckBox();
 			cb.setText(s);
-			cb.setSelected(true);
+			if (data.getListValues() == null || data.getListValues().isEmpty()) {
+				cb.setSelected(true);
+			} else {
+				cb.setSelected(data.getListValues().contains(s));
+			}
 			cb.selectedProperty()
 					.addListener((ObservableValue<? extends Boolean> ov, Boolean oldVal, Boolean newVal) -> {
 						if (Boolean.TRUE.equals(newVal) && areAllCheckBoxChecked()) {
@@ -73,7 +77,7 @@ public class CheckBoxChoiceController implements IModalController {
 			content.getChildren().add(cb);
 		}
 
-		selectAll.setSelected(true);
+		selectAll.setSelected(areAllCheckBoxChecked());
 		selectAll.selectedProperty()
 				.addListener((ObservableValue<? extends Boolean> ov, Boolean oldVal, Boolean newVal) -> {
 					if (Boolean.TRUE.equals(newVal)) {

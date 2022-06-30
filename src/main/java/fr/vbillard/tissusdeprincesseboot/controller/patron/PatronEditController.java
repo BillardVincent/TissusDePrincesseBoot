@@ -213,8 +213,8 @@ public class PatronEditController implements IController {
 		JFXButton validateBtn = new JFXButton("Valider");
 		validateBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
 			tissu.setGammePoids(gammePoidsChBx.getValue());
-			tissu.setLaize(Integer.valueOf(laizeSpinner.getText()));
-			tissu.setLongueur(Integer.valueOf(longueurSpinner.getText()));
+			tissu.setLaize(Integer.parseInt(laizeSpinner.getText()));
+			tissu.setLongueur(Integer.parseInt(longueurSpinner.getText()));
 			tissu.setGammePoids(gammePoidsChBx.getValue());
 			saveTissuRequis(tissu);
 		});
@@ -336,6 +336,7 @@ public class PatronEditController implements IController {
 
 	private void deleteTissuRequis(TissuRequisDto tissu) {
 		tissuRequisService.delete(tissu);
+		tissuEtFournitureContainer.getChildren().clear();
 		loadTissuRequisForPatron();
 	}
 

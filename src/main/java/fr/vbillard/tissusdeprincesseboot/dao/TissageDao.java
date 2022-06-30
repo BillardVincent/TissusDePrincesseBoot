@@ -1,5 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.dao;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,4 +12,6 @@ public interface TissageDao extends Idao<Tissage, Integer> {
 	Tissage getByValue(String value);
 
 	boolean existsByValue(String value);
+
+	List<Tissage> findByValueIn(List<String> values);
 }

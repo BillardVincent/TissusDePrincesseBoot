@@ -83,9 +83,9 @@
 									</children>
 								</GridPane>
 								<Separator prefWidth="200.0">
-									<padding>
-										<Insets top="20.0" />
-									</padding>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
 								</Separator>
 								<HBox prefHeight="30.0" prefWidth="495.0">
 									<children>
@@ -111,9 +111,9 @@
 									</rowConstraints>
 								</GridPane>
 								<Separator prefWidth="200.0">
-									<padding>
-										<Insets top="20.0" />
-									</padding>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
 								</Separator>
 								<HBox prefHeight="32.0" prefWidth="335.0">
 									<children>
@@ -145,20 +145,10 @@
 						<JFXButton layoutX="343.0" layoutY="752.0" onAction="#handleCancel" text="Annuler" />
 					</children>
 				</AnchorPane>
-				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="702.0" prefWidth="391.0">
+				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="798.0" prefWidth="728.0">
 					<children>
-						<VBox fx:id="tissuEtFournitureContainer" layoutX="23.0" layoutY="87.0" prefHeight="587.0" prefWidth="363.0" />
-						<Label id="tissuFournitureLbl" alignment="CENTER" contentDisplay="CENTER" layoutY="14.0" prefHeight="27.0" prefWidth="391.0" text="Tissus et fournitures" textAlignment="CENTER">
-							<font>
-								<Font name="System Bold" size="18.0" />
-							</font>
-						</Label>
-					</children>
-				</AnchorPane>
-				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="702.0" prefWidth="337.0">
-					<children>
-						<VBox fx:id="conseilleContainer" layoutX="23.0" layoutY="87.0" prefHeight="587.0" prefWidth="306.0" />
-						<Label id="conseilleLbl" alignment="CENTER" layoutX="-2.0" layoutY="14.0" prefHeight="27.0" prefWidth="338.0" text="Conseillé">
+						<VBox fx:id="tissuEtFournitureContainer" layoutX="23.0" layoutY="87.0" prefHeight="587.0" prefWidth="694.0" />
+						<Label id="tissuFournitureLbl" alignment="CENTER" contentDisplay="CENTER" layoutY="14.0" prefHeight="27.0" prefWidth="728.0" text="Tissus et fournitures" textAlignment="CENTER">
 							<font>
 								<Font name="System Bold" size="18.0" />
 							</font>

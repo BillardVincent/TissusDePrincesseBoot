@@ -62,7 +62,7 @@ import lombok.AllArgsConstructor;
 @Component
 public class StageInitializer implements ApplicationListener<TissusDePrincesseFxApp.StageReadyEvent> {
 
-	private final Image icon = new Image("file:resources/images/cut-cloth-red.png");
+	private final Image icon;
 	private final ApplicationContext applicationContext;
 	private Stage stage;
 	private final FxmlPathProperties pathProperties;
@@ -79,6 +79,7 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
 		this.preferenceService = preferenceService;
 		StageInitializer.history = history;
 		this.fxData = data;
+		icon = new Image("file:resources/images/cut-cloth-red.png");
 
 		tissuService.batchTissuDisponible();
 	}

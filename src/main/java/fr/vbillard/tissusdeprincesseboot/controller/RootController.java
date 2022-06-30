@@ -123,7 +123,7 @@ public class RootController implements IController {
 		fxData.setSpecification(spec);
 		beforeDisplay(patronMenu);
 		searchPane.getChildren().add(initializer.displayPane(PathEnum.PATRON_SEARCH, fxData));
-		mainWindow.getChildren().add(initializer.displayPane(PathEnum.PATRON_LIST));
+		mainWindow.getChildren().add(initializer.displayPane(PathEnum.PATRON_LIST, fxData));
 	}
 
 	public void displayPatronDetails(PatronDto patron) {
