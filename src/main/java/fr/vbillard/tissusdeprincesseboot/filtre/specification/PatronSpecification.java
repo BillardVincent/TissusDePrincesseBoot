@@ -2,6 +2,7 @@ package fr.vbillard.tissusdeprincesseboot.filtre.specification;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
@@ -21,7 +22,6 @@ import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis_;
 import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
 import fr.vbillard.tissusdeprincesseboot.model.TissuVariant_;
-import fr.vbillard.tissusdeprincesseboot.model.Tissu_;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import lombok.AllArgsConstructor;

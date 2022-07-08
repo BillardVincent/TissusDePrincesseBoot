@@ -9,7 +9,6 @@ import java.util.Optional;
 import javax.imageio.ImageIO;
 
 import org.imgscalr.Scalr;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import fr.vbillard.tissusdeprincesseboot.config.PathImgProperties;

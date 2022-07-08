@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import fr.vbillard.tissusdeprincesseboot.dao.TissuDao;
-import fr.vbillard.tissusdeprincesseboot.dao.TissuVariantDao;
-import fr.vbillard.tissusdeprincesseboot.exception.CantBeDeletedException;
-import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import fr.vbillard.tissusdeprincesseboot.dao.Idao;
 import fr.vbillard.tissusdeprincesseboot.dao.MatiereDao;
+import fr.vbillard.tissusdeprincesseboot.dao.TissuDao;
+import fr.vbillard.tissusdeprincesseboot.dao.TissuVariantDao;
+import fr.vbillard.tissusdeprincesseboot.exception.CantBeDeletedException;
+import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

@@ -1,10 +1,13 @@
 package fr.vbillard.tissusdeprincesseboot.controller.caracteristiques;
 
+import org.apache.logging.log4j.util.Strings;
+import org.springframework.stereotype.Component;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
+
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
-import fr.vbillard.tissusdeprincesseboot.controller.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.IModalController;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.service.MatiereService;
@@ -14,9 +17,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
-
-import org.apache.logging.log4j.util.Strings;
-import org.springframework.stereotype.Component;
 
 @Component
 public class MatiereEditController implements IModalController {

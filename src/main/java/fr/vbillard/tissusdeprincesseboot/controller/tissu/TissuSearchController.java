@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
 
 import com.jfoenix.controls.JFXButton;
@@ -17,7 +15,6 @@ import com.jfoenix.controls.JFXTextField;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
-import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.CharacterSearch;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
@@ -25,14 +22,12 @@ import fr.vbillard.tissusdeprincesseboot.fx_custom_element.IntegerSpinner;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.Tissage;
 import fr.vbillard.tissusdeprincesseboot.model.UserPref;
-import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.service.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.service.TissageService;
 import fr.vbillard.tissusdeprincesseboot.service.UserPrefService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
-import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
 import fr.vbillard.tissusdeprincesseboot.utils.ShowAlert;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -214,10 +209,13 @@ public class TissuSearchController implements IController {
 			Integer max = specification.getPoids().getLessThanEqual();
 
 			// TODO
-			lourdCBox.setSelected(specification.getPoids().contains(GammePoids.LOURD));
-			moyenCBox.setSelected(specification.getPoids().contains(GammePoids.MOYEN));
-			legerCBox.setSelected(specification.getPoids().contains(GammePoids.LEGER));
-			ncCBox.setSelected(specification.getPoids().contains(GammePoids.NON_RENSEIGNE));
+			/*
+			 * lourdCBox.setSelected(specification.getPoids().contains(GammePoids.LOURD));
+			 * moyenCBox.setSelected(specification.getPoids().contains(GammePoids.MOYEN));
+			 * legerCBox.setSelected(specification.getPoids().contains(GammePoids.LEGER));
+			 * ncCBox.setSelected(specification.getPoids().contains(GammePoids.NON_RENSEIGNE
+			 * ));
+			 */
 		}
 	}
 

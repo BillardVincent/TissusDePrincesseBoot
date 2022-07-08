@@ -8,7 +8,6 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
-import fr.vbillard.tissusdeprincesseboot.controller.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.IModalController;
 import fr.vbillard.tissusdeprincesseboot.model.Tissage;
 import fr.vbillard.tissusdeprincesseboot.service.TissageService;
@@ -67,7 +66,6 @@ public class TissageEditController implements IModalController {
 
 	public void setData(StageInitializer mainApp) {
 		this.mainApp = mainApp;
-
 
 	}
 

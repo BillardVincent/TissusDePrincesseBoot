@@ -7,7 +7,6 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;

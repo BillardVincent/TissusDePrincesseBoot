@@ -1,7 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.utils;
 
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
