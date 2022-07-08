@@ -40,7 +40,7 @@ public class TissageEditController implements IModalController {
 
 	private Stage dialogStage;
 	private boolean okClicked = false;
-	@Autowired
+
 	TissageService tissageService;
 	StageInitializer mainApp;
 
@@ -60,13 +60,9 @@ public class TissageEditController implements IModalController {
 				.addListener((observable, oldValue, newValue) -> handleSelectElement(newValue));
 	}
 
-	public void setDialogStage(Stage dialogStage) {
-		this.dialogStage = dialogStage;
-	}
-
-	public void setData(StageInitializer mainApp) {
+	public TissageEditController(TissageService tissageService, StageInitializer mainApp) {
+		this.tissageService = tissageService;
 		this.mainApp = mainApp;
-
 	}
 
 	public void handleAddElement() {
@@ -104,7 +100,7 @@ public class TissageEditController implements IModalController {
 	}
 
 	public void handleEditElement() {
-		if (newTissage.getText().trim().equals("")) {
+		if (editTissage.getText().trim().equals("")) {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.initOwner(mainApp.getPrimaryStage());
 			alert.setTitle("Pas de valeur");
@@ -113,7 +109,9 @@ public class TissageEditController implements IModalController {
 
 			alert.showAndWait();
 		} else if (tissageService.validate(editTissage.getText())) {
-			tissageService.saveOrUpdate(new Tissage(editTissage.getText()));
+			Tissage t = tissageService.findTissage(editedTissage);
+			t.setValue(editTissage.getText());
+			tissageService.saveOrUpdate(t);
 			editTissage.setText("");
 			allTissages = tissageService.getAllObs();
 			listTissages.setItems(allTissages);
@@ -124,8 +122,8 @@ public class TissageEditController implements IModalController {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.initOwner(mainApp.getPrimaryStage());
 			alert.setTitle("Duplicat");
-			alert.setHeaderText("Matière déja existante");
-			alert.setContentText("Cette matière existe déjà");
+			alert.setHeaderText("Tissage déja existante");
+			alert.setContentText("Ce tissage existe déjà");
 
 			alert.showAndWait();
 		}
