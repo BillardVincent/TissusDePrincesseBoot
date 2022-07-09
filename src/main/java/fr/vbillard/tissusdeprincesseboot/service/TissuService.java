@@ -73,14 +73,18 @@ public class TissuService extends AbstractService<Tissu> {
 		return mapper.map(saveOrUpdate(t), TissuDto.class);
 	}
 
+	/**
+	 * Contient la conversion du poids de g/m en g/m²
+	 */
 	@Override
 	protected void beforeSaveOrUpdate(Tissu entity) {
-		if (UnitePoids.GRAMME_M.equals(entity.getUnitePoids())){
-			if (entity.getLaize() == 0){
-				throw new IllegalData("La laize doit être renseignée pour calculer le poids en g/m² à partir du poids en g"
-						+ ".m².");
+		if (UnitePoids.GRAMME_M.equals(entity.getUnitePoids())) {
+			if (entity.getLaize() == 0) {
+				throw new IllegalData(
+						"La laize doit être renseignée pour calculer le poids en g/m² à partir du poids en g" + ".m².");
 			}
-			entity.setPoids(entity.getPoids()/(entity.getLaize()*100));
+			float conversion = (float) entity.getPoids() / ((float) entity.getLaize() / 100f);
+			entity.setPoids(Math.round(conversion));
 			entity.setUnitePoids(UnitePoids.GRAMME_M_CARRE);
 		}
 	}
@@ -97,10 +101,10 @@ public class TissuService extends AbstractService<Tissu> {
 
 	public int getLongueurUtilisee(int tissuId) {
 		Integer result = null;
-		if (tissuId != 0){
-			try{
+		if (tissuId != 0) {
+			try {
 				result = dao.longueurUtilisee(tissuId);
-			} catch (Exception e){
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -112,6 +116,9 @@ public class TissuService extends AbstractService<Tissu> {
 				.map(t -> mapper.map(t, TissuDto.class)).collect(Collectors.toList()));
 	}
 
+	/**
+	 * S'execute au démarage pour recalculer les longueurs restantes
+	 */
 	public void batchTissuDisponible() {
 		for (Tissu t : getAll()) {
 			int longueurRestante = t.getLongueur() - getLongueurUtilisee(t.getId());

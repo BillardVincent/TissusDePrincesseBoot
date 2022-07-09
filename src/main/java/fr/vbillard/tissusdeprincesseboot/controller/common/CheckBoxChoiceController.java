@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import com.jfoenix.controls.JFXCheckBox;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
-import fr.vbillard.tissusdeprincesseboot.controller.IModalController;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.IModalController;
 import fr.vbillard.tissusdeprincesseboot.exception.NoSelectionException;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import javafx.beans.value.ObservableValue;

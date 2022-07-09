@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
-import fr.vbillard.tissusdeprincesseboot.controller.ViewListController;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.ViewListController;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.service.PatronService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;

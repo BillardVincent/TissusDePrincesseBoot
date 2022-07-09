@@ -1,25 +1,19 @@
 package fr.vbillard.tissusdeprincesseboot.controller.caracteristiques;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
-import fr.vbillard.tissusdeprincesseboot.controller.IModalController;
 import fr.vbillard.tissusdeprincesseboot.model.Tissage;
 import fr.vbillard.tissusdeprincesseboot.service.TissageService;
-import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.stage.Stage;
 
 @Component
-public class TissageEditController implements IModalController {
+public class TissageEditController extends AbstractCaracteristiqueController {
 
 	@FXML
 	private JFXListView<String> listTissages;
@@ -29,24 +23,11 @@ public class TissageEditController implements IModalController {
 	@FXML
 	private JFXTextField editTissage;
 
-	@FXML
-	private JFXButton ajouterButton;
-	@FXML
-	private JFXButton editerButton;
-	@FXML
-	private JFXButton supprimerButton;
-	@FXML
-	private JFXButton fermerButton;
+	private TissageService tissageService;
 
-	private Stage dialogStage;
-	private boolean okClicked = false;
+	private String editedTissage;
 
-	TissageService tissageService;
-	StageInitializer mainApp;
-
-	String editedTissage;
-
-	ObservableList<String> allTissages;
+	private ObservableList<String> allTissages;
 
 	/**
 	 * Initializes the controller class. This method is automatically called after
@@ -65,68 +46,10 @@ public class TissageEditController implements IModalController {
 		this.mainApp = mainApp;
 	}
 
-	public void handleAddElement() {
-
-		if (newTissage.getText().trim().equals("")) {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.initOwner(mainApp.getPrimaryStage());
-			alert.setTitle("Pas de valeur");
-			alert.setHeaderText("Pas de valeur");
-			alert.setContentText("Veuillez remplir une valeur");
-
-			alert.showAndWait();
-		} else if (tissageService.validate(newTissage.getText())) {
-			tissageService.saveOrUpdate(new Tissage(newTissage.getText()));
-			newTissage.setText("");
-			allTissages = tissageService.getAllObs();
-			listTissages.setItems(allTissages);
-
-		} else {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.initOwner(mainApp.getPrimaryStage());
-			alert.setTitle("Duplicat");
-			alert.setHeaderText("Tissage déja existante");
-			alert.setContentText("Ce tissage existe déjà");
-
-			alert.showAndWait();
-		}
-
-	}
-
 	public void handleSelectElement(String tissage) {
 		this.editedTissage = tissage;
 		this.editTissage.setText(tissage);
 		this.editTissage.setDisable(false);
-	}
-
-	public void handleEditElement() {
-		if (editTissage.getText().trim().equals("")) {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.initOwner(mainApp.getPrimaryStage());
-			alert.setTitle("Pas de valeur");
-			alert.setHeaderText("Pas de valeur");
-			alert.setContentText("Veuillez remplir une valeur");
-
-			alert.showAndWait();
-		} else if (tissageService.validate(editTissage.getText())) {
-			Tissage t = tissageService.findTissage(editedTissage);
-			t.setValue(editTissage.getText());
-			tissageService.saveOrUpdate(t);
-			editTissage.setText("");
-			allTissages = tissageService.getAllObs();
-			listTissages.setItems(allTissages);
-
-			this.editTissage.setDisable(true);
-
-		} else {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.initOwner(mainApp.getPrimaryStage());
-			alert.setTitle("Duplicat");
-			alert.setHeaderText("Tissage déja existante");
-			alert.setContentText("Ce tissage existe déjà");
-
-			alert.showAndWait();
-		}
 	}
 
 	public void handleSuppressElement() {
@@ -139,24 +62,54 @@ public class TissageEditController implements IModalController {
 		this.editerButton.setDisable(true);
 	}
 
-	public void handleClose() {
-		okClicked = true;
-		dialogStage.close();
-	}
-
-	public boolean isOkClicked() {
-
-		return okClicked;
+	@Override
+	protected boolean fieldSaveEmpty() {
+		return StringUtils.isEmpty(newTissage.getText());
 	}
 
 	@Override
-	public FxData result() {
-		return null;
+	protected boolean fieldEditEmpty() {
+		return StringUtils.isEmpty(editTissage.getText());
 	}
 
 	@Override
-	public void setStage(Stage dialogStage, FxData data) {
-		this.dialogStage = dialogStage;
-
+	protected boolean validateSave() {
+		return tissageService.validate(newTissage.getText());
 	}
+
+	@Override
+	protected boolean validateEdit() {
+		return tissageService.validate(editTissage.getText());
+	}
+
+	@Override
+	protected String fieldAlreadyExists() {
+		return "Tissage déjà existant";
+	}
+
+	@Override
+	protected String thisField() {
+		return "Ce tissage";
+	}
+
+	@Override
+	protected void save() {
+		tissageService.saveOrUpdate(new Tissage(newTissage.getText()));
+		newTissage.setText("");
+		allTissages = tissageService.getAllObs();
+		listTissages.setItems(allTissages);
+	}
+
+	@Override
+	protected void edit() {
+		Tissage t = tissageService.findTissage(editedTissage);
+		t.setValue(editTissage.getText());
+		tissageService.saveOrUpdate(t);
+		editTissage.setText("");
+		allTissages = tissageService.getAllObs();
+		listTissages.setItems(allTissages);
+
+		this.editTissage.setDisable(true);
+	}
+
 }

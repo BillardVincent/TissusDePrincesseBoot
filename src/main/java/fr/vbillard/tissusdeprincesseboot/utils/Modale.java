@@ -1,6 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.utils;
 
-import fr.vbillard.tissusdeprincesseboot.controller.IModalController;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.IModalController;
 import javafx.stage.Stage;
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package fr.vbillard.tissusdeprincesseboot.controller;
+package fr.vbillard.tissusdeprincesseboot.controller.utils;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;

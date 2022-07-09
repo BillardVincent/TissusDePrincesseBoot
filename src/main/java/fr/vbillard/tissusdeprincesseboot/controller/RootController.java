@@ -3,6 +3,7 @@ package fr.vbillard.tissusdeprincesseboot.controller;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.logging.log4j.util.Strings;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.jfoenix.controls.JFXButton;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
@@ -192,55 +194,6 @@ public class RootController implements IController {
 		this.initializer = initializer;
 		menuElements = Arrays.asList(tissuMenu, fournitureMenu, patronMenu, projetMenu);
 		deleteSelectedButton.setVisible(false);
-
-		/*
-		 * JFXComboBox<JFXCheckBox> box = new JFXComboBox<JFXCheckBox>() {
-		 * 
-		 * }; JFXCheckBox label1 = new JFXCheckBox("Test1"); JFXCheckBox label2 = new
-		 * JFXCheckBox("Test2"); JFXCheckBox label3 = new JFXCheckBox("Test3");
-		 * JFXCheckBox label4 = new JFXCheckBox("Test4"); label1.setDisable(true);
-		 * label1.setOpacity(1); label2.setDisable(true); label2.setOpacity(1);
-		 * 
-		 * label3.setDisable(true); label3.setOpacity(1);
-		 * 
-		 * label4.setDisable(true); label4.setOpacity(1);
-		 * 
-		 * List<JFXCheckBox> checkList = Arrays.asList(label1, label2, label3, label4);
-		 * 
-		 * box.setItems(FXCollections.observableArrayList(checkList)); Label label = new
-		 * Label();
-		 * 
-		 * box.setOnAction(new EventHandler<ActionEvent>() {
-		 * 
-		 * @Override public void handle(ActionEvent event) { if
-		 * (!box.getSelectionModel().isEmpty()) {
-		 * box.getValue().setSelected(!box.getValue().isSelected());
-		 * label.setText(checkList.stream().filter(c -> c.isSelected()).map(c ->
-		 * c.getText()) .collect(Collectors.joining(" - ")));
-		 * box.setStyle("-fx-text-fill: red");
-		 * 
-		 * } else { box.getSelectionModel().clearSelection();
-		 * 
-		 * }
-		 * 
-		 * } });
-		 * 
-		 * box.setButtonCell(new ListCell<JFXCheckBox>() {
-		 * 
-		 * @Override protected void updateItem(JFXCheckBox item, boolean empty) {
-		 * super.updateItem(item, empty); if (empty || item == null) { // styled like
-		 * -fx-prompt-text-fill: setText("Aucun sélectionné");
-		 * 
-		 * } else { setText(checkList.stream().filter(c -> c.isSelected()).map(c ->
-		 * c.getText()) .collect(Collectors.joining(" - ")));
-		 * 
-		 * } }
-		 * 
-		 * });
-		 * 
-		 * test.getChildren().addAll(label, box);
-		 */
-
 	}
 
 	public boolean hasTissuRequisSelected() {
@@ -274,7 +227,7 @@ public class RootController implements IController {
 		FxData fxData = new FxData();
 		fxData.setLongueurRequise(longueurRequiseRestante);
 		fxData.setTissu(tissuSelected);
-		fxData = initializer.displayModale(PathEnum.SET_LONGUEUR, fxData, "");
+		fxData = initializer.displayModale(PathEnum.SET_LONGUEUR, fxData, Strings.EMPTY);
 		return fxData;
 	}
 }

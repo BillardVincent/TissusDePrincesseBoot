@@ -1,4 +1,4 @@
-package fr.vbillard.tissusdeprincesseboot.controller;
+package fr.vbillard.tissusdeprincesseboot.controller.utils;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;

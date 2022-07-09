@@ -3,6 +3,7 @@ package fr.vbillard.tissusdeprincesseboot.controller.tissu;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.util.Strings;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -14,9 +15,9 @@ import com.jfoenix.controls.JFXToggleButton;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
-import fr.vbillard.tissusdeprincesseboot.controller.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.picture_helper.TissuPictureHelper;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.fx_custom_element.GlyphIconUtil;
@@ -252,7 +253,10 @@ public class TissuEditController implements IController {
 	}
 
 	private String getFirstCharOrX(JFXComboBox<String> field) {
-		return field.getValue().trim().isEmpty() ? "X" : field.getValue().toUpperCase().substring(0, 1);
+		if (field == null || Strings.isBlank(field.getValue())) {
+			return "X";
+		}
+		return field.getValue().toUpperCase().substring(0, 1);
 	}
 
 	@FXML
@@ -260,8 +264,9 @@ public class TissuEditController implements IController {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getFirstCharOrX(typeField)).append(getFirstCharOrX(matiereField))
 				.append(getFirstCharOrX(tissageField)).append("-");
-		if (Boolean.parseBoolean(chuteField.getText()))
+		if (chuteField.isSelected()) {
 			sb.append("cp-");
+		}
 		boolean ref = true;
 		int refNb = 0;
 		while (ref) {
