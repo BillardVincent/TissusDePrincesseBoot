@@ -16,11 +16,13 @@ import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
+import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification;
 import fr.vbillard.tissusdeprincesseboot.fx_custom_element.CustomIcon;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
+import fr.vbillard.tissusdeprincesseboot.service.TissuRequisService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuUsedService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
@@ -48,6 +50,8 @@ public class RootController implements IController {
 	private HBox projetMenu;
 	@FXML
 	private JFXButton deleteSelectedButton;
+	@FXML
+	private JFXButton researchButton;
 
 	@FXML
 	private VBox test;
@@ -61,11 +65,14 @@ public class RootController implements IController {
 	private TissuUsedService tissuUsedService;
 	private ModelMapper mapper;
 	private CustomIcon customIcon;
+	private TissuRequisService tissuRequisService;
 
-	public RootController(TissuUsedService tissuUsedService, ModelMapper mapper, CustomIcon customIcon) {
+	public RootController(TissuUsedService tissuUsedService, ModelMapper mapper, CustomIcon customIcon,
+			TissuRequisService tissuRequisService) {
 		this.tissuUsedService = tissuUsedService;
 		this.mapper = mapper;
 		this.customIcon = customIcon;
+		this.tissuRequisService = tissuRequisService;
 	}
 
 	@FXML
@@ -161,11 +168,13 @@ public class RootController implements IController {
 		beforeDisplay(tissuMenu);
 		mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSUS));
 		deleteSelectedButton.setVisible(true);
+		researchButton.setVisible(true);
 	}
 
 	@FXML
 	public void deleteSelected() {
 		deleteSelectedButton.setVisible(false);
+		researchButton.setVisible(false);
 		tissuRequisSelected = null;
 		projetSelected = null;
 		selectedElement.getChildren().clear();
@@ -194,6 +203,7 @@ public class RootController implements IController {
 		this.initializer = initializer;
 		menuElements = Arrays.asList(tissuMenu, fournitureMenu, patronMenu, projetMenu);
 		deleteSelectedButton.setVisible(false);
+		researchButton.setVisible(false);
 	}
 
 	public boolean hasTissuRequisSelected() {
@@ -229,5 +239,12 @@ public class RootController implements IController {
 		fxData.setTissu(tissuSelected);
 		fxData = initializer.displayModale(PathEnum.SET_LONGUEUR, fxData, Strings.EMPTY);
 		return fxData;
+	}
+
+	@FXML
+	private void createResearch() {
+		if (tissuRequisSelected != null) {
+			displayTissu(tissuRequisService.getTissuSpecification(tissuRequisSelected));
+		}
 	}
 }

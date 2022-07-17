@@ -156,24 +156,15 @@ public class FxUtils {
 	public static NumericSearch<Integer> NumericSearch(JFXCheckBox lourdCBox, JFXCheckBox moyenCBox,
 			JFXCheckBox legerCBox, JFXCheckBox ncCBox, UserPref pref) {
 
-		int margeHauteLeger = Math
-				.round(pref.getMinPoidsMoyen() + pref.getMinPoidsMoyen() * pref.getPoidsMargePercent());
-		int margeBasseMoyen = Math
-				.round(pref.getMinPoidsMoyen() - pref.getMinPoidsMoyen() * pref.getPoidsMargePercent());
-		int margeHauteMoyen = Math
-				.round(pref.getMaxPoidsMoyen() + pref.getMaxPoidsMoyen() * pref.getPoidsMargePercent());
-		int margeBasseLourd = Math
-				.round(pref.getMaxPoidsMoyen() - pref.getMaxPoidsMoyen() * pref.getPoidsMargePercent());
-
 		NumericSearch<Integer> poidsSearch = null;
 
 		if (!lourdCBox.isSelected() && !moyenCBox.isSelected() && !legerCBox.isSelected() && !ncCBox.isSelected()) {
 			if (!lourdCBox.isSelected()) {
 				poidsSearch = new NumericSearch<Integer>(null);
 				if (moyenCBox.isSelected()) {
-					poidsSearch.setLessThanEqual(margeHauteMoyen);
+					poidsSearch.setLessThanEqual(pref.margeHauteMoyen());
 				} else if (legerCBox.isSelected()) {
-					poidsSearch.setLessThanEqual(margeHauteLeger);
+					poidsSearch.setLessThanEqual(pref.margeHauteLeger());
 
 				}
 			}
@@ -182,9 +173,9 @@ public class FxUtils {
 					poidsSearch = new NumericSearch<Integer>(null);
 				}
 				if (moyenCBox.isSelected()) {
-					poidsSearch.setGreaterThanEqual(margeBasseMoyen);
+					poidsSearch.setGreaterThanEqual(pref.margeBasseMoyen());
 				} else if (lourdCBox.isSelected()) {
-					poidsSearch.setGreaterThanEqual(margeBasseLourd);
+					poidsSearch.setGreaterThanEqual(pref.margeBasseLourd());
 				}
 			}
 			if (ncCBox.isSelected()) {
@@ -205,13 +196,15 @@ public class FxUtils {
 	}
 
 	public static void setTextFieldMaxFromNumericSearch(JFXTextField field, NumericSearch<Integer> numericSearch) {
-		if (numericSearch != null && numericSearch.getLessThanEqual() != 0) {
+		if (numericSearch != null && numericSearch.getLessThanEqual() != null
+				&& numericSearch.getLessThanEqual() != 0) {
 			field.setText(String.valueOf(numericSearch.getLessThanEqual()));
 		}
 	}
 
 	public static void setTextFieldMinFromNumericSearch(JFXTextField field, NumericSearch<Integer> numericSearch) {
-		if (numericSearch != null && numericSearch.getGreaterThanEqual() != 0) {
+		if (numericSearch != null && numericSearch.getGreaterThanEqual() != null
+				&& numericSearch.getGreaterThanEqual() != 0) {
 			field.setText(String.valueOf(numericSearch.getLessThanEqual()));
 		}
 	}

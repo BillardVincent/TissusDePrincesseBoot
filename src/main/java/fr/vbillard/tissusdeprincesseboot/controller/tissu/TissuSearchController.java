@@ -194,28 +194,33 @@ public class TissuSearchController implements IController {
 	private void setPoidsFromSpec() {
 		if (specification.getPoids() != null) {
 
-			UserPref pref = prefService.getUser();
-
-			int margeHauteLeger = Math
-					.round(pref.getMinPoidsMoyen() + pref.getMinPoidsMoyen() * pref.getPoidsMargePercent());
-			int margeBasseMoyen = Math
-					.round(pref.getMinPoidsMoyen() - pref.getMinPoidsMoyen() * pref.getPoidsMargePercent());
-			int margeHauteMoyen = Math
-					.round(pref.getMaxPoidsMoyen() + pref.getMaxPoidsMoyen() * pref.getPoidsMargePercent());
-			int margeBasseLourd = Math
-					.round(pref.getMaxPoidsMoyen() - pref.getMaxPoidsMoyen() * pref.getPoidsMargePercent());
-
 			Integer min = specification.getPoids().getGreaterThanEqual();
 			Integer max = specification.getPoids().getLessThanEqual();
 
-			// TODO
-			/*
-			 * lourdCBox.setSelected(specification.getPoids().contains(GammePoids.LOURD));
-			 * moyenCBox.setSelected(specification.getPoids().contains(GammePoids.MOYEN));
-			 * legerCBox.setSelected(specification.getPoids().contains(GammePoids.LEGER));
-			 * ncCBox.setSelected(specification.getPoids().contains(GammePoids.NON_RENSEIGNE
-			 * ));
-			 */
+			if ((min == null || min == 0) && (max == null || max == 0)) {
+				lourdCBox.setSelected(true);
+				moyenCBox.setSelected(true);
+				legerCBox.setSelected(true);
+				ncCBox.setSelected(true);
+			} else {
+				UserPref pref = prefService.getUser();
+
+				int margeHauteLeger = pref.margeHauteLeger();
+				int margeBasseMoyen = pref.margeBasseMoyen();
+				int margeHauteMoyen = pref.margeHauteMoyen();
+				int margeBasseLourd = pref.margeBasseLourd();
+
+				if (min == 0) {
+					legerCBox.setSelected(true);
+					if (max != margeHauteLeger) {
+						moyenCBox.setSelected(true);
+						if (max != margeHauteMoyen) {
+							lourdCBox.setSelected(true);
+
+						}
+					}
+				}
+			}
 		}
 	}
 

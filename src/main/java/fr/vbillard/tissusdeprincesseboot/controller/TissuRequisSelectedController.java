@@ -10,6 +10,7 @@ import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
 @Component
 public class TissuRequisSelectedController implements IController {
@@ -21,7 +22,7 @@ public class TissuRequisSelectedController implements IController {
 	@FXML
 	private Label gammePoidsLabel;
 	@FXML
-	private Label variantsLabel;
+	private VBox variantsContainer;
 
 	private StageInitializer initializer;
 	private TissuRequisDto tissuRequis;
@@ -37,22 +38,20 @@ public class TissuRequisSelectedController implements IController {
 			longueurLabel.setText(Integer.toString(tissuRequis.getLongueur()));
 			laizeLabel.setText(Integer.toString(tissuRequis.getLaize()));
 			gammePoidsLabel.setText(tissuRequis.getGammePoids());
-			variantsLabel.setText(StringUtils.join(tissuRequis.getVariant(), " - "));
-
+			setVariantsContainer();
 
 		} else {
-			longueurLabel.setText("");
-			laizeLabel.setText("");
-			gammePoidsLabel.setText("");
-			variantsLabel.setText("");
+			longueurLabel.setText("?");
+			laizeLabel.setText("?");
+			gammePoidsLabel.setText("?");
+			variantsContainer.getChildren().clear();
 		}
 
-
-		setPane();
 	}
 
-	private void setPane() {
+	private void setVariantsContainer() {
 		// TODO Auto-generated method stub
 
 	}
+
 }

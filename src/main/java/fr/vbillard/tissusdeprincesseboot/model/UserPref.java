@@ -22,4 +22,20 @@ public class UserPref extends AbstractEntity {
 	@Column(columnDefinition = "float default 0.10")
 	private float longueurMargePercent;
 
+	public int margeHauteLeger() {
+		return Math.round(minPoidsMoyen + minPoidsMoyen * poidsMargePercent);
+	}
+
+	public int margeBasseMoyen() {
+		return Math.round(minPoidsMoyen - minPoidsMoyen * poidsMargePercent);
+	}
+
+	public int margeHauteMoyen() {
+		return Math.round(maxPoidsMoyen + maxPoidsMoyen * poidsMargePercent);
+	}
+
+	public int margeBasseLourd() {
+		return Math.round(maxPoidsMoyen - maxPoidsMoyen * poidsMargePercent);
+	}
+
 }

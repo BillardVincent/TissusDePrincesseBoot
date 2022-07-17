@@ -55,7 +55,7 @@ public class PatronSpecification implements Specification<Patron> {
 	private List<Tissage> tissages;
 	private List<TypeTissuEnum> typeTissu;
 
-	public Boolean archived;
+	private Boolean archived;
 
 	private static class Joins {
 		private Join<Patron, TissuRequis> joinTissuRequis;

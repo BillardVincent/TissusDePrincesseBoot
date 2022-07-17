@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.UserPref;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
@@ -74,5 +75,29 @@ public class CalculPoidsTissuService {
 		default:
 			return Recommendation.INCONNU;
 		}
+	}
+
+	public NumericSearch<Integer> getNumericSearch(GammePoids gp) {
+		NumericSearch<Integer> ns = new NumericSearch<Integer>();
+		UserPref pref = userPrefService.getUser();
+
+		switch (gp) {
+		case LEGER:
+			ns.setLessThanEqual(pref.margeHauteLeger());
+			break;
+		case LOURD:
+			ns.setGreaterThanEqual(pref.margeBasseLourd());
+			break;
+		case MOYEN:
+			ns.setLessThanEqual(pref.margeHauteMoyen());
+			ns.setGreaterThanEqual(pref.margeBasseMoyen());
+			break;
+		case NON_RENSEIGNE:
+
+			break;
+
+		}
+
+		return ns;
 	}
 }
