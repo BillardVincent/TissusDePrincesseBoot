@@ -25,6 +25,6 @@ public interface TissuDao extends Idao<Tissu, Integer> {
 	@Query(value = "SELECT SUM(t.longueur) FROM TISSU_USED tu INNER JOIN TISSU t ON tu.TISSU_ID = t.ID "
 			+ "INNER JOIN PROJET p ON p.ID = tu.PROJET_ID WHERE p.STATUS = 'EN_COURS' OR p.STATUS = 'PLANIFIE' "
 			+ "AND t.ID = ?1", nativeQuery = true)
-	int longueurUtilisee(int tissuId);
+	Integer longueurUtilisee(int tissuId);
 
 }

@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="433.0" prefWidth="323.0" styleClass="global" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.PreferenceController">
+<Pane prefHeight="522.0" prefWidth="323.0" styleClass="global" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.PreferenceController">
    <children>
-      <VBox layoutX="2.0" layoutY="1.0" prefHeight="381.0" prefWidth="316.0" spacing="10.0">
+      <VBox layoutX="2.0" layoutY="1.0" prefHeight="522.0" prefWidth="316.0" spacing="10.0">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="364.0" styleClass="title1" text="Préférences" textAlignment="CENTER" />
             <Separator prefWidth="200.0" />
@@ -60,11 +60,17 @@
                </children>
             </HBox>
             <Separator prefWidth="200.0" />
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="310.0" text="Accepter les modifications redémarrera l'application" textAlignment="CENTER" />
+            <HBox alignment="CENTER" prefHeight="30.0" prefWidth="296.0">
+               <children>
+                  <JFXButton onAction="#handleOk" text="Accepter" />
+                  <JFXButton onAction="#handleOk" text="Annuler" />
+               </children>
+            </HBox>
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </VBox>
-      <JFXButton layoutX="127.0" layoutY="394.0" onAction="#handleOk" text="Accepter" />
    </children>
 </Pane>

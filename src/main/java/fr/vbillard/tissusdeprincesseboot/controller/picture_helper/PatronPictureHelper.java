@@ -43,4 +43,14 @@ public class PatronPictureHelper extends PictureHelper {
 		imagePane.setImage(new Image(new ByteArrayInputStream(picture.get().getData())));
 	}
 
+	public void addPictureWeb(PatronDto dto) {
+		patron = mapper.map(dto, Patron.class);
+		addPictureWeb();
+	}
+
+	public void addPictureLocal(PatronDto dto) {
+		patron = mapper.map(dto, Patron.class);
+		addPictureLocal();
+	}
+
 }

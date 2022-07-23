@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
 
 import com.jfoenix.controls.JFXButton;
@@ -121,6 +122,12 @@ public class TissuSearchController implements IController {
 		this.root = root;
 		this.prefService = prefService;
 
+		UserPref pref = prefService.getUser();
+
+		margeHauteLeger = pref.margeHauteLeger();
+		margeBasseMoyen = pref.margeBasseMoyen();
+		margeHauteMoyen = pref.margeHauteMoyen();
+		margeBasseLourd = pref.margeBasseLourd();
 	}
 
 	@Override
@@ -150,6 +157,11 @@ public class TissuSearchController implements IController {
 		legerCBox.setSelected(true);
 		ncCBox.setSelected(true);
 
+		setData(data);
+
+	}
+
+	private void setData(FxData data) {
 		if (data != null && data.getSpecification() != null && data.getSpecification() instanceof TissuSpecification) {
 
 			specification = (TissuSpecification) data.getSpecification();
@@ -187,8 +199,23 @@ public class TissuSearchController implements IController {
 
 		} else {
 			specification = new TissuSpecification();
-		}
 
+			typeLbl.setText(AUCUN_FILTRE);
+			typeValuesSelected = new ArrayList<String>();
+			matiereLbl.setText(AUCUN_FILTRE);
+			matiereValuesSelected = new ArrayList<String>();
+			tissageLbl.setText(AUCUN_FILTRE);
+			tissageValuesSelected = new ArrayList<String>();
+
+			longueurFieldMax.setText(Strings.EMPTY);
+			laizeFieldMax.setText(Strings.EMPTY);
+			descriptionField.setText(Strings.EMPTY);
+
+			lourdCBox.setSelected(true);
+			moyenCBox.setSelected(true);
+			legerCBox.setSelected(true);
+			ncCBox.setSelected(true);
+		}
 	}
 
 	private void setPoidsFromSpec() {
@@ -203,12 +230,6 @@ public class TissuSearchController implements IController {
 				legerCBox.setSelected(true);
 				ncCBox.setSelected(true);
 			} else {
-				UserPref pref = prefService.getUser();
-
-				int margeHauteLeger = pref.margeHauteLeger();
-				int margeBasseMoyen = pref.margeBasseMoyen();
-				int margeHauteMoyen = pref.margeHauteMoyen();
-				int margeBasseLourd = pref.margeBasseLourd();
 
 				if (min == 0) {
 					legerCBox.setSelected(true);
@@ -231,6 +252,13 @@ public class TissuSearchController implements IController {
 
 	public boolean isOkClicked() {
 		return okClicked;
+	}
+
+	@FXML
+	private void handleCancel() {
+		FxData data = new FxData();
+		data.setSpecification(new TissuSpecification());
+		setData(data);
 	}
 
 	@FXML

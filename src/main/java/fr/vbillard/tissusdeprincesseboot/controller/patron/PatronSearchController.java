@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
 
 import com.jfoenix.controls.JFXButton;
@@ -15,6 +16,7 @@ import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.PatronSpecification;
+import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.CharacterSearch;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
@@ -101,6 +103,18 @@ public class PatronSearchController implements IController {
 	public void setStageInitializer(StageInitializer initializer, FxData data) {
 		this.initializer = initializer;
 
+		setData(data);
+
+		UserPref pref = userPrefService.getUser();
+
+		margeHauteLeger = Math.round(pref.getMinPoidsMoyen() + pref.getMinPoidsMoyen() * pref.getPoidsMargePercent());
+		margeBasseMoyen = Math.round(pref.getMinPoidsMoyen() - pref.getMinPoidsMoyen() * pref.getPoidsMargePercent());
+		margeHauteMoyen = Math.round(pref.getMaxPoidsMoyen() + pref.getMaxPoidsMoyen() * pref.getPoidsMargePercent());
+		margeBasseLourd = Math.round(pref.getMaxPoidsMoyen() - pref.getMaxPoidsMoyen() * pref.getPoidsMargePercent());
+
+	}
+
+	private void setData(FxData data) {
 		if (data != null && data.getSpecification() != null && data.getSpecification() instanceof PatronSpecification) {
 			PatronSpecification spec = (PatronSpecification) data.getSpecification();
 			FxUtils.setTextFieldFromCharacterSearch(descriptionField, spec.getDescription());
@@ -139,21 +153,24 @@ public class PatronSearchController implements IController {
 		} else {
 
 			typeLbl.setText(AUCUN_FILTRE);
+			typeValuesSelected = new ArrayList<String>();
 			matiereLbl.setText(AUCUN_FILTRE);
+			matiereValuesSelected = new ArrayList<String>();
 			tissageLbl.setText(AUCUN_FILTRE);
+			tissageValuesSelected = new ArrayList<String>();
+
+			longueurFieldMax.setText(Strings.EMPTY);
+			laizeFieldMax.setText(Strings.EMPTY);
+			descriptionField.setText(Strings.EMPTY);
+			typeVetementField.setText(Strings.EMPTY);
+			marqueField.setText(Strings.EMPTY);
+			modeleField.setText(Strings.EMPTY);
 
 			lourdCBox.setSelected(true);
 			moyenCBox.setSelected(true);
 			legerCBox.setSelected(true);
 			ncCBox.setSelected(true);
 		}
-
-		UserPref pref = userPrefService.getUser();
-
-		margeHauteLeger = Math.round(pref.getMinPoidsMoyen() + pref.getMinPoidsMoyen() * pref.getPoidsMargePercent());
-		margeBasseMoyen = Math.round(pref.getMinPoidsMoyen() - pref.getMinPoidsMoyen() * pref.getPoidsMargePercent());
-		margeHauteMoyen = Math.round(pref.getMaxPoidsMoyen() + pref.getMaxPoidsMoyen() * pref.getPoidsMargePercent());
-		margeBasseLourd = Math.round(pref.getMaxPoidsMoyen() - pref.getMaxPoidsMoyen() * pref.getPoidsMargePercent());
 
 	}
 
@@ -201,18 +218,10 @@ public class PatronSearchController implements IController {
 	}
 
 	@FXML
-	private void lourdAction() {
-
-	}
-
-	@FXML
-	private void moyenAction() {
-
-	}
-
-	@FXML
-	private void legerAction() {
-
+	private void handleCancel() {
+		FxData data = new FxData();
+		data.setSpecification(new PatronSpecification());
+		setData(data);
 	}
 
 	@FXML

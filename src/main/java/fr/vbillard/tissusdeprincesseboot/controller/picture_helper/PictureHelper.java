@@ -38,7 +38,7 @@ public abstract class PictureHelper {
 		this.mapper = mapper;
 	}
 
-	public void addPictureWeb() {
+	protected void addPictureWeb() {
 
 		URL url = initializer.displayModale(PathEnum.WEB_URL, null, "URL de l'image").getUrl();
 
@@ -57,7 +57,7 @@ public abstract class PictureHelper {
 		setImage();
 	}
 
-	public void addPictureLocal() {
+	protected void addPictureLocal() {
 		Preference pref = preferenceService.getPreferences();
 		File file = initializer.directoryChooser(pref);
 

@@ -17,7 +17,7 @@ public class UserPref extends AbstractEntity {
 	private int minPoidsMoyen;
 	@Column(columnDefinition = "integer default 340")
 	private int maxPoidsMoyen;
-	@Column(columnDefinition = "float default 0.20")
+	@Column(columnDefinition = "float default 0.10")
 	private float poidsMargePercent;
 	@Column(columnDefinition = "float default 0.10")
 	private float longueurMargePercent;

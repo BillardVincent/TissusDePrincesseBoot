@@ -9,6 +9,7 @@ import static fr.vbillard.tissusdeprincesseboot.fx_custom_element.IntegerSpinner
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+import fr.vbillard.tissusdeprincesseboot.TissusDePrincesseFxApp;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IModalController;
 import fr.vbillard.tissusdeprincesseboot.model.UserPref;
 import fr.vbillard.tissusdeprincesseboot.service.UserPrefService;
@@ -69,6 +70,12 @@ public class PreferenceController implements IModalController {
 
 		dialogStage.close();
 
+		TissusDePrincesseFxApp.restart();
+	}
+
+	@FXML
+	public void close() {
+		dialogStage.close();
 	}
 
 }

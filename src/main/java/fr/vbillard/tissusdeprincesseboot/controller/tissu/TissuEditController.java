@@ -30,6 +30,7 @@ import fr.vbillard.tissusdeprincesseboot.service.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.service.TissageService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuService;
 import fr.vbillard.tissusdeprincesseboot.utils.ConstantesMetier;
+import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
@@ -210,11 +211,20 @@ public class TissuEditController implements IController {
 	@FXML
 	private void handleAddMatiere() {
 		initializer.displayModale(PathEnum.MATIERE, null, "Matière");
+
+		matiereField.setItems(FXCollections.observableArrayList(matiereService.getAll().stream()
+				.map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList())));
+		matiereField.setValue(FxUtils.safePropertyToString(tissu.getMatiereProperty()));
+
 	}
 
 	@FXML
 	private void handleAddTissage() {
 		initializer.displayModale(PathEnum.TISSAGE, null, "Tissage");
+
+		tissageField.setItems(FXCollections.observableArrayList(tissageService.getAll().stream()
+				.map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList())));
+		tissageField.setValue(FxUtils.safePropertyToString(tissu.getTissageProperty()));
 	}
 
 	private boolean isInputValid() {
@@ -280,16 +290,12 @@ public class TissuEditController implements IController {
 		mapTissu.remove(tissu);
 	}
 
-	public void setButton() {
-
-	}
-
 	@FXML
 	private void addPicture() {
 		if (isInputValid()) {
 			setTissuFromFields();
 
-			pictureHelper.addPictureLocal();
+			pictureHelper.addPictureLocal(tissu);
 		}
 	}
 
@@ -298,13 +304,13 @@ public class TissuEditController implements IController {
 		if (isInputValid()) {
 			setTissuFromFields();
 
-			pictureHelper.addPictureWeb();
+			pictureHelper.addPictureWeb(tissu);
 		}
 	}
 
 	@FXML
 	private void pictureExpend() {
-
+		DevInProgressService.notImplemented(initializer);
 	}
 
 	@FXML

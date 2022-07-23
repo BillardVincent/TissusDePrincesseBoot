@@ -88,11 +88,7 @@
 		</dependency>
 
 		<!-- TEST -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
+
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
@@ -117,6 +113,25 @@
 			<version>${powermock-version}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+    <groupId>org.testfx</groupId>
+    <artifactId>testfx-core</artifactId>
+    <version>4.0.15-alpha</version>
+    <scope>test</scope>
+</dependency>
+<dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+    <version>4.13-beta-3</version>
+    <scope>test</scope>
+</dependency>
+<dependency>
+    <groupId>org.testfx</groupId>
+    <artifactId>testfx-junit</artifactId>
+    <version>4.0.15-alpha</version>
+    <scope>test</scope>
+</dependency>
+
 		<dependency>
 			<groupId>com.github.javafaker</groupId>
 			<artifactId>javafaker</artifactId>

@@ -13,6 +13,7 @@ import fr.vbillard.tissusdeprincesseboot.controller.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.ProjetSpecification;
+import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import javafx.fxml.FXML;
@@ -64,6 +65,20 @@ public class ProjetSearchController implements IController {
 		return okClicked;
 	}
 
+	private void setData(FxData data) {
+		etudeCBox.setSelected(true);
+		planedCBox.setSelected(true);
+		inProgressCBox.setSelected(true);
+		finishedCBox.setSelected(true);
+	}
+
+	@FXML
+	private void handleCancel() {
+		FxData data = new FxData();
+		data.setSpecification(new TissuSpecification());
+		setData(data);
+	}
+
 	@FXML
 	private void handleOk() {
 		List<ProjectStatus> status = null;
@@ -87,7 +102,7 @@ public class ProjetSearchController implements IController {
 	private List<ProjectStatus> setStatusSpec(List<ProjectStatus> lst, JFXCheckBox cbox, ProjectStatus status) {
 		if (cbox.isSelected()) {
 			if (lst == null) {
-				lst = new ArrayList();
+				lst = new ArrayList<ProjectStatus>();
 			}
 			lst.add(status);
 		}

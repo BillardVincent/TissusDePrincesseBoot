@@ -478,7 +478,7 @@ public class PatronEditController implements IController {
 	private void addPicture() {
 		patronService.saveOrUpdate(mapper.map(patron, Patron.class));
 
-		pictureUtils.addPictureLocal();
+		pictureUtils.addPictureLocal(patron);
 
 	}
 
@@ -486,7 +486,7 @@ public class PatronEditController implements IController {
 	private void addPictureWeb() {
 		patronService.saveOrUpdate(mapper.map(patron, Patron.class));
 
-		pictureUtils.addPictureWeb();
+		pictureUtils.addPictureWeb(patron);
 
 	}
 

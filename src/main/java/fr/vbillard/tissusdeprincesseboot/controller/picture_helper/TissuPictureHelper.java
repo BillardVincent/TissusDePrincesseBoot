@@ -43,4 +43,14 @@ public class TissuPictureHelper extends PictureHelper {
 		imagePane.setImage(new Image(new ByteArrayInputStream(picture.get().getData())));
 	}
 
+	public void addPictureWeb(TissuDto dto) {
+		tissu = mapper.map(dto, Tissu.class);
+		addPictureWeb();
+	}
+
+	public void addPictureLocal(TissuDto dto) {
+		tissu = mapper.map(dto, Tissu.class);
+		addPictureLocal();
+	}
+
 }

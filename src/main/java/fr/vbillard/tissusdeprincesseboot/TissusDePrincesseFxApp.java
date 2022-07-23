@@ -1,5 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot;
 
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -14,7 +16,7 @@ import javafx.stage.Stage;
 
 public class TissusDePrincesseFxApp extends Application {
 
-	private ConfigurableApplicationContext applicationContext;
+	private static ConfigurableApplicationContext applicationContext;
 
 	private Stage primaryStage;
 
@@ -25,6 +27,18 @@ public class TissusDePrincesseFxApp extends Application {
 
 		applicationContext = new SpringApplicationBuilder(TissuDePrincesseBootApplication.class).run();
 
+	}
+
+	public static void restart() {
+		ApplicationArguments args = applicationContext.getBean(ApplicationArguments.class);
+
+		Thread thread = new Thread(() -> {
+			applicationContext.close();
+			applicationContext = SpringApplication.run(Application.class, args.getSourceArgs());
+		});
+
+		thread.setDaemon(false);
+		thread.start();
 	}
 
 	@Override

@@ -33,14 +33,17 @@ public class TissuToDto extends TypeMapConfigurer<Tissu, TissuDto> {
 		@Override
 		protected Integer convert(Tissu source) {
 			int longueurRestante = source.getLongueur();
-					if (source.getId() != 0){
-						try {
-							longueurRestante -= tissuDao.longueurUtilisee(source.getId());
-						}catch(Exception e){
-							e.printStackTrace();
-						}
+			if (source.getId() != 0) {
+				try {
+					Integer utilise = tissuDao.longueurUtilisee(source.getId());
+					if (utilise != null) {
+						longueurRestante -= utilise;
 					}
-					return longueurRestante;
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return longueurRestante;
 		}
 	}
 }

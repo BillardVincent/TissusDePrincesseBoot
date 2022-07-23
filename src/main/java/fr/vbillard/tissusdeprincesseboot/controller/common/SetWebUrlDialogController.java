@@ -76,9 +76,9 @@ public class SetWebUrlDialogController implements IModalController {
 		if (dotIndex == -1) {
 			return false;
 		}
-		String extension = URLtrimmed.substring(dotIndex);
+		String extension = URLtrimmed.substring(dotIndex + 1);
 		for (ImageFormat format : imagesFormats) {
-			if (format.getValue().equals(extension)) {
+			if (format.getValue().equals(extension.toUpperCase())) {
 				return true;
 			}
 		}
