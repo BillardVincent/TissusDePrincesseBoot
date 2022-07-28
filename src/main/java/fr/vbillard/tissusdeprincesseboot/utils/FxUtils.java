@@ -66,6 +66,15 @@ public class FxUtils {
 		return result;
 	}
 
+	public static CharacterSearch textFieldToCharacterSearchMultiple(JFXTextField textField) {
+		CharacterSearch result = null;
+		if (!textField.getText().isEmpty()) {
+			result = new CharacterSearch();
+			result.setContainsMultiple(textField.getText());
+		}
+		return result;
+	}
+
 	public static NumericSearch<Integer> textFieldToMaxNumericSearch(JFXTextField textField) {
 		NumericSearch<Integer> result = null;
 		if (!textField.getText().isEmpty()) {
@@ -191,6 +200,7 @@ public class FxUtils {
 
 	public static void setTextFieldFromCharacterSearch(JFXTextField field, CharacterSearch charSearch) {
 		if (charSearch != null && Strings.isNotBlank(charSearch.getContains())) {
+
 			field.setText(charSearch.getContains());
 		}
 	}

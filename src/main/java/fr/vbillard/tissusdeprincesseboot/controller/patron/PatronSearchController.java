@@ -117,7 +117,9 @@ public class PatronSearchController implements IController {
 	private void setData(FxData data) {
 		if (data != null && data.getSpecification() != null && data.getSpecification() instanceof PatronSpecification) {
 			PatronSpecification spec = (PatronSpecification) data.getSpecification();
-			FxUtils.setTextFieldFromCharacterSearch(descriptionField, spec.getDescription());
+			if (spec.getDescription() != null && Strings.isNotBlank(spec.getDescription().getContainsMultiple())) {
+				descriptionField.setText(spec.getDescription().getContainsMultiple());
+			}
 			FxUtils.setTextFieldFromCharacterSearch(typeVetementField, spec.getTypeVetement());
 			FxUtils.setTextFieldFromCharacterSearch(marqueField, spec.getMarque());
 			FxUtils.setTextFieldFromCharacterSearch(modeleField, spec.getModele());
@@ -198,7 +200,7 @@ public class PatronSearchController implements IController {
 			}
 		}
 
-		CharacterSearch description = FxUtils.textFieldToCharacterSearch(descriptionField);
+		CharacterSearch description = FxUtils.textFieldToCharacterSearchMultiple(descriptionField);
 
 		CharacterSearch reference = FxUtils.textFieldToCharacterSearch(referenceField);
 

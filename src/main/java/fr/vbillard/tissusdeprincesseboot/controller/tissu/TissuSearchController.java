@@ -166,7 +166,11 @@ public class TissuSearchController implements IController {
 
 			specification = (TissuSpecification) data.getSpecification();
 
-			FxUtils.setTextFieldFromCharacterSearch(descriptionField, specification.getDescription());
+			if (specification.getDescription() != null
+					&& Strings.isNotBlank(specification.getDescription().getContainsMultiple())) {
+				descriptionField.setText(specification.getDescription().getContainsMultiple());
+			}
+
 			FxUtils.setTextFieldFromCharacterSearch(referenceField, specification.getReference());
 
 			FxUtils.setTextFieldMaxFromNumericSearch(longueurFieldMax, specification.getLongueur());
@@ -279,7 +283,7 @@ public class TissuSearchController implements IController {
 
 		NumericSearch<Integer> laizeSearch = FxUtils.setNumericSearch(laizeFieldMin, laizeFieldMax);
 
-		CharacterSearch description = FxUtils.textFieldToCharacterSearch(descriptionField);
+		CharacterSearch description = FxUtils.textFieldToCharacterSearchMultiple(descriptionField);
 
 		CharacterSearch reference = FxUtils.textFieldToCharacterSearch(referenceField);
 
