@@ -34,18 +34,19 @@ public class TissuSpecification implements Specification<Tissu> {
 
 	private static final long serialVersionUID = -6956433248687682190L;
 
-	public NumericSearch<Integer> longueur;
-	public NumericSearch<Integer> laize;
-	public List<Matiere> matieres;
-	public List<Tissage> tissages;
-	public CharacterSearch reference;
-	public CharacterSearch description;
-	public List<TypeTissuEnum> typeTissu;
-	public Boolean chute;
-	public NumericSearch<Integer> poids;
-	public Boolean decati;
-	public CharacterSearch lieuAchat;
-	public Boolean archived;
+	private NumericSearch<Integer> longueur;
+	private NumericSearch<Integer> laize;
+	private List<Matiere> matieres;
+	private List<Tissage> tissages;
+	private CharacterSearch reference;
+	private CharacterSearch description;
+	private List<TypeTissuEnum> typeTissu;
+	private Boolean chute;
+	private NumericSearch<Integer> poids;
+	private Boolean poidsNC;
+	private Boolean decati;
+	private CharacterSearch lieuAchat;
+	private Boolean archived;
 
 	@Override
 	public Predicate toPredicate(Root<Tissu> tissu, CriteriaQuery<?> query, CriteriaBuilder cb) {
@@ -71,7 +72,19 @@ public class TissuSpecification implements Specification<Tissu> {
 			predicateList.add(SpecificationUtils.getNumericSearchPredicate(laize, tissu.get(Tissu_.LAIZE), cb));
 		}
 
-		if (poids != null) {
+		if (poidsNC != null && poidsNC) {
+			if (poids != null) {
+				Predicate nc = SpecificationUtils.getNumericSearchPredicate(new NumericSearch<Integer>(0),
+						tissu.get(Tissu_.POIDS), cb);
+				Predicate value = SpecificationUtils.getNumericSearchPredicate(poids, tissu.get(Tissu_.POIDS), cb);
+
+				Predicate or = cb.or(nc, value);
+				predicateList.add(or);
+			} else {
+				predicateList.add(SpecificationUtils.getNumericSearchPredicate(new NumericSearch<Integer>(0),
+						tissu.get(Tissu_.POIDS), cb));
+			}
+		} else if (poids != null) {
 			predicateList.add(SpecificationUtils.getNumericSearchPredicate(poids, tissu.get(Tissu_.POIDS), cb));
 		}
 

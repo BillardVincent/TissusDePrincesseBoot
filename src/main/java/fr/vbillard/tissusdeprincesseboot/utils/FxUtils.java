@@ -163,11 +163,11 @@ public class FxUtils {
 	}
 
 	public static NumericSearch<Integer> NumericSearch(JFXCheckBox lourdCBox, JFXCheckBox moyenCBox,
-			JFXCheckBox legerCBox, JFXCheckBox ncCBox, UserPref pref) {
+			JFXCheckBox legerCBox, UserPref pref) {
 
 		NumericSearch<Integer> poidsSearch = null;
 
-		if (!lourdCBox.isSelected() && !moyenCBox.isSelected() && !legerCBox.isSelected() && !ncCBox.isSelected()) {
+		if (!lourdCBox.isSelected() || !moyenCBox.isSelected() || !legerCBox.isSelected()) {
 			if (!lourdCBox.isSelected()) {
 				poidsSearch = new NumericSearch<Integer>(null);
 				if (moyenCBox.isSelected()) {
@@ -176,8 +176,7 @@ public class FxUtils {
 					poidsSearch.setLessThanEqual(pref.margeHauteLeger());
 
 				}
-			}
-			if (!legerCBox.isSelected()) {
+			} else if (!legerCBox.isSelected()) {
 				if (poidsSearch == null) {
 					poidsSearch = new NumericSearch<Integer>(null);
 				}
@@ -186,13 +185,6 @@ public class FxUtils {
 				} else if (lourdCBox.isSelected()) {
 					poidsSearch.setGreaterThanEqual(pref.margeBasseLourd());
 				}
-			}
-			if (ncCBox.isSelected()) {
-				// TODO vérifier que NC marche en plus d'une sélection ?
-				if (poidsSearch == null) {
-					poidsSearch = new NumericSearch<Integer>(null);
-				}
-				poidsSearch.setEquals(0);
 			}
 		}
 		return poidsSearch;

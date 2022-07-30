@@ -26,8 +26,8 @@ public class ProjetSpecification implements Specification<Projet> {
 
 	private static final long serialVersionUID = -6956433248687682190L;
 
-	public List<ProjectStatus> projectStatus;
-	public Boolean archived;
+	private List<ProjectStatus> projectStatus;
+	private Boolean archived;
 
 	@Override
 	public Predicate toPredicate(Root<Projet> projet, CriteriaQuery<?> query, CriteriaBuilder cb) {

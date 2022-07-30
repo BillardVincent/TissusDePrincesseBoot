@@ -155,7 +155,10 @@ public class TissuSearchController implements IController {
 		lourdCBox.setSelected(true);
 		moyenCBox.setSelected(true);
 		legerCBox.setSelected(true);
-		ncCBox.setSelected(true);
+
+		// TODO mettre en palce NC
+		ncCBox.setSelected(false);
+		ncCBox.setVisible(false);
 
 		setData(data);
 
@@ -223,6 +226,12 @@ public class TissuSearchController implements IController {
 	}
 
 	private void setPoidsFromSpec() {
+		if (specification.getPoidsNC() != null) {
+			ncCBox.setSelected(specification.getPoidsNC());
+		} else {
+			ncCBox.setSelected(specification.getPoids() == null);
+		}
+
 		if (specification.getPoids() != null) {
 
 			Integer min = specification.getPoids().getGreaterThanEqual();
@@ -232,10 +241,9 @@ public class TissuSearchController implements IController {
 				lourdCBox.setSelected(true);
 				moyenCBox.setSelected(true);
 				legerCBox.setSelected(true);
-				ncCBox.setSelected(true);
 			} else {
 
-				if (min == 0) {
+				if (min == null || min == 0) {
 					legerCBox.setSelected(true);
 					if (max != margeHauteLeger) {
 						moyenCBox.setSelected(true);
@@ -246,6 +254,10 @@ public class TissuSearchController implements IController {
 					}
 				}
 			}
+		} else {
+			lourdCBox.setSelected(true);
+			moyenCBox.setSelected(true);
+			legerCBox.setSelected(true);
 		}
 	}
 
@@ -287,16 +299,18 @@ public class TissuSearchController implements IController {
 
 		CharacterSearch reference = FxUtils.textFieldToCharacterSearch(referenceField);
 
-		NumericSearch<Integer> poidsSearch = FxUtils.NumericSearch(lourdCBox, moyenCBox, legerCBox, ncCBox,
+		NumericSearch<Integer> poidsSearch = FxUtils.NumericSearch(lourdCBox, moyenCBox, legerCBox,
 				prefService.getUser());
+
+		Boolean poidsSearchNc = ncCBox.isSelected();
 
 		Boolean decati = FxUtils.getBooleanFromRadioButtons(decatiTrue, decatiFalse, decatiAll);
 
 		Boolean chuteOuCoupon = FxUtils.getBooleanFromRadioButtons(chute, coupon, chuteEtCoupon);
 
 		specification = TissuSpecification.builder().reference(reference).description(description).chute(chuteOuCoupon)
-				.decati(decati).laize(laizeSearch).poids(poidsSearch).longueur(longueurSearch).typeTissu(types)
-				.matieres(matieres).tissages(tissages).build();
+				.decati(decati).laize(laizeSearch).poids(poidsSearch).poidsNC(poidsSearchNc).longueur(longueurSearch)
+				.typeTissu(types).matieres(matieres).tissages(tissages).build();
 
 		root.displayTissu(specification);
 	}
