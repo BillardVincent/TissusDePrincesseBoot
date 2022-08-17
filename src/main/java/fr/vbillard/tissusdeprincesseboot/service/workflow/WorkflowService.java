@@ -14,6 +14,11 @@ public class WorkflowService {
 	private PlanifieWorkFlow planifieWorkFlow;
 	private TermineWorkFlow termineWorkFlow;
 
+	/**
+	 * "Context" dans le pattern de Strategy du workflow
+	 * @param statut
+	 * @return
+	 */
 	public Workflow getWorkflow(ProjectStatus statut) {
 		switch (statut) {
 		case BROUILLON:

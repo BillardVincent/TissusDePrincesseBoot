@@ -237,22 +237,18 @@ public class TissuSearchController implements IController {
 			Integer min = specification.getPoids().getGreaterThanEqual();
 			Integer max = specification.getPoids().getLessThanEqual();
 
-			if ((min == null || min == 0) && (max == null || max == 0)) {
+			boolean minIsNullOrZero = min == null || min == 0;
+
+			if (minIsNullOrZero && (max == null || max == 0)) {
 				lourdCBox.setSelected(true);
 				moyenCBox.setSelected(true);
 				legerCBox.setSelected(true);
 			} else {
 
-				if (min == null || min == 0) {
-					legerCBox.setSelected(true);
-					if (max != margeHauteLeger) {
-						moyenCBox.setSelected(true);
-						if (max != margeHauteMoyen) {
-							lourdCBox.setSelected(true);
-
-						}
-					}
-				}
+					legerCBox.setSelected(minIsNullOrZero);
+					moyenCBox.setSelected(min != null && min >= margeBasseMoyen && max != null && max > margeHauteLeger);
+					lourdCBox.setSelected(max != null && max > margeHauteMoyen);		
+					
 			}
 		} else {
 			lourdCBox.setSelected(true);
@@ -302,7 +298,7 @@ public class TissuSearchController implements IController {
 		NumericSearch<Integer> poidsSearch = FxUtils.NumericSearch(lourdCBox, moyenCBox, legerCBox,
 				prefService.getUser());
 
-		Boolean poidsSearchNc = ncCBox.isSelected();
+		Boolean poidsSearchNc = null; // ncCBox.isSelected();
 
 		Boolean decati = FxUtils.getBooleanFromRadioButtons(decatiTrue, decatiFalse, decatiAll);
 

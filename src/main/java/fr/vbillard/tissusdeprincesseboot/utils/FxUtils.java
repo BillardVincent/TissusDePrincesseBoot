@@ -172,6 +172,9 @@ public class FxUtils {
 				poidsSearch = new NumericSearch<Integer>(null);
 				if (moyenCBox.isSelected()) {
 					poidsSearch.setLessThanEqual(pref.margeHauteMoyen());
+					if (! legerCBox.isSelected()) {
+						poidsSearch.setGreaterThanEqual(pref.margeBasseMoyen());
+					} 
 				} else if (legerCBox.isSelected()) {
 					poidsSearch.setLessThanEqual(pref.margeHauteLeger());
 

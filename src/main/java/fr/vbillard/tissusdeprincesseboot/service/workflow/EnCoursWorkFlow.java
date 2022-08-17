@@ -37,7 +37,7 @@ public class EnCoursWorkFlow extends Workflow {
 	}
 
 	@Override
-	public void nextStep(Projet projet) {
+	public void doNextStep() {
 		if (validateNextStep().orElse(ButtonType.NO).equals(ButtonType.OK)) {
 			deleteTissuLenght(projet);
 			projet.setStatus(ProjectStatus.TERMINE);
@@ -47,7 +47,7 @@ public class EnCoursWorkFlow extends Workflow {
 	}
 
 	@Override
-	public void cancel(Projet projet) {
+	public void doCancel() {
 		projet.setStatus(ProjectStatus.PLANIFIE);
 		projetService.saveOrUpdate(projet);
 	}
@@ -70,5 +70,43 @@ public class EnCoursWorkFlow extends Workflow {
 
 		return alert.showAndWait();
 	}
+
+	@Override
+	protected List<String> verifyNextStep() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	protected List<String> verifyCancel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected List<String> verifyDelete() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected void doDelete() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected List<String> verifyArchive() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected void doArchive() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

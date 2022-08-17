@@ -193,14 +193,14 @@ public class PatronEditController implements IController {
 		topGrid.add(new Label("Gamme de poids"), 0, 2);
 
 		JFXTextField longueurSpinner = new JFXTextField();
-		longueurSpinner.setText(FxUtils.safePropertyToString(tissu.getLongueurProperty()));
 		longueurSpinner.setTextFormatter(IntegerSpinner.getFormatter());
+		longueurSpinner.setText(FxUtils.safePropertyToString(tissu.getLongueurProperty()));
 
 		topGrid.add(longueurSpinner, 1, 0);
 
 		JFXTextField laizeSpinner = new JFXTextField();
-		longueurSpinner.setText(FxUtils.safePropertyToString(tissu.getLaizeProperty()));
 		laizeSpinner.setTextFormatter(IntegerSpinner.getFormatter());
+		laizeSpinner.setText(FxUtils.safePropertyToString(tissu.getLaizeProperty()));
 
 		topGrid.add(laizeSpinner, 1, 1);
 
@@ -476,7 +476,7 @@ public class PatronEditController implements IController {
 
 	@FXML
 	private void addPicture() {
-		patronService.saveOrUpdate(mapper.map(patron, Patron.class));
+		handleSavePatron();
 
 		pictureUtils.addPictureLocal(patron);
 
@@ -484,7 +484,7 @@ public class PatronEditController implements IController {
 
 	@FXML
 	private void addPictureWeb() {
-		patronService.saveOrUpdate(mapper.map(patron, Patron.class));
+		handleSavePatron();
 
 		pictureUtils.addPictureWeb(patron);
 
