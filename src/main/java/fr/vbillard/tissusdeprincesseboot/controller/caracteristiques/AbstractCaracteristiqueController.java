@@ -1,12 +1,10 @@
 package fr.vbillard.tissusdeprincesseboot.controller.caracteristiques;
 
-import org.apache.logging.log4j.util.Strings;
 
 import com.jfoenix.controls.JFXButton;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IModalController;
-import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

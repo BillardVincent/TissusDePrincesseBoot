@@ -30,7 +30,7 @@ public abstract class PictureHelper {
 
 	protected Optional<Photo> picture;
 
-	public PictureHelper(ModelMapper mapper, PreferenceService preferenceService, StageInitializer initializer,
+	protected PictureHelper(ModelMapper mapper, PreferenceService preferenceService, StageInitializer initializer,
 			ImageService imageService) {
 		this.preferenceService = preferenceService;
 		this.initializer = initializer;

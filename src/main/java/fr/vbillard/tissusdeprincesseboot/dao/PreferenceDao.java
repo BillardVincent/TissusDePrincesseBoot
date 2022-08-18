@@ -31,7 +31,6 @@ public class PreferenceDao {
 			pref = om.readValue(file, Preference.class);
 		} catch (IOException e) {
 			e.printStackTrace();
-			// throw new RuntimeException("Erreur de lecture du fichier préferences");
 			pref.setDataBasePath("");
 			pref.setPictureLastUploadPath(FileSystemView.getFileSystemView().getDefaultDirectory().getPath());
 			pref.setFirstLaunch(true);
@@ -39,7 +38,6 @@ public class PreferenceDao {
 				om.writeValue(file, pref);
 			} catch (IOException e1) {
 				e1.printStackTrace();
-				// throw new RuntimeException("Erreur d'ecriture du fichier préferences");
 			}
 		}
 

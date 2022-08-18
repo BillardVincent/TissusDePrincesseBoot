@@ -60,10 +60,4 @@ public class ProjetService extends AbstractService<Projet> {
 				.map(t -> mapper.map(t, ProjetDto.class)).collect(Collectors.toList()));
 	}
 
-	public Workflow getWorkflow(ProjetDto dto) {
-
-		return null;
-
-	}
-
 }

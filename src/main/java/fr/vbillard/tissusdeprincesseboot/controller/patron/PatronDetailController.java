@@ -43,13 +43,11 @@ public class PatronDetailController implements IController {
 	private StageInitializer initializer;
 	private PatronDto patron;
 
-	private ModelMapper mapper;
 	private ProjetService projetService;
 	private PatronPictureHelper pictureUtils;
 
-	PatronDetailController(PatronPictureHelper pictureUtils, ModelMapper mapper, RootController rootController,
+	PatronDetailController(PatronPictureHelper pictureUtils, RootController rootController,
 			ProjetService projetService) {
-		this.mapper = mapper;
 		this.rootController = rootController;
 		this.projetService = projetService;
 		this.pictureUtils = pictureUtils;

@@ -1,6 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +16,7 @@ public abstract class AbstractService<T extends AbstractEntity> {
 
 	public T saveOrUpdate(T entity) {
 		beforeSaveOrUpdate(entity);
-		return (T) getDao().save(entity);
+		return getDao().save(entity);
 	}
 
 	public List<T> getAll() {
@@ -31,7 +32,8 @@ public abstract class AbstractService<T extends AbstractEntity> {
 	}
 
 	public T getById(int id) {
-		return (T) getDao().findById(id).get();
+		Optional<T> opt = getDao().findById(id);
+			return opt.orElse(null);
 	}
 
 	public long count() {

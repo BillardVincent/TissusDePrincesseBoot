@@ -20,13 +20,11 @@ public class TissusDePrincesseFxApp extends Application {
 
 	private Stage primaryStage;
 
-	private Image icon = new Image("file:resources/images/cut-cloth-red.png");
-
 	@Override
 	public void init() {
 
 		SpringApplication application = new SpringApplication(TissusDePrincesseFxApp.class);
-		String[] args = getParameters().getRaw().stream().toArray(String[]::new);
+		String[] args = getParameters().getRaw().toArray(new String[0]);
 		application.setHeadless(false);
 		applicationContext = application.run(args);
 

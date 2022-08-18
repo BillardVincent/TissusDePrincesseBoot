@@ -5,7 +5,6 @@ import java.io.IOException;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
-
 import com.sun.javafx.webkit.Accessor;
 
 import fr.vbillard.tissusdeprincesseboot.config.PathIconsProperties;

@@ -257,13 +257,13 @@ public class PatronEditController implements IController {
 				editButton.setGraphic(GlyphIconUtil.editNormal());
 				editButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
 					editingVariant = true;
-					DevInProgressService.notImplemented(mainApp);
+					DevInProgressService.notImplemented();
 				});
 
 				JFXButton deleteButton = new JFXButton();
 				deleteButton.setGraphic(GlyphIconUtil.suppressNormal());
 				deleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-						e -> DevInProgressService.notImplemented(mainApp));
+						e -> DevInProgressService.notImplemented());
 				HBox btns = new HBox(editButton, deleteButton);
 				btns.setAlignment(Pos.CENTER_RIGHT);
 				btns.setSpacing(10);
@@ -411,7 +411,7 @@ public class PatronEditController implements IController {
 
 	@FXML
 	private void handleFournitureListedit() {
-		DevInProgressService.notImplemented(mainApp);
+		DevInProgressService.notImplemented();
 
 	}
 

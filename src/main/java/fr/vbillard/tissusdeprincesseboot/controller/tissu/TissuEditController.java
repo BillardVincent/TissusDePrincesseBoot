@@ -310,7 +310,7 @@ public class TissuEditController implements IController {
 
 	@FXML
 	private void pictureExpend() {
-		DevInProgressService.notImplemented(initializer);
+		DevInProgressService.notImplemented();
 	}
 
 	@FXML

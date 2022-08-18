@@ -23,7 +23,6 @@ public class ProjetSearchController implements IController {
 
 	private static final String AUCUN_FILTRE = "Aucun filtre";
 	public static final String CHOIX = "Choix";
-	private ProjetSpecification specification;
 
 	@FXML
 	public JFXTextField referenceField;
@@ -48,7 +47,6 @@ public class ProjetSearchController implements IController {
 	@Override
 	public void setStageInitializer(StageInitializer initializer, FxData data) {
 		this.initializer = initializer;
-		specification = new ProjetSpecification();
 
 		etudeCBox.setSelected(true);
 		planedCBox.setSelected(true);
@@ -94,9 +92,9 @@ public class ProjetSearchController implements IController {
 			status = setStatusSpec(status, finishedCBox, ProjectStatus.TERMINE);
 		}
 
-		ProjetSpecification specification = ProjetSpecification.builder().projectStatus(status).build();
+		ProjetSpecification projetSpec = ProjetSpecification.builder().projectStatus(status).build();
 
-		root.displayProjets(specification);
+		root.displayProjets(projetSpec);
 	}
 
 	private List<ProjectStatus> setStatusSpec(List<ProjectStatus> lst, JFXCheckBox cbox, ProjectStatus status) {

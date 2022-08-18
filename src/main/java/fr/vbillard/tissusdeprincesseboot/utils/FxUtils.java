@@ -177,9 +177,8 @@ public class FxUtils {
 
 				}
 			} else if (!legerCBox.isSelected()) {
-				if (poidsSearch == null) {
-					poidsSearch = new NumericSearch<Integer>(null);
-				}
+				poidsSearch = new NumericSearch<Integer>(null);
+
 				if (moyenCBox.isSelected()) {
 					poidsSearch.setGreaterThanEqual(pref.margeBasseMoyen());
 				} else if (lourdCBox.isSelected()) {
