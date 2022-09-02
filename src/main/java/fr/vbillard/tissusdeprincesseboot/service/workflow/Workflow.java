@@ -3,6 +3,7 @@ package fr.vbillard.tissusdeprincesseboot.service.workflow;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import fr.vbillard.tissusdeprincesseboot.exception.InvalidWorkflowException;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
@@ -54,6 +55,7 @@ public abstract class Workflow {
 	 * 
 	 * @param projet
 	 */
+	@Transactional
 	public final void nextStep(Projet projet) {
 		List<String> errors = verifyNextStep();
 		if (nextPossible && errors.isEmpty()) {
@@ -83,6 +85,7 @@ public abstract class Workflow {
 		return cancelPossible;
 	}
 
+	@Transactional
 	public final void cancel(Projet projet) {
 		List<String> errors = verifyNextStep();
 		if (cancelPossible && errors.isEmpty()) {
@@ -102,6 +105,7 @@ public abstract class Workflow {
 		return deletable;
 	}
 
+	@Transactional
 	public final void delete(Projet projet) {
 		List<String> errors = verifyDelete();
 		if (deletable && errors.isEmpty()) {
@@ -117,24 +121,25 @@ public abstract class Workflow {
 	
 	// --------- archive ----------
 	
-		public final boolean isArchivePossible() {
-			return archivePossible;
-		}
-
-		public final void archive(Projet projet) {
-			List<String> errors = verifyArchive();
-			if (archivePossible && errors.isEmpty()) {
-				doArchive();
-			} else {
-				buildError(errors);
-			}
-		}
-
-		protected abstract List<String> verifyArchive();
-
-		protected abstract void doArchive();
+	public final boolean isArchivePossible() {
+		return archivePossible;
+	}
 	
+	@Transactional
+	public final void archive(Projet projet) {
+		List<String> errors = verifyArchive();
+		if (archivePossible && errors.isEmpty()) {
+			doArchive();
+		} else {
+			buildError(errors);
+		}
+	}
 	
+	protected abstract List<String> verifyArchive();
+	
+	protected abstract void doArchive();
+		
+		
 	// -------- Autre -------------
 	private void buildError(List<String> errors) {
 		throw new InvalidWorkflowException(
