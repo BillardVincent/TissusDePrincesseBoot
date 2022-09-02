@@ -25,7 +25,10 @@ public class TissusDePrincesseFxApp extends Application {
 	@Override
 	public void init() {
 
-		applicationContext = new SpringApplicationBuilder(TissuDePrincesseBootApplication.class).run();
+		SpringApplication application = new SpringApplication(TissusDePrincesseFxApp.class);
+		String[] args = getParameters().getRaw().stream().toArray(String[]::new);
+		application.setHeadless(false);
+		applicationContext = application.run(args);
 
 	}
 

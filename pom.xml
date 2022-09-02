@@ -15,8 +15,7 @@
 	<description>Application de gestion de projets de couture</description>
 	<properties>
 		<java.version>1.8</java.version>
-	    <springboot-javafx-test.version>0.0.4</springboot-javafx-test.version>
-		
+		<powermock-version>2.0.4</powermock-version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -90,17 +89,48 @@
 
 		<!-- TEST -->
 
-    <dependency>
-      <groupId>de.roskenet</groupId>
-      <artifactId>springboot-javafx-support</artifactId>
-            <version>${springboot-javafx-test.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>de.roskenet</groupId>
-      <artifactId>springboot-javafx-test</artifactId>
-      <version>${springboot-javafx-test.version}</version>
-      <scope>test</scope>
-    </dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.10.19</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<version>${powermock-version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testfx</groupId>
+			<artifactId>testfx-junit</artifactId>
+			<version>4.0.15-alpha</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-mockito2</artifactId>
+			<version>${powermock-version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+    <groupId>org.testfx</groupId>
+    <artifactId>testfx-core</artifactId>
+    <version>4.0.15-alpha</version>
+    <scope>test</scope>
+</dependency>
+<dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+    <version>4.13-beta-3</version>
+    <scope>test</scope>
+</dependency>
+<dependency>
+    <groupId>org.testfx</groupId>
+    <artifactId>testfx-junit</artifactId>
+    <version>4.0.15-alpha</version>
+    <scope>test</scope>
+</dependency>
 
 		<dependency>
 			<groupId>com.github.javafaker</groupId>
