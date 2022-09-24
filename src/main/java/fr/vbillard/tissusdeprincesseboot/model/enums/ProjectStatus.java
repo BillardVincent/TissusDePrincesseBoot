@@ -28,6 +28,12 @@ public enum ProjectStatus {
 		public String toString() {
 			return "terminé";
 		}
+	},
+	ABANDONNE("abandonné") {
+		@Override
+		public String toString() {
+			return "terminé";
+		}
 	};
 
 	public final String label;

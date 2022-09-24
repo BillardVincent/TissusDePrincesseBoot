@@ -8,6 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 import fr.vbillard.tissusdeprincesseboot.exception.InvalidWorkflowException;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
+import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.Articles;
+import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.ModelUtils;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 
 /**
  * Utilise le Pattern Strategy: Ceci est la class abstraite regroupant les
@@ -18,6 +23,13 @@ import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
  */
 @Component
 public abstract class Workflow {
+	
+	protected final static String NON_AUTORISE = "Non autorisé";
+
+	/**
+	 * Description du workflow
+	 */
+	protected String description;
 
 	protected ProjetService projetService;
 	/**
@@ -57,14 +69,14 @@ public abstract class Workflow {
 	 */
 	@Transactional
 	public final void nextStep(Projet projet) {
-		List<String> errors = verifyNextStep();
-		if (nextPossible && errors.isEmpty()) {
-			this.projet = projet;
-			doNextStep();
+		ErrorWarn errors = verifyNextStep();
+		if (nextPossible && errors.getError().isEmpty() && warnAlert(errors.getWarn())) {
+				doNextStep();
 		} else {
 			buildError(errors);
 		}
 	}
+
 
 	/**
 	 * Vérification de la possibilité d'avancer dans le Workflow. Défini dans la
@@ -72,7 +84,7 @@ public abstract class Workflow {
 	 * 
 	 * @return une liste d'erreurs sous forme de String
 	 */
-	protected abstract List<String> verifyNextStep();
+	protected abstract ErrorWarn verifyNextStep();
 
 	/**
 	 * Application de la stratégie à définir dans la stratégie
@@ -87,15 +99,15 @@ public abstract class Workflow {
 
 	@Transactional
 	public final void cancel(Projet projet) {
-		List<String> errors = verifyNextStep();
-		if (cancelPossible && errors.isEmpty()) {
+		ErrorWarn errors = verifyNextStep();
+		if (cancelPossible && errors.getError().isEmpty() && warnAlert(errors.getWarn())) {
 			doCancel();
 		} else {
 			buildError(errors);
 		}
 	}
 
-	protected abstract List<String> verifyCancel();
+	protected abstract ErrorWarn verifyCancel();
 
 	protected abstract void doCancel();
 
@@ -107,15 +119,15 @@ public abstract class Workflow {
 
 	@Transactional
 	public final void delete(Projet projet) {
-		List<String> errors = verifyDelete();
-		if (deletable && errors.isEmpty()) {
+		ErrorWarn errors = verifyDelete();
+		if (deletable && errors.getError().isEmpty() && warnAlert(errors.getWarn())) {
 			doDelete();
 		} else {
 			buildError(errors);
 		}
 	}
 
-	protected abstract List<String> verifyDelete();
+	protected abstract ErrorWarn verifyDelete();
 
 	protected abstract void doDelete();
 	
@@ -127,24 +139,36 @@ public abstract class Workflow {
 	
 	@Transactional
 	public final void archive(Projet projet) {
-		List<String> errors = verifyArchive();
-		if (archivePossible && errors.isEmpty()) {
+		ErrorWarn errors = verifyArchive();
+		if (archivePossible && errors.getError().isEmpty() && warnAlert(errors.getWarn())) {
 			doArchive();
 		} else {
 			buildError(errors);
 		}
 	}
 	
-	protected abstract List<String> verifyArchive();
+	protected abstract ErrorWarn verifyArchive();
 	
 	protected abstract void doArchive();
 		
+	private boolean warnAlert(List<String> warn) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Attention");
+		alert.setHeaderText("Nous avons relevé des problèmes potentiels");
+		alert.setContentText(String.join(",\n", warn));
+
+		return alert.showAndWait().orElse(ButtonType.CANCEL).equals(ButtonType.OK);
+	}
 		
 	// -------- Autre -------------
-	private void buildError(List<String> errors) {
+	private void buildError (ErrorWarn errors) {
 		throw new InvalidWorkflowException(
 				"Vous ne pouvez pas passser à l'étape suivante. Corrigez les erreurs suivantes : "
-						+ String.join(", ", errors));
+						+ String.join(",\n", errors.getError()));
+	}
+	
+	public String getDescription() {
+		return description;
 	}
 
 }

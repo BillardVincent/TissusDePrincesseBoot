@@ -1,11 +1,8 @@
 package fr.vbillard.tissusdeprincesseboot.service.workflow;
 
-import java.util.List;
-
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.exception.NotAllowed;
-import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
 
 @Component
@@ -15,6 +12,7 @@ public class TermineWorkFlow extends Workflow {
 		super(projetService);
 		cancelPossible = false;
 		nextPossible = false;
+		description = "Le projet est arrivé à son terme. Plus aucune action ne peut être effectuée. Les longueurs sont définitivement retirées des stocks de tissus.";
 	}
 
 	@Override
@@ -29,19 +27,19 @@ public class TermineWorkFlow extends Workflow {
 	}
 
 	@Override
-	protected List<String> verifyNextStep() {
+	protected ErrorWarn verifyNextStep() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	protected List<String> verifyCancel() {
+	protected ErrorWarn verifyCancel() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	protected List<String> verifyDelete() {
+	protected ErrorWarn verifyDelete() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -53,7 +51,7 @@ public class TermineWorkFlow extends Workflow {
 	}
 
 	@Override
-	protected List<String> verifyArchive() {
+	protected ErrorWarn verifyArchive() {
 		// TODO Auto-generated method stub
 		return null;
 	}

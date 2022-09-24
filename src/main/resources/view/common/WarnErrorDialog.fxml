@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="443.0" prefWidth="450.0" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.common.WarnErrorDialogController">
+   <children>
+      <AnchorPane layoutX="12.0" layoutY="11.0" prefHeight="443.0" prefWidth="442.0" styleClass="card">
+         <children>
+            <VBox prefHeight="443.0" prefWidth="442.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="35.0" prefWidth="454.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="38.0" prefWidth="442.0" styleClass="title1" text="Erreurs ou avertissements détectés" textAlignment="CENTER" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
+                  <VBox prefHeight="358.0" prefWidth="450.0">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="439.0">
+                           <children>
+                              <Separator prefWidth="200.0" />
+                              <Label alignment="CENTER" prefHeight="43.0" prefWidth="439.0" text="Avertissements" textAlignment="CENTER" />
+                              <VBox prefHeight="200.0" prefWidth="100.0" />
+                           </children>
+                        </VBox>
+                        <Separator prefWidth="200.0" />
+                        <VBox prefHeight="200.0" prefWidth="439.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="18.0" prefWidth="439.0" text="Erreurs" />
+                              <VBox prefHeight="200.0" prefWidth="100.0" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+                  <Separator prefWidth="200.0" />
+                  <HBox alignment="CENTER" prefHeight="38.0" prefWidth="450.0" spacing="20.0">
+                     <children>
+                  		
+                        <JFXButton mnemonicParsing="false" onAction="#handleValidate" text="Valider" />
+                        <JFXButton mnemonicParsing="false" onAction="#handleCancel" text="Annuler" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</AnchorPane>

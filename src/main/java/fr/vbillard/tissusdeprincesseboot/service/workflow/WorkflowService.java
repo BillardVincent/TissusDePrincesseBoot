@@ -13,6 +13,8 @@ public class WorkflowService {
 	private EnCoursWorkFlow enCoursWorkFlow;
 	private PlanifieWorkFlow planifieWorkFlow;
 	private TermineWorkFlow termineWorkFlow;
+	private AbandonneWorkFlow abandonneWorkflow;
+	
 
 	/**
 	 * "Context" dans le pattern de Strategy du workflow
@@ -29,6 +31,8 @@ public class WorkflowService {
 			return planifieWorkFlow;
 		case TERMINE:
 			return termineWorkFlow;
+		case ABANDONNE:
+			return abandonneWorkflow;
 		default:
 			return null;
 		}
