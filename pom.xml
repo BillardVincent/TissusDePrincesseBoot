@@ -89,7 +89,7 @@
 		</dependency>
 
 		<!-- TEST -->
-
+<!--
     <dependency>
       <groupId>de.roskenet</groupId>
       <artifactId>springboot-javafx-support</artifactId>
@@ -101,6 +101,7 @@
       <version>${springboot-javafx-test.version}</version>
       <scope>test</scope>
     </dependency>
+    -->
 
 		<dependency>
 			<groupId>com.github.javafaker</groupId>
