@@ -25,19 +25,18 @@ public class EnCoursWorkFlow extends Workflow {
 
 	@Autowired
 	public EnCoursWorkFlow(ProjetService projetService, TissuUsedService tissuUsedService, TissuService tissuService) {
-		this(projetService);
+		super(projetService);
 		this.tissuUsedService = tissuUsedService;
 		this.tissuService = tissuService;
-	}
-
-	public EnCoursWorkFlow(ProjetService projetService) {
-		super(projetService);
 		cancelPossible = true;
 		nextPossible = true;
+		description = "Le premier coup de ciseau est donné ! Les tissus ne peuvent plus revenir dans le stock ! Les modifications sont plus difficiles.\r\n" + 
+				"Les longueurs de tissus sont réservées. Elles ne sont pas retirées du stock, mais ne sont pas disponibles pour les autres projets.\r\n" + 
+				"";
 	}
 
 	@Override
-	public void nextStep(Projet projet) {
+	public void doNextStep() {
 		if (validateNextStep().orElse(ButtonType.NO).equals(ButtonType.OK)) {
 			deleteTissuLenght(projet);
 			projet.setStatus(ProjectStatus.TERMINE);
@@ -47,7 +46,7 @@ public class EnCoursWorkFlow extends Workflow {
 	}
 
 	@Override
-	public void cancel(Projet projet) {
+	public void doCancel() {
 		projet.setStatus(ProjectStatus.PLANIFIE);
 		projetService.saveOrUpdate(projet);
 	}
@@ -70,5 +69,43 @@ public class EnCoursWorkFlow extends Workflow {
 
 		return alert.showAndWait();
 	}
+
+	@Override
+	protected ErrorWarn verifyNextStep() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	protected ErrorWarn verifyCancel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected ErrorWarn verifyDelete() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected void doDelete() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected ErrorWarn verifyArchive() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected void doArchive() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }
