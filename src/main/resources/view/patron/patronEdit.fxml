@@ -141,7 +141,6 @@
 							</children>
 						</VBox>
 						<JFXButton layoutX="62.0" layoutY="752.0" onAction="#handleSavePatron" prefHeight="26.0" prefWidth="120.0" text="Sauver" />
-						<JFXButton layoutX="186.0" layoutY="752.0" onAction="#handleSaveAndQuitPatron" prefHeight="26.0" prefWidth="148.0" text="Sauver et quitter" />
 						<JFXButton layoutX="343.0" layoutY="752.0" onAction="#handleCancel" text="Annuler" />
 					</children>
 				</AnchorPane>

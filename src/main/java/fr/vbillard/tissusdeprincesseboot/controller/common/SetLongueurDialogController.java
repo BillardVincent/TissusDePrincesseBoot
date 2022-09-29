@@ -2,6 +2,9 @@ package fr.vbillard.tissusdeprincesseboot.controller.common;
 
 import com.jfoenix.controls.JFXTextField;
 
+import static fr.vbillard.tissusdeprincesseboot.utils.FxUtils.*;
+
+
 import org.springframework.stereotype.Component;
 
 import com.jfoenix.controls.JFXButton;
@@ -14,8 +17,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
-//import javafx.scene.control.Spinner;
-//import javafx.scene.control.SpinnerValueFactory;
 import javafx.stage.Stage;
 
 @Component
@@ -48,6 +49,7 @@ public class SetLongueurDialogController implements IModalController {
 
 	@FXML
 	public void handleValidate() {
+		value = intFromJFXTextField(longueurValue);
 		if (value > available) {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.initOwner(initializer.getPrimaryStage());
@@ -68,6 +70,10 @@ public class SetLongueurDialogController implements IModalController {
 			dialogStage.close();
 		}
 
+	}
+
+	public SetLongueurDialogController(StageInitializer initializer) {
+		this.initializer = initializer;
 	}
 
 	@FXML

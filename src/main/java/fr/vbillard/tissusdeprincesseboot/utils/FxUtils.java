@@ -8,6 +8,7 @@ import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
 
 import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 
@@ -15,9 +16,12 @@ import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.CharacterSearch;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
+import fr.vbillard.tissusdeprincesseboot.fx_custom_element.IntegerSpinner;
 import fr.vbillard.tissusdeprincesseboot.model.UserPref;
+import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 import javafx.scene.control.Label;
 
 @Component
@@ -211,6 +215,25 @@ public class FxUtils {
 				&& numericSearch.getGreaterThanEqual() != 0) {
 			field.setText(String.valueOf(numericSearch.getLessThanEqual()));
 		}
+	}
+	
+	public static JFXComboBox<String> buildComboBox(List<String> values, StringProperty valueSelected) {
+		return buildComboBox(values, valueSelected, Strings.EMPTY);
+		}
+	
+	public static JFXComboBox<String> buildComboBox(List<String> values, StringProperty valueSelected, String defaultSelection) {
+		JFXComboBox<String> comboBox = new JFXComboBox<String>();
+		comboBox.setItems(FXCollections.observableArrayList(values));
+		comboBox.setValue(valueSelected == null || valueSelected.get() == null 
+				|| valueSelected.get().equals(Strings.EMPTY) ? defaultSelection : valueSelected.get());
+		return comboBox;
+		}
+	
+	public static JFXTextField buildSpinner(IntegerProperty value) {
+		JFXTextField spinner = new JFXTextField();
+		spinner.setTextFormatter(IntegerSpinner.getFormatter());
+		spinner.setText(FxUtils.safePropertyToString(value));
+		return spinner;
 	}
 
 }

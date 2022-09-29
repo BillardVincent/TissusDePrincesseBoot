@@ -85,6 +85,14 @@ public class TissuEditController implements IController {
 	public Label consommeIndo;
 	@FXML
 	public ImageView imagePane;
+	@FXML
+	public JFXButton addPictureWebBtn;
+	@FXML
+	public JFXButton pictureExpendBtn;
+	@FXML
+	public JFXButton addPictureBtn;
+	@FXML
+	public Label imageNotSaved;
 
 	private RootController root;
 	private StageInitializer initializer;
@@ -141,16 +149,17 @@ public class TissuEditController implements IController {
 		typeField.setValue(
 				tissu.getUnitePoidsProperty() == null ? TypeTissuEnum.NON_RENSEIGNE.label : tissu.getTypeTissu());
 
-		matiereField.setItems(FXCollections.observableArrayList(matiereService.getAll().stream()
-				.map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList())));
+		matiereField.setItems(FXCollections.observableArrayList(matiereService.getAllMatieresValues()));
 		matiereField.setValue(FxUtils.safePropertyToString(tissu.getMatiereProperty()));
 
-		tissageField.setItems(FXCollections.observableArrayList(tissageService.getAll().stream()
-				.map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList())));
+		tissageField.setItems(FXCollections.observableArrayList(tissageService.getAllValues()));
 		tissageField.setValue(FxUtils.safePropertyToString(tissu.getTissageProperty()));
 
 		pictureHelper.setPane(imagePane, tissu);
-
+		addPictureWebBtn.setDisable(tissu.getId() == 0);
+		pictureExpendBtn.setDisable(tissu.getId() == 0);
+		addPictureBtn.setDisable(tissu.getId() == 0);
+		imageNotSaved.setVisible(tissu.getId() == 0);
 	}
 
 	@FXML
@@ -164,7 +173,7 @@ public class TissuEditController implements IController {
 		IntegerSpinner.setSpinner(longueurField);
 		IntegerSpinner.setSpinner(laizeField);
 		IntegerSpinner.setSpinner(poidsField);
-
+		
 	}
 
 	public boolean isOkClicked() {
@@ -177,7 +186,6 @@ public class TissuEditController implements IController {
 
 			setTissuFromFields();
 			okClicked = true;
-
 			root.displayTissusDetails(tissu);
 		}
 	}
@@ -212,8 +220,7 @@ public class TissuEditController implements IController {
 	private void handleAddMatiere() {
 		initializer.displayModale(PathEnum.MATIERE, null, "Matière");
 
-		matiereField.setItems(FXCollections.observableArrayList(matiereService.getAll().stream()
-				.map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList())));
+		matiereField.setItems(FXCollections.observableArrayList(matiereService.getAllMatieresValues()));
 		matiereField.setValue(FxUtils.safePropertyToString(tissu.getMatiereProperty()));
 
 	}
@@ -222,8 +229,7 @@ public class TissuEditController implements IController {
 	private void handleAddTissage() {
 		initializer.displayModale(PathEnum.TISSAGE, null, "Tissage");
 
-		tissageField.setItems(FXCollections.observableArrayList(tissageService.getAll().stream()
-				.map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList())));
+		tissageField.setItems(FXCollections.observableArrayList(tissageService.getAllValues()));
 		tissageField.setValue(FxUtils.safePropertyToString(tissu.getTissageProperty()));
 	}
 
@@ -303,7 +309,6 @@ public class TissuEditController implements IController {
 	private void addPictureWeb() {
 		if (isInputValid()) {
 			setTissuFromFields();
-
 			pictureHelper.addPictureWeb(tissu);
 		}
 	}

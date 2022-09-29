@@ -25,6 +25,7 @@ import fr.vbillard.tissusdeprincesseboot.fx_custom_element.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.fx_custom_element.IntegerSpinner;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
+import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.service.ImageService;
@@ -192,22 +193,13 @@ public class PatronEditController implements IController {
 		topGrid.add(new Label("Laize"), 0, 1);
 		topGrid.add(new Label("Gamme de poids"), 0, 2);
 
-		JFXTextField longueurSpinner = new JFXTextField();
-		longueurSpinner.setTextFormatter(IntegerSpinner.getFormatter());
-		longueurSpinner.setText(FxUtils.safePropertyToString(tissu.getLongueurProperty()));
-
+		JFXTextField longueurSpinner = FxUtils.buildSpinner(tissu.getLongueurProperty());
 		topGrid.add(longueurSpinner, 1, 0);
 
-		JFXTextField laizeSpinner = new JFXTextField();
-		laizeSpinner.setTextFormatter(IntegerSpinner.getFormatter());
-		laizeSpinner.setText(FxUtils.safePropertyToString(tissu.getLaizeProperty()));
-
+		JFXTextField laizeSpinner = FxUtils.buildSpinner(tissu.getLaizeProperty());
 		topGrid.add(laizeSpinner, 1, 1);
 
-		JFXComboBox<String> gammePoidsChBx = new JFXComboBox<String>();
-		gammePoidsChBx.setItems(FXCollections.observableArrayList(GammePoids.labels()));
-		gammePoidsChBx.setValue(tissu.getGammePoidsProperty() == null || tissu.getGammePoids() == null
-				|| tissu.getGammePoids().equals("") ? GammePoids.NON_RENSEIGNE.label : tissu.getGammePoids());
+		JFXComboBox<String> gammePoidsChBx = FxUtils.buildComboBox(GammePoids.labels(),tissu.getGammePoidsProperty(), GammePoids.NON_RENSEIGNE.label);
 		topGrid.add(gammePoidsChBx, 1, 2);
 
 		JFXButton validateBtn = new JFXButton("Valider");
@@ -253,52 +245,17 @@ public class PatronEditController implements IController {
 
 			for (int i = 0; i < tvList.size(); i++) {
 				TissuVariantDto tv = tvList.get(i);
-				JFXButton editButton = new JFXButton();
-				editButton.setGraphic(GlyphIconUtil.editNormal());
-				editButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-					editingVariant = true;
-					DevInProgressService.notImplemented();
-				});
-
-				JFXButton deleteButton = new JFXButton();
-				deleteButton.setGraphic(GlyphIconUtil.suppressNormal());
-				deleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-						e -> DevInProgressService.notImplemented());
-				HBox btns = new HBox(editButton, deleteButton);
-				btns.setAlignment(Pos.CENTER_RIGHT);
-				btns.setSpacing(10);
-
-				bottomGrid.add(new Label(Utils.safeString(tv.getTypeTissu()) + " " + Utils.safeString(tv.getMatiere())
-						+ " " + Utils.safeString(tv.getTissage())), 0, i * 2);
-				bottomGrid.add(btns, 1, i * 2);
-
-				if (i != tvList.size() - 1) {
-					HBox hbox = new HBox(new Label("-------------   OU   --------------  "));
-					hbox.setAlignment(Pos.CENTER);
-					bottomGrid.add(hbox, 0, i * 2 + 1, 2, 1);
-					// displayTissuRequis(tissu);
-				}
+				buildTissuVariantDisplay(tissu, bottomGrid, i, tv);
 			}
 		}
 
 		if (tissu != null && tissu.getId() != 0) {
 
-			JFXComboBox<String> typeField = new JFXComboBox<String>();
-			typeField.setItems(FXCollections.observableArrayList(TypeTissuEnum.labels()));
-			typeField.setValue(variantSelected.getTypeTissuProperty() == null ? TypeTissuEnum.NON_RENSEIGNE.label
-					: variantSelected.getTypeTissu());
+			JFXComboBox<String> typeField = FxUtils.buildComboBox(TypeTissuEnum.labels(), variantSelected.getTypeTissuProperty());
 
-			JFXComboBox<String> matiereField = new JFXComboBox<String>();
-			matiereField.setItems(FXCollections.observableArrayList(
-					matiereService.getAll().stream().map(m -> m.getValue()).collect(Collectors.toList())));
-			matiereField.setValue(
-					variantSelected.getMatiereProperty() == null ? Strings.EMPTY : variantSelected.getMatiere());
+			JFXComboBox<String> matiereField = FxUtils.buildComboBox(matiereService.getAllMatieresValues(), variantSelected.getMatiereProperty());
 
-			JFXComboBox<String> tissageField = new JFXComboBox<String>();
-			tissageField.setItems(FXCollections.observableArrayList(
-					tissageService.getAll().stream().map(t -> t.getValue()).collect(Collectors.toList())));
-			tissageField.setValue(
-					variantSelected.getTissageProperty() == null ? Strings.EMPTY : variantSelected.getTissage());
+			JFXComboBox<String> tissageField = FxUtils.buildComboBox(tissageService.getAllValues(), variantSelected.getTissageProperty());
 
 			JFXButton addTvBtn = new JFXButton();
 			addTvBtn.setGraphic(GlyphIconUtil.plusCircleNormal());
@@ -321,6 +278,50 @@ public class PatronEditController implements IController {
 			hboxTissuVariant.setPadding(new Insets(20, 20, 20, 20));
 			bottomRightVbox.getChildren().addAll(new Separator(Orientation.HORIZONTAL), hboxTissuVariant);
 		}
+	}
+
+	private void buildTissuVariantDisplay(TissuRequisDto tissu, GridPane bottomGrid, int i, TissuVariantDto tv) {
+		JFXButton editButton = new JFXButton();
+		editButton.setGraphic(GlyphIconUtil.editNormal());
+		editButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+			editingVariant = true;
+			editVariant(tv);
+		});
+
+		JFXButton deleteButton = new JFXButton();
+		deleteButton.setGraphic(GlyphIconUtil.suppressNormal());
+		deleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+				e -> {
+					deleteVariant(tissu, tv);
+				});
+		HBox btns = new HBox(editButton, deleteButton);
+		btns.setAlignment(Pos.CENTER_RIGHT);
+		btns.setSpacing(10);
+
+		bottomGrid.add(new Label(Utils.safeString(tv.getTypeTissu()) + " " + Utils.safeString(tv.getMatiere())
+				+ " " + Utils.safeString(tv.getTissage())), 0, i * 2);
+		bottomGrid.add(btns, 1, i * 2);
+
+		if (i != tvList.size() - 1) {
+			HBox hbox = new HBox(new Label("-------------   OU   --------------  "));
+			hbox.setAlignment(Pos.CENTER);
+			bottomGrid.add(hbox, 0, i * 2 + 1, 2, 1);
+			// displayTissuRequis(tissu);
+		}
+	}
+
+	private void deleteVariant(TissuRequisDto tissu, TissuVariantDto tv) {
+		tissuVariantService.delete(mapper.map(tv, TissuVariant.class));
+		TissuRequisDto tissuReloaded = mapper.map(tissuRequisService.findTissuRequis(tissu.getId()), TissuRequisDto.class);
+		displayTissuRequis(tissuReloaded);
+
+		DevInProgressService.notImplemented();
+		
+	}
+
+	private void editVariant(TissuVariantDto tv) {
+		DevInProgressService.notImplemented();
+		
 	}
 
 	public void saveTissuRequis(TissuRequisDto tissu) {
@@ -366,16 +367,7 @@ public class PatronEditController implements IController {
 		}
 	}
 
-	@FXML
-	private void handleSaveAndQuitPatron() {
-		if (isInputValid()) {
-
-			handleSavePatron();
-			root.displayPatronDetails(patron);
-
-		}
-	}
-
+	
 	@FXML
 	private void handleCancel() {
 		if (patron.getId() != 0) {
@@ -463,10 +455,10 @@ public class PatronEditController implements IController {
 
 			setDisabledButton();
 
-			referenceField.setText(patron.getReferenceProperty() == null ? "" : patron.getReference());
-			marqueField.setText(patron.getMarqueProperty() == null ? "" : patron.getMarque());
-			modeleField.setText(patron.getModeleProperty() == null ? "" : patron.getModele());
-			typeVetementField.setText(patron.getTypeVetementProperty() == null ? "" : patron.getTypeVetement());
+			referenceField.setText(FxUtils.safePropertyToString(patron.getReferenceProperty()));
+			marqueField.setText(FxUtils.safePropertyToString(patron.getMarqueProperty()));
+			modeleField.setText(FxUtils.safePropertyToString(patron.getModeleProperty()));
+			typeVetementField.setText(FxUtils.safePropertyToString(patron.getTypeVetementProperty()));
 
 			pictureUtils.setPane(imagePane, patron);
 
@@ -492,6 +484,7 @@ public class PatronEditController implements IController {
 
 	@FXML
 	private void pictureExpend() {
+		DevInProgressService.notImplemented();
 
 	}
 
