@@ -34,6 +34,8 @@ import javafx.scene.layout.VBox;
 @Component
 public class RootController implements IController {
 
+	private static final String SELECTED = "mainmenu-element-selected";
+
 	@FXML
 	private Pane mainWindow;
 	@FXML
@@ -52,11 +54,8 @@ public class RootController implements IController {
 	private JFXButton deleteSelectedButton;
 	@FXML
 	private JFXButton researchButton;
-
 	@FXML
 	private VBox test;
-
-	private static final String SELECTED = "mainmenu-element-selected";
 
 	private List<HBox> menuElements;
 	private StageInitializer initializer;

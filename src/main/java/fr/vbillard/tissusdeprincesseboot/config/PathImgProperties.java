@@ -14,4 +14,6 @@ public class PathImgProperties {
 	public static final String PROPERTY_PREFIX = "fx.path.img";
 
 	private Resource imageDefault ;
+	
+	private Resource appIcon;
 }
