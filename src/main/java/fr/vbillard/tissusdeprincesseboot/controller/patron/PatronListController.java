@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.ViewListController;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
+import fr.vbillard.tissusdeprincesseboot.filtre.specification.PatronSpecification;
+import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification;
 import fr.vbillard.tissusdeprincesseboot.service.PatronService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
@@ -29,7 +31,15 @@ public class PatronListController extends ViewListController{
     @Override
     protected void setElements() {
         cardPane.getChildren().clear();
-        List<PatronDto> lst = patronService.getObservablePage(page, PAGE_SIZE);
+        
+        List<PatronDto> lst;
+        
+        if (specification instanceof PatronSpecification) {
+			lst = patronService.getObservablePage(page, PAGE_SIZE, (PatronSpecification) specification);
+		} else {
+			lst = patronService.getObservablePage(page, PAGE_SIZE);
+
+		}
         for (PatronDto p : lst){
         	FxData fxData = new FxData();
         	fxData.setPatron(p);

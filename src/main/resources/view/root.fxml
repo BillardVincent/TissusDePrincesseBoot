@@ -44,27 +44,6 @@
                            <children>
                               <HBox alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="1610.0">
                                  <children>
-                                    <HBox fx:id="fournitureMenu" alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="225.0" styleClass="mainmenu-element">
-                                       <children>
-                                          <HBox prefHeight="89.0" prefWidth="77.0">
-                                             <children>
-                                                <FontAwesomeIconView glyphName="CUBES" size="2em" styleClass="mainmenu-element-text">
-                                                   <HBox.margin>
-                                                      <Insets bottom="25.0" left="25.0" right="15.0" top="25.0" />
-                                                   </HBox.margin>
-                                                </FontAwesomeIconView>
-                                             </children>
-                                          </HBox>
-                                          <Label prefHeight="22.0" prefWidth="166.0" style="-fx-font-family: Calibri;" styleClass="mainmenu-element-text" text="FOURNITURES">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
-                                    </HBox>
                                     <HBox fx:id="patronMenu" alignment="CENTER_LEFT" onMouseClicked="#displayPatrons" prefHeight="14.0" prefWidth="225.0" styleClass="mainmenu-element">
                                        <children>
                                           <HBox prefHeight="84.0" prefWidth="66.0">
@@ -103,6 +82,27 @@
                                              </font>
                                           </Label>
                                        </children>
+                                    </HBox>
+                                    <HBox fx:id="fournitureMenu" alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="225.0" styleClass="mainmenu-element">
+                                       <children>
+                                          <HBox prefHeight="89.0" prefWidth="77.0">
+                                             <children>
+                                                <FontAwesomeIconView glyphName="CUBES" size="2em" styleClass="mainmenu-element-text">
+                                                   <HBox.margin>
+                                                      <Insets bottom="25.0" left="25.0" right="15.0" top="25.0" />
+                                                   </HBox.margin>
+                                                </FontAwesomeIconView>
+                                             </children>
+                                          </HBox>
+                                          <Label prefHeight="22.0" prefWidth="166.0" style="-fx-font-family: Calibri;" styleClass="mainmenu-element-text" text="FOURNITURES">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
                                     </HBox>
                                     <HBox prefHeight="100.0" prefWidth="200.0">
                                        <children>
@@ -195,7 +195,7 @@
                         <HBox alignment="CENTER" prefHeight="29.0" prefWidth="280.0" spacing="10.0">
                            <children>
                               <JFXButton fx:id="deleteSelectedButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#deleteSelected" text="Désélectionner" textAlignment="CENTER" />
-                              <JFXButton text="Créer une recherche" fx:id="researchButton" onMouseClicked="#createResearch" alignment="CENTER" textAlignment="CENTER" />
+                              <JFXButton fx:id="researchButton" alignment="CENTER" onMouseClicked="#createResearch" text="Créer une recherche" textAlignment="CENTER" />
                            </children>
                         </HBox>
                         <Pane fx:id="searchPane" prefHeight="713.0" prefWidth="320.0">

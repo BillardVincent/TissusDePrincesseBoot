@@ -311,12 +311,9 @@ public class PatronEditController implements IController {
 	}
 
 	private void deleteVariant(TissuRequisDto tissu, TissuVariantDto tv) {
-		tissuVariantService.delete(mapper.map(tv, TissuVariant.class));
+		tissuVariantService.delete(tv.getId());
 		TissuRequisDto tissuReloaded = mapper.map(tissuRequisService.findTissuRequis(tissu.getId()), TissuRequisDto.class);
-		displayTissuRequis(tissuReloaded);
-
-		DevInProgressService.notImplemented();
-		
+		displayTissuRequis(tissuReloaded);		
 	}
 
 	private void editVariant(TissuVariantDto tv) {

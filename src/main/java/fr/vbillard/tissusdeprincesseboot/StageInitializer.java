@@ -69,7 +69,7 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
 	private final PreferenceService preferenceService;
 	private static History history;
 	private FxData fxData;
-	RootController rootController;
+	private RootController rootController;
 
 	public StageInitializer(ApplicationContext applicationContext, FxmlPathProperties pathProperties,
 			PreferenceService preferenceService, History history, FxData data, TissuService tissuService,

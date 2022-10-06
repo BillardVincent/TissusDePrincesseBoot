@@ -27,6 +27,10 @@ public abstract class AbstractService<T extends AbstractEntity> {
 		return getDao().findAll(spec, page);
 	}
 
+	public void delete(int id) {
+		getDao().deleteById(id);
+	}
+	
 	public void delete(T entity) {
 		getDao().delete(entity);
 	}

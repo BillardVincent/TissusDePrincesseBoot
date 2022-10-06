@@ -10,6 +10,7 @@ import fr.vbillard.tissusdeprincesseboot.dao.Idao;
 import fr.vbillard.tissusdeprincesseboot.dao.PatronDao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissusRequisDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
+import fr.vbillard.tissusdeprincesseboot.filtre.specification.PatronSpecification;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import javafx.collections.FXCollections;
@@ -60,6 +61,11 @@ public class PatronService extends AbstractService<Patron> {
 
 	public ObservableList<PatronDto> getObservablePage(int page, int pageSize) {
 		return FXCollections.observableArrayList(patronDao.findAll(PageRequest.of(page, pageSize)).stream()
+				.map(t -> mapper.map(t, PatronDto.class)).collect(Collectors.toList()));
+	}
+	
+	public ObservableList<PatronDto> getObservablePage(int page, int pageSize, PatronSpecification spec) {
+		return FXCollections.observableArrayList(patronDao.findAll(spec, PageRequest.of(page, pageSize)).stream()
 				.map(t -> mapper.map(t, PatronDto.class)).collect(Collectors.toList()));
 	}
 
