@@ -1,19 +1,16 @@
 package fr.vbillard.tissusdeprincesseboot.service.workflow;
 
-import java.util.List;
-
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.exception.NotAllowed;
-import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
-import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
-import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
 import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuRequisService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuUsedService;
 import fr.vbillard.tissusdeprincesseboot.service.UserPrefService;
 
-@Component
+@Component("abandonné")
+@Scope("prototype")
 public class AbandonneWorkFlow extends Workflow {
 
 	private TissuRequisService tissuRequisService;
@@ -21,9 +18,7 @@ public class AbandonneWorkFlow extends Workflow {
 	private UserPrefService userPrefService;
 	
 	public AbandonneWorkFlow(ProjetService projetService) {
-		super(projetService);
-		cancelPossible = false;
-		nextPossible = false;
+		this.projetService = projetService;
 		description = "";
 	}
 
@@ -40,23 +35,20 @@ public class AbandonneWorkFlow extends Workflow {
 
 	@Override
 	protected ErrorWarn verifyNextStep() {
-		ErrorWarn errorwarn = new ErrorWarn();
-		errorwarn.addError("Non autorisé");
-		return errorwarn;
+		return nonAutorisé();
+
 	}
 
 	@Override
 	protected ErrorWarn verifyCancel() {
-		ErrorWarn errorwarn = new ErrorWarn();
-		errorwarn.addError("Non autorisé");
-		return errorwarn;
+		return nonAutorisé();
+
 	}
 
 	@Override
 	protected ErrorWarn verifyDelete() {
-		ErrorWarn errorwarn = new ErrorWarn();
-		errorwarn.addError("Non autorisé");
-		return errorwarn;
+		return nonAutorisé();
+
 	}
 
 	@Override
@@ -67,15 +59,34 @@ public class AbandonneWorkFlow extends Workflow {
 
 	@Override
 	protected ErrorWarn verifyArchive() {
-		ErrorWarn errorwarn = new ErrorWarn();
-		errorwarn.addError("Non autorisé");
-		return errorwarn;
+		return nonAutorisé();
+
 	}
 
 	@Override
 	protected void doArchive() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean isNextPossible() {
+		return false;
+	}
+
+	@Override
+	public boolean isCancelPossible() {
+		return false;
+	}
+
+	@Override
+	public boolean isDeletePossible() {
+		return true;
+	}
+
+	@Override
+	public boolean isArchivePossible() {
+		return false;
 	}
 
 }

@@ -1,35 +1,34 @@
 package fr.vbillard.tissusdeprincesseboot.service.workflow;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.exception.NotAllowed;
-import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
-import fr.vbillard.tissusdeprincesseboot.service.PreferenceService;
 import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuRequisService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuUsedService;
 import fr.vbillard.tissusdeprincesseboot.service.UserPrefService;
 
-@Component
+@Component("brouillon")
+@Scope("prototype")
 public class BrouillonWorkFlow extends Workflow {
 
 	private TissuRequisService tissuRequisService;
 	private TissuUsedService tissuUsedService;
 	private UserPrefService userPrefService;
 	
+	@Autowired
 	public BrouillonWorkFlow(UserPrefService userPrefService, ProjetService projetService, TissuRequisService tissuRequisService, TissuUsedService tissuUsedService) {
-		super(projetService);
+		this.projetService = projetService;
 		this.tissuRequisService = tissuRequisService;
 		this.tissuUsedService = tissuUsedService;
 		this.userPrefService = userPrefService;
-		cancelPossible = false;
-		nextPossible = true;
 		description = "Les projets « Brouillon » permettent de faire des essais. Les longueurs de tissus qui sont attribuées à un « Brouillon » ne sont pas retirées du stock et ne sont pas réservées pour ce projet.";
 	}
 
@@ -64,9 +63,7 @@ public class BrouillonWorkFlow extends Workflow {
 
 	@Override
 	protected ErrorWarn verifyCancel() {
-		ErrorWarn errorwarn = new ErrorWarn();
-		errorwarn.addError(NON_AUTORISE);
-		return errorwarn;
+		return nonAutorisé();
 	}
 
 	@Override
@@ -93,6 +90,26 @@ public class BrouillonWorkFlow extends Workflow {
 	protected void doArchive() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean isNextPossible() {
+		return true;
+	}
+
+	@Override
+	public boolean isCancelPossible() {
+		return false;
+	}
+
+	@Override
+	public boolean isDeletePossible() {
+		return true;
+	}
+
+	@Override
+	public boolean isArchivePossible() {
+		return true;
 	}
 
 }

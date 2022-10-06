@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
@@ -17,7 +18,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 
-@Component
+@Component("en cours")
+@Scope("prototype")
 public class EnCoursWorkFlow extends Workflow {
 
 	private TissuUsedService tissuUsedService;
@@ -25,11 +27,9 @@ public class EnCoursWorkFlow extends Workflow {
 
 	@Autowired
 	public EnCoursWorkFlow(ProjetService projetService, TissuUsedService tissuUsedService, TissuService tissuService) {
-		super(projetService);
+		this.projetService = projetService;
 		this.tissuUsedService = tissuUsedService;
 		this.tissuService = tissuService;
-		cancelPossible = true;
-		nextPossible = true;
 		description = "Le premier coup de ciseau est donné ! Les tissus ne peuvent plus revenir dans le stock ! Les modifications sont plus difficiles.\r\n" + 
 				"Les longueurs de tissus sont réservées. Elles ne sont pas retirées du stock, mais ne sont pas disponibles pour les autres projets.\r\n" + 
 				"";
@@ -72,21 +72,24 @@ public class EnCoursWorkFlow extends Workflow {
 
 	@Override
 	protected ErrorWarn verifyNextStep() {
+		ErrorWarn errorwarn = new ErrorWarn();
 		// TODO Auto-generated method stub
-		return null;
+		return errorwarn;
 	}
 
 
 	@Override
 	protected ErrorWarn verifyCancel() {
+		ErrorWarn errorwarn = new ErrorWarn();
 		// TODO Auto-generated method stub
-		return null;
+		return errorwarn;
 	}
 
 	@Override
 	protected ErrorWarn verifyDelete() {
+		ErrorWarn errorwarn = new ErrorWarn();
 		// TODO Auto-generated method stub
-		return null;
+		return errorwarn;
 	}
 
 	@Override
@@ -97,14 +100,35 @@ public class EnCoursWorkFlow extends Workflow {
 
 	@Override
 	protected ErrorWarn verifyArchive() {
+		ErrorWarn errorwarn = new ErrorWarn();
 		// TODO Auto-generated method stub
-		return null;
+		return errorwarn;
 	}
 
 	@Override
 	protected void doArchive() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean isNextPossible() {
+		return true;
+	}
+
+	@Override
+	public boolean isCancelPossible() {
+		return true;
+	}
+
+	@Override
+	public boolean isDeletePossible() {
+		return false;
+	}
+
+	@Override
+	public boolean isArchivePossible() {
+		return false;
 	}
 
 

@@ -41,7 +41,6 @@ public class ProjetEditController implements IController {
 
 	@FXML
 	private ScrollPane scrollContent;
-
 	@FXML
 	private Label description;
 	@FXML
@@ -141,7 +140,7 @@ public class ProjetEditController implements IController {
 			}
 		}
 
-		workflow = workflowService.getWorkflow(status);
+		workflow = workflowService.getWorkflow(mapper.map(projet, Projet.class));
 
 		nextStep.setDisable(!workflow.isNextPossible());
 		previousStep.setDisable(!workflow.isCancelPossible());

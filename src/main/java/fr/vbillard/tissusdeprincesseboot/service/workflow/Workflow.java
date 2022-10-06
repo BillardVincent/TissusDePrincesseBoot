@@ -2,14 +2,12 @@ package fr.vbillard.tissusdeprincesseboot.service.workflow;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import fr.vbillard.tissusdeprincesseboot.exception.InvalidWorkflowException;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
-import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.Articles;
-import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.ModelUtils;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
@@ -21,7 +19,6 @@ import javafx.scene.control.ButtonType;
  * @author vbill
  *
  */
-@Component
 public abstract class Workflow {
 	
 	protected final static String NON_AUTORISE = "Non autorisé";
@@ -32,18 +29,7 @@ public abstract class Workflow {
 	protected String description;
 
 	protected ProjetService projetService;
-	/**
-	 * défini si une étape suivante existe
-	 */
-	protected boolean nextPossible;
-	/**
-	 * défini si une étape précédente existe
-	 */
-	protected boolean cancelPossible;
 
-	
-	protected boolean deletable;
-	protected boolean archivePossible;
 	
 	/**
 	 * Le projet qui servira à évaluer les vérifications et qui pourra être modifié
@@ -52,15 +38,9 @@ public abstract class Workflow {
 	 */
 	protected Projet projet;
 
-	protected Workflow(ProjetService projetService) {
-		this.projetService = projetService;
-	}
-
 	// ------ partie "Next" -----------
 
-	public final boolean isNextPossible() {
-		return nextPossible;
-	}
+	public abstract boolean isNextPossible();
 
 	/**
 	 * Point d'entrée de la stratégie
@@ -70,13 +50,12 @@ public abstract class Workflow {
 	@Transactional
 	public final void nextStep(Projet projet) {
 		ErrorWarn errors = verifyNextStep();
-		if (nextPossible && errors.getError().isEmpty() && warnAlert(errors.getWarn())) {
+		if (isNextPossible() && errors.getError().isEmpty() && warnAlert(errors.getWarn())) {
 				doNextStep();
 		} else {
 			buildError(errors);
 		}
 	}
-
 
 	/**
 	 * Vérification de la possibilité d'avancer dans le Workflow. Défini dans la
@@ -93,14 +72,12 @@ public abstract class Workflow {
 
 	// ------ partie "Cancel" -----------
 
-	public final boolean isCancelPossible() {
-		return cancelPossible;
-	}
-
+	public abstract boolean isCancelPossible();
+	
 	@Transactional
 	public final void cancel(Projet projet) {
 		ErrorWarn errors = verifyNextStep();
-		if (cancelPossible && errors.getError().isEmpty() && warnAlert(errors.getWarn())) {
+		if (isCancelPossible() && errors.getError().isEmpty() && warnAlert(errors.getWarn())) {
 			doCancel();
 		} else {
 			buildError(errors);
@@ -113,14 +90,12 @@ public abstract class Workflow {
 
 	// --------- suppression ----------
 	
-	public final boolean isDeletePossible() {
-		return deletable;
-	}
+	public abstract boolean isDeletePossible();
 
 	@Transactional
 	public final void delete(Projet projet) {
 		ErrorWarn errors = verifyDelete();
-		if (deletable && errors.getError().isEmpty() && warnAlert(errors.getWarn())) {
+		if (isDeletePossible() && errors.getError().isEmpty() && warnAlert(errors.getWarn())) {
 			doDelete();
 		} else {
 			buildError(errors);
@@ -133,14 +108,12 @@ public abstract class Workflow {
 	
 	// --------- archive ----------
 	
-	public final boolean isArchivePossible() {
-		return archivePossible;
-	}
+	public abstract boolean isArchivePossible();
 	
 	@Transactional
 	public final void archive(Projet projet) {
 		ErrorWarn errors = verifyArchive();
-		if (archivePossible && errors.getError().isEmpty() && warnAlert(errors.getWarn())) {
+		if (isArchivePossible() && errors.getError().isEmpty() && warnAlert(errors.getWarn())) {
 			doArchive();
 		} else {
 			buildError(errors);
@@ -152,6 +125,10 @@ public abstract class Workflow {
 	protected abstract void doArchive();
 		
 	private boolean warnAlert(List<String> warn) {
+		if (CollectionUtils.isEmpty(warn)) {
+			return true;
+		}
+		
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Attention");
 		alert.setHeaderText("Nous avons relevé des problèmes potentiels");
@@ -169,6 +146,16 @@ public abstract class Workflow {
 	
 	public String getDescription() {
 		return description;
+	}
+	
+	public void setProjet(Projet projet) {
+		this.projet = projet;
+	}
+	
+	protected ErrorWarn nonAutorisé() {
+		ErrorWarn errorwarn = new ErrorWarn();
+		errorwarn.addError(NON_AUTORISE);
+		return errorwarn;
 	}
 
 }

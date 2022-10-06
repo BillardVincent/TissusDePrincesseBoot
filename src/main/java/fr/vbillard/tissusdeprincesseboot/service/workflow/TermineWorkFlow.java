@@ -1,17 +1,17 @@
 package fr.vbillard.tissusdeprincesseboot.service.workflow;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.exception.NotAllowed;
 import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
 
-@Component
+@Component("terminé")
+@Scope("prototype")
 public class TermineWorkFlow extends Workflow {
 
 	public TermineWorkFlow(ProjetService projetService) {
-		super(projetService);
-		cancelPossible = false;
-		nextPossible = false;
+		this.projetService = projetService;
 		description = "Le projet est arrivé à son terme. Plus aucune action ne peut être effectuée. Les longueurs sont définitivement retirées des stocks de tissus.";
 	}
 
@@ -28,20 +28,23 @@ public class TermineWorkFlow extends Workflow {
 
 	@Override
 	protected ErrorWarn verifyNextStep() {
+		ErrorWarn errorwarn = new ErrorWarn();
 		// TODO Auto-generated method stub
-		return null;
+		return errorwarn;
 	}
 
 	@Override
 	protected ErrorWarn verifyCancel() {
+		ErrorWarn errorwarn = new ErrorWarn();
 		// TODO Auto-generated method stub
-		return null;
+		return errorwarn;
 	}
 
 	@Override
 	protected ErrorWarn verifyDelete() {
+		ErrorWarn errorwarn = new ErrorWarn();
 		// TODO Auto-generated method stub
-		return null;
+		return errorwarn;
 	}
 
 	@Override
@@ -52,14 +55,35 @@ public class TermineWorkFlow extends Workflow {
 
 	@Override
 	protected ErrorWarn verifyArchive() {
+		ErrorWarn errorwarn = new ErrorWarn();
 		// TODO Auto-generated method stub
-		return null;
+		return errorwarn;
 	}
 
 	@Override
 	protected void doArchive() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean isNextPossible() {
+		return false;
+	}
+
+	@Override
+	public boolean isCancelPossible() {
+		return false;
+	}
+
+	@Override
+	public boolean isDeletePossible() {
+		return false;
+	}
+
+	@Override
+	public boolean isArchivePossible() {
+		return false;
 	}
 
 }
