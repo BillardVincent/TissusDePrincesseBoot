@@ -19,6 +19,7 @@ import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSear
 import fr.vbillard.tissusdeprincesseboot.fx_custom_element.IntegerSpinner;
 import fr.vbillard.tissusdeprincesseboot.model.UserPref;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
+import fr.vbillard.tissusdeprincesseboot.utils.path.PathEnum;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;

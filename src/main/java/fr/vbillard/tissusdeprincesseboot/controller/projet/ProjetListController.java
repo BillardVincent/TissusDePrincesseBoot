@@ -5,25 +5,42 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.DisplayInventaireService;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.ViewListController;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.ProjetSpecification;
+import fr.vbillard.tissusdeprincesseboot.fx_custom_element.CustomIcon;
+import fr.vbillard.tissusdeprincesseboot.service.InventaireService;
 import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
-import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
+import fr.vbillard.tissusdeprincesseboot.utils.path.PathEnum;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.web.WebView;
 
 @Component
 public class ProjetListController extends ViewListController {
 
+	boolean hasIncompleteInventaire;
+
+	@FXML
+	private WebView hasIncompleteInventaireIcn;
+
 	private ProjetService projetService;
 	private RootController rootController;
+	private DisplayInventaireService displayInventaireService;
+	private InventaireService inventaireService;
+	private CustomIcon customIcon;
 
-	public ProjetListController(ProjetService projetService, RootController rootController) {
+	public ProjetListController(CustomIcon customIcon, InventaireService inventaireService, ProjetService projetService,
+			RootController rootController, DisplayInventaireService displayInventaireService) {
 		this.projetService = projetService;
 		this.rootController = rootController;
+		this.displayInventaireService = displayInventaireService;
+		this.inventaireService = inventaireService;
+		this.customIcon = customIcon;
 		page = 0;
 	}
 
@@ -36,7 +53,6 @@ public class ProjetListController extends ViewListController {
 			lst = projetService.getObservablePage(page, PAGE_SIZE, (ProjetSpecification) specification);
 		} else {
 			lst = projetService.getObservablePage(page, PAGE_SIZE);
-
 		}
 
 		for (ProjetDto p : lst) {
@@ -45,7 +61,9 @@ public class ProjetListController extends ViewListController {
 			Pane card = initializer.displayPane(PathEnum.PROJET_CARD, data);
 			cardPane.getChildren().add(card);
 		}
+
 		setPageInfo(projetService.count());
+		setIventaireIcone();
 	}
 
 	@Override
@@ -54,4 +72,22 @@ public class ProjetListController extends ViewListController {
 		rootController.displayProjetEdit(new ProjetDto());
 	}
 
+	private void setIventaireIcone() {
+		hasIncompleteInventaire = inventaireService.hasInventairesIncomplets();
+
+		if (hasIncompleteInventaire) {
+			customIcon.textBoxRemove(hasIncompleteInventaireIcn, 40);
+		} else {
+			customIcon.textBoxCheck(hasIncompleteInventaireIcn, 40);
+
+		}
+	}
+
+	@FXML
+	private void launchInventaire() {
+		if (hasIncompleteInventaire) {
+			displayInventaireService.batchInventaire(initializer);
+			setIventaireIcone();
+		}
+	}
 }

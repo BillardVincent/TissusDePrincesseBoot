@@ -33,8 +33,8 @@ import fr.vbillard.tissusdeprincesseboot.utils.ConstantesMetier;
 import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
-import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
 import fr.vbillard.tissusdeprincesseboot.utils.ShowAlert;
+import fr.vbillard.tissusdeprincesseboot.utils.path.PathEnum;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -156,10 +156,11 @@ public class TissuEditController implements IController {
 		tissageField.setValue(FxUtils.safePropertyToString(tissu.getTissageProperty()));
 
 		pictureHelper.setPane(imagePane, tissu);
-		addPictureWebBtn.setDisable(tissu.getId() == 0);
-		pictureExpendBtn.setDisable(tissu.getId() == 0);
-		addPictureBtn.setDisable(tissu.getId() == 0);
-		imageNotSaved.setVisible(tissu.getId() == 0);
+		boolean tissuIsNew = tissu.getId() == 0;
+		addPictureWebBtn.setDisable(tissuIsNew);
+		pictureExpendBtn.setDisable(tissuIsNew);
+		addPictureBtn.setDisable(tissuIsNew);
+		imageNotSaved.setVisible(tissuIsNew);
 	}
 
 	@FXML

@@ -52,7 +52,6 @@ public class TissusDePrincesseFxApp extends Application {
 		Thread.setDefaultUncaughtExceptionHandler(((Thread t, Throwable e) -> showError(t, e)));
 
 		this.primaryStage = primaryStage;
-
 	}
 
 	public Stage getPrimaryStage() {

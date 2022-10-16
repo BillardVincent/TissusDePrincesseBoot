@@ -19,8 +19,8 @@ public class FxmlPathProperties {
 	private Resource typeEdit;
 	private Resource tissageEdit;
 
-	private Resource root2;
-	private Resource tissus2;
+	private Resource root;
+	private Resource tissus;
 	private Resource tissuCard;
 	private Resource tissuDetail;
 	private Resource tissuEdit;
@@ -45,5 +45,7 @@ public class FxmlPathProperties {
 	private Resource patronSearch;
 	private Resource checkBoxChoice;
 	private Resource preference;
+	private Resource carrousel;
+	private Resource inventaire;
 
 }

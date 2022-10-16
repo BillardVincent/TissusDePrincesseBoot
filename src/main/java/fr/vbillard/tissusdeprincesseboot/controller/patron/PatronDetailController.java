@@ -14,7 +14,7 @@ import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
 import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
-import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
+import fr.vbillard.tissusdeprincesseboot.utils.path.PathEnum;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;

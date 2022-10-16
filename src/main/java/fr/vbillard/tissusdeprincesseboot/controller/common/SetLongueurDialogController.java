@@ -88,7 +88,7 @@ public class SetLongueurDialogController implements IModalController {
 
 	@Override
 	public FxData result() {
-		result.setLongueurRequise(longueur);
+		//result.setLongueurRequise(longueur);
 		return result;
 	}
 

@@ -30,6 +30,14 @@ public class CustomIcon {
 		double originalSize = pathProperties.getNoWashingMachineSize();
 		loadSVG(view, path, size, originalSize);
 	}
+	
+	public void textBoxCheck(WebView view, double size) {
+		loadSVG(view, pathProperties.getTextBoxCheck(), size, pathProperties.getTextBoxCheckSize());
+	}
+
+	public void  textBoxRemove(WebView view, double size) {
+		loadSVG(view, pathProperties.getTextBoxRemove(), size, pathProperties.getTextBoxRemoveSize());
+	}
 
 	public WebView typeTissu(WebView view, TypeTissuEnum typeTissu) {
 		if (typeTissu == null) {

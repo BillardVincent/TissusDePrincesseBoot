@@ -25,7 +25,7 @@ import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 import fr.vbillard.tissusdeprincesseboot.service.TissuRequisService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuUsedService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
-import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
+import fr.vbillard.tissusdeprincesseboot.utils.path.PathEnum;
 import javafx.fxml.FXML;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -226,18 +226,15 @@ public class RootController implements IController {
 		tissuUsed.setLongueur(data.getLongueurRequise());
 		tissuUsedService.saveOrUpdate(tissuUsed);
 
-		deleteSelected();
-
 		displayProjetEdit(projetSelected);
-
+		deleteSelected();
 	}
 
 	private FxData displaySetLongueurDialog(int longueurRequiseRestante, TissuDto tissuSelected) {
 		FxData fxData = new FxData();
 		fxData.setLongueurRequise(longueurRequiseRestante);
 		fxData.setTissu(tissuSelected);
-		fxData = initializer.displayModale(PathEnum.SET_LONGUEUR, fxData, Strings.EMPTY);
-		return fxData;
+		return initializer.displayModale(PathEnum.SET_LONGUEUR, fxData, Strings.EMPTY);
 	}
 
 	@FXML

@@ -27,7 +27,7 @@ import fr.vbillard.tissusdeprincesseboot.service.workflow.Workflow;
 import fr.vbillard.tissusdeprincesseboot.service.workflow.WorkflowService;
 import fr.vbillard.tissusdeprincesseboot.utils.Constants;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
-import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
+import fr.vbillard.tissusdeprincesseboot.utils.path.PathEnum;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;

@@ -12,7 +12,7 @@ import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 import fr.vbillard.tissusdeprincesseboot.service.TissuUsedService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
-import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
+import fr.vbillard.tissusdeprincesseboot.utils.path.PathEnum;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
@@ -64,11 +64,8 @@ public class ProjetEditListElementController implements IController {
 		}
 
 		Pane plusCard = initializer.displayPane(PathEnum.PLUS_CARD);
-		plusCard.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent e) {
+		plusCard.addEventHandler(MouseEvent.MOUSE_CLICKED,  e -> {
 				initializer.getRoot().displaySelected(data);
-			}
 		});
 		hbox.getChildren().add(plusCard);
 

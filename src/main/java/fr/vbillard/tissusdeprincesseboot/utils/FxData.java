@@ -12,7 +12,10 @@ import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuVariantDto;
+import fr.vbillard.tissusdeprincesseboot.model.Inventaire;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
+import fr.vbillard.tissusdeprincesseboot.utils.path.PathEnum;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
@@ -32,6 +35,8 @@ public class FxData {
 	private List<String> listValues;
 	private List<String> listDataCBox;
 	private Specification specification;
+	private Inventaire inventaire;
+	private List<Inventaire> listInventaire;
 
 	public FxData getCopy() {
 		try {

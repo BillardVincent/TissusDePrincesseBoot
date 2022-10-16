@@ -27,5 +27,9 @@ public class PathIconsProperties {
 	private double mailleSize;
 	private Resource multiligne;
 	private double multiligneSize;
+	private Resource textBoxCheck;
+	private double textBoxCheckSize;
+	private Resource textBoxRemove;
+	private double textBoxRemoveSize;
 
 }

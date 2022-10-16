@@ -17,7 +17,7 @@ import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Preference;
 import fr.vbillard.tissusdeprincesseboot.service.ImageService;
 import fr.vbillard.tissusdeprincesseboot.service.PreferenceService;
-import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
+import fr.vbillard.tissusdeprincesseboot.utils.path.PathEnum;
 import javafx.scene.image.ImageView;
 
 public abstract class PictureHelper {

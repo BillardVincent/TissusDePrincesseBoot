@@ -2,9 +2,9 @@ package fr.vbillard.tissusdeprincesseboot.utils.path;
 
 import java.io.IOException;
 
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import fr.vbillard.tissusdeprincesseboot.controller.InventaireBatchController;
 import fr.vbillard.tissusdeprincesseboot.controller.PreferenceController;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.TissuRequisCardController;
@@ -27,19 +27,18 @@ import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetEditListElement
 import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetListController;
 import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetSearchController;
 import fr.vbillard.tissusdeprincesseboot.controller.projet.TissuUsedCardController;
+import fr.vbillard.tissusdeprincesseboot.controller.tissu.CarrouselController;
 import fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuDetailController;
 import fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuEditController;
 import fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuSearchController;
 import fr.vbillard.tissusdeprincesseboot.controller.tissu.TissusController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxmlPathProperties;
-import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
 
 @Service
 public class PathService {
 	
 	private final FxmlPathProperties pathProperties;
-	
 	
 	
 	public PathService(FxmlPathProperties pathProperties) {
@@ -48,13 +47,12 @@ public class PathService {
 	}
 
 
-
 	public PathHolder pathEnumToURL(PathEnum pathEnum) throws IOException {
 		switch (pathEnum) {
 		case ROOT:
-			return new PathHolder(pathProperties.getRoot2().getURL(), RootController.class);
+			return new PathHolder(pathProperties.getRoot().getURL(), RootController.class);
 		case TISSUS:
-			return new PathHolder(pathProperties.getTissus2().getURL(), TissusController.class);
+			return new PathHolder(pathProperties.getTissus().getURL(), TissusController.class);
 		case TISSUS_DETAILS:
 			return new PathHolder(pathProperties.getTissuDetail().getURL(), TissuDetailController.class);
 		case TISSUS_EDIT:
@@ -109,6 +107,10 @@ public class PathService {
 			return new PathHolder(pathProperties.getCheckBoxChoice().getURL(), CheckBoxChoiceController.class);
 		case PREF:
 			return new PathHolder(pathProperties.getPreference().getURL(), PreferenceController.class);
+		case CARROUSEL:
+			return new PathHolder(pathProperties.getCarrousel().getURL(), CarrouselController.class);
+		case INVENTAIRE:
+			return new PathHolder(pathProperties.getInventaire().getURL(), InventaireBatchController.class);
 		default:
 			break;
 

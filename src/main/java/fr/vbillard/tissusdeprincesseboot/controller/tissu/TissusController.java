@@ -10,7 +10,7 @@ import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification;
 import fr.vbillard.tissusdeprincesseboot.service.TissuService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
-import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
+import fr.vbillard.tissusdeprincesseboot.utils.path.PathEnum;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;

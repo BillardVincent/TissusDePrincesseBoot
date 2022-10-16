@@ -2,50 +2,27 @@ package fr.vbillard.tissusdeprincesseboot;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+import java.util.Iterator;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.config.PathImgProperties;
-import fr.vbillard.tissusdeprincesseboot.controller.PreferenceController;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
-import fr.vbillard.tissusdeprincesseboot.controller.TissuRequisCardController;
-import fr.vbillard.tissusdeprincesseboot.controller.TissuRequisSelectedController;
-import fr.vbillard.tissusdeprincesseboot.controller.caracteristiques.MatiereEditController;
-import fr.vbillard.tissusdeprincesseboot.controller.caracteristiques.TissageEditController;
-import fr.vbillard.tissusdeprincesseboot.controller.common.CheckBoxChoiceController;
-import fr.vbillard.tissusdeprincesseboot.controller.common.PlusCardController;
-import fr.vbillard.tissusdeprincesseboot.controller.common.SetLongueurDialogController;
-import fr.vbillard.tissusdeprincesseboot.controller.common.SetWebUrlDialogController;
-import fr.vbillard.tissusdeprincesseboot.controller.patron.ListElementController;
-import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronCardController;
-import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronDetailController;
-import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronEditController;
-import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronListController;
-import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronSearchController;
-import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetCardController;
-import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetEditController;
-import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetEditListElementController;
-import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetListController;
-import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetSearchController;
-import fr.vbillard.tissusdeprincesseboot.controller.projet.TissuUsedCardController;
-import fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuCardController;
-import fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuDetailController;
-import fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuEditController;
-import fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuSearchController;
-import fr.vbillard.tissusdeprincesseboot.controller.tissu.TissusController;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.DisplayInventaireService;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxmlPathProperties;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IModalController;
 import fr.vbillard.tissusdeprincesseboot.model.Preference;
+import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ImageFormat;
+import fr.vbillard.tissusdeprincesseboot.service.InventaireService;
 import fr.vbillard.tissusdeprincesseboot.service.PreferenceService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.History;
-import fr.vbillard.tissusdeprincesseboot.utils.PathEnum;
+import fr.vbillard.tissusdeprincesseboot.utils.path.PathEnum;
 import fr.vbillard.tissusdeprincesseboot.utils.path.PathHolder;
 import fr.vbillard.tissusdeprincesseboot.utils.path.PathService;
 import javafx.fxml.FXMLLoader;
@@ -56,7 +33,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import lombok.AllArgsConstructor;
 
 @Component
 public class StageInitializer implements ApplicationListener<TissusDePrincesseFxApp.StageReadyEvent> {
@@ -70,10 +46,11 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
 	private static History history;
 	private FxData fxData;
 	private RootController rootController;
+	private DisplayInventaireService displayInventaireService;
 
 	public StageInitializer(ApplicationContext applicationContext, FxmlPathProperties pathProperties,
 			PreferenceService preferenceService, History history, FxData data, TissuService tissuService,
-			PathImgProperties pathImgProperties, PathService pathService) {
+			PathImgProperties pathImgProperties, DisplayInventaireService displayInventaireService, PathService pathService) {
 		this.applicationContext = applicationContext;
 		this.pathProperties = pathProperties;
 		this.preferenceService = preferenceService;
@@ -81,15 +58,17 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
 		this.fxData = data;
 		this.pathImgProperties = pathImgProperties;
 		this.pathService = pathService;
+		this.displayInventaireService = displayInventaireService;
 
 		tissuService.batchTissuDisponible();
-	}
 
+	}
+	
 	@Override
 	public void onApplicationEvent(TissusDePrincesseFxApp.StageReadyEvent event) {
 		try {
 			FXMLLoader rootLoader = new FXMLLoader();
-			rootLoader.setLocation(pathProperties.getRoot2().getURL());
+			rootLoader.setLocation(pathProperties.getRoot().getURL());
 			rootLoader.setControllerFactory(applicationContext::getBean);
 			Parent rootLayout = rootLoader.load();
 
@@ -102,6 +81,7 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
 			stage.setMaximized(true);
 			stage.getIcons().add(new Image(pathImgProperties.getAppIcon().getURL().toString()));
 			stage.show();
+			displayInventaireService.batchInventaire(this);
 
 
 		} catch (IOException e) {
