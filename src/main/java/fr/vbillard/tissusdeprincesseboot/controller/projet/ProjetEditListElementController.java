@@ -5,11 +5,13 @@ import java.util.List;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
+import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
 import fr.vbillard.tissusdeprincesseboot.service.TissuUsedService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.path.PathEnum;
@@ -32,6 +34,11 @@ public class ProjetEditListElementController implements IController {
 	private List<TissuUsed> lstTissus;
 	private TissuUsedService tissuUsedService;
 	private FxData data;
+	private boolean lock;
+	
+	public boolean isLocked() {
+		return lock;
+	}
 
 	public ProjetEditListElementController(TissuUsedService tissuUsedService) {
 		this.tissuUsedService = tissuUsedService;
@@ -46,28 +53,52 @@ public class ProjetEditListElementController implements IController {
 		this.data = data;
 		tissuRequis = data.getTissuRequis();
 
-		lstTissus = tissuUsedService.getTissuUsedByTissuRequisAndProjet(tissuRequis, data.getProjet());
-
-		setPane();
+		refresh();
 	}
 
 	private void setPane() {
+		hbox.getChildren().clear();
+		data.setParentController(this);
 		Pane tr = initializer.displayPane(PathEnum.TISSU_REQUIS, data);
 		hbox.getChildren().add(tr);
 
 		for (TissuUsed tissu : lstTissus) {
 			FxData subData = new FxData();
+			subData.setParentController(this);
 			subData.setTissuRequis(tissuRequis);
 			subData.setTissuUsed(tissu);
 			Pane tu = initializer.displayPane(PathEnum.TISSU_USED_CARD, subData);
 			hbox.getChildren().add(tu);
 		}
 
-		Pane plusCard = initializer.displayPane(PathEnum.PLUS_CARD);
-		plusCard.addEventHandler(MouseEvent.MOUSE_CLICKED,  e -> {
-				initializer.getRoot().displaySelected(data);
-		});
+		Pane plusCard = initializer.displayPane(PathEnum.PLUS_CARD, data);
 		hbox.getChildren().add(plusCard);
 
+	}
+	
+	public void initLock(){
+		ProjectStatus status = ProjectStatus.getEnum(data.getProjet().getProjectStatus());
+        switch(status) {
+        case ABANDONNE:
+        case TERMINE:
+        case EN_COURS:
+        	lock = true;
+        	break;
+        case BROUILLON:
+        case PLANIFIE:
+        	lock = false;
+        	break;
+        }
+	}
+	
+	public void setLock(boolean lock){
+		this.lock = lock;
+		setPane();
+	}
+
+	public void refresh() {
+		lstTissus = tissuUsedService.getTissuUsedByTissuRequisAndProjet(tissuRequis, data.getProjet());
+		initLock();
+		setPane();		
 	}
 }

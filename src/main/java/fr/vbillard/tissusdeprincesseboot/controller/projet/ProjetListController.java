@@ -79,7 +79,6 @@ public class ProjetListController extends ViewListController {
 			customIcon.textBoxRemove(hasIncompleteInventaireIcn, 40);
 		} else {
 			customIcon.textBoxCheck(hasIncompleteInventaireIcn, 40);
-
 		}
 	}
 

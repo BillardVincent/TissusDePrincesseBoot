@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
@@ -15,7 +16,6 @@ import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuVariantDto;
 import fr.vbillard.tissusdeprincesseboot.model.Inventaire;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 import fr.vbillard.tissusdeprincesseboot.utils.path.PathEnum;
-import lombok.Builder;
 import lombok.Data;
 
 @Data
@@ -37,6 +37,7 @@ public class FxData {
 	private Specification specification;
 	private Inventaire inventaire;
 	private List<Inventaire> listInventaire;
+	private IController parentController;
 
 	public FxData getCopy() {
 		try {

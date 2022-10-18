@@ -22,6 +22,11 @@ public class TissuUsed extends AbstractEntity implements FxDto{
 	Projet projet;
 	@ManyToOne
 	TissuRequis tissuRequis;
+	
+	@Override
+	public String toString() {
+		return tissuRequis.getLongueur() + "cm de tissu ref.\""+tissu.getReference()+"\" aloués au modèle " + projet.getPatron().getModele();	
+	}
 
 
 }

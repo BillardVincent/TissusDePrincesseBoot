@@ -14,6 +14,7 @@ public class GlyphIconUtil {
     private static final String TINY_ICONE_SIZE = "1em";
     private static final String BIG_ICONE_SIZE = "2em";
     private static final String VERY_BIG_ICONE_SIZE = "4em";
+    private static final String GIANT_ICONE_SIZE = "10em";
 
 
     private static GlyphIcon generateIcon(GlyphIcon icon, String size, Paint color){
@@ -85,4 +86,11 @@ public class GlyphIconUtil {
         return generateIcon(new FontAwesomeIconView(FontAwesomeIcon.EXPAND), NORMAL_ICON_SIZE, null);
     }
     
+    public static GlyphIcon lockGiant(){
+        return generateIcon(new FontAwesomeIconView(FontAwesomeIcon.LOCK), GIANT_ICONE_SIZE, Constants.colorWarning);
+    }
+    
+    public static GlyphIcon plusGiant(){
+        return generateIcon(new FontAwesomeIconView(FontAwesomeIcon.PLUS_CIRCLE), GIANT_ICONE_SIZE, Constants.colorAdd);
+    }
 }

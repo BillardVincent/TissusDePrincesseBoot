@@ -13,15 +13,10 @@ import javafx.scene.control.Alert.AlertType;
 public class ShowAlert {
 
 	public static Optional<ButtonType> suppression(Stage stage, EntityToString entity, String item) {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.initOwner(stage);
-		alert.setTitle("Suppression");
-		alert.setHeaderText(
-				"Voulez vous vraiment supprimer " + ModelUtils.generateString(entity, Articles.DEMONSTRATIF));
 		String itemDisplay = item == null ? "" : " : " + item;
-		alert.setContentText("Supprimer " + ModelUtils.generateString(entity, Articles.DEFINI) + itemDisplay + " ?");
-
-		return alert.showAndWait();
+		return confirmation(stage, "Suppression",
+				"Voulez vous vraiment supprimer " + ModelUtils.generateString(entity, Articles.DEMONSTRATIF),
+				"Supprimer " + ModelUtils.generateString(entity, Articles.DEFINI) + itemDisplay + " ?");
 	}
 
 	public static Optional<ButtonType> suppressionImpossible(Stage stage, EntityToString entity, String item) {
@@ -37,6 +32,15 @@ public class ShowAlert {
 
 	public static Optional<ButtonType> information(Stage stage, String titre, String header, String content) {
 		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.initOwner(stage);
+		alert.setTitle(titre);
+		alert.setHeaderText(header);
+		alert.setContentText(content);
+		return alert.showAndWait();
+	}
+	
+	public static Optional<ButtonType> confirmation(Stage stage, String titre, String header, String content) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.initOwner(stage);
 		alert.setTitle(titre);
 		alert.setHeaderText(header);
