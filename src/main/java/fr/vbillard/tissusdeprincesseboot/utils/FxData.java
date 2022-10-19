@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
@@ -30,6 +31,7 @@ public class FxData {
 	private TissuUsed tissuUsed;
 	private TissuRequisDto tissuRequis;
 	private TissuVariantDto tissuVariant;
+	private FournitureDto fourniture;
 	private int longueurRequise;
 	private URL url;
 	private List<String> listValues;

@@ -31,7 +31,7 @@ public class ProjetDto implements FxDto {
 
 	private MapProperty<TissuRequisDto, List<Integer>> tissuUsed;
 
-	private MapProperty<FounitureRequiseDto, List<Integer>> fournitureUsed;
+	private MapProperty<FournitureRequiseDto, List<Integer>> fournitureUsed;
 
 	private StringProperty status;
 
@@ -46,8 +46,8 @@ public class ProjetDto implements FxDto {
 		this.tissuUsed = new SimpleMapProperty<TissuRequisDto, List<Integer>>();
 		setTissuUsed(new HashMap<TissuRequisDto, List<Integer>>());
 
-		this.fournitureUsed = new SimpleMapProperty<FounitureRequiseDto, List<Integer>>();
-		setFournitureUsed(new HashMap<FounitureRequiseDto, List<Integer>>());
+		this.fournitureUsed = new SimpleMapProperty<FournitureRequiseDto, List<Integer>>();
+		setFournitureUsed(new HashMap<FournitureRequiseDto, List<Integer>>());
 
 	}
 
@@ -118,15 +118,15 @@ public class ProjetDto implements FxDto {
 		this.tissuUsed.set(FXCollections.observableMap(tissuUsed));
 	}
 
-	public Map<FounitureRequiseDto, List<Integer>> getFournitureUsed() {
+	public Map<FournitureRequiseDto, List<Integer>> getFournitureUsed() {
 		return fournitureUsed.get();
 	}
 
-	public MapProperty<FounitureRequiseDto, List<Integer>> getFournitureUsedProperty() {
+	public MapProperty<FournitureRequiseDto, List<Integer>> getFournitureUsedProperty() {
 		return fournitureUsed;
 	}
 
-	public void setFournitureUsed(Map<FounitureRequiseDto, List<Integer>> fournitureUsed) {
+	public void setFournitureUsed(Map<FournitureRequiseDto, List<Integer>> fournitureUsed) {
 		this.fournitureUsed.set(FXCollections.observableMap(fournitureUsed));
 	}
 

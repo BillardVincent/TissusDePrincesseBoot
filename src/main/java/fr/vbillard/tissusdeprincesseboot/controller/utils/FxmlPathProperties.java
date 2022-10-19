@@ -48,4 +48,15 @@ public class FxmlPathProperties {
 	private Resource carrousel;
 	private Resource inventaire;
 
+	private Resource fournitureCarrousel;
+	private Resource fournitureSearch;
+	private Resource fournitureRequisCard;
+	private Resource fournitureUsedCard;
+	private Resource fournitureRequisSelected;
+	private Resource typeFournitureEdit;
+	private Resource fourniture;
+	private Resource fournitureCard;
+	private Resource fournitureDetail;
+	private Resource fournitureEdit;
+
 }

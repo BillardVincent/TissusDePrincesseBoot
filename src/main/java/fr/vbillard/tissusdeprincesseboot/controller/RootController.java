@@ -12,6 +12,7 @@ import com.jfoenix.controls.JFXButton;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
@@ -146,6 +147,33 @@ public class RootController implements IController {
 		FxData fxData = new FxData();
 		fxData.setPatron(patron);
 		mainWindow.getChildren().add(initializer.displayPane(PathEnum.PATRON_EDIT, fxData));
+	}
+
+	@FXML
+	public void displayFourniture() {
+		displayFourniture(null);
+	}
+
+	public void displayFourniture(Specification spec) {
+		FxData fxData = new FxData();
+		fxData.setSpecification(spec);
+		beforeDisplay(fournitureMenu);
+		searchPane.getChildren().add(initializer.displayPane(PathEnum.FOURNITURE_SEARCH, fxData));
+		mainWindow.getChildren().add(initializer.displayPane(PathEnum.FOURNITURES, fxData));
+	}
+
+	public void displayFournituresDetails(FournitureDto fourniture) {
+		beforeDisplay(fournitureMenu);
+		FxData fxData = new FxData();
+		fxData.setFourniture(fourniture);
+		mainWindow.getChildren().add(initializer.displayPane(PathEnum.FOURNITURES_DETAILS, fxData));
+	}
+
+	public void displayTissusEdit(FournitureDto fourniture) {
+		beforeDisplay(fournitureMenu);
+		FxData fxData = new FxData();
+		fxData.setFourniture(fourniture);
+		mainWindow.getChildren().add(initializer.displayPane(PathEnum.FOURNITURES_EDIT, fxData));
 	}
 
 	@FXML

@@ -11,7 +11,6 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class TissusDePrincesseFxApp extends Application {
@@ -20,12 +19,9 @@ public class TissusDePrincesseFxApp extends Application {
 
 	private Stage primaryStage;
 
-
 	@Override
 	public void init() {
-
-	applicationContext = new SpringApplicationBuilder(TissuDePrincesseBootApplication.class).run();
-
+		applicationContext = new SpringApplicationBuilder(TissuDePrincesseBootApplication.class).run();
 	}
 
 	public static void restart() {
@@ -49,7 +45,7 @@ public class TissusDePrincesseFxApp extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		applicationContext.publishEvent(new StageReadyEvent(primaryStage));
-		Thread.setDefaultUncaughtExceptionHandler(((Thread t, Throwable e) -> showError(t, e)));
+		Thread.setDefaultUncaughtExceptionHandler((this::showError));
 
 		this.primaryStage = primaryStage;
 	}

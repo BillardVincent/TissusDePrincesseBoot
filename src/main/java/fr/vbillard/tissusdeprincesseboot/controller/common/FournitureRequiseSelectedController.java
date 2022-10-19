@@ -1,6 +1,5 @@
-package fr.vbillard.tissusdeprincesseboot.controller;
+package fr.vbillard.tissusdeprincesseboot.controller.common;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
@@ -10,9 +9,10 @@ import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
 @Component
-public class TissuRequisCardController implements IController {
+public class FournitureRequiseSelectedController implements IController {
 
 	@FXML
 	private Label longueurLabel;
@@ -21,18 +21,10 @@ public class TissuRequisCardController implements IController {
 	@FXML
 	private Label gammePoidsLabel;
 	@FXML
-	private Label variantsLabel;
+	private VBox variantsContainer;
 
 	private StageInitializer initializer;
 	private TissuRequisDto tissuRequis;
-
-	private RootController rootController;
-
-	private FxData fxData;
-
-	public TissuRequisCardController(RootController rootController) {
-		this.rootController = rootController;
-	}
 
 	@Override
 	public void setStageInitializer(StageInitializer initializer, FxData data) {
@@ -42,31 +34,23 @@ public class TissuRequisCardController implements IController {
 		}
 		tissuRequis = data.getTissuRequis();
 		if (tissuRequis != null) {
-			longueurLabel.setText(Integer.toString(tissuRequis.getLongueur()) + " cm");
-			laizeLabel.setText(Integer.toString(tissuRequis.getLaize()) + " cm");
+			longueurLabel.setText(Integer.toString(tissuRequis.getLongueur()));
+			laizeLabel.setText(Integer.toString(tissuRequis.getLaize()));
 			gammePoidsLabel.setText(tissuRequis.getGammePoids());
-			variantsLabel.setText(StringUtils.join(tissuRequis.getVariant(), " - "));
-
+			setVariantsContainer();
 
 		} else {
-			longueurLabel.setText("");
-			laizeLabel.setText("");
-			gammePoidsLabel.setText("");
-			variantsLabel.setText("");
+			longueurLabel.setText("?");
+			laizeLabel.setText("?");
+			gammePoidsLabel.setText("?");
+			variantsContainer.getChildren().clear();
 		}
 
-
-		setPane();
 	}
 
-	private void setPane() {
+	private void setVariantsContainer() {
 		// TODO Auto-generated method stub
 
 	}
 
-	@FXML
-	private void chooseTissuSelected() {
-		// TODO
-		rootController.displaySelected(fxData);
-	}
 }

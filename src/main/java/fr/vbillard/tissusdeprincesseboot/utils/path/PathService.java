@@ -7,20 +7,29 @@ import org.springframework.stereotype.Service;
 import fr.vbillard.tissusdeprincesseboot.controller.InventaireBatchController;
 import fr.vbillard.tissusdeprincesseboot.controller.PreferenceController;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
-import fr.vbillard.tissusdeprincesseboot.controller.TissuRequisCardController;
-import fr.vbillard.tissusdeprincesseboot.controller.TissuRequisSelectedController;
+import fr.vbillard.tissusdeprincesseboot.controller.caracteristiques.TypeFournitureEditController;
+import fr.vbillard.tissusdeprincesseboot.controller.common.FournitureRequiseSelectedController;
+import fr.vbillard.tissusdeprincesseboot.controller.common.TissuRequisCardController;
+import fr.vbillard.tissusdeprincesseboot.controller.common.TissuRequisSelectedController;
 import fr.vbillard.tissusdeprincesseboot.controller.caracteristiques.MatiereEditController;
 import fr.vbillard.tissusdeprincesseboot.controller.caracteristiques.TissageEditController;
 import fr.vbillard.tissusdeprincesseboot.controller.common.CheckBoxChoiceController;
 import fr.vbillard.tissusdeprincesseboot.controller.common.PlusCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.common.SetLongueurDialogController;
 import fr.vbillard.tissusdeprincesseboot.controller.common.SetWebUrlDialogController;
+import fr.vbillard.tissusdeprincesseboot.controller.fourniture.FournitureCardController;
+import fr.vbillard.tissusdeprincesseboot.controller.fourniture.FournitureCarrouselController;
+import fr.vbillard.tissusdeprincesseboot.controller.fourniture.FournitureController;
+import fr.vbillard.tissusdeprincesseboot.controller.fourniture.FournitureDetailController;
+import fr.vbillard.tissusdeprincesseboot.controller.fourniture.FournitureEditController;
+import fr.vbillard.tissusdeprincesseboot.controller.fourniture.FournitureSearchController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.ListElementController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronDetailController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronEditController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronListController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronSearchController;
+import fr.vbillard.tissusdeprincesseboot.controller.projet.FournitureUsedCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetEditController;
 import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetEditListElementController;
@@ -111,7 +120,25 @@ public class PathService {
 			return new PathHolder(pathProperties.getCarrousel().getURL(), CarrouselController.class);
 		case INVENTAIRE:
 			return new PathHolder(pathProperties.getInventaire().getURL(), InventaireBatchController.class);
-		default:
+			case FOURNITURES :
+				return new PathHolder(pathProperties.getFourniture().getURL(), FournitureController.class);
+			case FOURNITURES_CARD:
+				return new PathHolder(pathProperties.getFournitureCard().getURL(), FournitureCardController.class);
+			case FOURNITURES_DETAILS:
+				return new PathHolder(pathProperties.getFournitureDetail().getURL(), FournitureDetailController.class);
+			case FOURNITURES_EDIT:
+				return new PathHolder(pathProperties.getFournitureEdit().getURL(), FournitureEditController.class);
+			case FOURNITURE_USED_CARD:
+				return new PathHolder(pathProperties.getFournitureUsedCard().getURL(), FournitureUsedCardController.class);
+			case FOURNITURE_REQUIS_SELECTED:
+				return new PathHolder(pathProperties.getFournitureRequisSelected().getURL(), FournitureRequiseSelectedController.class);
+			case FOURNITURE_CARROUSEL:
+				return new PathHolder(pathProperties.getFournitureCarrousel().getURL(), FournitureCarrouselController.class);
+			case TYPE_FOURNITURE:
+				return new PathHolder(pathProperties.getTypeFournitureEdit().getURL(), TypeFournitureEditController.class);
+			case FOURNITURE_SEARCH:
+				return new PathHolder(pathProperties.getFournitureSearch().getURL(), FournitureSearchController.class);
+			default:
 			break;
 
 		}

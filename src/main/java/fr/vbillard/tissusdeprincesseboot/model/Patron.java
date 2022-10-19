@@ -27,7 +27,7 @@ public class Patron extends AbstractEntity {
 	@OneToMany
 	private List<TissuRequis> tissuRequis;
 
-	@Transient
-	private List<FounitureRequise> fournituresRequises;
+	@OneToMany
+	private List<FournitureRequise> fournituresRequises;
 
 }

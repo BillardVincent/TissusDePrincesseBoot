@@ -83,7 +83,9 @@
                                           </Label>
                                        </children>
                                     </HBox>
-                                    <HBox fx:id="fournitureMenu" alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="225.0" styleClass="mainmenu-element">
+                                    <HBox fx:id="fournitureMenu" alignment="CENTER_LEFT"
+                                          onMouseClicked="#displayFourniture" prefHeight="74.0" prefWidth="225.0"
+                                          styleClass="mainmenu-element">
                                        <children>
                                           <HBox prefHeight="89.0" prefWidth="77.0">
                                              <children>

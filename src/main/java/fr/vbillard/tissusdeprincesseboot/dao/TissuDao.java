@@ -21,7 +21,6 @@ public interface TissuDao extends Idao<Tissu, Integer> {
 
 	boolean existsTissuByTissage(Tissage tissage);
 
-	// TODO
 	@Query(value = "SELECT SUM(tu.longueur) FROM TISSU_USED tu INNER JOIN TISSU t ON tu.TISSU_ID = t.ID "
 			+ "INNER JOIN PROJET p ON p.ID = tu.PROJET_ID WHERE (p.STATUS = 'EN_COURS' OR p.STATUS = 'PLANIFIE' )"
 			+ "AND t.ID = ?1", nativeQuery = true)
