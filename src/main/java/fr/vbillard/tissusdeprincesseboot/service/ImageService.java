@@ -15,6 +15,7 @@ import fr.vbillard.tissusdeprincesseboot.config.PathImgProperties;
 import fr.vbillard.tissusdeprincesseboot.dao.Idao;
 import fr.vbillard.tissusdeprincesseboot.dao.PhotoDao;
 import fr.vbillard.tissusdeprincesseboot.exception.PersistanceException;
+import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
@@ -49,6 +50,13 @@ public class ImageService extends AbstractService<Photo> {
 			return Optional.empty();
 		}
 		return dao.getByTissu(tissu);
+	}
+	
+	public Optional<Photo> getImage(Fourniture fourniture) {
+		if (fourniture.getId() == 0) {
+			return Optional.empty();
+		}
+		return dao.getByFourniture(fourniture);
 	}
 
 	public Image imageOrDefault(Optional<Photo> photo) {

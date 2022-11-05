@@ -29,7 +29,8 @@ public class Photo extends AbstractEntity{
 	@OneToOne
 	private Patron patron;
 	
-	
-	
+	@OneToOne
+	private Fourniture fourniture;
+
 	
 }

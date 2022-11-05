@@ -16,7 +16,7 @@
          <children>
             <HBox minHeight="90.0" prefHeight="90.0" prefWidth="1320.0">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="91.0" prefWidth="1263.0" styleClass="title-main-pane" text="Tissus" textAlignment="CENTER">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="91.0" prefWidth="1263.0" styleClass="title-main-pane" text="Fournitures" textAlignment="CENTER">
                      <font>
                         <Font size="36.0" />
                      </font>

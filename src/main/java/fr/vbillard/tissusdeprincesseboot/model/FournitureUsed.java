@@ -19,11 +19,11 @@ public class FournitureUsed extends AbstractEntity implements FxDto {
   @ManyToOne
   private Projet projet;
   @ManyToOne
-  private FournitureRequise founitureRequise;
+  private FournitureRequise fournitureRequise;
 
   @Override
   public String toString() {
-    return founitureRequise.getQuantite() + " de fourniture ref.\"" + fourniture.getReference() + "\" aloués au modèle "
+    return fournitureRequise.getQuantite() + " de fourniture ref.\"" + fourniture.getReference() + "\" aloués au modèle "
         + projet.getPatron().getModele();
   }
 }

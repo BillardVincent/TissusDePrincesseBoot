@@ -6,50 +6,51 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
-import fr.vbillard.tissusdeprincesseboot.model.Patron;
+import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
+import fr.vbillard.tissusdeprincesseboot.service.FournitureService;
 import fr.vbillard.tissusdeprincesseboot.service.ImageService;
-import fr.vbillard.tissusdeprincesseboot.service.PatronService;
 import fr.vbillard.tissusdeprincesseboot.service.PreferenceService;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 @Component
 @Scope("prototype")
-public class PatronPictureHelper extends PictureHelper {
+public class FourniturePictureHelper extends PictureHelper {
 
-	private PatronService patronService;
+	private FournitureService fournitureService;
 
-	private Patron patron;
+	private Fourniture fourniture;
 
-	public PatronPictureHelper(PatronService patronService, MapperService mapper, PreferenceService preferenceService,
+	public FourniturePictureHelper(FournitureService fournitureService, MapperService mapper, PreferenceService preferenceService,
 			StageInitializer initializer, ImageService imageService) {
 		super(mapper, preferenceService, initializer, imageService);
-		this.patronService = patronService;
+		this.fournitureService = fournitureService;
 	}
 
-	public void setPane(ImageView imagePane, PatronDto dto) {
-		patron = mapper.map(dto);
-		picture = imageService.getImage(patron);
+	public void setPane(ImageView imagePane, FournitureDto dto) {
+		fourniture = mapper.map(dto);
+		picture = imageService.getImage(fourniture);
 		this.imagePane = imagePane;
 		imagePane.setImage(imageService.imageOrDefault(picture));
 	}
 
 	protected void setImage() {
-		patronService.saveOrUpdate(patron);
-		picture.get().setPatron(patron);
+		fournitureService.saveOrUpdate(fourniture);
+		picture.get().setFourniture(fourniture);
 		imageService.saveOrUpdate(picture.get());
 		imagePane.setImage(new Image(new ByteArrayInputStream(picture.get().getData())));
 	}
 
-	public void addPictureWeb(PatronDto dto) {
-		patron = mapper.map(dto);
+	public void addPictureWeb(FournitureDto dto) {
+		fourniture = mapper.map(dto);
 		addPictureWeb();
 	}
 
-	public void addPictureLocal(PatronDto dto) {
-		patron = mapper.map(dto);
+	public void addPictureLocal(FournitureDto dto) {
+		fourniture = mapper.map(dto);
 		addPictureLocal();
 	}
 

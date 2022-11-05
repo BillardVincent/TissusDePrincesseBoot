@@ -77,8 +77,8 @@ public class FournitureService extends AbstractService<Fourniture> {
 				.map(t -> mapper.map(t, FournitureDto.class)).collect(Collectors.toList()));
 	}
 
-	public int getQuantiteUtilisee(int fournitureId) {
-		Integer result = null;
+	public float getQuantiteUtilisee(int fournitureId) {
+		Float result = null;
 		if (fournitureId != 0) {
 			try {
 				result = dao.quantiteUtilisee(fournitureId);
@@ -86,7 +86,7 @@ public class FournitureService extends AbstractService<Fourniture> {
 				e.printStackTrace();
 			}
 		}
-		return result == null ? 0 : result;
+		return result == null ? 0f : result;
 	}
 
 	public List<FournitureDto> getObservablePage(int page, int pageSize, FournitureSpecification specification) {
@@ -99,7 +99,7 @@ public class FournitureService extends AbstractService<Fourniture> {
 	 */
 	public void batcheFournitureDisponible() {
 		for (Fourniture f : getAll()) {
-			long longueurRestante = f.getQuantite() - getQuantiteUtilisee(f.getId());
+			float longueurRestante = f.getQuantite() - getQuantiteUtilisee(f.getId());
 			f.setQuantiteDisponible(longueurRestante < 0 ? 0 : longueurRestante);
 			saveOrUpdate(f);
 		}

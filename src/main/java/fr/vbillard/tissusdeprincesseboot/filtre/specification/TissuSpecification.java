@@ -97,6 +97,11 @@ public class TissuSpecification implements Specification<Tissu> {
 			predicateList.add(
 					SpecificationUtils.getCharacterSearchPredicate(description, tissu.get(Tissu_.DESCRIPTION), cb));
 		}
+		
+		if (lieuAchat != null) {
+			predicateList.add(
+					SpecificationUtils.getCharacterSearchPredicate(description, tissu.get(Tissu_.LIEU_ACHAT), cb));
+		}
 
 		return cb.and(predicateList.toArray(new Predicate[] {}));
 	}

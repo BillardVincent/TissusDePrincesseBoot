@@ -8,11 +8,11 @@ import java.util.Optional;
 
 import javax.imageio.ImageIO;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.util.StringUtils;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.exception.NotFoundException;
+import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Preference;
 import fr.vbillard.tissusdeprincesseboot.service.ImageService;
@@ -25,12 +25,12 @@ public abstract class PictureHelper {
 	protected PreferenceService preferenceService;
 	protected StageInitializer initializer;
 	protected ImageService imageService;
-	protected ModelMapper mapper;
+	protected MapperService mapper;
 	protected ImageView imagePane;
 
 	protected Optional<Photo> picture;
 
-	protected PictureHelper(ModelMapper mapper, PreferenceService preferenceService, StageInitializer initializer,
+	protected PictureHelper(MapperService mapper, PreferenceService preferenceService, StageInitializer initializer,
 			ImageService imageService) {
 		this.preferenceService = preferenceService;
 		this.initializer = initializer;

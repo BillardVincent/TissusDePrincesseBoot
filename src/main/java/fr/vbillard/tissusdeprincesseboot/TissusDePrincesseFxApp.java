@@ -1,11 +1,13 @@
 package fr.vbillard.tissusdeprincesseboot;
 
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import antlr.StringUtils;
 import fr.vbillard.tissusdeprincesseboot.exception.AbstractTissuDePricesseException;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -67,11 +69,11 @@ public class TissusDePrincesseFxApp extends Application {
 			Throwable e1 = e.getCause();
 			if (e1.getCause() instanceof AbstractTissuDePricesseException) {
 				AbstractTissuDePricesseException ex = (AbstractTissuDePricesseException) e1.getCause();
-				alert = new Alert(ex.getAlertType());
+				alert = new Alert(ex.getAlertType() == null ? AlertType.ERROR : ex.getAlertType());
 				alert.initOwner(primaryStage);
-				alert.setTitle(ex.getTitle());
-				alert.setHeaderText(ex.getHeader());
-				alert.setContentText(ex.getContent());
+				alert.setTitle(Strings.isEmpty(ex.getTitle()) ? "Erreur inatendue" : ex.getTitle()) ;
+				alert.setHeaderText(Strings.isEmpty(ex.getHeader())? "Une erreur est survenue" : ex.getHeader());
+				alert.setContentText(Strings.isEmpty(ex.getContent()) ? "Veuillez nous excuser de la gène occasionnée. Contactez nous si le problème se répète" : ex.getContent());
 			} else {
 				alert = new Alert(AlertType.ERROR);
 				alert.initOwner(primaryStage);

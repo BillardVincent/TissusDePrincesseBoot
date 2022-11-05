@@ -83,4 +83,5 @@ public class TypeFournitureService extends AbstractService<TypeFourniture> {
 		}
 		return result;
 	}
+
 }

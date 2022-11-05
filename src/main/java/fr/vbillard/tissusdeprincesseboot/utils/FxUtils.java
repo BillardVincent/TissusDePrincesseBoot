@@ -18,8 +18,8 @@ import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.CharacterSe
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
 import fr.vbillard.tissusdeprincesseboot.fx_custom_element.IntegerSpinner;
 import fr.vbillard.tissusdeprincesseboot.model.UserPref;
-import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
 import fr.vbillard.tissusdeprincesseboot.utils.path.PathEnum;
+import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -38,6 +38,10 @@ public class FxUtils {
 
 	public static String safePropertyToString(IntegerProperty property) {
 		return property == null ? "0" : Integer.toString(property.getValue());
+	}
+	
+	public static String safePropertyToString(FloatProperty property) {
+		return property == null ? "0" : Float.toString(property.getValue());
 	}
 
 	public static String safePropertyToString(StringProperty property) {

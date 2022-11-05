@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
@@ -23,5 +24,7 @@ public interface PhotoDao extends Idao<Photo, Integer> {
 	Optional<Photo> getByProjet(int projetId);
 
 	Optional<Photo> getByPatron(Patron patron);
+
+	Optional<Photo> getByFourniture(Fourniture fourniture);
 
 }

@@ -6,8 +6,11 @@ import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.ViewListController;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
+import fr.vbillard.tissusdeprincesseboot.filtre.specification.FournitureSpecification;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification;
+import fr.vbillard.tissusdeprincesseboot.service.FournitureService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.path.PathEnum;
@@ -18,38 +21,38 @@ import javafx.scene.layout.Pane;
 @Component
 public class FournitureController extends ViewListController {
 
-	private TissuService tissuService;
+	private FournitureService fournitureService;
 	private RootController rootController;
 
-	public FournitureController(TissuService tissuService, RootController rootController) {
+	public FournitureController(FournitureService fournitureService, RootController rootController) {
 		page = 0;
-		this.tissuService = tissuService;
+		this.fournitureService = fournitureService;
 		this.rootController = rootController;
 	}
 
 	@Override
 	protected void setElements() {
 		cardPane.getChildren().clear();
-		List<TissuDto> lstTissu;
-		if (specification instanceof TissuSpecification) {
-			lstTissu = tissuService.getObservablePage(page, PAGE_SIZE, (TissuSpecification) specification);
+		List<FournitureDto> lstTissu;
+		if (specification instanceof FournitureSpecification) {
+			lstTissu = fournitureService.getObservablePage(page, PAGE_SIZE, (FournitureSpecification) specification);
 		} else {
-			lstTissu = tissuService.getObservablePage(page, PAGE_SIZE);
+			lstTissu = fournitureService.getObservablePage(page, PAGE_SIZE);
 
 		}
-		for (TissuDto t : lstTissu) {
+		for (FournitureDto t : lstTissu) {
 			FxData data = new FxData();
-			data.setTissu(t);
-			Pane card = initializer.displayPane(PathEnum.TISSUS_CARD, data);
+			data.setFourniture(t);
+			Pane card = initializer.displayPane(PathEnum.FOURNITURES_CARD, data);
 			cardPane.getChildren().add(card);
 		}
-		setPageInfo(tissuService.count());
+		setPageInfo(fournitureService.count());
 	}
 
 	@Override
 	@FXML
 	public void addNewElement(MouseEvent mouseEvent) {
-		rootController.displayTissusEdit(new TissuDto());
+		rootController.displayFournitureEdit(new FournitureDto());
 	}
 
 }
