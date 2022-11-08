@@ -25,8 +25,6 @@ public class DtoToFourniture extends TypeMapConfigurer<FournitureDto, Fourniture
 	public void configure(TypeMap<FournitureDto, Fourniture> typeMap) {
 		typeMap.addMappings(mapper -> mapper.using(new IdConverter()).map(src -> src, Fourniture::setId));
 		typeMap.addMappings(mapper -> mapper.using(new ReferenceConverter()).map(src -> src, Fourniture::setReference));
-		typeMap.addMappings(
-				mapper -> mapper.using(new UniteConverter()).map(FournitureDto::getUnite, Fourniture::setUnite));
 		typeMap.addMappings(mapper -> mapper.using(new TypeConverter()).map(src -> src, Fourniture::setType));
 		
 	}

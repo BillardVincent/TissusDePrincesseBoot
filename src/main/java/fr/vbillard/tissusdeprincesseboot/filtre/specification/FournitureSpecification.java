@@ -39,7 +39,6 @@ public class FournitureSpecification implements Specification<Fourniture> {
 	private Boolean archived;
 	private String nom;
 	private NumericSearch<Float> quantite;
-	private Unite unite;
 	private NumericSearch<Float> quantiteDisponible;
 
 	@Override
@@ -60,9 +59,6 @@ public class FournitureSpecification implements Specification<Fourniture> {
 			predicateList.add(SpecificationUtils.getNumericSearchPredicate(quantiteDisponible, root.get(Fourniture_.QUANTITE_DISPONIBLE), cb));
 		}
 
-		if (unite != null) {
-			predicateList.add(root.get(Fourniture_.UNITE).in(unite));
-		}
 
 		if (reference != null) {
 			predicateList

@@ -23,7 +23,6 @@ public class FournitureToDto extends TypeMapConfigurer<Fourniture, FournitureDto
 		typeMap.addMappings(mapping -> mapping.using(new LongueurRestanteConverter()).map(src -> src,
 				FournitureDto::setQuantiteDisponible));
 		typeMap.addMapping(src -> src.getType().getValue(), FournitureDto::setType);
-		typeMap.addMapping(Fourniture::getUnite, (FournitureDto dest, Unite v) -> dest.setUnite(v));
 
 	}
 

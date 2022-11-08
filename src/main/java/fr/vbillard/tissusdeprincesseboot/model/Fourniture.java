@@ -16,12 +16,11 @@ public class Fourniture extends AbstractEntity{
 
   private String nom;
   private float quantite;
-  @Enumerated(EnumType.STRING)
-  private Unite unite;
   private String lieuAchat;
   private String reference;
   private String description;
   private float quantiteDisponible;
+  private float dimentionSecondaire;
 
   @ManyToOne
   private TypeFourniture type;

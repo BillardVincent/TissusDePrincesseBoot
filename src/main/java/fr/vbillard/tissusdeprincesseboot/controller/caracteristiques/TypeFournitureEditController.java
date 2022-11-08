@@ -99,7 +99,9 @@ public class TypeFournitureEditController extends AbstractCaracteristiqueControl
 
 	@Override
 	protected void save() {
-		typeFournitureService.saveOrUpdate(new TypeFourniture(newType.getText()));
+		TypeFourniture type = new TypeFourniture();
+		type.setValue(newType.getText());
+		typeFournitureService.saveOrUpdate(type);
 		newType.setText(Strings.EMPTY);
 		allTypes = typeFournitureService.getAllTypeFournituresValues();
 		listType.setItems(allTypes);

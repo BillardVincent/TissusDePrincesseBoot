@@ -2,8 +2,11 @@ package fr.vbillard.tissusdeprincesseboot.model;
 
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 
+import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,14 +19,13 @@ public class TypeFourniture extends AbstractSimpleValueEntity {
 
 	@OneToMany
 	protected List<Fourniture> fournitures;
+	
+	@Enumerated(EnumType.STRING)
+	private Unite unitePrincipale;
+	
+	@Enumerated(EnumType.STRING)
+	private Unite uniteSecondaire;
 
-	public TypeFourniture(int id, String value) {
-		this.id = id;
-		this.value = value;
-	}
 
-	public TypeFourniture(String value) {
-		this.value = value;
-	}
 
 }
