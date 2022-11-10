@@ -9,7 +9,7 @@ import com.github.rozidan.springboot.modelmapper.TypeMapConfigurer;
 import fr.vbillard.tissusdeprincesseboot.dao.FournitureDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
-import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
+import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
 import lombok.AllArgsConstructor;
 
 @Component
@@ -23,7 +23,6 @@ public class FournitureToDto extends TypeMapConfigurer<Fourniture, FournitureDto
 		typeMap.addMappings(mapping -> mapping.using(new LongueurRestanteConverter()).map(src -> src,
 				FournitureDto::setQuantiteDisponible));
 		typeMap.addMapping(src -> src.getType().getValue(), FournitureDto::setType);
-
 	}
 
 	private class LongueurRestanteConverter extends AbstractConverter<Fourniture, Float> {
@@ -43,4 +42,5 @@ public class FournitureToDto extends TypeMapConfigurer<Fourniture, FournitureDto
 			return longueurRestante;
 		}
 	}
+
 }

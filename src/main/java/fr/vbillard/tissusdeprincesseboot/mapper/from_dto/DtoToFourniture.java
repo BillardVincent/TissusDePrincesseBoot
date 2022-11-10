@@ -43,13 +43,6 @@ public class DtoToFourniture extends TypeMapConfigurer<FournitureDto, Fourniture
 		}
 	}
 
-	private class UniteConverter extends AbstractConverter<String, Unite> {
-		@Override
-		protected Unite convert(String source) {
-			return Unite.getEnum(source);
-		}
-	}
-
 	private class TypeConverter extends AbstractConverter<FournitureDto, TypeFourniture> {
 		@Override
 		protected TypeFourniture convert(FournitureDto source) {

@@ -7,13 +7,13 @@ import java.util.List;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 
 public enum Unite {
-  M("mètre", 1000), CM("centimètre", 10), MM("milimètre",1), UNITE("unité", 1), G("gramme", 1), KG("kilogramme", 1000)
+  M("mètre", 100), CM("centimètre", 1), MM("milimètre",0.1f), UNITE("unité", 1), G("gramme", 1), KG("kilogramme", 1000)
   , L("litre", 1000), ML("millilitre", 1), M2 ("mètre carré", 1), NON_RENSEIGNE("N/A", 0);
 
   private String label;
-  private int facteur;
+  private float facteur;
 
-  Unite(String label, int facteur) {
+  Unite(String label, float facteur) {
     this.label = label;
     this.facteur = facteur;
   }
@@ -21,7 +21,7 @@ public enum Unite {
   public String getLabel() {
 	  return label;
   }
-  public int getFacteur() {
+  public float getFacteur() {
 	  return facteur;
   }
   
@@ -58,14 +58,13 @@ public enum Unite {
   public float convertir(float value, Unite fromUnite, Unite toUnite) {
 	  
 	  if (poidUnite().containsAll(Arrays.asList(fromUnite, toUnite)) ||
-			  poidUnite().containsAll(Arrays.asList(fromUnite, toUnite))||
-			  poidUnite().containsAll(Arrays.asList(fromUnite, toUnite))) {
+        volumeUnite().containsAll(Arrays.asList(fromUnite, toUnite))||
+        longueurUnite().containsAll(Arrays.asList(fromUnite, toUnite))) {
 		  return value / fromUnite.getFacteur() * toUnite.getFacteur() ;
 	  }
 	  else {
 		  throw new IllegalData("conversion impossible de "+fromUnite.label + " en " +toUnite.label);
 	  }
-	  
 	  
   }
   }

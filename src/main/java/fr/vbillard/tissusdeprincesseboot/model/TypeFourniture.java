@@ -6,6 +6,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 
+import fr.vbillard.tissusdeprincesseboot.model.enums.DimensionEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,12 +20,18 @@ public class TypeFourniture extends AbstractSimpleValueEntity {
 
 	@OneToMany
 	protected List<Fourniture> fournitures;
-	
+
 	@Enumerated(EnumType.STRING)
-	private Unite unitePrincipale;
-	
+	private DimensionEnum dimensionPrincipale;
+
 	@Enumerated(EnumType.STRING)
-	private Unite uniteSecondaire;
+	private Unite unitePrincipaleConseillee;
+
+	@Enumerated(EnumType.STRING)
+	private DimensionEnum dimensionSecondaire;
+
+	@Enumerated(EnumType.STRING)
+	private Unite uniteSecondaireConseillée;
 
 
 
