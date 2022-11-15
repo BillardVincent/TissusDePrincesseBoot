@@ -1,5 +1,8 @@
 package fr.vbillard.tissusdeprincesseboot.model.enums;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum DimensionEnum {
   LONGUEUR("longueur", new Unite[]{Unite.CM, Unite.MM, Unite.M, Unite.NON_RENSEIGNE}),
   POIDS("poids", new Unite[]{Unite.G, Unite.KG, Unite.NON_RENSEIGNE}),
@@ -21,6 +24,14 @@ public enum DimensionEnum {
 
   public Unite[] getUnites() {
     return unites;
+  }
+  
+  public static List<String> labels(){
+  	List<String> list = new ArrayList<String>();
+      for(DimensionEnum e : DimensionEnum.values()){
+          list.add(e.label);
+      }
+      return list;
   }
 
   public Unite getDefault(){

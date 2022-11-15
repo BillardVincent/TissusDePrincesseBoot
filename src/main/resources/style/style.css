@@ -258,4 +258,11 @@
     -fx-background-radius: 2;
 }
 
+.info-obligatoire{
+	-fx-text-fill: -fx-primary-light;
+	-fx-font-style: italic;
+	-fx-font-weight: thin;
+	
+}
+
 

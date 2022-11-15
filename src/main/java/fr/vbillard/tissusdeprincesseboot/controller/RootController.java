@@ -3,6 +3,9 @@ package fr.vbillard.tissusdeprincesseboot.controller;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.util.Strings;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.domain.Specification;
@@ -36,6 +39,9 @@ public class RootController implements IController {
 
 	private static final String SELECTED = "mainmenu-element-selected";
 
+	private static Logger logger = LogManager.getLogger(RootController.class);
+
+	  
 	@FXML
 	private Pane mainWindow;
 	@FXML
@@ -73,6 +79,8 @@ public class RootController implements IController {
 		this.mapper = mapper;
 		this.customIcon = customIcon;
 		this.tissuRequisService = tissuRequisService;
+		
+		logger.info("Lancement de l'application");
 	}
 
 	@FXML
@@ -210,6 +218,7 @@ public class RootController implements IController {
 	private void beforeDisplay(HBox menuToSelect) {
 		mainWindow.getChildren().clear();
 		searchPane.getChildren().clear();
+		logger.info("menu selected = " +menuToSelect.getId());
 		for (HBox hb : menuElements) {
 			if (hb != null && hb.getStyleClass() != null && !hb.getStyleClass().isEmpty()) {
 				hb.getStyleClass().removeIf(style -> style.equals(SELECTED));

@@ -57,8 +57,8 @@ public class TypeFournitureService extends AbstractService<TypeFourniture> {
 				lst.stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList()));
 	}
 
-	public boolean validate(String value) {
-		return !dao.existsByValue(value);
+	public boolean validate(String value, int id) {
+		return !dao.existsByValueAndNotById(value, id);
 	}
 
 	public void delete(String value) {

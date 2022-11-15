@@ -17,21 +17,25 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 public class TypeFourniture extends AbstractSimpleValueEntity {
-
+ 
 	@OneToMany
 	protected List<Fourniture> fournitures;
 
+	private String intitulePrincipale;
+	
 	@Enumerated(EnumType.STRING)
 	private DimensionEnum dimensionPrincipale;
 
 	@Enumerated(EnumType.STRING)
 	private Unite unitePrincipaleConseillee;
 
+	private String intituleSecondaire;
+
 	@Enumerated(EnumType.STRING)
 	private DimensionEnum dimensionSecondaire;
 
 	@Enumerated(EnumType.STRING)
-	private Unite uniteSecondaireConseillée;
+	private Unite uniteSecondaireConseillee;
 
 
 
