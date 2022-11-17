@@ -58,7 +58,7 @@ public class TypeFournitureService extends AbstractService<TypeFourniture> {
 	}
 
 	public boolean validate(String value, int id) {
-		return !dao.existsByValueAndNotById(value, id);
+		return !dao.existsByValueAndIdNot(value, id);
 	}
 
 	public void delete(String value) {

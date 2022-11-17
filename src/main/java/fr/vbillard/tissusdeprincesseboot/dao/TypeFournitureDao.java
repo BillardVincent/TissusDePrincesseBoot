@@ -14,6 +14,6 @@ public interface TypeFournitureDao extends Idao<TypeFourniture, Integer> {
 
 	List<TypeFourniture> findByValueIn(List<String> values);
 
-	boolean existsByValueAndNotById(String value, int id);
+	boolean existsByValueAndIdNot(String value, int id);
 
 }

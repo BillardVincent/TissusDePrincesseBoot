@@ -79,10 +79,16 @@ public class TypeFournitureEditController implements IModalController{
 	private void initialize() {
 		resetField();
 
-
-		dimentionSecCombo.valueProperty().addListener((ov, t, t1) -> {
-
-
+		dimentionPrimCombo.valueProperty().addListener((observable, oldValue, newValue) -> {
+			if (dimentionPrimCombo.getValue() != null && !dimentionPrimCombo.getValue().equals(AUCUN)){
+				unitéPrimCombo.setDisable(false);
+				setComboBox(unitéPrimCombo, Unite.getValuesByDimension(DimensionEnum.getEnum(dimentionPrimCombo.getValue())));
+				unitéPrimCombo.setValue(typeFourniture == null ||
+						typeFourniture.getUnitePrincipaleConseillee() == null ?
+						AUCUN : typeFourniture.getUnitePrincipaleConseillee().getLabel());
+			} else {
+				unitéPrimCombo.setDisable(true);
+			}
 		});
 	}
 
