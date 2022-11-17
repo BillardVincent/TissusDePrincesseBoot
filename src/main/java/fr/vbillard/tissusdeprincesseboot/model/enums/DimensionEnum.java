@@ -1,19 +1,20 @@
 package fr.vbillard.tissusdeprincesseboot.model.enums;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public enum DimensionEnum {
-  LONGUEUR("longueur", new Unite[]{Unite.CM, Unite.MM, Unite.M, Unite.NON_RENSEIGNE}),
-  POIDS("poids", new Unite[]{Unite.G, Unite.KG, Unite.NON_RENSEIGNE}),
-  SURFACE("surface", new Unite[]{Unite.M2, Unite.NON_RENSEIGNE}),
-  NON_RENSEIGNE("N/A", new Unite[]{Unite.NON_RENSEIGNE}),
-  VOLUME("volume", new Unite[]{Unite.L, Unite.ML, Unite.NON_RENSEIGNE});
+  LONGUEUR("longueur", Arrays.asList(Unite.CM, Unite.MM, Unite.M, Unite.NON_RENSEIGNE)),
+  POIDS("poids", Arrays.asList(Unite.G, Unite.KG, Unite.NON_RENSEIGNE)),
+  SURFACE("surface",Arrays.asList(Unite.M2, Unite.NON_RENSEIGNE)),
+  NON_RENSEIGNE("N/A", Arrays.asList(Unite.NON_RENSEIGNE)),
+  VOLUME("volume", Arrays.asList(Unite.L, Unite.ML, Unite.NON_RENSEIGNE));
 
   private String label;
-  private Unite[] unites;
+  private List<Unite> unites;
 
-  DimensionEnum(String label, Unite[] unites) {
+  DimensionEnum(String label, List<Unite> unites) {
     this.label = label;
     this.unites = unites;
   }
@@ -22,7 +23,7 @@ public enum DimensionEnum {
     return label;
   }
 
-  public Unite[] getUnites() {
+  public List<Unite> getUnites() {
     return unites;
   }
   

@@ -39,27 +39,34 @@ public enum Unite {
       }
       return list;
   }
-  
+
+
+  public static List<String> getValuesByDimension(DimensionEnum dimension){
+    List<String> list = new ArrayList<String>();
+    for(Unite e : dimension.getUnites()){
+      list.add(e.label);
+    }
+    return list;
+  }
   public static List<Unite> longueurUnite(){
 	return Arrays.asList(M, CM, MM);
-	  
+
   }
 
   public static List<Unite> volumeUnite(){
 	return Arrays.asList(L, ML);
-	  
+
   }
-  
+
   public static List<Unite> poidUnite(){
 	return Arrays.asList(G, KG);
-	  
   }
-  
+
   public float convertir(float value, Unite fromUnite, Unite toUnite) {
 	  
-	  if (poidUnite().containsAll(Arrays.asList(fromUnite, toUnite)) ||
-        volumeUnite().containsAll(Arrays.asList(fromUnite, toUnite))||
-        longueurUnite().containsAll(Arrays.asList(fromUnite, toUnite))) {
+	  if (getValuesByDimension(DimensionEnum.LONGUEUR).containsAll(Arrays.asList(fromUnite, toUnite)) ||
+        getValuesByDimension(DimensionEnum.POIDS).containsAll(Arrays.asList(fromUnite, toUnite))||
+        getValuesByDimension(DimensionEnum.VOLUME).containsAll(Arrays.asList(fromUnite, toUnite))) {
 		  return value / fromUnite.getFacteur() * toUnite.getFacteur() ;
 	  }
 	  else {

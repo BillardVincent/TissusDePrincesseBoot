@@ -20,6 +20,7 @@ import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.CharacterSearch;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
 import fr.vbillard.tissusdeprincesseboot.fx_custom_element.IntegerSpinner;
+import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.Tissage;
 import fr.vbillard.tissusdeprincesseboot.model.UserPref;
@@ -183,19 +184,19 @@ public class TissuSearchController implements IController {
 
 			List<String> types = null;
 			if (specification.getTypeTissu() != null) {
-				types = specification.getTypeTissu().stream().map(m -> m.getLabel()).collect(Collectors.toList());
+				types = specification.getTypeTissu().stream().map(TypeTissuEnum::getLabel).collect(Collectors.toList());
 			}
 			FxUtils.setSelection(types, typeValuesSelected, typeLbl);
 
 			List<String> matieres = null;
 			if (specification.getMatieres() != null) {
-				matieres = specification.getMatieres().stream().map(m -> m.getValue()).collect(Collectors.toList());
+				matieres = specification.getMatieres().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList());
 			}
 			FxUtils.setSelection(matieres, matiereValuesSelected, matiereLbl);
 
 			List<String> tissages = null;
 			if (specification.getTissages() != null) {
-				tissages = specification.getTissages().stream().map(m -> m.getValue()).collect(Collectors.toList());
+				tissages = specification.getTissages().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList());
 			}
 			FxUtils.setSelection(tissages, tissageValuesSelected, tissageLbl);
 
@@ -247,8 +248,7 @@ public class TissuSearchController implements IController {
 
 					legerCBox.setSelected(minIsNullOrZero);
 					moyenCBox.setSelected(min != null && min >= margeBasseMoyen && max != null && max > margeHauteLeger);
-					lourdCBox.setSelected(max != null && max > margeHauteMoyen);		
-					
+					lourdCBox.setSelected(max != null && max > margeHauteMoyen);
 			}
 		} else {
 			lourdCBox.setSelected(true);

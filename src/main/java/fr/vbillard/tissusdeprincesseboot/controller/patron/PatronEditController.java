@@ -224,9 +224,7 @@ public class PatronEditController implements IController {
 
 		tissuEtFournitureContainer.getChildren().addAll(titre, topGrid, hboxBtn, bottomRightVbox);
 
-		if (tissu != null) {
-			tvList = FXCollections.observableArrayList(tissuVariantService.getVariantByTissuRequis(tissu));
-		}
+		tvList = FXCollections.observableArrayList(tissuVariantService.getVariantByTissuRequis(tissu));
 
 		loadBottomRightVbox(tissu);
 

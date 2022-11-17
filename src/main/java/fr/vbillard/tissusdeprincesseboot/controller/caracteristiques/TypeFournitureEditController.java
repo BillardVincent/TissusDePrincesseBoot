@@ -24,6 +24,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -77,8 +78,12 @@ public class TypeFournitureEditController implements IModalController{
 	@FXML
 	private void initialize() {
 		resetField();
-		listType.getSelectionModel().selectedItemProperty()
-				.addListener((observable, oldValue, newValue) -> handleSelectElement(newValue));
+
+
+		dimentionSecCombo.valueProperty().addListener((ov, t, t1) -> {
+
+
+		});
 	}
 
 	public void handleSuppressElement() {
@@ -123,11 +128,11 @@ public class TypeFournitureEditController implements IModalController{
 	}
 
 	private boolean validateField() {
-		boolean result = nomField.getText() != null;
+		boolean isValid = nomField.getText() != null;
 		
 		//TODO
 		
-		return result;
+		return isValid;
 	}
 
 	public void handleClose() {
@@ -150,7 +155,9 @@ public class TypeFournitureEditController implements IModalController{
 	}
 	
 	private void resetField() {
-		// todo All blank
+		listType.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> handleSelectElement(newValue));
+
 		allTypes = typeFournitureService.getAllTypeFournituresValues();
 		listType.setItems(allTypes);
 		ajouterButton.setText("Ajouter");
@@ -164,11 +171,17 @@ public class TypeFournitureEditController implements IModalController{
 				typeFourniture.getDimensionPrincipale() == null ?
 						AUCUN : typeFourniture.getDimensionPrincipale().getLabel());
 
-		setComboBox(unitéPrimCombo, Unite.labels());
-		unitéPrimCombo.setValue(typeFourniture == null || 
-				typeFourniture.getUnitePrincipaleConseillee() == null ?
-						AUCUN : typeFourniture.getUnitePrincipaleConseillee().getLabel());
 
+
+		if (dimentionPrimCombo.getValue() != null && !dimentionPrimCombo.getValue().equals(AUCUN)){
+			unitéPrimCombo.setDisable(false);
+			setComboBox(unitéPrimCombo, Unite.getValuesByDimension(DimensionEnum.getEnum(dimentionPrimCombo.getValue())));
+			unitéPrimCombo.setValue(typeFourniture == null ||
+					typeFourniture.getUnitePrincipaleConseillee() == null ?
+					AUCUN : typeFourniture.getUnitePrincipaleConseillee().getLabel());
+		} else {
+			unitéPrimCombo.setDisable(true);
+		}
 
 		boolean hasSecondary = typeFourniture != null && StringUtils.isNoneEmpty(typeFourniture.getIntituleSecondaire());
 		
@@ -179,19 +192,23 @@ public class TypeFournitureEditController implements IModalController{
 			intituleSecField.setText(typeFourniture == null ? Strings.EMPTY : typeFourniture.getIntituleSecondaire());
 	
 			setComboBox(dimentionSecCombo, DimensionEnum.labels());
+
+
 			dimentionSecCombo.setValue(typeFourniture == null || 
 					typeFourniture.getDimensionSecondaire() == null ?
 							AUCUN : typeFourniture.getDimensionSecondaire().getLabel());
-	
-			setComboBox(unitéSecCombo, Unite.labels());
+
+			if (dimentionSecCombo.getValue() != null && !dimentionSecCombo.getValue().equals(AUCUN)){
+				setComboBox(unitéSecCombo, Unite.labels());
 			unitéSecCombo.setValue(typeFourniture == null || 
 					typeFourniture.getUniteSecondaireConseillee() == null ?
 							AUCUN : typeFourniture.getUniteSecondaireConseillee().getLabel());
+			} else {
+				unitéPrimCombo.setDisable(true);
+			}
 		} else {
 			secondaryGrid.setDisable(true);
 		}
-	
-		
 	}
 
 	private void setComboBox(JFXComboBox<String> comboBox, List<String> labels) {
