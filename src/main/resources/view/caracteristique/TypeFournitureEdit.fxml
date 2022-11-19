@@ -58,9 +58,9 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <JFXComboBox fx:id="dimentionPrimCombo" prefHeight="26.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <JFXComboBox fx:id="dimensionPrimCombo" prefHeight="26.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label text="Unité conseillée" GridPane.rowIndex="2" />
-                  <JFXComboBox fx:id="unitéPrimCombo" prefHeight="26.0" prefWidth="244.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <JFXComboBox fx:id="unitePrimCombo" prefHeight="26.0" prefWidth="244.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <JFXTextField fx:id="intitulePrimField" prefHeight="25.0" prefWidth="211.0" GridPane.columnIndex="1" />
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                      <children>
@@ -94,9 +94,9 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <JFXComboBox fx:id="dimentionSecCombo" prefHeight="26.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <JFXComboBox fx:id="dimensionSecCombo" prefHeight="26.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label text="Unité conseillée" GridPane.rowIndex="2" />
-                  <JFXComboBox fx:id="unitéSecCombo" prefHeight="26.0" prefWidth="244.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <JFXComboBox fx:id="uniteSecCombo" prefHeight="26.0" prefWidth="244.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <JFXTextField fx:id="intituleSecField" prefHeight="25.0" prefWidth="211.0" GridPane.columnIndex="1" />
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                      <children>

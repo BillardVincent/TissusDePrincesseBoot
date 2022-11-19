@@ -1,6 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.controller.caracteristiques;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.util.Strings;
@@ -19,12 +20,12 @@ import fr.vbillard.tissusdeprincesseboot.model.enums.DimensionEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import fr.vbillard.tissusdeprincesseboot.service.TypeFournitureService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
+import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -42,17 +43,17 @@ public class TypeFournitureEditController implements IModalController{
 	@FXML
 	private JFXListView<String> listType;	
 	@FXML
-	private JFXComboBox<String> dimentionPrimCombo;
+	private JFXComboBox<String> dimensionPrimCombo;
 	@FXML
-	private JFXComboBox<String> unitéPrimCombo;
+	private JFXComboBox<String> unitePrimCombo;
 	@FXML
 	private JFXTextField intitulePrimField;
 	@FXML
 	private JFXCheckBox uniteSecondaireCheckBx;
 	@FXML
-	private JFXComboBox<String> dimentionSecCombo;
+	private JFXComboBox<String> dimensionSecCombo;
 	@FXML
-	private JFXComboBox<String> unitéSecCombo;
+	private JFXComboBox<String> uniteSecCombo;
 	@FXML
 	private JFXTextField intituleSecField;	
 	@FXML
@@ -79,17 +80,37 @@ public class TypeFournitureEditController implements IModalController{
 	private void initialize() {
 		resetField();
 
-		dimentionPrimCombo.valueProperty().addListener((observable, oldValue, newValue) -> {
-			if (dimentionPrimCombo.getValue() != null && !dimentionPrimCombo.getValue().equals(AUCUN)){
-				unitéPrimCombo.setDisable(false);
-				setComboBox(unitéPrimCombo, Unite.getValuesByDimension(DimensionEnum.getEnum(dimentionPrimCombo.getValue())));
-				unitéPrimCombo.setValue(typeFourniture == null ||
+		dimensionPrimCombo.setItems(FXCollections.observableArrayList(DimensionEnum.labels()));
+
+		dimensionPrimCombo.valueProperty().addListener((observable, oldValue, newValue) -> {
+			if (dimensionPrimCombo.getValue() != null && !dimensionPrimCombo.getValue().equals(AUCUN)){
+				unitePrimCombo.setDisable(false);
+				setComboBox(unitePrimCombo, Unite.getValuesByDimension(
+						Objects.requireNonNull(DimensionEnum.getEnum(dimensionPrimCombo.getValue()))));
+				unitePrimCombo.setValue(typeFourniture == null ||
 						typeFourniture.getUnitePrincipaleConseillee() == null ?
 						AUCUN : typeFourniture.getUnitePrincipaleConseillee().getLabel());
 			} else {
-				unitéPrimCombo.setDisable(true);
+				unitePrimCombo.setDisable(true);
 			}
 		});
+
+		dimensionSecCombo.valueProperty().addListener((observable, oldValue, newValue) -> {
+			if (dimensionSecCombo.getValue() != null && !dimensionSecCombo.getValue().equals(AUCUN)){
+				uniteSecCombo.setDisable(false);
+				setComboBox(uniteSecCombo, Unite.getValuesByDimension(
+						Objects.requireNonNull(DimensionEnum.getEnum(dimensionSecCombo.getValue()))));
+				uniteSecCombo.setValue(typeFourniture == null ||
+						typeFourniture.getUniteSecondaireConseillee() == null ?
+						AUCUN : typeFourniture.getUniteSecondaireConseillee().getLabel());
+			} else {
+				unitePrimCombo.setDisable(true);
+			}
+		});
+
+		if (typeFourniture.getId() != 0){
+			typeFournitureService.checkIfTypeFournitureIsUsed(typeFourniture);
+		}
 	}
 
 	public void handleSuppressElement() {
@@ -106,9 +127,30 @@ public class TypeFournitureEditController implements IModalController{
 	}
 
 	protected void save() {
-		TypeFourniture type = new TypeFourniture();
-		type.setValue(nomField.getText());
-		typeFournitureService.saveOrUpdate(type);
+		if (typeFourniture == null){
+			typeFourniture = new TypeFourniture();
+		}
+		typeFourniture.setValue(nomField.getText());
+
+		typeFourniture.setDimensionPrincipale(DimensionEnum.valueOf(dimensionPrimCombo.getValue()));
+		if (!dimensionPrimCombo.getValue().equals(DimensionEnum.NON_RENSEIGNE.getLabel())){
+			typeFourniture.setIntitulePrincipale(intitulePrimField.getText());
+		}
+		if (!unitePrimCombo.getValue().equals(AUCUN)){
+			typeFourniture.setUnitePrincipaleConseillee(Unite.valueOf(unitePrimCombo.getValue()));
+		}
+
+		if (!secondaryGrid.isDisabled()){
+			typeFourniture.setDimensionSecondaire(DimensionEnum.valueOf(dimensionSecCombo.getValue()));
+			if (!dimensionSecCombo.getValue().equals(DimensionEnum.NON_RENSEIGNE.getLabel())){
+				typeFourniture.setIntituleSecondaire(intituleSecField.getText());
+			}
+			if (!uniteSecCombo.getValue().equals(AUCUN)){
+				typeFourniture.setUniteSecondaireConseillee(Unite.valueOf(uniteSecCombo.getValue()));
+			}
+		}
+
+		typeFournitureService.saveOrUpdate(typeFourniture);
 		resetField();
 	}
 
@@ -135,7 +177,8 @@ public class TypeFournitureEditController implements IModalController{
 
 	private boolean validateField() {
 		boolean isValid = nomField.getText() != null;
-		
+
+
 		//TODO
 		
 		return isValid;
@@ -172,22 +215,9 @@ public class TypeFournitureEditController implements IModalController{
 		
 		intitulePrimField.setText(typeFourniture == null ? Strings.EMPTY : typeFourniture.getIntitulePrincipale());
 
-		setComboBox(dimentionPrimCombo, DimensionEnum.labels());
-		dimentionPrimCombo.setValue(typeFourniture == null || 
+		dimensionPrimCombo.setValue(typeFourniture == null ||
 				typeFourniture.getDimensionPrincipale() == null ?
-						AUCUN : typeFourniture.getDimensionPrincipale().getLabel());
-
-
-
-		if (dimentionPrimCombo.getValue() != null && !dimentionPrimCombo.getValue().equals(AUCUN)){
-			unitéPrimCombo.setDisable(false);
-			setComboBox(unitéPrimCombo, Unite.getValuesByDimension(DimensionEnum.getEnum(dimentionPrimCombo.getValue())));
-			unitéPrimCombo.setValue(typeFourniture == null ||
-					typeFourniture.getUnitePrincipaleConseillee() == null ?
-					AUCUN : typeFourniture.getUnitePrincipaleConseillee().getLabel());
-		} else {
-			unitéPrimCombo.setDisable(true);
-		}
+						DimensionEnum.NON_RENSEIGNE.getLabel() : typeFourniture.getDimensionPrincipale().getLabel());
 
 		boolean hasSecondary = typeFourniture != null && StringUtils.isNoneEmpty(typeFourniture.getIntituleSecondaire());
 		
@@ -197,20 +227,19 @@ public class TypeFournitureEditController implements IModalController{
 			
 			intituleSecField.setText(typeFourniture == null ? Strings.EMPTY : typeFourniture.getIntituleSecondaire());
 	
-			setComboBox(dimentionSecCombo, DimensionEnum.labels());
+			dimensionSecCombo.setItems(FXCollections.observableArrayList(DimensionEnum.labels()));
 
-
-			dimentionSecCombo.setValue(typeFourniture == null || 
+			dimensionSecCombo.setValue(typeFourniture == null ||
 					typeFourniture.getDimensionSecondaire() == null ?
-							AUCUN : typeFourniture.getDimensionSecondaire().getLabel());
+							DimensionEnum.NON_RENSEIGNE.getLabel() : typeFourniture.getDimensionSecondaire().getLabel());
 
-			if (dimentionSecCombo.getValue() != null && !dimentionSecCombo.getValue().equals(AUCUN)){
-				setComboBox(unitéSecCombo, Unite.labels());
-			unitéSecCombo.setValue(typeFourniture == null || 
+			if (dimensionSecCombo.getValue() != null){
+				setComboBox(uniteSecCombo, Unite.labels());
+			uniteSecCombo.setValue(typeFourniture == null ||
 					typeFourniture.getUniteSecondaireConseillee() == null ?
 							AUCUN : typeFourniture.getUniteSecondaireConseillee().getLabel());
 			} else {
-				unitéPrimCombo.setDisable(true);
+				unitePrimCombo.setDisable(true);
 			}
 		} else {
 			secondaryGrid.setDisable(true);
