@@ -9,6 +9,7 @@ public enum DimensionEnum {
   POIDS("poids", Arrays.asList(Unite.G, Unite.KG, Unite.NON_RENSEIGNE)),
   SURFACE("surface",Arrays.asList(Unite.M2, Unite.NON_RENSEIGNE)),
   NON_RENSEIGNE("N/A", Arrays.asList(Unite.NON_RENSEIGNE)),
+  NOMBRE("nombre", Arrays.asList(Unite.UNITE)),
   VOLUME("volume", Arrays.asList(Unite.L, Unite.ML, Unite.NON_RENSEIGNE));
 
   private String label;

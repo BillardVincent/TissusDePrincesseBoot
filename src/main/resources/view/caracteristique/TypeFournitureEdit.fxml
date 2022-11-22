@@ -14,11 +14,11 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="418.0" prefWidth="600.0" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.caracteristiques.TypeFournitureEditController">
+<AnchorPane prefHeight="444.0" prefWidth="600.0" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.caracteristiques.TypeFournitureEditController">
 	<children>
-		<JFXListView fx:id="listType" layoutX="21.0" layoutY="43.0" prefHeight="327.0" prefWidth="264.0" />
+		<JFXListView fx:id="listType" layoutX="28.0" layoutY="42.0" prefHeight="338.0" prefWidth="264.0" />
 		<JFXButton fx:id="ajouterButton" layoutX="353.0" layoutY="346.0" mnemonicParsing="false" onAction="#handleSaveOrEdit" text="Ajouter" />
-		<JFXButton fx:id="fermerButton" layoutX="527.0" layoutY="376.0" mnemonicParsing="false" onAction="#handleClose" text="Fermer" />
+		<JFXButton fx:id="fermerButton" layoutX="520.0" layoutY="399.0" mnemonicParsing="false" onAction="#handleClose" text="Fermer" />
 		<JFXButton fx:id="supprimerButton" layoutX="465.0" layoutY="346.0" mnemonicParsing="false" onAction="#handleSuppressElement" text="Supprimer" />
       <VBox layoutX="313.0" layoutY="35.0" prefHeight="307.0" prefWidth="246.0">
          <children>
@@ -44,7 +44,7 @@
                <children>
                   <Label text="Unité principale " />
                   <Label styleClass="info-obligatoire" text="*" textFill="RED" />
-                  <FontAwesomeIconView glyphName="QUESTION_CIRCLE" />
+                  <FontAwesomeIconView glyphName="QUESTION_CIRCLE" onMouseClicked="#handleHelpPrim" size="2em" />
                </children>
             </HBox>
             <GridPane>
@@ -59,28 +59,27 @@
               </rowConstraints>
                <children>
                   <JFXComboBox fx:id="dimensionPrimCombo" prefHeight="26.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label text="Unité conseillée" GridPane.rowIndex="2" />
+                  <Label fx:id="uniteConsPrimLbl" text="Unité conseillée" GridPane.rowIndex="2" />
                   <JFXComboBox fx:id="unitePrimCombo" prefHeight="26.0" prefWidth="244.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <JFXTextField fx:id="intitulePrimField" prefHeight="25.0" prefWidth="211.0" GridPane.columnIndex="1" />
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                      <children>
                         <Label text="Intitulé" />
-                        <Label styleClass="info-obligatoire" text="*" />
+                        <Label fx:id="intitulePrimAsterix" styleClass="info-obligatoire" text="*" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.rowIndex="1">
                      <children>
                         <Label text="Dimension" />
-                        <Label styleClass="info-obligatoire" text="*" />
                      </children>
                   </HBox>
                </children>
             </GridPane>
             <HBox alignment="CENTER" prefHeight="35.0" prefWidth="246.0" spacing="5.0">
                <children>
-                  <JFXCheckBox fx:id="uniteSecondaireCheckBx" text="Unité secondaire" />
+                  <JFXCheckBox fx:id="uniteSecondaireCheckBx" onAction="#handleUniteSecondaireCheck" text="Unité secondaire" />
                   <Label />
-                  <FontAwesomeIconView glyphName="QUESTION_CIRCLE" />
+                  <FontAwesomeIconView glyphName="QUESTION_CIRCLE" onMouseClicked="#handleHelpSec" size="2em" />
                </children>
             </HBox>
             <GridPane fx:id="secondaryGrid">
@@ -95,19 +94,19 @@
                </rowConstraints>
                <children>
                   <JFXComboBox fx:id="dimensionSecCombo" prefHeight="26.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label text="Unité conseillée" GridPane.rowIndex="2" />
+                  <Label fx:id="uniteConsSecLbl" text="Unité conseillée" GridPane.rowIndex="2" />
                   <JFXComboBox fx:id="uniteSecCombo" prefHeight="26.0" prefWidth="244.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <JFXTextField fx:id="intituleSecField" prefHeight="25.0" prefWidth="211.0" GridPane.columnIndex="1" />
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                      <children>
                         <Label text="Intitulé" />
-                        <Label styleClass="info-obligatoire" text="*" />
+                        <Label fx:id="intituleSecAsterix" styleClass="info-obligatoire" text="*" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.rowIndex="1">
                      <children>
                         <Label text="Dimension" />
-                        <Label styleClass="info-obligatoire" text="*" />
+                        <Label fx:id="dimensionSecAsterix" styleClass="info-obligatoire" text="*" />
                      </children>
                   </HBox>
                </children>
@@ -115,5 +114,6 @@
             <Label prefHeight="18.0" prefWidth="254.0" styleClass="info-obligatoire" stylesheets="@../../style/style.css" text="* obligatoire" textFill="RED" />
          </children>
       </VBox>
+      <JFXButton fx:id="deselectionnerButton" layoutX="105.0" layoutY="384.0" mnemonicParsing="false" onAction="#handleDeselectionner" text="Désélectionner" />
 	</children>
 </AnchorPane>
