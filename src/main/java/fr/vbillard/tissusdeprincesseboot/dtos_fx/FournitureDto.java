@@ -14,9 +14,11 @@ public class FournitureDto implements FxDto{
 
 	private IntegerProperty id;
 	  private StringProperty nom;
+		private StringProperty intituleDimension;
 	  private FloatProperty quantite;
 	  private StringProperty unite;
-	  private FloatProperty quantiteSecondaire;
+		private StringProperty intituleSecondaire;
+		private FloatProperty quantiteSecondaire;
 	  private StringProperty uniteSecondaire;
 	  private StringProperty lieuAchat;
 	  private StringProperty reference;
@@ -38,6 +40,8 @@ public class FournitureDto implements FxDto{
 		this.type = new SimpleStringProperty();
 		this.quantiteSecondaire = new SimpleFloatProperty();
 		this.uniteSecondaire = new SimpleStringProperty();
+		this.intituleDimension = new SimpleStringProperty();
+		this.intituleSecondaire = new SimpleStringProperty();
 	}
 
 	public int getId() {
@@ -192,4 +196,27 @@ public class FournitureDto implements FxDto{
 		this.archived.set(archived);
 	}
 
+	public StringProperty getIntituleDimensionProperty() {
+		return intituleDimension;
+	}
+
+	public String getIntituleDimension() {
+		return intituleDimension.get();
+	}
+
+	public void setIntituleDimension(String intituleDimension) {
+		this.intituleDimension.set(intituleDimension);
+	}
+
+	public StringProperty getIntituleSecondaireProperty() {
+		return intituleSecondaire;
+	}
+
+	public String getIntituleSecondaire() {
+		return intituleSecondaire.get();
+	}
+
+	public void setIntituleSecondaire(String intituleSecondaire) {
+		this.intituleSecondaire.set(intituleSecondaire);
+	}
 }

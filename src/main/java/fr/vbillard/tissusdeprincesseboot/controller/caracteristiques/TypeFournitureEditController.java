@@ -18,7 +18,6 @@ import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
 import fr.vbillard.tissusdeprincesseboot.model.enums.DimensionEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import fr.vbillard.tissusdeprincesseboot.service.TypeFournitureService;
-import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.ShowAlert;
 import javafx.collections.FXCollections;
@@ -91,7 +90,8 @@ public class TypeFournitureEditController implements IModalController {
 	private void initialize() {
 
 		typeFourniture = null;
-		
+		ajouterButton.setText("Ajouter");
+
 		listType.getSelectionModel().selectedItemProperty()
 		.addListener((observable, oldValue, newValue) -> handleSelectElement(newValue));
 		
@@ -111,7 +111,6 @@ public class TypeFournitureEditController implements IModalController {
 				uniteConsPrimLbl.setDisable(true);
 				unitePrimCombo.setItems(null);
 				unitePrimCombo.setValue(null);
-				
 			}
 		});
 
@@ -120,6 +119,9 @@ public class TypeFournitureEditController implements IModalController {
 					&& !dimensionSecCombo.getValue().equals(DimensionEnum.NON_RENSEIGNE.getLabel())) {
 				uniteSecCombo.setDisable(false);
 				uniteConsSecLbl.setDisable(false);
+				dimensionSecAsterix.setVisible(true);
+				intituleSecAsterix.setVisible(true);
+
 				uniteSecCombo.setItems(FXCollections.observableArrayList(Unite.getValuesByDimension(
 						Objects.requireNonNull(DimensionEnum.getEnum(dimensionSecCombo.getValue())))));
 
@@ -131,6 +133,9 @@ public class TypeFournitureEditController implements IModalController {
 				uniteConsSecLbl.setDisable(true);
 				uniteSecCombo.setItems(null);
 				uniteSecCombo.setValue(null);
+
+				dimensionSecAsterix.setVisible(false);
+				intituleSecAsterix.setVisible(false);
 			}
 		});
 
@@ -161,28 +166,25 @@ public class TypeFournitureEditController implements IModalController {
 			typeFourniture = new TypeFourniture();
 		}
 
-		if (typeFourniture != null && typeFourniture.getId() != 0) {
+		if (typeFourniture.getId() != 0) {
 			typeFournitureService.checkIfTypeFournitureIsUsed(typeFourniture);
 		}
 
 		typeFourniture.setValue(nomField.getText());
 
-		typeFourniture.setDimensionPrincipale(DimensionEnum.valueOf(dimensionPrimCombo.getValue()));
+		typeFourniture.setDimensionPrincipale(DimensionEnum.getEnum(dimensionPrimCombo.getValue()));
 
 		if (!dimensionPrimCombo.getValue().equals(DimensionEnum.NON_RENSEIGNE.getLabel())) {
 			typeFourniture.setIntitulePrincipale(intitulePrimField.getText());
-			typeFourniture.setUnitePrincipaleConseillee(Unite.valueOf(unitePrimCombo.getValue()));
-
+			typeFourniture.setUnitePrincipaleConseillee(Unite.getEnum(unitePrimCombo.getValue()));
 		}
 
-
 		if (!secondaryGrid.isDisabled()) {
-			typeFourniture.setDimensionSecondaire(DimensionEnum.valueOf(dimensionSecCombo.getValue()));
+			typeFourniture.setDimensionSecondaire(DimensionEnum.getEnum(dimensionSecCombo.getValue()));
 			if (!dimensionSecCombo.getValue().equals(DimensionEnum.NON_RENSEIGNE.getLabel())) {
 				typeFourniture.setIntituleSecondaire(intituleSecField.getText());
-				typeFourniture.setUniteSecondaireConseillee(Unite.valueOf(uniteSecCombo.getValue()));
+				typeFourniture.setUniteSecondaireConseillee(Unite.getEnum(uniteSecCombo.getValue()));
 			}
-
 		}
 
 		typeFournitureService.saveOrUpdate(typeFourniture);
@@ -199,6 +201,7 @@ public class TypeFournitureEditController implements IModalController {
 			alert.showAndWait();
 		} else if (typeFournitureService.validate(nomField.getText(), typeFourniture.getId())) {
 			save();
+			listType.getSelectionModel().clearSelection();
 		} else {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.initOwner(mainApp.getPrimaryStage());
@@ -245,12 +248,9 @@ public class TypeFournitureEditController implements IModalController {
 
 	private void resetField() {
 		deselectionnerButton.setVisible(typeFourniture != null);
-		
-
 
 		allTypes = typeFournitureService.getAllTypeFournituresValues();
 		listType.setItems(allTypes);
-		ajouterButton.setText("Ajouter");
 
 		nomField.setText(typeFourniture == null ? Strings.EMPTY : typeFourniture.getValue());
 
@@ -293,12 +293,13 @@ public class TypeFournitureEditController implements IModalController {
 			intituleSecField.setText(Strings.EMPTY);
 
 			dimensionSecCombo.setItems(null);
-
 			dimensionSecCombo.setValue(null);
 
 			uniteSecCombo.setItems(null);
-
 			uniteSecCombo.setValue(null);
+
+			dimensionSecAsterix.setVisible(false);
+			intituleSecAsterix.setVisible(false);
 		}
 	}
 
@@ -319,7 +320,9 @@ public class TypeFournitureEditController implements IModalController {
 	
 	@FXML
 	public void handleDeselectionner() {
-        listType.getSelectionModel().clearSelection();
+		ajouterButton.setText("Ajouter");
+
+		listType.getSelectionModel().clearSelection();
 
 	}
 

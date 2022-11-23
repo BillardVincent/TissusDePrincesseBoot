@@ -18,9 +18,9 @@ public class Fourniture extends AbstractEntity{
   private String reference;
   private String description;
   private Float quantiteDisponible;
-  private Unite dimension;
+  private Unite unite;
   private Float quantiteSecondaire;
-  private Unite dimensionSecondaire;
+  private Unite uniteSecondaire;
   @ManyToOne
   private TypeFourniture type;
 

@@ -49,7 +49,7 @@ public class FournitureService extends AbstractService<Fourniture> {
 	}
 
 	/**
-	 * Contient la conversion du poids de g/m en g/m²
+	 * Contient la conversion de l'unité
 	 */
 	@Override
 	protected void beforeSaveOrUpdate(Fourniture entity) {

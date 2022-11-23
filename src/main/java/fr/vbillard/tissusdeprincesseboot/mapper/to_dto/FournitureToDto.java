@@ -9,6 +9,7 @@ import com.github.rozidan.springboot.modelmapper.TypeMapConfigurer;
 import fr.vbillard.tissusdeprincesseboot.dao.FournitureDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
+import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import lombok.AllArgsConstructor;
 
 @Component
@@ -24,14 +25,25 @@ public class FournitureToDto extends TypeMapConfigurer<Fourniture, FournitureDto
 		
 		typeMap.setPostConverter(context -> {
 			if (context.getSource().getId() != 0){
-      
-	            context.getDestination().setUnite(context.getSource().getDimension());;
-	            //TODO
-            }
 
+				context.getDestination().setIntituleDimension(context.getSource().getType().getIntitulePrincipale());
+				context.getDestination().setIntituleSecondaire(context.getSource().getType().getIntituleSecondaire());
+
+				if (context.getSource().getUnite() != null){
+					context.getDestination().setUnite(context.getSource().getUnite());
+				} else if (context.getSource().getType().getUnitePrincipaleConseillee() != null){
+					context.getDestination().setUnite(context.getSource().getType().getUnitePrincipaleConseillee());
+				}
+
+				if (context.getSource().getType().getUniteSecondaireConseillee() != null){
+					context.getDestination().setUniteSecondaire(context.getSource().getUniteSecondaire());
+				} else if (context.getSource().getType().getUnitePrincipaleConseillee() != null){
+					context.getDestination().setUniteSecondaire(context.getSource().getType().getUnitePrincipaleConseillee());
+				}
+			}
             return context.getDestination();
-        });
-    }
+		});
+	}
 	
 	private class LongueurRestanteConverter extends AbstractConverter<Fourniture, Float> {
 		@Override
