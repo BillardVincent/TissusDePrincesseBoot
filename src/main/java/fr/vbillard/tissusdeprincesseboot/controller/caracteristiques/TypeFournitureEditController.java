@@ -12,6 +12,7 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IModalController;
 import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
@@ -70,6 +71,8 @@ public class TypeFournitureEditController implements IModalController {
 	private Label dimensionSecAsterix;
 	@FXML
 	private JFXButton deselectionnerButton;
+	@FXML
+	private FontAwesomeIconView dimensionLockIcn;
 
 	private Stage dialogStage;
 	private boolean okClicked = false;
@@ -166,13 +169,12 @@ public class TypeFournitureEditController implements IModalController {
 			typeFourniture = new TypeFourniture();
 		}
 
-		if (typeFourniture.getId() != 0) {
-			typeFournitureService.checkIfTypeFournitureIsUsed(typeFourniture);
+		if (typeFourniture.getId() == 0 || !typeFournitureService.checkIfTypeFournitureIsUsed(typeFourniture)){
+			typeFourniture.setDimensionPrincipale(DimensionEnum.getEnum(dimensionPrimCombo.getValue()));
 		}
 
 		typeFourniture.setValue(nomField.getText());
 
-		typeFourniture.setDimensionPrincipale(DimensionEnum.getEnum(dimensionPrimCombo.getValue()));
 
 		if (!dimensionPrimCombo.getValue().equals(DimensionEnum.NON_RENSEIGNE.getLabel())) {
 			typeFourniture.setIntitulePrincipale(intitulePrimField.getText());
@@ -192,6 +194,7 @@ public class TypeFournitureEditController implements IModalController {
 	}
 
 	public void handleSaveOrEdit() {
+
 		if (!validateField()) {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.initOwner(mainApp.getPrimaryStage());
@@ -199,7 +202,7 @@ public class TypeFournitureEditController implements IModalController {
 			alert.setHeaderText(PAS_DE_VALEUR);
 			alert.setContentText("Veuillez renseigner une valeur dans tous les champs obligatoires");
 			alert.showAndWait();
-		} else if (typeFournitureService.validate(nomField.getText(), typeFourniture.getId())) {
+		} else if (typeFournitureService.validate(nomField.getText(), typeFourniture)) {
 			save();
 			listType.getSelectionModel().clearSelection();
 		} else {
@@ -216,11 +219,10 @@ public class TypeFournitureEditController implements IModalController {
 	private boolean validateField() {
 		boolean isValid = nomField.getText() != null;
 
-		if (dimensionPrimCombo.getValue().equals(DimensionEnum.NON_RENSEIGNE.getLabel())) {
+		if (DimensionEnum.NON_RENSEIGNE.getLabel().equals(dimensionPrimCombo.getValue())) {
 			isValid = isValid && StringUtils.isNoneEmpty(intitulePrimField.getText());
 		}
-
-		if (dimensionSecCombo.getValue().equals(DimensionEnum.NON_RENSEIGNE.getLabel())) {
+		if (DimensionEnum.NON_RENSEIGNE.getLabel().equals(dimensionSecCombo.getValue())) {
 			isValid = isValid && StringUtils.isNoneEmpty(intituleSecField.getText());
 		}
 
@@ -248,6 +250,11 @@ public class TypeFournitureEditController implements IModalController {
 
 	private void resetField() {
 		deselectionnerButton.setVisible(typeFourniture != null);
+		
+		boolean isUsed = typeFourniture == null || typeFourniture.getId() == 0 || !typeFournitureService.checkIfTypeFournitureIsUsed(typeFourniture);
+
+		dimensionLockIcn.setVisible(isUsed);
+		dimensionPrimCombo.setEditable(false);
 
 		allTypes = typeFournitureService.getAllTypeFournituresValues();
 		listType.setItems(allTypes);

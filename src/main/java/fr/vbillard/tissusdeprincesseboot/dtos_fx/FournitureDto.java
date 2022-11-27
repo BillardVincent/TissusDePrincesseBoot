@@ -1,5 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.dtos_fx;
 
+import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.FloatProperty;
@@ -10,22 +11,23 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class FournitureDto implements FxDto{
+public class FournitureDto implements FxDto {
 
 	private IntegerProperty id;
-	  private StringProperty nom;
-		private StringProperty intituleDimension;
-	  private FloatProperty quantite;
-	  private StringProperty unite;
-		private StringProperty intituleSecondaire;
-		private FloatProperty quantiteSecondaire;
-	  private StringProperty uniteSecondaire;
-	  private StringProperty lieuAchat;
-	  private StringProperty reference;
-	  private StringProperty description;
-	  private FloatProperty quantiteDisponible;
-	  private StringProperty type;
-	  private BooleanProperty archived;
+	private StringProperty nom;
+	private StringProperty intituleDimension;
+	private FloatProperty quantite;
+	private StringProperty unite;
+	private StringProperty intituleSecondaire;
+	private FloatProperty quantiteSecondaire;
+	private StringProperty uniteSecondaire;
+	private StringProperty lieuAchat;
+	private StringProperty reference;
+	private StringProperty description;
+	private FloatProperty quantiteDisponible;
+	private StringProperty typeName;
+	private BooleanProperty archived;
+	private TypeFourniture type;
 
 	public FournitureDto() {
 		this.id = new SimpleIntegerProperty();
@@ -37,7 +39,7 @@ public class FournitureDto implements FxDto{
 		this.nom = new SimpleStringProperty();
 		this.lieuAchat = new SimpleStringProperty();
 		this.archived = new SimpleBooleanProperty();
-		this.type = new SimpleStringProperty();
+		this.typeName = new SimpleStringProperty();
 		this.quantiteSecondaire = new SimpleFloatProperty();
 		this.uniteSecondaire = new SimpleStringProperty();
 		this.intituleDimension = new SimpleStringProperty();
@@ -92,7 +94,6 @@ public class FournitureDto implements FxDto{
 		this.quantite.set(quantite);
 	}
 
-	
 	public String getDescription() {
 		return description.get();
 	}
@@ -104,7 +105,7 @@ public class FournitureDto implements FxDto{
 	public void setDescription(String description) {
 		this.description.set(description);
 	}
-	
+
 	public String getNom() {
 		return nom.get();
 	}
@@ -117,16 +118,21 @@ public class FournitureDto implements FxDto{
 		this.nom.set(nom);
 	}
 
-	public String getType() {
-		return type.get();
+	public String getTypeName() {
+		return typeName.get();
 	}
 
-	public StringProperty getTypeProperty() {
+	public StringProperty getTypeNameProperty() {
+		return typeName;
+	}
+
+	public void setType(TypeFourniture type) {
+		this.type = type;
+		this.typeName.set(type.getValue());
+	}
+	
+	public TypeFourniture getType() {
 		return type;
-	}
-
-	public void setType(String type) {
-		this.type.set(type);
 	}
 
 	public String getUnite() {
@@ -144,7 +150,7 @@ public class FournitureDto implements FxDto{
 
 		this.unite.set(unite.getLabel());
 	}
-	
+
 	public float getQuantiteSecondaire() {
 		return quantiteSecondaire.get();
 	}
@@ -156,7 +162,7 @@ public class FournitureDto implements FxDto{
 	public void setQuantiteSecondaire(float quantite) {
 		this.quantiteSecondaire.set(quantite);
 	}
-	
+
 	public String getUniteSecondaire() {
 		return uniteSecondaire.get();
 	}
@@ -171,7 +177,7 @@ public class FournitureDto implements FxDto{
 		}
 		this.uniteSecondaire.set(unite.getLabel());
 	}
-	
+
 	public StringProperty getLieuAchatProperty() {
 		return lieuAchat;
 	}

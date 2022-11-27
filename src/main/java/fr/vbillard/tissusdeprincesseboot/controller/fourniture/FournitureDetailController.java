@@ -36,9 +36,17 @@ public class FournitureDetailController implements IController {
 	@FXML
 	public Label lieuDachatField;
 	@FXML
-	public Label uniteField;
+	public Label unitePrimField;
 	@FXML
-	public Label quantiteField;
+	public Label quantitePrimField;
+	@FXML
+	public Label intitulePrimLbl;
+	@FXML
+	public Label uniteSecField;
+	@FXML
+	public Label quantiteSecField;
+	@FXML
+	public Label intituleSecLbl;
 	@FXML
 	public Label typeField;
 	@FXML
@@ -100,15 +108,20 @@ public class FournitureDetailController implements IController {
 		ancienneValeurInfo.setText(fourniture.getQuantiteProperty() == null ? "0" : Float.toString(fourniture.getQuantite()));
 		consommeInfo.setText(Float.toString(fournitureService.getQuantiteUtilisee(fourniture.getId())));
 
-		quantiteField.setText(FxUtils.safePropertyToString(fourniture.getQuantiteProperty()));
+		quantitePrimField.setText(FxUtils.safePropertyToString(fourniture.getQuantiteProperty()));
+		quantiteSecField.setText(FxUtils.safePropertyToString(fourniture.getQuantiteSecondaireProperty()));
+		intitulePrimLbl.setText(FxUtils.safePropertyToString(fourniture.getIntituleDimensionProperty()));
+		intituleSecLbl.setText(FxUtils.safePropertyToString(fourniture.getIntituleSecondaireProperty()));
 		referenceField.setText(FxUtils.safePropertyToString(fourniture.getReferenceProperty()));
 		descriptionField.setText(FxUtils.safePropertyToString(fourniture.getDescriptionProperty()));
 		lieuDachatField.setText(FxUtils.safePropertyToString(fourniture.getLieuAchatProperty()));
 		nomField.setText(FxUtils.safePropertyToString(fourniture.getNomProperty()));
-		typeField.setText(FxUtils.safePropertyToString(fourniture.getNomProperty()));
+		typeField.setText(FxUtils.safePropertyToString(fourniture.getTypeNameProperty()));
 
-		uniteField.setText(
-				fourniture.getType() == null ? Unite.NON_RENSEIGNE.getLabel() : fourniture.getType());
+		unitePrimField.setText(
+				fourniture.getUnite() == null ? Unite.NON_RENSEIGNE.getLabel() : fourniture.getUnite());
+		uniteSecField.setText(
+				fourniture.getUniteSecondaire() == null ? Unite.NON_RENSEIGNE.getLabel() : fourniture.getUniteSecondaire());
 		pictures = imageService.getImage(mapper.map(fourniture));
 		imagePane.setImage(imageService.imageOrDefault(pictures));
 

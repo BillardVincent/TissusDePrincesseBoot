@@ -63,8 +63,7 @@ public class FournitureService extends AbstractService<Fourniture> {
 			entity.setPoids(Math.round(conversion));
 			entity.setUnitePoids(UnitePoids.GRAMME_M_CARRE);
 		}
-
-		 */
+		*/
 	}
 
 	@Override

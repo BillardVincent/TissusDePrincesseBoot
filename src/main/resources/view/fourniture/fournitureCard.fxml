@@ -40,7 +40,7 @@
                <children>
                   <HBox fx:id="footer" prefHeight="38.0" prefWidth="259.0">
                      <children>
-                        <Label fx:id="type" prefHeight="28.0" prefWidth="38.0" text="00" textAlignment="RIGHT" />
+                        <Label fx:id="zero_zero" prefHeight="28.0" prefWidth="68.0" text="00" textAlignment="RIGHT" />
                      </children>
                   </HBox>
                </children>

@@ -24,20 +24,21 @@
             <RowConstraints fx:id="ancienneValeurRow" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints fx:id="consommeRow" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
         <children>
-            <Label text="Description" GridPane.rowIndex="6" />
+            <Label text="Description" GridPane.rowIndex="7" />
             <Label text="Type" GridPane.rowIndex="1" />
-            <Label text="Quantité" GridPane.rowIndex="5" />
-            <Label text="Lieu d'achat" GridPane.rowIndex="7" />
-            <Label fx:id="descriptionField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Label fx:id="lieuDachatField" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label fx:id="intitulePrimLbl" text="Quantité" GridPane.rowIndex="5" />
+            <Label text="Lieu d'achat" GridPane.rowIndex="8" />
+            <Label fx:id="descriptionField" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label fx:id="lieuDachatField" GridPane.columnIndex="1" GridPane.rowIndex="8" />
             <HBox fillHeight="false" prefHeight="0.0" prefWidth="324.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                 <children>
-                    <Label fx:id="quantiteField" prefHeight="26.0" prefWidth="239.0" />
-                    <Label fx:id="uniteField" prefHeight="26.0" prefWidth="94.0" />
+                    <Label fx:id="quantitePrimField" prefHeight="26.0" prefWidth="239.0" />
+                    <Label fx:id="unitePrimField" prefHeight="26.0" prefWidth="94.0" />
                 </children>
             </HBox>
             <Label text="Nom" GridPane.rowIndex="2" />
@@ -69,6 +70,13 @@
                     <Insets left="10.0" />
                 </padding>
             </Label>
+         <Label fx:id="intituleSecLbl" text="Quantité 2" GridPane.rowIndex="6" />
+         <HBox fillHeight="false" prefHeight="0.0" prefWidth="324.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+            <children>
+               <Label fx:id="quantiteSecField" prefHeight="26.0" prefWidth="239.0" />
+               <Label fx:id="uniteSecField" prefHeight="26.0" prefWidth="94.0" />
+            </children>
+         </HBox>
         </children>
     </GridPane>
     <ButtonBar layoutX="292.0" layoutY="639.0" prefHeight="40.0" prefWidth="521.0">

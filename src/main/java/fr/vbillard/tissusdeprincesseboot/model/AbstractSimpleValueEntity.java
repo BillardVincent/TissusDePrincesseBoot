@@ -1,5 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.model;
 
+import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
 import lombok.Getter;
@@ -10,6 +11,7 @@ import lombok.Setter;
 @MappedSuperclass
 public abstract class AbstractSimpleValueEntity extends AbstractEntity {
 
+	@Column(unique=true)
 	protected String value;
 
 	@Override

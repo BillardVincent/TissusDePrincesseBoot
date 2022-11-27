@@ -22,12 +22,14 @@ public class FournitureToDto extends TypeMapConfigurer<Fourniture, FournitureDto
 	public void configure(TypeMap<Fourniture, FournitureDto> typeMap) {
 		typeMap.addMappings(mapping -> mapping.using(new LongueurRestanteConverter()).map(src -> src,
 				FournitureDto::setQuantiteDisponible));
+		typeMap.addMapping(src -> src.getType().getIntitulePrincipale(), FournitureDto::setIntituleDimension);
+		typeMap.addMapping(src -> src.getType().getIntituleSecondaire(), FournitureDto::setIntituleSecondaire);
 		
 		typeMap.setPostConverter(context -> {
 			if (context.getSource().getId() != 0){
 
-				context.getDestination().setIntituleDimension(context.getSource().getType().getIntitulePrincipale());
-				context.getDestination().setIntituleSecondaire(context.getSource().getType().getIntituleSecondaire());
+				//context.getDestination().setIntituleDimension(context.getSource().getType().getIntitulePrincipale());
+				//context.getDestination().setIntituleSecondaire(context.getSource().getType().getIntituleSecondaire());
 
 				if (context.getSource().getUnite() != null){
 					context.getDestination().setUnite(context.getSource().getUnite());

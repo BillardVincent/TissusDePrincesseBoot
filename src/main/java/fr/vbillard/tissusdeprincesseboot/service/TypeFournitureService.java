@@ -14,6 +14,7 @@ import fr.vbillard.tissusdeprincesseboot.dao.ProjetDao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissuDao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissuVariantDao;
 import fr.vbillard.tissusdeprincesseboot.dao.TypeFournitureDao;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
 import fr.vbillard.tissusdeprincesseboot.exception.CantBeDeletedException;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
@@ -57,8 +58,9 @@ public class TypeFournitureService extends AbstractService<TypeFourniture> {
 				lst.stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList()));
 	}
 
-	public boolean validate(String value, int id) {
-		return !dao.existsByValueAndIdNot(value, id);
+	public boolean validate(String value, TypeFourniture type) {
+		return type == null || type.getId() == 0 || 
+		 !dao.existsByValueAndIdNot(value, type.getId());
 	}
 
 	public void delete(String value) {
@@ -67,13 +69,10 @@ public class TypeFournitureService extends AbstractService<TypeFourniture> {
 		delete(matiere);
 	}
 
-	public void checkIfTypeFournitureIsUsed(TypeFourniture typeFourniture) {
-		if (fournitureDao.existsFournitureByType(typeFourniture)) {
-			throw new CantBeDeletedException(typeFourniture, null);
-		}
-		if (fournitureRequiseDao.existsFournitureRequiseByType(typeFourniture)) {
-			throw new CantBeDeletedException(typeFourniture, null);
-		}
+	public boolean checkIfTypeFournitureIsUsed(TypeFourniture typeFourniture) {
+		return fournitureDao.existsFournitureByType(typeFourniture) 
+				|| fournitureRequiseDao.existsFournitureRequiseByType(typeFourniture);
+		
 	}
 
 	public List<String> getAllValues() {

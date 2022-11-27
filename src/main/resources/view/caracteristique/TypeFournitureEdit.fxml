@@ -115,5 +115,6 @@
          </children>
       </VBox>
       <JFXButton fx:id="deselectionnerButton" layoutX="105.0" layoutY="384.0" mnemonicParsing="false" onAction="#handleDeselectionner" text="Désélectionner" />
+      <FontAwesomeIconView fx:id="dimensionLockIcn" glyphName="LOCK" layoutX="568.0" layoutY="154.0" size="2em" />
 	</children>
 </AnchorPane>

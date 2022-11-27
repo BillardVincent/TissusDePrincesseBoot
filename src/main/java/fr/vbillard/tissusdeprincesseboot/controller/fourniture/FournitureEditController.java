@@ -45,6 +45,10 @@ public class FournitureEditController implements IController {
 	@FXML
 	public JFXTextField quantiteField;
 	@FXML
+	public JFXComboBox<String> uniteSecField;
+	@FXML
+	public JFXTextField quantiteSecField;
+	@FXML
 	public JFXComboBox<String> typeField;
 	@FXML
 	public JFXButton addTypeButton;
@@ -64,6 +68,10 @@ public class FournitureEditController implements IController {
 	public JFXButton addPictureBtn;
 	@FXML
 	public Label imageNotSaved;
+	@FXML
+	public Label intitulePrimLbl;
+	@FXML
+	public Label intituleSecLbl;
 
 	private RootController root;
 	private StageInitializer initializer;
@@ -91,23 +99,29 @@ public class FournitureEditController implements IController {
 			throw new IllegalData();
 		}
 		fourniture = data.getFourniture();
-		if (fourniture == null || fourniture.getTypeProperty() == null) {
+		if (fourniture == null || fourniture.getTypeNameProperty() == null) {
 			fourniture = new FournitureDto();
 		}
 
 		quantiteField.setText(FxUtils.safePropertyToString(fourniture.getQuantiteProperty()));
+		quantiteSecField.setText(FxUtils.safePropertyToString(fourniture.getQuantiteSecondaireProperty()));
 		referenceField.setText(FxUtils.safePropertyToString(fourniture.getReferenceProperty()));
 		descriptionField.setText(FxUtils.safePropertyToString(fourniture.getDescriptionProperty()));
 		lieuDachatField.setText(FxUtils.safePropertyToString(fourniture.getLieuAchatProperty()));
 		nomField.setText(FxUtils.safePropertyToString(fourniture.getNomProperty()));
 
-		uniteField.setItems(FXCollections.observableArrayList(Unite.labels()));
+		uniteField.setItems(FXCollections.observableArrayList(Unite.getValuesByDimension(fourniture.getType().getDimensionPrincipale())));
 		uniteField.setValue(
 				fourniture.getUniteProperty() == null ? Unite.NON_RENSEIGNE.getLabel() : fourniture.getUnite());
+		uniteSecField.setItems(FXCollections.observableArrayList(Unite.getValuesByDimension(fourniture.getType().getDimensionSecondaire())));
+		uniteSecField.setValue(
+				fourniture.getUniteSecondaireProperty() == null ? Unite.NON_RENSEIGNE.getLabel() : fourniture.getUniteSecondaire());
 
 		typeField.setItems(FXCollections.observableArrayList(typeService.getAllTypeFournituresValues()));
-		typeField.setValue(FxUtils.safePropertyToString(fourniture.getTypeProperty()));
+		typeField.setValue(FxUtils.safePropertyToString(fourniture.getTypeNameProperty()));
 
+		intitulePrimLbl.setText(FxUtils.safePropertyToString(fourniture.getIntituleDimensionProperty()));
+		intituleSecLbl.setText(FxUtils.safePropertyToString(fourniture.getIntituleSecondaireProperty()));
 		
 		pictureHelper.setPane(imagePane, fourniture);
 		boolean tissuIsNew = fourniture.getId() == 0;
@@ -145,9 +159,11 @@ public class FournitureEditController implements IController {
 	private void setTissuFromFields() {
 		fourniture.setReference(referenceField.getText());
 		fourniture.setQuantite(Float.parseFloat(quantiteField.getText()));
+		fourniture.setQuantiteSecondaire(Float.parseFloat(quantiteSecField.getText()));
 		fourniture.setDescription(descriptionField.getText());
-		fourniture.setType(typeField.getValue());
+		fourniture.setType(typeService.findTypeFourniture(typeField.getValue()));
 		fourniture.setUnite(Unite.getEnum(uniteField.getValue()));
+		fourniture.setUniteSecondaire(Unite.getEnum(uniteSecField.getValue()));
 		fourniture.setLieuAchat(lieuDachatField.getText());
 		fourniture.setNom(nomField.getText());
 		
@@ -168,7 +184,7 @@ public class FournitureEditController implements IController {
 		initializer.displayModale(PathEnum.TYPE_FOURNITURE, null, "Fourniture");
 
 		typeField.setItems(FXCollections.observableArrayList(typeService.getAllTypeFournituresValues()));
-		typeField.setValue(FxUtils.safePropertyToString(fourniture.getTypeProperty()));
+		typeField.setValue(FxUtils.safePropertyToString(fourniture.getTypeNameProperty()));
 
 	}
 

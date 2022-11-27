@@ -37,6 +37,8 @@ public class FournitureCardController implements IController {
 	@FXML
 	private Label type;
 	@FXML
+	private Label zero_zero;
+	@FXML
 	private HBox footer;
 	@FXML
 	private ImageView image;
@@ -74,7 +76,7 @@ public class FournitureCardController implements IController {
 		description.setText(isDescription ? fourniture.getDescription() : constants.getAucuneDescription());
 		nombreEtUnite.setText(FxUtils.safePropertyToString(fourniture.getQuantiteDisponibleProperty()) + 
 				FxUtils.safePropertyToString(fourniture.getUniteProperty()));
-		type.setText(FxUtils.safePropertyToString(fourniture.getTypeProperty()));
+		type.setText(FxUtils.safePropertyToString(fourniture.getTypeNameProperty()));
 		nom.setText(FxUtils.safePropertyToString(fourniture.getNomProperty()));
 		Optional<Photo> pictures = imageService.getImage(mapper.map(fourniture));
 		image.setImage(imageService.imageOrDefault(pictures));
