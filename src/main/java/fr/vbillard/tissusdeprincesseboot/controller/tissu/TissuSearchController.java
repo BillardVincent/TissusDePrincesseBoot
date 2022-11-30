@@ -19,7 +19,7 @@ import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.CharacterSearch;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
-import fr.vbillard.tissusdeprincesseboot.fx_custom_element.IntegerSpinner;
+import fr.vbillard.tissusdeprincesseboot.fx_custom_element.CustomSpinner;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.Tissage;
@@ -134,10 +134,10 @@ public class TissuSearchController implements IController {
 	@Override
 	public void setStageInitializer(StageInitializer initializer, FxData data) {
 		this.initializer = initializer;
-		IntegerSpinner.setSpinner(longueurFieldMax);
-		IntegerSpinner.setSpinner(longueurFieldMin);
-		IntegerSpinner.setSpinner(laizeFieldMax);
-		IntegerSpinner.setSpinner(laizeFieldMin);
+		CustomSpinner.setSpinner(longueurFieldMax);
+		CustomSpinner.setSpinner(longueurFieldMin);
+		CustomSpinner.setSpinner(laizeFieldMax);
+		CustomSpinner.setSpinner(laizeFieldMin);
 
 		decatiTrue.setToggleGroup(decatiGroup);
 		decatiFalse.setToggleGroup(decatiGroup);

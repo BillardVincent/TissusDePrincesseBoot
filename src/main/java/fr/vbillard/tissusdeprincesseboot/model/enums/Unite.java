@@ -79,4 +79,8 @@ public enum Unite {
 		}
 
 	}
+
+	public static float convertir(float value, Unite fromUnite) {
+			return value / fromUnite.getFacteur();
+	}
 }

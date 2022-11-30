@@ -48,14 +48,14 @@
 						<HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="302.0">
 				<children>
 					<Label prefHeight="26.0" prefWidth="61.0" text="min:" />
-					<JFXTextField fx:id="longueurFieldMin" editable="true" prefHeight="26.0" prefWidth="80.0" />
+					<JFXTextField fx:id="dimPrimMin" editable="true" prefHeight="26.0" prefWidth="80.0" />
 					<Label prefHeight="43.0" prefWidth="50.0" text="cm">
 						<HBox.margin>
 							<Insets left="15.0" />
 						</HBox.margin>
 					</Label>
 					<Label prefHeight="43.0" prefWidth="60.0" text="max:" />
-					<JFXTextField fx:id="longueurFieldMax" editable="true" prefHeight="26.0" prefWidth="80.0" />
+					<JFXTextField fx:id="dimPrimMax" editable="true" prefHeight="26.0" prefWidth="80.0" />
 					<Label prefHeight="43.0" prefWidth="50.0" text="cm" />
 				</children>
 			</HBox>
@@ -64,14 +64,14 @@
 						<HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="302.0">
 				<children>
 					<Label prefHeight="40.0" prefWidth="61.0" text="min:" />
-					<JFXTextField fx:id="laizeFieldMin" editable="true" prefHeight="26.0" prefWidth="80.0" />
+					<JFXTextField fx:id="dimSecMin" editable="true" prefHeight="26.0" prefWidth="80.0" />
 					<Label prefHeight="43.0" prefWidth="50.0" text="cm">
 						<HBox.margin>
 							<Insets left="15.0" />
 						</HBox.margin>
 					</Label>
 					<Label prefHeight="40.0" prefWidth="60.0" text="max:" />
-					<JFXTextField fx:id="laizeFieldMax" editable="true" prefHeight="26.0" prefWidth="80.0" />
+					<JFXTextField fx:id="dimSecMax" editable="true" prefHeight="26.0" prefWidth="80.0" />
 					<Label prefHeight="43.0" prefWidth="50.0" text="cm" />
 				</children>
 			</HBox>

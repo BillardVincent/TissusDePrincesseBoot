@@ -40,6 +40,7 @@ public class FournitureSpecification implements Specification<Fourniture> {
 	private String nom;
 	private NumericSearch<Float> quantite;
 	private NumericSearch<Float> quantiteDisponible;
+	private NumericSearch<Float> quantiteSecondaire;
 
 	@Override
 	public Predicate toPredicate(Root<Fourniture> root, CriteriaQuery<?> query, CriteriaBuilder cb) {

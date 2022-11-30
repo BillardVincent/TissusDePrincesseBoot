@@ -1,4 +1,4 @@
-package fr.vbillard.tissusdeprincesseboot.controller.caracteristiques;
+package fr.vbillard.tissusdeprincesseboot.controller.caracteristique;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;

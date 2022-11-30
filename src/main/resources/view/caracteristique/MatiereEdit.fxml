@@ -11,7 +11,7 @@
 	stylesheets="@../../style/style.css"
 	xmlns="http://javafx.com/javafx/15.0.1"
 	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="fr.vbillard.tissusdeprincesseboot.controller.caracteristiques.MatiereEditController">
+	fx:controller="fr.vbillard.tissusdeprincesseboot.controller.caracteristique.MatiereEditController">
 	<children>
 		<JFXListView fx:id="listMatieres" layoutX="21.0"
 			layoutY="43.0" prefHeight="327.0" prefWidth="264.0" />

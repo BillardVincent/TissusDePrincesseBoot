@@ -16,7 +16,7 @@ import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.CharacterSearch;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
-import fr.vbillard.tissusdeprincesseboot.fx_custom_element.IntegerSpinner;
+import fr.vbillard.tissusdeprincesseboot.fx_custom_element.CustomSpinner;
 import fr.vbillard.tissusdeprincesseboot.model.UserPref;
 import fr.vbillard.tissusdeprincesseboot.utils.path.PathEnum;
 import javafx.beans.property.FloatProperty;
@@ -93,18 +93,26 @@ public class FxUtils {
 		return result;
 	}
 
-	public static int intFromJFXTextField(JFXTextField field) {
-		int value = 0;
+	public static Integer intFromJFXTextField(JFXTextField field) {
+		Integer value = null;
 		if (!field.getText().isEmpty()) {
 			value = Integer.parseInt(field.getText());
 		}
 		return value;
 	}
 
-	public static NumericSearch<Integer> setNumericSearch(JFXTextField min, JFXTextField max) {
+	public static Float floatFromJFXTextField(JFXTextField field) {
+		Float value = 0f;
+		if (!field.getText().isEmpty()) {
+			value = Float.parseFloat(field.getText());
+		}
+		return value;
+	}
 
-		int minValue = intFromJFXTextField(min);
-		int maxValue = intFromJFXTextField(max);
+	public static NumericSearch<Integer> setNumericSearch(JFXTextField min, JFXTextField max, int marge) {
+
+		Integer minValue = intFromJFXTextField(min);
+		Integer maxValue = intFromJFXTextField(max);
 
 		if (minValue < 0 || maxValue < 0 || (maxValue != 0 && minValue >= maxValue)) {
 			throw new IllegalData(
@@ -122,6 +130,37 @@ public class FxUtils {
 
 		if (!min.getText().isEmpty()) {
 			int value = Integer.parseInt(min.getText());
+			if (value > 0) {
+				if (search == null) {
+					search = new NumericSearch<>(null);
+				}
+				search.setGreaterThanEqual(value);
+			}
+		}
+		return search;
+	}
+
+	public static NumericSearch<Float> setNumericFloatSearch(JFXTextField min, JFXTextField max) {
+
+		float minValue = intFromJFXTextField(min);
+		float maxValue = intFromJFXTextField(max);
+
+		if (minValue < 0 || maxValue < 0 || (maxValue != 0 && minValue >= maxValue)) {
+			throw new IllegalData(
+					"Les valeurs ne doivent pas être négatives. La valeur minimale doit être strictement inférieure à la valeur maximale");
+		}
+
+		NumericSearch<Float> search = null;
+		if (!max.getText().isEmpty()) {
+			float value = Float.parseFloat(max.getText());
+			if (value > 0) {
+				search = new NumericSearch<>(null);
+				search.setLessThanEqual(value);
+			}
+		}
+
+		if (!min.getText().isEmpty()) {
+			float value = Float.parseFloat(min.getText());
 			if (value > 0) {
 				if (search == null) {
 					search = new NumericSearch<>(null);
@@ -236,7 +275,7 @@ public class FxUtils {
 	
 	public static JFXTextField buildSpinner(IntegerProperty value) {
 		JFXTextField spinner = new JFXTextField();
-		spinner.setTextFormatter(IntegerSpinner.getFormatter());
+		spinner.setTextFormatter(CustomSpinner.getFormatter());
 		spinner.setText(FxUtils.safePropertyToString(value));
 		return spinner;
 	}

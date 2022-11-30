@@ -1,7 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.controller.tissu;
 
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.util.Strings;
 import org.modelmapper.ModelMapper;
@@ -21,8 +20,7 @@ import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.fx_custom_element.GlyphIconUtil;
-import fr.vbillard.tissusdeprincesseboot.fx_custom_element.IntegerSpinner;
-import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
+import fr.vbillard.tissusdeprincesseboot.fx_custom_element.CustomSpinner;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
@@ -171,9 +169,9 @@ public class TissuEditController implements IController {
 		generateReferenceButton.setGraphic(magicIcon);
 		generateReferenceButton.setTooltip(new Tooltip("Générer une référence automatiquement"));
 
-		IntegerSpinner.setSpinner(longueurField);
-		IntegerSpinner.setSpinner(laizeField);
-		IntegerSpinner.setSpinner(poidsField);
+		CustomSpinner.setSpinner(longueurField);
+		CustomSpinner.setSpinner(laizeField);
+		CustomSpinner.setSpinner(poidsField);
 		
 	}
 

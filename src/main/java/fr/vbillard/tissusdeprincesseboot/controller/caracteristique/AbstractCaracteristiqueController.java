@@ -1,4 +1,4 @@
-package fr.vbillard.tissusdeprincesseboot.controller.caracteristiques;
+package fr.vbillard.tissusdeprincesseboot.controller.caracteristique;
 
 
 import com.jfoenix.controls.JFXButton;

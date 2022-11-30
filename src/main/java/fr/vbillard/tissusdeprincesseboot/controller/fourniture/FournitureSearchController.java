@@ -2,14 +2,14 @@ package fr.vbillard.tissusdeprincesseboot.controller.fourniture;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXRadioButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
@@ -19,14 +19,11 @@ import fr.vbillard.tissusdeprincesseboot.filtre.specification.FournitureSpecific
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.CharacterSearch;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
-import fr.vbillard.tissusdeprincesseboot.fx_custom_element.IntegerSpinner;
-import fr.vbillard.tissusdeprincesseboot.model.Matiere;
-import fr.vbillard.tissusdeprincesseboot.model.Tissage;
+import fr.vbillard.tissusdeprincesseboot.fx_custom_element.CustomSpinner;
 import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
-import fr.vbillard.tissusdeprincesseboot.model.UserPref;
+import fr.vbillard.tissusdeprincesseboot.model.enums.DimensionEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
-import fr.vbillard.tissusdeprincesseboot.service.MatiereService;
-import fr.vbillard.tissusdeprincesseboot.service.TissageService;
+import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import fr.vbillard.tissusdeprincesseboot.service.TypeFournitureService;
 import fr.vbillard.tissusdeprincesseboot.service.UserPrefService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
@@ -34,7 +31,6 @@ import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
 import fr.vbillard.tissusdeprincesseboot.utils.ShowAlert;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.ToggleGroup;
 
 @Component
 public class FournitureSearchController implements IController {
@@ -56,15 +52,21 @@ public class FournitureSearchController implements IController {
 	@FXML
 	public JFXTextField lieuDachatField;
 	@FXML
-	public JFXTextField laizeFieldMin;
+	public JFXComboBox<String> typeField;
 	@FXML
-	public JFXTextField laizeFieldMax;
+	public JFXTextField dimSecMin;
+	@FXML
+	private JFXComboBox<String> uniteSecCombo;
+	@FXML
+	public JFXTextField dimSecMax;
 	@FXML
 	public JFXCheckBox longueurUtilisableCBox;
 	@FXML
-	public JFXTextField longueurFieldMin;
+	public JFXTextField dimPrimMin;
 	@FXML
-	public JFXTextField longueurFieldMax;
+	public JFXTextField dimPrimMax;
+	@FXML
+	private JFXComboBox<String> unitePrimCombo;
 	@FXML
 	public JFXCheckBox archiveTrue;
 	@FXML
@@ -77,12 +79,6 @@ public class FournitureSearchController implements IController {
 
 	private TypeFournitureService typeFournitureService;
 
-	private List<String> typeValuesSelected = new ArrayList();
-
-	private int margeHauteLeger;
-	private int margeBasseMoyen;
-	private int margeHauteMoyen;
-	private int margeBasseLourd;
 	private DecimalFormat df = new DecimalFormat("#.##");
 
 	private UserPrefService prefService;
@@ -95,13 +91,12 @@ public class FournitureSearchController implements IController {
 	@Override
 	public void setStageInitializer(StageInitializer initializer, FxData data) {
 		this.initializer = initializer;
-		IntegerSpinner.setSpinner(longueurFieldMax);
-		IntegerSpinner.setSpinner(longueurFieldMin);
-		IntegerSpinner.setSpinner(laizeFieldMax);
-		IntegerSpinner.setSpinner(laizeFieldMin);
+		CustomSpinner.setLongSpinner(dimPrimMax);
+		CustomSpinner.setLongSpinner(dimPrimMin);
+		CustomSpinner.setLongSpinner(dimSecMax);
+		CustomSpinner.setLongSpinner(dimSecMin);
 
 		typeLbl.setText(AUCUN_FILTRE);
-
 
 		setData(data);
 
@@ -150,11 +145,8 @@ public class FournitureSearchController implements IController {
 		} else {
 			specification = new FournitureSpecification();
 
-			typeLbl.setText(AUCUN_FILTRE);
-			typeValuesSelected = new ArrayList<String>();
-			
-			longueurFieldMax.setText(Strings.EMPTY);
-			laizeFieldMax.setText(Strings.EMPTY);
+			dimPrimMax.setText(Strings.EMPTY);
+			dimSecMax.setText(Strings.EMPTY);
 			descriptionField.setText(Strings.EMPTY);
 
 		}
@@ -178,18 +170,21 @@ public class FournitureSearchController implements IController {
 
 	@FXML
 	private void handleOk() {
-		List<TypeFourniture> types = typeFournitureService.findTypeFourniture(typeValuesSelected);
 
-		NumericSearch<Integer> longueurSearch = FxUtils.setNumericSearch(longueurFieldMin, longueurFieldMax);
+		Unite unitePrim = Unite.getEnum(unitePrimCombo.getValue());
+		NumericSearch<Integer> dimPrim = FxUtils.setNumericFloatSearch(Unite.convertir(dimPrimMin, unitePrim),
+				dimPrimMax);
 
-		NumericSearch<Integer> laizeSearch = FxUtils.setNumericSearch(laizeFieldMin, laizeFieldMax);
+		NumericSearch<Integer> dimSec = FxUtils.setNumericSearch(dimSecMin, dimSecMax);
 
 		CharacterSearch description = FxUtils.textFieldToCharacterSearchMultiple(descriptionField);
 
 		CharacterSearch reference = FxUtils.textFieldToCharacterSearch(referenceField);
 
-		specification = FournitureSpecification.builder().reference(reference).description(description)
-				.type(types).build();
+		List<TypeFourniture> type = Arrays.asList(typeFournitureService.findTypeFourniture(typeField.getValue()));
+
+		specification = FournitureSpecification.builder().reference(reference).description(description).type(type)
+				.build();
 
 		root.displayTissu(specification);
 	}
@@ -197,13 +192,9 @@ public class FournitureSearchController implements IController {
 	
 	@FXML
 	private void utilisableHelp() {
-		ShowAlert.information(initializer.getPrimaryStage(), "Aide", "Tissu utilisable",
-				"Définit si la recherche doit porter sur la quantité de tissu en stock (\"Utilisable\" décoché) ou sur la quantité de tissu disponible (\"Utilisable\" coché)");
-	}
-
-	@FXML
-	private void choiceType() {
-		FxUtils.setSelectionFromChoiceBoxModale(TypeTissuEnum.labels(), typeValuesSelected, typeLbl);
+		ShowAlert.information(initializer.getPrimaryStage(), "Aide", "Quantité utilisable",
+				"Définit si la recherche doit porter sur la quantité de fourniture en stock (\"Utilisable\" décoché) ou sur "
+						+ "la quantité de fourniture disponible (\"Utilisable\" coché)");
 	}
 
 }

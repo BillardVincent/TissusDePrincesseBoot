@@ -16,7 +16,7 @@ import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.fx_custom_element.GlyphIconUtil;
-import fr.vbillard.tissusdeprincesseboot.fx_custom_element.IntegerSpinner;
+import fr.vbillard.tissusdeprincesseboot.fx_custom_element.CustomSpinner;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureService;
 import fr.vbillard.tissusdeprincesseboot.service.TypeFournitureService;
@@ -138,7 +138,7 @@ public class FournitureEditController implements IController {
 		generateReferenceButton.setGraphic(magicIcon);
 		generateReferenceButton.setTooltip(new Tooltip("Générer une référence automatiquement"));
 
-		IntegerSpinner.setLongSpinner(quantiteField);
+		CustomSpinner.setLongSpinner(quantiteField);
 		
 	}
 

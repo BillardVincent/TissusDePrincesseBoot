@@ -35,4 +35,11 @@ public class Utils {
 		return value == null ? Strings.EMPTY : value;
 	}
 
+	public boolean notNullAndNotZero(Integer value){
+		return value != null && value != 0;
+	}
+
+	public boolean notNullAndMoreThanZero(Integer value){
+		return value != null && value > 0;
+	}
 }

@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.jfoenix.controls.JFXTextField;
 
-import static fr.vbillard.tissusdeprincesseboot.fx_custom_element.IntegerSpinner.setSpinner;
+import static fr.vbillard.tissusdeprincesseboot.fx_custom_element.CustomSpinner.setSpinner;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;

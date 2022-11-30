@@ -8,7 +8,7 @@ import com.jfoenix.controls.JFXTextField;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IModalController;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
-import fr.vbillard.tissusdeprincesseboot.fx_custom_element.IntegerSpinner;
+import fr.vbillard.tissusdeprincesseboot.fx_custom_element.CustomSpinner;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 import fr.vbillard.tissusdeprincesseboot.service.TissuService;
@@ -64,8 +64,8 @@ public class FournitureCarrouselController implements IModalController{
 		Tissu tissu = tissuUsed.getTissu();
 		int longueurUtilisee = tissuService.getLongueurUtilisee(tissu.getId());
 		
-		IntegerSpinner.setSpinner(restantField);
-		IntegerSpinner.setSpinner(utiliseFiled);
+		CustomSpinner.setSpinner(restantField);
+		CustomSpinner.setSpinner(utiliseFiled);
 		initialLabel.setText(String.valueOf(tissu.getLongueur()));
 		autreProjetLabel.setText(String.valueOf(tissu.getLongueur() - tissu.getLongueurDisponible()));
 		aloueLabel.setText(String.valueOf(tissuUsed.getLongueur()));

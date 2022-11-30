@@ -16,9 +16,9 @@ import javafx.util.converter.FloatStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
 @Component
-public class IntegerSpinner {
+public class CustomSpinner {
 
-	private IntegerSpinner(){
+	private CustomSpinner(){
 
 	}
 

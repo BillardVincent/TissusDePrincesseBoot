@@ -1,4 +1,4 @@
-package fr.vbillard.tissusdeprincesseboot.controller.caracteristiques;
+package fr.vbillard.tissusdeprincesseboot.controller.caracteristique;
 
 import java.util.Objects;
 
@@ -93,11 +93,14 @@ public class TypeFournitureEditController implements IModalController {
 	private void initialize() {
 
 		typeFourniture = null;
-		ajouterButton.setText("Ajouter");
+		ajouterButton.setDisable(true);
 
 		listType.getSelectionModel().selectedItemProperty()
-		.addListener((observable, oldValue, newValue) -> handleSelectElement(newValue));
-		
+				.addListener((observable, oldValue, newValue) -> handleSelectElement(newValue));
+
+		nomField.textProperty().addListener((observable, oldValue, newValue) ->
+				ajouterButton.setDisable(Strings.isEmpty(newValue)));
+
 		dimensionPrimCombo.valueProperty().addListener((observable, oldValue, newValue) -> {
 			if (dimensionPrimCombo.getValue() != null
 					&& !dimensionPrimCombo.getValue().equals(DimensionEnum.NON_RENSEIGNE.getLabel())) {
@@ -143,7 +146,6 @@ public class TypeFournitureEditController implements IModalController {
 		});
 
 		resetField();
-
 	}
 
 	public void handleSuppressElement() {
@@ -156,7 +158,6 @@ public class TypeFournitureEditController implements IModalController {
 
 	public void handleSelectElement(String type) {
 		typeFourniture = typeFournitureService.findTypeFourniture(type);
-		ajouterButton.setText("Editer");
 
 		uniteSecondaireCheckBx
 				.setSelected(typeFourniture != null && StringUtils.isNotEmpty(typeFourniture.getIntituleSecondaire()));
@@ -174,7 +175,6 @@ public class TypeFournitureEditController implements IModalController {
 		}
 
 		typeFourniture.setValue(nomField.getText());
-
 
 		if (!dimensionPrimCombo.getValue().equals(DimensionEnum.NON_RENSEIGNE.getLabel())) {
 			typeFourniture.setIntitulePrincipale(intitulePrimField.getText());
@@ -204,6 +204,7 @@ public class TypeFournitureEditController implements IModalController {
 			alert.showAndWait();
 		} else if (typeFournitureService.validate(nomField.getText(), typeFourniture)) {
 			save();
+			typeFourniture = null;
 			listType.getSelectionModel().clearSelection();
 		} else {
 			Alert alert = new Alert(AlertType.WARNING);
@@ -250,37 +251,46 @@ public class TypeFournitureEditController implements IModalController {
 
 	private void resetField() {
 		deselectionnerButton.setVisible(typeFourniture != null);
-		
-		boolean isUsed = typeFourniture == null || typeFourniture.getId() == 0 || !typeFournitureService.checkIfTypeFournitureIsUsed(typeFourniture);
+		supprimerButton.setVisible(typeFourniture != null);
+
+		boolean typeIsNull = typeFourniture == null;
+		boolean typeIsNew =  typeIsNull || typeFourniture.getId() == 0;
+		boolean isUsed = typeIsNew || !typeFournitureService.checkIfTypeFournitureIsUsed(typeFourniture);
 
 		dimensionLockIcn.setVisible(isUsed);
-		dimensionPrimCombo.setEditable(false);
+		dimensionPrimCombo.setDisable(isUsed);
 
 		allTypes = typeFournitureService.getAllTypeFournituresValues();
 		listType.setItems(allTypes);
 
-		nomField.setText(typeFourniture == null ? Strings.EMPTY : typeFourniture.getValue());
+		nomField.setText(typeIsNull ? Strings.EMPTY : typeFourniture.getValue());
 
-		intitulePrimField.setText(typeFourniture == null ? Strings.EMPTY : typeFourniture.getIntitulePrincipale());
+		intitulePrimField.setText(typeIsNull ? Strings.EMPTY : typeFourniture.getIntitulePrincipale());
 
 		dimensionPrimCombo.setItems(FXCollections.observableArrayList(DimensionEnum.labels()));
 
-		dimensionPrimCombo.setValue(typeFourniture == null || typeFourniture.getDimensionPrincipale() == null
+		dimensionPrimCombo.setValue(typeIsNull || typeFourniture.getDimensionPrincipale() == null
 				? DimensionEnum.NON_RENSEIGNE.getLabel()
 				: typeFourniture.getDimensionPrincipale().getLabel());
 
-		setSecondPane();
+			if (typeIsNew) {
+				ajouterButton.setText("Ajouter");
+			} else {
+				ajouterButton.setText("Editer");
+			}
+
+		setSecondPane(typeIsNull);
 	}
 
-	private void setSecondPane() {
+	private void setSecondPane(boolean typeIsNull) {
 		if (uniteSecondaireCheckBx.isSelected()) {
 			secondaryGrid.setDisable(false);
 			
-			intituleSecField.setText(typeFourniture == null ? Strings.EMPTY : typeFourniture.getIntituleSecondaire());
+			intituleSecField.setText(typeIsNull ? Strings.EMPTY : typeFourniture.getIntituleSecondaire());
 
 			dimensionSecCombo.setItems(FXCollections.observableArrayList(DimensionEnum.labels()));
 
-			dimensionSecCombo.setValue(typeFourniture == null || typeFourniture.getDimensionSecondaire() == null
+			dimensionSecCombo.setValue(typeIsNull || typeFourniture.getDimensionSecondaire() == null
 					? DimensionEnum.NON_RENSEIGNE.getLabel()
 					: typeFourniture.getDimensionSecondaire().getLabel());
 
@@ -289,7 +299,7 @@ public class TypeFournitureEditController implements IModalController {
 				uniteSecCombo.setItems(FXCollections.observableArrayList(Unite.getValuesByDimension(
 						Objects.requireNonNull(DimensionEnum.getEnum(dimensionSecCombo.getValue())))));
 
-				uniteSecCombo.setValue(typeFourniture == null || typeFourniture.getUniteSecondaireConseillee() == null
+				uniteSecCombo.setValue(typeIsNull || typeFourniture.getUniteSecondaireConseillee() == null
 						? DimensionEnum.NON_RENSEIGNE.getLabel()
 						: typeFourniture.getUniteSecondaireConseillee().getLabel());
 			} else {
@@ -312,25 +322,35 @@ public class TypeFournitureEditController implements IModalController {
 
 	@FXML
 	public void handleUniteSecondaireCheck() {
-		setSecondPane();
+		setSecondPane(typeFourniture == null);
 	}
 	
 	@FXML
 	public void handleHelpPrim() {
-		ShowAlert.information(dialogStage, "Info", "Dimension principale", "La dimension principale caractérise un type de fourniture. Elle est consommée en fonction de l'utilisation de la fourniture dans les projets. Exemple : la longueur d'un ruban / le nombre de boutons. N/A défini une fourniture dont la consommation de sera pas suivie");
+		ShowAlert.information(dialogStage, "Info", "Dimension principale",
+				"La dimension principale caractérise un type de fourniture.\n\n"
+						+ "Elle est consommée en fonction de l'utilisation de la fourniture dans les projets.\n\n"
+						+ "Exemple : la longueur d'un ruban / le nombre de boutons.\n\n"
+						+ "N/A défini une fourniture dont la consommation de sera pas suivie");
 	}
 	
 	@FXML
 	public void handleHelpSec() {
-		ShowAlert.information(dialogStage, "Info", "Dimension secondaire", "La dimension secondaire caractérise un type de fourniture. Elle est informative et n'est pas consommée en fonction de l'utilisation de la fourniture dans les projets. Exemple : la largeur d'un ruban, le diametre de boutons");
+		ShowAlert.information(dialogStage, "Info", "Dimension secondaire",
+				"La dimension secondaire caractérise un type de fourniture.\n\nElle est informative et n'est pas "
+						+ "consommée en fonction de l'utilisation de la fourniture dans les projets."
+						+ "\n\nExemple : la largeur d'un ruban, le diamètre de boutons");
+	}
+
+	@FXML
+	public void handleHelpLock() {
+		ShowAlert.information(dialogStage, "Info", "Vérouillé",
+				"Ce type est utilisé dans une fourniture ou un projet. Vous ne pouvez pas plus modifier sa dimension");
 	}
 	
 	@FXML
 	public void handleDeselectionner() {
-		ajouterButton.setText("Ajouter");
-
 		listType.getSelectionModel().clearSelection();
-
 	}
 
 }

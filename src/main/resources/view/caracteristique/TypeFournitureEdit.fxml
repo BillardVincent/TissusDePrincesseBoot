@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="444.0" prefWidth="600.0" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.caracteristiques.TypeFournitureEditController">
+<AnchorPane prefHeight="444.0" prefWidth="600.0" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.caracteristique.TypeFournitureEditController">
 	<children>
 		<JFXListView fx:id="listType" layoutX="28.0" layoutY="42.0" prefHeight="338.0" prefWidth="264.0" />
 		<JFXButton fx:id="ajouterButton" layoutX="353.0" layoutY="346.0" mnemonicParsing="false" onAction="#handleSaveOrEdit" text="Ajouter" />
@@ -115,6 +115,7 @@
          </children>
       </VBox>
       <JFXButton fx:id="deselectionnerButton" layoutX="105.0" layoutY="384.0" mnemonicParsing="false" onAction="#handleDeselectionner" text="Désélectionner" />
-      <FontAwesomeIconView fx:id="dimensionLockIcn" glyphName="LOCK" layoutX="568.0" layoutY="154.0" size="2em" />
+      <FontAwesomeIconView fx:id="dimensionLockIcn" onMouseClicked="#handleHelpLock" glyphName="LOCK" layoutX="568.0"
+                           layoutY="154.0" size="2em" />
 	</children>
 </AnchorPane>
