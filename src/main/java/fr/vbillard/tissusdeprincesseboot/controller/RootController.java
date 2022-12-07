@@ -3,7 +3,6 @@ package fr.vbillard.tissusdeprincesseboot.controller;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.util.Strings;
@@ -13,6 +12,10 @@ import org.springframework.stereotype.Component;
 
 import com.jfoenix.controls.JFXButton;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
@@ -30,6 +33,9 @@ import fr.vbillard.tissusdeprincesseboot.service.TissuUsedService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.path.PathEnum;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -240,6 +246,8 @@ public class RootController implements IController {
 		menuElements = Arrays.asList(tissuMenu, fournitureMenu, patronMenu, projetMenu);
 		deleteSelectedButton.setVisible(false);
 		researchButton.setVisible(false);
+		//TODO a suppr
+		testIcons();
 	}
 
 	public boolean hasTissuRequisSelected() {
@@ -313,5 +321,24 @@ public class RootController implements IController {
 	public boolean hasFournitureRequiseSelected() {
 		return fournitureRequiseSelected != null;
 
+	}
+	
+	private void testIcons() {
+		FlowPane pane = new FlowPane(5,5);
+		 ScrollPane s1 = new ScrollPane();
+		 s1.setPrefSize(1600, 800);
+		 s1.setContent(pane);
+		pane.setPrefWrapLength(1580.0);
+		mainWindow.getChildren().add(s1);
+		for (MaterialDesignIcon icn : MaterialDesignIcon.values()) {
+			MaterialDesignIconView icnView = new MaterialDesignIconView(icn);
+			icnView.setSize("2em");
+			pane.getChildren().add(new VBox(icnView, new Label(icn.toString())));
+		}
+		for (FontAwesomeIcon icn : FontAwesomeIcon.values()) {
+			FontAwesomeIconView icnView = new FontAwesomeIconView(icn);
+			icnView.setSize("2em");
+			pane.getChildren().add(new VBox(icnView, new Label(icn.toString())));
+		}
 	}
 }

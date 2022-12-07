@@ -110,10 +110,18 @@ public class FournitureEditController implements IController {
 		lieuDachatField.setText(FxUtils.safePropertyToString(fourniture.getLieuAchatProperty()));
 		nomField.setText(FxUtils.safePropertyToString(fourniture.getNomProperty()));
 
-		uniteField.setItems(FXCollections.observableArrayList(Unite.getValuesByDimension(fourniture.getType().getDimensionPrincipale())));
+		if (fourniture.getType() == null) {
+			uniteField.setItems(FXCollections.observableArrayList(Unite.NON_RENSEIGNE.getLabel()));
+			uniteSecField.setItems(FXCollections.observableArrayList(Unite.NON_RENSEIGNE.getLabel()));
+
+		} else {
+			uniteField.setItems(FXCollections.observableArrayList(Unite.getValuesByDimension(fourniture.getType().getDimensionPrincipale())));
+			uniteSecField.setItems(FXCollections.observableArrayList(Unite.getValuesByDimension(fourniture.getType().getDimensionSecondaire())));
+
+		}
 		uniteField.setValue(
 				fourniture.getUniteProperty() == null ? Unite.NON_RENSEIGNE.getLabel() : fourniture.getUnite());
-		uniteSecField.setItems(FXCollections.observableArrayList(Unite.getValuesByDimension(fourniture.getType().getDimensionSecondaire())));
+
 		uniteSecField.setValue(
 				fourniture.getUniteSecondaireProperty() == null ? Unite.NON_RENSEIGNE.getLabel() : fourniture.getUniteSecondaire());
 

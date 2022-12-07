@@ -3,6 +3,7 @@ package fr.vbillard.tissusdeprincesseboot.dtos_fx;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.vbillard.tissusdeprincesseboot.model.enums.SupportTypeEnum;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -21,19 +22,23 @@ public class PatronDto implements FxDto{
 	private StringProperty modele;
 	private StringProperty typeVetement;
 	private StringProperty description;
-
+	
+	private StringProperty typeSupport;
 	private ListProperty<TissuRequisDto> tissusRequis;
+	private ListProperty<FournitureRequiseDto> fournituresRequises;
 	
 	public PatronDto() {
-		this.id = new SimpleIntegerProperty();
+		id = new SimpleIntegerProperty();
 		this.reference = new SimpleStringProperty();
 		this.marque = new SimpleStringProperty();
 		this.modele = new SimpleStringProperty();
 		this.typeVetement = new SimpleStringProperty();
 		this.description = new SimpleStringProperty();
-
+		typeSupport = new SimpleStringProperty();
 		this.tissusRequis = new SimpleListProperty<TissuRequisDto>();
 		setTissusRequis(new ArrayList<TissuRequisDto>());
+		this.fournituresRequises = new SimpleListProperty<FournitureRequiseDto>();
+		setFournituresRequises(new ArrayList<FournitureRequiseDto>());
 	}
 	
 	public int getId() {
@@ -109,9 +114,40 @@ public class PatronDto implements FxDto{
 		return tissusRequis;
 	}
 
+	public void setTypeSupport(SupportTypeEnum typeSupport) {
+		if (typeSupport == null)
+			this.typeSupport.set(SupportTypeEnum.NON_RENSEIGNE.label);
+		else
+			this.typeSupport.set(typeSupport.label);
+	}
+
+	public void setTypeSupport(String label) {
+		this.typeSupport.set(label);
+	}
+
+	public String getTypeSupport() {
+		return typeSupport.get();
+	}
+
+	public StringProperty getTypeSupportProperty() {
+		return typeSupport;
+	}
+	
+	
 	public void setTissusRequis(List<TissuRequisDto> tissusRequis) {
 		ObservableList obs = FXCollections.observableArrayList(tissusRequis);
 		this.tissusRequis.set(obs);
+	}
+	
+	public void setFournituresRequises(List<FournitureRequiseDto> fournituresRequises) {
+		ObservableList obs = FXCollections.observableArrayList(fournituresRequises);
+		this.fournituresRequises.set(obs);
+	}
+	public List<FournitureRequiseDto> getFournituresRequises() {
+		return fournituresRequises.get();
+	}
+	public ListProperty<FournitureRequiseDto> getFournituresRequisesProperty() {
+		return fournituresRequises;
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
+import fr.vbillard.tissusdeprincesseboot.model.enums.SupportTypeEnum;
 import fr.vbillard.tissusdeprincesseboot.utils.Constants;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.MapProperty;
@@ -34,6 +35,7 @@ public class ProjetDto implements FxDto {
 	private MapProperty<FournitureRequiseDto, List<Integer>> fournitureUsed;
 
 	private StringProperty status;
+
 
 	public ProjetDto() {
 		this.id = new SimpleIntegerProperty();

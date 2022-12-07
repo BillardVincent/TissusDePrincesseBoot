@@ -28,6 +28,7 @@ import javafx.scene.control.Label;
 @Component
 public class FxUtils {
 
+	private static final String ILLEGAL_NUMBER = "Les valeurs ne doivent pas être négatives. La valeur minimale doit être strictement inférieure à la valeur maximale";
 	private static final String AUCUN_FILTRE = "Aucun filtre";
 	private static final String CHOIX = "Choix";
 	private static StageInitializer initializer;
@@ -36,10 +37,14 @@ public class FxUtils {
 		this.initializer = initializer;
 	}
 
+	// ---------------------------------------------
+	// Sefe Properties
+	// ----------------------------------------------
+
 	public static String safePropertyToString(IntegerProperty property) {
 		return property == null ? "0" : Integer.toString(property.getValue());
 	}
-	
+
 	public static String safePropertyToString(FloatProperty property) {
 		return property == null ? "0" : Float.toString(property.getValue());
 	}
@@ -47,6 +52,10 @@ public class FxUtils {
 	public static String safePropertyToString(StringProperty property) {
 		return property == null ? Strings.EMPTY : property.getValue();
 	}
+
+	// ---------------------------------------------
+	// Join values
+	// ----------------------------------------------
 
 	public static String joinValues(FxData data) {
 		if (data == null) {
@@ -65,6 +74,10 @@ public class FxUtils {
 		}
 		return sj.toString();
 	}
+
+	// ---------------------------------------------
+	// TextField to Search
+	// ----------------------------------------------
 
 	public static CharacterSearch textFieldToCharacterSearch(JFXTextField textField) {
 		CharacterSearch result = null;
@@ -93,83 +106,149 @@ public class FxUtils {
 		return result;
 	}
 
-	public static Integer intFromJFXTextField(JFXTextField field) {
-		Integer value = null;
+	// ---------------------------------------------
+	// Textfield to numbers
+	// ----------------------------------------------
+
+	public static int intFromJFXTextField(JFXTextField field) {
+		int value = 0;
 		if (!field.getText().isEmpty()) {
 			value = Integer.parseInt(field.getText());
 		}
 		return value;
 	}
 
-	public static Float floatFromJFXTextField(JFXTextField field) {
-		Float value = 0f;
+	public static float floatFromJFXTextField(JFXTextField field) {
+		float value = 0f;
 		if (!field.getText().isEmpty()) {
 			value = Float.parseFloat(field.getText());
 		}
 		return value;
 	}
 
-	public static NumericSearch<Integer> setNumericSearch(JFXTextField min, JFXTextField max, int marge) {
+	// ---------------------------------------------
+	// Set numeric search
+	// ----------------------------------------------
 
-		Integer minValue = intFromJFXTextField(min);
-		Integer maxValue = intFromJFXTextField(max);
+	public static NumericSearch<Integer> setNumericSearch(JFXTextField min, JFXTextField max) {
+		return setNumericSearch(min, min, 0);
+	}
 
-		if (minValue < 0 || maxValue < 0 || (maxValue != 0 && minValue >= maxValue)) {
-			throw new IllegalData(
-					"Les valeurs ne doivent pas être négatives. La valeur minimale doit être strictement inférieure à la valeur maximale");
+	public static NumericSearch<Integer> setNumericSearch(JFXTextField min, JFXTextField max, float marge) {
+
+		int minValueBeforeMarge = intFromJFXTextField(min);
+		int maxValueBeforeMarge = intFromJFXTextField(max);
+
+		if (minValueBeforeMarge < 0 || maxValueBeforeMarge < 0
+				|| (maxValueBeforeMarge != 0 && maxValueBeforeMarge >= maxValueBeforeMarge)) {
+			throw new IllegalData(ILLEGAL_NUMBER);
 		}
 
 		NumericSearch<Integer> search = null;
-		if (!max.getText().isEmpty()) {
-			int value = Integer.parseInt(max.getText());
-			if (value > 0) {
-				search = new NumericSearch<>(null);
-				search.setLessThanEqual(value);
-			}
+
+		int minValue = Math.round(minValueBeforeMarge - minValueBeforeMarge * marge);
+		if (minValue < 0) {
+			minValue = 0;
 		}
 
-		if (!min.getText().isEmpty()) {
-			int value = Integer.parseInt(min.getText());
-			if (value > 0) {
-				if (search == null) {
-					search = new NumericSearch<>(null);
-				}
-				search.setGreaterThanEqual(value);
+		int maxValue = Math.round(maxValueBeforeMarge + maxValueBeforeMarge * marge + 0.5f);
+
+		if (maxValue > 0) {
+			search = new NumericSearch<>(null);
+			search.setLessThanEqual(maxValue);
+
+		}
+
+		if (minValue > 0) {
+			if (search == null) {
+				search = new NumericSearch<>(null);
 			}
+			search.setGreaterThanEqual(minValue);
+
 		}
 		return search;
 	}
 
 	public static NumericSearch<Float> setNumericFloatSearch(JFXTextField min, JFXTextField max) {
+		return setNumericFloatSearch(min, max, 0);
+	}
 
-		float minValue = intFromJFXTextField(min);
-		float maxValue = intFromJFXTextField(max);
+	public static NumericSearch<Float> setNumericFloatSearch(JFXTextField min, JFXTextField max, float marge) {
 
-		if (minValue < 0 || maxValue < 0 || (maxValue != 0 && minValue >= maxValue)) {
-			throw new IllegalData(
-					"Les valeurs ne doivent pas être négatives. La valeur minimale doit être strictement inférieure à la valeur maximale");
+		float minValueBeforeMarge = floatFromJFXTextField(min);
+		float maxValueBeforeMarge = floatFromJFXTextField(max);
+
+		return setNumericFloatSearch(minValueBeforeMarge, maxValueBeforeMarge, marge);
+	}
+
+	public static NumericSearch<Float> setNumericFloatSearch(float minValueBeforeMarge, float maxValueBeforeMarge,
+			float marge) {
+
+		if (minValueBeforeMarge < 0 || maxValueBeforeMarge < 0
+				|| (maxValueBeforeMarge != 0 && maxValueBeforeMarge >= maxValueBeforeMarge)) {
+			throw new IllegalData(ILLEGAL_NUMBER);
 		}
 
 		NumericSearch<Float> search = null;
-		if (!max.getText().isEmpty()) {
-			float value = Float.parseFloat(max.getText());
-			if (value > 0) {
-				search = new NumericSearch<>(null);
-				search.setLessThanEqual(value);
-			}
+
+		float minValue = minValueBeforeMarge - minValueBeforeMarge * marge;
+		if (minValue < 0) {
+			minValue = 0;
+		}
+		float maxValue = maxValueBeforeMarge + maxValueBeforeMarge * marge;
+
+		if (maxValue > 0) {
+			search = new NumericSearch<>(null);
+			search.setLessThanEqual(maxValue);
 		}
 
-		if (!min.getText().isEmpty()) {
-			float value = Float.parseFloat(min.getText());
-			if (value > 0) {
-				if (search == null) {
-					search = new NumericSearch<>(null);
-				}
-				search.setGreaterThanEqual(value);
+		if (minValue > 0) {
+			if (search == null) {
+				search = new NumericSearch<>(null);
 			}
+			search.setGreaterThanEqual(minValue);
 		}
+
 		return search;
 	}
+
+	// ---------------------------------------------
+	// Build numeric search from boxes
+	// ----------------------------------------------
+
+	public static NumericSearch<Integer> NumericSearch(JFXCheckBox lourdCBox, JFXCheckBox moyenCBox,
+			JFXCheckBox legerCBox, UserPref pref) {
+
+		NumericSearch<Integer> poidsSearch = null;
+
+		if (!lourdCBox.isSelected() || !moyenCBox.isSelected() || !legerCBox.isSelected()) {
+			if (!lourdCBox.isSelected()) {
+				poidsSearch = new NumericSearch<Integer>(null);
+				if (moyenCBox.isSelected()) {
+					poidsSearch.setLessThanEqual(pref.margeHauteMoyen());
+					if (!legerCBox.isSelected()) {
+						poidsSearch.setGreaterThanEqual(pref.margeBasseMoyen());
+					}
+				} else if (legerCBox.isSelected()) {
+					poidsSearch.setLessThanEqual(pref.margeHauteLeger());
+
+				}
+			} else if (!legerCBox.isSelected()) {
+				poidsSearch = new NumericSearch<Integer>(null);
+
+				if (moyenCBox.isSelected()) {
+					poidsSearch.setGreaterThanEqual(pref.margeBasseMoyen());
+				} else if (lourdCBox.isSelected()) {
+					poidsSearch.setGreaterThanEqual(pref.margeBasseLourd());
+				}
+			}
+		}
+		return poidsSearch;
+	}
+
+	// ---------------------------------------------
+	// Component builder helper
+	// ----------------------------------------------
 
 	public static void setSelectionFromChoiceBoxModale(List<String> cboxList, List<String> selectionDestination,
 			Label lbl) {
@@ -192,6 +271,10 @@ public class FxUtils {
 		lbl.setText(StringUtils.defaultIfEmpty(joinValues(values), AUCUN_FILTRE));
 	}
 
+	// ---------------------------------------------
+	// ???
+	// ----------------------------------------------
+
 	public static Boolean getBooleanFromRadioButtons(JFXRadioButton trueButton, JFXRadioButton falseButton,
 			JFXRadioButton undetermined) {
 		if (trueButton.isSelected()) {
@@ -210,35 +293,9 @@ public class FxUtils {
 		throw new IllegalData("Au moins un radio boutton doit être sélectionné");
 	}
 
-	public static NumericSearch<Integer> NumericSearch(JFXCheckBox lourdCBox, JFXCheckBox moyenCBox,
-			JFXCheckBox legerCBox, UserPref pref) {
-
-		NumericSearch<Integer> poidsSearch = null;
-
-		if (!lourdCBox.isSelected() || !moyenCBox.isSelected() || !legerCBox.isSelected()) {
-			if (!lourdCBox.isSelected()) {
-				poidsSearch = new NumericSearch<Integer>(null);
-				if (moyenCBox.isSelected()) {
-					poidsSearch.setLessThanEqual(pref.margeHauteMoyen());
-					if (! legerCBox.isSelected()) {
-						poidsSearch.setGreaterThanEqual(pref.margeBasseMoyen());
-					} 
-				} else if (legerCBox.isSelected()) {
-					poidsSearch.setLessThanEqual(pref.margeHauteLeger());
-
-				}
-			} else if (!legerCBox.isSelected()) {
-				poidsSearch = new NumericSearch<Integer>(null);
-
-				if (moyenCBox.isSelected()) {
-					poidsSearch.setGreaterThanEqual(pref.margeBasseMoyen());
-				} else if (lourdCBox.isSelected()) {
-					poidsSearch.setGreaterThanEqual(pref.margeBasseLourd());
-				}
-			}
-		}
-		return poidsSearch;
-	}
+	// ---------------------------------------------
+	// Set from search
+	// ----------------------------------------------
 
 	public static void setTextFieldFromCharacterSearch(JFXTextField field, CharacterSearch charSearch) {
 		if (charSearch != null && Strings.isNotBlank(charSearch.getContains())) {
@@ -260,19 +317,32 @@ public class FxUtils {
 			field.setText(String.valueOf(numericSearch.getLessThanEqual()));
 		}
 	}
-	
+
+	// ---------------------------------------------
+	// Component builder helper
+	// ----------------------------------------------
+
 	public static JFXComboBox<String> buildComboBox(List<String> values, StringProperty valueSelected) {
 		return buildComboBox(values, valueSelected, Strings.EMPTY);
-		}
+	}
+
+	public static JFXComboBox<String> buildComboBox(List<String> values, StringProperty valueSelected,
+			String defaultSelection) {
+		return buildComboBox(values, valueSelected,defaultSelection, new JFXComboBox<String>());
+		
+	}
 	
-	public static JFXComboBox<String> buildComboBox(List<String> values, StringProperty valueSelected, String defaultSelection) {
-		JFXComboBox<String> comboBox = new JFXComboBox<String>();
+	public static JFXComboBox<String> buildComboBox(List<String> values, StringProperty valueSelected,
+			String defaultSelection, JFXComboBox<String> comboBox) {
 		comboBox.setItems(FXCollections.observableArrayList(values));
-		comboBox.setValue(valueSelected == null || valueSelected.get() == null 
-				|| valueSelected.get().equals(Strings.EMPTY) ? defaultSelection : valueSelected.get());
+		comboBox.setValue(
+				valueSelected == null || valueSelected.get() == null || valueSelected.get().equals(Strings.EMPTY)
+						? defaultSelection
+						: valueSelected.get());
 		return comboBox;
-		}
-	
+		
+	}
+
 	public static JFXTextField buildSpinner(IntegerProperty value) {
 		JFXTextField spinner = new JFXTextField();
 		spinner.setTextFormatter(CustomSpinner.getFormatter());

@@ -6,6 +6,7 @@ import javax.persistence.ManyToOne;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @Setter
@@ -24,6 +25,7 @@ public class Fourniture extends AbstractEntity{
   @ManyToOne
   private TypeFourniture type;
 
+  @ColumnDefault("false")
   private boolean archived;
 
 

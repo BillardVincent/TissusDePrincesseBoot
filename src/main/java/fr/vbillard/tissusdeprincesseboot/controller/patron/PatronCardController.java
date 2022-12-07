@@ -6,6 +6,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
@@ -13,6 +15,7 @@ import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
+import fr.vbillard.tissusdeprincesseboot.model.enums.SupportTypeEnum;
 import fr.vbillard.tissusdeprincesseboot.service.ImageService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import javafx.fxml.FXML;
@@ -35,6 +38,8 @@ public class PatronCardController implements IController {
 	private Label modelPatronLabel;
 	@FXML
 	private Label typeVetementPatronLabel;
+	@FXML
+	private MaterialDesignIconView typeSupportIcn;
 
 	private RootController rootController;
 	private ImageService imageService;
@@ -64,9 +69,30 @@ public class PatronCardController implements IController {
 		marquePatronLabel.setText(patron.getMarque());
 		modelPatronLabel.setText(patron.getModele());
 		typeVetementPatronLabel.setText(patron.getTypeVetement());
+		typeSupportIcn.setIcon(setIconTypeSupport(patron.getTypeSupport()));
 
 		Optional<Photo> pictures = imageService.getImage(mapper.map(patron, Patron.class));
 		image.setImage(imageService.imageOrDefault(pictures));
+	}
+
+	MaterialDesignIcon mat = null;
+
+	private MaterialDesignIcon setIconTypeSupport(String typeSupport) {
+		if (typeSupport == null) {
+			return MaterialDesignIcon.HELP_CIRCLE;
+		}
+		SupportTypeEnum type = SupportTypeEnum.getEnum(typeSupport);
+		switch (type) {
+		case PDF:
+			return MaterialDesignIcon.FILE_PDF;
+		case PAPIER:
+			return MaterialDesignIcon.BOOK_OPEN_VARIANT;
+		case PROJECTION:
+			return MaterialDesignIcon.THEATER;
+		default:
+			return MaterialDesignIcon.HELP_CIRCLE;
+
+		}
 	}
 
 	@FXML

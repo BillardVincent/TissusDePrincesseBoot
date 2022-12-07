@@ -1,12 +1,12 @@
 package fr.vbillard.tissusdeprincesseboot.controller.patron;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.picture_helper.PatronPictureHelper;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
@@ -37,6 +37,8 @@ public class PatronDetailController implements IController {
 	@FXML
 	private Label descriptionPatronLabel;
 	@FXML
+	private Label typeSupportPatronLabel;
+	@FXML
 	private TilePane listFournitures;
 
 	private RootController rootController;
@@ -64,6 +66,7 @@ public class PatronDetailController implements IController {
 		marquePatronLabel.setText(patron.getMarque());
 		modelPatronLabel.setText(patron.getModele());
 		typeVetementPatronLabel.setText(patron.getTypeVetement());
+		typeSupportPatronLabel.setText(patron.getTypeSupport());
 
 		for (TissuRequisDto t : patron.getTissusRequis()) {
 			FxData fxData = new FxData();
@@ -71,6 +74,14 @@ public class PatronDetailController implements IController {
 			Pane element = initializer.displayPane(PathEnum.LIST_ELEMENT, fxData);
 			listFournitures.getChildren().add(element);
 		}
+		
+		for (FournitureRequiseDto t : patron.getFournituresRequises()) {
+			FxData fxData = new FxData();
+			fxData.setFournitureRequise(t);
+			Pane element = initializer.displayPane(PathEnum.LIST_ELEMENT, fxData);
+			listFournitures.getChildren().add(element);
+		}
+		
 		pictureUtils.setPane(image, patron);
 
 	}

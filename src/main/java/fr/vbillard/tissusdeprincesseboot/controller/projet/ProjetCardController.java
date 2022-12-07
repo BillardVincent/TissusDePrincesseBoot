@@ -31,7 +31,6 @@ import javafx.scene.paint.Color;
 public class ProjetCardController implements IController {
 	@FXML
 	public Label titre;
-
 	@FXML
 	private FontAwesomeIconView iconeIdee;
 	@FXML

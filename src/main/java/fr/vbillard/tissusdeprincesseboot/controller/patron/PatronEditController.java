@@ -24,6 +24,7 @@ import fr.vbillard.tissusdeprincesseboot.fx_custom_element.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
+import fr.vbillard.tissusdeprincesseboot.model.enums.SupportTypeEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.service.ImageService;
 import fr.vbillard.tissusdeprincesseboot.service.MatiereService;
@@ -77,6 +78,8 @@ public class PatronEditController implements IController {
 	private JFXTextField referenceField;
 	@FXML
 	public ImageView imagePane;
+	@FXML
+	public JFXComboBox<String> typeSupportCbBox;
 
 	private StageInitializer initializer;
 	private RootController root;
@@ -350,6 +353,7 @@ public class PatronEditController implements IController {
 			patron.setMarque(marqueField.getText());
 			patron.setModele(modeleField.getText());
 			patron.setTypeVetement(typeVetementField.getText());
+			patron.setTypeSupport(typeSupportCbBox.getValue());
 
 			patron = patronService.create(patron);
 			setDisabledButton();
@@ -439,7 +443,7 @@ public class PatronEditController implements IController {
 		this.initializer = initializer;
 
 		if (data == null || data.getPatron() == null) {
-			patron = mapper.map(new Patron("", "", "", "", "", null, null), PatronDto.class);
+			patron = mapper.map(new Patron("", "", "", "", "", SupportTypeEnum.NON_RENSEIGNE, null, null), PatronDto.class);
 			setDisabledButton();
 
 		} else {
@@ -451,7 +455,7 @@ public class PatronEditController implements IController {
 			marqueField.setText(FxUtils.safePropertyToString(patron.getMarqueProperty()));
 			modeleField.setText(FxUtils.safePropertyToString(patron.getModeleProperty()));
 			typeVetementField.setText(FxUtils.safePropertyToString(patron.getTypeVetementProperty()));
-
+			FxUtils.buildComboBox(SupportTypeEnum.labels(), patron.getTypeSupportProperty(), SupportTypeEnum.NON_RENSEIGNE.label,typeSupportCbBox);
 			pictureUtils.setPane(imagePane, patron);
 
 			loadTissuRequisForPatron();

@@ -2,11 +2,13 @@ package fr.vbillard.tissusdeprincesseboot.controller.patron;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
@@ -22,6 +24,7 @@ import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.Tissage;
 import fr.vbillard.tissusdeprincesseboot.model.UserPref;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
+import fr.vbillard.tissusdeprincesseboot.model.enums.SupportTypeEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.service.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.service.TissageService;
@@ -67,9 +70,19 @@ public class PatronSearchController implements IController {
 	@FXML
 	public JFXCheckBox ncCBox;
 	@FXML
+	public JFXCheckBox supportPapierCBox;
+	@FXML
+	public JFXCheckBox supportPdfCBox;
+	@FXML
+	public JFXCheckBox supportProjectionCBox;
+	@FXML
+	public JFXCheckBox supportNcCBox;
+	@FXML
 	public JFXTextField longueurFieldMax;
 	@FXML
 	public JFXTextField laizeFieldMax;
+
+	// TODO TYPE SOPPORT
 
 	private RootController root;
 	private StageInitializer initializer;
@@ -144,11 +157,18 @@ public class PatronSearchController implements IController {
 			FxUtils.setTextFieldMaxFromNumericSearch(longueurFieldMax, spec.getLongueur());
 			FxUtils.setTextFieldMaxFromNumericSearch(laizeFieldMax, spec.getLaize());
 
-			if (spec.getPoids() != null && !spec.getPoids().isEmpty()) {
+			if (!CollectionUtils.isEmpty(spec.getPoids())) {
 				lourdCBox.setSelected(spec.getPoids().contains(GammePoids.LOURD));
 				moyenCBox.setSelected(spec.getPoids().contains(GammePoids.MOYEN));
 				legerCBox.setSelected(spec.getPoids().contains(GammePoids.LEGER));
 				ncCBox.setSelected(spec.getPoids().contains(GammePoids.NON_RENSEIGNE));
+			}
+			
+			if (!CollectionUtils.isEmpty(spec.getSupport())) {
+				supportPapierCBox.setSelected(spec.getSupport().contains(SupportTypeEnum.PAPIER));
+				supportPdfCBox.setSelected(spec.getSupport().contains(SupportTypeEnum.PDF));
+				supportProjectionCBox.setSelected(spec.getSupport().contains(SupportTypeEnum.PROJECTION));
+				supportNcCBox.setSelected(spec.getSupport().contains(SupportTypeEnum.NON_RENSEIGNE));
 			}
 
 		} else {
@@ -171,6 +191,12 @@ public class PatronSearchController implements IController {
 			moyenCBox.setSelected(true);
 			legerCBox.setSelected(true);
 			ncCBox.setSelected(true);
+			
+			supportPapierCBox.setSelected(true);
+			supportPdfCBox.setSelected(true);
+			supportProjectionCBox.setSelected(true);
+			supportNcCBox.setSelected(true);
+		
 		}
 
 	}
@@ -211,9 +237,23 @@ public class PatronSearchController implements IController {
 
 		NumericSearch<Integer> longueur = FxUtils.textFieldToMaxNumericSearch(longueurFieldMax);
 
+		List<SupportTypeEnum> support = new ArrayList<SupportTypeEnum>();
+		if (supportPapierCBox.isSelected()) {
+			support.add(SupportTypeEnum.PAPIER);
+		}
+		if (supportPdfCBox.isSelected()) {
+			support.add(SupportTypeEnum.PDF);
+		}
+		if (supportProjectionCBox.isSelected()) {
+			support.add(SupportTypeEnum.PROJECTION);
+		}
+		if (supportNcCBox.isSelected()) {
+			support.add(SupportTypeEnum.NON_RENSEIGNE);
+		}
+
 		PatronSpecification specification = PatronSpecification.builder().description(description).reference(reference)
 				.matieres(matieres).typeTissu(types).tissages(tissages).marque(marque).modele(modele)
-				.typeVetement(typeVetement).longueur(longueur).build();
+				.typeVetement(typeVetement).longueur(longueur).support(support).build();
 
 		root.displayPatrons(specification);
 	}

@@ -33,13 +33,13 @@ public class FournitureToDto extends TypeMapConfigurer<Fourniture, FournitureDto
 
 				if (context.getSource().getUnite() != null){
 					context.getDestination().setUnite(context.getSource().getUnite());
-				} else if (context.getSource().getType().getUnitePrincipaleConseillee() != null){
+				} else if (context.getSource().getType() != null && context.getSource().getType().getUnitePrincipaleConseillee() != null){
 					context.getDestination().setUnite(context.getSource().getType().getUnitePrincipaleConseillee());
 				}
 
-				if (context.getSource().getType().getUniteSecondaireConseillee() != null){
+				if (context.getSource().getType() != null && context.getSource().getType().getUniteSecondaireConseillee() != null){
 					context.getDestination().setUniteSecondaire(context.getSource().getUniteSecondaire());
-				} else if (context.getSource().getType().getUnitePrincipaleConseillee() != null){
+				} else if (context.getSource().getType() != null &&  context.getSource().getType().getUnitePrincipaleConseillee() != null){
 					context.getDestination().setUniteSecondaire(context.getSource().getType().getUnitePrincipaleConseillee());
 				}
 			}
@@ -50,6 +50,9 @@ public class FournitureToDto extends TypeMapConfigurer<Fourniture, FournitureDto
 	private class LongueurRestanteConverter extends AbstractConverter<Fourniture, Float> {
 		@Override
 		protected Float convert(Fourniture source) {
+			if (source== null || source.getQuantite() == null) {
+				return 0f;
+			}
 			float longueurRestante = source.getQuantite();
 			if (source.getId() != 0) {
 				try {

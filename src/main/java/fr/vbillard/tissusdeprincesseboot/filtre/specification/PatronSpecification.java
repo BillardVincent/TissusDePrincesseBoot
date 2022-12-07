@@ -23,6 +23,7 @@ import fr.vbillard.tissusdeprincesseboot.model.TissuRequis_;
 import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
 import fr.vbillard.tissusdeprincesseboot.model.TissuVariant_;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
+import fr.vbillard.tissusdeprincesseboot.model.enums.SupportTypeEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -44,6 +45,7 @@ public class PatronSpecification implements Specification<Patron> {
 	private CharacterSearch modele;
 	private CharacterSearch typeVetement;
 	private CharacterSearch description;
+	private List<SupportTypeEnum> support;
 
 	// TissuRequis
 	private NumericSearch<Integer> longueur;
@@ -119,6 +121,10 @@ public class PatronSpecification implements Specification<Patron> {
 
 		if (poids != null) {
 			predicateList.add(joins.joinTissuRequis(patron).get(TissuRequis_.GAMME_POIDS).in(poids));
+		}
+		
+		if (support != null) {
+			predicateList.add(patron.get(Patron_.SUPPORT_TYPE).in(support));
 		}
 
 		if (matieres != null) {
