@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 
-<Pane prefHeight="347.0" prefWidth="258.0" styleClass="card" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.patron.PatronCardController">
+<Pane prefHeight="347.0" prefWidth="258.0" styleClass="card" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.patron.PatronCardController">
 	<children>
 		<VBox onMouseClicked="#showDetail" prefHeight="347.0" prefWidth="259.0" stylesheets="@../../style/style.css">
 			<children>

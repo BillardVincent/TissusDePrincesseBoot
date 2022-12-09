@@ -7,13 +7,14 @@ import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.ProjetSpecification;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
-import fr.vbillard.tissusdeprincesseboot.service.workflow.Workflow;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,14 +51,24 @@ public class ProjetService extends AbstractService<Projet> {
 		return mapper.map(p, ProjetDto.class);
 	}
 
+	@Transactional
 	public ObservableList<ProjetDto> getObservablePage(int page, int pageSize) {
-		return FXCollections.observableArrayList(dao.findAll(PageRequest.of(page, pageSize)).stream()
-				.map(t -> mapper.map(t, ProjetDto.class)).collect(Collectors.toList()));
+		Page<Projet> projects = dao.findAll(PageRequest.of(page, pageSize));
+		return projectListToObservableList(projects);
 	}
 
+	@Transactional
 	public List<ProjetDto> getObservablePage(int page, int pageSize, ProjetSpecification specification) {
-		return FXCollections.observableArrayList(dao.findAll(specification, PageRequest.of(page, pageSize)).stream()
-				.map(t -> mapper.map(t, ProjetDto.class)).collect(Collectors.toList()));
+		Page<Projet> projects = dao.findAll(specification, PageRequest.of(page, pageSize));
+		return projectListToObservableList(projects);
+	}
+
+	private ObservableList<ProjetDto> projectListToObservableList(Page<Projet> projects) {
+		if(projects.hasContent()){
+			return FXCollections.observableArrayList(projects.stream()
+					.map(t -> mapper.map(t, ProjetDto.class)).collect(Collectors.toList()));
+		}
+		return FXCollections.emptyObservableList();
 	}
 
 }

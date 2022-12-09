@@ -1,7 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.controller.patron;
 
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -17,16 +16,18 @@ import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.picture_helper.PatronPictureHelper;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureVariantDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuVariantDto;
 import fr.vbillard.tissusdeprincesseboot.fx_custom_element.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
-import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
 import fr.vbillard.tissusdeprincesseboot.model.enums.SupportTypeEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
-import fr.vbillard.tissusdeprincesseboot.service.ImageService;
+import fr.vbillard.tissusdeprincesseboot.service.FournitureRequiseService;
+import fr.vbillard.tissusdeprincesseboot.service.FournitureVariantService;
 import fr.vbillard.tissusdeprincesseboot.service.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.service.PatronService;
 import fr.vbillard.tissusdeprincesseboot.service.TissageService;
@@ -73,6 +74,8 @@ public class PatronEditController implements IController {
 	@FXML
 	private GridPane tissusPatronListGrid;
 	@FXML
+	private GridPane fournituresPatronListGrid;
+	@FXML
 	private JFXButton generateReferenceButton;
 	@FXML
 	private JFXTextField referenceField;
@@ -89,9 +92,7 @@ public class PatronEditController implements IController {
 	private final TissuVariantService tissuVariantService;
 	private final MatiereService matiereService;
 	private final TissageService tissageService;
-	private final ImageService imageService;
 	private PatronPictureHelper pictureUtils;
-	private Optional<Photo> pictures;
 	private final ModelMapper mapper;
 	private boolean okClicked = false;
 	private StageInitializer mainApp;
@@ -104,12 +105,15 @@ public class PatronEditController implements IController {
 	private TissuVariantDto variantSelected;
 	boolean editingVariant = false;
 	private ObservableList<TissuVariantDto> tvList;
+	private ObservableList<FournitureVariantDto> fvList;
 	private VBox bottomRightVbox;
+	private FournitureVariantService fournitureVariantService;
+	private FournitureRequiseService fournitureRequiseService;
 
-	public PatronEditController(RootController root, ImageService imageService, PatronPictureHelper pictureUtils,
+	public PatronEditController(RootController root, PatronPictureHelper pictureUtils,
 			TissuRequisService tissuRequisService, TissuVariantService tissuVariantService,
 			MatiereService matiereService, TissageService tissageService, ModelMapper mapper,
-			PatronService patronService) {
+			PatronService patronService, FournitureVariantService fournitureVariantService) {
 
 		this.tissuRequisService = tissuRequisService;
 		this.tissuVariantService = tissuVariantService;
@@ -118,8 +122,8 @@ public class PatronEditController implements IController {
 		this.mapper = mapper;
 		this.patronService = patronService;
 		this.pictureUtils = pictureUtils;
-		this.imageService = imageService;
 		this.root = root;
+		this.fournitureVariantService = fournitureVariantService;
 	}
 
 	@FXML
@@ -226,10 +230,17 @@ public class PatronEditController implements IController {
 
 		tvList = FXCollections.observableArrayList(tissuVariantService.getVariantByTissuRequis(tissu));
 
+		//TODO !!!!!!!
+		// tvList = FXCollections.observableArrayList(fournitureVariantService.getVariantByFournitureRequis
+		// (tissu));
+
 		loadBottomRightVbox(tissu);
 
 	}
 
+	/**
+	 * 2e partie de génération du panneau Tissu
+	 */
 	private void loadBottomRightVbox(TissuRequisDto tissu) {
 		bottomRightVbox.getChildren().clear();
 
@@ -316,7 +327,6 @@ public class PatronEditController implements IController {
 
 	private void editVariant(TissuVariantDto tv) {
 		DevInProgressService.notImplemented();
-		
 	}
 
 	public void saveTissuRequis(TissuRequisDto tissu) {
@@ -393,12 +403,12 @@ public class PatronEditController implements IController {
 
 	@FXML
 	private void handleTissuListedit() {
-
 		displayTissuRequis(new TissuRequisDto());
 	}
 
 	@FXML
 	private void handleFournitureListedit() {
+		displayFournitureRequise(new FournitureRequiseDto());
 		DevInProgressService.notImplemented();
 
 	}
@@ -488,4 +498,214 @@ public class PatronEditController implements IController {
 	 * txtInput.setEditable(false); txtInput.setMouseTransparent(true);
 	 * txtInput.setFocusTraversable(false);
 	 */
+
+	//--------------------------------------------------------------------------------
+
+
+	/**
+	 * Détails d'un tissu requis, pour création ou édition
+	 *
+	 * @param tissu
+	 */
+	private void displayFournitureRequise(FournitureRequiseDto tissu) {
+		variantSelected = new TissuVariantDto();
+		/*
+		longueur = tissu.getLongueur();
+		laize = tissu.getLaize();
+		 */
+		tissuEtFournitureContainer.getChildren().clear();
+		fvList = FXCollections.observableArrayList(new ArrayList<FournitureVariantDto>());
+		bottomRightVbox = new VBox();
+
+		Label titre = new Label("Tissus recommandés : ");
+
+		GridPane topGrid = new GridPane();
+		topGrid.setVgap(10);
+		topGrid.setHgap(20);
+
+		topGrid.setPadding(new Insets(10, 0, 10, 0));
+		topGrid.add(new Label("Longeur"), 0, 0);
+		topGrid.add(new Label("Laize"), 0, 1);
+		topGrid.add(new Label("Gamme de poids"), 0, 2);
+/*
+		JFXTextField longueurSpinner = FxUtils.buildSpinner(tissu.getLongueurProperty());
+		topGrid.add(longueurSpinner, 1, 0);
+
+		JFXTextField laizeSpinner = FxUtils.buildSpinner(tissu.getLaizeProperty());
+		topGrid.add(laizeSpinner, 1, 1);
+
+		JFXComboBox<String> gammePoidsChBx = FxUtils.buildComboBox(GammePoids.labels(),tissu.getGammePoidsProperty(), GammePoids.NON_RENSEIGNE.label);
+		topGrid.add(gammePoidsChBx, 1, 2);
+
+		JFXButton validateBtn = new JFXButton("Valider");
+		validateBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+			tissu.setGammePoids(gammePoidsChBx.getValue());
+			tissu.setLaize(Integer.parseInt(laizeSpinner.getText()));
+			tissu.setLongueur(Integer.parseInt(longueurSpinner.getText()));
+			tissu.setGammePoids(gammePoidsChBx.getValue());
+			saveTissuRequis(tissu);
+		});
+ */
+		JFXButton cancelBtn = new JFXButton("Annuler");
+		cancelBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> tissuEtFournitureContainer.getChildren().clear());
+
+		JFXButton deleteBtn = new JFXButton("Supprimer");
+		deleteBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> deleteFournitureRequise(tissu));
+
+		/*
+		HBox hboxBtn = new HBox(validateBtn, cancelBtn, deleteBtn);
+		hboxBtn.setSpacing(10);
+		hboxBtn.setAlignment(Pos.CENTER);
+		hboxBtn.setPadding(new Insets(20, 20, 20, 20));
+		 */
+		//tissuEtFournitureContainer.getChildren().addAll(titre, topGrid, hboxBtn, bottomRightVbox);
+
+		//tvList = FXCollections.observableArrayList(tissuVariantService.getVariantByTissuRequis(tissu));
+
+		//TODO !!!!!!!
+		// tvList = FXCollections.observableArrayList(fournitureVariantService.getVariantByFournitureRequis
+		// (tissu));
+
+		loadBottomRightVbox(tissu);
+
+	}
+
+	/**
+	 * 2e partie de génération du panneau Tissu
+	 */
+	private void loadBottomRightVbox(FournitureRequiseDto tissu) {
+		bottomRightVbox.getChildren().clear();
+
+		bottomRightVbox.getChildren().addAll(new Separator(Orientation.HORIZONTAL), new Label("Possibilités :"));
+
+		if (fvList != null && fvList.size() > 0) {
+			GridPane bottomGrid = new GridPane();
+			bottomGrid.setPadding(new Insets(5, 0, 5, 0));
+			bottomRightVbox.getChildren().add(bottomGrid);
+			bottomGrid.getColumnConstraints().addAll(new ColumnConstraints(300), new ColumnConstraints(100));
+
+			for (int i = 0; i < fvList.size(); i++) {
+				FournitureVariantDto tv = fvList.get(i);
+				buildFournitureVariantDisplay(tissu, bottomGrid, i, tv);
+			}
+		}
+
+		if (tissu != null && tissu.getId() != 0) {
+
+			JFXComboBox<String> typeField = FxUtils.buildComboBox(TypeTissuEnum.labels(), variantSelected.getTypeTissuProperty());
+
+			JFXComboBox<String> matiereField = FxUtils.buildComboBox(matiereService.getAllMatieresValues(), variantSelected.getMatiereProperty());
+
+			JFXComboBox<String> tissageField = FxUtils.buildComboBox(tissageService.getAllValues(), variantSelected.getTissageProperty());
+
+			JFXButton addTvBtn = new JFXButton();
+			addTvBtn.setGraphic(GlyphIconUtil.plusCircleNormal());
+			addTvBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+				variantSelected.setMatiere(matiereField.getValue());
+				variantSelected.setTissage(tissageField.getValue());
+				variantSelected.setTypeTissu(typeField.getValue());
+				variantSelected.setTissuRequisId(tissu.getId());
+				variantSelected = tissuVariantService.saveOrUpdate(variantSelected);
+				if (variantSelected.getId() == 0) {
+					tvList.add(variantSelected);
+				}
+				editingVariant = false;
+				loadTissuRequisForPatron();
+				displayFournitureRequise(tissu);
+			});
+			HBox hboxTissuVariant = new HBox(typeField, matiereField, tissageField, addTvBtn);
+			hboxTissuVariant.setSpacing(10);
+			hboxTissuVariant.setAlignment(Pos.CENTER);
+			hboxTissuVariant.setPadding(new Insets(20, 20, 20, 20));
+			bottomRightVbox.getChildren().addAll(new Separator(Orientation.HORIZONTAL), hboxTissuVariant);
+		}
+	}
+
+	private void buildFournitureVariantDisplay(FournitureRequiseDto tissu, GridPane bottomGrid, int i, FournitureVariantDto tv) {
+		JFXButton editButton = new JFXButton();
+		editButton.setGraphic(GlyphIconUtil.editNormal());
+		editButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+			editingVariant = true;
+			editVariant(tv);
+		});
+
+		JFXButton deleteButton = new JFXButton();
+		deleteButton.setGraphic(GlyphIconUtil.suppressNormal());
+		deleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+				e -> {
+					deleteVariant(tissu, tv);
+				});
+		HBox btns = new HBox(editButton, deleteButton);
+		btns.setAlignment(Pos.CENTER_RIGHT);
+		btns.setSpacing(10);
+
+		bottomGrid.add(new Label(Utils.safeString(tv.getTypeName())), 0, i * 2);
+		bottomGrid.add(btns, 1, i * 2);
+
+		if (i != tvList.size() - 1) {
+			HBox hbox = new HBox(new Label("-------------   OU   --------------  "));
+			hbox.setAlignment(Pos.CENTER);
+			bottomGrid.add(hbox, 0, i * 2 + 1, 2, 1);
+			// displayTissuRequis(tissu);
+		}
+	}
+
+	private void deleteVariant(FournitureRequiseDto tissu, FournitureVariantDto tv) {
+		tissuVariantService.delete(tv.getId());
+		FournitureRequiseDto tissuReloaded = mapper.map(fournitureRequiseService.findFournitureRequise(tissu.getId()),
+				FournitureRequiseDto.class);
+		displayFournitureRequise(tissuReloaded);
+	}
+
+	private void editVariant(FournitureVariantDto tv) {
+		DevInProgressService.notImplemented();
+	}
+
+	public void saveFournitureRequise(FournitureRequiseDto tissu) {
+		boolean edit = tissu.getId() != 0;
+		FournitureRequiseDto tissuReturned = fournitureRequiseService.createOrUpdate(tissu, patron);
+		if (!edit) {
+			patron.getFournituresRequises().add(tissu);
+		}
+		loadFournitureRequiseForPatron();
+		displayFournitureRequise(tissuReturned);
+
+	}
+
+	private void deleteFournitureRequise(FournitureRequiseDto dto) {
+		fournitureRequiseService.delete(dto);
+		tissuEtFournitureContainer.getChildren().clear();
+		loadFournitureRequiseForPatron();
+	}
+
+	/**
+	 * Charge les tissusRequis, en fonction du patron sélectionné. tableau sous le
+	 * patron : tissusRequis.toString() - boutons
+	 */
+	private void loadFournitureRequiseForPatron() {
+		fournituresPatronListGrid.getChildren().clear();
+		patron.setFournituresRequises(fournitureRequiseService.getAllFournitureRequiseDtoByPatron(patron.getId()));
+
+		if (patron.getFournituresRequisesProperty() != null && patron.getFournituresRequises() != null) {
+
+			for (int i = 0; i < patron.getFournituresRequises().size(); i++) {
+
+				FournitureRequiseDto fourniture = patron.getFournituresRequises().get(i);
+
+				JFXButton editButton = new JFXButton();
+				editButton.setGraphic(GlyphIconUtil.editNormal());
+				editButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> displayFournitureRequise(fourniture));
+
+				JFXButton deleteButton = new JFXButton();
+				deleteButton.setGraphic(GlyphIconUtil.suppressNormal());
+				deleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> deleteFournitureRequise(fourniture));
+
+				HBox hbox = new HBox(editButton, deleteButton);
+				hbox.setSpacing(10);
+				hbox.setAlignment(Pos.CENTER_LEFT);
+				fournituresPatronListGrid.add(new Label(fourniture.toString()), 0, i);
+				fournituresPatronListGrid.add(hbox, 1, i);
+			}
+		}
+	}
 }

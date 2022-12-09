@@ -3,12 +3,16 @@ package fr.vbillard.tissusdeprincesseboot.dtos_fx;
 import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import javafx.beans.property.FloatProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class FournitureRequiseDto implements FxDto{
-	
+
+
+	private IntegerProperty id;
 	private StringProperty typeName;
 	private FloatProperty quantiteDisponible;
 	private FloatProperty quantite;
@@ -18,12 +22,26 @@ public class FournitureRequiseDto implements FxDto{
 	private TypeFourniture type;
 
 	public FournitureRequiseDto() {
+		id = new SimpleIntegerProperty();
 		typeName = new SimpleStringProperty();
 		quantiteDisponible = new SimpleFloatProperty();
 		quantite = new SimpleFloatProperty();
 		unite = new SimpleStringProperty();
 		quantiteSecondaire = new SimpleFloatProperty();
 		uniteSecondaire = new SimpleStringProperty();
+	}
+
+
+	public int getId() {
+		return id.get();
+	}
+
+	public IntegerProperty getIdProperty() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id.set(id);
 	}
 
 	public float getQuantiteDisponible() {

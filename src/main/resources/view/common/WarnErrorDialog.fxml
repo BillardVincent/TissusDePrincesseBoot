@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="443.0" prefWidth="450.0" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.common.WarnErrorDialogController">
+<AnchorPane prefHeight="443.0" prefWidth="450.0" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.common.WarnErrorDialogController">
    <children>
       <AnchorPane layoutX="12.0" layoutY="11.0" prefHeight="443.0" prefWidth="442.0" styleClass="card">
          <children>

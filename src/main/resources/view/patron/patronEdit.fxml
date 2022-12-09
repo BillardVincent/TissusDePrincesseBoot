@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="799.0" prefWidth="1634.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.patron.PatronEditController">
+<AnchorPane prefHeight="799.0" prefWidth="1634.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.patron.PatronEditController">
 	<children>
 		<HBox prefHeight="798.0" prefWidth="1634.0">
 			<children>

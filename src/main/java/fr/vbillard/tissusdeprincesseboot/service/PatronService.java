@@ -3,6 +3,7 @@ package fr.vbillard.tissusdeprincesseboot.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -10,13 +11,17 @@ import fr.vbillard.tissusdeprincesseboot.dao.Idao;
 import fr.vbillard.tissusdeprincesseboot.dao.PatronDao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissusRequisDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.PatronSpecification;
+import fr.vbillard.tissusdeprincesseboot.filtre.specification.ProjetSpecification;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
+import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.transaction.annotation.Transactional;
 
 @AllArgsConstructor
 @Service
@@ -59,14 +64,24 @@ public class PatronService extends AbstractService<Patron> {
 		return patronDao;
 	}
 
+	@Transactional
 	public ObservableList<PatronDto> getObservablePage(int page, int pageSize) {
-		return FXCollections.observableArrayList(patronDao.findAll(PageRequest.of(page, pageSize)).stream()
-				.map(t -> mapper.map(t, PatronDto.class)).collect(Collectors.toList()));
+		Page<Patron> patrons = patronDao.findAll(PageRequest.of(page, pageSize));
+		return projectListToObservableList(patrons);
 	}
-	
-	public ObservableList<PatronDto> getObservablePage(int page, int pageSize, PatronSpecification spec) {
-		return FXCollections.observableArrayList(patronDao.findAll(spec, PageRequest.of(page, pageSize)).stream()
-				.map(t -> mapper.map(t, PatronDto.class)).collect(Collectors.toList()));
+
+	@Transactional
+	public List<PatronDto> getObservablePage(int page, int pageSize, PatronSpecification specification) {
+		Page<Patron> patrons = patronDao.findAll(specification, PageRequest.of(page, pageSize));
+		return projectListToObservableList(patrons);
+	}
+
+	private ObservableList<PatronDto> projectListToObservableList(Page<Patron> patrons) {
+		if(patrons.hasContent()){
+			return FXCollections.observableArrayList(patrons.stream()
+					.map(t -> mapper.map(t, PatronDto.class)).collect(Collectors.toList()));
+		}
+		return FXCollections.emptyObservableList();
 	}
 
 	public PatronDto saveOrUpdate(PatronDto dto) {

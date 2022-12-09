@@ -255,7 +255,7 @@ public class TypeFournitureEditController implements IModalController {
 
 		boolean typeIsNull = typeFourniture == null;
 		boolean typeIsNew =  typeIsNull || typeFourniture.getId() == 0;
-		boolean isUsed = typeIsNew || !typeFournitureService.checkIfTypeFournitureIsUsed(typeFourniture);
+		boolean isUsed = !typeIsNew && typeFournitureService.checkIfTypeFournitureIsUsed(typeFourniture);
 
 		dimensionLockIcn.setVisible(isUsed);
 		dimensionPrimCombo.setDisable(isUsed);

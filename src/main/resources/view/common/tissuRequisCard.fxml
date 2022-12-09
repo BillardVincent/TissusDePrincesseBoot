@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="125.0" prefWidth="125.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.common.TissuRequisCardController">
+<Pane prefHeight="125.0" prefWidth="125.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.common.TissuRequisCardController">
 	<children>
 		<VBox layoutX="-1.0" layoutY="-1.0" prefHeight="125.0" prefWidth="125.0" stylesheets="@../../style/style.css">
 			<children>

@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<Pane prefHeight="720.0" prefWidth="1618.0" styleClass="global" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetListController">
+<Pane prefHeight="720.0" prefWidth="1618.0" styleClass="global" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetListController">
   <children>
       <VBox alignment="TOP_CENTER" layoutX="-1.0" prefHeight="900.0" prefWidth="1690.0">
          <children>
