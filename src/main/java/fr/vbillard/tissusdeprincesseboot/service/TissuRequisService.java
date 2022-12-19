@@ -13,8 +13,10 @@ import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
+import fr.vbillard.tissusdeprincesseboot.model.AbstractVariant;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
+import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
@@ -25,7 +27,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class TissuRequisService {
+public class TissuRequisService extends AbstractRequisService<TissuRequis, Tissu>{
 
 	private TissusRequisDao tissuRequisDao;
 	@Lazy
@@ -83,7 +85,7 @@ public class TissuRequisService {
 		float marge = userPrefService.getUser().getLongueurMargePercent();
 
 		NumericSearch<Integer> longueurSearch = new NumericSearch<Integer>();
-		longueurSearch.setGreaterThanEqual(Math.round(tr.getLongueur() - tr.getLongueur() * marge));
+		longueurSearch.setGreaterThanEqual(Math.round(tr.getQuantite() - tr.getQuantite() * marge));
 
 		NumericSearch<Integer> laizeSearch = new NumericSearch<Integer>();
 		laizeSearch.setGreaterThanEqual(Math.round(tr.getLaize() - tr.getLaize() * marge));
@@ -93,8 +95,9 @@ public class TissuRequisService {
 		List<Matiere> matieres = new ArrayList<Matiere>();
 		List<TypeTissuEnum> types = new ArrayList<TypeTissuEnum>();
 
-		if (tr.getTissuVariants() != null) {
-			for (TissuVariant tv : tr.getTissuVariants()) {
+		if (tr.getVariants() != null) {
+			for (AbstractVariant<Tissu> atv : tr.getVariants()) {
+				TissuVariant tv = (TissuVariant)atv;
 				matieres.add(tv.getMatiere());
 				types.add(tv.getTypeTissu());
 			}

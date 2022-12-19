@@ -23,7 +23,7 @@ public class TissuUsedService extends AbstractService<TissuUsed> {
 	private TissuUsedDao dao;
 
 	public List<TissuUsed> getTissuUsedByTissuRequisAndProjet(TissuRequis tr, Projet p) {
-		return dao.getAllByTissuRequisAndProjet(tr, p);
+		return dao.getAllByRequisAndProjet(tr, p);
 	}
 
 	public List<TissuUsed> getByTissu(Tissu t) {

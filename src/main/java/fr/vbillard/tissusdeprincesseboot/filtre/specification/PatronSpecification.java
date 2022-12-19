@@ -72,7 +72,7 @@ public class PatronSpecification implements Specification<Patron> {
 
 		private Join<Patron, TissuVariant> joinTissuVariant(Root<Patron> root) {
 			if (joinTissuVariant == null) {
-				joinTissuVariant = joinTissuRequis(root).join(TissuVariant_.TISSU_REQUIS);
+				joinTissuVariant = joinTissuRequis(root).join(TissuVariant_.REQUIS);
 			}
 			return joinTissuVariant;
 		}
@@ -111,7 +111,7 @@ public class PatronSpecification implements Specification<Patron> {
 
 		if (longueur != null) {
 			predicateList.add(SpecificationUtils.getNumericSearchPredicate(longueur,
-					joins.joinTissuRequis(patron).get(TissuRequis_.LONGUEUR), cb));
+					joins.joinTissuRequis(patron).get(TissuRequis_.QUANTITE), cb));
 		}
 
 		if (laize != null) {

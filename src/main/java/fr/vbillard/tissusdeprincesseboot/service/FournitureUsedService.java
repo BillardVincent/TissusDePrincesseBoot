@@ -25,7 +25,7 @@ public class FournitureUsedService extends AbstractService<FournitureUsed> {
 	private FournitureUsedDao dao;
 
 	public List<FournitureUsed> getFournitureUsedByFournitureRequiseAndProjet(FournitureRequise tr, Projet p) {
-		return dao.getAllByFournitureRequiseAndProjet(tr, p);
+		return dao.getAllByRequisAndProjet(tr, p);
 	}
 
 	public List<FournitureUsed> getByFourniture(Fourniture t) {

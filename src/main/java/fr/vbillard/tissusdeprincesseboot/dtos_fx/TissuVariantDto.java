@@ -2,14 +2,16 @@ package fr.vbillard.tissusdeprincesseboot.dtos_fx;
 
 import org.springframework.util.StringUtils;
 
+import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
+import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class TissuVariantDto implements FxDto {
+public class TissuVariantDto extends AbstractVariantDto<TissuVariant, Tissu> {
 
 	private IntegerProperty id;
 	private IntegerProperty tissuRequisId;

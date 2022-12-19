@@ -12,7 +12,7 @@ import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 @Repository
 public interface TissuVariantDao extends Idao<TissuVariant, Integer> {
 
-	List<TissuVariant> getAllByTissuRequisId(int id);
+	List<TissuVariant> getAllByRequisId(int id);
 
 	boolean existsTissuVariantByMatiere(Matiere matiere);
 

@@ -266,7 +266,7 @@ public class RootController implements IController {
 
 		TissuUsed tissuUsed = new TissuUsed();
 		tissuUsed.setProjet(mapper.map(projetSelected, Projet.class));
-		tissuUsed.setTissuRequis(mapper.map(tissuRequisSelected, TissuRequis.class));
+		tissuUsed.setRequis(mapper.map(tissuRequisSelected, TissuRequis.class));
 		tissuUsed.setTissu(mapper.map(tissuSelected, Tissu.class));
 		tissuUsed.setLongueur(data.getLongueurRequise());
 		tissuUsedService.saveOrUpdate(tissuUsed);
@@ -288,7 +288,7 @@ public class RootController implements IController {
 
 		TissuUsed tissuUsed = new TissuUsed();
 		tissuUsed.setProjet(mapper.map(projetSelected, Projet.class));
-		tissuUsed.setTissuRequis(mapper.map(tissuRequisSelected, TissuRequis.class));
+		tissuUsed.setRequis(mapper.map(tissuRequisSelected, TissuRequis.class));
 		tissuUsed.setTissu(mapper.map(tissuSelected, Tissu.class));
 		tissuUsed.setLongueur(data.getLongueurRequise());
 		tissuUsedService.saveOrUpdate(tissuUsed);

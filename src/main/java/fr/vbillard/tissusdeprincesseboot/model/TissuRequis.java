@@ -17,17 +17,16 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-public class TissuRequis extends AbstractEntity {
+public class TissuRequis extends AbstractRequis<Tissu> {
 
-	@ManyToOne
-	private Patron patron;
-	private int longueur;
+
 	private int laize;
 	@Enumerated(EnumType.STRING)
 	private GammePoids gammePoids;
-	@OneToMany(mappedBy = "tissuRequis")
-	private List<TissuVariant> tissuVariants;
 
 	// private Patron patron;
+	
+	@OneToMany
+	protected List<TissuVariant> variants;
 
 }

@@ -40,8 +40,8 @@ public class ProjetToDto extends TypeMapConfigurer<Projet, ProjetDto> {
             if (context.getSource().getId() != 0){
                 List<TissuRequis> trLst = trs.getAllByPatronId(context.getSource().getPatron().getId());
                 for (TissuRequis tr : trLst) {
-                    List<TissuUsed> tu = tus.getAllByTissuRequisAndProjet(tr, context.getSource());
-                    tuMap.put(new ModelMapper().map(tr, TissuRequisDto.class), tu == null ? new ArrayList<Integer>() : tu.stream().map(AbstractEntity::getId).collect(Collectors.toList()));
+                    List<TissuUsed> tu = tus.getAllByRequisAndProjet(tr, context.getSource());
+                    tuMap.put(new ModelMapper().map(tr, TissuRequisDto.class), tu == null ? new ArrayList<Integer>() : tu.stream().map(TissuUsed::getId).collect(Collectors.toList()));
                 }
             }
             context.getDestination().setTissuUsed(tuMap);

@@ -3,6 +3,8 @@ package fr.vbillard.tissusdeprincesseboot.dtos_fx;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import fr.vbillard.tissusdeprincesseboot.model.Tissu;
+import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ListProperty;
@@ -12,14 +14,13 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 
-public class TissuRequisDto implements FxDto{
+public class TissuRequisDto extends AbstractRequisDto<TissuRequis, Tissu>{
 
 	private IntegerProperty id;
 	private IntegerProperty longueur;
 	private IntegerProperty laize;
 	private StringProperty gammePoids;
 	private IntegerProperty patronId;
-	private ListProperty<String> variants;
 
 	public TissuRequisDto(){
 		id = new SimpleIntegerProperty(0);
@@ -64,18 +65,6 @@ public class TissuRequisDto implements FxDto{
 	
 	public IntegerProperty getLaizeProperty() {
 		return laize;
-	}
-
-	public void setVariant(List<TissuVariantDto> variants) {
-		this.variants.set(FXCollections.observableArrayList(variants.stream().map(TissuVariantDto::toString).collect(Collectors.toList())));
-	}
-	
-	public List<String> getVariant() {
-		return variants.get();
-	}
-	
-	public ListProperty<String> getVariantProperty() {
-		return variants;
 	}
 
 	public void setLaize(int laize) {

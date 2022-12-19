@@ -1,5 +1,11 @@
 package fr.vbillard.tissusdeprincesseboot.dtos_fx;
 
-public interface FxDto {
+import fr.vbillard.tissusdeprincesseboot.model.AbstractEntity;
+
+public interface FxDto<T extends AbstractEntity> {
+
+	int getId();
+
+	void setId(int id);
 
 }

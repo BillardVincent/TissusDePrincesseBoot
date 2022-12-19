@@ -9,6 +9,6 @@ import fr.vbillard.tissusdeprincesseboot.model.FournitureVariant;
 @Repository
 public interface FournitureVariantDao extends Idao<FournitureVariant, Integer> {
 
-	List<FournitureVariant> getAllByFournitureRequiseId(int id);
+	List<FournitureVariant> getAllByRequisId(int id);
 
 }

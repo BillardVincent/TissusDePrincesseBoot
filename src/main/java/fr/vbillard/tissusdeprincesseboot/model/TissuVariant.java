@@ -14,20 +14,22 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-public class TissuVariant extends AbstractEntity {
+public class TissuVariant extends AbstractVariant<Tissu> {
 
 	@Override
 	public String toString() {
 		return "matiere : " + matiere + ", type : " + typeTissu + ", tissage : " + tissage;
 	}
 
-	@ManyToOne
-	private TissuRequis tissuRequis;
+
 	@Enumerated(EnumType.STRING)
 	private TypeTissuEnum typeTissu;
 	@ManyToOne
 	private Matiere matiere;
 	@ManyToOne
 	private Tissage tissage;
+	
+	@ManyToOne
+	protected TissuRequis requis;
 
 }

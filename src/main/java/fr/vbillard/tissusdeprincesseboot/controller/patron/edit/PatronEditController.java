@@ -1,4 +1,4 @@
-package fr.vbillard.tissusdeprincesseboot.controller.patron;
+package fr.vbillard.tissusdeprincesseboot.controller.patron.edit;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -104,16 +104,16 @@ public class PatronEditController implements IController {
 	// private HBox tissuRequisDisplayHbox;
 	private TissuVariantDto variantSelected;
 	boolean editingVariant = false;
-	private ObservableList<TissuVariantDto> tvList;
 	private ObservableList<FournitureVariantDto> fvList;
 	private VBox bottomRightVbox;
 	private FournitureVariantService fournitureVariantService;
 	private FournitureRequiseService fournitureRequiseService;
+	private TissuPatronEditHelper tissuPatronEditHelper;
 
 	public PatronEditController(RootController root, PatronPictureHelper pictureUtils,
 			TissuRequisService tissuRequisService, TissuVariantService tissuVariantService,
 			MatiereService matiereService, TissageService tissageService, ModelMapper mapper,
-			PatronService patronService, FournitureVariantService fournitureVariantService) {
+			PatronService patronService, FournitureVariantService fournitureVariantService, TissuPatronEditHelper tissuPatronEditHelper) {
 
 		this.tissuRequisService = tissuRequisService;
 		this.tissuVariantService = tissuVariantService;
@@ -124,6 +124,7 @@ public class PatronEditController implements IController {
 		this.pictureUtils = pictureUtils;
 		this.root = root;
 		this.fournitureVariantService = fournitureVariantService;
+		this.tissuPatronEditHelper = tissuPatronEditHelper;
 	}
 
 	@FXML
@@ -133,6 +134,7 @@ public class PatronEditController implements IController {
 
 		generateReferenceButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.MAGIC));
 		generateReferenceButton.setTooltip(new Tooltip("Générer une référence automatiquement"));
+		
 	}
 
 	private void setDisabledButton() {
@@ -141,37 +143,7 @@ public class PatronEditController implements IController {
 		addFournitureButton.setDisable(unregistredPatron);
 	}
 
-	/**
-	 * Charge les tissusRequis, en fonction du patron sélectionné. tableau sous le
-	 * patron : tissusRequis.toString() - boutons
-	 */
-	private void loadTissuRequisForPatron() {
-		tissusPatronListGrid.getChildren().clear();
-		patron.setTissusRequis(tissuRequisService.getAllTissuRequisByPatron(patron.getId()).stream()
-				.map(tr -> mapper.map(tr, TissuRequisDto.class)).collect(Collectors.toList()));
-
-		if (patron.getTissusRequisProperty() != null && patron.getTissusRequis() != null) {
-
-			for (int i = 0; i < patron.getTissusRequis().size(); i++) {
-
-				TissuRequisDto tissu = patron.getTissusRequis().get(i);
-
-				JFXButton editButton = new JFXButton();
-				editButton.setGraphic(GlyphIconUtil.editNormal());
-				editButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> displayTissuRequis(tissu));
-
-				JFXButton deleteButton = new JFXButton();
-				deleteButton.setGraphic(GlyphIconUtil.suppressNormal());
-				deleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> deleteTissuRequis(tissu));
-
-				HBox hbox = new HBox(editButton, deleteButton);
-				hbox.setSpacing(10);
-				hbox.setAlignment(Pos.CENTER_LEFT);
-				tissusPatronListGrid.add(new Label(tissu.toString()), 0, i);
-				tissusPatronListGrid.add(hbox, 1, i);
-			}
-		}
-	}
+	
 
 	/**
 	 * Détails d'un tissu requis, pour création ou édition
@@ -183,9 +155,10 @@ public class PatronEditController implements IController {
 		longueur = tissu.getLongueur();
 		laize = tissu.getLaize();
 		tissuEtFournitureContainer.getChildren().clear();
-		tvList = FXCollections.observableArrayList(new ArrayList<TissuVariantDto>());
 		bottomRightVbox = new VBox();
 
+		tissuPatronEditHelper.displayTissuRequis(tissu);
+		
 		Label titre = new Label("Tissus recommandés : ");
 
 		GridPane topGrid = new GridPane();
@@ -468,6 +441,9 @@ public class PatronEditController implements IController {
 			FxUtils.buildComboBox(SupportTypeEnum.labels(), patron.getTypeSupportProperty(), SupportTypeEnum.NON_RENSEIGNE.label,typeSupportCbBox);
 			pictureUtils.setPane(imagePane, patron);
 
+			this.tissuPatronEditHelper.setContainer(tissuEtFournitureContainer, tissusPatronListGrid, bottomRightVbox, patron);
+
+			
 			loadTissuRequisForPatron();
 		}
 	}

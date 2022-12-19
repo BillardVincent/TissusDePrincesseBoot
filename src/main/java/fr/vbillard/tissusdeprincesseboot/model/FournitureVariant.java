@@ -14,12 +14,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class FournitureVariant extends AbstractEntity implements FxDto {
+public class FournitureVariant extends AbstractVariant<Fourniture> {
 
   protected long quantite;
 
   @ManyToOne
-  private FournitureRequise fournitureRequise;
+  private FournitureRequise requis;
   @ManyToOne
   private TypeFourniture typeFourniture;
   @Enumerated(EnumType.STRING)
@@ -30,7 +30,8 @@ public class FournitureVariant extends AbstractEntity implements FxDto {
 
   @Override
   public String toString() {
-    return "fourniture : " + fournitureRequise + ", type : " + typeFourniture ;
+    return "fourniture : " + requis + ", type : " + typeFourniture ;
   }
+
 
 }

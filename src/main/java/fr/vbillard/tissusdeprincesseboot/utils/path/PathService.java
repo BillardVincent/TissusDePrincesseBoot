@@ -26,9 +26,9 @@ import fr.vbillard.tissusdeprincesseboot.controller.fourniture.FournitureSearchC
 import fr.vbillard.tissusdeprincesseboot.controller.patron.ListElementController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronDetailController;
-import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronEditController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronListController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronSearchController;
+import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.PatronEditController;
 import fr.vbillard.tissusdeprincesseboot.controller.projet.FournitureUsedCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetEditController;

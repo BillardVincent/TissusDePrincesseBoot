@@ -25,12 +25,12 @@ public class FournitureVariantService extends AbstractService<FournitureVariant>
 	private ModelMapper mapper;
 
 	public List<FournitureVariantDto> getVariantByFournitureRequis(FournitureRequiseDto fourniture) {
-		List<FournitureVariant> listTv = fournitureVariantDao.getAllByFournitureRequiseId(fourniture.getId());
+		List<FournitureVariant> listTv = fournitureVariantDao.getAllByRequisId(fourniture.getId());
 		return listTv.stream().map(v -> mapper.map(v, FournitureVariantDto.class)).collect(Collectors.toList());
 	}
 
 	public List<FournitureVariant> getVariantByFournitureRequis(FournitureRequise fourniture) {
-		return fournitureVariantDao.getAllByFournitureRequiseId(fourniture.getId());
+		return fournitureVariantDao.getAllByRequisId(fourniture.getId());
 	}
 
 	public FournitureVariantDto saveOrUpdate(FournitureVariantDto variantSelected) {
@@ -50,12 +50,12 @@ public class FournitureVariantService extends AbstractService<FournitureVariant>
 	}
 
 	public List<FournitureVariant> getVariantByFournitureRequisId(int id) {
-		return fournitureVariantDao.getAllByFournitureRequiseId(id);
+		return fournitureVariantDao.getAllByRequisId(id);
 	}
 
 	private FournitureVariant map(FournitureVariantDto dto) {
 		FournitureVariant tv = mapper.map(dto, FournitureVariant.class);
-		tv.setFournitureRequise(fournitureRequiseDao.getById(dto.getFournitureRequiseId()));
+		tv.setRequis(fournitureRequiseDao.getById(dto.getFournitureRequiseId()));
 		tv.setTypeFourniture(dto.getType());
 
 		return tv;

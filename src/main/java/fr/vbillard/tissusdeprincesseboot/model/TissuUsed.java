@@ -12,21 +12,19 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-public class TissuUsed extends AbstractEntity implements FxDto{
+public class TissuUsed extends AbstractUsedEntity<Tissu> {
 
 	protected int longueur;
 
 	@ManyToOne
-	Tissu tissu;
-	@ManyToOne
 	Projet projet;
-	@ManyToOne
-	TissuRequis tissuRequis;
+
 	
 	@Override
 	public String toString() {
-		return tissuRequis.getLongueur() + "cm de tissu ref.\""+tissu.getReference()+"\" aloués au modèle " + projet.getPatron().getModele();	
+		return requis.getQuantite() + "cm de tissu ref.\""+tissu.getReference()+"\" aloués au modèle " + projet.getPatron().getModele();	
 	}
 
-
+	@ManyToOne
+	protected TissuRequis requis;
 }

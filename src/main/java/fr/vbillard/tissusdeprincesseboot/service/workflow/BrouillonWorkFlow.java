@@ -53,7 +53,7 @@ public class BrouillonWorkFlow extends Workflow {
 			int longueurUtilisee = tuList.stream().map(t -> t.getLongueur()).reduce(0, Integer::sum);
 			float marge = userPrefService.getUser().getPoidsMargePercent();
 			
-			if (tr.getLongueur() - marge * tr.getLongueur() > 0) {
+			if (tr.getQuantite() - marge * tr.getQuantite() > 0) {
 				//TODO
 			}
 			

@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class FournitureUsed extends AbstractEntity implements FxDto {
+public class FournitureUsed extends AbstractUsedEntity<Fourniture> {
 
   protected long quantite;
 
@@ -19,11 +19,13 @@ public class FournitureUsed extends AbstractEntity implements FxDto {
   @ManyToOne
   private Projet projet;
   @ManyToOne
-  private FournitureRequise fournitureRequise;
+  private FournitureRequise requis;
 
   @Override
   public String toString() {
-    return fournitureRequise.getQuantite() + " de fourniture ref.\"" + fourniture.getReference() + "\" aloués au modèle "
+    return requis.getQuantite() + " de fourniture ref.\"" + fourniture.getReference() + "\" aloués au modèle "
         + projet.getPatron().getModele();
   }
+
+
 }

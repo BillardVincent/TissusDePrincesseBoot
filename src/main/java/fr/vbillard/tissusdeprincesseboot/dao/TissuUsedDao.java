@@ -14,7 +14,7 @@ public interface TissuUsedDao extends Idao<TissuUsed, Integer> {
 
 	List<TissuUsed> getAllByTissu(Tissu tissu);
 
-	List<TissuUsed> getAllByTissuRequisAndProjet(TissuRequis tissuRequis, Projet projet);
+	List<TissuUsed> getAllByRequisAndProjet(TissuRequis tissuRequis, Projet projet);
 
 	List<TissuUsed> getAllByProjet(Projet projet);
 

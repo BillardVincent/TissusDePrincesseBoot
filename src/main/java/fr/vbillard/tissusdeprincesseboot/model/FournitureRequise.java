@@ -12,9 +12,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class FournitureRequise extends AbstractEntity{
+public class FournitureRequise extends AbstractRequis<Fourniture>{
 
-  private long quantite;
   private String details;
 
   @ManyToOne
@@ -22,10 +21,8 @@ public class FournitureRequise extends AbstractEntity{
 
   @ManyToOne
   private TypeFourniture type;
-  @OneToMany(mappedBy = "fournitureRequise")
-  private List<FournitureVariant> fournitureVariants;
 
-
-
+  @OneToMany
+  private List<FournitureVariant> variants;
 	
 }

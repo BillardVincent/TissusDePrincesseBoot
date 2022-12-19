@@ -93,8 +93,8 @@ public class FournitureRequiseService {
 		List<Matiere> matieres = new ArrayList<Matiere>();
 		List<TypeFourniture> types = new ArrayList<TypeFourniture>();
 
-		if (tr.getFournitureVariants() != null) {
-			for (FournitureVariant tv : tr.getFournitureVariants()) {
+		if (tr.getVariants() != null) {
+			for (FournitureVariant tv : tr.getVariants()) {
 				//matieres.add(tv.getMatiere());
 				//types.add(tv.getTypeTissu());
 			}
