@@ -36,7 +36,7 @@ public class TypeFournitureService extends AbstractService<TypeFourniture> {
 	}
 
 	@Override
-	protected Idao getDao() {
+	protected TypeFournitureDao getDao() {
 		return dao;
 	}
 

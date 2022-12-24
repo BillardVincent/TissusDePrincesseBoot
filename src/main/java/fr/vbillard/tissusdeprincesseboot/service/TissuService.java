@@ -90,7 +90,7 @@ public class TissuService extends AbstractService<Tissu> {
 	}
 
 	@Override
-	protected Idao getDao() {
+	protected TissuDao getDao() {
 		return dao;
 	}
 

@@ -31,7 +31,7 @@ public class ProjetService extends AbstractService<Projet> {
 	}
 
 	@Override
-	protected Idao getDao() {
+	protected ProjetDao getDao() {
 		return dao;
 	}
 

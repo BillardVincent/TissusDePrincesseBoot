@@ -8,11 +8,13 @@ import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureRequise;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
+import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import lombok.AllArgsConstructor;
 
 @Component
@@ -59,5 +61,13 @@ public class MapperService {
 	
 	public FournitureRequiseDto map(FournitureRequise source) {
 		return mapper.map(source, FournitureRequiseDto.class);
+	}
+
+	public TissuRequisDto map(TissuRequis source) {
+		return mapper.map(source, TissuRequisDto.class);
+	}
+
+	public TissuRequis map(TissuRequisDto source) {
+		return mapper.map(source, TissuRequis.class);
 	}
 }

@@ -67,7 +67,7 @@ public class FournitureService extends AbstractService<Fourniture> {
 	}
 
 	@Override
-	protected Idao getDao() {
+	protected FournitureDao getDao() {
 		return dao;
 	}
 
@@ -96,11 +96,13 @@ public class FournitureService extends AbstractService<Fourniture> {
 	/**
 	 * S'execute au démarage pour recalculer les longueurs restantes
 	 */
-	public void batcheFournitureDisponible() {
+	public void batchFournitureDisponible() {
 		for (Fourniture f : getAll()) {
-			float longueurRestante = f.getQuantite() - getQuantiteUtilisee(f.getId());
-			f.setQuantiteDisponible(longueurRestante < 0 ? 0 : longueurRestante);
-			saveOrUpdate(f);
+			if (f.getQuantitePrincipale() != null) {
+				float longueurRestante = f.getQuantitePrincipale().getQuantite() - getQuantiteUtilisee(f.getId());
+				f.setQuantiteDisponible(longueurRestante < 0 ? 0 : longueurRestante);
+				saveOrUpdate(f);
+			}
 		}
 	}
 

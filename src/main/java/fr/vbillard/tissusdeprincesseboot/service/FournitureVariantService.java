@@ -12,31 +12,45 @@ import fr.vbillard.tissusdeprincesseboot.dao.FournitureVariantDao;
 import fr.vbillard.tissusdeprincesseboot.dao.Idao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureVariantDto;
+import fr.vbillard.tissusdeprincesseboot.model.AbstractRequis;
+import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureRequise;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureVariant;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Service
-public class FournitureVariantService extends AbstractService<FournitureVariant> {
+public class FournitureVariantService extends AbstractVariantService<FournitureVariant, Fourniture, FournitureVariantDto> {
 	private FournitureVariantDao fournitureVariantDao;
 	private FournitureRequiseDao fournitureRequiseDao;
 	private TypeFournitureService typeFournitureService;
 	private ModelMapper mapper;
 
-	public List<FournitureVariantDto> getVariantByFournitureRequis(FournitureRequiseDto fourniture) {
+
+	public List<FournitureVariantDto> getVariantByRequis(FournitureRequiseDto fourniture) {
 		List<FournitureVariant> listTv = fournitureVariantDao.getAllByRequisId(fourniture.getId());
-		return listTv.stream().map(v -> mapper.map(v, FournitureVariantDto.class)).collect(Collectors.toList());
+		return convertToDto(listTv);
 	}
 
-	public List<FournitureVariant> getVariantByFournitureRequis(FournitureRequise fourniture) {
-		return fournitureVariantDao.getAllByRequisId(fourniture.getId());
+
+	@Override
+	public FournitureVariant convert(FournitureVariantDto dto) {
+		FournitureVariant tv = mapper.map(dto, FournitureVariant.class);
+		tv.setRequis(fournitureRequiseDao.getById(dto.getFournitureRequiseId()));
+		tv.setTypeFourniture(dto.getType());
+
+		return tv;
+	}
+
+	@Override
+	public FournitureVariantDto convert(FournitureVariant entity) {
+		return mapper.map(entity, FournitureVariantDto.class);
 	}
 
 	public FournitureVariantDto saveOrUpdate(FournitureVariantDto variantSelected) {
-		FournitureVariant tv = map(variantSelected);
+		FournitureVariant tv = convert(variantSelected);
 		tv = saveOrUpdate(tv);
-		return mapper.map(tv, FournitureVariantDto.class);
+		return convert(tv);
 	}
 
 	@Override
@@ -45,7 +59,7 @@ public class FournitureVariantService extends AbstractService<FournitureVariant>
 	}
 
 	@Override
-	protected Idao getDao() {
+	protected FournitureVariantDao getDao() {
 		return fournitureVariantDao;
 	}
 
@@ -53,18 +67,11 @@ public class FournitureVariantService extends AbstractService<FournitureVariant>
 		return fournitureVariantDao.getAllByRequisId(id);
 	}
 
-	private FournitureVariant map(FournitureVariantDto dto) {
-		FournitureVariant tv = mapper.map(dto, FournitureVariant.class);
-		tv.setRequis(fournitureRequiseDao.getById(dto.getFournitureRequiseId()));
-		tv.setTypeFourniture(dto.getType());
-
-		return tv;
-	}
-
-	public List<FournitureVariant> getVariantByFournitureRequise(FournitureRequise fourniture) {
-		if (fourniture == null){
-			return Collections.emptyList();
+	@Override
+	public List<FournitureVariant> getVariantByRequis(AbstractRequis<Fourniture> requis) {
+			if (requis == null){
+				return Collections.emptyList();
+			}
+			return getVariantByFournitureRequisId(requis.getId());
 		}
-		return getVariantByFournitureRequisId(fourniture.getId());
-	}
 }

@@ -19,7 +19,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class FournitureUsedService extends AbstractService<FournitureUsed> {
+public class FournitureUsedService extends AbstractUsedService<FournitureUsed, Fourniture> {
 
 	private MapperService mapper;
 	private FournitureUsedDao dao;
@@ -42,7 +42,7 @@ public class FournitureUsedService extends AbstractService<FournitureUsed> {
 	}
 
 	@Override
-	protected Idao getDao() {
+	protected FournitureUsedDao getDao() {
 		return dao;
 	}
 

@@ -9,7 +9,6 @@ import java.util.Map;
 public class Utils {
 
 	public static boolean isEmpty(Object... objs) {
-
 		for (Object o : objs) {
 			if (o == null || (o instanceof String && StringUtils.isBlank((String) o))
 					|| (o instanceof Collection<?> && ((Collection<?>) o).isEmpty())
@@ -27,7 +26,6 @@ public class Utils {
 	 * @return
 	 */
 	public static boolean isNotEmpty(Object... objs) {
-
 		return !isEmpty(objs);
 	}
 

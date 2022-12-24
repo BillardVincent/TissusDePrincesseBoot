@@ -24,7 +24,7 @@ public class InventaireService extends AbstractService<Inventaire>{
 	}
 
 	@Override
-	protected Idao<Inventaire, Integer> getDao() {
+	protected InventaireDao getDao() {
 		return dao;
 	}
 

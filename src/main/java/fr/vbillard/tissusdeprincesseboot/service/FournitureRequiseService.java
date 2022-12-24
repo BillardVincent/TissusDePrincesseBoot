@@ -9,9 +9,11 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import fr.vbillard.tissusdeprincesseboot.dao.FournitureRequiseDao;
+import fr.vbillard.tissusdeprincesseboot.dao.Idao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.FournitureSpecification;
+import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureRequise;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureVariant;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
@@ -23,7 +25,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class FournitureRequiseService {
+public class FournitureRequiseService extends AbstractRequisService<FournitureRequise, Fourniture, FournitureRequiseDto> {
 
 	private FournitureRequiseDao fournitureRequiseDao;
 	@Lazy
@@ -31,7 +33,7 @@ public class FournitureRequiseService {
 	private ModelMapper mapper;
 	private UserPrefService userPrefService;
 
-	public List<FournitureRequise> getAllFournitureRequiseByPatron(int id) {
+	public List<FournitureRequise> getAllRequisByPatron(int id) {
 		return fournitureRequiseDao.getAllByPatronId(id);
 	}
 
@@ -57,8 +59,13 @@ public class FournitureRequiseService {
 
 	}
 
+	@Override
+	protected void beforeSaveOrUpdate(FournitureRequise entity) {
+
+	}
+
 	public void delete(FournitureRequise fourniture) {
-		List<FournitureVariant> tvLst = tvs.getVariantByFournitureRequise(fourniture);
+		List<FournitureVariant> tvLst = tvs.getVariantByRequis(fourniture);
 		for (FournitureVariant tv : tvLst) {
 			tvs.delete(tv);
 		}
@@ -67,7 +74,7 @@ public class FournitureRequiseService {
 	}
 
 	public ObservableList<FournitureRequise> getAsObservableAllFournitureRequiseByPatron(int id) {
-		return FXCollections.observableArrayList(getAllFournitureRequiseByPatron(id));
+		return FXCollections.observableArrayList(getAllRequisByPatron(id));
 	}
 
 	public FournitureSpecification getFournitureSpecification(FournitureRequiseDto tr) {
@@ -102,4 +109,18 @@ public class FournitureRequiseService {
 		return FournitureSpecification.builder().type(types).build();
 	}
 
+	@Override
+	public FournitureRequise convert(FournitureRequiseDto dto) {
+		return mapper.map(dto, FournitureRequise.class);
+	}
+
+	@Override
+	public FournitureRequiseDto convert(FournitureRequise entity) {
+		return mapper.map(entity, FournitureRequiseDto.class);
+	}
+
+	@Override
+	protected FournitureRequiseDao getDao() {
+		return fournitureRequiseDao;
+	}
 }

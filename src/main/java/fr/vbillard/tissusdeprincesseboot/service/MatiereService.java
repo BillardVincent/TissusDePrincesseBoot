@@ -30,7 +30,7 @@ public class MatiereService extends AbstractService<Matiere> {
 	}
 
 	@Override
-	protected Idao getDao() {
+	protected MatiereDao getDao() {
 		return dao;
 	}
 

@@ -60,7 +60,7 @@ public class PatronService extends AbstractService<Patron> {
 	}
 
 	@Override
-	protected Idao getDao() {
+	protected PatronDao getDao() {
 		return patronDao;
 	}
 

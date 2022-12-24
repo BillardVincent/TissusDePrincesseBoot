@@ -78,7 +78,7 @@ public class ImageService extends AbstractService<Photo> {
 	}
 
 	@Override
-	protected Idao getDao() {
+	protected PhotoDao getDao() {
 		return dao;
 	}
 

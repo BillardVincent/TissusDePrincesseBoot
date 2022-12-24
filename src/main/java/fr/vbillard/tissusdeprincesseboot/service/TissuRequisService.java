@@ -4,18 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import fr.vbillard.tissusdeprincesseboot.dao.Idao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissusRequisDao;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
-import fr.vbillard.tissusdeprincesseboot.model.AbstractVariant;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
-import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
@@ -27,44 +24,41 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class TissuRequisService extends AbstractRequisService<TissuRequis, Tissu>{
+public class TissuRequisService extends AbstractRequisService<TissuRequis, Tissu, TissuRequisDto>{
 
 	private TissusRequisDao tissuRequisDao;
 	@Lazy
 	private TissuVariantService tvs;
-	private ModelMapper mapper;
 	private UserPrefService userPrefService;
 
 	private CalculPoidsTissuService calculPoidsTissuService;
 
-	public List<TissuRequis> getAllTissuRequisByPatron(int id) {
+	@Override
+	public List<TissuRequis> getAllRequisByPatron(int id) {
 		return tissuRequisDao.getAllByPatronId(id);
 	}
 
 	public List<TissuRequisDto> getAllTissuRequisDtoByPatron(int id) {
-		return tissuRequisDao.getAllByPatronId(id).stream().map(tr -> mapper.map(tr, TissuRequisDto.class))
+		return tissuRequisDao.getAllByPatronId(id).stream().map(tr -> mapper.map(tr))
 				.collect(Collectors.toList());
 	}
 
-	public TissuRequisDto createOrUpdate(TissuRequisDto tissu, PatronDto patron) {
-		TissuRequis t = mapper.map(tissu, TissuRequis.class);
-		t.setPatron(mapper.map(patron, Patron.class));
-		return mapper.map(tissuRequisDao.save(t), TissuRequisDto.class);
-
-	}
-
 	public TissuRequis findTissuRequis(int tissuRequisId) {
-
-		return tissuRequisDao.findById(tissuRequisId).get();
+		return tissuRequisDao.findById(tissuRequisId).orElse(new TissuRequis());
 	}
 
 	public void delete(TissuRequisDto tissu) {
-		delete(mapper.map(tissu, TissuRequis.class));
+		delete(mapper.map(tissu));
+
+	}
+
+	@Override
+	protected void beforeSaveOrUpdate(TissuRequis entity) {
 
 	}
 
 	public void delete(TissuRequis tissu) {
-		List<TissuVariant> tvLst = tvs.getVariantByTissuRequis(tissu);
+		List<TissuVariant> tvLst = tvs.getVariantByRequis(tissu);
 		for (TissuVariant tv : tvLst) {
 			tvs.delete(tv);
 		}
@@ -72,12 +66,17 @@ public class TissuRequisService extends AbstractRequisService<TissuRequis, Tissu
 
 	}
 
+	@Override
+	protected TissusRequisDao getDao() {
+		return tissuRequisDao;
+	}
+
 	public ObservableList<TissuRequis> getAsObservableAllTissuRequisByPatron(int id) {
-		return FXCollections.observableArrayList(getAllTissuRequisByPatron(id));
+		return FXCollections.observableArrayList(getAllRequisByPatron(id));
 	}
 
 	public TissuSpecification getTissuSpecification(TissuRequisDto tr) {
-		return getTissuSpecification(mapper.map(tr, TissuRequis.class));
+		return getTissuSpecification(convert(tr));
 	}
 
 	public TissuSpecification getTissuSpecification(TissuRequis tr) {
@@ -96,8 +95,7 @@ public class TissuRequisService extends AbstractRequisService<TissuRequis, Tissu
 		List<TypeTissuEnum> types = new ArrayList<TypeTissuEnum>();
 
 		if (tr.getVariants() != null) {
-			for (AbstractVariant<Tissu> atv : tr.getVariants()) {
-				TissuVariant tv = (TissuVariant)atv;
+			for (TissuVariant tv : tr.getVariants()) {
 				matieres.add(tv.getMatiere());
 				types.add(tv.getTypeTissu());
 			}
@@ -106,4 +104,13 @@ public class TissuRequisService extends AbstractRequisService<TissuRequis, Tissu
 				.matieres(matieres).typeTissu(types).build();
 	}
 
+	@Override
+	public TissuRequis convert(TissuRequisDto entity) {
+		return mapper.map(entity);
+	}
+
+	@Override
+	public TissuRequisDto convert(TissuRequis dto) {
+		return mapper.map(dto);
+	}
 }

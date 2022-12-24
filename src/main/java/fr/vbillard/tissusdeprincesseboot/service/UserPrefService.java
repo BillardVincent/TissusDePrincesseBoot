@@ -48,7 +48,7 @@ public class UserPrefService extends AbstractService<UserPref> {
 	}
 
 	@Override
-	protected Idao<UserPref, Integer> getDao() {
+	protected UserPrefDao getDao() {
 		return dao;
 	}
 }

@@ -17,7 +17,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class TissuUsedService extends AbstractService<TissuUsed> {
+public class TissuUsedService extends AbstractUsedService<TissuUsed, Tissu> {
 
 	private ModelMapper mapper;
 	private TissuUsedDao dao;
@@ -40,7 +40,7 @@ public class TissuUsedService extends AbstractService<TissuUsed> {
 	}
 
 	@Override
-	protected Idao getDao() {
+	protected TissuUsedDao getDao() {
 		return dao;
 	}
 

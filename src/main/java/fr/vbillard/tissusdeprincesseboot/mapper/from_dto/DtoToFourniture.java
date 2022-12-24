@@ -13,6 +13,7 @@ import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
+import fr.vbillard.tissusdeprincesseboot.model.Quantite;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
@@ -30,11 +31,8 @@ public class DtoToFourniture extends TypeMapConfigurer<FournitureDto, Fourniture
 	public void configure(TypeMap<FournitureDto, Fourniture> typeMap) {
 		typeMap.addMappings(mapper -> mapper.using(new IdConverter()).map(src -> src, Fourniture::setId));
 		typeMap.addMappings(mapper -> mapper.using(new ReferenceConverter()).map(src -> src, Fourniture::setReference));
-		typeMap.addMappings(mapper -> mapper.using(new UniteConverter()).map(FournitureDto::getUnite, Fourniture::setUnite));
-		typeMap.addMappings(mapper -> mapper.using(new UniteConverter()).map(FournitureDto::getUniteSecondaire,
-				Fourniture::setUniteSecondaire));
 		typeMap.addMappings(mapper -> mapper.using(new QuantitePrimConverter()).map(src -> src,
-				Fourniture::setQuantite));
+				Fourniture::setQuantitePrincipale));
 		typeMap.addMappings(mapper -> mapper.using(new QuantiteSecConverter()).map(src -> src,
 				Fourniture::setQuantiteSecondaire));
 
@@ -61,23 +59,32 @@ public class DtoToFourniture extends TypeMapConfigurer<FournitureDto, Fourniture
 		}
 	}
 	
-	private static class QuantitePrimConverter extends AbstractConverter<FournitureDto, Float> {
+	private static class QuantitePrimConverter extends AbstractConverter<FournitureDto, Quantite> {
 		@Override
-		protected Float convert(FournitureDto source) {
+		protected Quantite convert(FournitureDto source) {
 			if (Strings.isEmpty(source.getUnite()) || source.getUnite().equals(Unite.NON_RENSEIGNE.getLabel()) ) {
-				return 0f;
+
+				Quantite quantite = new Quantite();
+				//if ()
+				//return 0f;
+				return quantite;
 			}
-			return source.getQuantite() / Unite.getEnum(source.getUnite()).getFacteur();
+			//return source.getQuantite() / Unite.getEnum(source.getUnite()).getFacteur();
+			return null;
 		}
 	}
 	
-	private static class QuantiteSecConverter extends AbstractConverter<FournitureDto, Float> {
+	private static class QuantiteSecConverter extends AbstractConverter<FournitureDto, Quantite> {
 		@Override
-		protected Float convert(FournitureDto source) {
+		protected Quantite convert(FournitureDto source) {
+			return null;
+			/*
 			if (Strings.isEmpty(source.getUniteSecondaire()) || source.getUniteSecondaire().equals(Unite.NON_RENSEIGNE.getLabel()) ) {
 				return 0f;
 			}
 			return source.getQuantiteSecondaire() / Unite.getEnum(source.getUniteSecondaire()).getFacteur();
+			
+			 */
 		}
 	}
 

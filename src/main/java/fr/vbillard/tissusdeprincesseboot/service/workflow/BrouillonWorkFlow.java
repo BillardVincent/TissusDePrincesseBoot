@@ -47,7 +47,7 @@ public class BrouillonWorkFlow extends Workflow {
 	@Override
 	protected ErrorWarn verifyNextStep() {
 		ErrorWarn errorwarn = new ErrorWarn();
-		List<TissuRequis> trList = tissuRequisService.getAllTissuRequisByPatron(projet.getPatron().getId());
+		List<TissuRequis> trList = tissuRequisService.getAllRequisByPatron(projet.getPatron().getId());
 		for (TissuRequis tr : trList) {
 			List<TissuUsed> tuList = tissuUsedService.getTissuUsedByTissuRequisAndProjet(tr, projet);
 			int longueurUtilisee = tuList.stream().map(t -> t.getLongueur()).reduce(0, Integer::sum);

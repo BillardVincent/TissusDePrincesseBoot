@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -15,6 +16,12 @@ import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSear
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.SpecificationUtils;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture_;
+import fr.vbillard.tissusdeprincesseboot.model.Patron;
+import fr.vbillard.tissusdeprincesseboot.model.Patron_;
+import fr.vbillard.tissusdeprincesseboot.model.Quantite;
+import fr.vbillard.tissusdeprincesseboot.model.Quantite_;
+import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
+import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
 import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import lombok.AllArgsConstructor;
@@ -42,9 +49,30 @@ public class FournitureSpecification implements Specification<Fourniture> {
 	private NumericSearch<Float> quantiteDisponible;
 	private NumericSearch<Float> quantiteSecondaire;
 
+	private static class Joins {
+		private Join<Fourniture, Quantite> joinQuantitePrimaire;
+		private Join<Fourniture, Quantite> joinQuantiteSecondaire;
+
+		private Join<Fourniture, Quantite> joinQuantitePrimaire(Root<Fourniture> root) {
+			if (joinQuantitePrimaire == null) {
+				joinQuantitePrimaire = root.join(Fourniture_.QUANTITE_PRINCIPALE);
+			}
+			return joinQuantitePrimaire;
+		}
+
+		private Join<Fourniture, Quantite> joinQuantiteSecondaire(Root<Fourniture> root) {
+			if (joinQuantiteSecondaire == null) {
+				joinQuantiteSecondaire = root.join(Fourniture_.QUANTITE_SECONDAIRE);
+			}
+			return joinQuantiteSecondaire;
+		}
+	}
+
+
 	@Override
 	public Predicate toPredicate(Root<Fourniture> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 		query.distinct(true);
+		FournitureSpecification.Joins joins = new FournitureSpecification.Joins();
 
 		List<Predicate> predicateList = new ArrayList<>();
 
@@ -53,7 +81,13 @@ public class FournitureSpecification implements Specification<Fourniture> {
 		}
 
 		if (quantite != null) {
-			predicateList.add(SpecificationUtils.getNumericSearchPredicate(quantite, root.get(Fourniture_.QUANTITE), cb));
+			predicateList.add(SpecificationUtils.getNumericSearchPredicate(quantite,
+					joins.joinQuantitePrimaire.get(Quantite_.QUANTITE), cb));
+		}
+
+		if (quantiteSecondaire != null) {
+			predicateList.add(SpecificationUtils.getNumericSearchPredicate(quantiteSecondaire,
+					joins.joinQuantiteSecondaire.get(Quantite_.QUANTITE), cb));
 		}
 
 		if (quantiteDisponible != null) {

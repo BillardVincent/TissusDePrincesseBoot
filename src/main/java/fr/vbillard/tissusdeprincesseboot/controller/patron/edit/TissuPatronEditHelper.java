@@ -1,5 +1,9 @@
 package fr.vbillard.tissusdeprincesseboot.controller.patron.edit;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import com.jfoenix.controls.JFXButton;
@@ -8,6 +12,8 @@ import com.jfoenix.controls.JFXTextField;
 
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.AbstractRequisDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FxDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuVariantDto;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractRequis;
@@ -17,25 +23,42 @@ import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
+import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
+import fr.vbillard.tissusdeprincesseboot.service.AbstractDtoService;
+import fr.vbillard.tissusdeprincesseboot.service.AbstractRequisService;
+import fr.vbillard.tissusdeprincesseboot.service.AbstractUsedService;
+import fr.vbillard.tissusdeprincesseboot.service.AbstractVariantService;
+import fr.vbillard.tissusdeprincesseboot.service.MatiereService;
+import fr.vbillard.tissusdeprincesseboot.service.TissageService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuRequisService;
+import fr.vbillard.tissusdeprincesseboot.service.TissuUsedService;
+import fr.vbillard.tissusdeprincesseboot.service.TissuVariantService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
+import fr.vbillard.tissusdeprincesseboot.utils.Utils;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 
 @Service
-public class TissuPatronEditHelper extends PatronEditHelper<Tissu, TissuVariant, TissuRequis, TissuUsed>{
-	
+public class TissuPatronEditHelper extends PatronEditHelper<Tissu, TissuVariant, TissuRequis, TissuUsed, TissuDto,
+		TissuVariantDto, TissuRequisDto>{
 
-	
-	public TissuPatronEditHelper(TissuRequisService requisService) {
+	private final MatiereService matiereService;
+	private final TissageService tissageService;
+
+	public TissuPatronEditHelper(TissuRequisService requisService, TissuVariantService variantService,
+			TissuUsedService usedService, MatiereService matiereService, TissageService tissageService) {
+		this.variantService = variantService;
+		this.usedService = usedService;
 		this.requisService = requisService;
+		this.matiereService = matiereService;
+		this.tissageService = tissageService;
 	}
 
 	@Override
-	protected void completeTopGrid(GridPane topGrid, AbstractRequisDto<TissuRequis, Tissu> dto, JFXButton validateBtn) {
-		TissuRequisDto tissu = (TissuRequisDto) dto;
+	protected void completeTopGrid(GridPane topGrid,TissuRequisDto tissu, JFXButton validateBtn) {
 		topGrid.add(new Label("Longeur"), 0, 0);
 		topGrid.add(new Label("Laize"), 0, 1);
 		topGrid.add(new Label("Gamme de poids"), 0, 2);	
@@ -53,46 +76,59 @@ public class TissuPatronEditHelper extends PatronEditHelper<Tissu, TissuVariant,
 			tissu.setGammePoids(gammePoidsChBx.getValue());
 			tissu.setLaize(Integer.parseInt(laizeSpinner.getText()));
 			tissu.setLongueur(Integer.parseInt(longueurSpinner.getText()));
-			saveRequis(tissu);
+			saveRequis(tissu, patron);
 		});	
 	}
 
 	@Override
-	void saveRequis(FxDto requis) {
-		boolean edit = requis.getId() != 0;
-		TissuRequisDto tissuReturned = requisService.createOrUpdate(tissu, patron);
-		if (!edit) {
-			patron.getTissusRequis().add(tissu);
-		}
-		loadTissuRequisForPatron();
-		displayTissuRequis(tissuReturned);		
+	protected void addToPatron(TissuRequisDto requis, PatronDto patron) {
+		patron.getTissusRequis().add(requis);
 	}
 
 	@Override
-	void deleteRequis(FxDto requis) {
-		// TODO Auto-generated method stub
-		
+	protected HBox completeLoadBottomRightVBox(JFXButton addTvBtn, TissuRequisDto requis) {
+
+		JFXComboBox<String> typeField = FxUtils.buildComboBox(TypeTissuEnum.labels(), variantSelected.getTypeTissuProperty());
+
+		JFXComboBox<String> matiereField = FxUtils.buildComboBox(matiereService.getAllMatieresValues(), variantSelected.getMatiereProperty());
+
+		JFXComboBox<String> tissageField = FxUtils.buildComboBox(tissageService.getAllValues(), variantSelected.getTissageProperty());
+
+		addTvBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+
+			variantSelected.setMatiere(matiereField.getValue());
+			variantSelected.setTissage(tissageField.getValue());
+			variantSelected.setTypeTissu(typeField.getValue());
+			variantSelected.setTissuRequisId(requis.getId());
+			variantSelected = variantService.saveOrUpdate(variantSelected);
+			if (variantSelected.getId() == 0) {
+				tvList.add(variantSelected);
+			}
+			loadTissuRequisForPatron();
+			displayRequis(requis);
+		});
+
+
+
+		return new HBox(typeField, matiereField, tissageField, addTvBtn);
 	}
 
 	@Override
-	protected void completeTopGrid(GridPane topGrid, , JFXButton validateBtn) {
-		// TODO Auto-generated method stub
-		
+	void setRequisToPatron() {
+		patron.setTissusRequis(requisService.convertToDto(requisService.getAllRequisByPatron(patron.getId())));
 	}
 
 	@Override
-	void saveRequis(FxDto<TissuRequis> requis, Patron patron) {
-		// TODO Auto-generated method stub
-		
+	protected void displayVariant(GridPane bottomGrid, TissuVariantDto tv, int index) {
+		bottomGrid.add(new Label(Utils.safeString(tv.getTypeTissu()) + " " + Utils.safeString(tv.getMatiere())
+				+ " " + Utils.safeString(tv.getTissage())), 0, index * 2);
 	}
 
 	@Override
-	void deleteRequis(FxDto<TissuRequis> requis) {
-		// TODO Auto-generated method stub
-		
+	protected List<TissuRequisDto> getListRequisFromPatron() {
+		if (patron.getTissusRequisProperty() != null && patron.getTissusRequis() != null) {
+			return patron.getTissusRequis();
+		} else
+			return Collections.EMPTY_LIST;
 	}
-
-
-
-
 }
