@@ -23,14 +23,14 @@ public class PatronPictureHelper extends PictureHelper {
 
 	private Patron patron;
 
-	public PatronPictureHelper(PatronService patronService, MapperService mapper, PreferenceService preferenceService,
+	public PatronPictureHelper(PatronService patronService, PreferenceService preferenceService,
 			StageInitializer initializer, ImageService imageService) {
-		super(mapper, preferenceService, initializer, imageService);
+		super(preferenceService, initializer, imageService);
 		this.patronService = patronService;
 	}
 
 	public void setPane(ImageView imagePane, PatronDto dto) {
-		patron = mapper.map(dto);
+		patron = patronService.convert(dto);
 		picture = imageService.getImage(patron);
 		this.imagePane = imagePane;
 		imagePane.setImage(imageService.imageOrDefault(picture));
@@ -44,12 +44,12 @@ public class PatronPictureHelper extends PictureHelper {
 	}
 
 	public void addPictureWeb(PatronDto dto) {
-		patron = mapper.map(dto);
+		patron = patronService.convert(dto);
 		addPictureWeb();
 	}
 
 	public void addPictureLocal(PatronDto dto) {
-		patron = mapper.map(dto);
+		patron = patronService.convert(dto);
 		addPictureLocal();
 	}
 

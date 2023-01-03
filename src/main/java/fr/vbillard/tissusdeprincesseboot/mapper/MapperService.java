@@ -31,10 +31,6 @@ public class MapperService {
 		return mapper.map(source, Tissu.class);
 	}
 	
-	public Fourniture map(FournitureDto source) {
-		return mapper.map(source, Fourniture.class);
-	}
-	
 	public FournitureDto map(Fourniture source) {
 		return mapper.map(source, FournitureDto.class);
 	}

@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import fr.vbillard.tissusdeprincesseboot.dao.Idao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissusRequisDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
+import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
@@ -20,18 +19,26 @@ import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.utils.CalculPoidsTissuService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import lombok.AllArgsConstructor;
 
 @Service
-@AllArgsConstructor
+
 public class TissuRequisService extends AbstractRequisService<TissuRequis, Tissu, TissuRequisDto>{
 
 	private TissusRequisDao tissuRequisDao;
-	@Lazy
-	private TissuVariantService tvs;
 	private UserPrefService userPrefService;
-
 	private CalculPoidsTissuService calculPoidsTissuService;
+	private TissuVariantService tvs;
+
+	
+	
+	public TissuRequisService(TissusRequisDao tissuRequisDao, UserPrefService userPrefService,
+			CalculPoidsTissuService calculPoidsTissuService, TissuVariantService tvs, MapperService mapper) {
+		super(mapper);
+		this.tissuRequisDao = tissuRequisDao;
+		this.userPrefService = userPrefService;
+		this.calculPoidsTissuService = calculPoidsTissuService;
+		this.tvs = tvs;
+	}
 
 	@Override
 	public List<TissuRequis> getAllRequisByPatron(int id) {

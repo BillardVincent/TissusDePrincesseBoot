@@ -3,6 +3,8 @@ package fr.vbillard.tissusdeprincesseboot.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractEntity;
 
@@ -21,6 +23,10 @@ public abstract class AbstractDtoService <T extends AbstractEntity, U extends Fx
   public List<U> convertToDto(List<T> entities){
     return entities.stream().map(this::convert).collect(Collectors.toList());
   }
+  
+  public List<U> convertToDto(Page<T> entities){
+	    return entities.stream().map(this::convert).collect(Collectors.toList());
+	  }
 
   public  U getDtoById(int id){
     return convert(getById(id));

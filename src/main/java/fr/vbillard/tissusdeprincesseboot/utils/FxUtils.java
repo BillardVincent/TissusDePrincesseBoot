@@ -335,17 +335,21 @@ public class FxUtils {
 	public static JFXComboBox<String> buildComboBox(List<String> values, StringProperty valueSelected,
 			String defaultSelection, JFXComboBox<String> comboBox) {
 		comboBox.setItems(FXCollections.observableArrayList(values));
-		comboBox.setValue(
-				valueSelected == null || valueSelected.get() == null || valueSelected.get().equals(Strings.EMPTY)
-						? defaultSelection
-						: valueSelected.get());
-		return comboBox;
-		
+		comboBox.setValue( (valueSelected == null || Strings.isEmpty(valueSelected.get())) ?
+				defaultSelection : valueSelected.get());
+		return comboBox;	
 	}
 
 	public static JFXTextField buildSpinner(IntegerProperty value) {
 		JFXTextField spinner = new JFXTextField();
 		spinner.setTextFormatter(CustomSpinner.getFormatter());
+		spinner.setText(FxUtils.safePropertyToString(value));
+		return spinner;
+	}
+	
+	public static JFXTextField buildSpinner(FloatProperty value) {
+		JFXTextField spinner = new JFXTextField();
+		spinner.setTextFormatter(CustomSpinner.getLongFormatter());
 		spinner.setText(FxUtils.safePropertyToString(value));
 		return spinner;
 	}

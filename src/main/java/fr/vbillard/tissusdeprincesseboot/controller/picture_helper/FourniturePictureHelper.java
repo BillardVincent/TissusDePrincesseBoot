@@ -24,14 +24,14 @@ public class FourniturePictureHelper extends PictureHelper {
 
 	private Fourniture fourniture;
 
-	public FourniturePictureHelper(FournitureService fournitureService, MapperService mapper, PreferenceService preferenceService,
+	public FourniturePictureHelper(FournitureService fournitureService, PreferenceService preferenceService,
 			StageInitializer initializer, ImageService imageService) {
-		super(mapper, preferenceService, initializer, imageService);
+		super(preferenceService, initializer, imageService);
 		this.fournitureService = fournitureService;
 	}
 
 	public void setPane(ImageView imagePane, FournitureDto dto) {
-		fourniture = mapper.map(dto);
+		fourniture = fournitureService.convert(dto);
 		picture = imageService.getImage(fourniture);
 		this.imagePane = imagePane;
 		imagePane.setImage(imageService.imageOrDefault(picture));
@@ -45,12 +45,12 @@ public class FourniturePictureHelper extends PictureHelper {
 	}
 
 	public void addPictureWeb(FournitureDto dto) {
-		fourniture = mapper.map(dto);
+		fourniture = fournitureService.convert(dto);
 		addPictureWeb();
 	}
 
 	public void addPictureLocal(FournitureDto dto) {
-		fourniture = mapper.map(dto);
+		fourniture = fournitureService.convert(dto);
 		addPictureLocal();
 	}
 

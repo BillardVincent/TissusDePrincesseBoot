@@ -3,6 +3,7 @@ package fr.vbillard.tissusdeprincesseboot.dtos_fx;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.enums.SupportTypeEnum;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ListProperty;
@@ -13,7 +14,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class PatronDto implements FxDto{
+public class PatronDto implements FxDto<Patron>{
 
 	
 	private IntegerProperty id;

@@ -25,12 +25,12 @@ public class TissuPictureHelper extends PictureHelper {
 
 	public TissuPictureHelper(TissuService tissuService, MapperService mapper, PreferenceService preferenceService,
 			StageInitializer initializer, ImageService imageService) {
-		super(mapper, preferenceService, initializer, imageService);
+		super(preferenceService, initializer, imageService);
 		this.tissuService = tissuService;
 	}
 
 	public void setPane(ImageView imagePane, TissuDto dto) {
-		tissu = mapper.map(dto);
+		tissu = tissuService.convert(dto);
 		picture = imageService.getImage(tissu);
 		this.imagePane = imagePane;
 		imagePane.setImage(imageService.imageOrDefault(picture));
@@ -44,12 +44,12 @@ public class TissuPictureHelper extends PictureHelper {
 	}
 
 	public void addPictureWeb(TissuDto dto) {
-		tissu = mapper.map(dto);
+		tissu = tissuService.convert(dto);
 		addPictureWeb();
 	}
 
 	public void addPictureLocal(TissuDto dto) {
-		tissu = mapper.map(dto);
+		tissu = tissuService.convert(dto);
 		addPictureLocal();
 	}
 

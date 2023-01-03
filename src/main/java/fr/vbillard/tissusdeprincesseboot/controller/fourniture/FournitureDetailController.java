@@ -79,15 +79,13 @@ public class FournitureDetailController implements IController {
 	private FournitureDto fourniture;
 	private boolean okClicked = false;
 
-	private MapperService mapper;
 	private FournitureService fournitureService;
 	private RootController rootController;
 	private ImageService imageService;
 	private FournitureUsedService fournitureUsedService;
 
-	public FournitureDetailController(ImageService imageService, RootController rootController, MapperService mapper,
+	public FournitureDetailController(ImageService imageService, RootController rootController,
 			FournitureService fournitureService, FournitureUsedService tissuUsedService) {
-		this.mapper = mapper;
 		this.fournitureService = fournitureService;
 		this.rootController = rootController;
 		this.imageService = imageService;
@@ -122,7 +120,7 @@ public class FournitureDetailController implements IController {
 				fourniture.getUnite() == null ? Unite.NON_RENSEIGNE.getLabel() : fourniture.getUnite());
 		uniteSecField.setText(
 				fourniture.getUniteSecondaire() == null ? Unite.NON_RENSEIGNE.getLabel() : fourniture.getUniteSecondaire());
-		pictures = imageService.getImage(mapper.map(fourniture));
+		pictures = imageService.getImage(fournitureService.convert(fourniture));
 		imagePane.setImage(imageService.imageOrDefault(pictures));
 
 		addToButton.setVisible(rootController.hasFournitureRequiseSelected());

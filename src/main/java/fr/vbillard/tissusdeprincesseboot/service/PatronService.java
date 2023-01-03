@@ -25,7 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @AllArgsConstructor
 @Service
-public class PatronService extends AbstractService<Patron> {
+public class PatronService extends AbstractDtoService<Patron, PatronDto> {
 
 	PatronDao patronDao;
 	ModelMapper mapper;
@@ -87,6 +87,16 @@ public class PatronService extends AbstractService<Patron> {
 	public PatronDto saveOrUpdate(PatronDto dto) {
 		Patron patron = mapper.map(dto, Patron.class);
 		patron = saveOrUpdate(patron);
+		return mapper.map(dto, PatronDto.class);
+	}
+
+	@Override
+	public Patron convert(PatronDto dto) {
+		return mapper.map(dto, Patron.class);
+	}
+
+	@Override
+	public PatronDto convert(Patron dto) {
 		return mapper.map(dto, PatronDto.class);
 	}
 }

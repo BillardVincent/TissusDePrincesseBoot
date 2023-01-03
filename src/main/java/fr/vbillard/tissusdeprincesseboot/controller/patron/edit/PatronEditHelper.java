@@ -16,6 +16,7 @@ import fr.vbillard.tissusdeprincesseboot.service.AbstractRequisService;
 import fr.vbillard.tissusdeprincesseboot.service.AbstractUsedService;
 import fr.vbillard.tissusdeprincesseboot.service.AbstractVariantService;
 import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
+import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.EntityToString;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -62,11 +63,12 @@ public abstract class PatronEditHelper<E extends AbstractEntity, EV extends Abst
 	
 	public void displayRequis(DTOR requis) {
 
+		tissuEtFournitureContainer.getChildren().clear();
 		tvList = FXCollections.observableArrayList(new ArrayList<DTOV>());
 		List<Node> children = tissuEtFournitureContainer.getChildren();
+		String labelText = EntityToString.getByEntity(getEntityClass()).getLabel() + " recommandés : ";
 
-
-		children.add(new Label("Tissus recommandés : "));
+		children.add(new Label(labelText));
 
 		GridPane topGrid = new GridPane();
 		topGrid.setVgap(10);
@@ -75,8 +77,8 @@ public abstract class PatronEditHelper<E extends AbstractEntity, EV extends Abst
 		topGrid.setPadding(new Insets(10, 0, 10, 0));
 		children.add(topGrid);
 
-
 		JFXButton validateBtn = new JFXButton("Valider");
+		
 		completeTopGrid(topGrid, requis, validateBtn);
 
 		JFXButton cancelBtn = new JFXButton("Annuler");
@@ -102,6 +104,8 @@ public abstract class PatronEditHelper<E extends AbstractEntity, EV extends Abst
 
 	}
 	
+	protected abstract Class<E> getEntityClass();
+
 	protected abstract void completeTopGrid(GridPane topGrid, DTOR dto, JFXButton validateBtn);
 
 	void saveRequis(DTOR requis, PatronDto patron){
@@ -160,6 +164,7 @@ public abstract class PatronEditHelper<E extends AbstractEntity, EV extends Abst
 	protected abstract HBox completeLoadBottomRightVBox(JFXButton addTvBtn, DTOR requis);
 
 	abstract void setRequisToPatron();
+	
 	/**
 	 * Charge les tissusRequis, en fonction du patron sélectionné. tableau sous le
 	 * patron : tissusRequis.toString() - boutons

@@ -1,7 +1,5 @@
 package fr.vbillard.tissusdeprincesseboot.controller.patron.edit;
 
-import java.util.ArrayList;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -16,45 +14,26 @@ import fr.vbillard.tissusdeprincesseboot.controller.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.picture_helper.PatronPictureHelper;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureVariantDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuVariantDto;
 import fr.vbillard.tissusdeprincesseboot.fx_custom_element.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
-import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
 import fr.vbillard.tissusdeprincesseboot.model.enums.SupportTypeEnum;
-import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
-import fr.vbillard.tissusdeprincesseboot.service.FournitureRequiseService;
-import fr.vbillard.tissusdeprincesseboot.service.FournitureVariantService;
-import fr.vbillard.tissusdeprincesseboot.service.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.service.PatronService;
-import fr.vbillard.tissusdeprincesseboot.service.TissageService;
-import fr.vbillard.tissusdeprincesseboot.service.TissuRequisService;
-import fr.vbillard.tissusdeprincesseboot.service.TissuVariantService;
 import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
-import fr.vbillard.tissusdeprincesseboot.utils.Utils;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 @Component
 public class PatronEditController implements IController {
+	
+	private final static String X = "X";
 
 	@FXML
 	private JFXTextField marqueField;
@@ -171,9 +150,9 @@ public class PatronEditController implements IController {
 	@FXML
 	private void handleGenerateReference() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(marqueField.getText().trim().isEmpty() ? "X" : marqueField.getText().toUpperCase().charAt(0))
-				.append(modeleField.getText().trim().isEmpty() ? "X" : modeleField.getText().toUpperCase().charAt(0))
-				.append(typeVetementField.getText().trim().isEmpty() ? "X"
+		sb.append(marqueField.getText().trim().isEmpty() ? X : marqueField.getText().toUpperCase().charAt(0))
+				.append(modeleField.getText().trim().isEmpty() ? X : modeleField.getText().toUpperCase().charAt(0))
+				.append(typeVetementField.getText().trim().isEmpty() ? X
 						: typeVetementField.getText().toUpperCase().charAt(0))
 				.append("-");
 		boolean ref = true;
@@ -193,8 +172,6 @@ public class PatronEditController implements IController {
 	@FXML
 	private void handleFournitureListedit() {
 		fourniturePatronEditHelper.displayRequis(new FournitureRequiseDto());
-		DevInProgressService.notImplemented();
-
 	}
 
 	/**
@@ -253,7 +230,7 @@ public class PatronEditController implements IController {
 			pictureUtils.setPane(imagePane, patron);
 
 			tissuPatronEditHelper.setContainer(tissuEtFournitureContainer, tissusPatronListGrid, patron);
-
+			fourniturePatronEditHelper.setContainer(tissuEtFournitureContainer, tissusPatronListGrid, patron);
 
 			tissuPatronEditHelper.loadTissuRequisForPatron();
 		}

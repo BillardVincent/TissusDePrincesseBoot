@@ -25,17 +25,15 @@ public abstract class PictureHelper {
 	protected PreferenceService preferenceService;
 	protected StageInitializer initializer;
 	protected ImageService imageService;
-	protected MapperService mapper;
 	protected ImageView imagePane;
 
 	protected Optional<Photo> picture;
 
-	protected PictureHelper(MapperService mapper, PreferenceService preferenceService, StageInitializer initializer,
+	protected PictureHelper(PreferenceService preferenceService, StageInitializer initializer,
 			ImageService imageService) {
 		this.preferenceService = preferenceService;
 		this.initializer = initializer;
 		this.imageService = imageService;
-		this.mapper = mapper;
 	}
 
 	protected void addPictureWeb() {

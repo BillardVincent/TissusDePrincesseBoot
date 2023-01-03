@@ -20,7 +20,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class TissuService extends AbstractService<Tissu> {
+public class TissuService extends AbstractDtoService<Tissu, TissuDto> {
 
 	private ModelMapper mapper;
 	private TissuDao dao;
@@ -125,6 +125,16 @@ public class TissuService extends AbstractService<Tissu> {
 			t.setLongueurDisponible(longueurRestante < 0 ? 0 : longueurRestante);
 			saveOrUpdate(t);
 		}
+	}
+
+	@Override
+	public Tissu convert(TissuDto dto) {
+		return mapper.map(dto, Tissu.class);
+	}
+
+	@Override
+	public TissuDto convert(Tissu entity) {
+		return mapper.map(entity, TissuDto.class);
 	}
 
 }

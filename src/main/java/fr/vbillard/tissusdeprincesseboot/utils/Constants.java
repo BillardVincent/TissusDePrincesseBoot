@@ -18,6 +18,9 @@ public class Constants {
 
 	private String nonEnregistre;
 	private String aucuneDescription;
+	private String annuler;
+	private String valider;
+	private String supprimer;
 
 	public static final Paint colorBlack = Color.BLACK;
 	public static final Paint colorAdd = Color.GREEN;

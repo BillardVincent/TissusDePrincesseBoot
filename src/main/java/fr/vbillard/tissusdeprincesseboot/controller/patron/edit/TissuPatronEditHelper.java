@@ -87,7 +87,9 @@ public class TissuPatronEditHelper extends PatronEditHelper<Tissu, TissuVariant,
 
 	@Override
 	protected HBox completeLoadBottomRightVBox(JFXButton addTvBtn, TissuRequisDto requis) {
-
+		 if (variantSelected == null ) {
+			 variantSelected = new TissuVariantDto();
+		 }
 		JFXComboBox<String> typeField = FxUtils.buildComboBox(TypeTissuEnum.labels(), variantSelected.getTypeTissuProperty());
 
 		JFXComboBox<String> matiereField = FxUtils.buildComboBox(matiereService.getAllMatieresValues(), variantSelected.getMatiereProperty());
@@ -129,6 +131,11 @@ public class TissuPatronEditHelper extends PatronEditHelper<Tissu, TissuVariant,
 		if (patron.getTissusRequisProperty() != null && patron.getTissusRequis() != null) {
 			return patron.getTissusRequis();
 		} else
-			return Collections.EMPTY_LIST;
+			return Collections.emptyList();
+	}
+
+	@Override
+	protected Class<Tissu> getEntityClass() {
+		return Tissu.class;
 	}
 }

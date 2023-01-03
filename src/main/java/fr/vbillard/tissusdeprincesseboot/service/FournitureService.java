@@ -3,7 +3,9 @@ package fr.vbillard.tissusdeprincesseboot.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.util.Strings;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -11,21 +13,24 @@ import fr.vbillard.tissusdeprincesseboot.dao.FournitureDao;
 import fr.vbillard.tissusdeprincesseboot.dao.Idao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.FournitureSpecification;
+import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
+import fr.vbillard.tissusdeprincesseboot.model.Quantite;
+import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class FournitureService extends AbstractService<Fourniture> {
+public class FournitureService extends AbstractDtoService<Fourniture, FournitureDto> {
 
-	private ModelMapper mapper;
+	private MapperService mapper;
+	private TypeFournitureService typeFournitureService;
 	private FournitureDao dao;
 
 	public ObservableList<FournitureDto> getObservableList() {
-		return FXCollections.observableArrayList(
-				dao.findAll().stream().map(t -> mapper.map(t, FournitureDto.class)).collect(Collectors.toList()));
+		return FXCollections.observableArrayList(convertToDto(dao.findAll()));
 	}
 
 	public boolean existByReference(String string) {
@@ -33,19 +38,14 @@ public class FournitureService extends AbstractService<Fourniture> {
 	}
 
 	public void archive(FournitureDto dto) {
-		Fourniture t = mapper.map(dto, Fourniture.class);
+		Fourniture t = convert(dto);
 		t.setArchived(true);
 		dao.save(t);
 
 	}
 
 	public void delete(FournitureDto dto) {
-		delete(mapper.map(dto, Fourniture.class));
-	}
-
-	public FournitureDto saveOrUpdate(FournitureDto dto) {
-		Fourniture t = mapper.map(dto, Fourniture.class);
-		return mapper.map(saveOrUpdate(t), FournitureDto.class);
+		delete(convert(dto));
 	}
 
 	/**
@@ -72,8 +72,7 @@ public class FournitureService extends AbstractService<Fourniture> {
 	}
 
 	public ObservableList<FournitureDto> getObservablePage(int page, int pageSize) {
-		return FXCollections.observableArrayList(dao.findAll(PageRequest.of(page, pageSize)).stream()
-				.map(t -> mapper.map(t, FournitureDto.class)).collect(Collectors.toList()));
+		return FXCollections.observableArrayList(convertToDto(dao.findAll(PageRequest.of(page, pageSize))));
 	}
 
 	public float getQuantiteUtilisee(int fournitureId) {
@@ -89,8 +88,7 @@ public class FournitureService extends AbstractService<Fourniture> {
 	}
 
 	public List<FournitureDto> getObservablePage(int page, int pageSize, FournitureSpecification specification) {
-		return FXCollections.observableArrayList(dao.findAll(specification, PageRequest.of(page, pageSize)).stream()
-				.map(t -> mapper.map(t, FournitureDto.class)).collect(Collectors.toList()));
+		return FXCollections.observableArrayList(convertToDto(dao.findAll(specification, PageRequest.of(page, pageSize))));
 	}
 
 	/**
@@ -104,6 +102,42 @@ public class FournitureService extends AbstractService<Fourniture> {
 				saveOrUpdate(f);
 			}
 		}
+	}
+
+	@Override
+	public Fourniture convert(FournitureDto dto) {
+		Fourniture entity;
+		if (dto.getId() == 0) {
+			entity =  new Fourniture();
+			entity.setQuantitePrincipale(new Quantite());
+		} else {
+			entity = getById(dto.getId());
+		}
+		
+		BeanUtils.copyProperties(dto, entity);
+		
+		if (entity.getQuantitePrincipale() == null ) {
+			entity.setQuantitePrincipale(new Quantite());
+		}
+		entity.getQuantitePrincipale().setQuantite(dto.getQuantite());
+		entity.getQuantitePrincipale().setUnite(Unite.getEnum(dto.getUnite()));
+		
+		if (!Strings.isEmpty(dto.getIntituleSecondaire())){
+			
+			if (entity.getQuantiteSecondaire() == null) {
+				entity.setQuantiteSecondaire(new Quantite());
+			}
+			
+			entity.getQuantiteSecondaire().setQuantite(dto.getQuantiteSecondaire());
+			entity.getQuantiteSecondaire().setUnite(Unite.getEnum(dto.getUniteSecondaire()));
+		}
+		
+		return entity;
+	}
+
+	@Override
+	public FournitureDto convert(Fourniture source) {
+		return mapper.map(source);
 	}
 
 }

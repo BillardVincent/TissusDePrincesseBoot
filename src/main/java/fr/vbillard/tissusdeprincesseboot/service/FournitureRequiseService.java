@@ -5,14 +5,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import fr.vbillard.tissusdeprincesseboot.dao.FournitureRequiseDao;
-import fr.vbillard.tissusdeprincesseboot.dao.Idao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.FournitureSpecification;
+import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureRequise;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureVariant;
@@ -21,17 +20,22 @@ import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import lombok.AllArgsConstructor;
 
 @Service
-@AllArgsConstructor
 public class FournitureRequiseService extends AbstractRequisService<FournitureRequise, Fourniture, FournitureRequiseDto> {
 
 	private FournitureRequiseDao fournitureRequiseDao;
-	@Lazy
 	private FournitureVariantService tvs;
 	private ModelMapper mapper;
 	private UserPrefService userPrefService;
+
+	public FournitureRequiseService(MapperService mapper, FournitureRequiseDao fournitureRequiseDao,
+			FournitureVariantService tvs, UserPrefService userPrefService) {
+		super(mapper);
+		this.fournitureRequiseDao = fournitureRequiseDao;
+		this.tvs = tvs;
+		this.userPrefService = userPrefService;
+	}
 
 	public List<FournitureRequise> getAllRequisByPatron(int id) {
 		return fournitureRequiseDao.getAllByPatronId(id);
