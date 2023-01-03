@@ -26,7 +26,6 @@ import lombok.AllArgsConstructor;
 public class FournitureService extends AbstractDtoService<Fourniture, FournitureDto> {
 
 	private MapperService mapper;
-	private TypeFournitureService typeFournitureService;
 	private FournitureDao dao;
 
 	public ObservableList<FournitureDto> getObservableList() {
