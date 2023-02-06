@@ -2,7 +2,6 @@ package fr.vbillard.tissusdeprincesseboot.controller.patron.edit;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -10,24 +9,16 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.AbstractRequisDto;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuVariantDto;
-import fr.vbillard.tissusdeprincesseboot.model.AbstractRequis;
-import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
-import fr.vbillard.tissusdeprincesseboot.service.AbstractDtoService;
-import fr.vbillard.tissusdeprincesseboot.service.AbstractRequisService;
-import fr.vbillard.tissusdeprincesseboot.service.AbstractUsedService;
-import fr.vbillard.tissusdeprincesseboot.service.AbstractVariantService;
 import fr.vbillard.tissusdeprincesseboot.service.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.service.TissageService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuRequisService;
@@ -35,7 +26,6 @@ import fr.vbillard.tissusdeprincesseboot.service.TissuUsedService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuVariantService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
 import fr.vbillard.tissusdeprincesseboot.utils.Utils;
-import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -106,7 +96,7 @@ public class TissuPatronEditHelper extends PatronEditHelper<Tissu, TissuVariant,
 			if (variantSelected.getId() == 0) {
 				tvList.add(variantSelected);
 			}
-			loadTissuRequisForPatron();
+			loadRequisForPatron();
 			displayRequis(requis);
 		});
 
@@ -116,7 +106,7 @@ public class TissuPatronEditHelper extends PatronEditHelper<Tissu, TissuVariant,
 	}
 
 	@Override
-	void setRequisToPatron() {
+	protected void setRequisToPatron() {
 		patron.setTissusRequis(requisService.convertToDto(requisService.getAllRequisByPatron(patron.getId())));
 	}
 
@@ -132,6 +122,11 @@ public class TissuPatronEditHelper extends PatronEditHelper<Tissu, TissuVariant,
 			return patron.getTissusRequis();
 		} else
 			return Collections.emptyList();
+	}
+
+	@Override
+	protected boolean hasVariant() {
+		return true;
 	}
 
 	@Override

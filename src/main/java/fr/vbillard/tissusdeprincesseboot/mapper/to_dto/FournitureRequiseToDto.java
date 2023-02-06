@@ -3,22 +3,21 @@ package fr.vbillard.tissusdeprincesseboot.mapper.to_dto;
 import org.modelmapper.AbstractConverter;
 import org.modelmapper.TypeMap;
 import org.springframework.stereotype.Component;
-
 import com.github.rozidan.springboot.modelmapper.TypeMapConfigurer;
 
 import fr.vbillard.tissusdeprincesseboot.dao.FournitureDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
+import fr.vbillard.tissusdeprincesseboot.model.FournitureRequise;
 import lombok.AllArgsConstructor;
 
 @Component
 @AllArgsConstructor
-public class FournitureToDto extends TypeMapConfigurer<Fourniture, FournitureDto> {
-
-	FournitureDao fournitureDao;
+public class FournitureRequiseToDto extends TypeMapConfigurer<FournitureRequise, FournitureRequiseDto> {
 
 	@Override
-	public void configure(TypeMap<Fourniture, FournitureDto> typeMap) {
+	public void configure(TypeMap<FournitureRequise, FournitureRequiseDto> typeMap) {
 		//typeMap.addMappings(mapping -> mapping.using(new LongueurRestanteConverter()).map(src -> src,
 		//		FournitureDto::setQuantiteDisponible));
 		typeMap.addMapping(src -> src.getType().getIntitulePrincipale(), FournitureDto::setIntituleDimension);
@@ -56,27 +55,6 @@ public class FournitureToDto extends TypeMapConfigurer<Fourniture, FournitureDto
 
 			return context.getDestination();
 		});
-	}
-	
-	private class LongueurRestanteConverter extends AbstractConverter<Fourniture, Float> {
-		@Override
-		protected Float convert(Fourniture source) {
-			if (source == null ||  source.getQuantitePrincipale() == null || source.getQuantitePrincipale().getQuantite() == null) {
-				return 0f;
-			}
-			float longueurRestante = source.getQuantitePrincipale().getQuantite();
-			if (source.getId() != 0) {
-				try {
-					Float utilise = fournitureDao.quantiteUtilisee(source.getId());
-					if (utilise != null) {
-						longueurRestante -= utilise;
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			return longueurRestante;
-		}
 	}
 	
 }

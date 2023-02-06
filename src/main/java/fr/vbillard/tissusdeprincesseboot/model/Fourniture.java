@@ -1,5 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -19,9 +20,9 @@ public class Fourniture extends AbstractEntity{
   private String reference;
   private String description;
   private Float quantiteDisponible;
-  @OneToOne(fetch = FetchType.EAGER)
+  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private Quantite quantitePrincipale;
-  @OneToOne(fetch = FetchType.EAGER)
+  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private Quantite quantiteSecondaire;
 
   @ManyToOne

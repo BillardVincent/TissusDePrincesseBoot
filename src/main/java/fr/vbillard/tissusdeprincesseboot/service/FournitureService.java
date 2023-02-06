@@ -1,6 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.util.Strings;
@@ -11,10 +12,12 @@ import org.springframework.stereotype.Service;
 
 import fr.vbillard.tissusdeprincesseboot.dao.FournitureDao;
 import fr.vbillard.tissusdeprincesseboot.dao.Idao;
+import fr.vbillard.tissusdeprincesseboot.dao.QuantiteDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.FournitureSpecification;
 import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
+import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Quantite;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import javafx.collections.FXCollections;
@@ -27,6 +30,8 @@ public class FournitureService extends AbstractDtoService<Fourniture, Fourniture
 
 	private MapperService mapper;
 	private FournitureDao dao;
+	private QuantiteDao quantiteDao;
+	private ImageService imageService;
 
 	public ObservableList<FournitureDto> getObservableList() {
 		return FXCollections.observableArrayList(convertToDto(dao.findAll()));
@@ -47,11 +52,24 @@ public class FournitureService extends AbstractDtoService<Fourniture, Fourniture
 		delete(convert(dto));
 	}
 
+	@Override
+	public void beforeDelete(Fourniture entity){
+		Optional<Photo> p = imageService.getImage(entity);
+		p.ifPresent(photo -> imageService.delete(photo));
+	}
+
 	/**
 	 * Contient la conversion de l'unité
 	 */
 	@Override
 	protected void beforeSaveOrUpdate(Fourniture entity) {
+		/*
+		entity.setQuantitePrincipale(quantiteDao.save(entity.getQuantitePrincipale()));
+		if (entity.getQuantiteSecondaire() != null){
+			entity.setQuantiteSecondaire(quantiteDao.save(entity.getQuantiteSecondaire()));
+
+		}*/
+
 		/*
 		if (UnitePoids.GRAMME_M.equals(entity.getUnitePoids())) {
 			if (entity.getLaize() == 0) {
@@ -91,7 +109,7 @@ public class FournitureService extends AbstractDtoService<Fourniture, Fourniture
 	}
 
 	/**
-	 * S'execute au démarage pour recalculer les longueurs restantes
+	 * S'execute au démarage pour recalculer les quantites restantes
 	 */
 	public void batchFournitureDisponible() {
 		for (Fourniture f : getAll()) {
@@ -118,17 +136,27 @@ public class FournitureService extends AbstractDtoService<Fourniture, Fourniture
 		if (entity.getQuantitePrincipale() == null ) {
 			entity.setQuantitePrincipale(new Quantite());
 		}
-		entity.getQuantitePrincipale().setQuantite(dto.getQuantite());
-		entity.getQuantitePrincipale().setUnite(Unite.getEnum(dto.getUnite()));
-		
-		if (!Strings.isEmpty(dto.getIntituleSecondaire())){
-			
-			if (entity.getQuantiteSecondaire() == null) {
-				entity.setQuantiteSecondaire(new Quantite());
+
+		if(entity.getType() != null) {
+			Unite unitePrincipale = Unite.getEnum(dto.getUnite());
+			if (unitePrincipale == null) {
+				unitePrincipale = entity.getType().getUnitePrincipaleConseillee();
 			}
-			
-			entity.getQuantiteSecondaire().setQuantite(dto.getQuantiteSecondaire());
-			entity.getQuantiteSecondaire().setUnite(Unite.getEnum(dto.getUniteSecondaire()));
+			entity.getQuantitePrincipale().setQuantite(Unite.convertir(dto.getQuantite(), unitePrincipale));
+			entity.getQuantitePrincipale().setUnite(unitePrincipale);
+
+			if (!Strings.isEmpty(dto.getIntituleSecondaire())) {
+
+				if (entity.getQuantiteSecondaire() == null) {
+					entity.setQuantiteSecondaire(new Quantite());
+				}
+				Unite uniteSecondaire = Unite.getEnum(dto.getUniteSecondaire());
+				if (uniteSecondaire == null) {
+					uniteSecondaire = entity.getType().getUniteSecondaireConseillee();
+				}
+				entity.getQuantitePrincipale().setQuantite(Unite.convertir(dto.getQuantite(), uniteSecondaire));
+				entity.getQuantiteSecondaire().setUnite(uniteSecondaire);
+			}
 		}
 		
 		return entity;

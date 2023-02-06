@@ -19,9 +19,12 @@ import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSear
 import fr.vbillard.tissusdeprincesseboot.fx_custom_element.CustomSpinner;
 import fr.vbillard.tissusdeprincesseboot.model.UserPref;
 import fr.vbillard.tissusdeprincesseboot.utils.path.PathEnum;
+import javafx.application.Platform;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.scene.control.Label;
 
@@ -340,18 +343,40 @@ public class FxUtils {
 		return comboBox;	
 	}
 
+	public static JFXComboBox<String> buildComboBox(List<String> values, String valueSelected,
+			String defaultSelection, JFXComboBox<String> comboBox) {
+		comboBox.setItems(FXCollections.observableArrayList(values));
+		comboBox.setValue( (valueSelected == null || Strings.isEmpty(valueSelected)) ?
+				defaultSelection : valueSelected);
+		return comboBox;
+	}
+
 	public static JFXTextField buildSpinner(IntegerProperty value) {
-		JFXTextField spinner = new JFXTextField();
+		JFXTextField spinner = getTextFieldFocused();
 		spinner.setTextFormatter(CustomSpinner.getFormatter());
 		spinner.setText(FxUtils.safePropertyToString(value));
 		return spinner;
 	}
-	
-	public static JFXTextField buildSpinner(FloatProperty value) {
+
+	private static JFXTextField getTextFieldFocused() {
 		JFXTextField spinner = new JFXTextField();
-		spinner.setTextFormatter(CustomSpinner.getLongFormatter());
-		spinner.setText(FxUtils.safePropertyToString(value));
+		spinner.focusedProperty().addListener((observable, oldValue, newValue) -> Platform.runLater(() -> {
+			if (spinner.isFocused() && !spinner.getText().isEmpty()) {
+				spinner.selectAll();
+			}
+		}));
 		return spinner;
+	}
+
+	public static JFXTextField buildSpinner(FloatProperty value) {
+		return buildSpinner(value == null ? 0: value.getValue());
+	}
+
+	public static JFXTextField buildSpinner(Float value) {
+		JFXTextField textField = getTextFieldFocused();
+		textField.setTextFormatter(CustomSpinner.getLongFormatter());
+		textField.setText(Float.toString(value));
+		return textField;
 	}
 
 }

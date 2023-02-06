@@ -15,11 +15,6 @@ import lombok.AllArgsConstructor;
 @Component
 public class FournitureRequiseToListElement extends TypeMapConfigurer<FournitureRequiseDto, ListElement> {
 
-	/*
-	 * @Lazy private TissuVariantService tvs;
-	 */
-
-	private final static int MAX_VARIANT_DISPLAYED = 3;
 	private final static String NON_RENSEIGNE = "non renseigné";
 
 	@Override
@@ -45,17 +40,17 @@ public class FournitureRequiseToListElement extends TypeMapConfigurer<Fourniture
 		}
 	}
 
-	private class TitreConverter extends AbstractConverter<TissuRequisDto, String> {
+	private class TitreConverter extends AbstractConverter<FournitureRequiseDto, String> {
 		@Override
-		protected String convert(TissuRequisDto t) {
-			return "Poids : " + (t.getGammePoids().equals("N/A") ? t.getGammePoids() : NON_RENSEIGNE);
+		protected String convert(FournitureRequiseDto f) {
+			return f.getTypeName();
 		}
 	}
 
 	private class RefConverter extends AbstractConverter<FournitureRequiseDto, String> {
 		@Override
 		protected String convert(FournitureRequiseDto f) {
-			return f.getTypeName();
+			return f.getQuantite() + f.getUnite();
 		}
 	}
 

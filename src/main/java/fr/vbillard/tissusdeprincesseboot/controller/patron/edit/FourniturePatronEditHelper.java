@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
@@ -17,7 +16,7 @@ import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureRequise;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureUsed;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureVariant;
-import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
+import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureRequiseService;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureUsedService;
@@ -32,82 +31,166 @@ import javafx.scene.layout.HBox;
 
 @Service
 public class FourniturePatronEditHelper extends
-		PatronEditHelper<Fourniture, FournitureVariant, FournitureRequise, FournitureUsed, FournitureDto, FournitureVariantDto, FournitureRequiseDto> {
+    PatronEditHelper<Fourniture, FournitureVariant, FournitureRequise, FournitureUsed, FournitureDto, FournitureVariantDto, FournitureRequiseDto> {
 
-	private TypeFournitureService typeFournitureService;
+  private TypeFournitureService typeFournitureService;
 
-	public FourniturePatronEditHelper(TypeFournitureService typeFournitureService,
-			FournitureRequiseService requisService, FournitureVariantService variantService,
-			FournitureUsedService usedService) {
-		this.variantService = variantService;
-		this.usedService = usedService;
-		this.requisService = requisService;
-		this.typeFournitureService = typeFournitureService;
-	}
+  public FourniturePatronEditHelper(TypeFournitureService typeFournitureService, FournitureRequiseService requisService,
+      FournitureVariantService variantService, FournitureUsedService usedService) {
+    this.variantService = variantService;
+    this.usedService = usedService;
+    this.requisService = requisService;
+    this.typeFournitureService = typeFournitureService;
+  }
 
-	@Override
-	protected void completeTopGrid(GridPane topGrid, FournitureRequiseDto dto, JFXButton validateBtn) {
-		topGrid.add(new Label("Type"), 0, 0);
-		JFXComboBox<String> uniteChBx = FxUtils.buildComboBox(Unite.labels(),dto.getUniteProperty());
-		
-		topGrid.add(uniteChBx, 2, 1);
+  @Override
+  protected void completeTopGrid(GridPane topGrid, FournitureRequiseDto dto, JFXButton validateBtn) {
+    boolean dtoIsNotNew = dto.getId() != 0;
 
-		JFXComboBox<String> typeChBx = FxUtils.buildComboBox(typeFournitureService.getAllValues(),
-				dto.getTypeNameProperty());
-		typeChBx.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-			uniteChBx.setValue(dto.getUnite());
-		});
-		
-		topGrid.add(typeChBx, 1, 0);
+    topGrid.add(new Label("Type"), 0, 0);
 
-		topGrid.add(new Label(dto.getType().getIntitulePrincipale()), 0, 1);
-		JFXTextField longueurSpinner = FxUtils.buildSpinner(dto.getQuantiteProperty());
-		topGrid.add(longueurSpinner, 1, 1);
+    Label intitulePrincipal = new Label();
+    JFXTextField dimensionPrincipaleSpinner = FxUtils.buildSpinner(0f);
+    dimensionPrincipaleSpinner.setVisible(dtoIsNotNew);
+    JFXComboBox<String> uniteChBx = new JFXComboBox<>();
+    uniteChBx.setVisible(dtoIsNotNew);
 
-		uniteChBx.setValue(dto.getUnite());
+    topGrid.add(intitulePrincipal, 0, 1);
+    topGrid.add(dimensionPrincipaleSpinner, 1, 1);
+    topGrid.add(uniteChBx, 2, 1);
 
-		validateBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+    Label intituleSecondaire = new Label();
+    Label entre = new Label();
+    JFXTextField dimensionMinSpinner = FxUtils.buildSpinner(0f);
+    dimensionMinSpinner.setVisible(dtoIsNotNew);
+    Label et = new Label();
+    JFXTextField dimensionMaxSpinner = FxUtils.buildSpinner(0f);
+    dimensionMaxSpinner.setVisible(dtoIsNotNew);
+    JFXComboBox<String> uniteSecChBx = new JFXComboBox<>();
+    uniteSecChBx.setVisible(dtoIsNotNew);
 
-			// TODO set DTO !!!!!!!!!!!!!!!!
+    topGrid.add(intituleSecondaire, 0, 2);
+    topGrid.add(entre, 1, 2);
+    topGrid.add(dimensionMinSpinner, 1, 3);
+    topGrid.add(et, 2, 2);
+    topGrid.add(dimensionMaxSpinner, 2, 3);
+    topGrid.add(uniteSecChBx, 3, 3);
 
-			saveRequis(dto, patron);
-		});
+    JFXComboBox<String> typeChBx =
+        FxUtils.buildComboBox(typeFournitureService.getAllValues(), dto.getTypeNameProperty());
 
-	}
+    if (dtoIsNotNew) {
+      dimensionPrincipaleSpinner.setText(Float.toString(dto.getQuantite()));
 
-	@Override
-	protected void addToPatron(FournitureRequiseDto requis, PatronDto patron) {
-		patron.setFournituresRequises(requisService.convertToDto(requisService.getAllRequisByPatron(patron.getId())));
-	}
+      if (dto.getType() != null) {
+        intitulePrincipal.setText(dto.getType().getIntitulePrincipale());
+        FxUtils.buildComboBox(Unite.getValuesByDimension(dto.getType().getDimensionPrincipale()),
+            dto.getUniteProperty(),
+            dto.getType().getDimensionPrincipale().getDefault().getLabel(), uniteChBx);
+        dimensionPrincipaleSpinner.setVisible(true);
+        uniteChBx.setVisible(true);
 
-	@Override
-	protected HBox completeLoadBottomRightVBox(JFXButton addTvBtn, FournitureRequiseDto requis) {
-		return null;
-	}
+        if (dto.getType().getDimensionSecondaire() != null) {
 
-	@Override
-	void setRequisToPatron() {
-		patron.setFournituresRequises(requisService.convertToDto(requisService.getAllRequisByPatron(patron.getId())));
-	}
+          intituleSecondaire.setText(dto.getType().getIntituleSecondaire());
+          FxUtils.buildComboBox(Unite.labels(), dto.getUniteSecondaireProperty(),
+              dto.getType().getDimensionSecondaire().getDefault().getLabel(), uniteChBx);
 
-	@Override
-	protected void displayVariant(GridPane bottomGrid, FournitureVariantDto tv, int index) {
-		bottomGrid.add(new Label(Utils.safeString(tv.getTypeName()) + " - " + tv.getIntituleSecondaire() + ":  "
-				+ FxUtils.safePropertyToString(tv.getQuantiteSecondaireMinProperty()) + "/"
-				+ FxUtils.safePropertyToString(tv.getQuantiteSecondaireMaxProperty())
-				+ Utils.safeString(tv.getUniteSecondaire())), 0, index * 2);
-	}
+          dimensionMinSpinner.setVisible(true);
+          dimensionMaxSpinner.setVisible(true);
+          uniteSecChBx.setVisible(true);
 
-	@Override
-	protected List<FournitureRequiseDto> getListRequisFromPatron() {
-		if (patron.getFournituresRequisesProperty() != null && patron.getFournituresRequises() != null) {
-			return patron.getFournituresRequises();
-		} else
-			return Collections.emptyList();
-	}
+          entre.setText("entre");
+          et.setText("et");
+        }
+      }
+    }
 
-	@Override
-	protected Class<Fourniture> getEntityClass() {
-		return Fourniture.class;
-	}
+    typeChBx.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+
+      TypeFourniture typeFourniture = typeFournitureService.findTypeFourniture(newValue);
+      intitulePrincipal.setText(typeFourniture.getIntitulePrincipale());
+
+      FxUtils.buildComboBox(Unite.getValuesByDimension(typeFourniture.getDimensionPrincipale()),
+          typeFourniture.getUnitePrincipaleConseillee().getLabel(),
+          typeFourniture.getDimensionPrincipale().getDefault().getLabel(), uniteChBx);
+      dimensionPrincipaleSpinner.setVisible(true);
+      uniteChBx.setVisible(true);
+
+      if (typeFourniture.getDimensionSecondaire() != null) {
+
+        intituleSecondaire.setText(typeFourniture.getIntituleSecondaire());
+
+        FxUtils.buildComboBox(Unite.getValuesByDimension(typeFourniture.getDimensionSecondaire()),
+            typeFourniture.getUniteSecondaireConseillee().getLabel(),
+            typeFourniture.getDimensionSecondaire().getDefault().getLabel(), uniteSecChBx);
+
+        dimensionMinSpinner.setVisible(true);
+        dimensionMaxSpinner.setVisible(true);
+        uniteSecChBx.setVisible(true);
+
+        entre.setText("entre");
+        et.setText("et");
+      }
+    });
+
+    validateBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+
+      dto.setType(typeFournitureService.findTypeFourniture(typeChBx.getValue()));
+
+      dto.setUnite(Unite.getEnum(uniteChBx.getValue()));
+      dto.setQuantite(Float.parseFloat(dimensionPrincipaleSpinner.getText()));
+
+      dto.setUnite(Unite.getEnum(uniteSecChBx.getValue()));
+      dto.setQuantiteSecondaireMin(Float.parseFloat(dimensionMinSpinner.getText()));
+      dto.setQuantiteSecondaireMax(Float.parseFloat(dimensionPrincipaleSpinner.getText()));
+
+      saveRequis(dto, patron);
+    });
+
+    topGrid.add(typeChBx, 1, 0);
+
+  }
+
+  @Override
+  protected void addToPatron(FournitureRequiseDto requis, PatronDto patron) {
+    patron.setFournituresRequises(requisService.convertToDto(requisService.getAllRequisByPatron(patron.getId())));
+  }
+
+  @Override
+  protected HBox completeLoadBottomRightVBox(JFXButton addTvBtn, FournitureRequiseDto requis) {
+    return null;
+  }
+
+  @Override
+  protected void setRequisToPatron() {
+
+    //patron.setFournituresRequises(requisService.convertToDto(requisService.getAllRequisByPatron(patron.getId())));
+  }
+
+  @Override
+  protected void displayVariant(GridPane bottomGrid, FournitureVariantDto tv, int index) {
+    bottomGrid.add(new Label(
+        Utils.safeString(tv.getTypeName()) + " - " + tv.getIntituleSecondaire() + ":  " + FxUtils.safePropertyToString(
+            tv.getQuantiteSecondaireMinProperty()) + "/" + FxUtils.safePropertyToString(
+            tv.getQuantiteSecondaireMaxProperty()) + Utils.safeString(tv.getUniteSecondaire())), 0, index * 2);
+  }
+
+  @Override
+  protected List<FournitureRequiseDto> getListRequisFromPatron() {
+    if (patron.getFournituresRequisesProperty() != null && patron.getFournituresRequises() != null) {
+      return patron.getFournituresRequises();
+    } else
+      return Collections.emptyList();
+  }
+
+  @Override
+  protected boolean hasVariant() {
+    return false;
+  }
+
+  @Override
+  protected Class<Fourniture> getEntityClass() {
+    return Fourniture.class;
+  }
 }

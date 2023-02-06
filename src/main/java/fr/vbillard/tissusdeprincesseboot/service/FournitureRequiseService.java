@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import fr.vbillard.tissusdeprincesseboot.dao.FournitureRequiseDao;
@@ -16,7 +15,6 @@ import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureRequise;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureVariant;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
-import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,10 +22,9 @@ import javafx.collections.ObservableList;
 @Service
 public class FournitureRequiseService extends AbstractRequisService<FournitureRequise, Fourniture, FournitureRequiseDto> {
 
-	private FournitureRequiseDao fournitureRequiseDao;
-	private FournitureVariantService tvs;
-	private ModelMapper mapper;
-	private UserPrefService userPrefService;
+	private final FournitureRequiseDao fournitureRequiseDao;
+	private final FournitureVariantService tvs;
+	private final UserPrefService userPrefService;
 
 	public FournitureRequiseService(MapperService mapper, FournitureRequiseDao fournitureRequiseDao,
 			FournitureVariantService tvs, UserPrefService userPrefService) {
@@ -42,14 +39,14 @@ public class FournitureRequiseService extends AbstractRequisService<FournitureRe
 	}
 
 	public List<FournitureRequiseDto> getAllFournitureRequiseDtoByPatron(int id) {
-		return fournitureRequiseDao.getAllByPatronId(id).stream().map(tr -> mapper.map(tr, FournitureRequiseDto.class))
+		return fournitureRequiseDao.getAllByPatronId(id).stream().map(tr -> mapper.map(tr))
 				.collect(Collectors.toList());
 	}
 
 	public FournitureRequiseDto createOrUpdate(FournitureRequiseDto fourniture, PatronDto patron) {
-		FournitureRequise t = mapper.map(fourniture, FournitureRequise.class);
-		t.setPatron(mapper.map(patron, Patron.class));
-		return mapper.map(fournitureRequiseDao.save(t), FournitureRequiseDto.class);
+		FournitureRequise t = mapper.map(fourniture);
+		t.setPatron(mapper.map(patron));
+		return mapper.map(fournitureRequiseDao.save(t));
 
 	}
 
@@ -59,7 +56,7 @@ public class FournitureRequiseService extends AbstractRequisService<FournitureRe
 	}
 
 	public void delete(FournitureRequiseDto fourniture) {
-		delete(mapper.map(fourniture, FournitureRequise.class));
+		delete(mapper.map(fourniture));
 
 	}
 
@@ -82,7 +79,7 @@ public class FournitureRequiseService extends AbstractRequisService<FournitureRe
 	}
 
 	public FournitureSpecification getFournitureSpecification(FournitureRequiseDto tr) {
-		return getFournitureSpecification(mapper.map(tr, FournitureRequise.class));
+		return getFournitureSpecification(mapper.map(tr));
 	}
 
 	public FournitureSpecification getFournitureSpecification(FournitureRequise tr) {
@@ -115,12 +112,12 @@ public class FournitureRequiseService extends AbstractRequisService<FournitureRe
 
 	@Override
 	public FournitureRequise convert(FournitureRequiseDto dto) {
-		return mapper.map(dto, FournitureRequise.class);
+		return mapper.map(dto);
 	}
 
 	@Override
 	public FournitureRequiseDto convert(FournitureRequise entity) {
-		return mapper.map(entity, FournitureRequiseDto.class);
+		return mapper.map(entity);
 	}
 
 	@Override

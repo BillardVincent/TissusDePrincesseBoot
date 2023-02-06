@@ -17,6 +17,8 @@ import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.fx_custom_element.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.fx_custom_element.CustomSpinner;
+import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
+import fr.vbillard.tissusdeprincesseboot.model.enums.DimensionEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureService;
 import fr.vbillard.tissusdeprincesseboot.service.TypeFournitureService;
@@ -24,6 +26,7 @@ import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
 import fr.vbillard.tissusdeprincesseboot.utils.path.PathEnum;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -73,15 +76,15 @@ public class FournitureEditController implements IController {
 	@FXML
 	public Label intituleSecLbl;
 
-	private RootController root;
+	private final RootController root;
 	private StageInitializer initializer;
 
 	private FournitureDto fourniture;
 	private boolean okClicked = false;
 
-	private TypeFournitureService typeService;
-	private FournitureService fournitureService;
-	private FourniturePictureHelper pictureHelper;
+	private final TypeFournitureService typeService;
+	private final FournitureService fournitureService;
+	private final FourniturePictureHelper pictureHelper;
 
 	public FournitureEditController(FourniturePictureHelper pictureHelper, FournitureService fournitureService,
 			TypeFournitureService typeService, RootController root) {
@@ -110,27 +113,43 @@ public class FournitureEditController implements IController {
 		lieuDachatField.setText(FxUtils.safePropertyToString(fourniture.getLieuAchatProperty()));
 		nomField.setText(FxUtils.safePropertyToString(fourniture.getNomProperty()));
 
-		if (fourniture.getType() == null) {
-			uniteField.setItems(FXCollections.observableArrayList(Unite.NON_RENSEIGNE.getLabel()));
-			uniteSecField.setItems(FXCollections.observableArrayList(Unite.NON_RENSEIGNE.getLabel()));
 
-		} else {
-			uniteField.setItems(FXCollections.observableArrayList(Unite.getValuesByDimension(fourniture.getType().getDimensionPrincipale())));
-			uniteSecField.setItems(FXCollections.observableArrayList(Unite.getValuesByDimension(fourniture.getType().getDimensionSecondaire())));
+		typeField.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			System.out.println(newValue);
+			TypeFourniture type = typeService.findTypeFourniture(newValue);
+			boolean typeIsNull = type == null;
+			uniteField.setDisable(typeIsNull);
+			uniteSecField.setDisable(typeIsNull);
 
-		}
-		uniteField.setValue(
-				fourniture.getUniteProperty() == null ? Unite.NON_RENSEIGNE.getLabel() : fourniture.getUnite());
+			if (!typeIsNull) {
+				fourniture.setType(typeService.findTypeFourniture(newValue));
+				uniteField.setItems(FXCollections.observableArrayList(Unite.getValuesByDimension(fourniture.getType().getDimensionPrincipale())));
+				uniteSecField.setItems(FXCollections.observableArrayList(Unite.getValuesByDimension(fourniture.getType().getDimensionSecondaire())));
+				uniteField.setValue(type.getDimensionPrincipale().getDefault().getLabel());
+				uniteSecField.setValue(type.getDimensionSecondaire().getDefault().getLabel());
 
-		uniteSecField.setValue(
-				fourniture.getUniteSecondaireProperty() == null ? Unite.NON_RENSEIGNE.getLabel() : fourniture.getUniteSecondaire());
+				intitulePrimLbl.setText(type.getIntitulePrincipale());
+				intituleSecLbl.setText(type.getIntituleSecondaire());
+
+			}
+		});
+
 
 		typeField.setItems(FXCollections.observableArrayList(typeService.getAllTypeFournituresValues()));
 		typeField.setValue(FxUtils.safePropertyToString(fourniture.getTypeNameProperty()));
 
 		intitulePrimLbl.setText(FxUtils.safePropertyToString(fourniture.getIntituleDimensionProperty()));
 		intituleSecLbl.setText(FxUtils.safePropertyToString(fourniture.getIntituleSecondaireProperty()));
-		
+
+		if (fourniture.getType() != null) {
+			uniteSecField.setValue(FxUtils.safePropertyToString(fourniture.getUniteSecondaireProperty()));
+			uniteField.setItems(FXCollections.observableArrayList(Unite.getValuesByDimension(fourniture.getType().getDimensionPrincipale())));
+			uniteSecField.setItems(FXCollections.observableArrayList(Unite.getValuesByDimension(fourniture.getType().getDimensionSecondaire())));
+			uniteField.setValue(FxUtils.safePropertyToString(fourniture.getUniteProperty()));
+			intitulePrimLbl.setText(fourniture.getType().getIntitulePrincipale());
+			intituleSecLbl.setText(fourniture.getType().getIntituleSecondaire());
+		}
+
 		pictureHelper.setPane(imagePane, fourniture);
 		boolean tissuIsNew = fourniture.getId() == 0;
 		addPictureWebBtn.setDisable(tissuIsNew);
@@ -167,7 +186,7 @@ public class FournitureEditController implements IController {
 	private void setTissuFromFields() {
 		fourniture.setReference(referenceField.getText());
 		fourniture.setQuantite(Float.parseFloat(quantiteField.getText()));
-		fourniture.setQuantiteSecondaire(Float.parseFloat(quantiteSecField.getText()));
+		fourniture.setQuantiteSec(Float.parseFloat(quantiteSecField.getText()));
 		fourniture.setDescription(descriptionField.getText());
 		fourniture.setType(typeService.findTypeFourniture(typeField.getValue()));
 		fourniture.setUnite(Unite.getEnum(uniteField.getValue()));

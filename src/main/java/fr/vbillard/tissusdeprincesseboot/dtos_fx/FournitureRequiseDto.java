@@ -18,7 +18,8 @@ public class FournitureRequiseDto implements FxDto<FournitureRequise> {
 	private FloatProperty quantiteDisponible;
 	private FloatProperty quantite;
 	private StringProperty unite;
-	private FloatProperty quantiteSecondaire;
+	private FloatProperty quantiteSecondaireMin;
+	private FloatProperty quantiteSecondaireMax;
 	private StringProperty uniteSecondaire;
 	private TypeFourniture type;
 
@@ -28,7 +29,8 @@ public class FournitureRequiseDto implements FxDto<FournitureRequise> {
 		quantiteDisponible = new SimpleFloatProperty();
 		quantite = new SimpleFloatProperty();
 		unite = new SimpleStringProperty();
-		quantiteSecondaire = new SimpleFloatProperty();
+		quantiteSecondaireMin = new SimpleFloatProperty();
+		quantiteSecondaireMax = new SimpleFloatProperty();
 		uniteSecondaire = new SimpleStringProperty();
 	}
 
@@ -102,16 +104,25 @@ public class FournitureRequiseDto implements FxDto<FournitureRequise> {
 		this.unite.set(unite.getLabel());
 	}
 
-	public float getQuantiteSecondaire() {
-		return quantiteSecondaire.get();
+	public float getQuantiteSecondaireMin() {
+		return quantiteSecondaireMin.get();
+	}
+	public float getQuantiteSecondaireMax() {
+		return quantiteSecondaireMax.get();
 	}
 
-	public FloatProperty getQuantiteSecondaireProperty() {
-		return quantiteSecondaire;
+	public FloatProperty getQuantiteSecondaireMinProperty() {
+		return quantiteSecondaireMin;
+	}
+	public FloatProperty getQuantiteSecondaireMaxProperty() {
+		return quantiteSecondaireMax;
 	}
 
-	public void setQuantiteSecondaire(float quantite) {
-		this.quantiteSecondaire.set(quantite);
+	public void setQuantiteSecondaireMax(float quantite) {
+		this.quantiteSecondaireMax.set(quantite);
+	}
+	public void setQuantiteSecondaireMin(float quantite) {
+		this.quantiteSecondaireMin.set(quantite);
 	}
 
 	public String getUniteSecondaire() {
@@ -129,4 +140,8 @@ public class FournitureRequiseDto implements FxDto<FournitureRequise> {
 		this.uniteSecondaire.set(unite.getLabel());
 	}
 
+	@Override
+	public String toString() {
+		return type.getValue() + " - " + type.getIntitulePrincipale() + " : " + getQuantite() + " " + getUnite();
+	}
 }

@@ -48,6 +48,8 @@ public class ListElementController implements IController {
 			element = mapper.map(data.getTissuRequis(), ListElement.class);
 		} else if (data.getTissuUsed() != null) {
 			element = mapper.map(data.getTissuUsed(), ListElement.class);
+		} else if (data.getFournitureRequise() != null){
+			element = mapper.map(data.getFournitureRequise(), ListElement.class);
 		}
 
 		setElements();

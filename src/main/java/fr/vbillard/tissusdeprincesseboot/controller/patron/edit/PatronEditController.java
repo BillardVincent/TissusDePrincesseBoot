@@ -230,9 +230,10 @@ public class PatronEditController implements IController {
 			pictureUtils.setPane(imagePane, patron);
 
 			tissuPatronEditHelper.setContainer(tissuEtFournitureContainer, tissusPatronListGrid, patron);
-			fourniturePatronEditHelper.setContainer(tissuEtFournitureContainer, tissusPatronListGrid, patron);
+			fourniturePatronEditHelper.setContainer(tissuEtFournitureContainer, fournituresPatronListGrid, patron);
 
-			tissuPatronEditHelper.loadTissuRequisForPatron();
+			tissuPatronEditHelper.loadRequisForPatron();
+			fourniturePatronEditHelper.loadRequisForPatron();
 		}
 	}
 
