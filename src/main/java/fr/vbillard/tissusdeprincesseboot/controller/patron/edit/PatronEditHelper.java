@@ -15,6 +15,7 @@ import fr.vbillard.tissusdeprincesseboot.model.AbstractVariant;
 import fr.vbillard.tissusdeprincesseboot.service.AbstractRequisService;
 import fr.vbillard.tissusdeprincesseboot.service.AbstractUsedService;
 import fr.vbillard.tissusdeprincesseboot.service.AbstractVariantService;
+import fr.vbillard.tissusdeprincesseboot.service.PatronService;
 import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
 import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.EntityToString;
 import javafx.collections.FXCollections;
@@ -40,6 +41,7 @@ public abstract class PatronEditHelper<E extends AbstractEntity, EV extends Abst
 	protected AbstractVariantService<EV, E, DTOV> variantService;
 	protected AbstractRequisService<ER, E, DTOR> requisService;
 	protected AbstractUsedService<UE, E> usedService;
+	protected PatronService patronService;
 
 	protected VBox tissuEtFournitureContainer;
 	protected GridPane listGrid;
@@ -125,7 +127,9 @@ public abstract class PatronEditHelper<E extends AbstractEntity, EV extends Abst
 	protected abstract void addToPatron(DTOR requis, PatronDto patron);
 
 	void deleteRequis(DTOR requis) {
-		requisService.delete(requis);
+		ER requisEntity = requisService.convert(requis);
+		requisEntity.setPatron(patronService.convert(patron));
+		requisService.delete(requisEntity);
 		tissuEtFournitureContainer.getChildren().clear();
 		loadRequisForPatron();
 	}

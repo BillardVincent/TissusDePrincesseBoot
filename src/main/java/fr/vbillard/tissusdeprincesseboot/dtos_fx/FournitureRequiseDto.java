@@ -17,10 +17,10 @@ public class FournitureRequiseDto implements FxDto<FournitureRequise> {
 	private StringProperty typeName;
 	private FloatProperty quantiteDisponible;
 	private FloatProperty quantite;
-	private StringProperty unite;
+	private Unite unite;
 	private FloatProperty quantiteSecondaireMin;
 	private FloatProperty quantiteSecondaireMax;
-	private StringProperty uniteSecondaire;
+	private Unite uniteSecondaire;
 	private TypeFourniture type;
 
 	public FournitureRequiseDto() {
@@ -28,10 +28,8 @@ public class FournitureRequiseDto implements FxDto<FournitureRequise> {
 		typeName = new SimpleStringProperty();
 		quantiteDisponible = new SimpleFloatProperty();
 		quantite = new SimpleFloatProperty();
-		unite = new SimpleStringProperty();
 		quantiteSecondaireMin = new SimpleFloatProperty();
 		quantiteSecondaireMax = new SimpleFloatProperty();
-		uniteSecondaire = new SimpleStringProperty();
 	}
 
 
@@ -88,20 +86,13 @@ public class FournitureRequiseDto implements FxDto<FournitureRequise> {
 		return type;
 	}
 
-	public String getUnite() {
-		return unite.get();
-	}
-
-	public StringProperty getUniteProperty() {
+	public Unite getUnite() {
 		return unite;
 	}
 
-	public void setUnite(Unite unite) {
-		if (unite == null) {
-			unite = Unite.NON_RENSEIGNE;
-		}
 
-		this.unite.set(unite.getLabel());
+	public void setUnite(Unite unite) {
+		this.unite = unite;
 	}
 
 	public float getQuantiteSecondaireMin() {
@@ -125,23 +116,16 @@ public class FournitureRequiseDto implements FxDto<FournitureRequise> {
 		this.quantiteSecondaireMin.set(quantite);
 	}
 
-	public String getUniteSecondaire() {
-		return uniteSecondaire.get();
-	}
-
-	public StringProperty getUniteSecondaireProperty() {
+	public Unite getUniteSecondaire() {
 		return uniteSecondaire;
 	}
 
 	public void setUniteSecondaire(Unite unite) {
-		if (unite == null) {
-			unite = Unite.NON_RENSEIGNE;
-		}
-		this.uniteSecondaire.set(unite.getLabel());
+		this.uniteSecondaire = unite;
 	}
 
 	@Override
 	public String toString() {
-		return type.getValue() + " - " + type.getIntitulePrincipale() + " : " + getQuantite() + " " + getUnite();
+		return type.getValue() + " - " + type.getIntitulePrincipale() + " : " + getQuantite() + " " + getUnite().getAbbreviation();
 	}
 }

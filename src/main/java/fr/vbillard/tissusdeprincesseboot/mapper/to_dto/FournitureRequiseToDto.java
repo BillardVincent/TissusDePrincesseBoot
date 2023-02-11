@@ -18,43 +18,9 @@ public class FournitureRequiseToDto extends TypeMapConfigurer<FournitureRequise,
 
 	@Override
 	public void configure(TypeMap<FournitureRequise, FournitureRequiseDto> typeMap) {
-		//typeMap.addMappings(mapping -> mapping.using(new LongueurRestanteConverter()).map(src -> src,
-		//		FournitureDto::setQuantiteDisponible));
-		typeMap.addMapping(src -> src.getType().getIntitulePrincipale(), FournitureDto::setIntituleDimension);
-		typeMap.addMapping(src -> src.getType().getIntituleSecondaire(), FournitureDto::setIntituleSecondaire);
-		
-		typeMap.setPostConverter(context -> {
-			if (context.getSource().getId() != 0) {
+		typeMap.addMapping(FournitureRequise::getQuantiteSecMin, FournitureRequiseDto::setQuantiteSecondaireMin);
+		typeMap.addMapping(FournitureRequise::getQuantiteSecMax, FournitureRequiseDto::setQuantiteSecondaireMax);
 
-				if (context.getSource().getQuantitePrincipale() != null) {
-					Float qte = context.getSource().getQuantitePrincipale().getQuantite();
-					context.getDestination().setQuantite(qte == null ? 0 : qte);
-					if (context.getSource().getQuantitePrincipale().getUnite() != null) {
-						context.getDestination().setUnite(context.getSource().getQuantitePrincipale().getUnite());
-
-					}
-					if (context.getDestination().getUnite() == null && context.getSource().getType() != null
-							&& context.getSource().getType().getUnitePrincipaleConseillee() != null) {
-						context.getDestination().setUnite(context.getSource().getType().getUnitePrincipaleConseillee());
-					}
-				}
-					if (context.getSource().getQuantiteSecondaire() != null){
-						Float qte = context.getSource().getQuantiteSecondaire().getQuantite();
-						context.getDestination().setQuantiteSec(qte == null ? 0 : qte);
-
-						if (context.getSource().getQuantiteSecondaire().getUnite() != null) {
-							context.getDestination().setUniteSecondaire(context.getSource().getQuantiteSecondaire().getUnite());
-
-						}
-							}
-					if (context.getDestination().getUniteSecondaire() == null && context.getSource().getType() != null
-							&& context.getSource().getType().getUnitePrincipaleConseillee() != null) {
-						context.getDestination().setUniteSecondaire(context.getSource().getType().getUnitePrincipaleConseillee());
-					}
-				}
-
-			return context.getDestination();
-		});
 	}
 	
 }

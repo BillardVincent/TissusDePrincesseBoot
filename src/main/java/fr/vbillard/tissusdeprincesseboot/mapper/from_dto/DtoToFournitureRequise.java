@@ -6,45 +6,28 @@ import org.springframework.stereotype.Component;
 import com.github.rozidan.springboot.modelmapper.TypeMapConfigurer;
 
 import fr.vbillard.tissusdeprincesseboot.dao.PatronDao;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
+import fr.vbillard.tissusdeprincesseboot.model.FournitureRequise;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
+import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
+import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
+import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
 import lombok.AllArgsConstructor;
 
 @Component
 @AllArgsConstructor
-public class DtoToFournitureRequise extends TypeMapConfigurer<TissuRequisDto, TissuRequis>{
+public class DtoToFournitureRequise extends TypeMapConfigurer<FournitureRequiseDto, FournitureRequise>{
 
-	private PatronDao patronDao;
-	
 	@Override
-	public void configure(TypeMap<TissuRequisDto, TissuRequis> typeMap) {
-		
-		typeMap.addMappings(mapper -> mapper.using(new IdConverter()).map(src -> src, TissuRequis::setId));
-        typeMap.addMappings(mapper -> mapper.using(new GammePoidsConverter()).map(TissuRequisDto::getGammePoids, TissuRequis::setGammePoids));
+	public void configure(TypeMap<FournitureRequiseDto, FournitureRequise> typeMap) {
+		typeMap.addMapping(FournitureRequiseDto::getQuantiteSecondaireMin, FournitureRequise::setQuantiteSecMin);
+		typeMap.addMapping(FournitureRequiseDto::getQuantiteSecondaireMax, FournitureRequise::setQuantiteSecMax);
 
-        //TODO ??!!
-        typeMap.setPostConverter(context -> {
-    		Patron patron = patronDao.getById(context.getSource().getPatronId());
-            return context.getDestination();
-        });
-    }
-
-    private class IdConverter extends AbstractConverter<TissuRequisDto, Integer> {
-        @Override
-        protected Integer convert(TissuRequisDto dto) {
-            return dto.getIdProperty() == null ? 0 : dto.getId();
-        }
-    }
-
-
-    private class GammePoidsConverter extends AbstractConverter<String, GammePoids> {
-        @Override
-        protected GammePoids convert(String source) {
-            return GammePoids.getEnum(source);
-        }
-    }
-
+	}
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import fr.vbillard.tissusdeprincesseboot.dao.FournitureRequiseDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
@@ -14,7 +15,7 @@ import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureRequise;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureVariant;
-import fr.vbillard.tissusdeprincesseboot.model.Matiere;
+import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,13 +26,15 @@ public class FournitureRequiseService extends AbstractRequisService<FournitureRe
 	private final FournitureRequiseDao fournitureRequiseDao;
 	private final FournitureVariantService tvs;
 	private final UserPrefService userPrefService;
+	private final PatronService patronService;
 
 	public FournitureRequiseService(MapperService mapper, FournitureRequiseDao fournitureRequiseDao,
-			FournitureVariantService tvs, UserPrefService userPrefService) {
+			FournitureVariantService tvs, UserPrefService userPrefService, PatronService patronService) {
 		super(mapper);
 		this.fournitureRequiseDao = fournitureRequiseDao;
 		this.tvs = tvs;
 		this.userPrefService = userPrefService;
+		this.patronService = patronService;
 	}
 
 	public List<FournitureRequise> getAllRequisByPatron(int id) {
@@ -44,9 +47,9 @@ public class FournitureRequiseService extends AbstractRequisService<FournitureRe
 	}
 
 	public FournitureRequiseDto createOrUpdate(FournitureRequiseDto fourniture, PatronDto patron) {
-		FournitureRequise t = mapper.map(fourniture);
-		t.setPatron(mapper.map(patron));
-		return mapper.map(fournitureRequiseDao.save(t));
+		FournitureRequise t = convert(fourniture);
+		t.setPatron(patronService.convert(patron));
+		return convert(fournitureRequiseDao.save(t));
 
 	}
 
@@ -65,7 +68,13 @@ public class FournitureRequiseService extends AbstractRequisService<FournitureRe
 
 	}
 
+	@Transactional
+	@Override
 	public void delete(FournitureRequise fourniture) {
+		Patron p = fourniture.getPatron();
+		p.getFournituresRequises().remove(p);
+		patronService.saveOrUpdate(p);
+
 		List<FournitureVariant> tvLst = tvs.getVariantByRequis(fourniture);
 		for (FournitureVariant tv : tvLst) {
 			tvs.delete(tv);
@@ -98,26 +107,21 @@ public class FournitureRequiseService extends AbstractRequisService<FournitureRe
 
 
 		 */
-		List<Matiere> matieres = new ArrayList<Matiere>();
 		List<TypeFourniture> types = new ArrayList<TypeFourniture>();
 
-		if (tr.getVariants() != null) {
-			for (FournitureVariant tv : tr.getVariants()) {
-				//matieres.add(tv.getMatiere());
-				//types.add(tv.getTypeTissu());
-			}
-		}
 		return FournitureSpecification.builder().type(types).build();
 	}
 
 	@Override
 	public FournitureRequise convert(FournitureRequiseDto dto) {
-		return mapper.map(dto);
+		FournitureRequise result =  mapper.map(dto);
+		return result;
 	}
 
 	@Override
 	public FournitureRequiseDto convert(FournitureRequise entity) {
-		return mapper.map(entity);
+		FournitureRequiseDto dto = mapper.map(entity);
+		return dto;
 	}
 
 	@Override

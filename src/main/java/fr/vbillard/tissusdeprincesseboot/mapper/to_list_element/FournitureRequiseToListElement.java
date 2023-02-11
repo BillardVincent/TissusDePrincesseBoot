@@ -8,14 +8,13 @@ import com.github.rozidan.springboot.modelmapper.TypeMapConfigurer;
 
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ListElement;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Component
 public class FournitureRequiseToListElement extends TypeMapConfigurer<FournitureRequiseDto, ListElement> {
 
-	private final static String NON_RENSEIGNE = "non renseigné";
+	private static final String NON_RENSEIGNE = "non renseigné";
 
 	@Override
 	public void configure(TypeMap<FournitureRequiseDto, ListElement> typeMap) {
@@ -34,7 +33,7 @@ public class FournitureRequiseToListElement extends TypeMapConfigurer<Fourniture
 			if (f.getQuantite() == 0) {
 				dimension = NON_RENSEIGNE;
 			} else {
-				dimension = f.getQuantite() + f.getUnite();
+				dimension = f.getQuantite() + f.getUnite().getAbbreviation();
 			}
 			return dimension;
 		}
@@ -50,7 +49,7 @@ public class FournitureRequiseToListElement extends TypeMapConfigurer<Fourniture
 	private class RefConverter extends AbstractConverter<FournitureRequiseDto, String> {
 		@Override
 		protected String convert(FournitureRequiseDto f) {
-			return f.getQuantite() + f.getUnite();
+			return f.getQuantite() + f.getUnite().getAbbreviation();
 		}
 	}
 

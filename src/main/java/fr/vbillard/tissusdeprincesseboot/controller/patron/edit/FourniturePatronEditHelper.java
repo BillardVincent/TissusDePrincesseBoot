@@ -21,6 +21,7 @@ import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureRequiseService;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureUsedService;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureVariantService;
+import fr.vbillard.tissusdeprincesseboot.service.PatronService;
 import fr.vbillard.tissusdeprincesseboot.service.TypeFournitureService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
 import fr.vbillard.tissusdeprincesseboot.utils.Utils;
@@ -35,12 +36,14 @@ public class FourniturePatronEditHelper extends
 
   private TypeFournitureService typeFournitureService;
 
-  public FourniturePatronEditHelper(TypeFournitureService typeFournitureService, FournitureRequiseService requisService,
+  public FourniturePatronEditHelper(PatronService patronService, TypeFournitureService typeFournitureService,
+      FournitureRequiseService requisService,
       FournitureVariantService variantService, FournitureUsedService usedService) {
     this.variantService = variantService;
     this.usedService = usedService;
     this.requisService = requisService;
     this.typeFournitureService = typeFournitureService;
+    this.patronService = patronService;
   }
 
   @Override
@@ -85,16 +88,20 @@ public class FourniturePatronEditHelper extends
       if (dto.getType() != null) {
         intitulePrincipal.setText(dto.getType().getIntitulePrincipale());
         FxUtils.buildComboBox(Unite.getValuesByDimension(dto.getType().getDimensionPrincipale()),
-            dto.getUniteProperty(),
+            dto.getUnite().getLabel(),
             dto.getType().getDimensionPrincipale().getDefault().getLabel(), uniteChBx);
         dimensionPrincipaleSpinner.setVisible(true);
         uniteChBx.setVisible(true);
 
         if (dto.getType().getDimensionSecondaire() != null) {
 
+          dimensionMinSpinner.setText(Float.toString(dto.getQuantiteSecondaireMin()));
+          dimensionMaxSpinner.setText(Float.toString(dto.getQuantiteSecondaireMax()));
+
           intituleSecondaire.setText(dto.getType().getIntituleSecondaire());
-          FxUtils.buildComboBox(Unite.labels(), dto.getUniteSecondaireProperty(),
-              dto.getType().getDimensionSecondaire().getDefault().getLabel(), uniteChBx);
+          FxUtils.buildComboBox(Unite.getValuesByDimension(dto.getType().getDimensionSecondaire()),
+              dto.getType().getUniteSecondaireConseillee().getLabel(),
+              dto.getType().getDimensionSecondaire().getDefault().getLabel(), uniteSecChBx);
 
           dimensionMinSpinner.setVisible(true);
           dimensionMaxSpinner.setVisible(true);
@@ -141,7 +148,7 @@ public class FourniturePatronEditHelper extends
       dto.setUnite(Unite.getEnum(uniteChBx.getValue()));
       dto.setQuantite(Float.parseFloat(dimensionPrincipaleSpinner.getText()));
 
-      dto.setUnite(Unite.getEnum(uniteSecChBx.getValue()));
+      dto.setUniteSecondaire(Unite.getEnum(uniteSecChBx.getValue()));
       dto.setQuantiteSecondaireMin(Float.parseFloat(dimensionMinSpinner.getText()));
       dto.setQuantiteSecondaireMax(Float.parseFloat(dimensionPrincipaleSpinner.getText()));
 
@@ -165,7 +172,7 @@ public class FourniturePatronEditHelper extends
   @Override
   protected void setRequisToPatron() {
 
-    //patron.setFournituresRequises(requisService.convertToDto(requisService.getAllRequisByPatron(patron.getId())));
+    patron.setFournituresRequises(requisService.convertToDto(requisService.getAllRequisByPatron(patron.getId())));
   }
 
   @Override

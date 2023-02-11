@@ -24,7 +24,8 @@ public class TissuRequis extends AbstractRequis<Tissu> {
 	@Enumerated(EnumType.STRING)
 	private GammePoids gammePoids;
 
-	// private Patron patron;
+	@ManyToOne
+	private Patron patron;
 	
 	@OneToMany
 	protected List<TissuVariant> variants;

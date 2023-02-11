@@ -32,10 +32,10 @@ public class Patron extends AbstractEntity {
 	@Enumerated(EnumType.STRING)
 	private SupportTypeEnum supportType;
 
-	@OneToMany
+	@OneToMany(mappedBy = "patron")
 	private List<TissuRequis> tissuRequis;
 
-	@OneToMany
+	@OneToMany(mappedBy = "patron")
 	private List<FournitureRequise> fournituresRequises;
 	
 	@PrePersist

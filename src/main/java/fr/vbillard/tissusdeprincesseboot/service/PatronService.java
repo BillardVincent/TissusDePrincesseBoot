@@ -87,7 +87,7 @@ public class PatronService extends AbstractDtoService<Patron, PatronDto> {
 	public PatronDto saveOrUpdate(PatronDto dto) {
 		Patron patron = mapper.map(dto, Patron.class);
 		patron = saveOrUpdate(patron);
-		return mapper.map(dto, PatronDto.class);
+		return mapper.map(patron, PatronDto.class);
 	}
 
 	@Override

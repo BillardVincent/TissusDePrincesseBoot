@@ -20,6 +20,7 @@ import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.service.MatiereService;
+import fr.vbillard.tissusdeprincesseboot.service.PatronService;
 import fr.vbillard.tissusdeprincesseboot.service.TissageService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuRequisService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuUsedService;
@@ -38,13 +39,15 @@ public class TissuPatronEditHelper extends PatronEditHelper<Tissu, TissuVariant,
 	private final MatiereService matiereService;
 	private final TissageService tissageService;
 
-	public TissuPatronEditHelper(TissuRequisService requisService, TissuVariantService variantService,
+	public TissuPatronEditHelper(PatronService patronService, TissuRequisService requisService,
+			TissuVariantService variantService,
 			TissuUsedService usedService, MatiereService matiereService, TissageService tissageService) {
 		this.variantService = variantService;
 		this.usedService = usedService;
 		this.requisService = requisService;
 		this.matiereService = matiereService;
 		this.tissageService = tissageService;
+		this.patronService = patronService;
 	}
 
 	@Override

@@ -18,7 +18,7 @@ import lombok.Setter;
 @Entity
 public class TypeFourniture extends AbstractSimpleValueEntity {
  
-	@OneToMany
+	@OneToMany(mappedBy = "type")
 	protected List<Fourniture> fournitures;
 
 	private String intitulePrincipale;
