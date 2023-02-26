@@ -32,9 +32,10 @@ public class PatronService extends AbstractDtoService<Patron, PatronDto> {
 	TissusRequisDao tissuRequisDao;
 	TissuRequisService tissuRequisService;
 
+	@Transactional
 	public PatronDto create(PatronDto patron) {
-		Patron p = mapper.map(patron, Patron.class);
-		return mapper.map(saveOrUpdate(p), PatronDto.class);
+		Patron p = convert(patron);
+		return convert(saveOrUpdate(p));
 	}
 
 	public boolean existByReference(String string) {
@@ -50,7 +51,7 @@ public class PatronService extends AbstractDtoService<Patron, PatronDto> {
 
 	public ObservableList<PatronDto> getObservableList() {
 		List<Patron> lstPatron = getDao().findAll();
-		List<PatronDto> list = lstPatron.stream().map(t -> mapper.map(t, PatronDto.class)).collect(Collectors.toList());
+		List<PatronDto> list = lstPatron.stream().map(this::convert).collect(Collectors.toList());
 		return FXCollections.observableArrayList(list);
 	}
 
@@ -79,15 +80,15 @@ public class PatronService extends AbstractDtoService<Patron, PatronDto> {
 	private ObservableList<PatronDto> projectListToObservableList(Page<Patron> patrons) {
 		if(patrons.hasContent()){
 			return FXCollections.observableArrayList(patrons.stream()
-					.map(t -> mapper.map(t, PatronDto.class)).collect(Collectors.toList()));
+					.map(this::convert).collect(Collectors.toList()));
 		}
 		return FXCollections.emptyObservableList();
 	}
 	@Transactional
 	public PatronDto saveOrUpdate(PatronDto dto) {
-		Patron patron = mapper.map(dto, Patron.class);
+		Patron patron = convert(dto);
 		patron = saveOrUpdate(patron);
-		return mapper.map(patron, PatronDto.class);
+		return convert(patron);
 	}
 
 	@Override
