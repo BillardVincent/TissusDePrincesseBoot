@@ -16,13 +16,17 @@ public class TissuUsed extends AbstractUsedEntity<Tissu> {
 
 	protected int longueur;
 
+
+	@ManyToOne
+	protected Tissu tissu;
+
 	@ManyToOne
 	Projet projet;
 
 	
 	@Override
 	public String toString() {
-		return requis.getQuantite() + "cm de tissu ref.\""+tissu.getReference()+"\" aloués au modèle " + projet.getPatron().getModele();	
+		return requis.getLongueur() + "cm de tissu ref.\""+tissu.getReference()+"\" aloués au modèle " + projet.getPatron().getModele();
 	}
 
 	@ManyToOne

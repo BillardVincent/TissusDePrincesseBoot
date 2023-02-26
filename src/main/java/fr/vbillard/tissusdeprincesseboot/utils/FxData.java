@@ -15,6 +15,7 @@ import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuVariantDto;
+import fr.vbillard.tissusdeprincesseboot.model.FournitureUsed;
 import fr.vbillard.tissusdeprincesseboot.model.Inventaire;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 import fr.vbillard.tissusdeprincesseboot.utils.path.PathEnum;
@@ -35,6 +36,7 @@ public class FxData {
 	private FournitureDto fourniture;
 	private FournitureRequiseDto fournitureRequise;
 	private int longueurRequise;
+	private float quantiteRequise;
 	private URL url;
 	private List<String> listValues;
 	private List<String> listDataCBox;
@@ -42,6 +44,7 @@ public class FxData {
 	private Inventaire inventaire;
 	private List<Inventaire> listInventaire;
 	private IController parentController;
+	private FournitureUsed fournitureUsed;
 
 	public FxData getCopy() {
 		try {
@@ -51,5 +54,4 @@ public class FxData {
 			throw new RuntimeException("Echec du clonage : " + this.toString());
 		}
 	}
-
 }

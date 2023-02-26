@@ -27,7 +27,7 @@ public class TissuService extends AbstractDtoService<Tissu, TissuDto> {
 
 	public ObservableList<TissuDto> getObservableList() {
 		return FXCollections.observableArrayList(
-				dao.findAll().stream().map(t -> mapper.map(t, TissuDto.class)).collect(Collectors.toList()));
+				dao.findAll().stream().map(this::convert).collect(Collectors.toList()));
 	}
 
 	public ObservableList<TissuDto> filter(String text) {
@@ -58,7 +58,7 @@ public class TissuService extends AbstractDtoService<Tissu, TissuDto> {
 	}
 
 	public void archive(TissuDto dto) {
-		Tissu t = mapper.map(dto, Tissu.class);
+		Tissu t = convert(dto);
 		t.setArchived(true);
 		dao.save(t);
 
@@ -69,8 +69,8 @@ public class TissuService extends AbstractDtoService<Tissu, TissuDto> {
 	}
 
 	public TissuDto saveOrUpdate(TissuDto dto) {
-		Tissu t = mapper.map(dto, Tissu.class);
-		return mapper.map(saveOrUpdate(t), TissuDto.class);
+		Tissu t = convert(dto);
+		return convert(saveOrUpdate(t));
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class TissuService extends AbstractDtoService<Tissu, TissuDto> {
 
 	public ObservableList<TissuDto> getObservablePage(int page, int pageSize) {
 		return FXCollections.observableArrayList(dao.findAll(PageRequest.of(page, pageSize)).stream()
-				.map(t -> mapper.map(t, TissuDto.class)).collect(Collectors.toList()));
+				.map(this::convert).collect(Collectors.toList()));
 	}
 
 	public int getLongueurUtilisee(int tissuId) {
@@ -113,7 +113,7 @@ public class TissuService extends AbstractDtoService<Tissu, TissuDto> {
 
 	public List<TissuDto> getObservablePage(int page, int pageSize, TissuSpecification specification) {
 		return FXCollections.observableArrayList(dao.findAll(specification, PageRequest.of(page, pageSize)).stream()
-				.map(t -> mapper.map(t, TissuDto.class)).collect(Collectors.toList()));
+				.map(this::convert).collect(Collectors.toList()));
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class TissuService extends AbstractDtoService<Tissu, TissuDto> {
 	public void batchTissuDisponible() {
 		for (Tissu t : getAll()) {
 			int longueurRestante = t.getLongueur() - getLongueurUtilisee(t.getId());
-			t.setLongueurDisponible(longueurRestante < 0 ? 0 : longueurRestante);
+			t.setLongueurDisponible(Math.max(longueurRestante, 0));
 			saveOrUpdate(t);
 		}
 	}

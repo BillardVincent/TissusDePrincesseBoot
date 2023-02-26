@@ -206,6 +206,8 @@ public class FournitureSearchController implements IController {
 	@FXML
 	private void handleOk() {
 
+		List<TypeFourniture> type = Arrays.asList(typeFournitureService.findTypeFourniture(typeField.getValue()));
+
 		Unite unitePrim = Unite.getEnum(unitePrimCombo.getValue());
 
 		int marge = margeField.isDisable() ? 0 : FxUtils.intFromJFXTextField(margeField);
@@ -232,8 +234,6 @@ public class FournitureSearchController implements IController {
 
 		CharacterSearch reference = FxUtils.textFieldToCharacterSearch(referenceField);
 
-		List<TypeFourniture> type = Arrays.asList(typeFournitureService.findTypeFourniture(typeField.getValue()));
-
 		specification = FournitureSpecification.builder().reference(reference).description(description).type(type)
 				.quantite(dimPrim).quantiteDisponible(dimPrimDispo).quantiteSecondaire(dimSec).build();
 
@@ -249,7 +249,7 @@ public class FournitureSearchController implements IController {
 	
 	@FXML
 	private void choiceType() {
-		FxUtils.setSelectionFromChoiceBoxModale(TypeTissuEnum.labels(), typeValuesSelected, typeLbl);
+		FxUtils.setSelectionFromChoiceBoxModale(typeFournitureService.getAllValues(), typeValuesSelected, typeLbl);
 	}
 
 }

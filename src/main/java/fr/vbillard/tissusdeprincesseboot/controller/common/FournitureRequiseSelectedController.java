@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import javafx.fxml.FXML;
@@ -24,19 +24,19 @@ public class FournitureRequiseSelectedController implements IController {
 	private VBox variantsContainer;
 
 	private StageInitializer initializer;
-	private TissuRequisDto tissuRequis;
+	private FournitureRequiseDto fournitureRequise;
 
 	@Override
 	public void setStageInitializer(StageInitializer initializer, FxData data) {
 		this.initializer = initializer;
-		if (data == null || data.getTissuRequis() == null) {
+		if (data == null || data.getFournitureRequise() == null) {
 			throw new IllegalData();
 		}
-		tissuRequis = data.getTissuRequis();
-		if (tissuRequis != null) {
-			longueurLabel.setText(Integer.toString(tissuRequis.getLongueur()));
-			laizeLabel.setText(Integer.toString(tissuRequis.getLaize()));
-			gammePoidsLabel.setText(tissuRequis.getGammePoids());
+		fournitureRequise = data.getFournitureRequise();
+		if (fournitureRequise != null) {
+			longueurLabel.setText(Float.toString(fournitureRequise.getQuantite()));
+			laizeLabel.setText(fournitureRequise.getTypeName());
+			//gammePoidsLabel.setText(tissuRequis.getGammePoids());
 			setVariantsContainer();
 
 		} else {

@@ -45,7 +45,7 @@ public class PlusCardController implements IController{
     @FXML
     public void onClick(){
     	if (! parent.isLocked()) {
-    		initializer.getRoot().displaySelected(data);
+        parent.displaySelected(data);
     	} else {
     		Optional<ButtonType> result = ShowAlert.confirmation(initializer.getPrimaryStage(), "Débloquer",
     				"L'édition est déconseillée pour un projet au statut "+data.getProjet().getProjectStatus(),

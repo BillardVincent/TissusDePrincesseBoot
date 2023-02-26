@@ -2,6 +2,7 @@ package fr.vbillard.tissusdeprincesseboot.controller.projet;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
@@ -13,6 +14,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
@@ -20,6 +22,7 @@ import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
+import fr.vbillard.tissusdeprincesseboot.service.FournitureRequiseService;
 import fr.vbillard.tissusdeprincesseboot.service.ImageService;
 import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuRequisService;
@@ -66,18 +69,20 @@ public class ProjetEditController implements IController {
 
 	private StageInitializer initializer;
 
-	private WorkflowService workflowService;
+	private final WorkflowService workflowService;
 
-	private RootController root;
-	private ProjetService projetService;
-	private TissuRequisService tissuRequisService;
-	private ImageService imageService;
+	private final RootController root;
+	private final ProjetService projetService;
+	private final TissuRequisService tissuRequisService;
+	private final FournitureRequiseService fournitureRequiseService;
+	private final ImageService imageService;
 	private ModelMapper mapper;
 	private Workflow workflow;
 
 	private ProjetDto projet;
 
-	public ProjetEditController(RootController root, ProjetService projetService, TissuRequisService tissuRequisService,
+	public ProjetEditController(RootController root, ProjetService projetService,
+			FournitureRequiseService fournitureRequiseService, TissuRequisService tissuRequisService,
 			ImageService imageService, ModelMapper mapper, WorkflowService workflowService) {
 		this.projetService = projetService;
 		this.tissuRequisService = tissuRequisService;
@@ -85,6 +90,7 @@ public class ProjetEditController implements IController {
 		this.imageService = imageService;
 		this.mapper = mapper;
 		this.workflowService = workflowService;
+		this.fournitureRequiseService = fournitureRequiseService;
 	}
 
 	@Override
@@ -111,9 +117,19 @@ public class ProjetEditController implements IController {
 			FxData data = new FxData();
 			data.setTissuRequis(tr);
 			data.setProjet(projet);
-			Pane element = initializer.displayPane(PathEnum.PROJET_EDIT_LIST_ELEMENT, data);
+			Pane element = initializer.displayPane(PathEnum.PROJET_EDIT_TISSU_LIST_ELEMENT, data);
 			content.getChildren().add(element);
 		}
+		List<FournitureRequiseDto> lstFourniture =
+				fournitureRequiseService.getAllFournitureRequiseDtoByPatron(projet.getPatron().getId());
+		for (FournitureRequiseDto fr : lstFourniture) {
+			FxData data = new FxData();
+			data.setFournitureRequise(fr);
+			data.setProjet(projet);
+			Pane element = initializer.displayPane(PathEnum.PROJET_EDIT_FOURNITURE_LIST_ELEMENT, data);
+			content.getChildren().add(element);
+		}
+
 		scrollContent.setContent(content);
 
 		Optional<Photo> picturePatron = imageService.getImage(mapper.map(projet.getPatron(), Patron.class));
@@ -124,7 +140,7 @@ public class ProjetEditController implements IController {
 		for (FontAwesomeIconView icon : listIcn) {
 			icon.setFill(Color.LIGHTGRAY);
 
-			switch (status) {
+			switch (Objects.requireNonNull(status)) {
 			case BROUILLON:
 				iconeIdee.setFill(Constants.colorSecondary);
 				break;

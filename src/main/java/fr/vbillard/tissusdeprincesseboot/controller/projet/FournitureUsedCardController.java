@@ -9,13 +9,15 @@ import org.springframework.stereotype.Component;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
+import fr.vbillard.tissusdeprincesseboot.model.FournitureUsed;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
-import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
+import fr.vbillard.tissusdeprincesseboot.service.FournitureService;
+import fr.vbillard.tissusdeprincesseboot.service.FournitureUsedService;
 import fr.vbillard.tissusdeprincesseboot.service.ImageService;
-import fr.vbillard.tissusdeprincesseboot.service.TissuUsedService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.ShowAlert;
 import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.Articles;
@@ -37,45 +39,46 @@ public class FournitureUsedCardController implements IController {
 	@FXML
 	private ImageView image;
 
-	private ImageService imageService;
+	private final ImageService imageService;
 
-	private RootController rootController;
+	private final RootController rootController;
 
-	private ModelMapper mapper;
+	private FournitureUsed fournitureUsed;
 
-	private TissuUsed tissuUsed;
+	private final FournitureService fournitureService;
 
-	private TissuDto tissu;
+	private FournitureDto fournitureDto;
 
     private ProjetEditListElementController parent;
 
     private StageInitializer initializer;
 
-    private TissuUsedService tissuUsedService;
+    private final FournitureUsedService fournitureUsedService;
 
-	public FournitureUsedCardController(TissuUsedService tissuUsedService, ImageService imageService, RootController rootController, ModelMapper mapper) {
+	public FournitureUsedCardController(FournitureService fournitureService, FournitureUsedService fournitureUsedService
+			, ImageService imageService, RootController rootController) {
 		this.imageService = imageService;
 		this.rootController = rootController;
-		this.mapper = mapper;
-		this.tissuUsedService = tissuUsedService;
+		this.fournitureUsedService = fournitureUsedService;
+		this.fournitureService = fournitureService;
 	}
 
 	@Override
 	public void setStageInitializer(StageInitializer initializer, FxData data) {
 		this.initializer = initializer;
-		if (data == null || data.getTissuUsed() == null) {
+		if (data == null || data.getFournitureUsed() == null) {
 			throw new IllegalData();
 		}
-		tissuUsed = data.getTissuUsed();
+		fournitureUsed = data.getFournitureUsed();
         parent = (ProjetEditListElementController)data.getParentController();
 
-		tissu = mapper.map(tissuUsed.getTissu(), TissuDto.class);
+		fournitureDto = fournitureService.convert(fournitureUsed.getFourniture());
 		setCardContent();
 	}
 
 	private void setCardContent() {
-		longueur.setText(String.valueOf(tissuUsed.getLongueur()) + " cm");
-		Optional<Photo> pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
+		longueur.setText(fournitureUsed.getQuantite() + fournitureUsed.getRequis().getUnite().getAbbreviation());
+		Optional<Photo> pictures = imageService.getImage(fournitureService.convert(fournitureDto));
 		image.setImage(imageService.imageOrDefault(pictures));
 
 	}
@@ -86,7 +89,8 @@ public class FournitureUsedCardController implements IController {
 			
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("Choisissez");
-			alert.setHeaderText("Que souhaitez vous faire de " + ModelUtils.generateString(EntityToString.TISSU_USED, Articles.DEMONSTRATIF));
+			alert.setHeaderText("Que souhaitez vous faire de " + ModelUtils.generateString(EntityToString.FOURNITURE_USED,
+					Articles.DEMONSTRATIF));
 			alert.initOwner(initializer.getPrimaryStage());
 
 			ButtonType details = new ButtonType("Détails");
@@ -100,11 +104,12 @@ public class FournitureUsedCardController implements IController {
 			Optional<ButtonType> option = alert.showAndWait();
 
 			if (option.get() == details) {
-				rootController.displayTissusDetails(tissu);
+				rootController.displayFournituresDetails(fournitureDto);
 			} else if (option.get() == supprimer) {
-				Optional<ButtonType> confirm = ShowAlert.suppression(initializer.getPrimaryStage(), EntityToString.TISSU_USED, tissuUsed.toString());
+				Optional<ButtonType> confirm = ShowAlert.suppression(initializer.getPrimaryStage(), EntityToString.FOURNITURE_USED,
+						fournitureUsed.toString());
 				if (confirm.isPresent() && ButtonType.OK == confirm.get()) {
-					tissuUsedService.delete(tissuUsed);
+					fournitureUsedService.delete(fournitureUsed);
 					parent.refresh();
 				}
 			

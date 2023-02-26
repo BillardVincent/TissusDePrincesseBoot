@@ -1,6 +1,9 @@
 package fr.vbillard.tissusdeprincesseboot.controller.utils;
 
+import java.sql.CallableStatement;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Component
+@PropertySource("classpath:views.properties")
 @ConfigurationProperties(prefix = FxmlPathProperties.PROPERTY_PREFIX)
 public class FxmlPathProperties {
 
@@ -33,12 +37,14 @@ public class FxmlPathProperties {
 	private Resource patronDetail;
 	private Resource patronEdit;
 	private Resource listElement;
-	private Resource projetEditListElement;
+	private Resource projetEditTissuListElement;
+	private Resource projetEditFournitureListElement;
 	private Resource tissuRequisCard;
 	private Resource tissuUsedCard;
 	private Resource tissuRequisSelected;
 	private Resource plusCard;
 	private Resource longueur;
+	private Resource quantite;
 	private Resource url;
 	private Resource tissuSearch;
 	private Resource projetSearch;
@@ -47,7 +53,6 @@ public class FxmlPathProperties {
 	private Resource preference;
 	private Resource carrousel;
 	private Resource inventaire;
-
 	private Resource fournitureCarrousel;
 	private Resource fournitureSearch;
 	private Resource fournitureRequisCard;

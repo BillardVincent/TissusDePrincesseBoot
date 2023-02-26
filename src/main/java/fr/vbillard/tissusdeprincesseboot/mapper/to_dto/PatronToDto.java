@@ -3,6 +3,7 @@ package fr.vbillard.tissusdeprincesseboot.mapper.to_dto;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.modelmapper.spi.DestinationSetter;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -33,7 +34,8 @@ public class PatronToDto extends TypeMapConfigurer<Patron, PatronDto> {
 
     @Override
     public void configure(TypeMap<Patron, PatronDto> typeMap) {
-		typeMap.addMapping(Patron::getSupportType, (PatronDto d, SupportTypeEnum v) -> d.setTypeSupport(v));
+		typeMap.addMapping(Patron::getSupportType,
+        (DestinationSetter<PatronDto, SupportTypeEnum>) PatronDto::setTypeSupport);
         typeMap.setPostConverter(context -> {
         	List<TissuRequisDto> trLst = null;
         	if (context.getSource().getId() != 0){

@@ -27,7 +27,9 @@ public class TissuRequis extends AbstractRequis<Tissu> {
 	@ManyToOne
 	private Patron patron;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "requis")
 	protected List<TissuVariant> variants;
+
+	private int longueur;
 
 }

@@ -11,6 +11,7 @@ import fr.vbillard.tissusdeprincesseboot.dao.FournitureRequiseDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.FournitureSpecification;
+import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
 import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureRequise;
@@ -46,6 +47,7 @@ public class FournitureRequiseService extends AbstractRequisService<FournitureRe
 				.collect(Collectors.toList());
 	}
 
+	@Transactional
 	public FournitureRequiseDto createOrUpdate(FournitureRequiseDto fourniture, PatronDto patron) {
 		FournitureRequise t = convert(fourniture);
 		t.setPatron(patronService.convert(patron));
@@ -88,40 +90,38 @@ public class FournitureRequiseService extends AbstractRequisService<FournitureRe
 	}
 
 	public FournitureSpecification getFournitureSpecification(FournitureRequiseDto tr) {
-		return getFournitureSpecification(mapper.map(tr));
+		return getFournitureSpecification(convert(tr));
 	}
 
-	public FournitureSpecification getFournitureSpecification(FournitureRequise tr) {
+	public FournitureSpecification getFournitureSpecification(FournitureRequise fr) {
 
 		float marge = userPrefService.getUser().getLongueurMargePercent();
 
-		/*
-		TODO
-		NumericSearch<Integer> longueurSearch = new NumericSearch<Integer>();
-		longueurSearch.setGreaterThanEqual(Math.round(tr.getLongueur() - tr.getLongueur() * marge));
+		NumericSearch<Float> quantiteSearch = new NumericSearch<>();
+		quantiteSearch.setGreaterThanEqual(fr.getQuantite() - fr.getQuantite() * marge);
 
-		NumericSearch<Integer> laizeSearch = new NumericSearch<Integer>();
-		laizeSearch.setGreaterThanEqual(Math.round(tr.getLaize() - tr.getLaize() * marge));
+		List<TypeFourniture> types = new ArrayList<>();
+		types.add(fr.getType());
 
-		NumericSearch<Integer> poidsSearch = calculPoidsTissuService.getNumericSearch(tr.getGammePoids());
+		NumericSearch<Float> quantiteSecondaire = null;
 
+		if (fr.getType().getDimensionSecondaire() != null){
+			quantiteSecondaire = new NumericSearch<>();
+			quantiteSecondaire.setGreaterThanEqual(fr.getQuantiteSecMin());
+			quantiteSecondaire.setLessThanEqual(fr.getQuantiteSecMax());
+		}
 
-		 */
-		List<TypeFourniture> types = new ArrayList<TypeFourniture>();
-
-		return FournitureSpecification.builder().type(types).build();
+		return FournitureSpecification.builder().type(types).quantite(quantiteSearch).quantiteSecondaire(quantiteSecondaire).build();
 	}
 
 	@Override
 	public FournitureRequise convert(FournitureRequiseDto dto) {
-		FournitureRequise result =  mapper.map(dto);
-		return result;
+		return mapper.map(dto);
 	}
 
 	@Override
 	public FournitureRequiseDto convert(FournitureRequise entity) {
-		FournitureRequiseDto dto = mapper.map(entity);
-		return dto;
+		return mapper.map(entity);
 	}
 
 	@Override

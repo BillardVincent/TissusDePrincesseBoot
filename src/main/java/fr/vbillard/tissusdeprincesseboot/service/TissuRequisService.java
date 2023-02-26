@@ -24,10 +24,10 @@ import javafx.collections.ObservableList;
 
 public class TissuRequisService extends AbstractRequisService<TissuRequis, Tissu, TissuRequisDto>{
 
-	private TissusRequisDao tissuRequisDao;
-	private UserPrefService userPrefService;
-	private CalculPoidsTissuService calculPoidsTissuService;
-	private TissuVariantService tvs;
+	private final TissusRequisDao tissuRequisDao;
+	private final UserPrefService userPrefService;
+	private final CalculPoidsTissuService calculPoidsTissuService;
+	private final TissuVariantService tvs;
 
 	
 	
@@ -91,7 +91,7 @@ public class TissuRequisService extends AbstractRequisService<TissuRequis, Tissu
 		float marge = userPrefService.getUser().getLongueurMargePercent();
 
 		NumericSearch<Integer> longueurSearch = new NumericSearch<Integer>();
-		longueurSearch.setGreaterThanEqual(Math.round(tr.getQuantite() - tr.getQuantite() * marge));
+		longueurSearch.setGreaterThanEqual(Math.round(tr.getLongueur() - tr.getLongueur() * marge));
 
 		NumericSearch<Integer> laizeSearch = new NumericSearch<Integer>();
 		laizeSearch.setGreaterThanEqual(Math.round(tr.getLaize() - tr.getLaize() * marge));

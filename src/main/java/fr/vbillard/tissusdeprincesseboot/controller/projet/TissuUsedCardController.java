@@ -37,11 +37,11 @@ public class TissuUsedCardController implements IController {
 	@FXML
 	private ImageView image;
 
-	private ImageService imageService;
+	private final ImageService imageService;
 
-	private RootController rootController;
+	private final RootController rootController;
 
-	private ModelMapper mapper;
+	private final ModelMapper mapper;
 
 	private TissuUsed tissuUsed;
 
@@ -51,7 +51,7 @@ public class TissuUsedCardController implements IController {
     
     private StageInitializer initializer;
     
-    private TissuUsedService tissuUsedService;
+    private final TissuUsedService tissuUsedService;
 
 	public TissuUsedCardController(TissuUsedService tissuUsedService, ImageService imageService, RootController rootController, ModelMapper mapper) {
 		this.imageService = imageService;
@@ -74,7 +74,7 @@ public class TissuUsedCardController implements IController {
 	}
 
 	private void setCardContent() {
-		longueur.setText(String.valueOf(tissuUsed.getLongueur()) + " cm");
+		longueur.setText(tissuUsed.getLongueur() + " cm");
 		Optional<Photo> pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
 		image.setImage(imageService.imageOrDefault(pictures));
 
@@ -99,18 +99,16 @@ public class TissuUsedCardController implements IController {
 
 			Optional<ButtonType> option = alert.showAndWait();
 
-			if (option.get() == details) {
+			if (option.isPresent() && option.get() == details) {
 				rootController.displayTissusDetails(tissu);
-			} else if (option.get() == supprimer) {
+			} else if (option.isPresent() && option.get() == supprimer) {
 				Optional<ButtonType> confirm = ShowAlert.suppression(initializer.getPrimaryStage(), EntityToString.TISSU_USED, tissuUsed.toString());
 				if (confirm.isPresent() && ButtonType.OK == confirm.get()) {
 					tissuUsedService.delete(tissuUsed);
 					parent.refresh();
 				}
 			
-			} 
-
-			
+			}
 		}
 	}
 }

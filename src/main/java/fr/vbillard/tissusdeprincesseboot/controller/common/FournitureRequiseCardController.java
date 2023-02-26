@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
@@ -25,7 +26,7 @@ public class FournitureRequiseCardController implements IController {
 	private Label variantsLabel;
 
 	private StageInitializer initializer;
-	private TissuRequisDto tissuRequis;
+	private FournitureRequiseDto fournitureRequise;
 
 	private RootController rootController;
 
@@ -35,18 +36,19 @@ public class FournitureRequiseCardController implements IController {
 		this.rootController = rootController;
 	}
 
+	/////////// TODO ////////////////////////
 	@Override
 	public void setStageInitializer(StageInitializer initializer, FxData data) {
 		this.initializer = initializer;
-		if (data == null || data.getTissuRequis() == null) {
+		if (data == null || data.getFournitureRequise() == null) {
 			throw new IllegalData();
 		}
-		tissuRequis = data.getTissuRequis();
-		if (tissuRequis != null) {
-			longueurLabel.setText(Integer.toString(tissuRequis.getLongueur()) + " cm");
-			laizeLabel.setText(Integer.toString(tissuRequis.getLaize()) + " cm");
-			gammePoidsLabel.setText(tissuRequis.getGammePoids());
-			variantsLabel.setText(StringUtils.join(tissuRequis.getVariant(), " - "));
+		fournitureRequise = data.getFournitureRequise();
+		if (fournitureRequise != null) {
+			longueurLabel.setText(Float.toString(fournitureRequise.getQuantite()) + " cm");
+			laizeLabel.setText("TODO"+ " cm");
+			gammePoidsLabel.setText("TODO");
+			variantsLabel.setText("TODO");
 
 		} else {
 			longueurLabel.setText("");

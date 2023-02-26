@@ -15,8 +15,7 @@ public abstract class AbstractRequis<T> extends AbstractEntity{
 	
 	@ManyToOne
 	protected Patron patron;
-	protected long quantite;
-	
+
 	public abstract List<? extends AbstractVariant<T>> getVariants();
 
 

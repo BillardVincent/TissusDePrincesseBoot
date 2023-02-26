@@ -1,18 +1,13 @@
 package fr.vbillard.tissusdeprincesseboot.dtos_fx;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
 
 public class TissuRequisDto extends AbstractRequisDto<TissuRequis, Tissu>{
 

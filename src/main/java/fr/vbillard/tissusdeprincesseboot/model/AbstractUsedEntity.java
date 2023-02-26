@@ -11,10 +11,6 @@ import lombok.Setter;
 @Setter
 public abstract class AbstractUsedEntity<T> extends AbstractEntity{
 	
-
-	@ManyToOne
-	protected T tissu;
-	
 	public abstract AbstractRequis<T> getRequis();
 
 }

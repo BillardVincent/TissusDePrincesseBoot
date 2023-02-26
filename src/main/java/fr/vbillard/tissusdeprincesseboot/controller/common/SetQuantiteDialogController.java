@@ -1,13 +1,11 @@
 package fr.vbillard.tissusdeprincesseboot.controller.common;
 
-import com.jfoenix.controls.JFXTextField;
-
-import static fr.vbillard.tissusdeprincesseboot.utils.FxUtils.*;
-
+import static fr.vbillard.tissusdeprincesseboot.utils.FxUtils.floatFromJFXTextField;
+import static fr.vbillard.tissusdeprincesseboot.utils.FxUtils.intFromJFXTextField;
 
 import org.springframework.stereotype.Component;
-
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IModalController;
@@ -20,13 +18,13 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 @Component
-public class SetLongueurDialogController implements IModalController {
+public class SetQuantiteDialogController implements IModalController {
 	private Stage dialogStage;
-	private int required;
-	private int available;
+	private float required;
+	private float available;
 	private FxData result;
-	private int longueur;
-	private int value;
+	private float longueur;
+	private float value;
 	private StageInitializer initializer;
 
 	@FXML
@@ -44,12 +42,12 @@ public class SetLongueurDialogController implements IModalController {
 
 	@FXML
 	private void initialize() {
-		longueurValue.setTextFormatter(CustomSpinner.getFormatter());
+		longueurValue.setTextFormatter(CustomSpinner.getLongFormatter());
 	}
 
 	@FXML
 	public void handleValidate() {
-		value = intFromJFXTextField(longueurValue);
+		value = floatFromJFXTextField(longueurValue);
 		if (value > available) {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.initOwner(initializer.getPrimaryStage());
@@ -66,13 +64,13 @@ public class SetLongueurDialogController implements IModalController {
 			alert.showAndWait();
 		} else {
 			result = new FxData();
-			result.setLongueurRequise(value);
+			result.setQuantiteRequise(value);
 			dialogStage.close();
 		}
 
 	}
 
-	public SetLongueurDialogController(StageInitializer initializer) {
+	public SetQuantiteDialogController(StageInitializer initializer) {
 		this.initializer = initializer;
 	}
 
@@ -83,7 +81,7 @@ public class SetLongueurDialogController implements IModalController {
 
 	@FXML
 	public void handleAuto() {
-		longueurValue.setText(Integer.toString(Math.min(required, available)));
+		longueurValue.setText(Float.toString(Math.min(required, available)));
 	}
 
 	@Override
@@ -96,10 +94,13 @@ public class SetLongueurDialogController implements IModalController {
 	public void setStage(Stage dialogStage, FxData data) {
 		this.dialogStage = dialogStage;
 		this.longueur = 0;
-		this.required = data.getLongueurRequise();
-		this.available = data.getTissu().getLongueur();
-		requisLabel.setText(required + "cm");
-		dispoLabel.setText(available + "cm");
+			this.required = data.getQuantiteRequise();
+
+			this.available = data.getFourniture().getQuantite();
+			requisLabel.setText(required + data.getFourniture().getUnite());
+			dispoLabel.setText(available + data.getFourniture().getUnite());
+
+
 
 		longueurValue.setText("0");
 

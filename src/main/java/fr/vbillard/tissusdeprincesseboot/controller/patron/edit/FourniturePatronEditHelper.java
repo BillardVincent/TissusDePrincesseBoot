@@ -34,7 +34,7 @@ import javafx.scene.layout.HBox;
 public class FourniturePatronEditHelper extends
     PatronEditHelper<Fourniture, FournitureVariant, FournitureRequise, FournitureUsed, FournitureDto, FournitureVariantDto, FournitureRequiseDto> {
 
-  private TypeFournitureService typeFournitureService;
+  private final TypeFournitureService typeFournitureService;
 
   public FourniturePatronEditHelper(PatronService patronService, TypeFournitureService typeFournitureService,
       FournitureRequiseService requisService,
@@ -150,7 +150,7 @@ public class FourniturePatronEditHelper extends
 
       dto.setUniteSecondaire(Unite.getEnum(uniteSecChBx.getValue()));
       dto.setQuantiteSecondaireMin(Float.parseFloat(dimensionMinSpinner.getText()));
-      dto.setQuantiteSecondaireMax(Float.parseFloat(dimensionPrincipaleSpinner.getText()));
+      dto.setQuantiteSecondaireMax(Float.parseFloat(dimensionMaxSpinner.getText()));
 
       saveRequis(dto, patron);
     });

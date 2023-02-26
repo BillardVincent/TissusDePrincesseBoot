@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import fr.vbillard.tissusdeprincesseboot.controller.InventaireBatchController;
 import fr.vbillard.tissusdeprincesseboot.controller.PreferenceController;
 import fr.vbillard.tissusdeprincesseboot.controller.RootController;
+import fr.vbillard.tissusdeprincesseboot.controller.common.FournitureRequiseCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.common.FournitureRequiseSelectedController;
+import fr.vbillard.tissusdeprincesseboot.controller.common.SetQuantiteDialogController;
 import fr.vbillard.tissusdeprincesseboot.controller.common.TissuRequisCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.common.TissuRequisSelectedController;
 import fr.vbillard.tissusdeprincesseboot.controller.caracteristique.MatiereEditController;
@@ -49,7 +51,6 @@ public class PathService {
 	
 	private final FxmlPathProperties pathProperties;
 	
-	
 	public PathService(FxmlPathProperties pathProperties) {
 		super();
 		this.pathProperties = pathProperties;
@@ -90,10 +91,13 @@ public class PathService {
 			return new PathHolder(pathProperties.getListElement().getURL(), ListElementController.class);
 		case TISSU_REQUIS:
 			return new PathHolder(pathProperties.getTissuRequisCard().getURL(), TissuRequisCardController.class);
-		case PROJET_EDIT_LIST_ELEMENT:
-			return new PathHolder(pathProperties.getProjetEditListElement().getURL(),
+		case PROJET_EDIT_TISSU_LIST_ELEMENT:
+			return new PathHolder(pathProperties.getProjetEditTissuListElement().getURL(),
 					ProjetEditListElementController.class);
-		case TISSU_USED_CARD:
+			case PROJET_EDIT_FOURNITURE_LIST_ELEMENT:
+				return new PathHolder(pathProperties.getProjetEditFournitureListElement().getURL(),
+						ProjetEditListElementController.class);
+				case TISSU_USED_CARD:
 			return new PathHolder(pathProperties.getTissuUsedCard().getURL(), TissuUsedCardController.class);
 		case TISSU_REQUIS_SELECTED:
 			return new PathHolder(pathProperties.getTissuRequisSelected().getURL(),
@@ -138,7 +142,11 @@ public class PathService {
 				return new PathHolder(pathProperties.getTypeFournitureEdit().getURL(), TypeFournitureEditController.class);
 			case FOURNITURE_SEARCH:
 				return new PathHolder(pathProperties.getFournitureSearch().getURL(), FournitureSearchController.class);
-			default:
+			case FOURNITURE_REQUIS_CARD:
+				return new PathHolder(pathProperties.getFournitureRequisCard().getURL(), FournitureRequiseCardController.class);
+			case SET_QUANTITE:
+				return new PathHolder(pathProperties.getQuantite().getURL(), SetQuantiteDialogController.class);
+				default:
 			break;
 
 		}

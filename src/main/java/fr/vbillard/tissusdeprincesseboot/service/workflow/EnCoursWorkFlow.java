@@ -30,10 +30,10 @@ import javafx.scene.control.ButtonType;
 @Scope("prototype")
 public class EnCoursWorkFlow extends Workflow {
 
-	private TissuUsedService tissuUsedService;
-	private TissuService tissuService;
-	private InventaireService inventaireService;
-	private StageInitializer stage;
+	private final TissuUsedService tissuUsedService;
+	private final TissuService tissuService;
+	private final InventaireService inventaireService;
+	private final StageInitializer stage;
 
 	@Autowired
 	public EnCoursWorkFlow(StageInitializer stage, InventaireService inventaireService, ProjetService projetService, TissuUsedService tissuUsedService, TissuService tissuService) {

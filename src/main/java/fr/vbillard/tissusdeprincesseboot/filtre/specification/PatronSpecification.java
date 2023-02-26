@@ -111,7 +111,7 @@ public class PatronSpecification implements Specification<Patron> {
 
 		if (longueur != null) {
 			predicateList.add(SpecificationUtils.getNumericSearchPredicate(longueur,
-					joins.joinTissuRequis(patron).get(TissuRequis_.QUANTITE), cb));
+					joins.joinTissuRequis(patron).get(TissuRequis_.LONGUEUR), cb));
 		}
 
 		if (laize != null) {

@@ -48,7 +48,7 @@ public abstract class Workflow {
 	 * @param projet
 	 */
 	@Transactional
-	public final void nextStep(Projet projet) {
+	public void nextStep(Projet projet) {
 		ErrorWarn errors = verifyNextStep();
 		if (isNextPossible() && errors.getError().isEmpty() && warnAlert(errors.getWarn())) {
 				doNextStep();
@@ -75,7 +75,7 @@ public abstract class Workflow {
 	public abstract boolean isCancelPossible();
 	
 	@Transactional
-	public final void cancel(Projet projet) {
+	public void cancel(Projet projet) {
 		ErrorWarn errors = verifyNextStep();
 		if (isCancelPossible() && errors.getError().isEmpty() && warnAlert(errors.getWarn())) {
 			doCancel();
@@ -93,7 +93,7 @@ public abstract class Workflow {
 	public abstract boolean isDeletePossible();
 
 	@Transactional
-	public final void delete(Projet projet) {
+	public void delete(Projet projet) {
 		ErrorWarn errors = verifyDelete();
 		if (isDeletePossible() && errors.getError().isEmpty() && warnAlert(errors.getWarn())) {
 			doDelete();
@@ -111,7 +111,7 @@ public abstract class Workflow {
 	public abstract boolean isArchivePossible();
 	
 	@Transactional
-	public final void archive(Projet projet) {
+	public void archive(Projet projet) {
 		ErrorWarn errors = verifyArchive();
 		if (isArchivePossible() && errors.getError().isEmpty() && warnAlert(errors.getWarn())) {
 			doArchive();
@@ -152,7 +152,7 @@ public abstract class Workflow {
 		this.projet = projet;
 	}
 	
-	protected ErrorWarn nonAutorisé() {
+	protected ErrorWarn nonAutorise() {
 		ErrorWarn errorwarn = new ErrorWarn();
 		errorwarn.addError(NON_AUTORISE);
 		return errorwarn;

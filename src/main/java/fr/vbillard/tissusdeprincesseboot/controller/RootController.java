@@ -19,15 +19,22 @@ import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.fx_custom_element.CustomIcon;
+import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
+import fr.vbillard.tissusdeprincesseboot.model.FournitureRequise;
+import fr.vbillard.tissusdeprincesseboot.model.FournitureUsed;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
+import fr.vbillard.tissusdeprincesseboot.service.FournitureRequiseService;
+import fr.vbillard.tissusdeprincesseboot.service.FournitureService;
+import fr.vbillard.tissusdeprincesseboot.service.FournitureUsedService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuRequisService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuUsedService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
@@ -73,18 +80,26 @@ public class RootController implements IController {
 	private StageInitializer initializer;
 	private TissuRequisDto tissuRequisSelected;
 	private ProjetDto projetSelected;
-	private FournitureDto fournitureRequiseSelected;
-	private TissuUsedService tissuUsedService;
-	private ModelMapper mapper;
+	private FournitureRequiseDto fournitureRequiseSelected;
+	private final TissuUsedService tissuUsedService;
+	private final ModelMapper mapper;
 	private CustomIcon customIcon;
-	private TissuRequisService tissuRequisService;
+	private final TissuRequisService tissuRequisService;
+	private final FournitureRequiseService fournitureRequiseService;
+	private final FournitureUsedService fournitureUsedService;
+	private final FournitureService fournitureService;
 
-	public RootController(TissuUsedService tissuUsedService, ModelMapper mapper, CustomIcon customIcon,
-			TissuRequisService tissuRequisService) {
+	public RootController(FournitureService fournitureService, FournitureUsedService fournitureUsedService,
+			TissuUsedService tissuUsedService,
+			ModelMapper mapper, CustomIcon customIcon,
+			TissuRequisService tissuRequisService, FournitureRequiseService fournitureRequiseService) {
 		this.tissuUsedService = tissuUsedService;
 		this.mapper = mapper;
 		this.customIcon = customIcon;
 		this.tissuRequisService = tissuRequisService;
+		this.fournitureRequiseService = fournitureRequiseService;
+		this.fournitureUsedService = fournitureUsedService;
+		this.fournitureService = fournitureService;
 		
 		logger.info("Lancement de l'application");
 	}
@@ -203,11 +218,25 @@ public class RootController implements IController {
 	}
 
 	public void displaySelected(FxData fxData) {
-		tissuRequisSelected = fxData.getTissuRequis();
 		projetSelected = fxData.getProjet();
-		selectedElement.getChildren().add(initializer.displayPane(PathEnum.TISSU_REQUIS_SELECTED, fxData));
+
 		beforeDisplay(tissuMenu);
+		tissuRequisSelected = fxData.getTissuRequis();
+		selectedElement.getChildren().add(initializer.displayPane(PathEnum.TISSU_REQUIS_SELECTED, fxData));
 		mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSUS));
+
+		deleteSelectedButton.setVisible(true);
+		researchButton.setVisible(true);
+	}
+
+	public void displayFournitureSelected(FxData fxData) {
+		projetSelected = fxData.getProjet();
+
+		beforeDisplay(fournitureMenu);
+		fournitureRequiseSelected = fxData.getFournitureRequise();
+		selectedElement.getChildren().add(initializer.displayPane(PathEnum.FOURNITURE_REQUIS_SELECTED, fxData));
+		mainWindow.getChildren().add(initializer.displayPane(PathEnum.FOURNITURES));
+
 		deleteSelectedButton.setVisible(true);
 		researchButton.setVisible(true);
 	}
@@ -217,6 +246,7 @@ public class RootController implements IController {
 		deleteSelectedButton.setVisible(false);
 		researchButton.setVisible(false);
 		tissuRequisSelected = null;
+		fournitureRequiseSelected = null;
 		projetSelected = null;
 		selectedElement.getChildren().clear();
 	}
@@ -275,23 +305,22 @@ public class RootController implements IController {
 		deleteSelected();
 	}
 	
-	public void addToSelected(FournitureDto tissuSelected) {
-		// TODO passer avec un fournitureRequiseSelected
-		int longueurRequiseRestante = tissuRequisSelected.getLongueur();
-		if (projetSelected.getTissuUsed() != null && projetSelected.getTissuUsed().get(tissuRequisSelected) != null) {
-			for (int id : projetSelected.getTissuUsed().get(tissuRequisSelected)) {
-				longueurRequiseRestante -= tissuUsedService.getById(id).getLongueur();
+	public void addToSelected(FournitureDto fournitureSelected) {
+		float longueurRequiseRestante = fournitureRequiseSelected.getQuantite();
+		if (projetSelected.getTissuUsed() != null && projetSelected.getFournitureUsed().get(fournitureRequiseSelected) != null) {
+			for (int id : projetSelected.getFournitureUsed().get(fournitureRequiseSelected)) {
+				longueurRequiseRestante -= fournitureUsedService.getById(id).getQuantite();
 			}
 		}
 
-		FxData data = displaySetQuantiteDialog(longueurRequiseRestante, tissuSelected);
+		FxData data = displaySetQuantiteDialog(longueurRequiseRestante, fournitureSelected);
 
-		TissuUsed tissuUsed = new TissuUsed();
-		tissuUsed.setProjet(mapper.map(projetSelected, Projet.class));
-		tissuUsed.setRequis(mapper.map(tissuRequisSelected, TissuRequis.class));
-		tissuUsed.setTissu(mapper.map(tissuSelected, Tissu.class));
-		tissuUsed.setLongueur(data.getLongueurRequise());
-		tissuUsedService.saveOrUpdate(tissuUsed);
+		FournitureUsed fournitureUsed = new FournitureUsed();
+		fournitureUsed.setProjet(mapper.map(projetSelected, Projet.class));
+		fournitureUsed.setRequis(mapper.map(fournitureRequiseSelected, FournitureRequise.class));
+		fournitureUsed.setFourniture(fournitureService.convert(fournitureSelected));
+		fournitureUsed.setQuantite(data.getLongueurRequise());
+		fournitureUsedService.saveOrUpdate(fournitureUsed);
 
 		displayProjetEdit(projetSelected);
 		deleteSelected();
@@ -304,17 +333,19 @@ public class RootController implements IController {
 		return initializer.displayModale(PathEnum.SET_LONGUEUR, fxData, Strings.EMPTY);
 	}
 	
-	private FxData displaySetQuantiteDialog(int quantiteRequiseRestante, FournitureDto fournitureSelected) {
+	private FxData displaySetQuantiteDialog(float quantiteRequiseRestante, FournitureDto fournitureSelected) {
 		FxData fxData = new FxData();
-		fxData.setLongueurRequise(quantiteRequiseRestante);
+		fxData.setQuantiteRequise(quantiteRequiseRestante);
 		fxData.setFourniture(fournitureSelected);
-		return initializer.displayModale(PathEnum.SET_LONGUEUR, fxData, Strings.EMPTY);
+		return initializer.displayModale(PathEnum.SET_QUANTITE, fxData, Strings.EMPTY);
 	}
 
 	@FXML
 	private void createResearch() {
 		if (tissuRequisSelected != null) {
 			displayTissu(tissuRequisService.getTissuSpecification(tissuRequisSelected));
+		} else if (fournitureRequiseSelected != null){
+			displayFourniture(fournitureRequiseService.getFournitureSpecification(fournitureRequiseSelected));
 		}
 	}
 

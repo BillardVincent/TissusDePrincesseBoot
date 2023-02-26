@@ -119,6 +119,7 @@ public abstract class PatronEditHelper<E extends AbstractEntity, EV extends Abst
 		DTOR returned = requisService.createOrUpdate(requis, patron);
 		if (!edit) {
 			addToPatron(requis, patron);
+			patronService.saveOrUpdate(patron);
 		}
 		loadRequisForPatron();
 		displayRequis(returned);

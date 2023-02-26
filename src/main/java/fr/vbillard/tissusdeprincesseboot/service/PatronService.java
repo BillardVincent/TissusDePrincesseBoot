@@ -83,7 +83,7 @@ public class PatronService extends AbstractDtoService<Patron, PatronDto> {
 		}
 		return FXCollections.emptyObservableList();
 	}
-
+	@Transactional
 	public PatronDto saveOrUpdate(PatronDto dto) {
 		Patron patron = mapper.map(dto, Patron.class);
 		patron = saveOrUpdate(patron);

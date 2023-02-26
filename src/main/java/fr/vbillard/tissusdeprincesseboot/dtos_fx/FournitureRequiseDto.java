@@ -1,5 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.dtos_fx;
 
+import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureRequise;
 import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
@@ -10,7 +11,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class FournitureRequiseDto implements FxDto<FournitureRequise> {
+public class FournitureRequiseDto extends AbstractRequisDto<FournitureRequise, Fourniture> {
 
 
 	private IntegerProperty id;

@@ -4,7 +4,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane prefHeight="170.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetEditListElementController">
+<Pane prefHeight="170.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetEditTissuListElementController">
    <children>
       <HBox fx:id="hbox" layoutX="10.0" layoutY="7.0" prefHeight="150.0" prefWidth="1484.0" spacing="10.0" styleClass="card">
          <opaqueInsets>

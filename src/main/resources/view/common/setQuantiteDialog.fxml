@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="267.0" prefWidth="448.0" stylesheets="@../../style/style.css"
+            xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="fr.vbillard.tissusdeprincesseboot.controller.common.SetQuantiteDialogController">
+   <children>
+      <Label layoutX="137.0" layoutY="60.0" text="Requis" />
+      <Label fx:id="requisLabel" layoutX="137.0" layoutY="88.0" text="Label" />
+      <Label layoutX="80.0" layoutY="154.0" text="Modifiez:" />
+      <JFXButton layoutX="172.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleValidate" text="Valider" />
+      <JFXButton layoutX="287.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleCancel" text="Annuler" />
+      <JFXTextField fx:id="longueurValue" layoutX="170.0" layoutY="149.0" prefHeight="26.0" prefWidth="112.0" />
+      <Label layoutX="254.0" layoutY="60.0" text="Disponible" />
+      <Label fx:id="dispoLabel" layoutX="257.0" layoutY="88.0" text="Label" />
+      <JFXButton fx:id="auto" layoutX="345.0" layoutY="150.0" mnemonicParsing="false" onAction="#handleAuto" text="Auto" />
+      <Label layoutX="282.0" layoutY="163.0" text="cm" />
+   </children>
+</AnchorPane>

@@ -1,73 +1,71 @@
 package fr.vbillard.tissusdeprincesseboot.controller.projet;
 
 import java.util.List;
+import java.util.Objects;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.AbstractRequisDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
-import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
+import fr.vbillard.tissusdeprincesseboot.model.AbstractEntity;
+import fr.vbillard.tissusdeprincesseboot.model.AbstractRequis;
+import fr.vbillard.tissusdeprincesseboot.model.AbstractUsedEntity;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
-import fr.vbillard.tissusdeprincesseboot.service.TissuUsedService;
+import fr.vbillard.tissusdeprincesseboot.service.AbstractUsedService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.path.PathEnum;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
-@Component
-@Scope("prototype")
-public class ProjetEditListElementController implements IController {
+public abstract class ProjetEditListElementController <T extends AbstractRequisDto<W, X>,
+		U extends AbstractUsedEntity<X>, V extends AbstractUsedService<U, X>, W extends AbstractRequis<X>,
+		X extends AbstractEntity> implements IController {
 
 	@FXML
-	private HBox hbox;
+	protected HBox hbox;
 
-	private StageInitializer initializer;
+	protected StageInitializer initializer;
 
-	private TissuRequisDto tissuRequis;
-	private List<TissuUsed> lstTissus;
-	private TissuUsedService tissuUsedService;
-	private FxData data;
-	private boolean lock;
+	protected T dtoRequis;
+	protected List<U> lstTissus;
+	protected final V tissuUsedService;
+	protected FxData data;
+	protected boolean lock;
 	
 	public boolean isLocked() {
 		return lock;
 	}
 
-	public ProjetEditListElementController(TissuUsedService tissuUsedService) {
+	public ProjetEditListElementController(V tissuUsedService) {
 		this.tissuUsedService = tissuUsedService;
 	}
 
 	@Override
 	public void setStageInitializer(StageInitializer initializer, FxData data) {
 		this.initializer = initializer;
-		if (data == null || data.getTissuRequis() == null || data.getProjet() == null) {
+		if (data == null || requisFromData(data) == null || data.getProjet() == null) {
 			throw new IllegalData();
 		}
 		this.data = data;
-		tissuRequis = data.getTissuRequis();
+		dtoRequis = requisFromData(data);
 
 		refresh();
 	}
 
+	protected abstract T requisFromData(FxData data);
+
 	private void setPane() {
 		hbox.getChildren().clear();
 		data.setParentController(this);
-		Pane tr = initializer.displayPane(PathEnum.TISSU_REQUIS, data);
+		Pane tr = initializer.displayPane(getPathEnumRequis(), data);
 		hbox.getChildren().add(tr);
 
-		for (TissuUsed tissu : lstTissus) {
+		for (U tissu : lstTissus) {
 			FxData subData = new FxData();
 			subData.setParentController(this);
-			subData.setTissuRequis(tissuRequis);
-			subData.setTissuUsed(tissu);
-			Pane tu = initializer.displayPane(PathEnum.TISSU_USED_CARD, subData);
+			setSubData(subData, tissu);
+			Pane tu = initializer.displayPane(getPathEnumUsed(), subData);
 			hbox.getChildren().add(tu);
 		}
 
@@ -75,10 +73,16 @@ public class ProjetEditListElementController implements IController {
 		hbox.getChildren().add(plusCard);
 
 	}
-	
+
+	protected abstract PathEnum getPathEnumUsed();
+
+	protected abstract void setSubData(FxData subData, U tissu);
+
+	protected abstract PathEnum getPathEnumRequis();
+
 	public void initLock(){
 		ProjectStatus status = ProjectStatus.getEnum(data.getProjet().getProjectStatus());
-        switch(status) {
+        switch(Objects.requireNonNull(status)) {
         case ABANDONNE:
         case TERMINE:
         case EN_COURS:
@@ -97,8 +101,12 @@ public class ProjetEditListElementController implements IController {
 	}
 
 	public void refresh() {
-		lstTissus = tissuUsedService.getTissuUsedByTissuRequisAndProjet(tissuRequis, data.getProjet());
+		lstTissus = refreshLst();
 		initLock();
 		setPane();		
 	}
+
+	protected abstract List<U> refreshLst();
+
+	public abstract void displaySelected(FxData data);
 }

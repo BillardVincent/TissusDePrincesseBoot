@@ -35,19 +35,19 @@ public class AbandonneWorkFlow extends Workflow {
 
 	@Override
 	protected ErrorWarn verifyNextStep() {
-		return nonAutorisé();
+		return nonAutorise();
 
 	}
 
 	@Override
 	protected ErrorWarn verifyCancel() {
-		return nonAutorisé();
+		return nonAutorise();
 
 	}
 
 	@Override
 	protected ErrorWarn verifyDelete() {
-		return nonAutorisé();
+		return nonAutorise();
 
 	}
 
@@ -59,7 +59,7 @@ public class AbandonneWorkFlow extends Workflow {
 
 	@Override
 	protected ErrorWarn verifyArchive() {
-		return nonAutorisé();
+		return nonAutorise();
 
 	}
 

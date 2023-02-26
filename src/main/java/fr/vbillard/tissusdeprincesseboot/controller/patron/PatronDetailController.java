@@ -41,12 +41,12 @@ public class PatronDetailController implements IController {
 	@FXML
 	private TilePane listFournitures;
 
-	private RootController rootController;
+	private final RootController rootController;
 	private StageInitializer initializer;
 	private PatronDto patron;
 
-	private ProjetService projetService;
-	private PatronPictureHelper pictureUtils;
+	private final ProjetService projetService;
+	private final PatronPictureHelper pictureUtils;
 
 	PatronDetailController(PatronPictureHelper pictureUtils, RootController rootController,
 			ProjetService projetService) {
