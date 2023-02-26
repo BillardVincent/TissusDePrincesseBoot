@@ -2,6 +2,8 @@ package fr.vbillard.tissusdeprincesseboot.service;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
@@ -18,6 +20,7 @@ public abstract class AbstractRequisService<T extends AbstractRequis<U>, U exten
 	  this.mapper = mapper;
   }
 
+  @Transactional
   public V createOrUpdate(V tissu, PatronDto patron) {
     T t = convert(tissu);
     t.setPatron(mapper.map(patron));

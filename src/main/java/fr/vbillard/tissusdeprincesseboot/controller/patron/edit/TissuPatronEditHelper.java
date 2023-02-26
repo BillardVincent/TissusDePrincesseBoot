@@ -103,8 +103,6 @@ public class TissuPatronEditHelper extends PatronEditHelper<Tissu, TissuVariant,
 			displayRequis(requis);
 		});
 
-
-
 		return new HBox(typeField, matiereField, tissageField, addTvBtn);
 	}
 

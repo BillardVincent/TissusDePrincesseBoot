@@ -9,29 +9,36 @@
 <?import javafx.scene.layout.VBox?>
 
 <Pane prefHeight="194.0" prefWidth="284.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-	  fx:controller="fr.vbillard.tissusdeprincesseboot.controller.common.FournitureRequiseCardController">
+	  fx:controller="fr.vbillard.tissusdeprincesseboot.controller.common.FournitureRequiseSelectedController">
 	<children>
 		<VBox layoutX="-1.0" layoutY="-1.0" prefHeight="190.0" prefWidth="282.0" stylesheets="@../../style/style.css">
 			<children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="275.0" styleClass="title1" text="Tissu requis" />
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="275.0" styleClass="title1"
+				   text="Fourniture Requise" />
 				<HBox alignment="CENTER" prefHeight="44.0" prefWidth="260.0" spacing="5.0">
 					<children>
                   <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="90.0" text="Longueur" />
-      						<Label fx:id="longueurLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="89.0" text="valuer lo." textAlignment="CENTER" />
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="90.0"
+							   text="Type" />
+      						<Label fx:id="typeLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0"
+								   prefWidth="89.0" text="valuer lo." textAlignment="CENTER" />
                      </children>
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="90.0" text="Laize" />
-      						<Label fx:id="laizeLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="89.0" text="valeur la." />
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="90.0"
+							   text="Quantité" fx:id="uniteLabel"/>
+      						<Label fx:id="quantiteLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0"
+								   prefWidth="89.0" text="valeur la." />
                      </children>
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="90.0" text="Poids" />
-      						<Label fx:id="gammePoidsLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="87.0" text="valeur P." textAlignment="CENTER" />
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="90.0"
+							   fx:id="uniteSecLabel" />
+      						<Label fx:id="quantiteSecLabel" alignment="CENTER" contentDisplay="CENTER"
+								   prefHeight="14.0" prefWidth="87.0" text="valeur P." textAlignment="CENTER" />
                      </children>
                   </VBox>
 					</children>

@@ -67,17 +67,16 @@ public abstract class PatronEditHelper<E extends AbstractEntity, EV extends Abst
 
 		tissuEtFournitureContainer.getChildren().clear();
 		tvList = FXCollections.observableArrayList(new ArrayList<DTOV>());
-		List<Node> children = tissuEtFournitureContainer.getChildren();
 		String labelText = EntityToString.getByEntity(getEntityClass()).getLabel() + " recommandés : ";
 
-		children.add(new Label(labelText));
+		tissuEtFournitureContainer.getChildren().add(new Label(labelText));
 
 		GridPane topGrid = new GridPane();
 		topGrid.setVgap(10);
 		topGrid.setHgap(20);
 
 		topGrid.setPadding(new Insets(10, 0, 10, 0));
-		children.add(topGrid);
+		tissuEtFournitureContainer.getChildren().add(topGrid);
 
 		JFXButton validateBtn = new JFXButton("Valider");
 		
@@ -94,13 +93,13 @@ public abstract class PatronEditHelper<E extends AbstractEntity, EV extends Abst
 		hboxBtn.setAlignment(Pos.CENTER);
 		hboxBtn.setPadding(new Insets(20, 20, 20, 20));
 
-		children.add(hboxBtn);
+		tissuEtFournitureContainer.getChildren().add(hboxBtn);
+		tvList = FXCollections.observableArrayList(variantService.getVariantDtoByRequis(requisService.convert(requis)));
 
 		if (hasVariant()) {
-
-			children.add(loadBottomRightVbox(requis));
+			tissuEtFournitureContainer.getChildren().add(loadBottomRightVbox(requis));
 		}
-		//tvList = FXCollections.observableArrayList(variantService.getVariantDtoByRequis(requisService.convert(requis)));
+
 
 		//TODO !!!!!!!
 		// tvList = FXCollections.observableArrayList(fournitureVariantService.getVariantByFournitureRequis

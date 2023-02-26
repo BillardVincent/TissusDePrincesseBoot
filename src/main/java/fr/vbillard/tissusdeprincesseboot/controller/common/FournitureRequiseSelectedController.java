@@ -15,13 +15,15 @@ import javafx.scene.layout.VBox;
 public class FournitureRequiseSelectedController implements IController {
 
 	@FXML
-	private Label longueurLabel;
+	private Label uniteLabel;
 	@FXML
-	private Label laizeLabel;
+	private Label quantiteLabel;
 	@FXML
-	private Label gammePoidsLabel;
+	private Label uniteSecLabel;
 	@FXML
-	private VBox variantsContainer;
+	private Label quantiteSecLabel;
+	@FXML
+	private Label typeLabel;
 
 	private StageInitializer initializer;
 	private FournitureRequiseDto fournitureRequise;
@@ -34,22 +36,20 @@ public class FournitureRequiseSelectedController implements IController {
 		}
 		fournitureRequise = data.getFournitureRequise();
 		if (fournitureRequise != null) {
-			longueurLabel.setText(Float.toString(fournitureRequise.getQuantite()));
-			laizeLabel.setText(fournitureRequise.getTypeName());
-			//gammePoidsLabel.setText(tissuRequis.getGammePoids());
-			setVariantsContainer();
+			quantiteLabel.setText(fournitureRequise.getQuantite()+fournitureRequise.getUnite().getAbbreviation());
+			typeLabel.setText(fournitureRequise.getTypeName());
+			uniteLabel.setText(fournitureRequise.getType().getIntitulePrincipale());
+
+			uniteSecLabel.setText(fournitureRequise.getType().getIntituleSecondaire());
+			quantiteSecLabel.setText(fournitureRequise.getQuantiteSecondaireMin()+"-"+
+					fournitureRequise.getQuantiteSecondaireMax()+fournitureRequise.getUniteSecondaire().getAbbreviation());
+
 
 		} else {
-			longueurLabel.setText("?");
-			laizeLabel.setText("?");
-			gammePoidsLabel.setText("?");
-			variantsContainer.getChildren().clear();
+			quantiteLabel.setText("?");
+			typeLabel.setText("?");
+			uniteLabel.setText("?");
 		}
-
-	}
-
-	private void setVariantsContainer() {
-		// TODO Auto-generated method stub
 
 	}
 
