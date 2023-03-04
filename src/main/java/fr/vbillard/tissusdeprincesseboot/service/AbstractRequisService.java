@@ -9,7 +9,7 @@ import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractEntity;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractRequis;
-
+ 
 
 public abstract class AbstractRequisService<T extends AbstractRequis<U>, U extends AbstractEntity,
     V extends FxDto<T>> extends AbstractDtoService<T, V>{

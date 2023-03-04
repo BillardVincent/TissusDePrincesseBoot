@@ -99,6 +99,7 @@ public class TissuPatronEditHelper extends PatronEditHelper<Tissu, TissuVariant,
 			if (variantSelected.getId() == 0) {
 				tvList.add(variantSelected);
 			}
+			variantSelected = null;
 			loadRequisForPatron();
 			displayRequis(requis);
 		});

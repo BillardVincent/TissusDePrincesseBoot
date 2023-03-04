@@ -3,6 +3,8 @@ package fr.vbillard.tissusdeprincesseboot.controller.patron.edit;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.jfoenix.controls.JFXButton;
 
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FxDto;
@@ -113,6 +115,7 @@ public abstract class PatronEditHelper<E extends AbstractEntity, EV extends Abst
 
 	protected abstract void completeTopGrid(GridPane topGrid, DTOR dto, JFXButton validateBtn);
 
+	@Transactional
 	void saveRequis(DTOR requis, PatronDto patron){
 		boolean edit = requis.getId() != 0;
 		DTOR returned = requisService.createOrUpdate(requis, patron);
