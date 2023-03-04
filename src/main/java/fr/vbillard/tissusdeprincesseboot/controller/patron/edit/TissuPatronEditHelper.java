@@ -13,6 +13,7 @@ import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuVariantDto;
+import fr.vbillard.tissusdeprincesseboot.fx_custom_element.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
@@ -27,6 +28,7 @@ import fr.vbillard.tissusdeprincesseboot.service.TissuUsedService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuVariantService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
 import fr.vbillard.tissusdeprincesseboot.utils.Utils;
+import fr.vbillard.tissusdeprincesseboot.utils.path.PathEnum;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -87,7 +89,19 @@ public class TissuPatronEditHelper extends PatronEditHelper<Tissu, TissuVariant,
 
 		JFXComboBox<String> matiereField = FxUtils.buildComboBox(matiereService.getAllMatieresValues(), variantSelected.getMatiereProperty());
 
+		JFXButton addMatiere =  new JFXButton();
+		addMatiere.setGraphic(GlyphIconUtil.plusCircleTiny());
+		addMatiere.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+			initializer.displayModale(PathEnum.MATIERE, null, "Matière");
+		});
+
 		JFXComboBox<String> tissageField = FxUtils.buildComboBox(tissageService.getAllValues(), variantSelected.getTissageProperty());
+
+		JFXButton addTissage =  new JFXButton();
+		addTissage.setGraphic(GlyphIconUtil.plusCircleTiny());
+		addTissage.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+			initializer.displayModale(PathEnum.TISSAGE, null, "Tissage");
+		});
 
 		addTvBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
 
@@ -99,11 +113,12 @@ public class TissuPatronEditHelper extends PatronEditHelper<Tissu, TissuVariant,
 			if (variantSelected.getId() == 0) {
 				tvList.add(variantSelected);
 			}
+			variantSelected = null;
 			loadRequisForPatron();
 			displayRequis(requis);
 		});
 
-		return new HBox(typeField, matiereField, tissageField, addTvBtn);
+		return new HBox(typeField, matiereField, addMatiere, tissageField, addTissage, addTvBtn);
 	}
 
 	@Override

@@ -154,7 +154,7 @@ public class FournitureService extends AbstractDtoService<Fourniture, Fourniture
 				if (uniteSecondaire == null) {
 					uniteSecondaire = entity.getType().getUniteSecondaireConseillee();
 				}
-				entity.getQuantitePrincipale().setQuantite(Unite.convertir(dto.getQuantite(), uniteSecondaire));
+				entity.getQuantiteSecondaire().setQuantite(Unite.convertir(dto.getQuantiteSec(), uniteSecondaire));
 				entity.getQuantiteSecondaire().setUnite(uniteSecondaire);
 			}
 		}

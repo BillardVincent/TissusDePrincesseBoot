@@ -229,8 +229,8 @@ public class PatronEditController implements IController {
 			FxUtils.buildComboBox(SupportTypeEnum.labels(), patron.getTypeSupportProperty(), SupportTypeEnum.NON_RENSEIGNE.label,typeSupportCbBox);
 			pictureUtils.setPane(imagePane, patron);
 
-			tissuPatronEditHelper.setContainer(tissuEtFournitureContainer, tissusPatronListGrid, patron);
-			fourniturePatronEditHelper.setContainer(tissuEtFournitureContainer, fournituresPatronListGrid, patron);
+			tissuPatronEditHelper.setContainer(tissuEtFournitureContainer, tissusPatronListGrid, patron, initializer);
+			fourniturePatronEditHelper.setContainer(tissuEtFournitureContainer, fournituresPatronListGrid, patron, initializer);
 
 			tissuPatronEditHelper.loadRequisForPatron();
 			fourniturePatronEditHelper.loadRequisForPatron();

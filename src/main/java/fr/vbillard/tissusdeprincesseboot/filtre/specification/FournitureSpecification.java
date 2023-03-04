@@ -82,12 +82,12 @@ public class FournitureSpecification implements Specification<Fourniture> {
 
 		if (quantite != null) {
 			predicateList.add(SpecificationUtils.getNumericSearchPredicate(quantite,
-					joins.joinQuantitePrimaire.get(Quantite_.QUANTITE), cb));
+					joins.joinQuantitePrimaire(root).get(Quantite_.QUANTITE), cb));
 		}
 
 		if (quantiteSecondaire != null) {
 			predicateList.add(SpecificationUtils.getNumericSearchPredicate(quantiteSecondaire,
-					joins.joinQuantiteSecondaire.get(Quantite_.QUANTITE), cb));
+					joins.joinQuantiteSecondaire(root).get(Quantite_.QUANTITE), cb));
 		}
 
 		if (quantiteDisponible != null) {

@@ -307,16 +307,18 @@ public class FxUtils {
 		}
 	}
 
-	public static void setTextFieldMaxFromNumericSearch(JFXTextField field, NumericSearch<Integer> numericSearch) {
+	public static <T extends Number & Comparable<? super T>>  void setTextFieldMaxFromNumericSearch(JFXTextField field,
+			NumericSearch<T> numericSearch) {
 		if (numericSearch != null && numericSearch.getLessThanEqual() != null
-				&& numericSearch.getLessThanEqual() != 0) {
+				&& !numericSearch.getLessThanEqual().equals(0)) {
 			field.setText(String.valueOf(numericSearch.getLessThanEqual()));
 		}
 	}
 
-	public static void setTextFieldMinFromNumericSearch(JFXTextField field, NumericSearch<Integer> numericSearch) {
+	public static <T extends Number & Comparable<? super T>>  void setTextFieldMinFromNumericSearch(JFXTextField field,
+			NumericSearch<T> numericSearch) {
 		if (numericSearch != null && numericSearch.getGreaterThanEqual() != null
-				&& numericSearch.getGreaterThanEqual() != 0) {
+				&& !numericSearch.getGreaterThanEqual().equals(0)) {
 			field.setText(String.valueOf(numericSearch.getLessThanEqual()));
 		}
 	}

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.jfoenix.controls.JFXButton;
 
+import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.fx_custom_element.GlyphIconUtil;
@@ -52,14 +53,17 @@ public abstract class PatronEditHelper<E extends AbstractEntity, EV extends Abst
 
 	protected DTOV variantSelected;
 
+	protected StageInitializer initializer;
+
 
 	@Getter
 	protected boolean editingVariant;
 	
-	public void setContainer(VBox tissuEtFournitureContainer, GridPane listGrid, PatronDto patron) {
+	public void setContainer(VBox tissuEtFournitureContainer, GridPane listGrid, PatronDto patron, StageInitializer initializer) {
 		this.tissuEtFournitureContainer = tissuEtFournitureContainer;
 		this.listGrid = listGrid;
 		this.patron = patron;
+		this.initializer = initializer;
 
 	}
 	
@@ -99,11 +103,6 @@ public abstract class PatronEditHelper<E extends AbstractEntity, EV extends Abst
 		if (hasVariant()) {
 			tissuEtFournitureContainer.getChildren().add(loadBottomRightVbox(requis));
 		}
-
-
-		//TODO !!!!!!!
-		// tvList = FXCollections.observableArrayList(fournitureVariantService.getVariantByFournitureRequis
-		// (tissu));
 
 	}
 
