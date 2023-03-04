@@ -17,13 +17,15 @@ import javafx.scene.control.Label;
 public class FournitureRequiseCardController implements IController {
 
 	@FXML
-	private Label longueurLabel;
+	private Label uniteLabel;
 	@FXML
-	private Label laizeLabel;
+	private Label quantiteLabel;
 	@FXML
-	private Label gammePoidsLabel;
+	private Label uniteSecLabel;
 	@FXML
-	private Label variantsLabel;
+	private Label quantiteSecLabel;
+	@FXML
+	private Label typeLabel;
 
 	private StageInitializer initializer;
 	private FournitureRequiseDto fournitureRequise;
@@ -45,16 +47,19 @@ public class FournitureRequiseCardController implements IController {
 		}
 		fournitureRequise = data.getFournitureRequise();
 		if (fournitureRequise != null) {
-			longueurLabel.setText(Float.toString(fournitureRequise.getQuantite()) + " cm");
-			laizeLabel.setText("TODO"+ " cm");
-			gammePoidsLabel.setText("TODO");
-			variantsLabel.setText("TODO");
+			quantiteLabel.setText(fournitureRequise.getQuantite()+fournitureRequise.getUnite().getAbbreviation());
+			typeLabel.setText(fournitureRequise.getTypeName());
+			uniteLabel.setText(fournitureRequise.getType().getIntitulePrincipale());
+
+			uniteSecLabel.setText(fournitureRequise.getType().getIntituleSecondaire());
+			quantiteSecLabel.setText(fournitureRequise.getQuantiteSecondaireMin()+"-"+
+					fournitureRequise.getQuantiteSecondaireMax()+fournitureRequise.getUniteSecondaire().getAbbreviation());
+
 
 		} else {
-			longueurLabel.setText("");
-			laizeLabel.setText("");
-			gammePoidsLabel.setText("");
-			variantsLabel.setText("");
+			quantiteLabel.setText("?");
+			typeLabel.setText("?");
+			uniteLabel.setText("?");
 		}
 		setPane();
 	}

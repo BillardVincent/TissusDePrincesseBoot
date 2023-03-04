@@ -1,7 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.controller.fourniture;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,9 +20,8 @@ import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.CharacterSearch;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
 import fr.vbillard.tissusdeprincesseboot.fx_custom_element.CustomSpinner;
+import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
 import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
-import fr.vbillard.tissusdeprincesseboot.model.enums.SupportTypeEnum;
-import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import fr.vbillard.tissusdeprincesseboot.service.TypeFournitureService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
@@ -80,12 +78,12 @@ public class FournitureSearchController implements IController {
 	@FXML
 	public JFXCheckBox archiveFalse;
 
-	private RootController root;
+	private final RootController root;
 	private StageInitializer initializer;
 
 	private boolean okClicked = false;
 
-	private TypeFournitureService typeFournitureService;
+	private final TypeFournitureService typeFournitureService;
 	private List<String> typeValuesSelected = new ArrayList();
 
 
@@ -124,17 +122,13 @@ public class FournitureSearchController implements IController {
 			margeField.setText("0");
 			margeSecField.setText("0");
 			margeCbx.setSelected(false);
-			;
 			margeSecCbx.setSelected(false);
-			;
-
-
 
 			specification = (FournitureSpecification) data.getSpecification();
 
 			List<String> types = null;
 			if (specification.getType() != null) {
-				types = specification.getType().stream().map(t -> t.getValue()).collect(Collectors.toList());
+				types = specification.getType().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList());
 			}
 			FxUtils.setSelection(types, typeValuesSelected, typeLbl);
 			
@@ -145,36 +139,22 @@ public class FournitureSearchController implements IController {
 
 			FxUtils.setTextFieldFromCharacterSearch(referenceField, specification.getReference());
 
-			/*
-			 * FxUtils.setTextFieldMaxFromNumericSearch(longueurFieldMax,
-			 * specification.getLongueur());
-			 * FxUtils.setTextFieldMinFromNumericSearch(longueurFieldMin,
-			 * specification.getLongueur());
-			 * FxUtils.setTextFieldMaxFromNumericSearch(laizeFieldMax,
-			 * specification.getLaize());
-			 * FxUtils.setTextFieldMinFromNumericSearch(laizeFieldMin,
-			 * specification.getLaize());
-			 * 
-			 * List<String> types = null; if (specification.getTypeTissu() != null) { types
-			 * = specification.getTypeTissu().stream().map(m ->
-			 * m.getLabel()).collect(Collectors.toList()); } FxUtils.setSelection(types,
-			 * typeValuesSelected, typeLbl);
-			 * 
-			 * List<String> matieres = null; if (specification.getMatieres() != null) {
-			 * matieres = specification.getMatieres().stream().map(m ->
-			 * m.getValue()).collect(Collectors.toList()); } FxUtils.setSelection(matieres,
-			 * matiereValuesSelected, matiereLbl);
-			 * 
-			 * List<String> tissages = null; if (specification.getTissages() != null) {
-			 * tissages = specification.getTissages().stream().map(m ->
-			 * m.getValue()).collect(Collectors.toList()); } FxUtils.setSelection(tissages,
-			 * tissageValuesSelected, tissageLbl);
-			 * 
-			 * FxUtils.setTextFieldMaxFromNumericSearch(longueurFieldMax,
-			 * specification.getLongueur());
-			 * FxUtils.setTextFieldMaxFromNumericSearch(laizeFieldMax,
-			 * specification.getLaize());
-			 */
+			  FxUtils.setTextFieldMaxFromNumericSearch(dimPrimMax,
+			  specification.getQuantite());
+			  FxUtils.setTextFieldMinFromNumericSearch(dimPrimMin,
+			  specification.getQuantite());
+			  FxUtils.setTextFieldMaxFromNumericSearch(dimSecMax,
+			  specification.getQuantiteSecondaire());
+			  FxUtils.setTextFieldMinFromNumericSearch(dimSecMin,
+			  specification.getQuantiteSecondaire());
+
+			  List<String> typesSearch = null;
+				if (specification.getType() != null) {
+					typesSearch = specification.getType().stream().map(AbstractSimpleValueEntity::getValue)
+							.collect(Collectors.toList());
+				}
+				FxUtils.setSelection(typesSearch, typeValuesSelected, typeLbl);
+
 
 		} else {
 			specification = new FournitureSpecification();
@@ -206,7 +186,7 @@ public class FournitureSearchController implements IController {
 	@FXML
 	private void handleOk() {
 
-		List<TypeFourniture> type = Arrays.asList(typeFournitureService.findTypeFourniture(typeField.getValue()));
+		List<TypeFourniture> type = typeFournitureService.findTypeFourniture(typeValuesSelected);
 
 		Unite unitePrim = Unite.getEnum(unitePrimCombo.getValue());
 
@@ -226,9 +206,11 @@ public class FournitureSearchController implements IController {
 			dimPrimDispo = dimPrimTemp;
 		}
 
+		Unite uniteSec = Unite.getEnum(uniteSecCombo.getValue());
+
 		NumericSearch<Float> dimSec = FxUtils.setNumericFloatSearch(
-				Unite.convertir(FxUtils.floatFromJFXTextField(dimSecMin), unitePrim),
-				Unite.convertir(FxUtils.floatFromJFXTextField(dimSecMax), unitePrim), margeSec);
+				Unite.convertir(FxUtils.floatFromJFXTextField(dimSecMin), uniteSec),
+				Unite.convertir(FxUtils.floatFromJFXTextField(dimSecMax), uniteSec), margeSec);
 
 		CharacterSearch description = FxUtils.textFieldToCharacterSearchMultiple(descriptionField);
 

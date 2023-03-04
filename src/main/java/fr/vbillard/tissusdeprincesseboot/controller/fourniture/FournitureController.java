@@ -21,8 +21,8 @@ import javafx.scene.layout.Pane;
 @Component
 public class FournitureController extends ViewListController {
 
-	private FournitureService fournitureService;
-	private RootController rootController;
+	private final FournitureService fournitureService;
+	private final RootController rootController;
 
 	public FournitureController(FournitureService fournitureService, RootController rootController) {
 		page = 0;

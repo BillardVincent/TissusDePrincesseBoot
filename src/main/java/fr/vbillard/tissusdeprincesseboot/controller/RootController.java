@@ -307,7 +307,7 @@ public class RootController implements IController {
 	
 	public void addToSelected(FournitureDto fournitureSelected) {
 		float longueurRequiseRestante = fournitureRequiseSelected.getQuantite();
-		if (projetSelected.getTissuUsed() != null && projetSelected.getFournitureUsed().get(fournitureRequiseSelected) != null) {
+		if (projetSelected.getFournitureUsed() != null && projetSelected.getFournitureUsed().get(fournitureRequiseSelected) != null) {
 			for (int id : projetSelected.getFournitureUsed().get(fournitureRequiseSelected)) {
 				longueurRequiseRestante -= fournitureUsedService.getById(id).getQuantite();
 			}
@@ -319,7 +319,7 @@ public class RootController implements IController {
 		fournitureUsed.setProjet(mapper.map(projetSelected, Projet.class));
 		fournitureUsed.setRequis(mapper.map(fournitureRequiseSelected, FournitureRequise.class));
 		fournitureUsed.setFourniture(fournitureService.convert(fournitureSelected));
-		fournitureUsed.setQuantite(data.getLongueurRequise());
+		fournitureUsed.setQuantite(data.getQuantiteRequise());
 		fournitureUsedService.saveOrUpdate(fournitureUsed);
 
 		displayProjetEdit(projetSelected);

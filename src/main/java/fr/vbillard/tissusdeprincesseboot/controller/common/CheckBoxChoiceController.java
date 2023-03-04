@@ -25,7 +25,6 @@ public class CheckBoxChoiceController implements IModalController {
 
 	protected StageInitializer initializer;
 	private Stage dialogStage;
-
 	private FxData data;
 	private FxData result;
 

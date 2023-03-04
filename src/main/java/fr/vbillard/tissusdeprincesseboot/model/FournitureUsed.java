@@ -12,7 +12,7 @@ import lombok.Setter;
 @Entity
 public class FournitureUsed extends AbstractUsedEntity<Fourniture> {
 
-  protected long quantite;
+  protected float quantite;
 
   @ManyToOne
   private Fourniture fourniture;

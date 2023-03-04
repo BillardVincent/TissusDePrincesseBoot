@@ -85,7 +85,7 @@ public class TissuVariantDto extends AbstractVariantDto<TissuVariant, Tissu> {
 			type = TypeTissuEnum.NON_RENSEIGNE;
 		}
 
-		this.typeTissu.set(type.label);
+		this.typeTissu.set(type.getLabel());
 	}
 
 	public void setTypeTissu(String type) {
