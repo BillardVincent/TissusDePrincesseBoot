@@ -1,5 +1,9 @@
 package fr.vbillard.tissusdeprincesseboot.controller.picture_helper;
 
+import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -7,6 +11,7 @@ import java.net.URL;
 import java.util.Optional;
 
 import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
 
 import org.springframework.util.StringUtils;
 
@@ -76,6 +81,31 @@ public abstract class PictureHelper {
 			}
 		}
 		setImage();
+	}
+
+	protected void addPictureFromClipboard() {
+		Transferable transferable = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);
+
+
+		if (transferable != null && transferable.isDataFlavorSupported(DataFlavor.imageFlavor)) {
+			try {
+				Image img = (Image) transferable.getTransferData(DataFlavor.imageFlavor);
+
+					int width = img.getWidth(null);
+					int height = img.getHeight(null);
+					BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+					Graphics g = bufferedImage.createGraphics();
+					g.drawImage(img, 0, 0, null);
+					g.dispose();
+				picture = Optional.of(imageService.setImage(picture, "copie", "jpg", bufferedImage));
+			} catch (IOException | UnsupportedFlavorException e) {
+				e.printStackTrace();
+				throw new NotFoundException( "presse-papier");
+			}
+		}
+		if (picture.isPresent()){
+			setImage();
+		}
 	}
 
 	protected abstract void setImage();

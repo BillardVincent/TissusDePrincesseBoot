@@ -54,4 +54,9 @@ public class FourniturePictureHelper extends PictureHelper {
 		addPictureLocal();
 	}
 
+	public void addPictureClipBoard(FournitureDto dto){
+		fourniture = fournitureService.convert(dto);
+		addPictureFromClipboard();
+	}
+
 }

@@ -23,7 +23,7 @@ public class TissusDePrincesseFxApp extends Application {
 
 	@Override
 	public void init() {
-		applicationContext = new SpringApplicationBuilder(TissuDePrincesseBootApplication.class).run();
+		applicationContext = new SpringApplicationBuilder(TissuDePrincesseBootApplication.class).headless(false).run();
 	}
 
 	public static void restart() {

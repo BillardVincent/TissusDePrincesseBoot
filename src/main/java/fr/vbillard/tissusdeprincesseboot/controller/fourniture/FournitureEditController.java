@@ -264,7 +264,6 @@ public class FournitureEditController implements IController {
 	private void addPicture() {
 		if (isInputValid()) {
 			setTissuFromFields();
-
 			pictureHelper.addPictureLocal(fourniture);
 		}
 	}
@@ -274,6 +273,14 @@ public class FournitureEditController implements IController {
 		if (isInputValid()) {
 			setTissuFromFields();
 			pictureHelper.addPictureWeb(fourniture);
+		}
+	}
+
+	@FXML
+	private void addPictureFromClipboard(){
+		if (isInputValid()) {
+			setTissuFromFields();
+			pictureHelper.addPictureClipBoard(fourniture);
 		}
 	}
 
