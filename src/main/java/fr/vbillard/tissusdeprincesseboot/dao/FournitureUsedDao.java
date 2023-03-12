@@ -18,4 +18,5 @@ public interface FournitureUsedDao extends Idao<FournitureUsed, Integer>{
 
 	List<FournitureUsed> getAllByRequisAndProjet(FournitureRequise fr, Projet p);
 
+  boolean existsByFournitureId(int id);
 }

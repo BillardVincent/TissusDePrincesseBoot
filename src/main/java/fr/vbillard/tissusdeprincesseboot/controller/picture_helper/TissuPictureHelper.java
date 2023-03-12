@@ -19,11 +19,11 @@ import javafx.scene.image.ImageView;
 @Scope("prototype")
 public class TissuPictureHelper extends PictureHelper {
 
-	private TissuService tissuService;
+	private final TissuService tissuService;
 
 	private Tissu tissu;
 
-	public TissuPictureHelper(TissuService tissuService, MapperService mapper, PreferenceService preferenceService,
+	public TissuPictureHelper(TissuService tissuService, PreferenceService preferenceService,
 			StageInitializer initializer, ImageService imageService) {
 		super(preferenceService, initializer, imageService);
 		this.tissuService = tissuService;

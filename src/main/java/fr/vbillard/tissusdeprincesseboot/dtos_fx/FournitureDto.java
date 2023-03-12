@@ -226,4 +226,10 @@ public class FournitureDto implements FxDto<Fourniture> {
 	public void setIntituleSecondaire(String intituleSecondaire) {
 		this.intituleSecondaire.set(intituleSecondaire);
 	}
+
+	@Override
+	public String toString() {
+		return "Fourniture - "+typeName.get()+" [ nom : " + nom.get() + ", " + intituleDimension.get() + " : " + quantite.get() + unite.get() + ", " +
+				intituleSecondaire.get() + " : " + quantiteSec.get() + uniteSecondaire.get() + ']';
+	}
 }

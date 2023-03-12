@@ -52,7 +52,9 @@ public abstract class PictureHelper {
 				throw new NotFoundException(url.toString());
 			}
 		}
-		setImage();
+		if (picture.isPresent()){
+			setImage();
+		}
 	}
 
 	protected void addPictureLocal() {

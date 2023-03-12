@@ -2,6 +2,8 @@ package fr.vbillard.tissusdeprincesseboot.utils;
 
 import java.util.Optional;
 
+import org.apache.logging.log4j.util.Strings;
+
 import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.Articles;
 import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.EntityToString;
 import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.ModelUtils;
@@ -24,9 +26,10 @@ public class ShowAlert {
 		alert.initOwner(stage);
 		alert.setTitle("Info");
 		alert.setHeaderText("Vous ne pouvez pas supprimer " + ModelUtils.generateString(entity, Articles.DEMONSTRATIF));
-		String itemDisplay = item == null ? "" : " : " + item;
+		String itemDisplay = item == null ? Strings.EMPTY : " : " + item;
 		alert.setContentText("Vous ne pouvez pas supprimer " + ModelUtils.generateString(entity, Articles.DEFINI)
-				+ itemDisplay + " car il est utilisé dans un projet");
+				+ itemDisplay + " car "+ (entity.isMasculin() ? "il" : "elle") + "est utilisé"+ (entity.isMasculin() ? "e":
+				Strings.EMPTY) +" dans un projet");
 		return alert.showAndWait();
 	}
 

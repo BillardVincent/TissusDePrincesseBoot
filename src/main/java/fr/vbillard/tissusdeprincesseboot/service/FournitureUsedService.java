@@ -56,7 +56,7 @@ public class FournitureUsedService extends AbstractUsedService<FournitureUsed, F
 	}
 
 	public boolean existsByFournitureId(int id) {
-		return dao.existsById(id);
+		return dao.existsByFournitureId(id);
 	}
 
 }

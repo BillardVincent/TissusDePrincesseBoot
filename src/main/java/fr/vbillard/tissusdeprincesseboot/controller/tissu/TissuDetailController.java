@@ -168,15 +168,13 @@ public class TissuDetailController implements IController {
 	}
 
 	public void delete() {
+		if (tissuUsedService.existsByTissuId(tissu.getId())) {
+			ShowAlert.suppressionImpossible(initializer.getPrimaryStage(), EntityToString.TISSU, tissu.toString());
+		} else {
 		Optional<ButtonType> result = ShowAlert.suppression(initializer.getPrimaryStage(), EntityToString.TISSU,
 				tissu.toString());
 		if (result.isPresent() && result.get().equals(ButtonType.OK)) {
-			if (tissuUsedService.existsByTissuId(tissu.getId())) {
-				ShowAlert.suppressionImpossible(initializer.getPrimaryStage(), EntityToString.TISSU, tissu.toString());
-			} else {
-				if (pictures.isPresent()) {
-					imageService.delete(pictures.get());
-				}
+			pictures.ifPresent(photo -> imageService.delete(photo));
 				tissuService.delete(tissu);
 			}
 			rootController.displayTissus();

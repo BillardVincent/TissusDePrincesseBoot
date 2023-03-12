@@ -143,18 +143,17 @@ public class FournitureDetailController implements IController {
 	}
 
 	public void delete() {
-		Optional<ButtonType> result = ShowAlert.suppression(initializer.getPrimaryStage(), EntityToString.TISSU,
+		if (fournitureUsedService.existsByFournitureId(fourniture.getId())) {
+			ShowAlert.suppressionImpossible(initializer.getPrimaryStage(), EntityToString.FOURNITURE, fourniture.toString());
+		} else {
+		Optional<ButtonType> result = ShowAlert.suppression(initializer.getPrimaryStage(), EntityToString.FOURNITURE,
 				fourniture.toString());
 		if (result.isPresent() && result.get().equals(ButtonType.OK)) {
-			if (fournitureUsedService.existsByFournitureId(fourniture.getId())) {
-				ShowAlert.suppressionImpossible(initializer.getPrimaryStage(), EntityToString.TISSU, fourniture.toString());
-			} else {
-				if (pictures.isPresent()) {
-					imageService.delete(pictures.get());
-				}
+
+				pictures.ifPresent(photo -> imageService.delete(photo));
 				fournitureService.delete(fourniture);
 			}
-			rootController.displayTissus();
+			rootController.displayFourniture();
 		}
 	}
 }
