@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
@@ -51,6 +52,11 @@ public class PatronPictureHelper extends PictureHelper {
 	public void addPictureLocal(PatronDto dto) {
 		patron = patronService.convert(dto);
 		addPictureLocal();
+	}
+	
+	public void addPictureClipBoard(PatronDto dto) {
+		patron = patronService.convert(dto);
+		addPictureFromClipboard();
 	}
 
 }

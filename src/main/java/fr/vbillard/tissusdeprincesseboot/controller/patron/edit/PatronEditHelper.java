@@ -117,10 +117,11 @@ public abstract class PatronEditHelper<E extends AbstractEntity, EV extends Abst
 	@Transactional
 	void saveRequis(DTOR requis, PatronDto patron){
 		boolean edit = requis.getId() != 0;
+		patron = patronService.saveOrUpdate(patron);
 		DTOR returned = requisService.createOrUpdate(requis, patron);
 		if (!edit) {
 			addToPatron(requis, patron);
-			patronService.saveOrUpdate(patron);
+			patron= patronService.saveOrUpdate(patron);
 		}
 		loadRequisForPatron();
 		displayRequis(returned);

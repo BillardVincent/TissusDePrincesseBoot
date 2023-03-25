@@ -252,6 +252,13 @@ public class PatronEditController implements IController {
 		pictureUtils.addPictureWeb(patron);
 
 	}
+	
+	@FXML
+	private void addPictureFromClipboard(){
+			handleSavePatron();
+			pictureUtils.addPictureClipBoard(patron);
+	
+	}
 
 	@FXML
 	private void pictureExpend() {

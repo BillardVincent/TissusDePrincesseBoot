@@ -8,6 +8,9 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,13 +23,16 @@ public class FournitureRequise extends AbstractRequis<Fourniture>{
 
   private String details;
 
+  @Cascade(CascadeType.PERSIST)
   @ManyToOne
   private Patron patron;
 
   @ManyToOne
+  @Cascade(CascadeType.PERSIST)
   private TypeFourniture type;
 
   protected long quantite;
+  
   @Enumerated(EnumType.STRING)
   private Unite unite;
 

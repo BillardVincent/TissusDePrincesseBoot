@@ -9,6 +9,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 
 import org.aspectj.lang.annotation.Before;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import fr.vbillard.tissusdeprincesseboot.model.enums.SupportTypeEnum;
 import lombok.AllArgsConstructor;
@@ -31,10 +33,12 @@ public class Patron extends AbstractEntity {
 	
 	@Enumerated(EnumType.STRING)
 	private SupportTypeEnum supportType;
-
+	
+    @Cascade(CascadeType.PERSIST)
 	@OneToMany(mappedBy = "patron")
 	private List<TissuRequis> tissuRequis;
-
+    
+    @Cascade(CascadeType.PERSIST)
 	@OneToMany(mappedBy = "patron")
 	private List<FournitureRequise> fournituresRequises;
 	
