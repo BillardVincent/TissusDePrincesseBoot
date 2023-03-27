@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
@@ -56,7 +57,8 @@ public class TissuPatronEditHelper extends PatronEditHelper<Tissu, TissuVariant,
 	protected void completeTopGrid(GridPane topGrid,TissuRequisDto tissu, JFXButton validateBtn) {
 		topGrid.add(new Label("Longeur"), 0, 0);
 		topGrid.add(new Label("Laize"), 0, 1);
-		topGrid.add(new Label("Gamme de poids"), 0, 2);	
+		topGrid.add(new Label("Gamme de poids"), 0, 2);
+		topGrid.add(new Label("Doublure"), 0, 3);
 		
 		JFXTextField longueurSpinner = FxUtils.buildSpinner(tissu.getLongueurProperty());
 		topGrid.add(longueurSpinner, 1, 0);
@@ -66,11 +68,15 @@ public class TissuPatronEditHelper extends PatronEditHelper<Tissu, TissuVariant,
 
 		JFXComboBox<String> gammePoidsChBx = FxUtils.buildComboBox(GammePoids.labels(),tissu.getGammePoidsProperty(), GammePoids.NON_RENSEIGNE.label);
 		topGrid.add(gammePoidsChBx, 1, 2);
+
+		JFXCheckBox isDoublure = new JFXCheckBox();
+		isDoublure.setSelected(tissu.isDoublure());
 		
 		validateBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
 			tissu.setGammePoids(gammePoidsChBx.getValue());
 			tissu.setLaize(Integer.parseInt(laizeSpinner.getText()));
 			tissu.setLongueur(Integer.parseInt(longueurSpinner.getText()));
+			tissu.setDoublure(isDoublure.isSelected());
 			saveRequis(tissu, patron);
 		});	
 	}

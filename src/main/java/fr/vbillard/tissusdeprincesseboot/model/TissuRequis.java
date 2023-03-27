@@ -37,4 +37,6 @@ public class TissuRequis extends AbstractRequis<Tissu> {
 
 	private int longueur;
 
+	private boolean doublure;
+
 }
