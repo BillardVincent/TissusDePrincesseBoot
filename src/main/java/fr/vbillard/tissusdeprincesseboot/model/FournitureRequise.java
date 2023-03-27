@@ -31,7 +31,7 @@ public class FournitureRequise extends AbstractRequis<Fourniture>{
   @Cascade(CascadeType.PERSIST)
   private TypeFourniture type;
 
-  protected long quantite;
+  protected float quantite;
   
   @Enumerated(EnumType.STRING)
   private Unite unite;

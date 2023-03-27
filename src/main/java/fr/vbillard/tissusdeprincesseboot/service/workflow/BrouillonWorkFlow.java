@@ -1,14 +1,10 @@
 package fr.vbillard.tissusdeprincesseboot.service.workflow;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.exception.NotAllowed;
-import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
-import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
 import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuRequisService;
@@ -19,16 +15,19 @@ import fr.vbillard.tissusdeprincesseboot.service.UserPrefService;
 @Scope("prototype")
 public class BrouillonWorkFlow extends Workflow {
 
-	private TissuRequisService tissuRequisService;
-	private TissuUsedService tissuUsedService;
-	private UserPrefService userPrefService;
+	private final TissuRequisService tissuRequisService;
+	private final TissuUsedService tissuUsedService;
+	private final UserPrefService userPrefService;
+	private final Rules rules;
 	
 	@Autowired
-	public BrouillonWorkFlow(UserPrefService userPrefService, ProjetService projetService, TissuRequisService tissuRequisService, TissuUsedService tissuUsedService) {
+	public BrouillonWorkFlow(Rules rules, UserPrefService userPrefService, ProjetService projetService,
+			TissuRequisService tissuRequisService, TissuUsedService tissuUsedService) {
 		this.projetService = projetService;
 		this.tissuRequisService = tissuRequisService;
 		this.tissuUsedService = tissuUsedService;
 		this.userPrefService = userPrefService;
+		this.rules = rules;
 		description = "Les projets « Brouillon » permettent de faire des essais. Les longueurs de tissus qui sont attribuées à un « Brouillon » ne sont pas retirées du stock et ne sont pas réservées pour ce projet.";
 	}
 
@@ -46,18 +45,8 @@ public class BrouillonWorkFlow extends Workflow {
 
 	@Override
 	protected ErrorWarn verifyNextStep() {
-		ErrorWarn errorwarn = new ErrorWarn();
-		List<TissuRequis> trList = tissuRequisService.getAllRequisByPatron(projet.getPatron().getId());
-		for (TissuRequis tr : trList) {
-			List<TissuUsed> tuList = tissuUsedService.getTissuUsedByTissuRequisAndProjet(tr, projet);
-			int longueurUtilisee = tuList.stream().map(TissuUsed::getLongueur).reduce(0, Integer::sum);
-			float marge = userPrefService.getUser().getPoidsMargePercent();
-			
-			if (tr.getLongueur() - marge * tr.getLongueur() > 0) {
-				//TODO
-			}
-			
-		}
+		ErrorWarn errorwarn = rules.verifyLenght(projet);
+
 		return errorwarn;
 	}
 

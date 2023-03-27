@@ -107,8 +107,6 @@ public class PathService {
         return new PathHolder(pathProperties.getLongueur().getURL(), SetLongueurDialogController.class);
       case WEB_URL:
         return new PathHolder(pathProperties.getUrl().getURL(), SetWebUrlDialogController.class);
-      case PROJET_DETAILS:
-        break;
       case TISSU_SEARCH:
         return new PathHolder(pathProperties.getTissuSearch().getURL(), TissuSearchController.class);
       case PROJET_SEARCH:
