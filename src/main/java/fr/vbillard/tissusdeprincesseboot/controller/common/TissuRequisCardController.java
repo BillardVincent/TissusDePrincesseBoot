@@ -87,12 +87,13 @@ public class TissuRequisCardController implements IController {
 
 		int longueurUtilisee = tissuUsedService.longueurVariantByRequis(tissuRequis, projet);
 		List<TissuUsed> tissuUsedTooShort = tissuUsedService.getTissuVariantLaizeTooShort(tissuRequis, projet);
+		List<TissuUsed> tissuUsedNotDecati = tissuUsedService.getTissuUsedNotDecati(tissuRequis, projet);
 
 		if (longueurUtilisee < tissuRequis.getLongueur() - tissuRequis.getLongueur() * preferenceService.getUser().getLongueurMargePercent()){
 			iconStatus = GlyphIconUtil.notOk();
 			iconStatus.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> ShowAlert.information(initializer.getPrimaryStage(), "Attention", "Pas assez de tissu", "content"));
 
-		} else if (longueurUtilisee < tissuRequis.getLongueur() || !CollectionUtils.isEmpty(tissuUsedTooShort)) {
+		} else if (longueurUtilisee < tissuRequis.getLongueur() || !CollectionUtils.isEmpty(tissuUsedTooShort) || !CollectionUtils.isEmpty(tissuUsedNotDecati)) {
 			iconStatus = GlyphIconUtil.warning();
 			String header = Strings.EMPTY;
 			String content = Strings.EMPTY;

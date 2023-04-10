@@ -33,7 +33,7 @@
               <FontAwesomeIconView glyphName="DOWNLOAD" size="20"/>
             </graphic>
           </JFXButton>
-          <JFXButton fx:id="addPictureClipboardBtn" layoutX="181.0" layoutY="674.0" mnemonicParsing="false"
+          <JFXButton layoutX="181.0" layoutY="674.0" mnemonicParsing="false"
                      onMouseClicked="#addPictureFromClipboard">
             <graphic>
               <FontAwesomeIconView glyphName="CLIPBOARD" size="20"/>

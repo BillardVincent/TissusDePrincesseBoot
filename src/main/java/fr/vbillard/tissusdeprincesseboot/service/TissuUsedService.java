@@ -12,6 +12,9 @@ import org.springframework.util.CollectionUtils;
 import fr.vbillard.tissusdeprincesseboot.dao.TissuUsedDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
+import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuUsedSpecification;
+import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
+import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
@@ -22,7 +25,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class TissuUsedService extends AbstractUsedService<TissuUsed, Tissu> {
 
-	private ModelMapper mapper;
+	private MapperService mapper;
 	private TissuUsedDao dao;
 
 	public List<TissuUsed> getTissuUsedByTissuRequisAndProjet(TissuRequis tr, Projet p) {
@@ -48,8 +51,7 @@ public class TissuUsedService extends AbstractUsedService<TissuUsed, Tissu> {
 	}
 
 	public List<TissuUsed> getTissuUsedByTissuRequisAndProjet(TissuRequisDto tissuRequis, ProjetDto projet) {
-		return getTissuUsedByTissuRequisAndProjet(mapper.map(tissuRequis, TissuRequis.class),
-				mapper.map(projet, Projet.class));
+		return getTissuUsedByTissuRequisAndProjet(mapper.map(tissuRequis),mapper.map(projet));
 	}
 
 	public int longueurVariantByRequis(TissuRequisDto tissuRequis, ProjetDto projet){
@@ -62,15 +64,22 @@ public class TissuUsedService extends AbstractUsedService<TissuUsed, Tissu> {
 
 	@Transactional
 	public List<TissuUsed> getTissuVariantLaizeTooShort(TissuRequisDto tissuRequis, ProjetDto projet){
-		List<TissuUsed> lst = getTissuUsedByTissuRequisAndProjet(tissuRequis, projet);
-		if (CollectionUtils.isEmpty(lst)){
-			return Collections.emptyList();
-		}
-		return lst.stream().filter(u -> u.getTissu().getLaize() < tissuRequis.getLaize()).collect(Collectors.toList());
+
+		NumericSearch<Integer> laize = new NumericSearch<>();
+		laize.setLessThanEqual(tissuRequis.getLaize());
+		TissuUsedSpecification spec =
+				TissuUsedSpecification.builder().tissuRequis(mapper.map(tissuRequis)).projet(mapper.map(projet)).laize(laize).build();
+		return dao.findAll(spec);
 	}
 
 	public boolean existsByTissuId(int id) {
 		return dao.existsByTissuId(id);
 	}
 
+	@Transactional
+	public List<TissuUsed> getTissuUsedNotDecati(TissuRequisDto tissuRequis, ProjetDto projet) {
+		TissuUsedSpecification spec =
+				TissuUsedSpecification.builder().tissuRequis(mapper.map(tissuRequis)).projet(mapper.map(projet)).isDecati(false).build();
+		return dao.findAll(spec);
+	}
 }
