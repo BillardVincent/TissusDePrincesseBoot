@@ -1,11 +1,14 @@
 package fr.vbillard.tissusdeprincesseboot.service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
-import fr.vbillard.tissusdeprincesseboot.dao.Idao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissuUsedDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
@@ -36,7 +39,7 @@ public class TissuUsedService extends AbstractUsedService<TissuUsed, Tissu> {
 
 	@Override
 	protected void beforeSaveOrUpdate(TissuUsed entity) {
-
+		//Nothing to do
 	}
 
 	@Override
@@ -44,13 +47,26 @@ public class TissuUsedService extends AbstractUsedService<TissuUsed, Tissu> {
 		return dao;
 	}
 
-	public TissuUsed saveNew(TissuRequis tr, Projet p, int longueur) {
-		return null;
-	}
-
 	public List<TissuUsed> getTissuUsedByTissuRequisAndProjet(TissuRequisDto tissuRequis, ProjetDto projet) {
 		return getTissuUsedByTissuRequisAndProjet(mapper.map(tissuRequis, TissuRequis.class),
 				mapper.map(projet, Projet.class));
+	}
+
+	public int longueurVariantByRequis(TissuRequisDto tissuRequis, ProjetDto projet){
+		List<TissuUsed> lst = getTissuUsedByTissuRequisAndProjet(tissuRequis, projet);
+		if (CollectionUtils.isEmpty(lst)){
+			return 0;
+		}
+		return lst.stream().map(TissuUsed::getLongueur).reduce(0, Integer::sum);
+	}
+
+	@Transactional
+	public List<TissuUsed> getTissuVariantLaizeTooShort(TissuRequisDto tissuRequis, ProjetDto projet){
+		List<TissuUsed> lst = getTissuUsedByTissuRequisAndProjet(tissuRequis, projet);
+		if (CollectionUtils.isEmpty(lst)){
+			return Collections.emptyList();
+		}
+		return lst.stream().filter(u -> u.getTissu().getLaize() < tissuRequis.getLaize()).collect(Collectors.toList());
 	}
 
 	public boolean existsByTissuId(int id) {

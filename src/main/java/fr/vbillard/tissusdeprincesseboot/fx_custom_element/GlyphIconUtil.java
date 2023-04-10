@@ -66,7 +66,7 @@ public class GlyphIconUtil {
         return generateIcon(new FontAwesomeIconView(FontAwesomeIcon.ARCHIVE), NORMAL_ICON_SIZE, null);
     }
 
-    public static GlyphIcon warning(){
+    public static GlyphIcon bigWarning(){
         return generateIcon(new FontAwesomeIconView(FontAwesomeIcon.EXCLAMATION_TRIANGLE), BIG_ICONE_SIZE, Constants.colorWarning);
     }
 
@@ -92,5 +92,19 @@ public class GlyphIconUtil {
     
     public static GlyphIcon plusGiant(){
         return generateIcon(new FontAwesomeIconView(FontAwesomeIcon.PLUS_CIRCLE), GIANT_ICONE_SIZE, Constants.colorAdd);
+    }
+
+    public static GlyphIcon ok(){
+        return generateIcon(new MaterialDesignIconView(MaterialDesignIcon.CHECKBOX_MARKED_CIRCLE_OUTLINE), NORMAL_ICON_SIZE, Constants.colorAdd);
+    }
+
+    public static GlyphIcon notOk(){
+        return generateIcon(new MaterialDesignIconView(MaterialDesignIcon.CLOSE_CIRCLE_OUTLINE), NORMAL_ICON_SIZE,
+            Constants.colorDelete);
+    }
+
+    public static GlyphIcon warning(){
+        return generateIcon(new MaterialDesignIconView(MaterialDesignIcon.ALERT_OUTLINE), NORMAL_ICON_SIZE,
+            Constants.colorWarning);
     }
 }

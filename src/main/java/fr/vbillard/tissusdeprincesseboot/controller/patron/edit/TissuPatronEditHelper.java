@@ -71,7 +71,8 @@ public class TissuPatronEditHelper extends PatronEditHelper<Tissu, TissuVariant,
 
 		JFXCheckBox isDoublure = new JFXCheckBox();
 		isDoublure.setSelected(tissu.isDoublure());
-		
+		topGrid.add(isDoublure, 1, 3);
+
 		validateBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
 			tissu.setGammePoids(gammePoidsChBx.getValue());
 			tissu.setLaize(Integer.parseInt(laizeSpinner.getText()));
@@ -97,17 +98,13 @@ public class TissuPatronEditHelper extends PatronEditHelper<Tissu, TissuVariant,
 
 		JFXButton addMatiere =  new JFXButton();
 		addMatiere.setGraphic(GlyphIconUtil.plusCircleTiny());
-		addMatiere.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-			initializer.displayModale(PathEnum.MATIERE, null, "Matière");
-		});
+		addMatiere.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> initializer.displayModale(PathEnum.MATIERE, null, "Matière"));
 
 		JFXComboBox<String> tissageField = FxUtils.buildComboBox(tissageService.getAllValues(), variantSelected.getTissageProperty());
 
 		JFXButton addTissage =  new JFXButton();
 		addTissage.setGraphic(GlyphIconUtil.plusCircleTiny());
-		addTissage.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-			initializer.displayModale(PathEnum.TISSAGE, null, "Tissage");
-		});
+		addTissage.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> initializer.displayModale(PathEnum.TISSAGE, null, "Tissage"));
 
 		addTvBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
 

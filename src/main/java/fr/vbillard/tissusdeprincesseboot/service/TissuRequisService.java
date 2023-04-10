@@ -28,8 +28,6 @@ public class TissuRequisService extends AbstractRequisService<TissuRequis, Tissu
 	private final UserPrefService userPrefService;
 	private final CalculPoidsTissuService calculPoidsTissuService;
 	private final TissuVariantService tvs;
-
-	
 	
 	public TissuRequisService(TissusRequisDao tissuRequisDao, UserPrefService userPrefService,
 			CalculPoidsTissuService calculPoidsTissuService, TissuVariantService tvs, MapperService mapper) {
@@ -61,9 +59,10 @@ public class TissuRequisService extends AbstractRequisService<TissuRequis, Tissu
 
 	@Override
 	protected void beforeSaveOrUpdate(TissuRequis entity) {
-
+		//Nothing to do
 	}
 
+	@Override
 	public void delete(TissuRequis tissu) {
 		List<TissuVariant> tvLst = tvs.getVariantByRequis(tissu);
 		for (TissuVariant tv : tvLst) {
@@ -90,16 +89,16 @@ public class TissuRequisService extends AbstractRequisService<TissuRequis, Tissu
 
 		float marge = userPrefService.getUser().getLongueurMargePercent();
 
-		NumericSearch<Integer> longueurSearch = new NumericSearch<Integer>();
+		NumericSearch<Integer> longueurSearch = new NumericSearch<>();
 		longueurSearch.setGreaterThanEqual(Math.round(tr.getLongueur() - tr.getLongueur() * marge));
 
-		NumericSearch<Integer> laizeSearch = new NumericSearch<Integer>();
+		NumericSearch<Integer> laizeSearch = new NumericSearch<>();
 		laizeSearch.setGreaterThanEqual(Math.round(tr.getLaize() - tr.getLaize() * marge));
 
 		NumericSearch<Integer> poidsSearch = calculPoidsTissuService.getNumericSearch(tr.getGammePoids());
 
-		List<Matiere> matieres = new ArrayList<Matiere>();
-		List<TypeTissuEnum> types = new ArrayList<TypeTissuEnum>();
+		List<Matiere> matieres = new ArrayList<>();
+		List<TypeTissuEnum> types = new ArrayList<>();
 
 		if (tr.getVariants() != null) {
 			for (TissuVariant tv : tr.getVariants()) {

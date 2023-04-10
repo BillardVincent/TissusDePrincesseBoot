@@ -53,6 +53,15 @@
 						<Insets top="5.0" />
 					</padding>
 				</HBox>
+              <HBox alignment="CENTER" prefHeight="50.0" prefWidth="126.0">
+                <children>
+                  <Label fx:id="doublure" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="80.0"
+                         text="doublure" textAlignment="CENTER" />
+                </children>
+                <padding>
+                  <Insets top="5.0" />
+                </padding>
+              </HBox>
 			</children>
 			<styleClass>
 				<String fx:value="global" />

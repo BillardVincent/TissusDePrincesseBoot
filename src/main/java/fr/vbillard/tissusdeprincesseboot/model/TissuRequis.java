@@ -2,6 +2,7 @@ package fr.vbillard.tissusdeprincesseboot.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -27,16 +28,13 @@ public class TissuRequis extends AbstractRequis<Tissu> {
 	@Enumerated(EnumType.STRING)
 	private GammePoids gammePoids;
 
-	@ManyToOne
-    @Cascade(CascadeType.PERSIST)
-	private Patron patron;
-	
 	@OneToMany(mappedBy = "requis")
     @Cascade(CascadeType.PERSIST)
 	protected List<TissuVariant> variants;
 
 	private int longueur;
 
+	@Column(columnDefinition = "boolean default false")
 	private boolean doublure;
 
 }

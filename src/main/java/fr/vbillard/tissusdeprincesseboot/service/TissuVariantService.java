@@ -1,21 +1,16 @@
 package fr.vbillard.tissusdeprincesseboot.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import fr.vbillard.tissusdeprincesseboot.dao.Idao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissuVariantDao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissusRequisDao;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuVariantDto;
-import fr.vbillard.tissusdeprincesseboot.model.AbstractEntity;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractRequis;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
-import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import lombok.AllArgsConstructor;
@@ -34,10 +29,7 @@ public class TissuVariantService extends AbstractVariantService<TissuVariant, Ti
 		return convertToDto(listTv);
 	}
 
-	public List<TissuVariant> getVariantByRequis(TissuRequis tissu) {
-		return tissuVariantDao.getAllByRequisId(tissu.getId());
-	}
-
+	@Override
 	public TissuVariantDto saveOrUpdate(TissuVariantDto variantSelected) {
 		TissuVariant tv = convert(variantSelected);
 		tv = saveOrUpdate(tv);
@@ -46,7 +38,7 @@ public class TissuVariantService extends AbstractVariantService<TissuVariant, Ti
 
 	@Override
 	protected void beforeSaveOrUpdate(TissuVariant entity) {
-
+		//Nothing to do
 	}
 
 	@Override

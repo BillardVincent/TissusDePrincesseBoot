@@ -5,6 +5,9 @@ import java.util.List;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +17,7 @@ import lombok.Setter;
 public abstract class AbstractRequis<T> extends AbstractEntity{
 	
 	@ManyToOne
+	@Cascade(CascadeType.PERSIST)
 	protected Patron patron;
 
 	public abstract List<? extends AbstractVariant<T>> getVariants();

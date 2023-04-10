@@ -54,7 +54,7 @@ public class Rules {
   }
 
   public ErrorWarn verifyLenght(Projet projet) {
-    ErrorWarn result;
+    ErrorWarn result = new ErrorWarn();
     List<TissuRequis> trList = tissuRequisService.getAllRequisByPatron(projet.getPatron().getId());
     for (TissuRequis tr : trList) {
       List<TissuUsed> tuList = tissuUsedService.getTissuUsedByTissuRequisAndProjet(tr, projet);
@@ -62,7 +62,7 @@ public class Rules {
       float marge = userPrefService.getUser().getPoidsMargePercent();
 
       if (tr.getLongueur() - marge * tr.getLongueur() > 0) {
-        //TODO
+        //TODO cf warning on card
       }
 
     }
