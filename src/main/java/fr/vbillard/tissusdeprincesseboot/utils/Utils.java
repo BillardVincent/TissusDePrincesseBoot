@@ -40,4 +40,11 @@ public class Utils {
 	public boolean notNullAndMoreThanZero(Integer value){
 		return value != null && value > 0;
 	}
+
+	public static void appendWithSeparator(StringBuilder sb, String separator, String value){
+		if (sb.length() > 1 ){
+			sb.append(separator);
+		}
+		sb.append(value);
+	}
 }

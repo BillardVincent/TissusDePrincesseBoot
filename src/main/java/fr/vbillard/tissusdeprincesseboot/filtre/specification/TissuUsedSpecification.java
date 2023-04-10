@@ -10,23 +10,14 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.CharacterSearch;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.SpecificationUtils;
-import fr.vbillard.tissusdeprincesseboot.model.Matiere;
-import fr.vbillard.tissusdeprincesseboot.model.Patron;
-import fr.vbillard.tissusdeprincesseboot.model.Patron_;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
-import fr.vbillard.tissusdeprincesseboot.model.Tissage;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
-import fr.vbillard.tissusdeprincesseboot.model.TissuRequis_;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed_;
-import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
-import fr.vbillard.tissusdeprincesseboot.model.TissuVariant_;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu_;
-import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -79,7 +70,7 @@ public class TissuUsedSpecification implements Specification<TissuUsed> {
 		}
 
 		if (isDecati != null) {
-			predicateList.add(joins.joinTissu.get(Tissu_.DECATI).in(isDecati));
+			predicateList.add(joins.joinTissu(tissuUsed).get(Tissu_.DECATI).in(isDecati));
 		}
 
 		return cb.and(predicateList.toArray(new Predicate[] {}));
