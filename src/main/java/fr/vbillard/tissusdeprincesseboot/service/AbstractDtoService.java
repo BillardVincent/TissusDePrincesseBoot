@@ -31,6 +31,7 @@ public abstract class AbstractDtoService <T extends AbstractEntity, U extends Fx
 	    return entities.stream().map(this::convert).collect(Collectors.toList());
 	  }
 
+    @Transactional
   public  U getDtoById(int id){
     return convert(getById(id));
   }

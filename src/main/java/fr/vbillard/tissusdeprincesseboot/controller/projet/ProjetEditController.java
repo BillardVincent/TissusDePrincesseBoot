@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jfoenix.controls.JFXButton;
 
@@ -18,6 +19,7 @@ import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
+import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
@@ -76,14 +78,14 @@ public class ProjetEditController implements IController {
 	private final TissuRequisService tissuRequisService;
 	private final FournitureRequiseService fournitureRequiseService;
 	private final ImageService imageService;
-	private ModelMapper mapper;
+	private MapperService mapper;
 	private Workflow workflow;
 
 	private ProjetDto projet;
 
 	public ProjetEditController(RootController root, ProjetService projetService,
 			FournitureRequiseService fournitureRequiseService, TissuRequisService tissuRequisService,
-			ImageService imageService, ModelMapper mapper, WorkflowService workflowService) {
+			ImageService imageService, MapperService mapper, WorkflowService workflowService) {
 		this.projetService = projetService;
 		this.tissuRequisService = tissuRequisService;
 		this.root = root;
@@ -132,7 +134,7 @@ public class ProjetEditController implements IController {
 
 		scrollContent.setContent(content);
 
-		Optional<Photo> picturePatron = imageService.getImage(mapper.map(projet.getPatron(), Patron.class));
+		Optional<Photo> picturePatron = imageService.getImage(mapper.map(projet.getPatron()));
 		patronPicture.setImage(imageService.imageOrDefault(picturePatron));
 
 		ProjectStatus status = ProjectStatus.getEnum(projet.getProjectStatus());
@@ -156,7 +158,7 @@ public class ProjetEditController implements IController {
 			}
 		}
 
-		workflow = workflowService.getWorkflow(mapper.map(projet, Projet.class));
+		workflow = workflowService.getWorkflow(mapper.map(projet));
 
 		nextStep.setDisable(!workflow.isNextPossible());
 		previousStep.setDisable(!workflow.isCancelPossible());
@@ -172,23 +174,20 @@ public class ProjetEditController implements IController {
 
 	@FXML
 	private void handleCancel() {
-
 		root.displayPatrons();
 
 	}
 
 	@FXML
 	private void nextStep() {
-		workflow.nextStep(mapper.map(projet, Projet.class));
-		projet = mapper.map(projetService.getById(projet.getId()), ProjetDto.class);
-		root.displayProjetEdit(projet);
+		workflow.nextStep(mapper.map(projet));
+		root.displayProjetEdit(projetService.getDtoById(projet.getId()));
 	}
 
 	@FXML
 	private void previousStep() {
-		workflow.cancel(mapper.map(projet, Projet.class));
-		projet = mapper.map(projetService.getById(projet.getId()), ProjetDto.class);
-		root.displayProjetEdit(projet);
+		workflow.cancel(mapper.map(projet));
+		root.displayProjetEdit(projetService.getDtoById(projet.getId()));
 
 	}
 

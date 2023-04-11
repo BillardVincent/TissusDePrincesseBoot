@@ -93,7 +93,7 @@ public class EnCoursWorkFlow extends Workflow {
 		projetService.saveOrUpdate(projet);
 	}
 
-	private void deleteTissuLenght(Projet projet) {
+	private void deleteTissuLength(Projet projet) {
 		List<TissuUsed> tissuUsedList = tissuUsedService.getByProjet(projet);
 		for (TissuUsed tu : tissuUsedList) {
 			Tissu t = tu.getTissu();

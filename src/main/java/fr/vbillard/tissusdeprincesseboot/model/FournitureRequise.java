@@ -23,10 +23,6 @@ public class FournitureRequise extends AbstractRequis<Fourniture>{
 
   private String details;
 
-  @Cascade(CascadeType.PERSIST)
-  @ManyToOne
-  private Patron patron;
-
   @ManyToOne
   @Cascade(CascadeType.PERSIST)
   private TypeFourniture type;

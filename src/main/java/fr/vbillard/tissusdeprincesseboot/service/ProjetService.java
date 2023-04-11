@@ -1,16 +1,15 @@
 package fr.vbillard.tissusdeprincesseboot.service;
 
-import fr.vbillard.tissusdeprincesseboot.dao.Idao;
 import fr.vbillard.tissusdeprincesseboot.dao.ProjetDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.ProjetSpecification;
+import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -21,8 +20,9 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
-public class ProjetService extends AbstractService<Projet> {
-	ModelMapper mapper;
+@Transactional
+public class ProjetService extends AbstractDtoService<Projet, ProjetDto> {
+	MapperService mapper;
 	ProjetDao dao;
 
 	@Override
@@ -35,20 +35,30 @@ public class ProjetService extends AbstractService<Projet> {
 		return dao;
 	}
 
+	@Override
+	public Projet convert(ProjetDto dto) {
+		return mapper.map(dto);
+	}
+
+	@Override
+	public ProjetDto convert(Projet entity) {
+		return mapper.map(entity);
+	}
+
 	public ProjetDto saveOrUpdate(ProjetDto dto) {
-		return mapper.map(saveOrUpdate(mapper.map(dto, Projet.class)), ProjetDto.class);
+		return convert(saveOrUpdate(convert(dto)));
 	}
 
 	public ObservableList<ProjetDto> getObservableList() {
 		return FXCollections.observableArrayList(
-				dao.findAll().stream().map(t -> mapper.map(t, ProjetDto.class)).collect(Collectors.toList()));
+				dao.findAll().stream().map(this::convert).collect(Collectors.toList()));
 	}
 
 	public ProjetDto newProjetDto(PatronDto selectedPatron) {
 		Projet p = new Projet();
-		p.setPatron(mapper.map(selectedPatron, Patron.class));
+		p.setPatron(mapper.map(selectedPatron));
 
-		return mapper.map(p, ProjetDto.class);
+		return convert(p);
 	}
 
 	@Transactional
@@ -66,7 +76,7 @@ public class ProjetService extends AbstractService<Projet> {
 	private ObservableList<ProjetDto> projectListToObservableList(Page<Projet> projects) {
 		if(projects.hasContent()){
 			return FXCollections.observableArrayList(projects.stream()
-					.map(t -> mapper.map(t, ProjetDto.class)).collect(Collectors.toList()));
+					.map(this::convert).collect(Collectors.toList()));
 		}
 		return FXCollections.emptyObservableList();
 	}

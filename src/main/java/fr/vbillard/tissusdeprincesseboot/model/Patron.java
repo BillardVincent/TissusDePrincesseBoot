@@ -2,9 +2,11 @@ package fr.vbillard.tissusdeprincesseboot.model;
 
 import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 
@@ -34,12 +36,12 @@ public class Patron extends AbstractEntity {
 	@Enumerated(EnumType.STRING)
 	private SupportTypeEnum supportType;
 	
-    @Cascade(CascadeType.PERSIST)
-	@OneToMany(mappedBy = "patron")
+	@Cascade(CascadeType.PERSIST)
+	@OneToMany(mappedBy = "patron", fetch = FetchType.LAZY)
 	private List<TissuRequis> tissuRequis;
     
     @Cascade(CascadeType.PERSIST)
-	@OneToMany(mappedBy = "patron")
+		@OneToMany(mappedBy = "patron", fetch = FetchType.LAZY)
 	private List<FournitureRequise> fournituresRequises;
 	
 	@PrePersist

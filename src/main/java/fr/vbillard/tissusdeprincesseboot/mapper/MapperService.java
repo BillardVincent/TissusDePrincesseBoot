@@ -2,6 +2,7 @@ package fr.vbillard.tissusdeprincesseboot.mapper;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
@@ -19,10 +20,11 @@ import lombok.AllArgsConstructor;
 
 @Component
 @AllArgsConstructor
+@Transactional
 public class MapperService {
 	
 	ModelMapper mapper;
-	
+
 	public TissuDto map(Tissu source) {
 		return mapper.map(source, TissuDto.class);
 	}
