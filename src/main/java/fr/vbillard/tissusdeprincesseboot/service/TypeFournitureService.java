@@ -8,16 +8,8 @@ import org.springframework.stereotype.Service;
 
 import fr.vbillard.tissusdeprincesseboot.dao.FournitureDao;
 import fr.vbillard.tissusdeprincesseboot.dao.FournitureRequiseDao;
-import fr.vbillard.tissusdeprincesseboot.dao.Idao;
-import fr.vbillard.tissusdeprincesseboot.dao.MatiereDao;
-import fr.vbillard.tissusdeprincesseboot.dao.ProjetDao;
-import fr.vbillard.tissusdeprincesseboot.dao.TissuDao;
-import fr.vbillard.tissusdeprincesseboot.dao.TissuVariantDao;
 import fr.vbillard.tissusdeprincesseboot.dao.TypeFournitureDao;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
-import fr.vbillard.tissusdeprincesseboot.exception.CantBeDeletedException;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
-import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

@@ -46,7 +46,7 @@ public class SpecificationUtils {
 			if (StringUtils.isNotBlank(characterSearch.getContainsMultiple())) {
 
 				if (characterSearch.getContainsMultiple().contains(QUOTE)) {
-					List<Integer> quoteIndex = new ArrayList<Integer>();
+					List<Integer> quoteIndex = new ArrayList<>();
 
 					for (int i = 0; i < characterSearch.getContainsMultiple().length(); i++) {
 						if (characterSearch.getContainsMultiple().charAt(i) == QUOTE_CHAR) {
@@ -58,8 +58,8 @@ public class SpecificationUtils {
 						quoteIndex.remove(quoteIndex.size() - 1);
 					}
 
-					List<String> elements = new ArrayList<String>();
-					if (quoteIndex.size() != 0) {
+					List<String> elements = new ArrayList<>();
+					if (!quoteIndex.isEmpty()) {
 						elements.addAll(Arrays.asList(
 								characterSearch.getContainsMultiple().substring(0, quoteIndex.get(0)).split(SPACE)));
 

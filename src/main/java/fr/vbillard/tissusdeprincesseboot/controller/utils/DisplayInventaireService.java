@@ -46,7 +46,7 @@ public class DisplayInventaireService {
 			inventaireService.saveOrUpdate(r.getInventaire());
 		}
 
-		if (inventaire.getTissus().size() == 0) {
+		if (inventaire.getTissus().isEmpty()) {
 			inventaireService.delete(inventaire);
 		}
 		batchInventaire(initializer);

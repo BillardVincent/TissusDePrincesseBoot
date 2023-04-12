@@ -34,7 +34,6 @@ public class Rules {
     return result;
   }
 
-
   public ErrorWarn notReservedAnymore(Projet projet) {
     ErrorWarn result = new ErrorWarn();
     if (!tissuUsedService.getByProjet(projet).isEmpty()) {
@@ -59,7 +58,7 @@ public class Rules {
       float marge = userPrefService.getUser().getLongueurMargePercent();
 
       if (tr.getLongueur() - marge * tr.getLongueur() > longueurUtilisee) {
-        result.addWarn("La longueur totale alloué est inferieure à la longueur requise pour " + tr);
+        result.addWarn("La longueur totale alloué est inférieure à la longueur requise pour " + tr);
       }
 
     }
@@ -70,7 +69,7 @@ public class Rules {
       float quantiteUtilisee = fuList.stream().map(FournitureUsed::getQuantite).reduce(0f, Float::sum);
 
       if (fr.getQuantite()  > quantiteUtilisee) {
-        result.addWarn("La quantité totale alloué est inferieure à la quantité requise pour " + fr);
+        result.addWarn("La quantité totale alloué est inférieure à la quantité requise pour " + fr);
       }
 
     }

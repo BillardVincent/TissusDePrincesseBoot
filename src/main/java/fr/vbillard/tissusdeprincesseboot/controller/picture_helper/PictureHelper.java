@@ -5,17 +5,12 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.Optional;
 import javax.imageio.ImageIO;
-import javax.swing.*;
 
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.util.StringUtils;
 
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
@@ -36,7 +31,6 @@ public abstract class PictureHelper {
   protected ImageView imagePane;
 
   protected Optional<Photo> picture;
-  private BufferedImage L;
 
   protected PictureHelper(PreferenceService preferenceService, StageInitializer initializer,
       ImageService imageService) {
@@ -97,11 +91,11 @@ public abstract class PictureHelper {
 
         int width = img.getWidth(null);
         int height = img.getHeight(null);
-        BufferedImage L = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        Graphics g = L.createGraphics();
+        BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        Graphics g = bi.createGraphics();
         g.drawImage(img, 0, 0, null);
         g.dispose();
-        picture = Optional.of(imageService.setImage(picture, "copie", "jpg", L));
+        picture = Optional.of(imageService.setImage(picture, "copie", "jpg", bi));
       } catch (IOException | UnsupportedFlavorException e) {
         e.printStackTrace();
         throw new IllegalData("Les données du presse-papier ne correspondent pas à une image");

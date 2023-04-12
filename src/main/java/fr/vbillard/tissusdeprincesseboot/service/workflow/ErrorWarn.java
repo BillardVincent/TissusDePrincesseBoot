@@ -5,8 +5,8 @@ import java.util.List;
 
 public class ErrorWarn {
 	
-	private List<String> error = new ArrayList();
-	private List<String> warn = new ArrayList();
+	private List<String> error = new ArrayList<>();
+	private List<String> warn = new ArrayList<>();
 	
 	public List<String> getError() {
 		return error;

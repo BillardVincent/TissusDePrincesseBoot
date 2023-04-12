@@ -102,12 +102,8 @@ public class FournitureSearchController implements IController {
 		CustomSpinner.setSpinner(margeField);
 		CustomSpinner.setSpinner(margeSecField);
 
-		margeCbx.selectedProperty().addListener((observable, oldValue, newValue) -> {
-			margeField.setDisable(!newValue);
-		});
-		margeSecCbx.selectedProperty().addListener((observable, oldValue, newValue) -> {
-			margeSecField.setDisable(!newValue);
-		});
+		margeCbx.selectedProperty().addListener((observable, oldValue, newValue) -> margeField.setDisable(!newValue));
+		margeSecCbx.selectedProperty().addListener((observable, oldValue, newValue) -> margeSecField.setDisable(!newValue));
 
 		typeLbl.setText(AUCUN_FILTRE);
 
@@ -159,7 +155,7 @@ public class FournitureSearchController implements IController {
 		} else {
 			specification = new FournitureSpecification();
 			typeLbl.setText(AUCUN_FILTRE);
-			typeValuesSelected = new ArrayList<String>();
+			typeValuesSelected = new ArrayList<>();
 			dimPrimMax.setText(Strings.EMPTY);
 			dimSecMax.setText(Strings.EMPTY);
 			descriptionField.setText(Strings.EMPTY);

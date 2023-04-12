@@ -21,7 +21,7 @@ public abstract class AbstractRequisDto<T extends AbstractRequis<U>, U> implemen
 	}
 	
 	public void setVariant(List<AbstractVariantDto> variants) {
-		this.variants.set(FXCollections.observableArrayList(variants.stream().map(v -> v.toString()).collect(Collectors.toList())));
+		this.variants.set(FXCollections.observableArrayList(variants.stream().map(Object::toString).collect(Collectors.toList())));
 	}
 	
 }

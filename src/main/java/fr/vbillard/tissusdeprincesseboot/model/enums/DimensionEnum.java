@@ -29,7 +29,7 @@ public enum DimensionEnum {
   }
   
   public static List<String> labels(){
-  	List<String> list = new ArrayList<String>();
+  	List<String> list = new ArrayList<>();
       for(DimensionEnum e : DimensionEnum.values()){
           list.add(e.label);
       }

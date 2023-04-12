@@ -36,10 +36,10 @@ public class PatronDto implements FxDto<Patron>{
 		this.typeVetement = new SimpleStringProperty();
 		this.description = new SimpleStringProperty();
 		typeSupport = new SimpleStringProperty();
-		this.tissusRequis = new SimpleListProperty<TissuRequisDto>();
-		setTissusRequis(new ArrayList<TissuRequisDto>());
-		this.fournituresRequises = new SimpleListProperty<FournitureRequiseDto>();
-		setFournituresRequises(new ArrayList<FournitureRequiseDto>());
+		this.tissusRequis = new SimpleListProperty<>();
+		setTissusRequis(new ArrayList<>());
+		this.fournituresRequises = new SimpleListProperty<>();
+		setFournituresRequises(new ArrayList<>());
 	}
 	
 	public int getId() {

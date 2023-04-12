@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import com.jfoenix.controls.JFXButton;
 
@@ -26,7 +27,6 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.input.MouseEvent;
@@ -143,7 +143,7 @@ public abstract class PatronEditHelper<E extends AbstractEntity, EV extends Abst
 
 		bottomRightVbox.getChildren().addAll(new Separator(Orientation.HORIZONTAL), new Label("Possibilités :"));
 
-		if (tvList != null && tvList.size() > 0) {
+		if (CollectionUtils.isEmpty(tvList )) {
 			GridPane bottomGrid = new GridPane();
 			bottomGrid.setPadding(new Insets(5, 0, 5, 0));
 			bottomRightVbox.getChildren().add(bottomGrid);

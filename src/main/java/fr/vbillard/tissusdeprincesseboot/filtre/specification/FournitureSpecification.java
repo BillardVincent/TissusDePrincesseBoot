@@ -2,7 +2,6 @@ package fr.vbillard.tissusdeprincesseboot.filtre.specification;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
@@ -16,14 +15,9 @@ import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSear
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.SpecificationUtils;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture_;
-import fr.vbillard.tissusdeprincesseboot.model.Patron;
-import fr.vbillard.tissusdeprincesseboot.model.Patron_;
 import fr.vbillard.tissusdeprincesseboot.model.Quantite;
 import fr.vbillard.tissusdeprincesseboot.model.Quantite_;
-import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
-import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
 import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
-import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

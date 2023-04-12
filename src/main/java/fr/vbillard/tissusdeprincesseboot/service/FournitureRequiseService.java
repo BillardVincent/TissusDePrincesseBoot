@@ -48,6 +48,7 @@ public class FournitureRequiseService extends AbstractRequisService<FournitureRe
 	}
 
 	@Transactional
+	@Override
 	public FournitureRequiseDto createOrUpdate(FournitureRequiseDto fourniture, PatronDto patron) {
 		FournitureRequise t = convert(fourniture);
 		t.setPatron(patronService.convert(patron));
@@ -60,6 +61,7 @@ public class FournitureRequiseService extends AbstractRequisService<FournitureRe
 		return fournitureRequiseDao.findById(fournitureRequisId).get();
 	}
 
+	@Transactional
 	public void delete(FournitureRequiseDto fourniture) {
 		delete(mapper.map(fourniture));
 
@@ -67,14 +69,14 @@ public class FournitureRequiseService extends AbstractRequisService<FournitureRe
 
 	@Override
 	protected void beforeSaveOrUpdate(FournitureRequise entity) {
-
+		//nothing to do here
 	}
 
 	@Transactional
 	@Override
 	public void delete(FournitureRequise fourniture) {
 		Patron p = fourniture.getPatron();
-		p.getFournituresRequises().remove(p);
+		p.getFournituresRequises().remove(fourniture);
 		patronService.saveOrUpdate(p);
 
 		List<FournitureVariant> tvLst = tvs.getVariantByRequis(fourniture);

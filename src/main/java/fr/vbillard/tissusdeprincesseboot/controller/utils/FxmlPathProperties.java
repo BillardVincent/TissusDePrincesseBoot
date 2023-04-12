@@ -1,7 +1,5 @@
 package fr.vbillard.tissusdeprincesseboot.controller.utils;
 
-import java.sql.CallableStatement;
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.Resource;

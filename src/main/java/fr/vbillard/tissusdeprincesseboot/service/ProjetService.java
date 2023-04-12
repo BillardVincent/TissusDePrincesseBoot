@@ -5,7 +5,6 @@ import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.ProjetSpecification;
 import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
-import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -45,6 +44,7 @@ public class ProjetService extends AbstractDtoService<Projet, ProjetDto> {
 		return mapper.map(entity);
 	}
 
+	@Override
 	public ProjetDto saveOrUpdate(ProjetDto dto) {
 		return convert(saveOrUpdate(convert(dto)));
 	}

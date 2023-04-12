@@ -44,7 +44,7 @@ public enum GammePoids {
     }
     
     public static List<String> labels(){
-    	List<String> list = new ArrayList<String>();
+    	List<String> list = new ArrayList<>();
         for(GammePoids e : GammePoids.values()){
             list.add(e.label);
         }

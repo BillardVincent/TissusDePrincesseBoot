@@ -1,10 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.service;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 
-import fr.vbillard.tissusdeprincesseboot.dao.Idao;
 import fr.vbillard.tissusdeprincesseboot.dao.InventaireDao;
 import fr.vbillard.tissusdeprincesseboot.model.Inventaire;
 

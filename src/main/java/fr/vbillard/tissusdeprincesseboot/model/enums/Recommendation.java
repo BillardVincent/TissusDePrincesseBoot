@@ -43,7 +43,7 @@ public enum Recommendation {
     }
     
     public static List<String> labels(){
-    	List<String> list = new ArrayList();
+    	List<String> list = new ArrayList<>();
         for(Recommendation e : Recommendation.values()){
             list.add(e.label);
         }

@@ -12,7 +12,6 @@ import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.fx_custom_element.CustomIcon;
-import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureService;
 import fr.vbillard.tissusdeprincesseboot.service.ImageService;
@@ -54,7 +53,7 @@ public class FournitureCardController implements IController {
 	
 	private Constants constants;
 
-	public FournitureCardController(Constants constants, UserPrefService userPrefService, CustomIcon customIcon,
+	public FournitureCardController(Constants constants, CustomIcon customIcon,
 			ImageService imageService, RootController rootController, FournitureService fournitureService) {
 		this.imageService = imageService;
 		this.rootController = rootController;

@@ -1,12 +1,11 @@
 package fr.vbillard.tissusdeprincesseboot.model;
 
+import java.util.Collections;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -40,6 +39,6 @@ public class FournitureRequise extends AbstractRequis<Fourniture>{
 
   @Override
   public List<? extends AbstractVariant<Fourniture>> getVariants() {
-    return null;
+    return Collections.emptyList();
   }
 }

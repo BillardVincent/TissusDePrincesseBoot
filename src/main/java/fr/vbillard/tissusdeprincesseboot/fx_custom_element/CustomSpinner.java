@@ -35,7 +35,7 @@ public class CustomSpinner {
 			return c;
 		};
 
-		return new TextFormatter<Integer>(new IntegerStringConverter(), 0, filter);
+		return new TextFormatter<>(new IntegerStringConverter(), 0, filter);
 	}
 
 	public static void setSpinner(JFXTextField textField) {
@@ -58,7 +58,7 @@ public class CustomSpinner {
 			return c;
 		};
 
-		return new TextFormatter<Float>(new FloatStringConverter(), 0f, filter);
+		return new TextFormatter<>(new FloatStringConverter(), 0f, filter);
 
 	}
 

@@ -2,7 +2,6 @@ package fr.vbillard.tissusdeprincesseboot;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
@@ -15,9 +14,7 @@ import fr.vbillard.tissusdeprincesseboot.controller.utils.FxmlPathProperties;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IModalController;
 import fr.vbillard.tissusdeprincesseboot.model.Preference;
-import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ImageFormat;
-import fr.vbillard.tissusdeprincesseboot.service.InventaireService;
 import fr.vbillard.tissusdeprincesseboot.service.PreferenceService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;

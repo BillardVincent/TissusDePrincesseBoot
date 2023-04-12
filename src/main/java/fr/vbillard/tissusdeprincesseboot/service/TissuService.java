@@ -7,7 +7,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import fr.vbillard.tissusdeprincesseboot.dao.Idao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissuDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
@@ -68,6 +67,7 @@ public class TissuService extends AbstractDtoService<Tissu, TissuDto> {
 		delete(mapper.map(dto, Tissu.class));
 	}
 
+	@Override
 	public TissuDto saveOrUpdate(TissuDto dto) {
 		Tissu t = convert(dto);
 		return convert(saveOrUpdate(t));
@@ -83,7 +83,7 @@ public class TissuService extends AbstractDtoService<Tissu, TissuDto> {
 				throw new IllegalData(
 						"La laize doit être renseignée pour calculer le poids en g/m² à partir du poids en g" + ".m².");
 			}
-			float conversion = (float) entity.getPoids() / ((float) entity.getLaize() / 100f);
+			float conversion =  entity.getPoids() / (entity.getLaize() / 100f);
 			entity.setPoids(Math.round(conversion));
 			entity.setUnitePoids(UnitePoids.GRAMME_M_CARRE);
 		}

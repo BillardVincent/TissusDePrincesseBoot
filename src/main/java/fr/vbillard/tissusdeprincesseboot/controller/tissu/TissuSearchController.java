@@ -209,11 +209,11 @@ public class TissuSearchController implements IController {
 			specification = new TissuSpecification();
 
 			typeLbl.setText(AUCUN_FILTRE);
-			typeValuesSelected = new ArrayList<String>();
+			typeValuesSelected = new ArrayList<>();
 			matiereLbl.setText(AUCUN_FILTRE);
-			matiereValuesSelected = new ArrayList<String>();
+			matiereValuesSelected = new ArrayList<>();
 			tissageLbl.setText(AUCUN_FILTRE);
-			tissageValuesSelected = new ArrayList<String>();
+			tissageValuesSelected = new ArrayList<>();
 
 			longueurFieldMax.setText(Strings.EMPTY);
 			laizeFieldMax.setText(Strings.EMPTY);

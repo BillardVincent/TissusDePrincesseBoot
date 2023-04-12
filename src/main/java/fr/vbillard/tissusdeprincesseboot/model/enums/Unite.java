@@ -40,7 +40,7 @@ public enum Unite {
 	}
 
 	public static List<String> labels() {
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 		for (Unite e : Unite.values()) {
 			list.add(e.label);
 		}
@@ -48,7 +48,7 @@ public enum Unite {
 	}
 
 	public static List<String> getValuesByDimension(DimensionEnum dimension) {
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 		if (dimension == null) {
 			list.add(Unite.NON_RENSEIGNE.label);
 		} else {

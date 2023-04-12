@@ -2,7 +2,6 @@ package fr.vbillard.tissusdeprincesseboot.controller.patron;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +19,7 @@ import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.PatronSpecification;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.CharacterSearch;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
+import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.Tissage;
 import fr.vbillard.tissusdeprincesseboot.model.UserPref;
@@ -138,19 +138,19 @@ public class PatronSearchController implements IController {
 
 			List<String> types = null;
 			if (spec.getTypeTissu() != null) {
-				types = spec.getTypeTissu().stream().map(m -> m.getLabel()).collect(Collectors.toList());
+				types = spec.getTypeTissu().stream().map(TypeTissuEnum::getLabel).collect(Collectors.toList());
 			}
 			FxUtils.setSelection(types, typeValuesSelected, typeLbl);
 
 			List<String> matieres = null;
 			if (spec.getMatieres() != null) {
-				matieres = spec.getMatieres().stream().map(m -> m.getValue()).collect(Collectors.toList());
+				matieres = spec.getMatieres().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList());
 			}
 			FxUtils.setSelection(matieres, matiereValuesSelected, matiereLbl);
 
 			List<String> tissages = null;
 			if (spec.getTissages() != null) {
-				tissages = spec.getTissages().stream().map(m -> m.getValue()).collect(Collectors.toList());
+				tissages = spec.getTissages().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList());
 			}
 			FxUtils.setSelection(tissages, tissageValuesSelected, tissageLbl);
 
@@ -174,11 +174,11 @@ public class PatronSearchController implements IController {
 		} else {
 
 			typeLbl.setText(AUCUN_FILTRE);
-			typeValuesSelected = new ArrayList<String>();
+			typeValuesSelected = new ArrayList<>();
 			matiereLbl.setText(AUCUN_FILTRE);
-			matiereValuesSelected = new ArrayList<String>();
+			matiereValuesSelected = new ArrayList<>();
 			tissageLbl.setText(AUCUN_FILTRE);
-			tissageValuesSelected = new ArrayList<String>();
+			tissageValuesSelected = new ArrayList<>();
 
 			longueurFieldMax.setText(Strings.EMPTY);
 			laizeFieldMax.setText(Strings.EMPTY);
@@ -237,7 +237,7 @@ public class PatronSearchController implements IController {
 
 		NumericSearch<Integer> longueur = FxUtils.textFieldToMaxNumericSearch(longueurFieldMax);
 
-		List<SupportTypeEnum> support = new ArrayList<SupportTypeEnum>();
+		List<SupportTypeEnum> support = new ArrayList<>();
 		if (supportPapierCBox.isSelected()) {
 			support.add(SupportTypeEnum.PAPIER);
 		}

@@ -2,19 +2,16 @@ package fr.vbillard.tissusdeprincesseboot.service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import fr.vbillard.tissusdeprincesseboot.dao.FournitureRequiseDao;
 import fr.vbillard.tissusdeprincesseboot.dao.FournitureVariantDao;
-import fr.vbillard.tissusdeprincesseboot.dao.Idao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureVariantDto;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractRequis;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
-import fr.vbillard.tissusdeprincesseboot.model.FournitureRequise;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureVariant;
 import lombok.AllArgsConstructor;
 
@@ -47,6 +44,7 @@ public class FournitureVariantService extends AbstractVariantService<FournitureV
 		return mapper.map(entity, FournitureVariantDto.class);
 	}
 
+	@Override
 	public FournitureVariantDto saveOrUpdate(FournitureVariantDto variantSelected) {
 		FournitureVariant tv = convert(variantSelected);
 		tv = saveOrUpdate(tv);

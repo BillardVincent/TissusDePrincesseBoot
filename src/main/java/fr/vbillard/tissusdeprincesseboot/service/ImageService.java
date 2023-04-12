@@ -12,7 +12,6 @@ import org.imgscalr.Scalr;
 import org.springframework.stereotype.Service;
 
 import fr.vbillard.tissusdeprincesseboot.config.PathImgProperties;
-import fr.vbillard.tissusdeprincesseboot.dao.Idao;
 import fr.vbillard.tissusdeprincesseboot.dao.PhotoDao;
 import fr.vbillard.tissusdeprincesseboot.exception.PersistanceException;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture;

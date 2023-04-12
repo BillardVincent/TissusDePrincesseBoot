@@ -2,7 +2,6 @@ package fr.vbillard.tissusdeprincesseboot.model;
 
 import java.util.List;
 
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -10,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 
-import org.aspectj.lang.annotation.Before;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 

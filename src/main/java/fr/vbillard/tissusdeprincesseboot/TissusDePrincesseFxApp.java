@@ -7,7 +7,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import antlr.StringUtils;
 import fr.vbillard.tissusdeprincesseboot.exception.AbstractTissuDePricesseException;
 import javafx.application.Application;
 import javafx.application.Platform;

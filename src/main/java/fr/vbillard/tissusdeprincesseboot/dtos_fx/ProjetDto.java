@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
-import fr.vbillard.tissusdeprincesseboot.model.enums.SupportTypeEnum;
 import fr.vbillard.tissusdeprincesseboot.utils.Constants;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.MapProperty;
@@ -43,14 +42,14 @@ public class ProjetDto implements FxDto<Projet> {
 		this.description = new SimpleStringProperty();
 
 		this.status = new SimpleStringProperty();
-		this.patron = new SimpleObjectProperty<PatronDto>();
+		this.patron = new SimpleObjectProperty<>();
 		setPatron(new PatronDto());
 
-		this.tissuUsed = new SimpleMapProperty<TissuRequisDto, List<Integer>>();
-		setTissuUsed(new HashMap<TissuRequisDto, List<Integer>>());
+		this.tissuUsed = new SimpleMapProperty<>();
+		setTissuUsed(new HashMap<>());
 
-		this.fournitureUsed = new SimpleMapProperty<FournitureRequiseDto, List<Integer>>();
-		setFournitureUsed(new HashMap<FournitureRequiseDto, List<Integer>>());
+		this.fournitureUsed = new SimpleMapProperty<>();
+		setFournitureUsed(new HashMap<>());
 
 	}
 

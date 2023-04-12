@@ -1,6 +1,5 @@
 package fr.vbillard.tissusdeprincesseboot.model;
 
-import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
 import lombok.Getter;

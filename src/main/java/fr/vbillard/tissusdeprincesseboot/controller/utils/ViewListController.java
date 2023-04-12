@@ -31,7 +31,7 @@ public abstract class ViewListController implements IController {
 	protected Specification specification;
 
 	protected int page;
-	protected final static int PAGE_SIZE = 10;
+	protected static final int PAGE_SIZE = 10;
 	private long totalElement;
 
 	protected abstract void setElements();
@@ -39,12 +39,12 @@ public abstract class ViewListController implements IController {
 	protected void setPageInfo(long totalElement) {
 		this.totalElement = totalElement;
 		start.setText(Integer.toString((page) * PAGE_SIZE + 1));
-		end.setText(Long.toString(Math.min((page + 1) * PAGE_SIZE, totalElement)));
+		end.setText(Long.toString(Math.min((page + 1L) * PAGE_SIZE, totalElement)));
 		total.setText(Long.toString(totalElement));
 		previousIcon.setVisible(page > 0);
 		previousIcon.setDisable(page <= 0);
-		nextIcon.setVisible((page + 1) * PAGE_SIZE <= totalElement);
-		nextIcon.setDisable((page + 1) * PAGE_SIZE > totalElement);
+		nextIcon.setVisible((page + 1L) * PAGE_SIZE <= totalElement);
+		nextIcon.setDisable((page + 1L) * PAGE_SIZE > totalElement);
 
 	}
 

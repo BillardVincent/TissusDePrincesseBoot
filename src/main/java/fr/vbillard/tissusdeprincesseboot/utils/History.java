@@ -13,7 +13,7 @@ public class History {
 
     private LinkedList getFull(){
         if (full == null){
-            full = new LinkedList<FxData>();
+            full = new LinkedList<>();
         }
         return full;
     }

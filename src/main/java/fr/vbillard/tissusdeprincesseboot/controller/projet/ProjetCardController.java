@@ -94,6 +94,8 @@ public class ProjetCardController implements IController {
 			case TERMINE:
 				iconeFini.setFill(Constants.colorSecondary);
 				break;
+				default:
+					break;
 			}
 		}
 	}

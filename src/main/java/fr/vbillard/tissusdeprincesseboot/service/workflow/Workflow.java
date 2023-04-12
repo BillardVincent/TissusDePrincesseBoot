@@ -20,8 +20,8 @@ import javafx.scene.control.ButtonType;
  *
  */
 public abstract class Workflow {
-	
-	protected final static String NON_AUTORISE = "Non autorisé";
+
+	protected static final String NON_AUTORISE = "Non autorisé";
 
 	/**
 	 * Description du workflow

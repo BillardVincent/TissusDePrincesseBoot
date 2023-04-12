@@ -33,7 +33,7 @@ public class CalculPoidsTissuService {
 	}
 
 	public Map<GammePoids, Recommendation> setRecommendations(Tissu tissu) {
-		Map<GammePoids, Recommendation> result = new EnumMap<GammePoids, Recommendation>(GammePoids.class);
+		Map<GammePoids, Recommendation> result = new EnumMap<>(GammePoids.class);
 		for (GammePoids gp : GammePoids.values()) {
 			result.put(gp, getRecommendation(gp, tissu));
 		}
@@ -78,7 +78,7 @@ public class CalculPoidsTissuService {
 	}
 
 	public NumericSearch<Integer> getNumericSearch(GammePoids gp) {
-		NumericSearch<Integer> ns = new NumericSearch<Integer>();
+		NumericSearch<Integer> ns = new NumericSearch<>();
 		UserPref pref = userPrefService.getUser();
 
 		switch (gp) {

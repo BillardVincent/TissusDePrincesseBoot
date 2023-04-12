@@ -71,12 +71,12 @@ public class SetWebUrlDialogController implements IModalController {
 
 	private boolean validateAsPicture() {
 		ImageFormat[] imagesFormats = ImageFormat.values();
-		String URLtrimmed = urlField.getText().trim();
-		int dotIndex = URLtrimmed.lastIndexOf(".");
+		String urlTrimmed = urlField.getText().trim();
+		int dotIndex = urlTrimmed.lastIndexOf(".");
 		if (dotIndex == -1) {
 			return false;
 		}
-		String extension = URLtrimmed.substring(dotIndex + 1);
+		String extension = urlTrimmed.substring(dotIndex + 1);
 		for (ImageFormat format : imagesFormats) {
 			if (format.getValue().equals(extension.toUpperCase())) {
 				return true;

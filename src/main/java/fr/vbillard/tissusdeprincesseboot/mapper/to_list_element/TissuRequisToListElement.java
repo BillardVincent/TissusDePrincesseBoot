@@ -23,8 +23,8 @@ public class TissuRequisToListElement extends TypeMapConfigurer<TissuRequisDto, 
 	@Lazy
 	private TissuVariantService tvs;
 
-	private final static int MAX_VARIANT_DISPLAYED = 3;
-	private final static String NON_RENSEIGNE = "non renseigné";
+	private static final int MAX_VARIANT_DISPLAYED = 3;
+	private static final String NON_RENSEIGNE = "non renseigné";
 
 	@Override
 	public void configure(TypeMap<TissuRequisDto, ListElement> typeMap) {
