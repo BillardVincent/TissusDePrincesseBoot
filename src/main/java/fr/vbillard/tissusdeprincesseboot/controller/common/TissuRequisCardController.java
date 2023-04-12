@@ -88,7 +88,7 @@ public class TissuRequisCardController implements IController {
 	private void setPane() {
 		GlyphIcon iconStatus;
 
-		int longueurUtilisee = tissuUsedService.longueurVariantByRequis(tissuRequis, projet);
+		int longueurUtilisee = tissuUsedService.longueurUsedByRequis(tissuRequis, projet);
 		List<TissuUsed> tissuUsedTooShort = tissuUsedService.getTissuVariantLaizeTooShort(tissuRequis, projet);
 		List<TissuUsed> tissuUsedNotDecati = tissuUsedService.getTissuUsedNotDecati(tissuRequis, projet);
 

@@ -54,8 +54,15 @@ public class TissuUsedService extends AbstractUsedService<TissuUsed, Tissu> {
 		return getTissuUsedByTissuRequisAndProjet(mapper.map(tissuRequis),mapper.map(projet));
 	}
 
-	public int longueurVariantByRequis(TissuRequisDto tissuRequis, ProjetDto projet){
-		List<TissuUsed> lst = getTissuUsedByTissuRequisAndProjet(tissuRequis, projet);
+	public int longueurUsedByRequis(TissuRequis tissuRequis, Projet projet){
+		return longueurUsedByRequis(getTissuUsedByTissuRequisAndProjet(tissuRequis, projet));
+	}
+
+	public int longueurUsedByRequis(TissuRequisDto tissuRequis, ProjetDto projet){
+		return longueurUsedByRequis(getTissuUsedByTissuRequisAndProjet(tissuRequis, projet));
+	}
+
+	public int longueurUsedByRequis(List<TissuUsed> lst){
 		if (CollectionUtils.isEmpty(lst)){
 			return 0;
 		}

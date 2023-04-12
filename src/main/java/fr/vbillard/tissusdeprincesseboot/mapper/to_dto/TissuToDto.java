@@ -2,6 +2,7 @@ package fr.vbillard.tissusdeprincesseboot.mapper.to_dto;
 
 import org.modelmapper.AbstractConverter;
 import org.modelmapper.TypeMap;
+import org.modelmapper.spi.DestinationSetter;
 import org.springframework.stereotype.Component;
 
 import com.github.rozidan.springboot.modelmapper.TypeMapConfigurer;
@@ -25,7 +26,7 @@ public class TissuToDto extends TypeMapConfigurer<Tissu, TissuDto> {
 				TissuDto::setLongueurRestante));
 		typeMap.addMapping(src -> src.getMatiere().getValue(), TissuDto::setMatiere);
 		typeMap.addMapping(src -> src.getTissage().getValue(), TissuDto::setTissage);
-		typeMap.addMapping(Tissu::getTypeTissu, (TissuDto dest, TypeTissuEnum v) -> dest.setTypeTissu(v));
+		typeMap.addMapping(Tissu::getTypeTissu, (DestinationSetter<TissuDto, TypeTissuEnum>) TissuDto::setTypeTissu);
 
 	}
 

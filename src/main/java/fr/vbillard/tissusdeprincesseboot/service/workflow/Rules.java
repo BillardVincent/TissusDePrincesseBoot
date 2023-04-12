@@ -8,7 +8,6 @@ import fr.vbillard.tissusdeprincesseboot.model.FournitureRequise;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureUsed;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
-import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureRequiseService;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureUsedService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuRequisService;
@@ -47,22 +46,20 @@ public class Rules {
     return result;
   }
 
-  private static ErrorWarn notReservedAnymore(ErrorWarn result, EntityToString entity) {
+  private static void notReservedAnymore(ErrorWarn result, EntityToString entity) {
     result.addWarn(
         ModelUtils.generateString(entity, Articles.DEFINI, true, true) + "ne seront plus réservés pour ce projet");
-    return result;
   }
 
   public ErrorWarn verifyLenght(Projet projet) {
     ErrorWarn result = new ErrorWarn();
     List<TissuRequis> trList = tissuRequisService.getAllRequisByPatron(projet.getPatron().getId());
     for (TissuRequis tr : trList) {
-      List<TissuUsed> tuList = tissuUsedService.getTissuUsedByTissuRequisAndProjet(tr, projet);
-      int longueurUtilisee = tuList.stream().map(TissuUsed::getLongueur).reduce(0, Integer::sum);
-      float marge = userPrefService.getUser().getPoidsMargePercent();
+      int longueurUtilisee =  tissuUsedService.longueurUsedByRequis(tr, projet);
+      float marge = userPrefService.getUser().getLongueurMargePercent();
 
-      if (tr.getLongueur() - marge * tr.getLongueur() > 0) {
-        //TODO cf warning on card
+      if (tr.getLongueur() - marge * tr.getLongueur() > longueurUtilisee) {
+        result.addWarn("La longueur totale alloué est inferieure à la longueur requise pour " + tr);
       }
 
     }
@@ -70,11 +67,10 @@ public class Rules {
     List<FournitureRequise> frList = fournitureRequiseService.getAllRequisByPatron(projet.getPatron().getId());
     for (FournitureRequise fr : frList) {
       List<FournitureUsed> fuList = fournitureUsedService.getFournitureUsedByFournitureRequiseAndProjet(fr, projet);
-      float longueurUtilisee = fuList.stream().map(FournitureUsed::getQuantite).reduce(0f, Float::sum);
-      float marge = userPrefService.getUser().getPoidsMargePercent();
+      float quantiteUtilisee = fuList.stream().map(FournitureUsed::getQuantite).reduce(0f, Float::sum);
 
-      if (fr.getQuantite() - marge * fr.getQuantite() > 0) {
-        //TODO
+      if (fr.getQuantite()  > quantiteUtilisee) {
+        result.addWarn("La quantité totale alloué est inferieure à la quantité requise pour " + fr);
       }
 
     }

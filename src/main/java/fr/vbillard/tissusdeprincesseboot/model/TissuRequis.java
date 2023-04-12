@@ -9,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.apache.logging.log4j.util.Strings;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -37,4 +38,8 @@ public class TissuRequis extends AbstractRequis<Tissu> {
 	@Column(columnDefinition = "boolean default false")
 	private boolean doublure;
 
+	@Override
+	public String toString() {
+		return "tissu " + gammePoids +" - "+ laize + "cm x" + longueur +"cm " + (doublure ? " (doublure)" : Strings.EMPTY);
+	}
 }
