@@ -91,7 +91,7 @@ public class TissuUsedCardController implements IController {
 
 			ButtonType details = new ButtonType("Détails");
 			ButtonType supprimer = new ButtonType("Supprimer");
-			ButtonType annuler = new ButtonType("Anuler");
+			ButtonType annuler = new ButtonType("Annuler");
 
 			alert.getButtonTypes().clear();
 

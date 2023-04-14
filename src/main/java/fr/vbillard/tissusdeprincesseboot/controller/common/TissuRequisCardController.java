@@ -10,6 +10,7 @@ import org.springframework.util.CollectionUtils;
 
 import de.jensd.fx.glyphs.GlyphIcon;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.ClassCssUtils;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
@@ -97,6 +98,7 @@ public class TissuRequisCardController implements IController {
 			iconStatus.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> ShowAlert.information(initializer.getPrimaryStage(),
 					"Attention", "Pas assez de tissu", "La longueur de tissu alloué est inférieure à la longueur de tissu "
 							+ "requise. Ajoutez d'autres tissus"));
+			iconStatus.setStyleClass(ClassCssUtils.CLICKABLE);
 
 		} else if (longueurUtilisee < tissuRequis.getLongueur() || !CollectionUtils.isEmpty(tissuUsedTooShort) || !CollectionUtils.isEmpty(tissuUsedNotDecati)) {
 			iconStatus = GlyphIconUtil.warning();
@@ -114,6 +116,7 @@ public class TissuRequisCardController implements IController {
 				Utils.appendWithSeparator(content, SEPARATOR, "Laize trop courte pour ");
 				content.append(tissuUsedTooShort.stream().map(u -> u.getTissu().getReference()).collect(Collectors.joining(
 						DELIMITER)));
+
 			}
 
 			if (!CollectionUtils.isEmpty(tissuUsedNotDecati)){
@@ -132,11 +135,11 @@ public class TissuRequisCardController implements IController {
 
 			iconStatus.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> ShowAlert.information(initializer.getPrimaryStage(),
 					"Attention", header.toString(), content.toString()));
+			iconStatus.setStyleClass(ClassCssUtils.CLICKABLE);
 
 		} else {
 			iconStatus = GlyphIconUtil.ok();
 		}
-
 	complement.getChildren().add(iconStatus);
 
 	}

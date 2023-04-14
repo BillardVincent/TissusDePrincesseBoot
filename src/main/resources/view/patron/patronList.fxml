@@ -22,7 +22,8 @@
                   </Label>
                   <HBox alignment="CENTER" prefHeight="89.0" prefWidth="85.0">
                      <children>
-                        <FontAwesomeIconView glyphName="PLUS_CIRCLE" onMouseClicked="#addNewElement" size="3em" wrappingWidth="37.0" />
+                        <FontAwesomeIconView styleClass="clickable" glyphName="PLUS_CIRCLE"
+                                             onMouseClicked="#addNewElement" size="3em" wrappingWidth="37.0" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="89.0" prefWidth="85.0">

@@ -54,7 +54,8 @@
       
       			<Label text="Longueur" />
                <JFXCheckBox fx:id="longueurUtilisableCBox" text="Utilisable" />
-               <FontAwesomeIconView glyphName="QUESTION_CIRCLE" onMouseClicked="#utilisableHelp" size="20" />
+               <FontAwesomeIconView styleClass="clickable" glyphName="QUESTION_CIRCLE"
+									onMouseClicked="#utilisableHelp" size="20" />
             </children>
          </HBox>
 						<HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="302.0">
@@ -93,7 +94,8 @@
       				<children>
             			
             			<Label text="Poids: " />
-                     <FontAwesomeIconView glyphName="QUESTION_CIRCLE" onMouseClicked="#poidsHelp" size="20" />
+                     <FontAwesomeIconView styleClass="clickable" glyphName="QUESTION_CIRCLE"
+										  onMouseClicked="#poidsHelp" size="20" />
       				</children>
       			</HBox>
                <HBox alignment="CENTER" prefHeight="26.0" prefWidth="302.0" spacing="5.0">

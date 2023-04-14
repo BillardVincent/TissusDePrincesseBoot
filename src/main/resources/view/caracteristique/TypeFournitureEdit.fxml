@@ -44,7 +44,8 @@
                <children>
                   <Label text="Unité principale " />
                   <Label styleClass="info-obligatoire" text="*" textFill="RED" />
-                  <FontAwesomeIconView glyphName="QUESTION_CIRCLE" onMouseClicked="#handleHelpPrim" size="2em" />
+                  <FontAwesomeIconView styleClass="clickable" glyphName="QUESTION_CIRCLE"
+                                       onMouseClicked="#handleHelpPrim" size="2em" />
                </children>
             </HBox>
             <GridPane>
@@ -79,7 +80,8 @@
                <children>
                   <JFXCheckBox fx:id="uniteSecondaireCheckBx" onAction="#handleUniteSecondaireCheck" text="Unité secondaire" />
                   <Label />
-                  <FontAwesomeIconView glyphName="QUESTION_CIRCLE" onMouseClicked="#handleHelpSec" size="2em" />
+                  <FontAwesomeIconView styleClass="clickable" glyphName="QUESTION_CIRCLE"
+                                       onMouseClicked="#handleHelpSec" size="2em" />
                </children>
             </HBox>
             <GridPane fx:id="secondaryGrid">
@@ -115,7 +117,8 @@
          </children>
       </VBox>
       <JFXButton fx:id="deselectionnerButton" layoutX="105.0" layoutY="384.0" mnemonicParsing="false" onAction="#handleDeselectionner" text="Désélectionner" />
-      <FontAwesomeIconView fx:id="dimensionLockIcn" onMouseClicked="#handleHelpLock" glyphName="LOCK" layoutX="568.0"
+      <FontAwesomeIconView styleClass="clickable" fx:id="dimensionLockIcn" onMouseClicked="#handleHelpLock"
+                           glyphName="LOCK" layoutX="568.0"
                            layoutY="154.0" size="2em" />
 	</children>
 </AnchorPane>

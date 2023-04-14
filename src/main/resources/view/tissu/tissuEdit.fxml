@@ -52,7 +52,8 @@
                 <children>
                     <JFXTextField fx:id="poidsField" editable="true" prefHeight="26.0" prefWidth="239.0" />
                     <JFXComboBox fx:id="unitePoidsField" prefHeight="26.0" prefWidth="94.0" />
-               <FontAwesomeIconView glyphName="QUESTION_CIRCLE" onMouseClicked="#poidsHelp" size="24" wrappingWidth="26.171464920043945">
+               <FontAwesomeIconView styleClass="clickable" glyphName="QUESTION_CIRCLE" onMouseClicked="#poidsHelp"
+                                    size="24" wrappingWidth="26.171464920043945">
                   <HBox.margin>
                      <Insets left="10.0" />
                   </HBox.margin>

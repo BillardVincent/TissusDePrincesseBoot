@@ -91,7 +91,8 @@
                <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="17.0" prefWidth="302.0" spacing="5.0">
                   <children>
                      <Label text="Poids: " />
-                     <FontAwesomeIconView glyphName="QUESTION_CIRCLE" onMouseClicked="#poidsHelp" size="20" />
+                     <FontAwesomeIconView styleClass="clickable" glyphName="QUESTION_CIRCLE" onMouseClicked="#poidsHelp"
+                                          size="20" />
                   </children>
                </HBox>
                <HBox alignment="CENTER" prefHeight="26.0" prefWidth="302.0" spacing="5.0">

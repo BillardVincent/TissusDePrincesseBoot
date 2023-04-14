@@ -104,9 +104,9 @@ public class TissuSearchController implements IController {
 	private final ToggleGroup decatiGroup = new ToggleGroup();
 	private final ToggleGroup chuteGroup = new ToggleGroup();
 
-	private List<String> tissageValuesSelected = new ArrayList();
-	private List<String> typeValuesSelected = new ArrayList();
-	private List<String> matiereValuesSelected = new ArrayList();
+	private List<String> tissageValuesSelected = new ArrayList<>();
+	private List<String> typeValuesSelected = new ArrayList<>();
+	private List<String> matiereValuesSelected = new ArrayList<>();
 
 	private int margeHauteLeger;
 	private int margeBasseMoyen;

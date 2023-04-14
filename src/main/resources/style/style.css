@@ -22,7 +22,6 @@
 .root{
 	-fx-background-color: #ffffff;
 	-fx-accent: -fx-secondary;
-	-fx-focus-color:-fx-secondary;
 	-fx-pressed-based: -fx-secondary-dark;
 	-fx-hover-base: -fx-secondary-light;
 	-fx-text-background-color:-fx-basic-text;
@@ -78,6 +77,7 @@
 }
 .jfx-combo-box{
 	-jfx-focus-color: -fx-secondary-light;
+    -fx-cursor: hand;
 
 }
 
@@ -85,6 +85,18 @@
     -fx-text-fill: -fx-basic-text;
 }
 
+.radio-button .radio {
+    -fx-selected-color: -fx-secondary;
+}
+
+.radio-button .radio :hover{
+    -fx-cursor: hand;
+}
+
+
+.jfx-check-box .box{
+    -fx-cursor: hand;
+}
 
 .global{
     -fx-font-family: Calibri;
@@ -114,6 +126,8 @@
     -fx-border-width: 1;
     -fx-border-color: -fx-primary-contrast;
     -fx-border-style: solid none solid none;
+    -fx-cursor: hand;
+
 
 }
 
@@ -177,7 +191,9 @@
 .clickable:hover{
     -fx-border-color: -fx-primary-light;
     -fx-border-width: 3px;
+    -fx-cursor: hand;
 }
+
 .title{
     -fx-background-color: -fx-primary;
     -fx-text-fill: -fx-primary-contrast;
@@ -223,7 +239,7 @@
 }
 
 .list-element-titre{
-    -fx-font-weight: bold;
+    -fx-font-weight: bolder;
     -fx-font-size: 15px;
 }
 
@@ -232,11 +248,13 @@
 	-fx-font-size: 1.2em;
     -fx-font-weight: bold;
 	-fx-background-color: #ffffff;
-	
+    -fx-cursor: hand;
+
 }
 .jfx-button:hover{
 	-fx-background-color: #d0d0d0
 }
+
 
 .light-background{
 	-fx-background-color: #f0f0f0

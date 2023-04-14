@@ -41,10 +41,15 @@ public abstract class ViewListController implements IController {
 		start.setText(Integer.toString((page) * PAGE_SIZE + 1));
 		end.setText(Long.toString(Math.min((page + 1L) * PAGE_SIZE, totalElement)));
 		total.setText(Long.toString(totalElement));
+
 		previousIcon.setVisible(page > 0);
 		previousIcon.setDisable(page <= 0);
+		ClassCssUtils.setStyle(previousIcon, ClassCssUtils.CLICKABLE, page > 0);
+
 		nextIcon.setVisible((page + 1L) * PAGE_SIZE <= totalElement);
 		nextIcon.setDisable((page + 1L) * PAGE_SIZE > totalElement);
+		ClassCssUtils.setStyle(nextIcon, ClassCssUtils.CLICKABLE, (page + 1L) * PAGE_SIZE <= totalElement);
+
 
 	}
 
@@ -70,7 +75,7 @@ public abstract class ViewListController implements IController {
 
 	@FXML
 	public void nextPage(MouseEvent mouseEvent) {
-		if ((page + 1) * PAGE_SIZE < totalElement) {
+		if ((page + 1L) * PAGE_SIZE < totalElement) {
 			page++;
 			setElements();
 		}
