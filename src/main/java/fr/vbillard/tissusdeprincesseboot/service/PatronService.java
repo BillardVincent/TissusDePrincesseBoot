@@ -45,15 +45,9 @@ public class PatronService extends AbstractDtoService<Patron, PatronDto> {
 		delete(mapper.map(selected, Patron.class));
 	}
 
-	public ObservableList<PatronDto> getObservableList() {
-		List<Patron> lstPatron = getDao().findAll();
-		List<PatronDto> list = lstPatron.stream().map(this::convert).collect(Collectors.toList());
-		return FXCollections.observableArrayList(list);
-	}
-
 	@Override
 	protected void beforeSaveOrUpdate(Patron entity) {
-
+		//nothing to do here
 	}
 
 	@Override
@@ -63,7 +57,7 @@ public class PatronService extends AbstractDtoService<Patron, PatronDto> {
 
 	@Transactional
 	public ObservableList<PatronDto> getObservablePage(int page, int pageSize) {
-		Page<Patron> patrons = patronDao.findAll(PageRequest.of(page, pageSize));
+		Page<Patron> patrons = patronDao.getAllByArchived(PageRequest.of(page, pageSize), false);
 		return projectListToObservableList(patrons);
 	}
 

@@ -24,43 +24,8 @@ public class TissuService extends AbstractDtoService<Tissu, TissuDto> {
 	private ModelMapper mapper;
 	private TissuDao dao;
 
-	public ObservableList<TissuDto> getObservableList() {
-		return FXCollections.observableArrayList(
-				dao.findAll().stream().map(this::convert).collect(Collectors.toList()));
-	}
-
-	public ObservableList<TissuDto> filter(String text) {
-		ObservableList<TissuDto> result = FXCollections.observableArrayList();
-		for (TissuDto t : getObservableList()) {
-			if (t.getDescription().contains(text) || t.getLieuAchat().contains(text) || t.getMatiere().contains(text)
-					|| t.getTissage().contains(text) || t.getTypeTissu().contains(text))
-				result.add(t);
-		}
-		return result;
-	}
-
-	public ObservableList<TissuDto> filter(TissuDto tissuDto) {
-		ObservableList<TissuDto> result = FXCollections.observableArrayList();
-		for (TissuDto t : getObservableList()) {
-			if (t.getDescription().contains(tissuDto.getDescription())
-					|| t.getLieuAchat().contains(tissuDto.getLieuAchat())
-					|| t.getMatiere().contains(tissuDto.getMatiere()) || t.getTissage().contains(tissuDto.getTissage())
-					|| t.getTypeTissu().contains(tissuDto.getTypeTissu()))
-				result.add(t);
-		}
-		return result;
-	}
-
 	public boolean existByReference(String string) {
 		return dao.existsByReference(string);
-
-	}
-
-	public void archive(TissuDto dto) {
-		Tissu t = convert(dto);
-		t.setArchived(true);
-		dao.save(t);
-
 	}
 
 	public void delete(TissuDto dto) {
@@ -95,7 +60,7 @@ public class TissuService extends AbstractDtoService<Tissu, TissuDto> {
 	}
 
 	public ObservableList<TissuDto> getObservablePage(int page, int pageSize) {
-		return FXCollections.observableArrayList(dao.findAll(PageRequest.of(page, pageSize)).stream()
+		return FXCollections.observableArrayList(dao.findAllByArchived(PageRequest.of(page, pageSize), false).stream()
 				.map(this::convert).collect(Collectors.toList()));
 	}
 

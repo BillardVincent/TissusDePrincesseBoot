@@ -30,19 +30,9 @@ public class FournitureService extends AbstractDtoService<Fourniture, Fourniture
 	private QuantiteDao quantiteDao;
 	private ImageService imageService;
 
-	public ObservableList<FournitureDto> getObservableList() {
-		return FXCollections.observableArrayList(convertToDto(dao.findAll()));
-	}
 
 	public boolean existByReference(String string) {
 		return dao.existsByReference(string);
-	}
-
-	public void archive(FournitureDto dto) {
-		Fourniture t = convert(dto);
-		t.setArchived(true);
-		dao.save(t);
-
 	}
 
 	public void delete(FournitureDto dto) {
@@ -86,7 +76,8 @@ public class FournitureService extends AbstractDtoService<Fourniture, Fourniture
 	}
 
 	public ObservableList<FournitureDto> getObservablePage(int page, int pageSize) {
-		return FXCollections.observableArrayList(convertToDto(dao.findAll(PageRequest.of(page, pageSize))));
+		return FXCollections.observableArrayList(convertToDto(dao.findAllByArchived(PageRequest.of(page, pageSize),
+				false)));
 	}
 
 	public float getQuantiteUtilisee(int fournitureId) {
