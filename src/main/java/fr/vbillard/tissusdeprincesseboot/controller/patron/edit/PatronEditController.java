@@ -61,6 +61,8 @@ public class PatronEditController implements IController {
 	public ImageView imagePane;
 	@FXML
 	public JFXComboBox<String> typeSupportCbBox;
+	@FXML
+	public JFXButton archiverBtn;
 
 	private StageInitializer initializer;
 	private RootController root;
@@ -234,6 +236,7 @@ public class PatronEditController implements IController {
 
 			tissuPatronEditHelper.loadRequisForPatron();
 			fourniturePatronEditHelper.loadRequisForPatron();
+			setBoutonArchiver();
 		}
 	}
 
@@ -264,6 +267,17 @@ public class PatronEditController implements IController {
 	private void pictureExpend() {
 		DevInProgressService.notImplemented();
 
+	}
+
+	@FXML
+	public void archiver(){
+		patron.setArchived(!patron.isArchived());
+		patron = patronService.saveOrUpdate(patron);
+		setBoutonArchiver();
+	}
+
+	private void setBoutonArchiver() {
+		archiverBtn.setText(patron.isArchived() ? "Désarchiver" :"Archiver");
 	}
 
 	/*

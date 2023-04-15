@@ -5,8 +5,10 @@ import java.util.List;
 
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.enums.SupportTypeEnum;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -23,6 +25,7 @@ public class PatronDto implements FxDto<Patron>{
 	private StringProperty modele;
 	private StringProperty typeVetement;
 	private StringProperty description;
+	private BooleanProperty archived;
 	
 	private StringProperty typeSupport;
 	private ListProperty<TissuRequisDto> tissusRequis;
@@ -40,6 +43,7 @@ public class PatronDto implements FxDto<Patron>{
 		setTissusRequis(new ArrayList<>());
 		this.fournituresRequises = new SimpleListProperty<>();
 		setFournituresRequises(new ArrayList<>());
+		this.archived = new SimpleBooleanProperty();
 	}
 	
 	public int getId() {
@@ -154,5 +158,17 @@ public class PatronDto implements FxDto<Patron>{
 	@Override
 	public String toString() {
 		return " " + modele.getValue()+" ("+typeVetement.getValue() + ") de la marque "+marque.getValue()+" (ref. " + reference.getValue() + ").";
+	}
+
+	public boolean isArchived() {
+		return archived.get();
+	}
+
+	public BooleanProperty archivedProperty() {
+		return archived;
+	}
+
+	public void setArchived(boolean archived) {
+		this.archived.set(archived);
 	}
 }

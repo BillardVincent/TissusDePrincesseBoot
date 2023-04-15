@@ -11,6 +11,7 @@ import javax.persistence.PrePersist;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.ColumnDefault;
 
 import fr.vbillard.tissusdeprincesseboot.model.enums.SupportTypeEnum;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,9 @@ public class Patron extends AbstractEntity {
 	private String modele;
 	private String typeVetement;
 	private String description;
+
+	@ColumnDefault("false")
+	private boolean archived;
 	
 	@Enumerated(EnumType.STRING)
 	private SupportTypeEnum supportType;

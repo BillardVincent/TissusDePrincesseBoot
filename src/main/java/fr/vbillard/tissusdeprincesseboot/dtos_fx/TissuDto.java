@@ -36,6 +36,7 @@ public class TissuDto implements FxDto<Tissu> {
 	private BooleanProperty decati;
 	private StringProperty tissage;
 	private BooleanProperty chute;
+	private BooleanProperty archived;
 
 	public TissuDto() {
 		this.id = new SimpleIntegerProperty();
@@ -52,6 +53,7 @@ public class TissuDto implements FxDto<Tissu> {
 		this.unitePoids = new SimpleStringProperty();
 		this.tissage = new SimpleStringProperty();
 		this.chute = new SimpleBooleanProperty();
+		this.archived = new SimpleBooleanProperty();
 		this.longueurRestante = new SimpleIntegerProperty();
 
 	}
@@ -246,4 +248,15 @@ public class TissuDto implements FxDto<Tissu> {
 		this.tissage.set(tissage);
 	}
 
+	public boolean isArchived() {
+		return archived.get();
+	}
+
+	public BooleanProperty archivedProperty() {
+		return archived;
+	}
+
+	public void setArchived(boolean archived){
+		this.archived.set(archived);
+	}
 }

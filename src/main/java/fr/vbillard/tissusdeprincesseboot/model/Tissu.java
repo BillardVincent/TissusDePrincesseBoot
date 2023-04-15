@@ -5,6 +5,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
 import lombok.Getter;
@@ -39,7 +41,9 @@ public class Tissu extends AbstractEntity {
 	private UnitePoids unitePoids = UnitePoids.NON_RENSEIGNE;
 	private boolean decati;
 	private String lieuAchat;
-	private Boolean archived;
+
+	@ColumnDefault("false")
+	private boolean archived;
 
 	public Tissu(int id, String reference, int longueur, int laize, String description, Matiere matiere,
 			TypeTissuEnum typeTissu, int poids, UnitePoids unitePoids, boolean decati, String lieuAchat,

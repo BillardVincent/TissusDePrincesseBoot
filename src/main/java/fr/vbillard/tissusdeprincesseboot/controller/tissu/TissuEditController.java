@@ -91,6 +91,8 @@ public class TissuEditController implements IController {
 	public JFXButton addPictureBtn;
 	@FXML
 	public Label imageNotSaved;
+	@FXML
+	public JFXButton archiverBtn;
 
 	private RootController root;
 	private StageInitializer initializer;
@@ -159,6 +161,7 @@ public class TissuEditController implements IController {
 		pictureExpendBtn.setDisable(tissuIsNew);
 		addPictureBtn.setDisable(tissuIsNew);
 		imageNotSaved.setVisible(tissuIsNew);
+		setBoutonArchiver();
 	}
 
 	@FXML
@@ -325,6 +328,17 @@ public class TissuEditController implements IController {
 						+ "g/m², un tissu moyen entre " + constantesMetier.getMinPoidsMoyen() + "g/m² et "
 						+ constantesMetier.getMaxPoidsMoyen() + "g/m², un tissu lourd aura un poids supérieur à "
 						+ constantesMetier.getMaxPoidsMoyen() + "g/m².");
+	}
+
+	@FXML
+	public void archiver(){
+		tissu.setArchived(!tissu.isArchived());
+		tissu = tissuService.saveOrUpdate(tissu);
+		setBoutonArchiver();
+	}
+
+	private void setBoutonArchiver() {
+		archiverBtn.setText(tissu.isArchived() ? "Désarchiver" :"Archiver");
 	}
 
 }

@@ -72,6 +72,8 @@ public class FournitureEditController implements IController {
 	public Label intitulePrimLbl;
 	@FXML
 	public Label intituleSecLbl;
+	@FXML
+	public JFXButton archiverBtn;
 
 	private final RootController root;
 	private StageInitializer initializer;
@@ -284,6 +286,17 @@ public class FournitureEditController implements IController {
 	@FXML
 	private void pictureExpend() {
 		DevInProgressService.notImplemented();
+	}
+
+	@FXML
+	public void archiver(){
+		fourniture.setArchived(!fourniture.isArchived());
+		fourniture = fournitureService.saveOrUpdate(fourniture);
+		setBoutonArchiver();
+	}
+
+	private void setBoutonArchiver() {
+		archiverBtn.setText(fourniture.isArchived() ? "Désarchiver" :"Archiver");
 	}
 
 }
