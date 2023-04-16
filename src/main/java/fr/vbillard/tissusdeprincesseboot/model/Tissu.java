@@ -47,7 +47,7 @@ public class Tissu extends AbstractEntity {
 
 	public Tissu(int id, String reference, int longueur, int laize, String description, Matiere matiere,
 			TypeTissuEnum typeTissu, int poids, UnitePoids unitePoids, boolean decati, String lieuAchat,
-			Tissage tissage, boolean chute) {
+			Tissage tissage, boolean chute, boolean archived) {
 		super();
 		this.id = id;
 		this.reference = reference;
@@ -62,6 +62,7 @@ public class Tissu extends AbstractEntity {
 		this.lieuAchat = lieuAchat;
 		this.chute = chute;
 		this.tissage = tissage;
+		this.archived = false;
 	}
 
 }

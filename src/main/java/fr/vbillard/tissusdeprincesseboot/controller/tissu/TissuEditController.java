@@ -92,6 +92,8 @@ public class TissuEditController implements IController {
 	@FXML
 	public Label imageNotSaved;
 	@FXML
+	public JFXButton addPictureClipboardBtn;
+	@FXML
 	public JFXButton archiverBtn;
 
 	private RootController root;
@@ -129,7 +131,7 @@ public class TissuEditController implements IController {
 		tissu = data.getTissu();
 		if (tissu == null || tissu.getChuteProperty() == null) {
 			tissu = mapper.map(new Tissu(0, "", 0, 0, "", null, TypeTissuEnum.NON_RENSEIGNE, 0,
-					UnitePoids.NON_RENSEIGNE, false, "", null, false), TissuDto.class);
+					UnitePoids.NON_RENSEIGNE, false, "", null, false, false), TissuDto.class);
 		}
 
 		longueurField.setText(FxUtils.safePropertyToString(tissu.getLongueurProperty()));
@@ -161,6 +163,7 @@ public class TissuEditController implements IController {
 		pictureExpendBtn.setDisable(tissuIsNew);
 		addPictureBtn.setDisable(tissuIsNew);
 		imageNotSaved.setVisible(tissuIsNew);
+		addPictureClipboardBtn.setDisable(tissuIsNew);
 		setBoutonArchiver();
 	}
 
@@ -175,7 +178,7 @@ public class TissuEditController implements IController {
 		CustomSpinner.setSpinner(longueurField);
 		CustomSpinner.setSpinner(laizeField);
 		CustomSpinner.setSpinner(poidsField);
-		
+
 	}
 
 	public boolean isOkClicked() {
@@ -312,6 +315,14 @@ public class TissuEditController implements IController {
 		if (isInputValid()) {
 			setTissuFromFields();
 			pictureHelper.addPictureWeb(tissu);
+		}
+	}
+
+	@FXML
+	private void addPictureFromClipboard(){
+		if (isInputValid()) {
+			setTissuFromFields();
+			pictureHelper.addPictureClipBoard(tissu);
 		}
 	}
 

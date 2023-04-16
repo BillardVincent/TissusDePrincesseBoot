@@ -91,9 +91,9 @@ public class PatronSearchController implements IController {
 	private TissageService tissageService;
 	private UserPrefService userPrefService;
 
-	private List<String> tissageValuesSelected = new ArrayList();
-	private List<String> typeValuesSelected = new ArrayList();
-	private List<String> matiereValuesSelected = new ArrayList();
+	private List<String> tissageValuesSelected = new ArrayList<>();
+	private List<String> typeValuesSelected = new ArrayList<>();
+	private List<String> matiereValuesSelected = new ArrayList<>();
 
 	private int margeHauteLeger;
 	private int margeBasseMoyen;
@@ -124,6 +124,9 @@ public class PatronSearchController implements IController {
 		margeHauteMoyen = Math.round(pref.getMaxPoidsMoyen() + pref.getMaxPoidsMoyen() * pref.getPoidsMargePercent());
 		margeBasseLourd = Math.round(pref.getMaxPoidsMoyen() - pref.getMaxPoidsMoyen() * pref.getPoidsMargePercent());
 
+
+		FxUtils.setToggleColor(lourdCBox,	moyenCBox,	legerCBox, ncCBox, supportPapierCBox, supportPdfCBox,
+				supportProjectionCBox, supportNcCBox);
 	}
 
 	private void setData(FxData data) {
@@ -196,7 +199,9 @@ public class PatronSearchController implements IController {
 			supportPdfCBox.setSelected(true);
 			supportProjectionCBox.setSelected(true);
 			supportNcCBox.setSelected(true);
-		
+
+
+
 		}
 
 	}

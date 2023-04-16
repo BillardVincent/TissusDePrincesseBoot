@@ -16,6 +16,7 @@ import fr.vbillard.tissusdeprincesseboot.filtre.specification.ProjetSpecificatio
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
+import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
 import javafx.fxml.FXML;
 
 @Component
@@ -52,6 +53,8 @@ public class ProjetSearchController implements IController {
 		planedCBox.setSelected(true);
 		inProgressCBox.setSelected(true);
 		finishedCBox.setSelected(true);
+
+		FxUtils.setToggleColor(etudeCBox,	planedCBox,	inProgressCBox, finishedCBox);
 	}
 
 	@FXML

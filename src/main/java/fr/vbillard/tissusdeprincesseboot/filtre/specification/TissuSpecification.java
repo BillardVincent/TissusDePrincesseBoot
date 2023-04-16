@@ -73,14 +73,14 @@ public class TissuSpecification implements Specification<Tissu> {
 
 		if (poidsNC != null && poidsNC) {
 			if (poids != null) {
-				Predicate nc = SpecificationUtils.getNumericSearchPredicate(new NumericSearch<Integer>(0),
+				Predicate nc = SpecificationUtils.getNumericSearchPredicate(new NumericSearch<>(0),
 						tissu.get(Tissu_.POIDS), cb);
 				Predicate value = SpecificationUtils.getNumericSearchPredicate(poids, tissu.get(Tissu_.POIDS), cb);
 
 				Predicate or = cb.or(nc, value);
 				predicateList.add(or);
 			} else {
-				predicateList.add(SpecificationUtils.getNumericSearchPredicate(new NumericSearch<Integer>(0),
+				predicateList.add(SpecificationUtils.getNumericSearchPredicate(new NumericSearch<>(0),
 						tissu.get(Tissu_.POIDS), cb));
 			}
 		} else if (poids != null) {
@@ -100,6 +100,10 @@ public class TissuSpecification implements Specification<Tissu> {
 		if (lieuAchat != null) {
 			predicateList.add(
 					SpecificationUtils.getCharacterSearchPredicate(description, tissu.get(Tissu_.LIEU_ACHAT), cb));
+		}
+
+		if(archived != null){
+			predicateList.add(tissu.get(Tissu_.ARCHIVED).in(archived));
 		}
 
 		return cb.and(predicateList.toArray(new Predicate[] {}));

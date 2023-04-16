@@ -156,6 +156,8 @@
             <JFXButton layoutX="62.0" layoutY="752.0" onAction="#handleSavePatron" prefHeight="26.0" prefWidth="120.0"
                        text="Sauver"/>
             <JFXButton layoutX="343.0" layoutY="752.0" onAction="#handleCancel" text="Annuler"/>
+            <JFXButton fx:id="archiverBtn" mnemonicParsing="false" onMouseClicked="#archiver"/>
+
           </children>
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="798.0" prefWidth="728.0">

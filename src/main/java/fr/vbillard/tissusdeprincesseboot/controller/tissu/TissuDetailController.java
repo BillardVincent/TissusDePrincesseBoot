@@ -108,7 +108,7 @@ public class TissuDetailController implements IController {
 		tissu = data.getTissu();
 		if (tissu == null || tissu.getChuteProperty() == null) {
 			tissu = mapper.map(new Tissu(0, "", 0, 0, "", null, TypeTissuEnum.NON_RENSEIGNE, 0,
-					UnitePoids.NON_RENSEIGNE, false, "", null, false), TissuDto.class);
+					UnitePoids.NON_RENSEIGNE, false, "", null, false, false), TissuDto.class);
 		}
 
 		longueurField

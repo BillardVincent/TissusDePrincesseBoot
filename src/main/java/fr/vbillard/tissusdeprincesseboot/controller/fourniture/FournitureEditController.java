@@ -67,6 +67,8 @@ public class FournitureEditController implements IController {
 	@FXML
 	public JFXButton addPictureBtn;
 	@FXML
+	public JFXButton addPictureClipboardBtn;
+	@FXML
 	public Label imageNotSaved;
 	@FXML
 	public Label intitulePrimLbl;
@@ -155,6 +157,7 @@ public class FournitureEditController implements IController {
 		pictureExpendBtn.setDisable(tissuIsNew);
 		addPictureBtn.setDisable(tissuIsNew);
 		imageNotSaved.setVisible(tissuIsNew);
+		addPictureClipboardBtn.setDisable(tissuIsNew);
 	}
 
 	@FXML

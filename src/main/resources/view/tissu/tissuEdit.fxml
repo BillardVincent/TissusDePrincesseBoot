@@ -50,7 +50,7 @@
             <JFXTextField fx:id="lieuDachatField" GridPane.columnIndex="1" GridPane.rowIndex="10" />
             <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="0.0" prefWidth="324.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
                 <children>
-                    <JFXTextField fx:id="poidsField" editable="true" prefHeight="26.0" prefWidth="239.0" />
+                    <JFXTextField fx:id="poidsField" prefHeight="26.0" prefWidth="239.0" />
                     <JFXComboBox fx:id="unitePoidsField" prefHeight="26.0" prefWidth="94.0" />
                <FontAwesomeIconView styleClass="clickable" glyphName="QUESTION_CIRCLE" onMouseClicked="#poidsHelp"
                                     size="24" wrappingWidth="26.171464920043945">
@@ -62,7 +62,7 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                 <children>
-                    <JFXTextField fx:id="laizeField" editable="true" prefHeight="23.0" prefWidth="248.0" />
+                    <JFXTextField fx:id="laizeField" prefHeight="23.0" prefWidth="248.0" />
                     <Label prefHeight="43.0" prefWidth="65.0" text="cm">
                         <HBox.margin>
                             <Insets left="15.0" />
@@ -72,7 +72,7 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                 <children>
-                    <JFXTextField fx:id="longueurField" editable="true" prefHeight="26.0" prefWidth="250.0" />
+                    <JFXTextField fx:id="longueurField" prefHeight="26.0" prefWidth="250.0" />
                     <Label prefHeight="43.0" prefWidth="65.0" text="cm">
                         <HBox.margin>
                             <Insets left="15.0" />
@@ -137,6 +137,7 @@
         <buttons>
             <JFXButton mnemonicParsing="false" onAction="#handleOk" prefHeight="25.0" prefWidth="123.0" text="Valider" />
             <JFXButton mnemonicParsing="false" onAction="#handleCancel" text="Annuler" />
+            <JFXButton fx:id="archiverBtn" mnemonicParsing="false" onMouseClicked="#archiver"/>
         </buttons>
     </ButtonBar>
    <ImageView fx:id="imagePane" fitHeight="400.0" fitWidth="600.0" layoutX="681.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true" />
@@ -155,6 +156,12 @@
          <FontAwesomeIconView glyphName="DOWNLOAD" size="20" />
       </graphic>
    </JFXButton>
+    <JFXButton fx:id="addPictureClipboardBtn" layoutX="940.0" layoutY="566.0" mnemonicParsing="false"
+               onMouseClicked="#addPictureFromClipboard">
+        <graphic>
+            <FontAwesomeIconView glyphName="CLIPBOARD" size="20" />
+        </graphic>
+    </JFXButton>
    <Label fx:id="imageNotSaved" layoutX="780.0" layoutY="594.0" text="Sauvegardez une première fois le tissu avant de choisir une image" />
    <padding>
       <Insets bottom="75.0" left="75.0" right="75.0" top="75.0" />
