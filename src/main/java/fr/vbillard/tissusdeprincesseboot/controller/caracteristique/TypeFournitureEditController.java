@@ -20,6 +20,7 @@ import fr.vbillard.tissusdeprincesseboot.model.enums.DimensionEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import fr.vbillard.tissusdeprincesseboot.service.TypeFournitureService;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
+import fr.vbillard.tissusdeprincesseboot.utils.FxUtils;
 import fr.vbillard.tissusdeprincesseboot.utils.ShowAlert;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -94,6 +95,8 @@ public class TypeFournitureEditController implements IModalController {
 
 		typeFourniture = null;
 		ajouterButton.setDisable(true);
+
+		FxUtils.setToggleColor(uniteSecondaireCheckBx);
 
 		listType.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> handleSelectElement(newValue));

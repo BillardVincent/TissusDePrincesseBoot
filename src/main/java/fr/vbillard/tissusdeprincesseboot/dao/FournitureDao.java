@@ -1,7 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.dao;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -20,5 +20,5 @@ public interface FournitureDao extends Idao<Fourniture, Integer>{
 
   boolean existsFournitureByType(TypeFourniture typeFourniture);
 
-  Page<Fourniture> findAllByArchived(PageRequest of, boolean b);
+  Page<Fourniture> findAllByArchived(Pageable pageable, boolean b);
 }

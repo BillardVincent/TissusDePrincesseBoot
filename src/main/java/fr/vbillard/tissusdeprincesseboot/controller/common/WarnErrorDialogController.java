@@ -20,6 +20,9 @@ import javafx.stage.Stage;
 @Component
 public class WarnErrorDialogController implements IModalController {
 
+
+	// TODO A FAIRE !!!!!!!!!!!!!!!!!!!
+
 	@FXML
 	private JFXCheckBox selectAll;
 

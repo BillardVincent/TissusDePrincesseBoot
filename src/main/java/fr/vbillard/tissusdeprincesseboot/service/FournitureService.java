@@ -9,7 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import fr.vbillard.tissusdeprincesseboot.dao.FournitureDao;
-import fr.vbillard.tissusdeprincesseboot.dao.QuantiteDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.FournitureSpecification;
 import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
@@ -27,7 +26,6 @@ public class FournitureService extends AbstractDtoService<Fourniture, Fourniture
 
 	private MapperService mapper;
 	private FournitureDao dao;
-	private QuantiteDao quantiteDao;
 	private ImageService imageService;
 
 
@@ -50,24 +48,7 @@ public class FournitureService extends AbstractDtoService<Fourniture, Fourniture
 	 */
 	@Override
 	protected void beforeSaveOrUpdate(Fourniture entity) {
-		/*
-		entity.setQuantitePrincipale(quantiteDao.save(entity.getQuantitePrincipale()));
-		if (entity.getQuantiteSecondaire() != null){
-			entity.setQuantiteSecondaire(quantiteDao.save(entity.getQuantiteSecondaire()));
 
-		}*/
-
-		/*
-		if (UnitePoids.GRAMME_M.equals(entity.getUnitePoids())) {
-			if (entity.getLaize() == 0) {
-				throw new IllegalData(
-						"La laize doit être renseignée pour calculer le poids en g/m² à partir du poids en g" + ".m².");
-			}
-			float conversion = (float) entity.getPoids() / ((float) entity.getLaize() / 100f);
-			entity.setPoids(Math.round(conversion));
-			entity.setUnitePoids(UnitePoids.GRAMME_M_CARRE);
-		}
-		*/
 	}
 
 	@Override
@@ -97,7 +78,7 @@ public class FournitureService extends AbstractDtoService<Fourniture, Fourniture
 	}
 
 	/**
-	 * S'execute au démarage pour recalculer les quantites restantes
+	 * S'exécute au démarrage pour recalculer les quantités restantes
 	 */
 	public void batchFournitureDisponible() {
 		for (Fourniture f : getAll()) {

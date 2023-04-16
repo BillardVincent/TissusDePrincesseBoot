@@ -2,6 +2,7 @@ package fr.vbillard.tissusdeprincesseboot.model.enums;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
@@ -75,14 +76,17 @@ public enum Unite {
 
 	public float convertir(float value, Unite fromUnite, Unite toUnite) {
 
-		List<Unite> lst = Arrays.asList(fromUnite, toUnite);
-		if (getValuesByDimension(DimensionEnum.LONGUEUR).containsAll(lst)
-				|| getValuesByDimension(DimensionEnum.POIDS).containsAll(lst)
-				|| getValuesByDimension(DimensionEnum.VOLUME).containsAll(lst)) {
-			return value / fromUnite.getFacteur() * toUnite.getFacteur();
-		} else {
-			throw new IllegalData("conversion impossible de " + fromUnite.label + " en " + toUnite.label);
+		if (fromUnite == toUnite){
+			return value;
 		}
+		List<Unite> lst = Arrays.asList(fromUnite, toUnite);
+		if (DimensionEnum.LONGUEUR.getUnites().containsAll(lst)
+				|| DimensionEnum.POIDS.getUnites().containsAll(lst)
+				|| DimensionEnum.VOLUME.getUnites().containsAll(lst)) {
+			return value / fromUnite.getFacteur() * toUnite.getFacteur();
+		}
+
+		throw new IllegalData("conversion impossible de " + fromUnite.label + " en " + toUnite.label);
 
 	}
 

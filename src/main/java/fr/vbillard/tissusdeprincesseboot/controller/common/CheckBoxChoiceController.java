@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXCheckBox;
 import fr.vbillard.tissusdeprincesseboot.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IModalController;
 import fr.vbillard.tissusdeprincesseboot.exception.NoSelectionException;
+import fr.vbillard.tissusdeprincesseboot.utils.Constants;
 import fr.vbillard.tissusdeprincesseboot.utils.FxData;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -59,6 +60,8 @@ public class CheckBoxChoiceController implements IModalController {
 		this.dialogStage = dialogStage;
 		for (String s : data.getListDataCBox()) {
 			JFXCheckBox cb = new JFXCheckBox();
+			cb.setCheckedColor(Constants.colorSecondary);
+
 			cb.setText(s);
 			if (data.getListValues() == null || data.getListValues().isEmpty()) {
 				cb.setSelected(true);
@@ -77,6 +80,7 @@ public class CheckBoxChoiceController implements IModalController {
 		}
 
 		selectAll.setSelected(areAllCheckBoxChecked());
+		selectAll.setCheckedColor(Constants.colorSecondary);
 		selectAll.selectedProperty()
 				.addListener((ObservableValue<? extends Boolean> ov, Boolean oldVal, Boolean newVal) -> {
 					if (Boolean.TRUE.equals(newVal)) {

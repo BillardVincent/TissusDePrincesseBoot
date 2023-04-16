@@ -37,7 +37,7 @@ public class TissuPictureHelper extends PictureHelper {
 
 	protected void setImage() {
 		tissuService.saveOrUpdate(tissu);
-		picture.get().setTissu(tissu);
+		picture.orElseThrow(RuntimeException::new).setTissu(tissu);
 		imageService.saveOrUpdate(picture.get());
 		imagePane.setImage(new Image(new ByteArrayInputStream(picture.get().getData())));
 	}
@@ -52,4 +52,8 @@ public class TissuPictureHelper extends PictureHelper {
 		addPictureLocal();
 	}
 
+	public void addPictureClipBoard(TissuDto dto) {
+		tissu = tissuService.convert(dto);
+		addPictureFromClipboard();
+	}
 }

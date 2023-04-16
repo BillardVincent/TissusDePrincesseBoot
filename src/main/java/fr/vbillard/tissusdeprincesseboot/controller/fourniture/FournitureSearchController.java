@@ -84,7 +84,7 @@ public class FournitureSearchController implements IController {
 	private boolean okClicked = false;
 
 	private final TypeFournitureService typeFournitureService;
-	private List<String> typeValuesSelected = new ArrayList();
+	private List<String> typeValuesSelected = new ArrayList<>();
 
 
 	public FournitureSearchController(TypeFournitureService typeFournitureService, RootController root) {
@@ -107,6 +107,7 @@ public class FournitureSearchController implements IController {
 
 		typeLbl.setText(AUCUN_FILTRE);
 
+		FxUtils.setToggleColor(margeCbx,	margeSecCbx,	longueurUtilisableCBox);
 		setData(data);
 
 	}

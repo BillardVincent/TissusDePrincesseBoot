@@ -37,7 +37,7 @@
             <JFXTextField fx:id="lieuDachatField" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="0.0" prefWidth="324.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                 <children>
-                    <JFXTextField fx:id="quantiteField" editable="true" prefHeight="26.0" prefWidth="205.0" />
+                    <JFXTextField fx:id="quantiteField" prefHeight="26.0" prefWidth="205.0" />
                     <JFXComboBox fx:id="uniteField" prefHeight="26.0" prefWidth="125.0" />
                 </children>
             </HBox>
@@ -88,6 +88,7 @@
         <buttons>
             <JFXButton mnemonicParsing="false" onAction="#handleOk" prefHeight="25.0" prefWidth="123.0" text="Valider" />
             <JFXButton mnemonicParsing="false" onAction="#handleCancel" text="Annuler" />
+          <JFXButton fx:id="archiverBtn" mnemonicParsing="false" onMouseClicked="#archiver"/>
         </buttons>
     </ButtonBar>
    <ImageView fx:id="imagePane" fitHeight="400.0" fitWidth="600.0" layoutX="681.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true" />
@@ -106,10 +107,10 @@
          <FontAwesomeIconView glyphName="DOWNLOAD" size="20" />
       </graphic>
    </JFXButton>
-  <JFXButton fx:id="addPictureClipboardBtn" layoutX="1100.0" layoutY="566.0" mnemonicParsing="false"
+  <JFXButton fx:id="addPictureClipboardBtn" layoutX="940.0" layoutY="566.0" mnemonicParsing="false"
              onMouseClicked="#addPictureFromClipboard">
     <graphic>
-      <FontAwesomeIconView glyphName="DOWNLOAD" size="20" />
+      <FontAwesomeIconView glyphName="CLIPBOARD" size="20" />
     </graphic>
   </JFXButton>
    <Label fx:id="imageNotSaved" layoutX="780.0" layoutY="594.0" text="Sauvegardez une première fois le tissu avant de choisir une image" />

@@ -216,7 +216,8 @@ public class PatronEditController implements IController {
 		this.initializer = initializer;
 
 		if (data == null || data.getPatron() == null) {
-			patron = mapper.map(new Patron("", "", "", "", "", SupportTypeEnum.NON_RENSEIGNE, null, null), PatronDto.class);
+			patron = mapper.map(new Patron("", "", "", "", "", false, SupportTypeEnum.NON_RENSEIGNE, null, null),
+					PatronDto.class);
 			setDisabledButton();
 
 		} else {

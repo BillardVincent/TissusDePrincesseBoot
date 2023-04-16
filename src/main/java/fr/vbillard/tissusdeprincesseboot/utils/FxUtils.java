@@ -3,6 +3,7 @@ package fr.vbillard.tissusdeprincesseboot.utils;
 import java.util.List;
 import java.util.StringJoiner;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
@@ -23,7 +24,10 @@ import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
+import javafx.scene.control.ButtonBase;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.paint.Color;
 
 @Component
 public class FxUtils {
@@ -112,7 +116,7 @@ public class FxUtils {
 
 	public static int intFromJFXTextField(JFXTextField field) {
 		int value = 0;
-		if (!field.getText().isEmpty()) {
+		if (field!= null && !field.getText().isEmpty()) {
 			value = Integer.parseInt(field.getText());
 		}
 		return value;
@@ -120,7 +124,7 @@ public class FxUtils {
 
 	public static float floatFromJFXTextField(JFXTextField field) {
 		float value = 0f;
-		if (!field.getText().isEmpty()) {
+		if (field!= null && !field.getText().isEmpty()) {
 			value = Float.parseFloat(field.getText());
 		}
 		return value;
@@ -131,7 +135,7 @@ public class FxUtils {
 	// ----------------------------------------------
 
 	public static NumericSearch<Integer> setNumericSearch(JFXTextField min, JFXTextField max) {
-		return setNumericSearch(min, min, 0);
+		return setNumericSearch(min, max, 0);
 	}
 
 	public static NumericSearch<Integer> setNumericSearch(JFXTextField min, JFXTextField max, float marge) {
@@ -140,7 +144,7 @@ public class FxUtils {
 		int maxValueBeforeMarge = intFromJFXTextField(max);
 
 		if (minValueBeforeMarge < 0 || maxValueBeforeMarge < 0
-				|| (maxValueBeforeMarge != 0 && maxValueBeforeMarge >= maxValueBeforeMarge)) {
+				|| (maxValueBeforeMarge != 0 && minValueBeforeMarge >= maxValueBeforeMarge)) {
 			throw new IllegalData(ILLEGAL_NUMBER);
 		}
 
@@ -151,9 +155,9 @@ public class FxUtils {
 			minValue = 0;
 		}
 
-		int maxValue = Math.round(maxValueBeforeMarge + maxValueBeforeMarge * marge + 0.5f);
 
-		if (maxValue > 0) {
+		if (maxValueBeforeMarge > 0) {
+			int maxValue = Math.round(maxValueBeforeMarge + maxValueBeforeMarge * marge + 0.5f);
 			search = new NumericSearch<>(null);
 			search.setLessThanEqual(maxValue);
 
@@ -185,7 +189,7 @@ public class FxUtils {
 			float marge) {
 
 		if (minValueBeforeMarge < 0 || maxValueBeforeMarge < 0
-				|| (maxValueBeforeMarge != 0 && maxValueBeforeMarge >= maxValueBeforeMarge)) {
+				|| (maxValueBeforeMarge != 0 && minValueBeforeMarge >= maxValueBeforeMarge)) {
 			throw new IllegalData(ILLEGAL_NUMBER);
 		}
 
@@ -216,7 +220,7 @@ public class FxUtils {
 	// Build numeric search from boxes
 	// ----------------------------------------------
 
-	public static NumericSearch<Integer> NumericSearch(JFXCheckBox lourdCBox, JFXCheckBox moyenCBox,
+	public static NumericSearch<Integer> numericSearch(JFXCheckBox lourdCBox, JFXCheckBox moyenCBox,
 			JFXCheckBox legerCBox, UserPref pref) {
 
 		NumericSearch<Integer> poidsSearch = null;
@@ -272,7 +276,7 @@ public class FxUtils {
 	}
 
 	// ---------------------------------------------
-	// ???
+	// RadioButton
 	// ----------------------------------------------
 
 	public static Boolean getBooleanFromRadioButtons(JFXRadioButton trueButton, JFXRadioButton falseButton,
@@ -318,6 +322,15 @@ public class FxUtils {
 				&& !numericSearch.getGreaterThanEqual().equals(0)) {
 			field.setText(String.valueOf(numericSearch.getLessThanEqual()));
 		}
+	}
+
+
+	public static void setToggleGroupFromBoolean(Boolean search, JFXRadioButton trueBtn, JFXRadioButton falseBtn,
+			JFXRadioButton undetermined) {
+		trueBtn.setSelected(BooleanUtils.isTrue(search));
+		falseBtn.setSelected(BooleanUtils.isFalse(search));
+		undetermined.setSelected(search == null);
+
 	}
 
 	// ---------------------------------------------
@@ -376,6 +389,28 @@ public class FxUtils {
 		textField.setTextFormatter(CustomSpinner.getLongFormatter());
 		textField.setText(Float.toString(value));
 		return textField;
+	}
+
+	public static void setToggleGroup (ToggleGroup toggleGroup, JFXRadioButton selected, JFXRadioButton... otherRadio){
+		selected.setToggleGroup(toggleGroup);
+		selected.setSelected(true);
+		for (JFXRadioButton radioButton: otherRadio) {
+			radioButton.setToggleGroup(toggleGroup);
+		}
+	}
+
+	public static void setToggleColor(ButtonBase... toggles){
+		for (ButtonBase t: toggles) {
+			if (t instanceof JFXRadioButton){
+				((JFXRadioButton)t).setSelectedColor((Color)Constants.colorSecondary);
+
+			}
+			else if(t instanceof JFXCheckBox){
+				((JFXCheckBox)t).setCheckedColor(Constants.colorSecondary);
+
+			}
+		}
+
 	}
 
 }
