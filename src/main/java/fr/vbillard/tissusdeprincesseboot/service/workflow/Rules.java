@@ -50,7 +50,7 @@ public class Rules {
         ModelUtils.generateString(entity, Articles.DEFINI, true, true) + "ne seront plus réservés pour ce projet");
   }
 
-  public ErrorWarn verifyLenght(Projet projet) {
+  public ErrorWarn verifyLength(Projet projet) {
     ErrorWarn result = new ErrorWarn();
     List<TissuRequis> trList = tissuRequisService.getAllRequisByPatron(projet.getPatron().getId());
     for (TissuRequis tr : trList) {
@@ -60,7 +60,6 @@ public class Rules {
       if (tr.getLongueur() - marge * tr.getLongueur() > longueurUtilisee) {
         result.addWarn("La longueur totale alloué est inférieure à la longueur requise pour " + tr);
       }
-
     }
 
     List<FournitureRequise> frList = fournitureRequiseService.getAllRequisByPatron(projet.getPatron().getId());
@@ -71,7 +70,6 @@ public class Rules {
       if (fr.getQuantite()  > quantiteUtilisee) {
         result.addWarn("La quantité totale alloué est inférieure à la quantité requise pour " + fr);
       }
-
     }
 
     return  result;

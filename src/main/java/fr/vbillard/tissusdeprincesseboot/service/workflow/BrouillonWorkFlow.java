@@ -45,7 +45,7 @@ public class BrouillonWorkFlow extends Workflow {
 
 	@Override
 	protected ErrorWarn verifyNextStep() {
-		ErrorWarn errorwarn = rules.verifyLenght(projet);
+		ErrorWarn errorwarn = rules.verifyLength(projet);
 
 		return errorwarn;
 	}
