@@ -1,4 +1,4 @@
-package fr.vbillard.tissusdeprincesseboot.utils;
+package fr.vbillard.tissusdeprincesseboot.controller.utils;
 
 import java.util.Optional;
 

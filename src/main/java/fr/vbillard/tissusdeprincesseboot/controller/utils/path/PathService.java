@@ -1,12 +1,12 @@
-package fr.vbillard.tissusdeprincesseboot.utils.path;
+package fr.vbillard.tissusdeprincesseboot.controller.utils.path;
 
 import java.io.IOException;
 
 import org.springframework.stereotype.Service;
 
-import fr.vbillard.tissusdeprincesseboot.controller.InventaireBatchController;
-import fr.vbillard.tissusdeprincesseboot.controller.PreferenceController;
-import fr.vbillard.tissusdeprincesseboot.controller.RootController;
+import fr.vbillard.tissusdeprincesseboot.controller.misc.InventaireBatchController;
+import fr.vbillard.tissusdeprincesseboot.controller.misc.PreferenceController;
+import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.caracteristique.MatiereEditController;
 import fr.vbillard.tissusdeprincesseboot.controller.caracteristique.TissageEditController;
 import fr.vbillard.tissusdeprincesseboot.controller.caracteristique.TypeFournitureEditController;

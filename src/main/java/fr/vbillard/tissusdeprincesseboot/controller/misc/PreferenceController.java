@@ -1,10 +1,10 @@
-package fr.vbillard.tissusdeprincesseboot.controller;
+package fr.vbillard.tissusdeprincesseboot.controller.misc;
 
 import org.springframework.stereotype.Component;
 
 import com.jfoenix.controls.JFXTextField;
 
-import static fr.vbillard.tissusdeprincesseboot.fx_custom_element.CustomSpinner.setSpinner;
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.CustomSpinner.setSpinner;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -13,7 +13,7 @@ import fr.vbillard.tissusdeprincesseboot.TissusDePrincesseFxApp;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IModalController;
 import fr.vbillard.tissusdeprincesseboot.model.UserPref;
 import fr.vbillard.tissusdeprincesseboot.service.UserPrefService;
-import fr.vbillard.tissusdeprincesseboot.utils.FxData;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
 

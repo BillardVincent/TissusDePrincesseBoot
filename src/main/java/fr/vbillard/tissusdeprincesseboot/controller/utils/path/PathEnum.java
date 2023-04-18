@@ -1,4 +1,4 @@
-package fr.vbillard.tissusdeprincesseboot.utils.path;
+package fr.vbillard.tissusdeprincesseboot.controller.utils.path;
 
 import lombok.Getter;
 

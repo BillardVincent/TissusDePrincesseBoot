@@ -1,4 +1,4 @@
-package fr.vbillard.tissusdeprincesseboot.fx_custom_element;
+package fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;

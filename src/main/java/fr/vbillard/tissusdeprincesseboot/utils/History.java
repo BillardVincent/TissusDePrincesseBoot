@@ -4,6 +4,8 @@ import java.util.LinkedList;
 
 import org.springframework.stereotype.Component;
 
+import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
+
 @Component
 public class History {
 

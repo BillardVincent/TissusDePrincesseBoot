@@ -1,4 +1,4 @@
-package fr.vbillard.tissusdeprincesseboot.fx_custom_element;
+package fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element;
 
 import de.jensd.fx.glyphs.GlyphIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;

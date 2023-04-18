@@ -1,16 +1,15 @@
 package fr.vbillard.tissusdeprincesseboot.controller.common;
 
-import static fr.vbillard.tissusdeprincesseboot.utils.FxUtils.floatFromJFXTextField;
-import static fr.vbillard.tissusdeprincesseboot.utils.FxUtils.intFromJFXTextField;
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.floatFromJFXTextField;
 
 import org.springframework.stereotype.Component;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 
-import fr.vbillard.tissusdeprincesseboot.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IModalController;
-import fr.vbillard.tissusdeprincesseboot.fx_custom_element.CustomSpinner;
-import fr.vbillard.tissusdeprincesseboot.utils.FxData;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.CustomSpinner;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;

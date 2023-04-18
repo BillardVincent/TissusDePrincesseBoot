@@ -1,7 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.controller.utils;
 
-import fr.vbillard.tissusdeprincesseboot.StageInitializer;
-import fr.vbillard.tissusdeprincesseboot.utils.FxData;
+import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 
 public interface IController {
 

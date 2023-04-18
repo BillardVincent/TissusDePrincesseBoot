@@ -1,4 +1,4 @@
-package fr.vbillard.tissusdeprincesseboot.utils;
+package fr.vbillard.tissusdeprincesseboot.controller.utils;
 
 import java.util.List;
 import java.util.StringJoiner;
@@ -12,13 +12,14 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 
-import fr.vbillard.tissusdeprincesseboot.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.CharacterSearch;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
-import fr.vbillard.tissusdeprincesseboot.fx_custom_element.CustomSpinner;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.CustomSpinner;
 import fr.vbillard.tissusdeprincesseboot.model.UserPref;
-import fr.vbillard.tissusdeprincesseboot.utils.path.PathEnum;
+import fr.vbillard.tissusdeprincesseboot.utils.Constants;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
 import javafx.application.Platform;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
@@ -402,7 +403,7 @@ public class FxUtils {
 	public static void setToggleColor(ButtonBase... toggles){
 		for (ButtonBase t: toggles) {
 			if (t instanceof JFXRadioButton){
-				((JFXRadioButton)t).setSelectedColor((Color)Constants.colorSecondary);
+				((JFXRadioButton)t).setSelectedColor((Color) Constants.colorSecondary);
 
 			}
 			else if(t instanceof JFXCheckBox){
