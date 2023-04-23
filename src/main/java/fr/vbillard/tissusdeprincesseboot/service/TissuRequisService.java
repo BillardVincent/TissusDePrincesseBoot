@@ -29,13 +29,15 @@ public class TissuRequisService extends AbstractRequisService<TissuRequis, Tissu
 	private final CalculPoidsTissuService calculPoidsTissuService;
 	private final TissuVariantService tvs;
 	
-	public TissuRequisService(TissusRequisDao tissuRequisDao, UserPrefService userPrefService,
+	public TissuRequisService(PatronService patronService, TissusRequisDao tissuRequisDao,
+			UserPrefService userPrefService,
 			CalculPoidsTissuService calculPoidsTissuService, TissuVariantService tvs, MapperService mapper) {
 		super(mapper);
 		this.tissuRequisDao = tissuRequisDao;
 		this.userPrefService = userPrefService;
 		this.calculPoidsTissuService = calculPoidsTissuService;
 		this.tvs = tvs;
+		this.patronService = patronService;
 	}
 
 	@Override

@@ -2,7 +2,6 @@ package fr.vbillard.tissusdeprincesseboot.model.enums;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
@@ -74,7 +73,7 @@ public enum Unite {
 		return Arrays.asList(G, KG);
 	}
 
-	public float convertir(float value, Unite fromUnite, Unite toUnite) {
+	public static float convertir(float value, Unite fromUnite, Unite toUnite) {
 
 		if (fromUnite == toUnite){
 			return value;

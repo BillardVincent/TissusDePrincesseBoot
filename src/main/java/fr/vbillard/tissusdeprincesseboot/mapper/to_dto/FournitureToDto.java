@@ -9,6 +9,7 @@ import com.github.rozidan.springboot.modelmapper.TypeMapConfigurer;
 import fr.vbillard.tissusdeprincesseboot.dao.FournitureDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
+import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import lombok.AllArgsConstructor;
 
 @Component
@@ -28,8 +29,7 @@ public class FournitureToDto extends TypeMapConfigurer<Fourniture, FournitureDto
 			if (context.getSource().getId() != 0) {
 
 				if (context.getSource().getQuantitePrincipale() != null) {
-					Float qte = context.getSource().getQuantitePrincipale().getQuantite();
-					context.getDestination().setQuantite(qte == null ? 0 : qte);
+
 					if (context.getSource().getQuantitePrincipale().getUnite() != null) {
 						context.getDestination().setUnite(context.getSource().getQuantitePrincipale().getUnite());
 
@@ -38,18 +38,24 @@ public class FournitureToDto extends TypeMapConfigurer<Fourniture, FournitureDto
 							&& context.getSource().getType().getUnitePrincipaleConseillee() != null) {
 						context.getDestination().setUnite(context.getSource().getType().getUnitePrincipaleConseillee());
 					}
+					float qte = Unite.convertir(context.getSource().getQuantitePrincipale().getQuantite(),
+							context.getSource().getType().getDimensionPrincipale().getDefault(),
+							Unite.getEnum(context.getDestination().getUnite()));
+					context.getDestination().setQuantite(qte);
 				}
-					if (context.getSource().getQuantiteSecondaire() != null){
-						Float qte = context.getSource().getQuantiteSecondaire().getQuantite();
-						context.getDestination().setQuantiteSec(qte == null ? 0 : qte);
+					if (context.getSource().getQuantiteSecondaire() != null) {
 
 						if (context.getSource().getQuantiteSecondaire().getUnite() != null) {
 							context.getDestination().setUniteSecondaire(context.getSource().getQuantiteSecondaire().getUnite());
 						}
-					}
-					if (context.getDestination().getUniteSecondaire() == null && context.getSource().getType() != null
-							&& context.getSource().getType().getUnitePrincipaleConseillee() != null) {
-						context.getDestination().setUniteSecondaire(context.getSource().getType().getUnitePrincipaleConseillee());
+
+						if (context.getDestination().getUniteSecondaire() == null && context.getSource().getType() != null
+								&& context.getSource().getType().getUnitePrincipaleConseillee() != null) {
+							context.getDestination().setUniteSecondaire(context.getSource().getType().getUnitePrincipaleConseillee());
+						}
+						float qte = Unite.convertir(context.getSource().getQuantiteSecondaire().getQuantite(),
+								context.getSource().getType().getDimensionSecondaire().getDefault(), Unite.getEnum(context.getDestination().getUniteSecondaire()));
+						context.getDestination().setQuantiteSec(qte);
 					}
 				}
 

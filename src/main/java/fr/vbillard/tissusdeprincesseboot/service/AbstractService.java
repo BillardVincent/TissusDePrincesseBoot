@@ -17,9 +17,7 @@ public abstract class AbstractService<T> {
 	}
 
 	protected void beforeDelete(T entity){
-
 	}
-
 
 	@Transactional
 	public T saveOrUpdate(T entity) {

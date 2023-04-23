@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.jfoenix.controls.JFXTextField;
 
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextFormatter;
 import javafx.util.converter.FloatStringConverter;
@@ -41,6 +42,7 @@ public class CustomSpinner {
 	public static void setSpinner(JFXTextField textField) {
 		textField.setTextFormatter(getFormatter());
 		textField.setAlignment(Pos.CENTER_RIGHT);
+		setSpinnerFocused(textField);
 
 	}
 	
@@ -65,7 +67,15 @@ public class CustomSpinner {
 	public static void setLongSpinner(JFXTextField textField) {
 		textField.setTextFormatter(getLongFormatter());
 		textField.setAlignment(Pos.CENTER_RIGHT);
+		setSpinnerFocused(textField);
+	}
 
+	public static void setSpinnerFocused(JFXTextField textField){
+		textField.focusedProperty().addListener((observable, oldValue, newValue) -> Platform.runLater(() -> {
+			if (textField.isFocused() && !textField.getText().isEmpty()) {
+				textField.selectAll();
+			}
+		}));
 	}
 
 }

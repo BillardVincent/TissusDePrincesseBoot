@@ -14,7 +14,6 @@ import fr.vbillard.tissusdeprincesseboot.dao.TissusRequisDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.PatronSpecification;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
-import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.AllArgsConstructor;
@@ -26,7 +25,6 @@ public class PatronService extends AbstractDtoService<Patron, PatronDto> {
 	PatronDao patronDao;
 	ModelMapper mapper;
 	TissusRequisDao tissuRequisDao;
-	TissuRequisService tissuRequisService;
 
 	@Transactional
 	public PatronDto create(PatronDto patron) {
@@ -39,9 +37,7 @@ public class PatronService extends AbstractDtoService<Patron, PatronDto> {
 	}
 
 	public void delete(PatronDto selected) {
-		for (TissuRequis tr : tissuRequisDao.getAllByPatronId(selected.getId())) {
-			tissuRequisService.delete(tr);
-		}
+		tissuRequisDao.deleteAll(tissuRequisDao.getAllByPatronId(selected.getId()));
 		delete(mapper.map(selected, Patron.class));
 	}
 

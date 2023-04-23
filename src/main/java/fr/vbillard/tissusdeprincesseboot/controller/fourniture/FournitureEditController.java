@@ -116,7 +116,6 @@ public class FournitureEditController implements IController {
 
 
 		typeField.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-			System.out.println(newValue);
 			TypeFourniture type = typeService.findTypeFourniture(newValue);
 			boolean typeIsNull = type == null;
 			uniteField.setDisable(typeIsNull);
@@ -168,7 +167,8 @@ public class FournitureEditController implements IController {
 		generateReferenceButton.setTooltip(new Tooltip("Générer une référence automatiquement"));
 
 		CustomSpinner.setLongSpinner(quantiteField);
-		
+		CustomSpinner.setLongSpinner(quantiteSecField);
+
 	}
 
 	public boolean isOkClicked() {
@@ -189,10 +189,12 @@ public class FournitureEditController implements IController {
 		fourniture.setReference(referenceField.getText());
 		fourniture.setQuantite(Float.parseFloat(quantiteField.getText()));
 		fourniture.setQuantiteSec(Float.parseFloat(quantiteSecField.getText()));
+		fourniture.setIntituleDimension(intitulePrimLbl.getText());
 		fourniture.setDescription(descriptionField.getText());
 		fourniture.setType(typeService.findTypeFourniture(typeField.getValue()));
 		fourniture.setUnite(Unite.getEnum(uniteField.getValue()));
 		fourniture.setUniteSecondaire(Unite.getEnum(uniteSecField.getValue()));
+		fourniture.setIntituleSecondaire(intituleSecLbl.getText());
 		fourniture.setLieuAchat(lieuDachatField.getText());
 		fourniture.setNom(nomField.getText());
 		

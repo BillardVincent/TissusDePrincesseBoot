@@ -72,7 +72,7 @@ public abstract class PatronEditHelper<E extends AbstractEntity, EV extends Abst
 	public void displayRequis(DTOR requis) {
 
 		tissuEtFournitureContainer.getChildren().clear();
-		tvList = FXCollections.observableArrayList(new ArrayList<DTOV>());
+		tvList = FXCollections.observableArrayList(new ArrayList<>());
 		String labelText = EntityToString.getByEntity(getEntityClass()).getLabel() + " recommandés : ";
 
 		tissuEtFournitureContainer.getChildren().add(new Label(labelText));
@@ -115,7 +115,7 @@ public abstract class PatronEditHelper<E extends AbstractEntity, EV extends Abst
 	protected abstract void completeTopGrid(GridPane topGrid, DTOR dto, JFXButton validateBtn);
 
 	@Transactional
-	void saveRequis(DTOR requis, PatronDto patron){
+	public void saveRequis(DTOR requis, PatronDto patron){
 		boolean edit = requis.getId() != 0;
 		patron = patronService.saveOrUpdate(patron);
 		DTOR returned = requisService.createOrUpdate(requis, patron);
@@ -143,7 +143,7 @@ public abstract class PatronEditHelper<E extends AbstractEntity, EV extends Abst
 
 		bottomRightVbox.getChildren().addAll(new Separator(Orientation.HORIZONTAL), new Label("Possibilités :"));
 
-		if (CollectionUtils.isEmpty(tvList )) {
+		if (!CollectionUtils.isEmpty(tvList )) {
 			GridPane bottomGrid = new GridPane();
 			bottomGrid.setPadding(new Insets(5, 0, 5, 0));
 			bottomRightVbox.getChildren().add(bottomGrid);
@@ -246,6 +246,10 @@ public abstract class PatronEditHelper<E extends AbstractEntity, EV extends Abst
 		variantService.delete(tv.getId());
 		DTOR requisReloaded = requisService.getDtoById(requis.getId());
 		displayRequis(requisReloaded);
+	}
+
+	public void setPatron(PatronDto patron){
+		this.patron = patron;
 	}
 
 	/**

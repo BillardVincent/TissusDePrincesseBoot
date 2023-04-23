@@ -32,8 +32,8 @@ import javafx.scene.layout.VBox;
 
 @Component
 public class PatronEditController implements IController {
-	
-	private final static String X = "X";
+
+	private static final String X = "X";
 
 	@FXML
 	private JFXTextField marqueField;
@@ -131,6 +131,8 @@ public class PatronEditController implements IController {
 			patron.setTypeSupport(typeSupportCbBox.getValue());
 
 			patron = patronService.create(patron);
+			fourniturePatronEditHelper.setPatron(patron);
+			tissuPatronEditHelper.setPatron(patron);
 			setDisabledButton();
 
 			okClicked = true;

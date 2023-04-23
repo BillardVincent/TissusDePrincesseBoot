@@ -1,5 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.controller.utils;
 
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.CustomSpinner.setSpinnerFocused;
+
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -20,7 +22,6 @@ import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.Cust
 import fr.vbillard.tissusdeprincesseboot.model.UserPref;
 import fr.vbillard.tissusdeprincesseboot.utils.Constants;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
-import javafx.application.Platform;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
@@ -39,7 +40,7 @@ public class FxUtils {
 	private static StageInitializer initializer;
 
 	public FxUtils(StageInitializer initializer) {
-		this.initializer = initializer;
+		FxUtils.initializer = initializer;
 	}
 
 	// ---------------------------------------------
@@ -105,7 +106,7 @@ public class FxUtils {
 	public static NumericSearch<Integer> textFieldToMaxNumericSearch(JFXTextField textField) {
 		NumericSearch<Integer> result = null;
 		if (!textField.getText().isEmpty()) {
-			result = new NumericSearch<Integer>();
+			result = new NumericSearch<>();
 			result.setLessThanEqual(Integer.parseInt(textField.getText()));
 		}
 		return result;
@@ -228,7 +229,7 @@ public class FxUtils {
 
 		if (!lourdCBox.isSelected() || !moyenCBox.isSelected() || !legerCBox.isSelected()) {
 			if (!lourdCBox.isSelected()) {
-				poidsSearch = new NumericSearch<Integer>(null);
+				poidsSearch = new NumericSearch<>(null);
 				if (moyenCBox.isSelected()) {
 					poidsSearch.setLessThanEqual(pref.margeHauteMoyen());
 					if (!legerCBox.isSelected()) {
@@ -239,7 +240,7 @@ public class FxUtils {
 
 				}
 			} else if (!legerCBox.isSelected()) {
-				poidsSearch = new NumericSearch<Integer>(null);
+				poidsSearch = new NumericSearch<>(null);
 
 				if (moyenCBox.isSelected()) {
 					poidsSearch.setGreaterThanEqual(pref.margeBasseMoyen());
@@ -344,7 +345,7 @@ public class FxUtils {
 
 	public static JFXComboBox<String> buildComboBox(List<String> values, StringProperty valueSelected,
 			String defaultSelection) {
-		return buildComboBox(values, valueSelected,defaultSelection, new JFXComboBox<String>());
+		return buildComboBox(values, valueSelected,defaultSelection, new JFXComboBox<>());
 		
 	}
 	
@@ -365,19 +366,10 @@ public class FxUtils {
 	}
 
 	public static JFXTextField buildSpinner(IntegerProperty value) {
-		JFXTextField spinner = getTextFieldFocused();
+		JFXTextField spinner = new JFXTextField();
+		setSpinnerFocused(spinner);
 		spinner.setTextFormatter(CustomSpinner.getFormatter());
 		spinner.setText(FxUtils.safePropertyToString(value));
-		return spinner;
-	}
-
-	private static JFXTextField getTextFieldFocused() {
-		JFXTextField spinner = new JFXTextField();
-		spinner.focusedProperty().addListener((observable, oldValue, newValue) -> Platform.runLater(() -> {
-			if (spinner.isFocused() && !spinner.getText().isEmpty()) {
-				spinner.selectAll();
-			}
-		}));
 		return spinner;
 	}
 
@@ -386,10 +378,11 @@ public class FxUtils {
 	}
 
 	public static JFXTextField buildSpinner(Float value) {
-		JFXTextField textField = getTextFieldFocused();
-		textField.setTextFormatter(CustomSpinner.getLongFormatter());
-		textField.setText(Float.toString(value));
-		return textField;
+		JFXTextField spinner = new JFXTextField();
+		setSpinnerFocused(spinner);
+		spinner.setTextFormatter(CustomSpinner.getLongFormatter());
+		spinner.setText(Float.toString(value));
+		return spinner;
 	}
 
 	public static void setToggleGroup (ToggleGroup toggleGroup, JFXRadioButton selected, JFXRadioButton... otherRadio){
