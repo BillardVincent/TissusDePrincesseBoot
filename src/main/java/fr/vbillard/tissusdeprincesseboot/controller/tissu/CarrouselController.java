@@ -71,7 +71,7 @@ public class CarrouselController implements IModalController{
 		autreProjetLabel.setText(String.valueOf(tissu.getLongueur() - tissu.getLongueurDisponible()));
 		aloueLabel.setText(String.valueOf(tissuUsed.getLongueur()));
 		utiliseFiled.setText(String.valueOf(tissuUsed.getLongueur()));
-		restantField.setText(String.valueOf(longueurUtilisee - tissuUsed.getLongueur()));
+		restantField.setText(String.valueOf(tissu.getLongueurDisponible()));
 		
 		utiliseFiled.textProperty().addListener((observable, oldValue, newValue) -> {
 		    if (utiliseFiled.isFocused()) {
@@ -91,7 +91,7 @@ public class CarrouselController implements IModalController{
 	private void linkSpinnerValues(Tissu tissu, JFXTextField observedField, JFXTextField linkedFiled) {
 		observedField.textProperty().addListener((observable, oldValue, newValue) -> {
 		    if (observedField.isFocused()) {
-		    	int utiliseNewValue = tissu.getLongueur()- Integer.parseInt(observedField.getText());
+		    	int utiliseNewValue = tissu.getLongueur() - Integer.parseInt(observedField.getText());
 		    	if (utiliseNewValue<0) {
 		    		utiliseNewValue = 0;
 		    		observedField.setText(String.valueOf(tissu.getLongueur()));

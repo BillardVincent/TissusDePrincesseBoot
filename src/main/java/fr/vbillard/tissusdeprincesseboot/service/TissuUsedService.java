@@ -70,7 +70,7 @@ public class TissuUsedService extends AbstractUsedService<TissuUsed, Tissu> {
 	public List<TissuUsed> getTissuVariantLaizeTooShort(TissuRequisDto tissuRequis, ProjetDto projet){
 
 		NumericSearch<Integer> laize = new NumericSearch<>();
-		laize.setLessThanEqual(tissuRequis.getLaize());
+		laize.setLessThan(tissuRequis.getLaize());
 		TissuUsedSpecification spec =
 				TissuUsedSpecification.builder().tissuRequis(mapper.map(tissuRequis)).projet(mapper.map(projet)).laize(laize).build();
 		return dao.findAll(spec);
