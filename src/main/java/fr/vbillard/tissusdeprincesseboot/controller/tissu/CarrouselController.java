@@ -108,6 +108,7 @@ public class CarrouselController implements IModalController{
 		result = new FxData();
 		tissuUsed.setLongueur(Integer.parseInt(utiliseFiled.getText()));
 		result.setTissuUsed(tissuUsed);
+		result.setTissu(tissuService.convert(tissuUsed.getTissu()));
 		dialogStage.close();
 		
 	}

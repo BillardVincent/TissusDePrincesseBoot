@@ -17,7 +17,7 @@ public interface FournitureDao extends Idao<Fourniture, Integer>{
       + "INNER JOIN PROJET p ON p.ID = fu.PROJET_ID WHERE (p.STATUS = 'EN_COURS' OR p.STATUS = 'PLANIFIE' OR "
       + "(p.STATUS = 'TERMINE' AND ("
       + "SELECT COUNT(*) FROM INVENTAIRE i WHERE i.PROJET_ID = p.ID > 0)))"
-      + "AND t.ID = ?1", nativeQuery = true)
+      + "AND f.ID = ?1", nativeQuery = true)
   Float quantiteUtilisee(int fournitureId);
 
   boolean existsFournitureByType(TypeFourniture typeFourniture);

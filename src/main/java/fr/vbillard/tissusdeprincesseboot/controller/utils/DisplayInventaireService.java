@@ -6,7 +6,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.model.Inventaire;
+import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 import fr.vbillard.tissusdeprincesseboot.service.InventaireService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuService;
@@ -30,6 +32,7 @@ public class DisplayInventaireService {
 
 		while (iterator.hasNext()) {
 			TissuUsed tissuUsed = iterator.next();
+			int beforeEditLongueur = tissuUsed.getLongueur();
 			FxData d = new FxData();
 
 			d.setTissuUsed(tissuUsed);
@@ -40,9 +43,15 @@ public class DisplayInventaireService {
 				break;
 			}
 
-			tissuService.saveOrUpdate(r.getTissu());
+			int diff = beforeEditLongueur - r.getTissuUsed().getLongueur();
+
+			Tissu tissu = r.getTissuUsed().getTissu();
+			tissu.setLongueurDisponible(tissu.getLongueurDisponible() + diff);
+			tissu.setLongueur(tissu.getLongueur() - r.getTissuUsed().getLongueur());
+			tissuService.saveOrUpdate(tissu);
+
 			iterator.remove();
-			inventaireService.saveOrUpdate(r.getInventaire());
+			inventaireService.saveOrUpdate(inventaire);
 		}
 
 		if (inventaire.getTissus().isEmpty()) {
