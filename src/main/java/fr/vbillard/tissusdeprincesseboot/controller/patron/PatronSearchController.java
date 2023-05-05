@@ -11,6 +11,7 @@ import org.springframework.util.CollectionUtils;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
@@ -34,6 +35,7 @@ import fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleGroup;
 
 @Component
 public class PatronSearchController implements IController {
@@ -81,8 +83,16 @@ public class PatronSearchController implements IController {
 	public JFXTextField longueurFieldMax;
 	@FXML
 	public JFXTextField laizeFieldMax;
+	@FXML
+	public JFXRadioButton archive;
+	@FXML
+	public JFXRadioButton	notArchive;
+	@FXML
+	public JFXRadioButton indifferentArchive;
 
 	// TODO TYPE SOPPORT
+
+	private final ToggleGroup archiveGroup = new ToggleGroup();
 
 	private RootController root;
 	private StageInitializer initializer;
@@ -125,8 +135,10 @@ public class PatronSearchController implements IController {
 		margeBasseLourd = Math.round(pref.getMaxPoidsMoyen() - pref.getMaxPoidsMoyen() * pref.getPoidsMargePercent());
 
 
-		FxUtils.setToggleColor(lourdCBox,	moyenCBox,	legerCBox, ncCBox, supportPapierCBox, supportPdfCBox,
-				supportProjectionCBox, supportNcCBox);
+		FxUtils.setToggleColor(lourdCBox, moyenCBox, legerCBox, ncCBox, supportPapierCBox, supportPdfCBox,
+				supportProjectionCBox, supportNcCBox, notArchive, indifferentArchive, archive);
+
+		FxUtils.setToggleGroup(archiveGroup, notArchive, indifferentArchive, archive);
 	}
 
 	private void setData(FxData data) {
@@ -159,6 +171,8 @@ public class PatronSearchController implements IController {
 
 			FxUtils.setTextFieldMaxFromNumericSearch(longueurFieldMax, spec.getLongueur());
 			FxUtils.setTextFieldMaxFromNumericSearch(laizeFieldMax, spec.getLaize());
+
+			FxUtils.setToggleGroupFromBoolean(spec.getArchived(), archive, notArchive, indifferentArchive);
 
 			if (!CollectionUtils.isEmpty(spec.getPoids())) {
 				lourdCBox.setSelected(spec.getPoids().contains(GammePoids.LOURD));
@@ -200,10 +214,9 @@ public class PatronSearchController implements IController {
 			supportProjectionCBox.setSelected(true);
 			supportNcCBox.setSelected(true);
 
-
+			FxUtils.setToggleGroupFromBoolean(null, archive, notArchive, indifferentArchive);
 
 		}
-
 	}
 
 	@FXML

@@ -140,7 +140,7 @@
 				<children>
 					<JFXRadioButton fx:id="archive" text="Archivés" />
 					<JFXRadioButton fx:id="notArchive" text="Non archivés" />
-					<JFXRadioButton fx:id="indiferentArchive" text="Tous" />
+					<JFXRadioButton fx:id="indifferentArchive" text="Tous" />
 				</children>
 			</HBox>
 		</children>

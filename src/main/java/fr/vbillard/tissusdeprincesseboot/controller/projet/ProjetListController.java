@@ -1,5 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.controller.projet;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -10,6 +11,7 @@ import fr.vbillard.tissusdeprincesseboot.controller.utils.ViewListController;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.ProjetSpecification;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.CustomIcon;
+import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
 import fr.vbillard.tissusdeprincesseboot.service.InventaireService;
 import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
@@ -48,11 +50,15 @@ public class ProjetListController extends ViewListController {
 		cardPane.getChildren().clear();
 
 		List<ProjetDto> lst;
+		ProjetSpecification spec;
 		if (specification != null && specification instanceof ProjetSpecification) {
-			lst = projetService.getObservablePage(page, PAGE_SIZE, (ProjetSpecification) specification);
+			spec = (ProjetSpecification) specification;
 		} else {
-			lst = projetService.getObservablePage(page, PAGE_SIZE);
+			spec = ProjetSpecification.builder().projectStatus(Arrays.asList(ProjectStatus.PLANIFIE,
+					ProjectStatus.BROUILLON, ProjectStatus.EN_COURS)).build();
 		}
+		lst = projetService.getObservablePage(page, PAGE_SIZE, spec);
+
 
 		for (ProjetDto p : lst) {
 			FxData data = new FxData();

@@ -89,8 +89,10 @@ public class TissuSearchController implements IController {
 	public JFXRadioButton chuteEtCoupon;
 	@FXML
 	public JFXRadioButton archive;
+	@FXML
 	public JFXRadioButton	notArchive;
-	public JFXRadioButton indiferentArchive;
+	@FXML
+	public JFXRadioButton indifferentArchive;
 
 	private StageInitializer initializer;
 
@@ -104,10 +106,10 @@ public class TissuSearchController implements IController {
 	private List<String> typeValuesSelected = new ArrayList<>();
 	private List<String> matiereValuesSelected = new ArrayList<>();
 
-	private int margeHauteLeger;
-	private int margeBasseMoyen;
-	private int margeHauteMoyen;
-	private int margeBasseLourd;
+	private final int margeHauteLeger;
+	private final int margeBasseMoyen;
+	private final int margeHauteMoyen;
+	private final int margeBasseLourd;
 	private final static DecimalFormat df = new DecimalFormat("#.##");
 
 	private final RootController root;
@@ -141,9 +143,9 @@ public class TissuSearchController implements IController {
 
 		FxUtils.setToggleGroup(decatiGroup, decatiAll, decatiFalse, decatiTrue);
 		FxUtils.setToggleGroup(chuteGroup, chuteEtCoupon, coupon, chute);
-		FxUtils.setToggleGroup(archiveGroup, notArchive, indiferentArchive, archive);
+		FxUtils.setToggleGroup(archiveGroup, notArchive, indifferentArchive, archive);
 		FxUtils.setToggleColor(lourdCBox, moyenCBox, legerCBox, decatiAll, decatiFalse, decatiTrue,
-				chuteEtCoupon, coupon, chute, notArchive, indiferentArchive, archive, longueurUtilisableCBox);
+				chuteEtCoupon, coupon, chute, notArchive, indifferentArchive, archive, longueurUtilisableCBox);
 
 
 		typeLbl.setText(AUCUN_FILTRE);
@@ -202,7 +204,7 @@ public class TissuSearchController implements IController {
 
 			setPoidsFromSpec();
 
-			FxUtils.setToggleGroupFromBoolean(specification.getArchived(), archive, notArchive, indiferentArchive);
+			FxUtils.setToggleGroupFromBoolean(specification.getArchived(), archive, notArchive, indifferentArchive);
 			FxUtils.setToggleGroupFromBoolean(specification.getDecati(), decatiTrue, decatiFalse, decatiAll);
 			FxUtils.setToggleGroupFromBoolean(specification.getChute(), chute, coupon, chuteEtCoupon);
 
@@ -303,7 +305,7 @@ public class TissuSearchController implements IController {
 
 		Boolean decati = FxUtils.getBooleanFromRadioButtons(decatiTrue, decatiFalse, decatiAll);
 		Boolean chuteOuCoupon = FxUtils.getBooleanFromRadioButtons(chute, coupon, chuteEtCoupon);
-		Boolean archived = FxUtils.getBooleanFromRadioButtons(archive, notArchive, indiferentArchive);
+		Boolean archived = FxUtils.getBooleanFromRadioButtons(archive, notArchive, indifferentArchive);
 
 		specification = TissuSpecification.builder().reference(reference).description(description).chute(chuteOuCoupon)
 				.decati(decati).laize(laizeSearch).poids(poidsSearch).poidsNC(poidsSearchNc).longueur(longueurSearch)

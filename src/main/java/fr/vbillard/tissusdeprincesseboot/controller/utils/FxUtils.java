@@ -34,7 +34,8 @@ import javafx.scene.paint.Color;
 @Component
 public class FxUtils {
 
-	private static final String ILLEGAL_NUMBER = "Les valeurs ne doivent pas être négatives. La valeur minimale doit être strictement inférieure à la valeur maximale";
+	private static final String ILLEGAL_NUMBER = "Les valeurs ne doivent pas être négatives. La valeur minimale doit "
+			+ "être inférieure ou égale à la valeur maximale";
 	private static final String AUCUN_FILTRE = "Aucun filtre";
 	private static final String CHOIX = "Choix";
 	private static StageInitializer initializer;
@@ -146,7 +147,7 @@ public class FxUtils {
 		int maxValueBeforeMarge = intFromJFXTextField(max);
 
 		if (minValueBeforeMarge < 0 || maxValueBeforeMarge < 0
-				|| (maxValueBeforeMarge != 0 && minValueBeforeMarge >= maxValueBeforeMarge)) {
+				|| (maxValueBeforeMarge != 0 && minValueBeforeMarge > maxValueBeforeMarge)) {
 			throw new IllegalData(ILLEGAL_NUMBER);
 		}
 
@@ -314,7 +315,8 @@ public class FxUtils {
 			NumericSearch<T> numericSearch) {
 		if (numericSearch != null && numericSearch.getLessThanEqual() != null
 				&& !numericSearch.getLessThanEqual().equals(0)) {
-			field.setText(String.valueOf(numericSearch.getLessThanEqual()));
+			// LessThanEqual est stoqué avec Value +1
+			field.setText(String.valueOf(numericSearch.getLessThanEqual().intValue() - 1));
 		}
 	}
 
@@ -322,7 +324,7 @@ public class FxUtils {
 			NumericSearch<T> numericSearch) {
 		if (numericSearch != null && numericSearch.getGreaterThanEqual() != null
 				&& !numericSearch.getGreaterThanEqual().equals(0)) {
-			field.setText(String.valueOf(numericSearch.getLessThanEqual()));
+			field.setText(String.valueOf(numericSearch.getGreaterThanEqual()));
 		}
 	}
 

@@ -1,126 +1,134 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXCheckBox?>
-<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.*?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
+<AnchorPane prefHeight="616.0" prefWidth="312.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="fr.vbillard.tissusdeprincesseboot.controller.patron.PatronSearchController">
+  <VBox prefHeight="616.0" prefWidth="312.0" spacing="10.0">
+    <children>
+      <Separator prefWidth="200.0"/>
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="310.0" text="Recherche"
+             textAlignment="CENTER"/>
+      <HBox alignment="CENTER" prefHeight="32.0" prefWidth="302.0" spacing="30.0">
+        <children>
+          <JFXButton onAction="#handleCancel" text="Annuler"/>
+          <JFXButton onAction="#handleOk" text="Appliquer les filtres"/>
+        </children>
+      </HBox>
+      <VBox prefHeight="52.0" prefWidth="302.0" spacing="15.0">
+        <children>
+          <JFXTextField fx:id="referenceField" prefHeight="26.0" prefWidth="304.0" promptText="Reference"/>
+          <HBox alignment="CENTER" prefHeight="26.0" prefWidth="302.0" spacing="5.0">
+            <children>
+              <JFXCheckBox fx:id="supportPapierCBox" prefHeight="20.0" prefWidth="62.0" text="Papier">
+                <HBox.margin>
+                  <Insets/>
+                </HBox.margin>
+              </JFXCheckBox>
+              <JFXCheckBox fx:id="supportPdfCBox" prefHeight="18.0" prefWidth="63.0" text="PDF">
+                <HBox.margin>
+                  <Insets/>
+                </HBox.margin>
+              </JFXCheckBox>
+              <JFXCheckBox fx:id="supportProjectionCBox" prefHeight="18.0" prefWidth="98.0" text="Projection">
+                <HBox.margin>
+                  <Insets/>
+                </HBox.margin>
+              </JFXCheckBox>
+              <JFXCheckBox fx:id="supportNcCBox" prefHeight="20.0" prefWidth="46.0" text="NC"/>
+            </children>
+          </HBox>
+          <JFXTextField fx:id="marqueField" prefHeight="26.0" prefWidth="304.0" promptText="Marque"/>
+          <JFXTextField fx:id="modeleField" prefHeight="26.0" prefWidth="304.0" promptText="Modele"/>
+          <JFXTextField fx:id="typeVetementField" prefHeight="26.0" prefWidth="304.0" promptText="Type"/>
+          <JFXTextField fx:id="descriptionField" prefHeight="26.0" prefWidth="304.0" promptText="Descripion"/>
+          <HBox alignment="CENTER" prefHeight="26.0" prefWidth="302.0" spacing="5.0">
+            <children>
+              <JFXRadioButton fx:id="archive" text="Archivés"/>
+              <JFXRadioButton fx:id="notArchive" text="Non archivés"/>
+              <JFXRadioButton fx:id="indifferentArchive" text="Tous"/>
+            </children>
+          </HBox>
+        </children>
+      </VBox>
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="310.0"
+             text="Tissu requis"
+             textAlignment="CENTER"/>
+      <Accordion/>
+      <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="302.0" spacing="5.0">
+        <children>
+          <JFXButton fx:id="typeButton" onAction="#choiceType" prefHeight="26.0" prefWidth="80.0" text="Type"/>
+          <Label fx:id="typeLbl" prefHeight="36.0" prefWidth="200.0" text="Label" wrapText="true"/>
+        </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="302.0" spacing="5.0">
+        <children>
+          <JFXButton fx:id="tissageButton" onAction="#choiceTissage" prefHeight="26.0" prefWidth="80.0" text="Tissage"/>
+          <Label fx:id="tissageLbl" prefHeight="34.0" prefWidth="200.0" text="Label" wrapText="true"/>
+        </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="302.0" spacing="5.0">
+        <children>
+          <JFXButton onAction="#choiceMatiere" prefHeight="26.0" prefWidth="80.0" text="Matière"/>
+          <Label fx:id="matiereLbl" prefHeight="28.0" prefWidth="200.0" text="Label" wrapText="true"/>
+        </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT">
+        <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="302.0">
+          <children>
+            <Label prefHeight="43.0" prefWidth="80.0" text="Longueur: "/>
+            <JFXTextField fx:id="longueurFieldMax" prefHeight="26.0" prefWidth="50.0"/>
+            <Label prefHeight="43.0" prefWidth="50.0" text="cm"/>
+          </children>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="302.0">
+          <children>
+            <Label prefHeight="40.0" prefWidth="50.0" text="Laize :"/>
+            <JFXTextField fx:id="laizeFieldMax" prefHeight="26.0" prefWidth="50.0"/>
+            <Label prefHeight="43.0" prefWidth="50.0" text="cm"/>
+          </children>
+        </HBox>
+      </HBox>
+      <VBox prefHeight="52.0" prefWidth="302.0" spacing="5.0">
+        <children>
+          <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="17.0" prefWidth="302.0" spacing="5.0">
+            <children>
+              <Label text="Poids: "/>
+              <FontAwesomeIconView styleClass="clickable" glyphName="QUESTION_CIRCLE" onMouseClicked="#poidsHelp"
+                                   size="20"/>
+            </children>
+          </HBox>
+          <HBox alignment="CENTER" prefHeight="26.0" prefWidth="302.0" spacing="5.0">
+            <children>
+              <JFXCheckBox fx:id="lourdCBox" prefHeight="20.0" prefWidth="62.0" text="Lourd">
+                <HBox.margin>
+                  <Insets/>
+                </HBox.margin>
+              </JFXCheckBox>
+              <JFXCheckBox fx:id="moyenCBox" prefHeight="22.0" prefWidth="72.0" text="Moyen">
+                <HBox.margin>
+                  <Insets/>
+                </HBox.margin>
+              </JFXCheckBox>
+              <JFXCheckBox fx:id="legerCBox" prefHeight="20.0" prefWidth="60.0" text="Léger">
+                <HBox.margin>
+                  <Insets/>
+                </HBox.margin>
+              </JFXCheckBox>
+              <JFXCheckBox fx:id="ncCBox" prefHeight="20.0" prefWidth="46.0" text="NC"/>
+            </children>
+          </HBox>
+        </children>
+      </VBox>
 
-<AnchorPane prefHeight="616.0" prefWidth="312.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.patron.PatronSearchController">
-	<VBox prefHeight="616.0" prefWidth="312.0" spacing="10.0">
-		<children>
-          <Separator prefWidth="200.0" />
-          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="310.0" text="Recherche" textAlignment="CENTER" />
-         <HBox alignment="CENTER" prefHeight="32.0" prefWidth="302.0" spacing="30.0">
-            <children>
-               <JFXButton onAction="#handleCancel" text="Annuler" />
-               <JFXButton onAction="#handleOk" text="Appliquer les filtres" />
-            </children>
-         </HBox>
-         <VBox prefHeight="52.0" prefWidth="302.0" spacing="15.0">
-            <children>
-               <JFXTextField fx:id="referenceField" prefHeight="26.0" prefWidth="304.0" promptText="Reference" />
-               <HBox alignment="CENTER" prefHeight="26.0" prefWidth="302.0" spacing="5.0">
-                  <children>
-                     <JFXCheckBox fx:id="supportPapierCBox" prefHeight="20.0" prefWidth="62.0" text="Papier">
-                        <HBox.margin>
-                           <Insets />
-                        </HBox.margin>
-                     </JFXCheckBox>
-                     <JFXCheckBox fx:id="supportPdfCBox" prefHeight="18.0" prefWidth="63.0" text="PDF">
-                        <HBox.margin>
-                           <Insets />
-                        </HBox.margin>
-                     </JFXCheckBox>
-                     <JFXCheckBox fx:id="supportProjectionCBox" prefHeight="18.0" prefWidth="98.0" text="Projection">
-                        <HBox.margin>
-                           <Insets />
-                        </HBox.margin>
-                     </JFXCheckBox>
-                     <JFXCheckBox fx:id="supportNcCBox" prefHeight="20.0" prefWidth="46.0" text="NC" />
-                  </children>
-               </HBox>
-               <JFXTextField fx:id="marqueField" prefHeight="26.0" prefWidth="304.0" promptText="Marque" />
-               <JFXTextField fx:id="modeleField" prefHeight="26.0" prefWidth="304.0" promptText="Modele" />
-               <JFXTextField fx:id="typeVetementField" prefHeight="26.0" prefWidth="304.0" promptText="Type" />
-               <JFXTextField fx:id="descriptionField" prefHeight="26.0" prefWidth="304.0" promptText="Descripion" />
-            </children>
-         </VBox>
-         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="310.0" text="Tissu" textAlignment="CENTER" />
-         <Accordion />
-         <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="302.0" spacing="5.0">
-            <children>
-               <JFXButton fx:id="typeButton" onAction="#choiceType" prefHeight="26.0" prefWidth="80.0" text="Type" />
-               <Label fx:id="typeLbl" prefHeight="36.0" prefWidth="200.0" text="Label" wrapText="true" />
-            </children>
-         </HBox>
-         <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="302.0" spacing="5.0">
-            <children>
-               <JFXButton fx:id="tissageButton" onAction="#choiceTissage" prefHeight="26.0" prefWidth="80.0" text="Tissage" />
-               <Label fx:id="tissageLbl" prefHeight="34.0" prefWidth="200.0" text="Label" wrapText="true" />
-            </children>
-         </HBox>
-         <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="302.0" spacing="5.0">
-            <children>
-               <JFXButton onAction="#choiceMatiere" prefHeight="26.0" prefWidth="80.0" text="Matière" />
-               <Label fx:id="matiereLbl" prefHeight="28.0" prefWidth="200.0" text="Label" wrapText="true" />
-            </children>
-         </HBox>
-         <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="302.0">
-            <children>
-               <Label prefHeight="43.0" prefWidth="80.0" text="Longueur: " />
-               <JFXTextField fx:id="longueurFieldMax" editable="true" prefHeight="26.0" prefWidth="80.0" />
-               <Label prefHeight="43.0" prefWidth="50.0" text="cm" />
-            </children>
-         </HBox>
-         <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="302.0">
-            <children>
-               <Label prefHeight="40.0" prefWidth="80.0" text="Laize :" />
-               <JFXTextField fx:id="laizeFieldMax" editable="true" prefHeight="26.0" prefWidth="80.0" />
-               <Label prefHeight="43.0" prefWidth="50.0" text="cm" />
-            </children>
-         </HBox>
-         <VBox prefHeight="52.0" prefWidth="302.0" spacing="5.0">
-            <children>
-               <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="17.0" prefWidth="302.0" spacing="5.0">
-                  <children>
-                     <Label text="Poids: " />
-                     <FontAwesomeIconView styleClass="clickable" glyphName="QUESTION_CIRCLE" onMouseClicked="#poidsHelp"
-                                          size="20" />
-                  </children>
-               </HBox>
-               <HBox alignment="CENTER" prefHeight="26.0" prefWidth="302.0" spacing="5.0">
-                  <children>
-                     <JFXCheckBox fx:id="lourdCBox" prefHeight="20.0" prefWidth="62.0" text="Lourd">
-                        <HBox.margin>
-                           <Insets />
-                        </HBox.margin>
-                     </JFXCheckBox>
-                     <JFXCheckBox fx:id="moyenCBox" prefHeight="22.0" prefWidth="72.0" text="Moyen">
-                        <HBox.margin>
-                           <Insets />
-                        </HBox.margin>
-                     </JFXCheckBox>
-                     <JFXCheckBox fx:id="legerCBox" prefHeight="20.0" prefWidth="60.0" text="Léger">
-                        <HBox.margin>
-                           <Insets />
-                        </HBox.margin>
-                     </JFXCheckBox>
-                     <JFXCheckBox fx:id="ncCBox" prefHeight="20.0" prefWidth="46.0" text="NC" />
-                  </children>
-               </HBox>
-            </children>
-         </VBox>
-
-		</children>
-      <padding>
-         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-      </padding>
-	</VBox>
+    </children>
+    <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+    </padding>
+  </VBox>
 </AnchorPane>

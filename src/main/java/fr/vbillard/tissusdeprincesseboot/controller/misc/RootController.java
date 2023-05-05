@@ -51,8 +51,7 @@ public class RootController implements IController {
 
 	private static final String SELECTED = "mainmenu-element-selected";
 
-	private static Logger logger = LogManager.getLogger(RootController.class);
-
+	private static final Logger LOGGER = LogManager.getLogger(RootController.class);
 	  
 	@FXML
 	private Pane mainWindow;
@@ -100,7 +99,7 @@ public class RootController implements IController {
 		this.fournitureUsedService = fournitureUsedService;
 		this.fournitureService = fournitureService;
 		
-		logger.info("Lancement de l'application");
+		LOGGER.info("Lancement de l'application");
 	}
 
 	@FXML
@@ -139,7 +138,7 @@ public class RootController implements IController {
 		FxData fxData = new FxData();
 		fxData.setSpecification(spec);
 		beforeDisplay(projetMenu);
-		searchPane.getChildren().add(initializer.displayPane(PathEnum.PROJET_SEARCH));
+		searchPane.getChildren().add(initializer.displayPane(PathEnum.PROJET_SEARCH, fxData));
 		mainWindow.getChildren().add(initializer.displayPane(PathEnum.PROJET_LIST, fxData));
 	}
 
@@ -253,7 +252,7 @@ public class RootController implements IController {
 	private void beforeDisplay(HBox menuToSelect) {
 		mainWindow.getChildren().clear();
 		searchPane.getChildren().clear();
-		logger.info("menu selected = " +menuToSelect.getId());
+		LOGGER.info("menu selected = " +menuToSelect.getId());
 		for (HBox hb : menuElements) {
 			if (hb != null && hb.getStyleClass() != null && !hb.getStyleClass().isEmpty()) {
 				hb.getStyleClass().removeIf(style -> style.equals(SELECTED));

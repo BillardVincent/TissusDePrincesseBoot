@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
@@ -49,10 +50,24 @@ public class ProjetSearchController implements IController {
 	public void setStageInitializer(StageInitializer initializer, FxData data) {
 		this.initializer = initializer;
 
-		etudeCBox.setSelected(true);
-		planedCBox.setSelected(true);
-		inProgressCBox.setSelected(true);
-		finishedCBox.setSelected(true);
+		List<ProjectStatus> lst = null;
+
+		if (data != null && data.getSpecification() != null && data.getSpecification() instanceof ProjetSpecification) {
+			ProjetSpecification spec = (ProjetSpecification) data.getSpecification();
+			lst = spec.getProjectStatus();
+		}
+
+		if (CollectionUtils.isEmpty(lst)) {
+			etudeCBox.setSelected(true);
+			planedCBox.setSelected(true);
+			inProgressCBox.setSelected(true);
+			finishedCBox.setSelected(false);
+		} else {
+			etudeCBox.setSelected(lst.contains(ProjectStatus.BROUILLON));
+			planedCBox.setSelected(lst.contains(ProjectStatus.PLANIFIE));
+			inProgressCBox.setSelected(lst.contains(ProjectStatus.EN_COURS));
+			finishedCBox.setSelected(lst.contains(ProjectStatus.TERMINE));
+		}
 
 		FxUtils.setToggleColor(etudeCBox,	planedCBox,	inProgressCBox, finishedCBox);
 	}
@@ -87,13 +102,11 @@ public class ProjetSearchController implements IController {
 				&& !finishedCBox.isSelected()) {
 			throw new IllegalData("Veuillez renseigner au moins un statut avant de lancer la recherche");
 		}
-		if (!(etudeCBox.isSelected() && planedCBox.isSelected() && inProgressCBox.isSelected()
-				&& finishedCBox.isSelected())) {
-			status = setStatusSpec(status, etudeCBox, ProjectStatus.BROUILLON);
-			status = setStatusSpec(status, planedCBox, ProjectStatus.PLANIFIE);
-			status = setStatusSpec(status, inProgressCBox, ProjectStatus.EN_COURS);
-			status = setStatusSpec(status, finishedCBox, ProjectStatus.TERMINE);
-		}
+
+		status = setStatusSpec(status, etudeCBox, ProjectStatus.BROUILLON);
+		status = setStatusSpec(status, planedCBox, ProjectStatus.PLANIFIE);
+		status = setStatusSpec(status, inProgressCBox, ProjectStatus.EN_COURS);
+		status = setStatusSpec(status, finishedCBox, ProjectStatus.TERMINE);
 
 		ProjetSpecification projetSpec = ProjetSpecification.builder().projectStatus(status).build();
 

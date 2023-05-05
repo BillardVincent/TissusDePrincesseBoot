@@ -1,9 +1,9 @@
 * {
     -fx-primary: #9c27b0;
     -fx-primary-contrast: #ffffff;
-    -fx-primary-dark:#6a0080;
+    -fx-primary-dark: #6a0080;
     -fx-primary-dark-contrast: #ffffff;
-    -fx-primary-light:#d05ce3;
+    -fx-primary-light: #d05ce3;
     -fx-primary-light-contrast: #000000;
     -fx-secondary: #b0273c;
     -fx-secondary-contrast: #ffffff;
@@ -14,24 +14,24 @@
     -fx-accent: -fx-secondary;
     -fx-background-accent: #d0d0d0;
     -fx-background-workspace: #e0e0e0;
-  
+
     -fx-basic-text: #000000;
     -fx-contrast-text: #ffffff;
 }
-    
-.root{
-	-fx-background-color: #ffffff;
-	-fx-accent: -fx-secondary;
-	-fx-pressed-based: -fx-secondary-dark;
-	-fx-hover-base: -fx-secondary-light;
-	-fx-text-background-color:-fx-basic-text;
-	-fx-box-border: transparent;
-	-fx-text-box-border: transparent;
-	
-	-fx-body-color:  transparent;
-    -fx-body-color-bottomup:  transparent;
-    -fx-body-color-to-right:  transparent;
-    
+
+.root {
+    -fx-background-color: #ffffff;
+    -fx-accent: -fx-secondary;
+    -fx-pressed-based: -fx-secondary-dark;
+    -fx-hover-base: -fx-secondary-light;
+    -fx-text-background-color: -fx-basic-text;
+    -fx-box-border: transparent;
+    -fx-text-box-border: transparent;
+
+    -fx-body-color: transparent;
+    -fx-body-color-bottomup: transparent;
+    -fx-body-color-to-right: transparent;
+
     /* The color to use as -fx-text-fill when painting text on top of
      * backgrounds filled with -fx-base, -fx-color, and -fx-body-color.
      */
@@ -49,14 +49,15 @@
     /* The small thin light "shadow" for mark-like objects. Typically used in
      * conjunction with -fx-mark-color with an insets of 1 0 -1 0. */
     -fx-mark-highlight-color: -fx-secondary-light;
-    
+
     -fx-focus-color: -fx-secondary-light;
     -fx-faint-focus-color: -fx-secondary-light;
-	-fx-selection-bar: -fx-secondary-light;
-	-fx-default-button : transparent;
-	
-	-jfx-rippler-fill: -fx-secondary-light;
+    -fx-selection-bar: -fx-secondary-light;
+    -fx-default-button: transparent;
+
+    -jfx-rippler-fill: -fx-secondary-light;
 }
+
 /*
 .toggle-button:selected {
         -fx-background-color: -fx-primary;
@@ -68,15 +69,17 @@
 .toggle-button:selected:focused {
 
 }*/
-.jfx-toggle-button{
-	-jfx-toggle-color: -fx-secondary;
-	-jfx-toggle-line-color: -fx-secondary-light;
+.jfx-toggle-button {
+    -jfx-toggle-color: -fx-secondary;
+    -jfx-toggle-line-color: -fx-secondary-light;
 }
-.jfx-text-field{
-	-jfx-focus-color: -fx-secondary;
+
+.jfx-text-field {
+    -jfx-focus-color: -fx-secondary;
 }
-.jfx-combo-box{
-	-jfx-focus-color: -fx-secondary-light;
+
+.jfx-combo-box {
+    -jfx-focus-color: -fx-secondary-light;
     -fx-cursor: hand;
 
 }
@@ -89,16 +92,16 @@
     -fx-selected-color: -fx-secondary;
 }
 
-.radio-button .radio :hover{
+.radio-button .radio :hover {
     -fx-cursor: hand;
 }
 
 
-.jfx-check-box .box{
+.jfx-check-box .box {
     -fx-cursor: hand;
 }
 
-.global{
+.global {
     -fx-font-family: Calibri;
 }
 
@@ -106,18 +109,20 @@
     -fx-background-color: -fx-primary;
 
 }
-.mainmenu-element{
+
+.mainmenu-element {
     -fx-background-color: -fx-primary;
     -fx-text-fill: -fx-primary-contrast;
 
 }
+
 .mainmenu-element-text {
     -fx-text-fill: -fx-primary-contrast;
     -fx-fill: -fx-primary-contrast;
 
 }
 
-.mainmenu-element:hover{
+.mainmenu-element:hover {
     /*-fx-background-color: -fx-primary-light;  */
     -fx-text-fill: -fx-primary-light-contrast;
     -fx-font-family: Calibri;
@@ -131,8 +136,8 @@
 
 }
 
-.mainmenu-element-selected{
-	-fx-text-fill: -fx-primary-light-contrast;
+.mainmenu-element-selected {
+    -fx-text-fill: -fx-primary-light-contrast;
     -fx-font-family: Calibri;
     -fx-font-size: 18px;
     -fx-font-weight: 800;
@@ -141,14 +146,15 @@
     -fx-border-style: solid none solid none;
 }
 
-.corner-left{
+.corner-left {
     -fx-background-color: -fx-primary;
 }
+
 .text-corner-left {
     -fx-text-fill: -fx-primary-contrast;
 }
 
-.aside{
+.aside {
     -fx-background-color: -fx-background-accent;
 }
 
@@ -156,52 +162,44 @@
     -fx-background-color: -fx-background-accent;
 }
 
-.search-box{
+.search-box {
     -fx-border-radius: 10px;
     -fx-border-width: 1px;
     -fx-border-color: #a0a0a0;
     -fx-border-style: solid;
 }
 
-.search-box :selected{
-   -fx-background-color: white;
+.search-box :selected {
+    -fx-background-color: white;
 }
 
-.title-main-pane{
+.title-main-pane {
     -fx-fill: -fx-primary;
     -fx-font-weight: bold;
     -fx-font-size: 30px;
 }
 
-.card{
+.card {
     /*-fx-border-color: -fx-primary;
     -fx-border-width: 1px;*/
-    
-  -fx-outer-border: white;
-  -fx-body-color: white;
-  -fx-background-color: 
-       -fx-outer-border, 
-       -fx-body-color;    
-  -fx-background-insets: 0, 6;
-  -fx-background-radius: 6px, 0px;
-  -fx-effect: dropshadow(gaussian, #909090, 10, 0.5, 0.0, 0.0);
-  
-  }
-  
-.clickable:hover{
+
+    -fx-outer-border: white;
+    -fx-body-color: white;
+    -fx-background-color: -fx-outer-border,
+    -fx-body-color;
+    -fx-background-insets: 0, 6;
+    -fx-background-radius: 6px, 0px;
+    -fx-effect: dropshadow(gaussian, #909090, 10, 0.5, 0.0, 0.0);
+
+}
+
+.clickable:hover {
     -fx-border-color: -fx-primary-light;
     -fx-border-width: 3px;
     -fx-cursor: hand;
 }
 
-.title{
-    -fx-background-color: -fx-primary;
-    -fx-text-fill: -fx-primary-contrast;
-    -fx-fill: -fx-primary-contrast;
-    -fx-font-weight: bold;
-    -fx-font-size: 30px;
-}
-.card .title{
+.title {
     -fx-background-color: -fx-primary;
     -fx-text-fill: -fx-primary-contrast;
     -fx-fill: -fx-primary-contrast;
@@ -209,77 +207,85 @@
     -fx-font-size: 30px;
 }
 
-.heavy-weight{
+.card .title {
+    -fx-background-color: -fx-primary;
+    -fx-text-fill: -fx-primary-contrast;
+    -fx-fill: -fx-primary-contrast;
+    /*-fx-font-weight: bold;*/
+    -fx-font-size: 30px;
+}
+
+.heavy-weight {
     -fx-fill: -fx-primary-dark;
 }
 
-.standard-weight{
+.standard-weight {
     -fx-fill: -fx-primary;
 }
 
-.light-weight{
+.light-weight {
     -fx-fill: -fx-primary-light;
 }
 
-.spinner{
-	-fx-background-color: transparent;
-	-fx-border-color: transparent;
-	
+.spinner {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+
 }
 
-.list-element{
-	-fx-outer-border: white;
-  -fx-body-color: white;
-  -fx-background-color: 
-       -fx-outer-border, 
-       -fx-body-color;
-  -fx-background-insets: 0, 6;
-  -fx-background-radius: 6px, 0px;
-  -fx-effect: dropshadow(gaussian, #909090, 10, 0.5, 0.0, 0.0);
+.list-element {
+    -fx-outer-border: white;
+    -fx-body-color: white;
+    -fx-background-color: -fx-outer-border,
+    -fx-body-color;
+    -fx-background-insets: 0, 6;
+    -fx-background-radius: 6px, 0px;
+    -fx-effect: dropshadow(gaussian, #909090, 10, 0.5, 0.0, 0.0);
 }
 
-.list-element-titre{
+.list-element-titre {
     -fx-font-weight: bolder;
     -fx-font-size: 15px;
 }
 
-.jfx-button{
-	-fx-text-fill: -fx-secondary;
-	-fx-font-size: 1.2em;
+.jfx-button {
+    -fx-text-fill: -fx-secondary;
+    -fx-font-size: 1.2em;
     -fx-font-weight: bold;
-	-fx-background-color: #ffffff;
+    -fx-background-color: #ffffff;
     -fx-cursor: hand;
 
 }
-.jfx-button:hover{
-	-fx-background-color: #d0d0d0
+
+.jfx-button:hover {
+    -fx-background-color: #d0d0d0
 }
 
 
-.light-background{
-	-fx-background-color: #f0f0f0
+.light-background {
+    -fx-background-color: #f0f0f0
 }
 
-.scroll-pane:focused{
-	-fx-border-color: -fx-primary-light;
+.scroll-pane:focused {
+    -fx-border-color: -fx-primary-light;
     -fx-border-width: 0px;
 }
 
-.title1{
-	-fx-text-fill: -fx-primary;
-	-fx-font-size: 1.2em;
+.title1 {
+    -fx-text-fill: -fx-primary;
+    -fx-font-size: 1.2em;
     -fx-font-weight: bold;
 }
 
-.separator{
-	-fx-background-color: -fx-primary;
+.separator {
+    -fx-background-color: -fx-primary;
     -fx-background-radius: 2;
 }
 
-.info-obligatoire{
-	-fx-text-fill: -fx-primary-light;
-	-fx-font-style: italic;
-	-fx-font-weight: thin;
+.info-obligatoire {
+    -fx-text-fill: -fx-primary-light;
+    -fx-font-style: italic;
+    /*-fx-font-weight: thin;*/
 }
 
 
