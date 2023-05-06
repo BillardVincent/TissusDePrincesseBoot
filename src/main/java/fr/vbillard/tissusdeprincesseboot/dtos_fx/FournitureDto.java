@@ -19,9 +19,11 @@ public class FournitureDto implements FxDto<Fourniture> {
 	private StringProperty intituleDimension;
 	private FloatProperty quantite;
 	private StringProperty unite;
+	private StringProperty uniteShort;
 	private StringProperty intituleSecondaire;
 	private FloatProperty quantiteSec;
 	private StringProperty uniteSecondaire;
+	private StringProperty uniteSecondaireShort;
 	private StringProperty lieuAchat;
 	private StringProperty reference;
 	private StringProperty description;
@@ -37,12 +39,14 @@ public class FournitureDto implements FxDto<Fourniture> {
 		this.quantiteDisponible = new SimpleFloatProperty();
 		this.description = new SimpleStringProperty();
 		this.unite = new SimpleStringProperty();
+		this.uniteShort = new SimpleStringProperty();
 		this.nom = new SimpleStringProperty();
 		this.lieuAchat = new SimpleStringProperty();
 		this.archived = new SimpleBooleanProperty();
 		this.typeName = new SimpleStringProperty();
 		this.quantiteSec = new SimpleFloatProperty();
 		this.uniteSecondaire = new SimpleStringProperty();
+		this.uniteSecondaireShort = new SimpleStringProperty();
 		this.intituleDimension = new SimpleStringProperty();
 		this.intituleSecondaire = new SimpleStringProperty();
 	}
@@ -139,9 +143,15 @@ public class FournitureDto implements FxDto<Fourniture> {
 	public String getUnite() {
 		return unite.get();
 	}
+	public String getUniteShort() {
+		return uniteShort.get();
+	}
 
 	public StringProperty getUniteProperty() {
 		return unite;
+	}
+	public StringProperty getUniteShortProperty() {
+		return uniteShort;
 	}
 
 	public void setUnite(Unite unite) {
@@ -149,6 +159,7 @@ public class FournitureDto implements FxDto<Fourniture> {
 			unite = Unite.NON_RENSEIGNE;
 		}
 
+		this.uniteShort.set(unite.getAbbreviation());
 		this.unite.set(unite.getLabel());
 	}
 
@@ -167,15 +178,22 @@ public class FournitureDto implements FxDto<Fourniture> {
 	public String getUniteSecondaire() {
 		return uniteSecondaire.get();
 	}
+	public String getUniteSecondaireShort() {
+		return uniteSecondaireShort.get();
+	}
 
 	public StringProperty getUniteSecondaireProperty() {
 		return uniteSecondaire;
+	}
+	public StringProperty getUniteShortSecondaireProperty() {
+		return uniteSecondaireShort;
 	}
 
 	public void setUniteSecondaire(Unite unite) {
 		if (unite == null) {
 			unite = Unite.NON_RENSEIGNE;
 		}
+		this.uniteSecondaireShort.set(unite.getAbbreviation());
 		this.uniteSecondaire.set(unite.getLabel());
 	}
 

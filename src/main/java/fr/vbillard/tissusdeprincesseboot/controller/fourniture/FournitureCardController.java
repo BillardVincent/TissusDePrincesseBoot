@@ -74,7 +74,7 @@ public class FournitureCardController implements IController {
 		boolean isDescription = fourniture.getDescription() != null && !fourniture.getDescription().equals(Strings.EMPTY);
 		description.setText(isDescription ? fourniture.getDescription() : constants.getAucuneDescription());
 		nombreEtUnite.setText(FxUtils.safePropertyToString(fourniture.getQuantiteDisponibleProperty()) + 
-				FxUtils.safePropertyToString(fourniture.getUniteProperty()));
+				FxUtils.safePropertyToString(fourniture.getUniteShortProperty()));
 		type.setText(FxUtils.safePropertyToString(fourniture.getTypeNameProperty()));
 		nom.setText(FxUtils.safePropertyToString(fourniture.getNomProperty()));
 		Optional<Photo> pictures = imageService.getImage(fournitureService.convert(fourniture));
