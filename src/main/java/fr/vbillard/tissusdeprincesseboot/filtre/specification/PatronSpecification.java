@@ -10,6 +10,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.util.CollectionUtils;
 
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.CharacterSearch;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
@@ -22,6 +23,7 @@ import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis_;
 import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
 import fr.vbillard.tissusdeprincesseboot.model.TissuVariant_;
+import fr.vbillard.tissusdeprincesseboot.model.Tissu_;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
 import fr.vbillard.tissusdeprincesseboot.model.enums.SupportTypeEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
@@ -119,24 +121,28 @@ public class PatronSpecification implements Specification<Patron> {
 					joins.joinTissuRequis(patron).get(TissuRequis_.LAIZE), cb));
 		}
 
-		if (poids != null) {
+		if (!CollectionUtils.isEmpty(poids)) {
 			predicateList.add(joins.joinTissuRequis(patron).get(TissuRequis_.GAMME_POIDS).in(poids));
 		}
 		
-		if (support != null) {
+		if (!CollectionUtils.isEmpty(support)) {
 			predicateList.add(patron.get(Patron_.SUPPORT_TYPE).in(support));
 		}
 
-		if (matieres != null) {
+		if (!CollectionUtils.isEmpty(matieres)) {
 			predicateList.add(joins.joinTissuVariant(patron).get(TissuVariant_.MATIERE).in(matieres));
 		}
 
-		if (typeTissu != null) {
+		if (!CollectionUtils.isEmpty(typeTissu)) {
 			predicateList.add(joins.joinTissuVariant(patron).get(TissuVariant_.TYPE_TISSU).in(typeTissu));
 		}
 
-		if (tissages != null) {
+		if (!CollectionUtils.isEmpty(tissages)) {
 			predicateList.add(joins.joinTissuVariant(patron).get(TissuVariant_.TISSAGE).in(tissages));
+		}
+
+		if(archived != null){
+			predicateList.add(patron.get(Patron_.ARCHIVED).in(archived));
 		}
 
 		return cb.and(predicateList.toArray(new Predicate[] {}));

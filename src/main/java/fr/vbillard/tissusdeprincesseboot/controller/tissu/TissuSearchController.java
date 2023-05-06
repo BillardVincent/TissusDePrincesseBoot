@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
-
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXRadioButton;
@@ -15,11 +14,14 @@ import com.jfoenix.controls.JFXTextField;
 
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.CustomSpinner;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.CharacterSearch;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.CustomSpinner;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.Tissage;
@@ -28,9 +30,6 @@ import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.service.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.service.TissageService;
 import fr.vbillard.tissusdeprincesseboot.service.UserPrefService;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
@@ -38,330 +37,331 @@ import javafx.scene.control.ToggleGroup;
 @Component
 public class TissuSearchController implements IController {
 
-	private static final String AUCUN_FILTRE = "Aucun filtre";
-	private TissuSpecification specification;
+  private static final String AUCUN_FILTRE = "Aucun filtre";
+  private TissuSpecification specification;
 
-	@FXML
-	public JFXTextField referenceField;
-	@FXML
-	public JFXButton typeButton;
-	@FXML
-	public Label typeLbl;
-	@FXML
-	public JFXButton tissageButton;
-	@FXML
-	public Label tissageLbl;
-	@FXML
-	public Label matiereLbl;
-	@FXML
-	public JFXTextField descriptionField;
-	@FXML
-	public JFXTextField lieuDachatField;
-	@FXML
-	public JFXCheckBox lourdCBox;
-	@FXML
-	public JFXCheckBox moyenCBox;
-	@FXML
-	public JFXCheckBox legerCBox;
-	@FXML
-	public JFXCheckBox ncCBox;
-	@FXML
-	public JFXTextField laizeFieldMin;
-	@FXML
-	public JFXTextField laizeFieldMax;
-	@FXML
-	public JFXCheckBox longueurUtilisableCBox;
-	@FXML
-	public JFXTextField longueurFieldMin;
-	@FXML
-	public JFXTextField longueurFieldMax;
-	@FXML
-	public JFXRadioButton decatiTrue;
-	@FXML
-	public JFXRadioButton decatiFalse;
-	@FXML
-	public JFXRadioButton decatiAll;
-	@FXML
-	public JFXRadioButton chute;
-	@FXML
-	public JFXRadioButton coupon;
-	@FXML
-	public JFXRadioButton chuteEtCoupon;
-	@FXML
-	public JFXRadioButton archive;
-	@FXML
-	public JFXRadioButton	notArchive;
-	@FXML
-	public JFXRadioButton indifferentArchive;
+  @FXML
+  public JFXTextField referenceField;
+  @FXML
+  public JFXButton typeButton;
+  @FXML
+  public Label typeLbl;
+  @FXML
+  public JFXButton tissageButton;
+  @FXML
+  public Label tissageLbl;
+  @FXML
+  public Label matiereLbl;
+  @FXML
+  public JFXTextField descriptionField;
+  @FXML
+  public JFXTextField lieuDachatField;
+  @FXML
+  public JFXCheckBox lourdCBox;
+  @FXML
+  public JFXCheckBox moyenCBox;
+  @FXML
+  public JFXCheckBox legerCBox;
+  @FXML
+  public JFXCheckBox ncCBox;
+  @FXML
+  public JFXTextField laizeFieldMin;
+  @FXML
+  public JFXTextField laizeFieldMax;
+  @FXML
+  public JFXCheckBox longueurUtilisableCBox;
+  @FXML
+  public JFXTextField longueurFieldMin;
+  @FXML
+  public JFXTextField longueurFieldMax;
+  @FXML
+  public JFXRadioButton decatiTrue;
+  @FXML
+  public JFXRadioButton decatiFalse;
+  @FXML
+  public JFXRadioButton decatiAll;
+  @FXML
+  public JFXRadioButton chute;
+  @FXML
+  public JFXRadioButton coupon;
+  @FXML
+  public JFXRadioButton chuteEtCoupon;
+  @FXML
+  public JFXRadioButton archive;
+  @FXML
+  public JFXRadioButton notArchive;
+  @FXML
+  public JFXRadioButton indifferentArchive;
 
-	private StageInitializer initializer;
+  private StageInitializer initializer;
 
-	private boolean okClicked = false;
+  private boolean okClicked = false;
 
-	private final ToggleGroup decatiGroup = new ToggleGroup();
-	private final ToggleGroup chuteGroup = new ToggleGroup();
-	private final ToggleGroup archiveGroup = new ToggleGroup();
+  private final ToggleGroup decatiGroup = new ToggleGroup();
+  private final ToggleGroup chuteGroup = new ToggleGroup();
+  private final ToggleGroup archiveGroup = new ToggleGroup();
 
-	private List<String> tissageValuesSelected = new ArrayList<>();
-	private List<String> typeValuesSelected = new ArrayList<>();
-	private List<String> matiereValuesSelected = new ArrayList<>();
+  private List<String> tissageValuesSelected = new ArrayList<>();
+  private List<String> typeValuesSelected = new ArrayList<>();
+  private List<String> matiereValuesSelected = new ArrayList<>();
 
-	private final int margeHauteLeger;
-	private final int margeBasseMoyen;
-	private final int margeHauteMoyen;
-	private final int margeBasseLourd;
-	private final static DecimalFormat df = new DecimalFormat("#.##");
+  private final int margeHauteLeger;
+  private final int margeBasseMoyen;
+  private final int margeHauteMoyen;
+  private final int margeBasseLourd;
+  private final static DecimalFormat df = new DecimalFormat("#.##");
 
-	private final RootController root;
-	private final MatiereService matiereService;
-	private final TissageService tissageService;
-	private final UserPrefService prefService;
+  private final RootController root;
+  private final MatiereService matiereService;
+  private final TissageService tissageService;
+  private final UserPrefService prefService;
 
-	public TissuSearchController(MatiereService matiereService, TissageService tissageService, RootController root,
-			UserPrefService prefService) {
-		this.matiereService = matiereService;
-		this.tissageService = tissageService;
-		this.root = root;
-		this.prefService = prefService;
+  public TissuSearchController(MatiereService matiereService, TissageService tissageService, RootController root,
+      UserPrefService prefService) {
+    this.matiereService = matiereService;
+    this.tissageService = tissageService;
+    this.root = root;
+    this.prefService = prefService;
 
-		UserPref pref = prefService.getUser();
+    UserPref pref = prefService.getUser();
 
-		margeHauteLeger = pref.margeHauteLeger();
-		margeBasseMoyen = pref.margeBasseMoyen();
-		margeHauteMoyen = pref.margeHauteMoyen();
-		margeBasseLourd = pref.margeBasseLourd();
-	}
+    margeHauteLeger = pref.margeHauteLeger();
+    margeBasseMoyen = pref.margeBasseMoyen();
+    margeHauteMoyen = pref.margeHauteMoyen();
+    margeBasseLourd = pref.margeBasseLourd();
+  }
 
-	@Override
-	public void setStageInitializer(StageInitializer initializer, FxData data) {
-		this.initializer = initializer;
-		CustomSpinner.setSpinner(longueurFieldMax);
-		CustomSpinner.setSpinner(longueurFieldMin);
-		CustomSpinner.setSpinner(laizeFieldMax);
-		CustomSpinner.setSpinner(laizeFieldMin);
-
-
-		FxUtils.setToggleGroup(decatiGroup, decatiAll, decatiFalse, decatiTrue);
-		FxUtils.setToggleGroup(chuteGroup, chuteEtCoupon, coupon, chute);
-		FxUtils.setToggleGroup(archiveGroup, notArchive, indifferentArchive, archive);
-		FxUtils.setToggleColor(lourdCBox, moyenCBox, legerCBox, decatiAll, decatiFalse, decatiTrue,
-				chuteEtCoupon, coupon, chute, notArchive, indifferentArchive, archive, longueurUtilisableCBox);
+  @Override
+  public void setStageInitializer(StageInitializer initializer, FxData data) {
+    this.initializer = initializer;
+    CustomSpinner.setSpinner(longueurFieldMax);
+    CustomSpinner.setSpinner(longueurFieldMin);
+    CustomSpinner.setSpinner(laizeFieldMax);
+    CustomSpinner.setSpinner(laizeFieldMin);
 
 
-		typeLbl.setText(AUCUN_FILTRE);
-		matiereLbl.setText(AUCUN_FILTRE);
-		tissageLbl.setText(AUCUN_FILTRE);
+    FxUtils.setToggleGroup(decatiGroup, decatiAll, decatiFalse, decatiTrue);
+    FxUtils.setToggleGroup(chuteGroup, chuteEtCoupon, coupon, chute);
+    FxUtils.setToggleGroup(archiveGroup, notArchive, indifferentArchive, archive);
+    FxUtils.setToggleColor(lourdCBox, moyenCBox, legerCBox, decatiAll, decatiFalse, decatiTrue, chuteEtCoupon, coupon,
+        chute, notArchive, indifferentArchive, archive, longueurUtilisableCBox);
 
-		lourdCBox.setSelected(true);
-		moyenCBox.setSelected(true);
-		legerCBox.setSelected(true);
 
-		// TODO mettre en place NC
-		ncCBox.setSelected(false);
-		ncCBox.setVisible(false);
+    typeLbl.setText(AUCUN_FILTRE);
+    matiereLbl.setText(AUCUN_FILTRE);
+    tissageLbl.setText(AUCUN_FILTRE);
 
-		setData(data);
+    lourdCBox.setSelected(true);
+    moyenCBox.setSelected(true);
+    legerCBox.setSelected(true);
 
-	}
+    // TODO mettre en place NC
+    ncCBox.setSelected(false);
+    ncCBox.setVisible(false);
 
-	private void setData(FxData data) {
-		if (data != null && data.getSpecification() != null && data.getSpecification() instanceof TissuSpecification) {
+    setData(data);
 
-			specification = (TissuSpecification) data.getSpecification();
+  }
 
-			if (specification.getDescription() != null
-					&& Strings.isNotBlank(specification.getDescription().getContainsMultiple())) {
-				descriptionField.setText(specification.getDescription().getContainsMultiple());
-			}
+  private void setData(FxData data) {
+    if (data != null && data.getSpecification() != null && data.getSpecification() instanceof TissuSpecification) {
 
-			FxUtils.setTextFieldFromCharacterSearch(referenceField, specification.getReference());
+      specification = (TissuSpecification) data.getSpecification();
 
-			FxUtils.setTextFieldMaxFromNumericSearch(longueurFieldMax, specification.getLongueur());
-			FxUtils.setTextFieldMinFromNumericSearch(longueurFieldMin, specification.getLongueur());
-			FxUtils.setTextFieldMaxFromNumericSearch(laizeFieldMax, specification.getLaize());
-			FxUtils.setTextFieldMinFromNumericSearch(laizeFieldMin, specification.getLaize());
+      if (specification.getDescription() != null && Strings.isNotBlank(
+          specification.getDescription().getContainsMultiple())) {
+        descriptionField.setText(specification.getDescription().getContainsMultiple());
+      }
 
-			List<String> types = null;
-			if (specification.getTypeTissu() != null) {
-				types = specification.getTypeTissu().stream().map(TypeTissuEnum::getLabel).collect(Collectors.toList());
-			}
-			FxUtils.setSelection(types, typeValuesSelected, typeLbl);
+      FxUtils.setTextFieldFromCharacterSearch(referenceField, specification.getReference());
 
-			List<String> matieres = null;
-			if (specification.getMatieres() != null) {
-				matieres = specification.getMatieres().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList());
-			}
-			FxUtils.setSelection(matieres, matiereValuesSelected, matiereLbl);
+      FxUtils.setTextFieldMaxFromNumericSearch(longueurFieldMax, specification.getLongueur());
+      FxUtils.setTextFieldMinFromNumericSearch(longueurFieldMin, specification.getLongueur());
+      FxUtils.setTextFieldMaxFromNumericSearch(laizeFieldMax, specification.getLaize());
+      FxUtils.setTextFieldMinFromNumericSearch(laizeFieldMin, specification.getLaize());
 
-			List<String> tissages = null;
-			if (specification.getTissages() != null) {
-				tissages = specification.getTissages().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList());
-			}
-			FxUtils.setSelection(tissages, tissageValuesSelected, tissageLbl);
+      List<String> types = null;
+      if (specification.getTypeTissu() != null) {
+        types = specification.getTypeTissu().stream().map(TypeTissuEnum::getLabel).collect(Collectors.toList());
+      }
+      FxUtils.setSelection(types, typeValuesSelected, typeLbl);
 
-			FxUtils.setTextFieldMaxFromNumericSearch(longueurFieldMax, specification.getLongueur());
-			FxUtils.setTextFieldMaxFromNumericSearch(laizeFieldMax, specification.getLaize());
+      List<String> matieres = null;
+      if (specification.getMatieres() != null) {
+        matieres =
+            specification.getMatieres().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList());
+      }
+      FxUtils.setSelection(matieres, matiereValuesSelected, matiereLbl);
 
-			setPoidsFromSpec();
+      List<String> tissages = null;
+      if (specification.getTissages() != null) {
+        tissages =
+            specification.getTissages().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList());
+      }
+      FxUtils.setSelection(tissages, tissageValuesSelected, tissageLbl);
 
-			FxUtils.setToggleGroupFromBoolean(specification.getArchived(), archive, notArchive, indifferentArchive);
-			FxUtils.setToggleGroupFromBoolean(specification.getDecati(), decatiTrue, decatiFalse, decatiAll);
-			FxUtils.setToggleGroupFromBoolean(specification.getChute(), chute, coupon, chuteEtCoupon);
+      FxUtils.setTextFieldMaxFromNumericSearch(longueurFieldMax, specification.getLongueur());
+      FxUtils.setTextFieldMaxFromNumericSearch(laizeFieldMax, specification.getLaize());
 
-		} else {
-			specification = new TissuSpecification();
+      setPoidsFromSpec();
 
-			typeLbl.setText(AUCUN_FILTRE);
-			typeValuesSelected = new ArrayList<>();
-			matiereLbl.setText(AUCUN_FILTRE);
-			matiereValuesSelected = new ArrayList<>();
-			tissageLbl.setText(AUCUN_FILTRE);
-			tissageValuesSelected = new ArrayList<>();
+      FxUtils.setToggleGroupFromBoolean(specification.getArchived(), archive, notArchive, indifferentArchive);
+      FxUtils.setToggleGroupFromBoolean(specification.getDecati(), decatiTrue, decatiFalse, decatiAll);
+      FxUtils.setToggleGroupFromBoolean(specification.getChute(), chute, coupon, chuteEtCoupon);
 
-			longueurFieldMax.setText(Strings.EMPTY);
-			laizeFieldMax.setText(Strings.EMPTY);
-			descriptionField.setText(Strings.EMPTY);
+    } else {
+      specification = new TissuSpecification();
 
-			lourdCBox.setSelected(true);
-			moyenCBox.setSelected(true);
-			legerCBox.setSelected(true);
-			ncCBox.setSelected(true);
-		}
-	}
+      typeLbl.setText(AUCUN_FILTRE);
+      typeValuesSelected = new ArrayList<>();
+      matiereLbl.setText(AUCUN_FILTRE);
+      matiereValuesSelected = new ArrayList<>();
+      tissageLbl.setText(AUCUN_FILTRE);
+      tissageValuesSelected = new ArrayList<>();
 
-	private void setPoidsFromSpec() {
-		if (specification.getPoidsNC() != null) {
-			ncCBox.setSelected(specification.getPoidsNC());
-		} else {
-			ncCBox.setSelected(specification.getPoids() == null);
-		}
+      longueurFieldMax.setText(Strings.EMPTY);
+      laizeFieldMax.setText(Strings.EMPTY);
+      descriptionField.setText(Strings.EMPTY);
 
-		if (specification.getPoids() != null) {
+      lourdCBox.setSelected(true);
+      moyenCBox.setSelected(true);
+      legerCBox.setSelected(true);
+      ncCBox.setSelected(true);
+    }
+  }
 
-			Integer min = specification.getPoids().getGreaterThanEqual();
-			Integer max = specification.getPoids().getLessThanEqual();
+  private void setPoidsFromSpec() {
+    if (specification.getPoidsNC() != null) {
+      ncCBox.setSelected(specification.getPoidsNC());
+    } else {
+      ncCBox.setSelected(specification.getPoids() == null);
+    }
 
-			boolean minIsNullOrZero = min == null || min == 0;
+    if (specification.getPoids() != null) {
 
-			if (minIsNullOrZero && (max == null || max == 0)) {
-				lourdCBox.setSelected(true);
-				moyenCBox.setSelected(true);
-				legerCBox.setSelected(true);
-			} else {
+      Integer min = specification.getPoids().getGreaterThanEqual();
+      Integer max = specification.getPoids().getLessThanEqual();
 
-					legerCBox.setSelected(minIsNullOrZero);
-					moyenCBox.setSelected(min != null && min >= margeBasseMoyen && max != null && max > margeHauteLeger);
-					lourdCBox.setSelected(max != null && max > margeHauteMoyen);
-			}
-		} else {
-			lourdCBox.setSelected(true);
-			moyenCBox.setSelected(true);
-			legerCBox.setSelected(true);
-		}
-	}
+      boolean minIsNullOrZero = min == null || min == 0;
 
-	@FXML
-	private void initialize() {
-		// nothing to do here
-	}
+      if (minIsNullOrZero && (max == null || max == 0)) {
+        lourdCBox.setSelected(true);
+        moyenCBox.setSelected(true);
+        legerCBox.setSelected(true);
+      } else {
+        legerCBox.setSelected(minIsNullOrZero);
+        moyenCBox.setSelected(min != null && min >= margeBasseMoyen && max != null && max > margeHauteLeger);
+        lourdCBox.setSelected(max != null && max > margeHauteMoyen);
+      }
+    } else {
+      lourdCBox.setSelected(true);
+      moyenCBox.setSelected(true);
+      legerCBox.setSelected(true);
+    }
+  }
 
-	public boolean isOkClicked() {
-		return okClicked;
-	}
+  @FXML
+  private void initialize() {
+    // nothing to do here
+  }
 
-	@FXML
-	private void handleCancel() {
-		FxData data = new FxData();
-		data.setSpecification(new TissuSpecification());
-		setData(data);
-	}
+  public boolean isOkClicked() {
+    return okClicked;
+  }
 
-	@FXML
-	private void handleOk() {
-		List<Matiere> matieres = matiereService.findMatiere(matiereValuesSelected);
+  @FXML
+  private void handleCancel() {
+    FxData data = new FxData();
+    data.setSpecification(new TissuSpecification());
+    setData(data);
+  }
 
-		List<Tissage> tissages = tissageService.tissageValuesSelected(tissageValuesSelected);
+  @FXML
+  private void handleOk() {
+    List<Matiere> matieres = matiereService.findMatiere(matiereValuesSelected);
 
-		List<TypeTissuEnum> types = null;
-		if (typeValuesSelected != null && !typeValuesSelected.isEmpty()) {
-			types = new ArrayList<>();
-			for (String s : typeValuesSelected) {
-				types.add(TypeTissuEnum.getEnum(s));
-			}
-		}
+    List<Tissage> tissages = tissageService.tissageValuesSelected(tissageValuesSelected);
 
-		NumericSearch<Integer> longueurSearch = FxUtils.setNumericSearch(longueurFieldMin, longueurFieldMax);
+    List<TypeTissuEnum> types = null;
+    if (typeValuesSelected != null && !typeValuesSelected.isEmpty()) {
+      types = new ArrayList<>();
+      for (String s : typeValuesSelected) {
+        types.add(TypeTissuEnum.getEnum(s));
+      }
+    }
 
-		NumericSearch<Integer> laizeSearch = FxUtils.setNumericSearch(laizeFieldMin, laizeFieldMax);
+    NumericSearch<Integer> longueurSearch = FxUtils.setNumericSearch(longueurFieldMin, longueurFieldMax);
 
-		CharacterSearch description = FxUtils.textFieldToCharacterSearchMultiple(descriptionField);
+    NumericSearch<Integer> laizeSearch = FxUtils.setNumericSearch(laizeFieldMin, laizeFieldMax);
 
-		CharacterSearch reference = FxUtils.textFieldToCharacterSearch(referenceField);
+    CharacterSearch description = FxUtils.textFieldToCharacterSearchMultiple(descriptionField);
 
-		NumericSearch<Integer> poidsSearch = FxUtils.numericSearch(lourdCBox, moyenCBox, legerCBox,
-				prefService.getUser());
+    CharacterSearch reference = FxUtils.textFieldToCharacterSearch(referenceField);
 
-		Boolean poidsSearchNc = null; // ncCBox.isSelected();
+    NumericSearch<Integer> poidsSearch = FxUtils.numericSearch(lourdCBox, moyenCBox, legerCBox, prefService.getUser());
 
-		Boolean decati = FxUtils.getBooleanFromRadioButtons(decatiTrue, decatiFalse, decatiAll);
-		Boolean chuteOuCoupon = FxUtils.getBooleanFromRadioButtons(chute, coupon, chuteEtCoupon);
-		Boolean archived = FxUtils.getBooleanFromRadioButtons(archive, notArchive, indifferentArchive);
+    Boolean poidsSearchNc = null; // ncCBox.isSelected();
 
-		specification = TissuSpecification.builder().reference(reference).description(description).chute(chuteOuCoupon)
-				.decati(decati).laize(laizeSearch).poids(poidsSearch).poidsNC(poidsSearchNc).longueur(longueurSearch)
-				.typeTissu(types).matieres(matieres).tissages(tissages).archived(archived).build();
+    Boolean decati = FxUtils.getBooleanFromRadioButtons(decatiTrue, decatiFalse, decatiAll);
+    Boolean chuteOuCoupon = FxUtils.getBooleanFromRadioButtons(chute, coupon, chuteEtCoupon);
+    Boolean archived = FxUtils.getBooleanFromRadioButtons(archive, notArchive, indifferentArchive);
 
-		root.displayTissu(specification);
-	}
+    specification =
+        TissuSpecification.builder().reference(reference).description(description).chute(chuteOuCoupon).decati(decati)
+            .laize(laizeSearch).poids(poidsSearch).poidsNC(poidsSearchNc).longueur(longueurSearch).typeTissu(types)
+            .matieres(matieres).tissages(tissages).archived(archived).build();
 
-	@FXML
-	private void lourdAction() {
-		if (!moyenCBox.isSelected() && legerCBox.isSelected()) {
-			moyenCBox.setSelected(true);
-		}
-	}
+    root.displayTissu(specification);
+  }
 
-	@FXML
-	private void moyenAction() {
-		if (!moyenCBox.isSelected() && lourdCBox.isSelected() && legerCBox.isSelected()) {
-			lourdCBox.setSelected(false);
-		}
-	}
+  @FXML
+  private void lourdAction() {
+    if (!moyenCBox.isSelected() && legerCBox.isSelected()) {
+      moyenCBox.setSelected(true);
+    }
+  }
 
-	@FXML
-	private void legerAction() {
-		if (!moyenCBox.isSelected() && lourdCBox.isSelected()) {
-			moyenCBox.setSelected(true);
-		}
-	}
+  @FXML
+  private void moyenAction() {
+    if (!moyenCBox.isSelected() && lourdCBox.isSelected() && legerCBox.isSelected()) {
+      lourdCBox.setSelected(false);
+    }
+  }
 
-	@FXML
-	private void poidsHelp() {
-		ShowAlert.information(initializer.getPrimaryStage(), "Aide", "Poids des tissus",
-				"Définissez une plage de poids à filtrer. La plage doit être continue. Léger = inférieur à "
-						+ df.format(margeHauteLeger) + ", Moyen = entre " + df.format(margeBasseMoyen) + " et "
-						+ df.format(margeHauteMoyen) + ", Lourd = supérieur à " + df.format(margeBasseLourd));
-	}
+  @FXML
+  private void legerAction() {
+    if (!moyenCBox.isSelected() && lourdCBox.isSelected()) {
+      moyenCBox.setSelected(true);
+    }
+  }
 
-	@FXML
-	private void utilisableHelp() {
-		ShowAlert.information(initializer.getPrimaryStage(), "Aide", "Tissu utilisable",
-				"Définit si la recherche doit porter sur la quantité de tissu en stock (\"Utilisable\" décoché) ou sur la quantité de tissu disponible (\"Utilisable\" coché)");
-	}
+  @FXML
+  private void poidsHelp() {
+    ShowAlert.information(initializer.getPrimaryStage(), "Aide", "Poids des tissus",
+        "Définissez une plage de poids à filtrer. La plage doit être continue. Léger = inférieur à " + df.format(
+            margeHauteLeger) + ", Moyen = entre " + df.format(margeBasseMoyen) + " et " + df.format(margeHauteMoyen)
+            + ", Lourd = supérieur à " + df.format(margeBasseLourd));
+  }
 
-	@FXML
-	private void choiceType() {
-		FxUtils.setSelectionFromChoiceBoxModale(TypeTissuEnum.labels(), typeValuesSelected, typeLbl);
-	}
+  @FXML
+  private void utilisableHelp() {
+    ShowAlert.information(initializer.getPrimaryStage(), "Aide", "Tissu utilisable",
+        "Définit si la recherche doit porter sur la quantité de tissu en stock (\"Utilisable\" décoché) ou sur la quantité de tissu disponible (\"Utilisable\" coché)");
+  }
 
-	@FXML
-	private void choiceMatiere() {
-		FxUtils.setSelectionFromChoiceBoxModale(matiereService.getAllValues(), matiereValuesSelected, matiereLbl);
-	}
+  @FXML
+  private void choiceType() {
+    FxUtils.setSelectionFromChoiceBoxModale(TypeTissuEnum.labels(), typeValuesSelected, typeLbl);
+  }
 
-	@FXML
-	private void choiceTissage() {
-		FxUtils.setSelectionFromChoiceBoxModale(tissageService.getAllValues(), tissageValuesSelected, tissageLbl);
-	}
+  @FXML
+  private void choiceMatiere() {
+    FxUtils.setSelectionFromChoiceBoxModale(matiereService.getAllValues(), matiereValuesSelected, matiereLbl);
+  }
+
+  @FXML
+  private void choiceTissage() {
+    FxUtils.setSelectionFromChoiceBoxModale(tissageService.getAllValues(), tissageValuesSelected, tissageLbl);
+  }
 
 }
