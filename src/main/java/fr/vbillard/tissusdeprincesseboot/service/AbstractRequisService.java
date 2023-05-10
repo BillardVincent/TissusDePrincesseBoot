@@ -18,8 +18,9 @@ public abstract class AbstractRequisService<T extends AbstractRequis<U>, U exten
   protected MapperService mapper;
   protected PatronService patronService;
   
-  protected AbstractRequisService(MapperService mapper){
+  protected AbstractRequisService(MapperService mapper, PatronService patronService){
 	  this.mapper = mapper;
+    this.patronService = patronService;
   }
 
   @Transactional

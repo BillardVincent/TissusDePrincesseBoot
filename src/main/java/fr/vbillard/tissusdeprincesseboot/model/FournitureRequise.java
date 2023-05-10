@@ -23,7 +23,6 @@ public class FournitureRequise extends AbstractRequis<Fourniture>{
   private String details;
 
   @ManyToOne
-  @Cascade(CascadeType.PERSIST)
   private TypeFourniture type;
 
   protected float quantite;

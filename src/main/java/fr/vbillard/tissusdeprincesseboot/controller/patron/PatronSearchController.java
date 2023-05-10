@@ -220,8 +220,8 @@ public class PatronSearchController implements IController {
   }
 
   @FXML
-  private void initialize() {
-
+  private void initialize(){
+    // nothing to initialize
   }
 
   public boolean isOkClicked() {

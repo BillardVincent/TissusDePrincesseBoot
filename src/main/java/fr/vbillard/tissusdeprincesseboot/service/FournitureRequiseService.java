@@ -27,15 +27,13 @@ public class FournitureRequiseService extends AbstractRequisService<FournitureRe
 	private final FournitureRequiseDao fournitureRequiseDao;
 	private final FournitureVariantService tvs;
 	private final UserPrefService userPrefService;
-	private final PatronService patronService;
 
 	public FournitureRequiseService(MapperService mapper, FournitureRequiseDao fournitureRequiseDao,
 			FournitureVariantService tvs, UserPrefService userPrefService, PatronService patronService) {
-		super(mapper);
+		super(mapper, patronService);
 		this.fournitureRequiseDao = fournitureRequiseDao;
 		this.tvs = tvs;
 		this.userPrefService = userPrefService;
-		this.patronService = patronService;
 	}
 
 	public List<FournitureRequise> getAllRequisByPatron(int id) {
@@ -45,15 +43,6 @@ public class FournitureRequiseService extends AbstractRequisService<FournitureRe
 	public List<FournitureRequiseDto> getAllFournitureRequiseDtoByPatron(int id) {
 		return fournitureRequiseDao.getAllByPatronId(id).stream().map(tr -> mapper.map(tr))
 				.collect(Collectors.toList());
-	}
-
-	@Transactional
-	@Override
-	public FournitureRequiseDto createOrUpdate(FournitureRequiseDto fourniture, PatronDto patron) {
-		FournitureRequise t = convert(fourniture);
-		t.setPatron(patronService.convert(patron));
-		return convert(fournitureRequiseDao.save(t));
-
 	}
 
 	public FournitureRequise findFournitureRequise(int fournitureRequisId) {
