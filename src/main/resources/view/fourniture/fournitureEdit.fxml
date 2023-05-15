@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
+<?import fr.vbillard.tissusdeprincesseboot.controller.components.FloatSpinner?>
 <AnchorPane prefHeight="747.0" prefWidth="1275.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.fourniture.FournitureEditController">
     <GridPane layoutX="54.0" layoutY="124.0" prefHeight="375.0" prefWidth="500.0">
         <columnConstraints>
@@ -37,7 +38,7 @@
             <JFXTextField fx:id="lieuDachatField" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="0.0" prefWidth="324.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                 <children>
-                    <JFXTextField fx:id="quantiteField" prefHeight="26.0" prefWidth="205.0" />
+                    <FloatSpinner fx:id="quantiteField" prefHeight="26.0" prefWidth="205.0" />
                     <JFXComboBox fx:id="uniteField" prefHeight="26.0" prefWidth="125.0" />
                 </children>
             </HBox>
@@ -78,7 +79,7 @@
          <Label fx:id="intituleSecLbl" text="Quantité" GridPane.rowIndex="4" />
          <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="0.0" prefWidth="324.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
             <children>
-               <JFXTextField fx:id="quantiteSecField" prefHeight="26.0" prefWidth="205.0" />
+               <FloatSpinner fx:id="quantiteSecField" prefHeight="26.0" prefWidth="205.0" />
                <JFXComboBox fx:id="uniteSecField" prefHeight="26.0" prefWidth="125.0" />
             </children>
          </HBox>

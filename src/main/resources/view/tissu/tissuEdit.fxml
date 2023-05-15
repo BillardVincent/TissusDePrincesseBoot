@@ -15,6 +15,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
+<?import fr.vbillard.tissusdeprincesseboot.controller.components.IntegerSpinner?>
 <AnchorPane prefHeight="747.0" prefWidth="1275.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuEditController">
     <GridPane layoutX="54.0" layoutY="124.0" prefHeight="515.0" prefWidth="578.0">
         <columnConstraints>
@@ -26,8 +27,8 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints fx:id="ancienneValeurRow" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints fx:id="consommeRow" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -50,7 +51,7 @@
             <JFXTextField fx:id="lieuDachatField" GridPane.columnIndex="1" GridPane.rowIndex="10" />
             <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="0.0" prefWidth="324.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
                 <children>
-                    <JFXTextField fx:id="poidsField" prefHeight="26.0" prefWidth="239.0" />
+                    <IntegerSpinner fx:id="poidsField" prefHeight="26.0" prefWidth="239.0" />
                     <JFXComboBox fx:id="unitePoidsField" prefHeight="26.0" prefWidth="94.0" />
                <FontAwesomeIconView styleClass="clickable" glyphName="QUESTION_CIRCLE" onMouseClicked="#poidsHelp"
                                     size="24" wrappingWidth="26.171464920043945">
@@ -62,7 +63,7 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                 <children>
-                    <JFXTextField fx:id="laizeField" prefHeight="23.0" prefWidth="248.0" />
+                    <IntegerSpinner fx:id="laizeField" prefHeight="23.0" prefWidth="248.0" />
                     <Label prefHeight="43.0" prefWidth="65.0" text="cm">
                         <HBox.margin>
                             <Insets left="15.0" />
@@ -72,7 +73,7 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                 <children>
-                    <JFXTextField fx:id="longueurField" prefHeight="26.0" prefWidth="250.0" />
+                    <IntegerSpinner fx:id="longueurField" prefHeight="26.0" prefWidth="250.0" />
                     <Label prefHeight="43.0" prefWidth="65.0" text="cm">
                         <HBox.margin>
                             <Insets left="15.0" />

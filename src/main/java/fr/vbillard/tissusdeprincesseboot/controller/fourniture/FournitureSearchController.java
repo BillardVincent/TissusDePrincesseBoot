@@ -13,6 +13,8 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.controller.components.FloatSpinner;
+import fr.vbillard.tissusdeprincesseboot.controller.components.IntegerSpinner;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.FournitureSpecification;
@@ -54,23 +56,23 @@ public class FournitureSearchController implements IController {
 	@FXML
 	public JFXCheckBox margeSecCbx;
 	@FXML
-	public JFXTextField margeField;
+	public IntegerSpinner margeField;
 	@FXML
-	public JFXTextField margeSecField;
+	public IntegerSpinner margeSecField;
 	@FXML
 	public JFXComboBox<String> typeField;
 	@FXML
-	public JFXTextField dimSecMin;
+	public FloatSpinner dimSecMin;
 	@FXML
 	private JFXComboBox<String> uniteSecCombo;
 	@FXML
-	public JFXTextField dimSecMax;
+	public FloatSpinner dimSecMax;
 	@FXML
 	public JFXCheckBox longueurUtilisableCBox;
 	@FXML
-	public JFXTextField dimPrimMin;
+	public FloatSpinner dimPrimMin;
 	@FXML
-	public JFXTextField dimPrimMax;
+	public FloatSpinner dimPrimMax;
 	@FXML
 	private JFXComboBox<String> unitePrimCombo;
 	@FXML
@@ -95,12 +97,6 @@ public class FournitureSearchController implements IController {
 	@Override
 	public void setStageInitializer(StageInitializer initializer, FxData data) {
 		this.initializer = initializer;
-		CustomSpinner.setLongSpinner(dimPrimMax);
-		CustomSpinner.setLongSpinner(dimPrimMin);
-		CustomSpinner.setLongSpinner(dimSecMax);
-		CustomSpinner.setLongSpinner(dimSecMin);
-		CustomSpinner.setSpinner(margeField);
-		CustomSpinner.setSpinner(margeSecField);
 
 		margeCbx.selectedProperty().addListener((observable, oldValue, newValue) -> margeField.setDisable(!newValue));
 		margeSecCbx.selectedProperty().addListener((observable, oldValue, newValue) -> margeSecField.setDisable(!newValue));

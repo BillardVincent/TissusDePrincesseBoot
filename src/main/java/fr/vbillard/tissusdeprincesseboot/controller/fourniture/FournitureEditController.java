@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXTextField;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.controller.components.FloatSpinner;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.picture_helper.FourniturePictureHelper;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
@@ -45,11 +46,11 @@ public class FournitureEditController implements IController {
 	@FXML
 	public JFXComboBox<String> uniteField;
 	@FXML
-	public JFXTextField quantiteField;
+	public FloatSpinner quantiteField;
 	@FXML
 	public JFXComboBox<String> uniteSecField;
 	@FXML
-	public JFXTextField quantiteSecField;
+	public FloatSpinner quantiteSecField;
 	@FXML
 	public JFXComboBox<String> typeField;
 	@FXML
@@ -182,9 +183,6 @@ public class FournitureEditController implements IController {
 		FontAwesomeIconView magicIcon = new FontAwesomeIconView(FontAwesomeIcon.MAGIC);
 		generateReferenceButton.setGraphic(magicIcon);
 		generateReferenceButton.setTooltip(new Tooltip("Générer une référence automatiquement"));
-
-		CustomSpinner.setLongSpinner(quantiteField);
-		CustomSpinner.setLongSpinner(quantiteSecField);
 
 	}
 

@@ -14,6 +14,7 @@ import com.jfoenix.controls.JFXToggleButton;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.controller.components.IntegerSpinner;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.picture_helper.TissuPictureHelper;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
@@ -50,13 +51,13 @@ public class TissuEditController implements IController {
 	@FXML
 	public JFXTextField lieuDachatField;
 	@FXML
-	public JFXTextField poidsField;
+	public IntegerSpinner poidsField;
 	@FXML
 	public JFXComboBox<String> unitePoidsField;
 	@FXML
-	public JFXTextField laizeField;
+	public IntegerSpinner laizeField;
 	@FXML
-	public JFXTextField longueurField;
+	public IntegerSpinner longueurField;
 	@FXML
 	public JFXToggleButton chuteField;
 	@FXML
@@ -174,10 +175,6 @@ public class TissuEditController implements IController {
 		FontAwesomeIconView magicIcon = new FontAwesomeIconView(FontAwesomeIcon.MAGIC);
 		generateReferenceButton.setGraphic(magicIcon);
 		generateReferenceButton.setTooltip(new Tooltip("Générer une référence automatiquement"));
-
-		CustomSpinner.setSpinner(longueurField);
-		CustomSpinner.setSpinner(laizeField);
-		CustomSpinner.setSpinner(poidsField);
 
 	}
 

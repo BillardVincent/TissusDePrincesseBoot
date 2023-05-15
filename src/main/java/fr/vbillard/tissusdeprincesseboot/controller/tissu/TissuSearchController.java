@@ -13,6 +13,7 @@ import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.controller.components.IntegerSpinner;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils;
@@ -65,15 +66,15 @@ public class TissuSearchController implements IController {
   @FXML
   public JFXCheckBox ncCBox;
   @FXML
-  public JFXTextField laizeFieldMin;
+  public IntegerSpinner laizeFieldMin;
   @FXML
-  public JFXTextField laizeFieldMax;
+  public IntegerSpinner laizeFieldMax;
   @FXML
   public JFXCheckBox longueurUtilisableCBox;
   @FXML
-  public JFXTextField longueurFieldMin;
+  public IntegerSpinner longueurFieldMin;
   @FXML
-  public JFXTextField longueurFieldMax;
+  public IntegerSpinner longueurFieldMax;
   @FXML
   public JFXRadioButton decatiTrue;
   @FXML
@@ -134,18 +135,12 @@ public class TissuSearchController implements IController {
   @Override
   public void setStageInitializer(StageInitializer initializer, FxData data) {
     this.initializer = initializer;
-    CustomSpinner.setSpinner(longueurFieldMax);
-    CustomSpinner.setSpinner(longueurFieldMin);
-    CustomSpinner.setSpinner(laizeFieldMax);
-    CustomSpinner.setSpinner(laizeFieldMin);
-
 
     FxUtils.setToggleGroup(decatiGroup, decatiAll, decatiFalse, decatiTrue);
     FxUtils.setToggleGroup(chuteGroup, chuteEtCoupon, coupon, chute);
     FxUtils.setToggleGroup(archiveGroup, notArchive, indifferentArchive, archive);
     FxUtils.setToggleColor(lourdCBox, moyenCBox, legerCBox, decatiAll, decatiFalse, decatiTrue, chuteEtCoupon, coupon,
         chute, notArchive, indifferentArchive, archive, longueurUtilisableCBox);
-
 
     typeLbl.setText(AUCUN_FILTRE);
     matiereLbl.setText(AUCUN_FILTRE);
