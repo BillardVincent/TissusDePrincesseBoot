@@ -1,5 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.controller.fourniture;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
 import com.jfoenix.controls.JFXButton;
@@ -12,6 +13,7 @@ import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.picture_helper.FourniturePictureHelper;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.CustomSpinner;
@@ -118,19 +120,34 @@ public class FournitureEditController implements IController {
 		typeField.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			TypeFourniture type = typeService.findTypeFourniture(newValue);
 			boolean typeIsNull = type == null;
+			boolean dimSecondaireIsNull = typeIsNull || type.getDimensionSecondaire() == null;
+
 			uniteField.setDisable(typeIsNull);
-			uniteSecField.setDisable(typeIsNull);
+			quantiteField.setDisable(typeIsNull);
+			quantiteField.setText("0");
 
 			if (!typeIsNull) {
 				fourniture.setType(typeService.findTypeFourniture(newValue));
 				uniteField.setItems(FXCollections.observableArrayList(Unite.getValuesByDimension(fourniture.getType().getDimensionPrincipale())));
-				uniteSecField.setItems(FXCollections.observableArrayList(Unite.getValuesByDimension(fourniture.getType().getDimensionSecondaire())));
 				uniteField.setValue(type.getDimensionPrincipale().getDefault().getLabel());
-				uniteSecField.setValue(type.getDimensionSecondaire().getDefault().getLabel());
-
 				intitulePrimLbl.setText(type.getIntitulePrincipale());
-				intituleSecLbl.setText(type.getIntituleSecondaire());
 
+			} else {
+				uniteField.setValue(Strings.EMPTY);
+				intitulePrimLbl.setText("N/A");
+			}
+
+			uniteSecField.setDisable(dimSecondaireIsNull);
+			quantiteSecField.setDisable(dimSecondaireIsNull);
+			quantiteSecField.setText("0");
+
+			if (!dimSecondaireIsNull) {
+				uniteSecField.setItems(FXCollections.observableArrayList(Unite.getValuesByDimension(fourniture.getType().getDimensionSecondaire())));
+				uniteSecField.setValue(type.getDimensionSecondaire().getDefault().getLabel());
+				intituleSecLbl.setText(type.getIntituleSecondaire());
+			} else {
+				uniteSecField.setValue(Strings.EMPTY);
+				intituleSecLbl.setText("N/A");
 			}
 		});
 
@@ -222,7 +239,7 @@ public class FournitureEditController implements IController {
 	private boolean isInputValid() {
 		String errorMessage = "";
 
-		if (referenceField.getText() == null || referenceField.getText().length() == 0) {
+		if (StringUtils.isEmpty(referenceField.getText())) {
 			errorMessage += "Référence non renseignée.\n";
 		}
 		if (typeField.getValue() == null) {
@@ -232,18 +249,11 @@ public class FournitureEditController implements IController {
 			errorMessage += "Unité non renseignée.\n";
 		}
 
-		if (errorMessage.length() == 0) {
+		if (StringUtils.isEmpty(errorMessage)) {
 			return true;
 		} else {
 			// Show the error message.
-			Alert alert = new Alert(AlertType.ERROR);
-			// alert.initOwner(dialogStage);
-			alert.setTitle("Valeurs incorrectes");
-			alert.setHeaderText("Merci de renseigner les champs suivants:");
-			alert.setContentText(errorMessage);
-
-			alert.showAndWait();
-
+			ShowAlert.erreur(initializer.getPrimaryStage(), "Valeurs incorrectes", "Merci de renseigner les champs suivants:", errorMessage);
 			return false;
 		}
 	}

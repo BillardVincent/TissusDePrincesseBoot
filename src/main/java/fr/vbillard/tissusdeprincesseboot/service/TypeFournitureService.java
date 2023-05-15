@@ -1,6 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,7 +48,7 @@ public class TypeFournitureService extends AbstractService<TypeFourniture> {
 	public ObservableList<String> getAllTypeFournituresValues() {
 		List<TypeFourniture> lst = getAll();
 		return FXCollections.observableArrayList(
-				lst.stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList()));
+				lst.stream().map(AbstractSimpleValueEntity::getValue).sorted().collect(Collectors.toList()));
 	}
 
 	public boolean validate(String value, TypeFourniture type) {
@@ -68,10 +69,11 @@ public class TypeFournitureService extends AbstractService<TypeFourniture> {
 	}
 
 	public List<String> getAllValues() {
-		List<String> result = new ArrayList();
+		List<String> result = new ArrayList<>();
 		for (TypeFourniture tf : getAll()) {
 			result.add(tf.getValue());
 		}
+		Collections.sort(result);
 		return result;
 	}
 

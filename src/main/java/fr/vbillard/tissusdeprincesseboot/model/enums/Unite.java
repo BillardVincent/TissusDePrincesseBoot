@@ -69,7 +69,7 @@ public enum Unite {
 
 	}
 
-	public static List<Unite> poidUnite() {
+	public static List<Unite> poidsUnite() {
 		return Arrays.asList(G, KG);
 	}
 
@@ -89,7 +89,10 @@ public enum Unite {
 
 	}
 
-	public static float convertir(float value, Unite fromUnite) {
-			return value / fromUnite.getFacteur();
+	public static Float convertir(float value, Unite fromUnite) {
+		if (fromUnite == null){
+			return null;
+		}
+		return value / fromUnite.getFacteur();
 	}
 }

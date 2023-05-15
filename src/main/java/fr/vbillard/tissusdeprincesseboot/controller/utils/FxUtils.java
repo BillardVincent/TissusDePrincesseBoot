@@ -22,6 +22,7 @@ import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.Cust
 import fr.vbillard.tissusdeprincesseboot.model.UserPref;
 import fr.vbillard.tissusdeprincesseboot.utils.Constants;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
+import fr.vbillard.tissusdeprincesseboot.utils.Utils;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
@@ -188,32 +189,33 @@ public class FxUtils {
 		return setNumericFloatSearch(minValueBeforeMarge, maxValueBeforeMarge, marge);
 	}
 
-	public static NumericSearch<Float> setNumericFloatSearch(float minValueBeforeMarge, float maxValueBeforeMarge,
+	public static NumericSearch<Float> setNumericFloatSearch(Float minValueBeforeMarge, Float maxValueBeforeMarge,
 			float marge) {
 
-		if (minValueBeforeMarge < 0 || maxValueBeforeMarge < 0
-				|| (maxValueBeforeMarge != 0 && minValueBeforeMarge >= maxValueBeforeMarge)) {
+		if (Utils.notNullAndLessThanZero(minValueBeforeMarge) || Utils.notNullAndLessThanZero(maxValueBeforeMarge)
+				|| (Utils.notNullAndNotZero(maxValueBeforeMarge) && Utils.notNullAndMoreThanEqual(minValueBeforeMarge,
+				maxValueBeforeMarge))) {
 			throw new IllegalData(ILLEGAL_NUMBER);
 		}
 
 		NumericSearch<Float> search = null;
 
-		float minValue = minValueBeforeMarge - minValueBeforeMarge * marge;
-		if (minValue < 0) {
-			minValue = 0;
-		}
-		float maxValue = maxValueBeforeMarge + maxValueBeforeMarge * marge;
-
-		if (maxValue > 0) {
-			search = new NumericSearch<>(null);
-			search.setLessThanEqual(maxValue);
-		}
-
-		if (minValue > 0) {
-			if (search == null) {
+		if (maxValueBeforeMarge != null) {
+			float maxValue = maxValueBeforeMarge + maxValueBeforeMarge * marge;
+			if (maxValue > 0) {
 				search = new NumericSearch<>(null);
+				search.setLessThanEqual(maxValue);
 			}
-			search.setGreaterThanEqual(minValue);
+		}
+
+		if (minValueBeforeMarge != null) {
+			float minValue = minValueBeforeMarge - minValueBeforeMarge * marge;
+			if (minValue > 0) {
+				if (search == null) {
+					search = new NumericSearch<>(null);
+				}
+				search.setGreaterThanEqual(minValue);
+			}
 		}
 
 		return search;

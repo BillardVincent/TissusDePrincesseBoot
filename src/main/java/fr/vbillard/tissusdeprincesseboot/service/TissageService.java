@@ -1,10 +1,12 @@
 package fr.vbillard.tissusdeprincesseboot.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import fr.vbillard.tissusdeprincesseboot.dao.TissageDao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissuDao;
@@ -29,7 +31,7 @@ public class TissageService extends AbstractService<Tissage> {
 
 	public ObservableList<String> getAllObs() {
 		return FXCollections.observableArrayList(
-				getAll().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList()));
+				getAll().stream().map(AbstractSimpleValueEntity::getValue).sorted().collect(Collectors.toList()));
 	}
 
 	public boolean validate(String value) {
@@ -62,10 +64,11 @@ public class TissageService extends AbstractService<Tissage> {
 	}
 
 	public List<String> getAllValues() {
-		List<String> result = new ArrayList();
+		List<String> result = new ArrayList<>();
 		for (Tissage t : getAll()) {
 			result.add(t.getValue());
 		}
+		Collections.sort(result);
 		return result;
 	}
 

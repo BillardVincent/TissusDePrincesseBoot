@@ -22,33 +22,34 @@ public class ShowAlert {
 	}
 
 	public static Optional<ButtonType> suppressionImpossible(Stage stage, EntityToString entity, String item) {
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.initOwner(stage);
-		alert.setTitle("Info");
-		alert.setHeaderText("Vous ne pouvez pas supprimer " + ModelUtils.generateString(entity, Articles.DEMONSTRATIF));
+		String header = "Vous ne pouvez pas supprimer " + ModelUtils.generateString(entity, Articles.DEMONSTRATIF);
 		String itemDisplay = item == null ? Strings.EMPTY : " : " + item;
-		alert.setContentText("Vous ne pouvez pas supprimer " + ModelUtils.generateString(entity, Articles.DEFINI)
+		String content = "Vous ne pouvez pas supprimer " + ModelUtils.generateString(entity, Articles.DEFINI)
 				+ itemDisplay + " car "+ (entity.isMasculin() ? "il" : "elle") + "est utilisé"+ (entity.isMasculin() ? "e":
-				Strings.EMPTY) +" dans un projet");
-		return alert.showAndWait();
+				Strings.EMPTY) +" dans au moins un projet";
+		return information(stage, "Info",  header, content);
 	}
 
 	public static Optional<ButtonType> information(Stage stage, String titre, String header, String content) {
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.initOwner(stage);
-		alert.setTitle(titre);
-		alert.setHeaderText(header);
-		alert.setContentText(content);
-		return alert.showAndWait();
+		return alert(AlertType.INFORMATION, stage, titre, header, content);
 	}
 	
 	public static Optional<ButtonType> confirmation(Stage stage, String titre, String header, String content) {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
+		return alert(AlertType.CONFIRMATION, stage, titre, header, content);
+	}
+
+  public static  Optional<ButtonType> erreur(Stage stage, String titre, String header, String errorMessage) {
+		return alert(AlertType.ERROR, stage, titre, header, errorMessage);
+  }
+
+	public static  Optional<ButtonType> alert(AlertType type, Stage stage, String titre, String header,
+			String errorMessage){
+		Alert alert = new Alert(type);
 		alert.initOwner(stage);
 		alert.setTitle(titre);
 		alert.setHeaderText(header);
-		alert.setContentText(content);
+		alert.setContentText(errorMessage);
+
 		return alert.showAndWait();
 	}
-
 }

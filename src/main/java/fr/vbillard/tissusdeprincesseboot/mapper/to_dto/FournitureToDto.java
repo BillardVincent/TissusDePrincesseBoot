@@ -43,7 +43,7 @@ public class FournitureToDto extends TypeMapConfigurer<Fourniture, FournitureDto
 							Unite.getEnum(context.getDestination().getUnite()));
 					context.getDestination().setQuantite(qte);
 				}
-					if (context.getSource().getQuantiteSecondaire() != null) {
+					if (context.getSource().getQuantiteSecondaire() != null && !Float.isNaN(context.getSource().getQuantiteSecondaire().getQuantite()) ) {
 
 						if (context.getSource().getQuantiteSecondaire().getUnite() != null) {
 							context.getDestination().setUniteSecondaire(context.getSource().getQuantiteSecondaire().getUnite());

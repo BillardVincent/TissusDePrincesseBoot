@@ -38,7 +38,7 @@ public enum UnitePoids {
     }
     
     public static List<String> labels(){
-    	List<String> list = new ArrayList();
+    	List<String> list = new ArrayList<>();
         for(UnitePoids e : UnitePoids.values()){
             list.add(e.label);
         }

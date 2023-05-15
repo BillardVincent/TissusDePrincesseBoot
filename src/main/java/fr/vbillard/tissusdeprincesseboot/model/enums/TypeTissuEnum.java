@@ -27,7 +27,7 @@ public enum TypeTissuEnum {
 	}
 
 	public static List<String> labels() {
-		List<String> list = new ArrayList();
+		List<String> list = new ArrayList<>();
 		for (TypeTissuEnum e : TypeTissuEnum.values()) {
 			list.add(e.label);
 		}

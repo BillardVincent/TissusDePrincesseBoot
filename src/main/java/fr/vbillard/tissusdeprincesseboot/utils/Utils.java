@@ -33,12 +33,20 @@ public class Utils {
 		return value == null ? Strings.EMPTY : value;
 	}
 
-	public boolean notNullAndNotZero(Integer value){
+	public static boolean notNullAndNotZero(Integer value){
 		return value != null && value != 0;
 	}
 
-	public boolean notNullAndMoreThanZero(Integer value){
+	public static boolean notNullAndMoreThanZero(Integer value){
 		return value != null && value > 0;
+	}
+
+	public static boolean notNullAndMoreThanZero(Float value) {return value != null && value > 0; }
+	public static boolean notNullAndLessThanZero(Float value) {return value != null && value < 0; }
+	public static boolean notNullAndNotZero(Float value) {return value != null && value != 0; }
+
+	public static boolean notNullAndMoreThanEqual(Float value1, Float value2){
+		return value1 != null && value2 != null && value1 >= value2;
 	}
 
 	public static void appendWithSeparator(StringBuilder sb, String separator, String value){

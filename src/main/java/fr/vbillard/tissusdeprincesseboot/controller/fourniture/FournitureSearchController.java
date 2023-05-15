@@ -216,7 +216,7 @@ public class FournitureSearchController implements IController {
 		specification = FournitureSpecification.builder().reference(reference).description(description).type(type)
 				.quantite(dimPrim).quantiteDisponible(dimPrimDispo).quantiteSecondaire(dimSec).build();
 
-		root.displayTissu(specification);
+		root.displayFourniture(specification);
 	}
 
 	@FXML

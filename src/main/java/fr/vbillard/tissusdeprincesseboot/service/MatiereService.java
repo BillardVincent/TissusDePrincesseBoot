@@ -1,6 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,7 +49,7 @@ public class MatiereService extends AbstractService<Matiere> {
 	public ObservableList<String> getAllMatieresValues() {
 		List<Matiere> lst = getAll();
 		return FXCollections.observableArrayList(
-				lst.stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList()));
+				lst.stream().map(AbstractSimpleValueEntity::getValue).sorted().collect(Collectors.toList()));
 	}
 
 	public boolean validate(String value) {
@@ -71,10 +72,11 @@ public class MatiereService extends AbstractService<Matiere> {
 	}
 
 	public List<String> getAllValues() {
-		List<String> result = new ArrayList();
+		List<String> result = new ArrayList<>();
 		for (Matiere m : getAll()) {
 			result.add(m.getValue());
 		}
+		Collections.sort(result);
 		return result;
 	}
 }
