@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.*?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import fr.vbillard.tissusdeprincesseboot.controller.components.IntegerSpinner?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Label?>
@@ -82,14 +83,14 @@
         <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="302.0">
           <children>
             <Label prefHeight="43.0" prefWidth="80.0" text="Longueur: "/>
-            <JFXTextField fx:id="longueurFieldMax" prefHeight="26.0" prefWidth="50.0"/>
+            <IntegerSpinner fx:id="longueurFieldMax" prefHeight="26.0" prefWidth="50.0"/>
             <Label prefHeight="43.0" prefWidth="50.0" text="cm"/>
           </children>
         </HBox>
         <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="302.0">
           <children>
             <Label prefHeight="40.0" prefWidth="50.0" text="Laize :"/>
-            <JFXTextField fx:id="laizeFieldMax" prefHeight="26.0" prefWidth="50.0"/>
+            <IntegerSpinner fx:id="laizeFieldMax" prefHeight="26.0" prefWidth="50.0"/>
             <Label prefHeight="43.0" prefWidth="50.0" text="cm"/>
           </children>
         </HBox>
@@ -125,7 +126,6 @@
           </HBox>
         </children>
       </VBox>
-
     </children>
     <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>

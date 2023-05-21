@@ -83,5 +83,4 @@ public class FournitureToDto extends TypeMapConfigurer<Fourniture, FournitureDto
 			return longueurRestante;
 		}
 	}
-	
 }

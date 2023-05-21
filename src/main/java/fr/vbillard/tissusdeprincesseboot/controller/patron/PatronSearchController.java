@@ -14,6 +14,7 @@ import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.controller.components.IntegerSpinner;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils;
@@ -79,9 +80,9 @@ public class PatronSearchController implements IController {
   @FXML
   public JFXCheckBox supportNcCBox;
   @FXML
-  public JFXTextField longueurFieldMax;
+  public IntegerSpinner longueurFieldMax;
   @FXML
-  public JFXTextField laizeFieldMax;
+  public IntegerSpinner laizeFieldMax;
   @FXML
   public JFXRadioButton archive;
   @FXML

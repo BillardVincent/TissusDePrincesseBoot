@@ -102,13 +102,13 @@ public class TissuCardController implements IController {
 		tissage.setText(FxUtils.safePropertyToString(tissu.getTissageProperty()));
 		poids.setText(FxUtils.safePropertyToString(tissu.getPoidseProperty()));
 		unitePoids.setText(tissu.getUnitePoids());
-		WebView view = new WebView();
+		WebView decatiView = new WebView();
 		if (tissu.isDecati()) {
-			customIcon.washingMachinIcon(view, 20);
+			customIcon.washingMachinIcon(decatiView, 20);
 		} else {
-			customIcon.noWashingMachinIcon(view, 20);
+			customIcon.noWashingMachinIcon(decatiView, 20);
 		}
-		footer.getChildren().add(view);
+		footer.getChildren().add(decatiView);
 
 		UserPref pref = userPrefService.getUser();
 
