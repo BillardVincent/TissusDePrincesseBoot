@@ -2,12 +2,15 @@ package fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element;
 
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import com.sun.javafx.webkit.Accessor;
 
 import fr.vbillard.tissusdeprincesseboot.config.PathIconsProperties;
+import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.exception.PersistanceException;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import javafx.scene.web.WebView;
@@ -18,6 +21,8 @@ import lombok.AllArgsConstructor;
 public class CustomIcon {
 
 	PathIconsProperties pathProperties;
+
+	private static final Logger LOGGER = LogManager.getLogger(CustomIcon.class);
 
 	public void washingMachinIcon(WebView view, double size) {
 		Resource path = pathProperties.getWashingMachine();
@@ -78,7 +83,7 @@ public class CustomIcon {
 		try {
 			view.getEngine().load(path.getURL().toString());
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 			throw new PersistanceException(path.getFilename());
 		}
 

@@ -3,6 +3,8 @@ package fr.vbillard.tissusdeprincesseboot.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,9 @@ public class TissuService extends AbstractDtoService<Tissu, TissuDto> {
 
 	private ModelMapper mapper;
 	private TissuDao dao;
+
+	private static final Logger LOGGER = LogManager.getLogger(TissuService.class);
+
 
 	public boolean existByReference(String string) {
 		return dao.existsByReference(string);
@@ -70,7 +75,7 @@ public class TissuService extends AbstractDtoService<Tissu, TissuDto> {
 			try {
 				result = dao.longueurUtilisee(tissuId);
 			} catch (Exception e) {
-				e.printStackTrace();
+				LOGGER.error(e);
 			}
 		}
 		return result == null ? 0 : result;

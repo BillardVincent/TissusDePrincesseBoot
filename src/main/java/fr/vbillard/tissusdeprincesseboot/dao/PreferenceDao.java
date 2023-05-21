@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import javax.swing.filechooser.FileSystemView;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,6 +19,9 @@ public class PreferenceDao {
 
 	private static File file = new File("preferences.yaml");
 
+	private static final Logger LOGGER = LogManager.getLogger(PreferenceDao.class);
+
+
 	public Preference getPreference() {
 		Preference pref = new Preference();
 		ObjectMapper om = new ObjectMapper(new YAMLFactory());
@@ -24,20 +29,20 @@ public class PreferenceDao {
 		try {
 			file.createNewFile();
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 
 		try {
 			pref = om.readValue(file, Preference.class);
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 			pref.setDataBasePath("");
 			pref.setPictureLastUploadPath(FileSystemView.getFileSystemView().getDefaultDirectory().getPath());
 			pref.setFirstLaunch(true);
 			try {
 				om.writeValue(file, pref);
 			} catch (IOException e1) {
-				e1.printStackTrace();
+				LOGGER.error(e1);
 			}
 		}
 
@@ -46,11 +51,10 @@ public class PreferenceDao {
 
 	public void savePreferences(Preference pref) {
 		ObjectMapper om = new ObjectMapper(new YAMLFactory());
-
 		try {
 			om.writeValue(file, pref);
-		} catch (IOException e1) {
-			e1.printStackTrace();
+		} catch (IOException e) {
+			LOGGER.error(e);
 		}
 	}
 }

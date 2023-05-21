@@ -3,6 +3,8 @@ package fr.vbillard.tissusdeprincesseboot.controller.utils;
 import java.net.URL;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
@@ -23,6 +25,8 @@ import lombok.Data;
 @Data
 @Component
 public class FxData {
+
+	private static final Logger LOGGER = LogManager.getLogger(FxData.class);
 
 	private Page page;
 	private PathEnum path;
@@ -49,7 +53,7 @@ public class FxData {
 		try {
 			return (FxData) this.clone();
 		} catch (CloneNotSupportedException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 			throw new RuntimeException("Echec du clonage : " + this.toString());
 		}
 	}

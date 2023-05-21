@@ -8,6 +8,8 @@ import java.util.Optional;
 
 import javax.imageio.ImageIO;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.imgscalr.Scalr;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +29,10 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class ImageService extends AbstractService<Photo> {
 
-	PhotoDao dao;
-	PathImgProperties pathProperties;
+	private PhotoDao dao;
+	private PathImgProperties pathProperties;
+
+	private static final Logger LOGGER = LogManager.getLogger(ImageService.class);
 
 	public Optional<Photo> getImage(Projet projet) {
 		if (projet.getId() == 0) {
@@ -65,7 +69,7 @@ public class ImageService extends AbstractService<Photo> {
 		try {
 			return new Image(pathProperties.getImageDefault().getURL().toString());
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 			throw new PersistanceException("Erreur de chargement de l'image");
 		}
 

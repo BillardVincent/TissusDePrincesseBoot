@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +28,9 @@ import javafx.stage.Stage;
 
 @Component
 public class SetWebUrlDialogController implements IModalController {
+
+	private static final Logger LOGGER = LogManager.getLogger(SetWebUrlDialogController.class);
+
 	private Stage dialogStage;
 	private FxData result;
 	private StageInitializer initializer;
@@ -62,7 +67,7 @@ public class SetWebUrlDialogController implements IModalController {
 			try {
 				result.setUrl(new URL(urlField.getText()));
 			} catch (MalformedURLException e) {
-				e.printStackTrace();
+				LOGGER.error(e);
 				throw new NotFoundException(urlField.getText());
 			}
 			dialogStage.close();
@@ -97,7 +102,7 @@ public class SetWebUrlDialogController implements IModalController {
 			String data = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
 			urlField.setText(data);
 		} catch (HeadlessException | UnsupportedFlavorException | IOException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 			throw new NotFoundException("Le contenu du presse papier");
 		}
 	}

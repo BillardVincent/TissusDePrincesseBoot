@@ -1,5 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.mapper.to_dto;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.modelmapper.AbstractConverter;
 import org.modelmapper.TypeMap;
 import org.springframework.stereotype.Component;
@@ -17,6 +19,9 @@ import lombok.AllArgsConstructor;
 public class FournitureToDto extends TypeMapConfigurer<Fourniture, FournitureDto> {
 
 	FournitureDao fournitureDao;
+
+	private static final Logger LOGGER = LogManager.getLogger(FournitureToDto.class);
+
 
 	@Override
 	public void configure(TypeMap<Fourniture, FournitureDto> typeMap) {
@@ -77,7 +82,7 @@ public class FournitureToDto extends TypeMapConfigurer<Fourniture, FournitureDto
 						longueurRestante -= utilise;
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					LOGGER.error(e);
 				}
 			}
 			return longueurRestante;

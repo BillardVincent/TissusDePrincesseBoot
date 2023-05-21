@@ -3,6 +3,8 @@ package fr.vbillard.tissusdeprincesseboot.controller;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -37,14 +39,17 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
 
 	private final ApplicationContext applicationContext;
 	private Stage stage;
-	private PathImgProperties pathImgProperties; 
+	private final PathImgProperties pathImgProperties;
 	private final FxmlPathProperties pathProperties;
 	private final PathService pathService;
 	private final PreferenceService preferenceService;
 	private static History history;
 	private FxData fxData;
 	private RootController rootController;
-	private DisplayInventaireService displayInventaireService;
+	private final DisplayInventaireService displayInventaireService;
+
+	private static final Logger LOGGER = LogManager.getLogger(StageInitializer.class);
+
 
 	public StageInitializer(ApplicationContext applicationContext, FxmlPathProperties pathProperties,
 			PreferenceService preferenceService, History history, FxData data, TissuService tissuService,
@@ -83,7 +88,7 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
 
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 	}
 
@@ -117,7 +122,7 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
 			// TODO Fil d'ariane ici
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return layout;
 	}
@@ -150,7 +155,7 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
 
 			return controller.result();
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 			return null;
 		}
 	}

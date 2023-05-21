@@ -3,6 +3,8 @@ package fr.vbillard.tissusdeprincesseboot.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.PageRequest;
@@ -27,6 +29,9 @@ public class FournitureService extends AbstractDtoService<Fourniture, Fourniture
 	private MapperService mapper;
 	private FournitureDao dao;
 	private ImageService imageService;
+
+	private static final Logger LOGGER = LogManager.getLogger(FournitureService.class);
+
 
 
 	public boolean existByReference(String string) {
@@ -67,7 +72,7 @@ public class FournitureService extends AbstractDtoService<Fourniture, Fourniture
 			try {
 				result = dao.quantiteUtilisee(fournitureId);
 			} catch (Exception e) {
-				e.printStackTrace();
+				LOGGER.error(e);
 			}
 		}
 		return result == null ? 0f : result;

@@ -1,5 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.mapper.to_dto;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.modelmapper.AbstractConverter;
 import org.modelmapper.TypeMap;
 import org.modelmapper.spi.DestinationSetter;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.github.rozidan.springboot.modelmapper.TypeMapConfigurer;
 
+import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.CustomIcon;
 import fr.vbillard.tissusdeprincesseboot.dao.TissuDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
@@ -19,6 +22,8 @@ import lombok.AllArgsConstructor;
 public class TissuToDto extends TypeMapConfigurer<Tissu, TissuDto> {
 
 	TissuDao tissuDao;
+
+	private static final Logger LOGGER = LogManager.getLogger(TissuToDto.class);
 
 	@Override
 	public void configure(TypeMap<Tissu, TissuDto> typeMap) {
@@ -41,7 +46,7 @@ public class TissuToDto extends TypeMapConfigurer<Tissu, TissuDto> {
 						longueurRestante -= utilise;
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					LOGGER.error(e);
 				}
 			}
 			return longueurRestante;

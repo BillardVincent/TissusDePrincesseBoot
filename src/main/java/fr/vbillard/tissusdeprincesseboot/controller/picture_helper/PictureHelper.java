@@ -11,6 +11,8 @@ import java.net.URL;
 import java.util.Optional;
 import javax.imageio.ImageIO;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.util.StringUtils;
 
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
@@ -32,6 +34,9 @@ public abstract class PictureHelper {
 
   protected Optional<Photo> picture;
 
+  private static final Logger LOGGER = LogManager.getLogger(PictureHelper.class);
+
+
   protected PictureHelper(PreferenceService preferenceService, StageInitializer initializer,
       ImageService imageService) {
     this.preferenceService = preferenceService;
@@ -51,7 +56,7 @@ public abstract class PictureHelper {
         BufferedImage bufferedImage = ImageIO.read(url);
         picture = Optional.of(imageService.setImage(picture, name, extension, bufferedImage));
       } catch (IOException e) {
-        e.printStackTrace();
+        LOGGER.error(e);
         throw new NotFoundException(url.toString());
       }
     }
@@ -74,7 +79,7 @@ public abstract class PictureHelper {
         picture = Optional.of(imageService.setImage(picture, name, extension, bufferedImage));
 
       } catch (IOException e) {
-        e.printStackTrace();
+        LOGGER.error(e);
         throw new NotFoundException(file.getName());
       }
     }
@@ -97,7 +102,7 @@ public abstract class PictureHelper {
         g.dispose();
         picture = Optional.of(imageService.setImage(picture, "copie", "jpg", bi));
       } catch (IOException | UnsupportedFlavorException e) {
-        e.printStackTrace();
+        LOGGER.error(e);
         throw new IllegalData("Les données du presse-papier ne correspondent pas à une image");
       }
     }

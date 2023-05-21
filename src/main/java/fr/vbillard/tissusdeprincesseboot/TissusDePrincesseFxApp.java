@@ -1,5 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.SpringApplication;
@@ -19,6 +21,9 @@ public class TissusDePrincesseFxApp extends Application {
 	private static ConfigurableApplicationContext applicationContext;
 
 	private Stage primaryStage;
+
+	private static final Logger LOGGER = LogManager.getLogger(TissusDePrincesseFxApp.class);
+
 
 	@Override
 	public void init() {
@@ -61,7 +66,7 @@ public class TissusDePrincesseFxApp extends Application {
 
 	private void showError(Thread t, Throwable e) {
 		System.err.println("***Default exception handler***");
-		e.printStackTrace();
+		LOGGER.error(e);
 		if (Platform.isFxApplicationThread()) {
 			Alert alert;
 
