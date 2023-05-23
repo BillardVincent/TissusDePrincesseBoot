@@ -199,24 +199,16 @@ public class TypeFournitureEditController implements IModalController {
 	public void handleSaveOrEdit() {
 
 		if (!validateField()) {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.initOwner(mainApp.getPrimaryStage());
-			alert.setTitle(PAS_DE_VALEUR);
-			alert.setHeaderText(PAS_DE_VALEUR);
-			alert.setContentText("Veuillez renseigner une valeur dans tous les champs obligatoires");
-			alert.showAndWait();
+			ShowAlert.warn(mainApp.getPrimaryStage(), PAS_DE_VALEUR, PAS_DE_VALEUR,
+					"Veuillez renseigner une valeur dans tous les champs obligatoires");
 		} else if (typeFournitureService.validate(nomField.getText(), typeFourniture)) {
 			save();
 			typeFourniture = null;
 			listType.getSelectionModel().clearSelection();
 		} else {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.initOwner(mainApp.getPrimaryStage());
-			alert.setTitle("Duplicat");
-			alert.setHeaderText("Type de fourniture déja existant");
-			alert.setContentText("Ce type de fourniture existe déjà");
+			ShowAlert.warn(mainApp.getPrimaryStage(), "Duplicat", "Type de fourniture déja existant"
+					, "Ce type de fourniture existe déjà");
 
-			alert.showAndWait();
 		}
 	}
 

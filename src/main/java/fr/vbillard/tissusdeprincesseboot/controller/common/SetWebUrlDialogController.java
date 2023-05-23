@@ -18,6 +18,7 @@ import com.jfoenix.controls.JFXTextField;
 
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IModalController;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
 import fr.vbillard.tissusdeprincesseboot.exception.NotFoundException;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ImageFormat;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
@@ -50,18 +51,11 @@ public class SetWebUrlDialogController implements IModalController {
 	@FXML
 	public void handleValidate() {
 		if (urlField.getText().trim().isEmpty()) {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Aucune valeur renseignée");
-			alert.setHeaderText("Aucune valeur renseignée");
-			alert.setContentText("Veuillez renseigner une URL");
-			alert.showAndWait();
+			ShowAlert.warn(dialogStage, "Aucune valeur renseignée", "Aucune valeur renseignée","Veuillez "
+					+ "renseigner une URL" );
 		} else if (!validateAsPicture()) {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Non supporté");
-			alert.setHeaderText("Le format n'est pas supporté");
-			alert.setContentText("Le format n'est pas supporté. L'URL doit terminer par "
+			ShowAlert.warn(dialogStage, "Non supporté", "Le format n'est pas supporté","Le format n'est pas supporté. L'URL doit terminer par "
 					+ Strings.join(ImageFormat.extensions(), ' '));
-			alert.showAndWait();
 		} else {
 			result = new FxData();
 			try {

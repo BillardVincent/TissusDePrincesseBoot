@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
 import fr.vbillard.tissusdeprincesseboot.model.Inventaire;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
@@ -103,13 +104,9 @@ public class EnCoursWorkFlow extends Workflow {
 	}
 
 	private Optional<ButtonType> validateNextStep() {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Terminer le projet");
-		alert.setHeaderText("Cette opération est définitive");
-		alert.setContentText(
-				"Souhaitez vous terminer ce projet? Vos stocks font être définitivement réduit de la quantité allouée à ce projet. Cette opération est définitive");
 
-		return alert.showAndWait();
+		return ShowAlert.confirmation(null, "Terminer le projet", "Cette opération est définitive",
+				"Souhaitez vous terminer ce projet? Vos stocks font être définitivement réduit de la quantité allouée à ce projet. Cette opération est définitive");
 	}
 
 	@Override

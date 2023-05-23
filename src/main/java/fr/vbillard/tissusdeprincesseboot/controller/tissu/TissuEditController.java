@@ -1,6 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.controller.tissu;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.logging.log4j.util.Strings;
 import org.modelmapper.ModelMapper;
@@ -38,6 +39,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
@@ -258,14 +260,8 @@ public class TissuEditController implements IController {
 			return true;
 		} else {
 			// Show the error message.
-			Alert alert = new Alert(AlertType.ERROR);
-			// alert.initOwner(dialogStage);
-			alert.setTitle("Valeurs incorrectes");
-			alert.setHeaderText("Merci de renseigner les champs suivants:");
-			alert.setContentText(errorMessage);
-
-			alert.showAndWait();
-
+			ShowAlert.erreur(initializer.getPrimaryStage(),"Valeurs incorrectes",
+					"Merci de renseigner les champs suivants:", errorMessage);
 			return false;
 		}
 	}

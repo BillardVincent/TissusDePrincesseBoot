@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXButton;
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IModalController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -51,24 +52,13 @@ public abstract class AbstractCaracteristiqueController implements IModalControl
 
 	private void handleSaveOrEdit(boolean isSave) {
 		if ((isSave && fieldSaveEmpty()) || (!isSave && fieldEditEmpty())) {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.initOwner(mainApp.getPrimaryStage());
-			alert.setTitle(PAS_DE_VALEUR);
-			alert.setHeaderText(PAS_DE_VALEUR);
-			alert.setContentText("Veuillez remplir une valeur");
-			alert.showAndWait();
+			ShowAlert.warn(mainApp.getPrimaryStage(), PAS_DE_VALEUR, PAS_DE_VALEUR, "Veuillez remplir une valeur");
 		} else if (isSave && validateSave()) {
 			save();
 		} else if (!isSave && validateEdit()) {
 			edit();
 		} else {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.initOwner(mainApp.getPrimaryStage());
-			alert.setTitle("Duplicat");
-			alert.setHeaderText(fieldAlreadyExists());
-			alert.setContentText(thisField() + " existe déjà");
-
-			alert.showAndWait();
+			ShowAlert.warn(mainApp.getPrimaryStage(), "Duplicat", fieldAlreadyExists(),thisField() + " existe déjà");
 		}
 	}
 

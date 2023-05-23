@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
 import fr.vbillard.tissusdeprincesseboot.exception.InvalidWorkflowException;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
@@ -128,13 +129,9 @@ public abstract class Workflow {
 		if (CollectionUtils.isEmpty(warn)) {
 			return true;
 		}
-		
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Attention");
-		alert.setHeaderText("Nous avons relevé des problèmes potentiels");
-		alert.setContentText(String.join(",\n", warn));
 
-		return alert.showAndWait().orElse(ButtonType.CANCEL).equals(ButtonType.OK);
+		return ShowAlert.confirmation(null, "Attention", "Nous avons relevé des problèmes potentiels",
+				String.join(",\n", warn)).orElse(ButtonType.CANCEL).equals(ButtonType.OK);
 	}
 		
 	// -------- Autre -------------

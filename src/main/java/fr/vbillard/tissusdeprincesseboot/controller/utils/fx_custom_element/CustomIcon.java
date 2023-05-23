@@ -13,6 +13,7 @@ import fr.vbillard.tissusdeprincesseboot.config.PathIconsProperties;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.exception.PersistanceException;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.web.WebView;
 import lombok.AllArgsConstructor;
 
@@ -77,6 +78,7 @@ public class CustomIcon {
 
 	private void loadSVG(WebView view, Resource path, double size, double originalSize) {
 		Accessor.getPageFor(view.getEngine()).setBackgroundColor(0);
+		view.setBlendMode(BlendMode.DARKEN);
 
 		view.setMinSize(size, size);
 		view.setPrefSize(size, size);

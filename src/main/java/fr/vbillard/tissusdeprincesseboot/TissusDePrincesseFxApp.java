@@ -9,6 +9,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
 import fr.vbillard.tissusdeprincesseboot.exception.AbstractTissuDePricesseException;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -65,28 +66,21 @@ public class TissusDePrincesseFxApp extends Application {
 	}
 
 	private void showError(Thread t, Throwable e) {
-		System.err.println("***Default exception handler***");
+		LOGGER.error("***Default exception handler***");
 		LOGGER.error(e);
 		if (Platform.isFxApplicationThread()) {
-			Alert alert;
 
 			Throwable e1 = e.getCause();
 			if (e1.getCause() instanceof AbstractTissuDePricesseException) {
 				AbstractTissuDePricesseException ex = (AbstractTissuDePricesseException) e1.getCause();
-				alert = new Alert(ex.getAlertType() == null ? AlertType.ERROR : ex.getAlertType());
-				alert.initOwner(primaryStage);
-				alert.setTitle(Strings.isEmpty(ex.getTitle()) ? "Erreur inatendue" : ex.getTitle()) ;
-				alert.setHeaderText(Strings.isEmpty(ex.getHeader())? "Une erreur est survenue" : ex.getHeader());
-				alert.setContentText(Strings.isEmpty(ex.getContent()) ? "Veuillez nous excuser de la gène occasionnée. Contactez nous si le problème se répète" : ex.getContent());
-			} else {
-				alert = new Alert(AlertType.ERROR);
-				alert.initOwner(primaryStage);
-				alert.setTitle("Erreur inatendue");
-				alert.setHeaderText("Une erreur est survenue");
-				alert.setContentText(
+				ShowAlert.alert(ex.getAlertType() == null ? AlertType.ERROR : ex.getAlertType(), primaryStage,
+						Strings.isEmpty(ex.getTitle()) ? "Erreur inattendue" : ex.getTitle(),
+						Strings.isEmpty(ex.getHeader())? 	"Une erreur est survenue" : ex.getHeader(),
+						Strings.isEmpty(ex.getContent()) ? "Veuillez nous excuser de la gène occasionnée. Contactez nous si le problème se répète" : ex.getContent());
+					} else {
+				ShowAlert.alert(AlertType.ERROR, primaryStage, "Erreur inattendue", "Une erreur est survenue",
 						"Veuillez nous excuser de la gène occasionnée. Contactez nous si le problème se répète");
 			}
-			alert.showAndWait();
 		}
 	}
 

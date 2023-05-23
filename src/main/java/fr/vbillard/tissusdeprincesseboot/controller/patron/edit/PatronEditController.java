@@ -13,6 +13,7 @@ import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.picture_helper.PatronPictureHelper;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
@@ -202,12 +203,8 @@ public class PatronEditController implements IController {
 		if (errorMessage.length() == 0) {
 			return true;
 		} else {
-			Alert alert = new Alert(Alert.AlertType.ERROR);
-			alert.setTitle("Champ(s) invalide(s)");
-			alert.setHeaderText("Merci de corriger :");
-			alert.setContentText(errorMessage);
-
-			alert.showAndWait();
+			ShowAlert.erreur(initializer.getPrimaryStage(), "Champ(s) invalide(s)", "Merci de corriger :",
+					errorMessage);
 
 			return false;
 		}

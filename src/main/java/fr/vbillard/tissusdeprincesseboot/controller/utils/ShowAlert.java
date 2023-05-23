@@ -8,11 +8,19 @@ import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.Articles;
 import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.EntityToString;
 import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.ModelUtils;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.stage.Stage;
 import javafx.scene.control.Alert.AlertType;
 
 public class ShowAlert {
+
+
+	private ShowAlert(){};
+
+	public static final ButtonType DETAILS = new ButtonType("Détails");
+	public static final ButtonType SUPPRIMER = new ButtonType("Supprimer");
 
 	public static Optional<ButtonType> suppression(Stage stage, EntityToString entity, String item) {
 		String itemDisplay = item == null ? "" : " : " + item;
@@ -42,13 +50,36 @@ public class ShowAlert {
 		return alert(AlertType.ERROR, stage, titre, header, errorMessage);
   }
 
+	public static  Optional<ButtonType> warn(Stage stage, String titre, String header, String errorMessage) {
+		return alert(AlertType.WARNING, stage, titre, header, errorMessage);
+	}
+
 	public static  Optional<ButtonType> alert(AlertType type, Stage stage, String titre, String header,
 			String errorMessage){
 		Alert alert = new Alert(type);
-		alert.initOwner(stage);
+		if (stage != null){
+			alert.initOwner(stage);
+		}
 		alert.setTitle(titre);
 		alert.setHeaderText(header);
 		alert.setContentText(errorMessage);
+
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add("/style/style.css");
+		dialogPane.getStylesheets().add("/style/modena.css");
+
+		return alert.showAndWait();
+	}
+
+	public static Optional<ButtonType> detailSuppressionAnnuler(Stage stage, EntityToString entity){
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Choisissez");
+		alert.setHeaderText("Que souhaitez vous faire de " + ModelUtils.generateString(entity,Articles.DEMONSTRATIF));
+		alert.initOwner(stage);
+
+		alert.getButtonTypes().clear();
+
+		alert.getButtonTypes().addAll(DETAILS, SUPPRIMER, ButtonType.CANCEL);
 
 		return alert.showAndWait();
 	}

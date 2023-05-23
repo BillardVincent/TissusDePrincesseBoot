@@ -84,26 +84,14 @@ public class TissuUsedCardController implements IController {
 	public void showDetail() {
 		if (!parent.isLocked()) {
 			
-			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Choisissez");
-			alert.setHeaderText("Que souhaitez vous faire de " + ModelUtils.generateString(EntityToString.TISSU_USED, Articles.DEMONSTRATIF));
-			alert.initOwner(initializer.getPrimaryStage());
+			Optional<ButtonType> option = ShowAlert.detailSuppressionAnnuler(initializer.getPrimaryStage(),
+					EntityToString.TISSU_USED);
 
-			ButtonType details = new ButtonType("Détails");
-			ButtonType supprimer = new ButtonType("Supprimer");
-			ButtonType annuler = new ButtonType("Annuler");
-
-			alert.getButtonTypes().clear();
-
-			alert.getButtonTypes().addAll(details, supprimer, annuler);
-
-			Optional<ButtonType> option = alert.showAndWait();
-
-			if (option.isPresent() && option.get() == details) {
+			if (option.orElse(ButtonType.CANCEL)  == ShowAlert.DETAILS) {
 				rootController.displayTissusDetails(tissu);
-			} else if (option.isPresent() && option.get() == supprimer) {
+			} else if (option.orElse(ButtonType.CANCEL) == ShowAlert.SUPPRIMER) {
 				Optional<ButtonType> confirm = ShowAlert.suppression(initializer.getPrimaryStage(), EntityToString.TISSU_USED, tissuUsed.toString());
-				if (confirm.isPresent() && ButtonType.OK == confirm.get()) {
+				if (confirm.orElse(ButtonType.CANCEL) == ButtonType.OK) {
 					tissuUsedService.delete(tissuUsed);
 					parent.refresh();
 				}

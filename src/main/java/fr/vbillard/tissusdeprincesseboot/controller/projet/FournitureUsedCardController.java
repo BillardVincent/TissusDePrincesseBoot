@@ -51,6 +51,7 @@ public class FournitureUsedCardController implements IController {
     private StageInitializer initializer;
 
     private final FournitureUsedService fournitureUsedService;
+	private Optional<ButtonType> option;
 
 	public FournitureUsedCardController(FournitureService fournitureService, FournitureUsedService fournitureUsedService
 			, ImageService imageService, RootController rootController) {
@@ -83,29 +84,16 @@ public class FournitureUsedCardController implements IController {
 	@FXML
 	public void showDetail() {
 		if (!parent.isLocked()) {
-			
-			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Choisissez");
-			alert.setHeaderText("Que souhaitez vous faire de " + ModelUtils.generateString(EntityToString.FOURNITURE_USED,
-					Articles.DEMONSTRATIF));
-			alert.initOwner(initializer.getPrimaryStage());
 
-			ButtonType details = new ButtonType("Détails");
-			ButtonType supprimer = new ButtonType("Supprimer");
-			ButtonType annuler = new ButtonType("Anuler");
+			Optional<ButtonType> option = ShowAlert.detailSuppressionAnnuler(initializer.getPrimaryStage(),
+					EntityToString.FOURNITURE_USED);
 
-			alert.getButtonTypes().clear();
-
-			alert.getButtonTypes().addAll(details, supprimer, annuler);
-
-			Optional<ButtonType> option = alert.showAndWait();
-
-			if (option.get() == details) {
+			if (option.orElse(ButtonType.CANCEL) == ShowAlert.DETAILS) {
 				rootController.displayFournituresDetails(fournitureDto);
-			} else if (option.get() == supprimer) {
+			} else if (option.orElse(ButtonType.CANCEL) == ShowAlert.SUPPRIMER) {
 				Optional<ButtonType> confirm = ShowAlert.suppression(initializer.getPrimaryStage(), EntityToString.FOURNITURE_USED,
 						fournitureUsed.toString());
-				if (confirm.isPresent() && ButtonType.OK == confirm.get()) {
+				if (confirm.orElse(ButtonType.CANCEL) == ButtonType.OK) {
 					fournitureUsedService.delete(fournitureUsed);
 					parent.refresh();
 				}
