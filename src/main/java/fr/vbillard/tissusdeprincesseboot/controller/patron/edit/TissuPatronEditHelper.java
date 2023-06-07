@@ -1,5 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.controller.patron.edit;
 
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.buildComboBox;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -66,7 +68,7 @@ public class TissuPatronEditHelper extends PatronEditHelper<Tissu, TissuVariant,
 		JFXTextField laizeSpinner = FxUtils.buildSpinner(tissu.getLaizeProperty());
 		topGrid.add(laizeSpinner, 1, 1);
 
-		JFXComboBox<String> gammePoidsChBx = FxUtils.buildComboBox(GammePoids.labels(),tissu.getGammePoidsProperty(), GammePoids.NON_RENSEIGNE.label);
+		JFXComboBox<String> gammePoidsChBx = buildComboBox(GammePoids.labels(),tissu.getGammePoidsProperty(), GammePoids.NON_RENSEIGNE.label);
 		topGrid.add(gammePoidsChBx, 1, 2);
 
 		JFXCheckBox isDoublure = new JFXCheckBox();
@@ -92,15 +94,15 @@ public class TissuPatronEditHelper extends PatronEditHelper<Tissu, TissuVariant,
 		 if (variantSelected == null ) {
 			 variantSelected = new TissuVariantDto();
 		 }
-		JFXComboBox<String> typeField = FxUtils.buildComboBox(TypeTissuEnum.labels(), variantSelected.getTypeTissuProperty());
+		JFXComboBox<String> typeField = buildComboBox(TypeTissuEnum.labels(), variantSelected.getTypeTissuProperty());
 
-		JFXComboBox<String> matiereField = FxUtils.buildComboBox(matiereService.getAllMatieresValues(), variantSelected.getMatiereProperty());
+		JFXComboBox<String> matiereField = buildComboBox(matiereService.getAllMatieresValues(), variantSelected.getMatiereProperty());
 
 		JFXButton addMatiere =  new JFXButton();
 		addMatiere.setGraphic(GlyphIconUtil.plusCircleTiny());
 		addMatiere.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> initializer.displayModale(PathEnum.MATIERE, null, "Matière"));
 
-		JFXComboBox<String> tissageField = FxUtils.buildComboBox(tissageService.getAllValues(), variantSelected.getTissageProperty());
+		JFXComboBox<String> tissageField = buildComboBox(tissageService.getAllValues(), variantSelected.getTissageProperty());
 
 		JFXButton addTissage =  new JFXButton();
 		addTissage.setGraphic(GlyphIconUtil.plusCircleTiny());

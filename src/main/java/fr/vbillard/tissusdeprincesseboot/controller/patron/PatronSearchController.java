@@ -1,5 +1,8 @@
 package fr.vbillard.tissusdeprincesseboot.controller.patron;
 
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.*;
+import static java.lang.Math.round;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -129,16 +132,16 @@ public class PatronSearchController implements IController {
 
     UserPref pref = userPrefService.getUser();
 
-    margeHauteLeger = Math.round(pref.getMinPoidsMoyen() + pref.getMinPoidsMoyen() * pref.getPoidsMargePercent());
-    margeBasseMoyen = Math.round(pref.getMinPoidsMoyen() - pref.getMinPoidsMoyen() * pref.getPoidsMargePercent());
-    margeHauteMoyen = Math.round(pref.getMaxPoidsMoyen() + pref.getMaxPoidsMoyen() * pref.getPoidsMargePercent());
-    margeBasseLourd = Math.round(pref.getMaxPoidsMoyen() - pref.getMaxPoidsMoyen() * pref.getPoidsMargePercent());
+    margeHauteLeger = round(pref.getMinPoidsMoyen() + pref.getMinPoidsMoyen() * pref.getPoidsMargePercent());
+    margeBasseMoyen = round(pref.getMinPoidsMoyen() - pref.getMinPoidsMoyen() * pref.getPoidsMargePercent());
+    margeHauteMoyen = round(pref.getMaxPoidsMoyen() + pref.getMaxPoidsMoyen() * pref.getPoidsMargePercent());
+    margeBasseLourd = round(pref.getMaxPoidsMoyen() - pref.getMaxPoidsMoyen() * pref.getPoidsMargePercent());
 
 
-    FxUtils.setToggleColor(lourdCBox, moyenCBox, legerCBox, ncCBox, supportPapierCBox, supportPdfCBox,
+    setToggleColor(lourdCBox, moyenCBox, legerCBox, ncCBox, supportPapierCBox, supportPdfCBox,
         supportProjectionCBox, supportNcCBox, notArchive, indifferentArchive, archive);
 
-    FxUtils.setToggleGroup(archiveGroup, notArchive, indifferentArchive, archive);
+    setToggleGroup(archiveGroup, notArchive, indifferentArchive, archive);
   }
 
   private void setData(FxData data) {
@@ -147,32 +150,32 @@ public class PatronSearchController implements IController {
       if (spec.getDescription() != null && Strings.isNotBlank(spec.getDescription().getContainsMultiple())) {
         descriptionField.setText(spec.getDescription().getContainsMultiple());
       }
-      FxUtils.setTextFieldFromCharacterSearch(typeVetementField, spec.getTypeVetement());
-      FxUtils.setTextFieldFromCharacterSearch(marqueField, spec.getMarque());
-      FxUtils.setTextFieldFromCharacterSearch(modeleField, spec.getModele());
+      setTextFieldFromCharacterSearch(typeVetementField, spec.getTypeVetement());
+      setTextFieldFromCharacterSearch(marqueField, spec.getMarque());
+      setTextFieldFromCharacterSearch(modeleField, spec.getModele());
 
       List<String> types = null;
       if (spec.getTypeTissu() != null) {
         types = spec.getTypeTissu().stream().map(TypeTissuEnum::getLabel).collect(Collectors.toList());
       }
-      FxUtils.setSelection(types, typeValuesSelected, typeLbl);
+      setSelection(types, typeValuesSelected, typeLbl);
 
       List<String> matieres = null;
       if (spec.getMatieres() != null) {
         matieres = spec.getMatieres().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList());
       }
-      FxUtils.setSelection(matieres, matiereValuesSelected, matiereLbl);
+      setSelection(matieres, matiereValuesSelected, matiereLbl);
 
       List<String> tissages = null;
       if (spec.getTissages() != null) {
         tissages = spec.getTissages().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList());
       }
-      FxUtils.setSelection(tissages, tissageValuesSelected, tissageLbl);
+      setSelection(tissages, tissageValuesSelected, tissageLbl);
 
-      FxUtils.setTextFieldMaxFromNumericSearch(longueurFieldMax, spec.getLongueur());
-      FxUtils.setTextFieldMaxFromNumericSearch(laizeFieldMax, spec.getLaize());
+      setTextFieldMaxFromNumericSearch(longueurFieldMax, spec.getLongueur());
+      setTextFieldMaxFromNumericSearch(laizeFieldMax, spec.getLaize());
 
-      FxUtils.setToggleGroupFromBoolean(spec.getArchived(), archive, notArchive, indifferentArchive);
+      setToggleGroupFromBoolean(spec.getArchived(), archive, notArchive, indifferentArchive);
 
       lourdCBox.setSelected(CollectionUtils.isEmpty(spec.getPoids()) || spec.getPoids().contains(GammePoids.LOURD));
       moyenCBox.setSelected(CollectionUtils.isEmpty(spec.getPoids()) || spec.getPoids().contains(GammePoids.MOYEN));
@@ -244,17 +247,17 @@ public class PatronSearchController implements IController {
       }
     }
 
-    CharacterSearch description = FxUtils.textFieldToCharacterSearchMultiple(descriptionField);
+    CharacterSearch description = textFieldToCharacterSearchMultiple(descriptionField);
 
-    CharacterSearch reference = FxUtils.textFieldToCharacterSearch(referenceField);
+    CharacterSearch reference = textFieldToCharacterSearch(referenceField);
 
-    CharacterSearch marque = FxUtils.textFieldToCharacterSearch(marqueField);
+    CharacterSearch marque = textFieldToCharacterSearch(marqueField);
 
-    CharacterSearch modele = FxUtils.textFieldToCharacterSearch(modeleField);
+    CharacterSearch modele = textFieldToCharacterSearch(modeleField);
 
-    CharacterSearch typeVetement = FxUtils.textFieldToCharacterSearch(typeVetementField);
+    CharacterSearch typeVetement = textFieldToCharacterSearch(typeVetementField);
 
-    NumericSearch<Integer> longueur = FxUtils.textFieldToMaxNumericSearch(longueurFieldMax);
+    NumericSearch<Integer> longueur = textFieldToMaxNumericSearch(longueurFieldMax);
 
     List<SupportTypeEnum> support = new ArrayList<>();
     if (supportPapierCBox.isSelected()) {
@@ -273,7 +276,7 @@ public class PatronSearchController implements IController {
       support = null;
     }
 
-    Boolean archived = FxUtils.getBooleanFromRadioButtons(archive, notArchive, indifferentArchive);
+    Boolean archived = getBooleanFromRadioButtons(archive, notArchive, indifferentArchive);
 
     PatronSpecification specification =
         PatronSpecification.builder().description(description).reference(reference).matieres(matieres).typeTissu(types)
@@ -292,17 +295,17 @@ public class PatronSearchController implements IController {
 
   @FXML
   private void choiceType() {
-    FxUtils.setSelectionFromChoiceBoxModale(TypeTissuEnum.labels(), typeValuesSelected, typeLbl);
+    setSelectionFromChoiceBoxModale(TypeTissuEnum.labels(), typeValuesSelected, typeLbl);
   }
 
   @FXML
   private void choiceMatiere() {
-    FxUtils.setSelectionFromChoiceBoxModale(matiereService.getAllValues(), matiereValuesSelected, matiereLbl);
+    setSelectionFromChoiceBoxModale(matiereService.getAllValues(), matiereValuesSelected, matiereLbl);
   }
 
   @FXML
   private void choiceTissage() {
-    FxUtils.setSelectionFromChoiceBoxModale(tissageService.getAllValues(), tissageValuesSelected, tissageLbl);
+    setSelectionFromChoiceBoxModale(tissageService.getAllValues(), tissageValuesSelected, tissageLbl);
   }
 
   @FXML

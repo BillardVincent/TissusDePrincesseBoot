@@ -1,5 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.controller.tissu;
 
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.*;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -136,10 +138,10 @@ public class TissuSearchController implements IController {
   public void setStageInitializer(StageInitializer initializer, FxData data) {
     this.initializer = initializer;
 
-    FxUtils.setToggleGroup(decatiGroup, decatiAll, decatiFalse, decatiTrue);
-    FxUtils.setToggleGroup(chuteGroup, chuteEtCoupon, coupon, chute);
-    FxUtils.setToggleGroup(archiveGroup, notArchive, indifferentArchive, archive);
-    FxUtils.setToggleColor(lourdCBox, moyenCBox, legerCBox, decatiAll, decatiFalse, decatiTrue, chuteEtCoupon, coupon,
+    setToggleGroup(decatiGroup, decatiAll, decatiFalse, decatiTrue);
+    setToggleGroup(chuteGroup, chuteEtCoupon, coupon, chute);
+    setToggleGroup(archiveGroup, notArchive, indifferentArchive, archive);
+    setToggleColor(lourdCBox, moyenCBox, legerCBox, decatiAll, decatiFalse, decatiTrue, chuteEtCoupon, coupon,
         chute, notArchive, indifferentArchive, archive, longueurUtilisableCBox);
 
     typeLbl.setText(AUCUN_FILTRE);
@@ -168,41 +170,41 @@ public class TissuSearchController implements IController {
         descriptionField.setText(specification.getDescription().getContainsMultiple());
       }
 
-      FxUtils.setTextFieldFromCharacterSearch(referenceField, specification.getReference());
+      setTextFieldFromCharacterSearch(referenceField, specification.getReference());
 
-      FxUtils.setTextFieldMaxFromNumericSearch(longueurFieldMax, specification.getLongueur());
-      FxUtils.setTextFieldMinFromNumericSearch(longueurFieldMin, specification.getLongueur());
-      FxUtils.setTextFieldMaxFromNumericSearch(laizeFieldMax, specification.getLaize());
-      FxUtils.setTextFieldMinFromNumericSearch(laizeFieldMin, specification.getLaize());
+      setTextFieldMaxFromNumericSearch(longueurFieldMax, specification.getLongueur());
+      setTextFieldMinFromNumericSearch(longueurFieldMin, specification.getLongueur());
+      setTextFieldMaxFromNumericSearch(laizeFieldMax, specification.getLaize());
+      setTextFieldMinFromNumericSearch(laizeFieldMin, specification.getLaize());
 
       List<String> types = null;
       if (specification.getTypeTissu() != null) {
         types = specification.getTypeTissu().stream().map(TypeTissuEnum::getLabel).collect(Collectors.toList());
       }
-      FxUtils.setSelection(types, typeValuesSelected, typeLbl);
+      setSelection(types, typeValuesSelected, typeLbl);
 
       List<String> matieres = null;
       if (specification.getMatieres() != null) {
         matieres =
             specification.getMatieres().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList());
       }
-      FxUtils.setSelection(matieres, matiereValuesSelected, matiereLbl);
+      setSelection(matieres, matiereValuesSelected, matiereLbl);
 
       List<String> tissages = null;
       if (specification.getTissages() != null) {
         tissages =
             specification.getTissages().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList());
       }
-      FxUtils.setSelection(tissages, tissageValuesSelected, tissageLbl);
+      setSelection(tissages, tissageValuesSelected, tissageLbl);
 
-      FxUtils.setTextFieldMaxFromNumericSearch(longueurFieldMax, specification.getLongueur());
-      FxUtils.setTextFieldMaxFromNumericSearch(laizeFieldMax, specification.getLaize());
+      setTextFieldMaxFromNumericSearch(longueurFieldMax, specification.getLongueur());
+      setTextFieldMaxFromNumericSearch(laizeFieldMax, specification.getLaize());
 
       setPoidsFromSpec();
 
-      FxUtils.setToggleGroupFromBoolean(specification.getArchived(), archive, notArchive, indifferentArchive);
-      FxUtils.setToggleGroupFromBoolean(specification.getDecati(), decatiTrue, decatiFalse, decatiAll);
-      FxUtils.setToggleGroupFromBoolean(specification.getChute(), chute, coupon, chuteEtCoupon);
+      setToggleGroupFromBoolean(specification.getArchived(), archive, notArchive, indifferentArchive);
+      setToggleGroupFromBoolean(specification.getDecati(), decatiTrue, decatiFalse, decatiAll);
+      setToggleGroupFromBoolean(specification.getChute(), chute, coupon, chuteEtCoupon);
 
     } else {
       specification = new TissuSpecification();
@@ -285,21 +287,21 @@ public class TissuSearchController implements IController {
       }
     }
 
-    NumericSearch<Integer> longueurSearch = FxUtils.setNumericSearch(longueurFieldMin, longueurFieldMax);
+    NumericSearch<Integer> longueurSearch = setNumericSearch(longueurFieldMin, longueurFieldMax);
 
-    NumericSearch<Integer> laizeSearch = FxUtils.setNumericSearch(laizeFieldMin, laizeFieldMax);
+    NumericSearch<Integer> laizeSearch = setNumericSearch(laizeFieldMin, laizeFieldMax);
 
-    CharacterSearch description = FxUtils.textFieldToCharacterSearchMultiple(descriptionField);
+    CharacterSearch description = textFieldToCharacterSearchMultiple(descriptionField);
 
-    CharacterSearch reference = FxUtils.textFieldToCharacterSearch(referenceField);
+    CharacterSearch reference = textFieldToCharacterSearch(referenceField);
 
-    NumericSearch<Integer> poidsSearch = FxUtils.numericSearch(lourdCBox, moyenCBox, legerCBox, prefService.getUser());
+    NumericSearch<Integer> poidsSearch = numericSearch(lourdCBox, moyenCBox, legerCBox, prefService.getUser());
 
     Boolean poidsSearchNc = null; // ncCBox.isSelected();
 
-    Boolean decati = FxUtils.getBooleanFromRadioButtons(decatiTrue, decatiFalse, decatiAll);
-    Boolean chuteOuCoupon = FxUtils.getBooleanFromRadioButtons(chute, coupon, chuteEtCoupon);
-    Boolean archived = FxUtils.getBooleanFromRadioButtons(archive, notArchive, indifferentArchive);
+    Boolean decati = getBooleanFromRadioButtons(decatiTrue, decatiFalse, decatiAll);
+    Boolean chuteOuCoupon = getBooleanFromRadioButtons(chute, coupon, chuteEtCoupon);
+    Boolean archived = getBooleanFromRadioButtons(archive, notArchive, indifferentArchive);
 
     specification =
         TissuSpecification.builder().reference(reference).description(description).chute(chuteOuCoupon).decati(decati)
@@ -346,17 +348,17 @@ public class TissuSearchController implements IController {
 
   @FXML
   private void choiceType() {
-    FxUtils.setSelectionFromChoiceBoxModale(TypeTissuEnum.labels(), typeValuesSelected, typeLbl);
+    setSelectionFromChoiceBoxModale(TypeTissuEnum.labels(), typeValuesSelected, typeLbl);
   }
 
   @FXML
   private void choiceMatiere() {
-    FxUtils.setSelectionFromChoiceBoxModale(matiereService.getAllValues(), matiereValuesSelected, matiereLbl);
+    setSelectionFromChoiceBoxModale(matiereService.getAllValues(), matiereValuesSelected, matiereLbl);
   }
 
   @FXML
   private void choiceTissage() {
-    FxUtils.setSelectionFromChoiceBoxModale(tissageService.getAllValues(), tissageValuesSelected, tissageLbl);
+    setSelectionFromChoiceBoxModale(tissageService.getAllValues(), tissageValuesSelected, tissageLbl);
   }
 
 }

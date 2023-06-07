@@ -1,5 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.controller.fourniture;
 
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -183,12 +185,12 @@ public class FournitureSearchController implements IController {
 
 		Unite unitePrim = Unite.getEnum(unitePrimCombo.getValue());
 
-		int marge = margeField.isDisable() ? 0 : FxUtils.intFromJFXTextField(margeField);
-		int margeSec = margeSecField.isDisable() ? 0 : FxUtils.intFromJFXTextField(margeSecField);
+		int marge = margeField.isDisable() ? 0 : intFromJFXTextField(margeField);
+		int margeSec = margeSecField.isDisable() ? 0 : intFromJFXTextField(margeSecField);
 
-		NumericSearch<Float> dimPrimTemp = FxUtils.setNumericFloatSearch(
-				Unite.convertir(FxUtils.floatFromJFXTextField(dimPrimMin), unitePrim),
-				Unite.convertir(FxUtils.floatFromJFXTextField(dimPrimMax), unitePrim), marge);
+		NumericSearch<Float> dimPrimTemp = setNumericFloatSearch(
+				Unite.convertir(floatFromJFXTextField(dimPrimMin), unitePrim),
+				Unite.convertir(floatFromJFXTextField(dimPrimMax), unitePrim), marge);
 
 		NumericSearch<Float> dimPrim = null;
 		NumericSearch<Float> dimPrimDispo = null;
@@ -201,13 +203,13 @@ public class FournitureSearchController implements IController {
 
 		Unite uniteSec = Unite.getEnum(uniteSecCombo.getValue());
 
-		NumericSearch<Float> dimSec = FxUtils.setNumericFloatSearch(
-				Unite.convertir(FxUtils.floatFromJFXTextField(dimSecMin), uniteSec),
-				Unite.convertir(FxUtils.floatFromJFXTextField(dimSecMax), uniteSec), margeSec);
+		NumericSearch<Float> dimSec = setNumericFloatSearch(
+				Unite.convertir(floatFromJFXTextField(dimSecMin), uniteSec),
+				Unite.convertir(floatFromJFXTextField(dimSecMax), uniteSec), margeSec);
 
-		CharacterSearch description = FxUtils.textFieldToCharacterSearchMultiple(descriptionField);
+		CharacterSearch description = textFieldToCharacterSearchMultiple(descriptionField);
 
-		CharacterSearch reference = FxUtils.textFieldToCharacterSearch(referenceField);
+		CharacterSearch reference = textFieldToCharacterSearch(referenceField);
 
 		specification = FournitureSpecification.builder().reference(reference).description(description).type(type)
 				.quantite(dimPrim).quantiteDisponible(dimPrimDispo).quantiteSecondaire(dimSec).build();
@@ -224,7 +226,7 @@ public class FournitureSearchController implements IController {
 	
 	@FXML
 	private void choiceType() {
-		FxUtils.setSelectionFromChoiceBoxModale(typeFournitureService.getAllValues(), typeValuesSelected, typeLbl);
+		setSelectionFromChoiceBoxModale(typeFournitureService.getAllValues(), typeValuesSelected, typeLbl);
 	}
 
 }

@@ -1,5 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.controller.tissu;
 
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.safePropertyToString;
 import static fr.vbillard.tissusdeprincesseboot.controller.validators.ValidatorUtils.areValidatorsValid;
 
 import java.util.Arrays;
@@ -147,13 +148,13 @@ public class TissuEditController implements IController {
 					UnitePoids.NON_RENSEIGNE, false, "", null, false, false));
 		}
 
-		longueurField.setText(FxUtils.safePropertyToString(tissu.getLongueurProperty()));
-		laizeField.setText(FxUtils.safePropertyToString(tissu.getLaizeProperty()));
-		poidsField.setText(FxUtils.safePropertyToString(tissu.getPoidseProperty()));
-		referenceField.setText(FxUtils.safePropertyToString(tissu.getReferenceProperty()));
-		descriptionField.setText(FxUtils.safePropertyToString(tissu.getDescriptionProperty()));
+		longueurField.setText(safePropertyToString(tissu.getLongueurProperty()));
+		laizeField.setText(safePropertyToString(tissu.getLaizeProperty()));
+		poidsField.setText(safePropertyToString(tissu.getPoidseProperty()));
+		referenceField.setText(safePropertyToString(tissu.getReferenceProperty()));
+		descriptionField.setText(safePropertyToString(tissu.getDescriptionProperty()));
 		decatiField.setSelected(tissu.getDecatiProperty() != null && tissu.isDecati());
-		lieuDachatField.setText(FxUtils.safePropertyToString(tissu.getLieuAchatProperty()));
+		lieuDachatField.setText(safePropertyToString(tissu.getLieuAchatProperty()));
 		chuteField.setSelected(tissu.getChuteProperty() != null && tissu.isChute());
 
 		unitePoidsField.setItems(FXCollections.observableArrayList(UnitePoids.labels()));
@@ -165,10 +166,10 @@ public class TissuEditController implements IController {
 				tissu.getUnitePoidsProperty() == null ? TypeTissuEnum.NON_RENSEIGNE.label : tissu.getTypeTissu());
 
 		matiereField.setItems(FXCollections.observableArrayList(matiereService.getAllMatieresValues()));
-		matiereField.setValue(FxUtils.safePropertyToString(tissu.getMatiereProperty()));
+		matiereField.setValue(safePropertyToString(tissu.getMatiereProperty()));
 
 		tissageField.setItems(FXCollections.observableArrayList(tissageService.getAllValues()));
-		tissageField.setValue(FxUtils.safePropertyToString(tissu.getTissageProperty()));
+		tissageField.setValue(safePropertyToString(tissu.getTissageProperty()));
 
 		pictureHelper.setPane(imagePane, tissu);
 		boolean tissuIsNew = tissu.getId() == 0;
@@ -240,7 +241,7 @@ public class TissuEditController implements IController {
 		initializer.displayModale(PathEnum.MATIERE, null, "Matière");
 
 		matiereField.setItems(FXCollections.observableArrayList(matiereService.getAllMatieresValues()));
-		matiereField.setValue(FxUtils.safePropertyToString(tissu.getMatiereProperty()));
+		matiereField.setValue(safePropertyToString(tissu.getMatiereProperty()));
 	}
 
 	@FXML
@@ -248,7 +249,7 @@ public class TissuEditController implements IController {
 		initializer.displayModale(PathEnum.TISSAGE, null, "Tissage");
 
 		tissageField.setItems(FXCollections.observableArrayList(tissageService.getAllValues()));
-		tissageField.setValue(FxUtils.safePropertyToString(tissu.getTissageProperty()));
+		tissageField.setValue(safePropertyToString(tissu.getTissageProperty()));
 	}
 
 	private String getFirstCharOrX(JFXComboBox<String> field) {

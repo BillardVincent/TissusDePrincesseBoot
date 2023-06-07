@@ -1,5 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.controller.fourniture;
 
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.safePropertyToString;
+
 import java.util.Optional;
 
 import org.springframework.stereotype.Component;
@@ -105,15 +107,15 @@ public class FournitureDetailController implements IController {
 		ancienneValeurInfo.setText(fourniture.getQuantiteProperty() == null ? "0" : Float.toString(fourniture.getQuantite()));
 		consommeInfo.setText(Float.toString(fournitureService.getQuantiteUtilisee(fourniture.getId())));
 
-		quantitePrimField.setText(FxUtils.safePropertyToString(fourniture.getQuantiteProperty()));
-		quantiteSecField.setText(FxUtils.safePropertyToString(fourniture.getQuantiteSecondaireProperty()));
-		intitulePrimLbl.setText(FxUtils.safePropertyToString(fourniture.getIntituleDimensionProperty()));
-		intituleSecLbl.setText(FxUtils.safePropertyToString(fourniture.getIntituleSecondaireProperty()));
-		referenceField.setText(FxUtils.safePropertyToString(fourniture.getReferenceProperty()));
-		descriptionField.setText(FxUtils.safePropertyToString(fourniture.getDescriptionProperty()));
-		lieuDachatField.setText(FxUtils.safePropertyToString(fourniture.getLieuAchatProperty()));
-		nomField.setText(FxUtils.safePropertyToString(fourniture.getNomProperty()));
-		typeField.setText(FxUtils.safePropertyToString(fourniture.getTypeNameProperty()));
+		quantitePrimField.setText(safePropertyToString(fourniture.getQuantiteProperty()));
+		quantiteSecField.setText(safePropertyToString(fourniture.getQuantiteSecondaireProperty()));
+		intitulePrimLbl.setText(safePropertyToString(fourniture.getIntituleDimensionProperty()));
+		intituleSecLbl.setText(safePropertyToString(fourniture.getIntituleSecondaireProperty()));
+		referenceField.setText(safePropertyToString(fourniture.getReferenceProperty()));
+		descriptionField.setText(safePropertyToString(fourniture.getDescriptionProperty()));
+		lieuDachatField.setText(safePropertyToString(fourniture.getLieuAchatProperty()));
+		nomField.setText(safePropertyToString(fourniture.getNomProperty()));
+		typeField.setText(safePropertyToString(fourniture.getTypeNameProperty()));
 
 		unitePrimField.setText(
 				fourniture.getUnite() == null ? Unite.NON_RENSEIGNE.getLabel() : fourniture.getUnite());

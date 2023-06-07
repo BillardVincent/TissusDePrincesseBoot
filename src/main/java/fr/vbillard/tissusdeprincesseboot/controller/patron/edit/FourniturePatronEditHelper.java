@@ -1,5 +1,8 @@
 package fr.vbillard.tissusdeprincesseboot.controller.patron.edit;
 
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.buildComboBox;
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.buildSpinner;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -53,7 +56,7 @@ public class FourniturePatronEditHelper extends
     topGrid.add(new Label("Type"), 0, 0);
 
     Label intitulePrincipal = new Label();
-    JFXTextField dimensionPrincipaleSpinner = FxUtils.buildSpinner(0f);
+    JFXTextField dimensionPrincipaleSpinner = buildSpinner(0f);
     dimensionPrincipaleSpinner.setVisible(dtoIsNotNew);
     JFXComboBox<String> uniteChBx = new JFXComboBox<>();
     uniteChBx.setVisible(dtoIsNotNew);
@@ -64,10 +67,10 @@ public class FourniturePatronEditHelper extends
 
     Label intituleSecondaire = new Label();
     Label entre = new Label();
-    JFXTextField dimensionMinSpinner = FxUtils.buildSpinner(0f);
+    JFXTextField dimensionMinSpinner = buildSpinner(0f);
     dimensionMinSpinner.setVisible(dtoIsNotNew);
     Label et = new Label();
-    JFXTextField dimensionMaxSpinner = FxUtils.buildSpinner(0f);
+    JFXTextField dimensionMaxSpinner = buildSpinner(0f);
     dimensionMaxSpinner.setVisible(dtoIsNotNew);
     JFXComboBox<String> uniteSecChBx = new JFXComboBox<>();
     uniteSecChBx.setVisible(dtoIsNotNew);
@@ -80,14 +83,14 @@ public class FourniturePatronEditHelper extends
     topGrid.add(uniteSecChBx, 3, 3);
 
     JFXComboBox<String> typeChBx =
-        FxUtils.buildComboBox(typeFournitureService.getAllValues(), dto.getTypeNameProperty());
+        buildComboBox(typeFournitureService.getAllValues(), dto.getTypeNameProperty());
 
     if (dtoIsNotNew) {
       dimensionPrincipaleSpinner.setText(Float.toString(dto.getQuantite()));
 
       if (dto.getType() != null) {
         intitulePrincipal.setText(dto.getType().getIntitulePrincipale());
-        FxUtils.buildComboBox(Unite.getValuesByDimension(dto.getType().getDimensionPrincipale()),
+        buildComboBox(Unite.getValuesByDimension(dto.getType().getDimensionPrincipale()),
             dto.getUnite().getLabel(),
             dto.getType().getDimensionPrincipale().getDefault().getLabel(), uniteChBx);
         dimensionPrincipaleSpinner.setVisible(true);
@@ -99,7 +102,7 @@ public class FourniturePatronEditHelper extends
           dimensionMaxSpinner.setText(Float.toString(dto.getQuantiteSecondaireMax()));
 
           intituleSecondaire.setText(dto.getType().getIntituleSecondaire());
-          FxUtils.buildComboBox(Unite.getValuesByDimension(dto.getType().getDimensionSecondaire()),
+          buildComboBox(Unite.getValuesByDimension(dto.getType().getDimensionSecondaire()),
               dto.getType().getUniteSecondaireConseillee().getLabel(),
               dto.getType().getDimensionSecondaire().getDefault().getLabel(), uniteSecChBx);
 
@@ -118,7 +121,7 @@ public class FourniturePatronEditHelper extends
       TypeFourniture typeFourniture = typeFournitureService.findTypeFourniture(newValue);
       intitulePrincipal.setText(typeFourniture.getIntitulePrincipale());
 
-      FxUtils.buildComboBox(Unite.getValuesByDimension(typeFourniture.getDimensionPrincipale()),
+      buildComboBox(Unite.getValuesByDimension(typeFourniture.getDimensionPrincipale()),
           typeFourniture.getUnitePrincipaleConseillee().getLabel(),
           typeFourniture.getDimensionPrincipale().getDefault().getLabel(), uniteChBx);
       dimensionPrincipaleSpinner.setVisible(true);
@@ -128,7 +131,7 @@ public class FourniturePatronEditHelper extends
 
         intituleSecondaire.setText(typeFourniture.getIntituleSecondaire());
 
-        FxUtils.buildComboBox(Unite.getValuesByDimension(typeFourniture.getDimensionSecondaire()),
+        buildComboBox(Unite.getValuesByDimension(typeFourniture.getDimensionSecondaire()),
             typeFourniture.getUniteSecondaireConseillee().getLabel(),
             typeFourniture.getDimensionSecondaire().getDefault().getLabel(), uniteSecChBx);
 

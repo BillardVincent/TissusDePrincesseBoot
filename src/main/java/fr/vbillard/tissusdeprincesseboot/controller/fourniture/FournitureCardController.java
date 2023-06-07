@@ -1,5 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.controller.fourniture;
 
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.safePropertyToString;
+
 import java.util.Optional;
 
 import org.apache.logging.log4j.util.Strings;
@@ -42,18 +44,18 @@ public class FournitureCardController implements IController {
 	@FXML
 	private ImageView image;
 
-	private ImageService imageService;
+	private final ImageService imageService;
 
-	private RootController rootController;
+	private final RootController rootController;
 
-	private FournitureService fournitureService;
+	private final FournitureService fournitureService;
 
 	private FournitureDto fourniture;
 	
-	private Constants constants;
+	private final Constants constants;
 
-	public FournitureCardController(Constants constants, CustomIcon customIcon,
-			ImageService imageService, RootController rootController, FournitureService fournitureService) {
+	public FournitureCardController(Constants constants, ImageService imageService, RootController rootController,
+			FournitureService fournitureService) {
 		this.imageService = imageService;
 		this.rootController = rootController;
 		this.fournitureService = fournitureService;
@@ -73,10 +75,10 @@ public class FournitureCardController implements IController {
 	private void setCardContent() {
 		boolean isDescription = fourniture.getDescription() != null && !fourniture.getDescription().equals(Strings.EMPTY);
 		description.setText(isDescription ? fourniture.getDescription() : constants.getAucuneDescription());
-		nombreEtUnite.setText(FxUtils.safePropertyToString(fourniture.getQuantiteDisponibleProperty()) + 
-				FxUtils.safePropertyToString(fourniture.getUniteShortProperty()));
-		type.setText(FxUtils.safePropertyToString(fourniture.getTypeNameProperty()));
-		nom.setText(FxUtils.safePropertyToString(fourniture.getNomProperty()));
+		nombreEtUnite.setText(safePropertyToString(fourniture.getQuantiteDisponibleProperty()) +
+				safePropertyToString(fourniture.getUniteShortProperty()));
+		type.setText(safePropertyToString(fourniture.getTypeNameProperty()));
+		nom.setText(safePropertyToString(fourniture.getNomProperty()));
 		Optional<Photo> pictures = imageService.getImage(fournitureService.convert(fourniture));
 		image.setImage(imageService.imageOrDefault(pictures));
 

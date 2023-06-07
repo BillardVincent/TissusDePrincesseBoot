@@ -1,5 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.controller.tissu;
 
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.CustomSpinner.setSpinner;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -65,8 +67,8 @@ public class CarrouselController implements IModalController{
 		Tissu tissu = tissuUsed.getTissu();
 		int longueurUtilisee = tissuService.getLongueurUtilisee(tissu.getId());
 		
-		CustomSpinner.setSpinner(restantField);
-		CustomSpinner.setSpinner(utiliseFiled);
+		setSpinner(restantField);
+		setSpinner(utiliseFiled);
 		initialLabel.setText(String.valueOf(tissu.getLongueur()));
 		autreProjetLabel.setText(String.valueOf(tissu.getLongueur() - tissu.getLongueurDisponible()));
 		aloueLabel.setText(String.valueOf(tissuUsed.getLongueur()));
