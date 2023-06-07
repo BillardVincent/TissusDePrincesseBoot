@@ -1,6 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.utils;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 

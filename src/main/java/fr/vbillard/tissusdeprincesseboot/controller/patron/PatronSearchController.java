@@ -94,12 +94,12 @@ public class PatronSearchController implements IController {
 
   private final ToggleGroup archiveGroup = new ToggleGroup();
 
-  private RootController root;
+  private final RootController root;
   private StageInitializer initializer;
 
-  private MatiereService matiereService;
-  private TissageService tissageService;
-  private UserPrefService userPrefService;
+  private final MatiereService matiereService;
+  private final TissageService tissageService;
+  private final UserPrefService userPrefService;
 
   private List<String> tissageValuesSelected = new ArrayList<>();
   private List<String> typeValuesSelected = new ArrayList<>();
@@ -109,7 +109,7 @@ public class PatronSearchController implements IController {
   private int margeBasseMoyen;
   private int margeHauteMoyen;
   private int margeBasseLourd;
-  private DecimalFormat df = new DecimalFormat("#.##");
+  private final static DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
 
   private boolean okClicked = false;
 
@@ -308,9 +308,9 @@ public class PatronSearchController implements IController {
   @FXML
   private void poidsHelp() {
     ShowAlert.information(initializer.getPrimaryStage(), "Aide", "Poids des tissus",
-        "Définissez une plage de poids à filtrer. La plage doit être continue. Léger = inférieur à " + df.format(
-            margeHauteLeger) + ", Moyen = entre " + df.format(margeBasseMoyen) + " et " + df.format(margeHauteMoyen)
-            + ", Lourd = supérieur à " + df.format(margeBasseLourd));
+        "Définissez une plage de poids à filtrer. La plage doit être continue. Léger = inférieur à " + DECIMAL_FORMAT.format(
+            margeHauteLeger) + ", Moyen = entre " + DECIMAL_FORMAT.format(margeBasseMoyen) + " et " + DECIMAL_FORMAT.format(margeHauteMoyen)
+            + ", Lourd = supérieur à " + DECIMAL_FORMAT.format(margeBasseLourd));
   }
 
 }

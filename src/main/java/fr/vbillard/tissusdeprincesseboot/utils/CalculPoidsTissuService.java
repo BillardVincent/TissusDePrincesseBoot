@@ -15,13 +15,13 @@ import fr.vbillard.tissusdeprincesseboot.service.UserPrefService;
 @Component
 public class CalculPoidsTissuService {
 
-	private UserPrefService userPrefService;
+	private final UserPrefService userPrefService;
 
 	public CalculPoidsTissuService(UserPrefService userPrefService) {
 		this.userPrefService = userPrefService;
 	}
 
-	public int poidFromTissu(Tissu tissu) {
+	public int poidsFromTissu(Tissu tissu) {
 		switch (tissu.getUnitePoids()) {
 		case GRAMME_M:
 			return tissu.getPoids() / tissu.getLaize() * 100;
@@ -43,7 +43,7 @@ public class CalculPoidsTissuService {
 
 	private Recommendation getRecommendation(GammePoids gp, Tissu tissu) {
 		UserPref pref = userPrefService.getUser();
-		int poidsGM2 = poidFromTissu(tissu);
+		int poidsGM2 = poidsFromTissu(tissu);
 
 		if (poidsGM2 == -1) {
 			return Recommendation.INCONNU;
@@ -66,9 +66,9 @@ public class CalculPoidsTissuService {
 				return Recommendation.NON_RECOMMANDE;
 
 		case LEGER:
-			if (poidsGM2 > pref.getMaxPoidsMoyen()) {
+			if (poidsGM2 < pref.getMinPoidsMoyen()) {
 				return Recommendation.IDEAL;
-			} else if (poidsGM2 > pref.getMaxPoidsMoyen() + pref.getMaxPoidsMoyen() * pref.getPoidsMargePercent())
+			} else if (poidsGM2 < pref.getMinPoidsMoyen() - pref.getMinPoidsMoyen() * pref.getPoidsMargePercent())
 				return Recommendation.POSSIBLE;
 			else
 				return Recommendation.NON_RECOMMANDE;

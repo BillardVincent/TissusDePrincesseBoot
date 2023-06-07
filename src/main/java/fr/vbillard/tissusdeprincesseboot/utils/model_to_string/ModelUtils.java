@@ -2,9 +2,7 @@ package fr.vbillard.tissusdeprincesseboot.utils.model_to_string;
 
 public class ModelUtils {
 
-	private ModelUtils(){
-
-	}
+	private ModelUtils(){}
 
 	private static final String VOYELLES = "aeiouy";
 	
@@ -47,7 +45,7 @@ public class ModelUtils {
 		
 		result += pluriel? entity.getPluriel() :  entity.getLabel();
 		if (withMaj) {
-			result = result.substring(0, 1).toUpperCase() + result.substring(1);
+			result = startWithMajuscule(result);
 		}
 		
 		return result;

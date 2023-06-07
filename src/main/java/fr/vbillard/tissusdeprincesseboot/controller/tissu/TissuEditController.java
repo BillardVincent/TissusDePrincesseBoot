@@ -1,5 +1,9 @@
 package fr.vbillard.tissusdeprincesseboot.controller.tissu;
 
+import static fr.vbillard.tissusdeprincesseboot.controller.validators.ValidatorUtils.areValidatorsValid;
+
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -19,10 +23,14 @@ import fr.vbillard.tissusdeprincesseboot.controller.components.IntegerSpinner;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.picture_helper.TissuPictureHelper;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
+import fr.vbillard.tissusdeprincesseboot.controller.validators.NonNullValidator;
+import fr.vbillard.tissusdeprincesseboot.controller.validators.Validator;
+import fr.vbillard.tissusdeprincesseboot.controller.validators.ValidatorUtils;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.CustomSpinner;
+import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
@@ -99,20 +107,22 @@ public class TissuEditController implements IController {
 	@FXML
 	public JFXButton archiverBtn;
 
-	private RootController root;
+	private final RootController root;
 	private StageInitializer initializer;
 
 	private TissuDto tissu;
 	private boolean okClicked = false;
 
-	private ModelMapper mapper;
-	private MatiereService matiereService;
-	private TissageService tissageService;
-	private TissuService tissuService;
-	private TissuPictureHelper pictureHelper;
-	private ConstantesMetier constantesMetier;
+	private final MapperService mapper;
+	private final MatiereService matiereService;
+	private final TissageService tissageService;
+	private final TissuService tissuService;
+	private final TissuPictureHelper pictureHelper;
+	private final ConstantesMetier constantesMetier;
 
-	public TissuEditController(TissuPictureHelper pictureHelper, ModelMapper mapper, TissuService tissuService,
+	private Validator[] validators;
+
+	public TissuEditController(TissuPictureHelper pictureHelper, MapperService mapper, TissuService tissuService,
 			MatiereService matiereService, TissageService tissageService, RootController root,
 			ConstantesMetier constantesMetier) {
 		this.mapper = mapper;
@@ -134,7 +144,7 @@ public class TissuEditController implements IController {
 		tissu = data.getTissu();
 		if (tissu == null || tissu.getChuteProperty() == null) {
 			tissu = mapper.map(new Tissu(0, "", 0, 0, "", null, TypeTissuEnum.NON_RENSEIGNE, 0,
-					UnitePoids.NON_RENSEIGNE, false, "", null, false, false), TissuDto.class);
+					UnitePoids.NON_RENSEIGNE, false, "", null, false, false));
 		}
 
 		longueurField.setText(FxUtils.safePropertyToString(tissu.getLongueurProperty()));
@@ -178,6 +188,11 @@ public class TissuEditController implements IController {
 		generateReferenceButton.setGraphic(magicIcon);
 		generateReferenceButton.setTooltip(new Tooltip("Générer une référence automatiquement"));
 
+		validators = new Validator[] {new NonNullValidator<>(referenceField, "référence"),
+				new NonNullValidator<>(matiereField, "matière"),
+				new NonNullValidator<>(unitePoidsField, "unité de poids"),
+				new NonNullValidator<>(poidsField, "poids"),
+				new NonNullValidator<>(typeField, "type")};
 	}
 
 	public boolean isOkClicked() {
@@ -186,7 +201,7 @@ public class TissuEditController implements IController {
 
 	@FXML
 	private void handleOk() {
-		if (isInputValid()) {
+		if (areValidatorsValid(initializer, validators)) {
 
 			setTissuFromFields();
 			okClicked = true;
@@ -226,7 +241,6 @@ public class TissuEditController implements IController {
 
 		matiereField.setItems(FXCollections.observableArrayList(matiereService.getAllMatieresValues()));
 		matiereField.setValue(FxUtils.safePropertyToString(tissu.getMatiereProperty()));
-
 	}
 
 	@FXML
@@ -235,35 +249,6 @@ public class TissuEditController implements IController {
 
 		tissageField.setItems(FXCollections.observableArrayList(tissageService.getAllValues()));
 		tissageField.setValue(FxUtils.safePropertyToString(tissu.getTissageProperty()));
-	}
-
-	private boolean isInputValid() {
-		String errorMessage = "";
-
-		if (referenceField.getText() == null || referenceField.getText().length() == 0) {
-			errorMessage += "Référence non renseignée.\n";
-		}
-		if (matiereField.getValue() == null) {
-			errorMessage += "Matière non renseignée.\n";
-		}
-		if (unitePoidsField.getValue() == null) {
-			errorMessage += "Unité de poids non renseignée.\n";
-		}
-		if (poidsField.getText() == null) {
-			errorMessage += "Poids non renseigné.\n";
-		}
-		if (tissageField.getValue() == null) {
-			errorMessage += "Tissage non renseigné.\n";
-		}
-
-		if (errorMessage.length() == 0) {
-			return true;
-		} else {
-			// Show the error message.
-			ShowAlert.erreur(initializer.getPrimaryStage(),"Valeurs incorrectes",
-					"Merci de renseigner les champs suivants:", errorMessage);
-			return false;
-		}
 	}
 
 	private String getFirstCharOrX(JFXComboBox<String> field) {
@@ -296,7 +281,7 @@ public class TissuEditController implements IController {
 
 	@FXML
 	private void addPicture() {
-		if (isInputValid()) {
+		if (areValidatorsValid(initializer, validators)) {
 			setTissuFromFields();
 
 			pictureHelper.addPictureLocal(tissu);
@@ -305,7 +290,7 @@ public class TissuEditController implements IController {
 
 	@FXML
 	private void addPictureWeb() {
-		if (isInputValid()) {
+		if (areValidatorsValid(initializer, validators)) {
 			setTissuFromFields();
 			pictureHelper.addPictureWeb(tissu);
 		}
@@ -313,7 +298,7 @@ public class TissuEditController implements IController {
 
 	@FXML
 	private void addPictureFromClipboard(){
-		if (isInputValid()) {
+		if (areValidatorsValid(initializer, validators)) {
 			setTissuFromFields();
 			pictureHelper.addPictureClipBoard(tissu);
 		}

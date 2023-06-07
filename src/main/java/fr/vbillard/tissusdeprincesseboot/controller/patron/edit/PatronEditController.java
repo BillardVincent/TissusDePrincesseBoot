@@ -1,5 +1,9 @@
 package fr.vbillard.tissusdeprincesseboot.controller.patron.edit;
 
+import static fr.vbillard.tissusdeprincesseboot.controller.validators.ValidatorUtils.areValidatorsValid;
+
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +18,9 @@ import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.picture_helper.PatronPictureHelper;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
+import fr.vbillard.tissusdeprincesseboot.controller.validators.NonNullValidator;
+import fr.vbillard.tissusdeprincesseboot.controller.validators.Validator;
+import fr.vbillard.tissusdeprincesseboot.controller.validators.ValidatorUtils;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
@@ -66,10 +73,10 @@ public class PatronEditController implements IController {
 	public JFXButton archiverBtn;
 
 	private StageInitializer initializer;
-	private RootController root;
+	private final RootController root;
 	private PatronDto patron;
 
-	private PatronPictureHelper pictureUtils;
+	private final PatronPictureHelper pictureUtils;
 	private final ModelMapper mapper;
 	private boolean okClicked = false;
 	private StageInitializer mainApp;
@@ -80,9 +87,10 @@ public class PatronEditController implements IController {
 	// private HBox tissuRequisDisplayHbox;
 
 	private VBox bottomRightVbox;
+	private Validator[] validators;
 
-	private TissuPatronEditHelper tissuPatronEditHelper;
-	private FourniturePatronEditHelper fourniturePatronEditHelper;
+	private final TissuPatronEditHelper tissuPatronEditHelper;
+	private final FourniturePatronEditHelper fourniturePatronEditHelper;
 
 	public PatronEditController(RootController root, PatronPictureHelper pictureUtils,
 			 ModelMapper mapper,
@@ -103,7 +111,11 @@ public class PatronEditController implements IController {
 
 		generateReferenceButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.MAGIC));
 		generateReferenceButton.setTooltip(new Tooltip("Générer une référence automatiquement"));
-		
+
+		validators = new Validator[] {new NonNullValidator<>(referenceField, "référence"),
+				new NonNullValidator<>(marqueField, "marque"),
+				new NonNullValidator<>(modeleField, "modèle"),
+				new NonNullValidator<>(typeVetementField, "type")};
 	}
 
 	private void setDisabledButton() {
@@ -123,7 +135,7 @@ public class PatronEditController implements IController {
 
 	@FXML
 	private void handleSavePatron() {
-		if (isInputValid()) {
+		if (areValidatorsValid(initializer, validators)) {
 
 			patron.setReference(referenceField.getText());
 			patron.setMarque(marqueField.getText());
@@ -179,36 +191,7 @@ public class PatronEditController implements IController {
 		fourniturePatronEditHelper.displayRequis(new FournitureRequiseDto());
 	}
 
-	/**
-	 * Validates the user input in the text fields.
-	 *
-	 * @return true if the input is valid
-	 */
-	private boolean isInputValid() {
-		String errorMessage = "";
 
-		if (referenceField.getText() == null || referenceField.getText().length() == 0) {
-			errorMessage += "Référence non renseignée.\n";
-		}
-		if (marqueField.getText() == null || marqueField.getText().length() == 0) {
-			errorMessage += "Marque non renseignée.\n";
-		}
-		if (modeleField.getText() == null || modeleField.getText().length() == 0) {
-			errorMessage += "Modèle non renseigné.\n";
-		}
-		if (typeVetementField.getText() == null || typeVetementField.getText().length() == 0) {
-			errorMessage += "Type non renseigné.\n";
-		}
-
-		if (errorMessage.length() == 0) {
-			return true;
-		} else {
-			ShowAlert.erreur(initializer.getPrimaryStage(), "Champ(s) invalide(s)", "Merci de corriger :",
-					errorMessage);
-
-			return false;
-		}
-	}
 
 	@Override
 	public void setStageInitializer(StageInitializer initializer, FxData data) {
@@ -243,17 +226,13 @@ public class PatronEditController implements IController {
 	@FXML
 	private void addPicture() {
 		handleSavePatron();
-
 		pictureUtils.addPictureLocal(patron);
-
 	}
 
 	@FXML
 	private void addPictureWeb() {
 		handleSavePatron();
-
 		pictureUtils.addPictureWeb(patron);
-
 	}
 	
 	@FXML
@@ -280,8 +259,4 @@ public class PatronEditController implements IController {
 		archiverBtn.setText(patron.isArchived() ? "Désarchiver" :"Archiver");
 	}
 
-	/*
-	 * txtInput.setEditable(false); txtInput.setMouseTransparent(true);
-	 * txtInput.setFocusTraversable(false);
-	 */
 }

@@ -1,5 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.controller.fourniture;
 
+import static fr.vbillard.tissusdeprincesseboot.controller.validators.ValidatorUtils.areValidatorsValid;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
@@ -15,6 +17,9 @@ import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.picture_helper.FourniturePictureHelper;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
+import fr.vbillard.tissusdeprincesseboot.controller.validators.NonNullValidator;
+import fr.vbillard.tissusdeprincesseboot.controller.validators.Validator;
+import fr.vbillard.tissusdeprincesseboot.controller.validators.ValidatorUtils;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.CustomSpinner;
@@ -89,6 +94,8 @@ public class FournitureEditController implements IController {
 	private final TypeFournitureService typeService;
 	private final FournitureService fournitureService;
 	private final FourniturePictureHelper pictureHelper;
+
+	private Validator[] validators;
 
 	public FournitureEditController(FourniturePictureHelper pictureHelper, FournitureService fournitureService,
 			TypeFournitureService typeService, RootController root) {
@@ -184,6 +191,9 @@ public class FournitureEditController implements IController {
 		generateReferenceButton.setGraphic(magicIcon);
 		generateReferenceButton.setTooltip(new Tooltip("Générer une référence automatiquement"));
 
+		validators = new Validator[] {new NonNullValidator<>(referenceField, "référence"),
+				new NonNullValidator<>(typeField, "type"),
+				new NonNullValidator<>(uniteField, "unité primaire")};
 	}
 
 	public boolean isOkClicked() {
@@ -192,7 +202,7 @@ public class FournitureEditController implements IController {
 
 	@FXML
 	private void handleOk() {
-		if (isInputValid()) {
+		if (areValidatorsValid(initializer, validators)) {
 
 			setTissuFromFields();
 			okClicked = true;
@@ -234,27 +244,6 @@ public class FournitureEditController implements IController {
 
 	}
 
-	private boolean isInputValid() {
-		String errorMessage = "";
-
-		if (StringUtils.isEmpty(referenceField.getText())) {
-			errorMessage += "Référence non renseignée.\n";
-		}
-		if (typeField.getValue() == null) {
-			errorMessage += "Type non renseignée.\n";
-		}
-		if (uniteField.getValue() == null) {
-			errorMessage += "Unité non renseignée.\n";
-		}
-
-		if (StringUtils.isEmpty(errorMessage)) {
-			return true;
-		} else {
-			// Show the error message.
-			ShowAlert.erreur(initializer.getPrimaryStage(), "Valeurs incorrectes", "Merci de renseigner les champs suivants:", errorMessage);
-			return false;
-		}
-	}
 
 	@FXML
 	private void handleGenerateReference() {
@@ -274,7 +263,7 @@ public class FournitureEditController implements IController {
 
 	@FXML
 	private void addPicture() {
-		if (isInputValid()) {
+		if (areValidatorsValid(initializer, validators)) {
 			setTissuFromFields();
 			pictureHelper.addPictureLocal(fourniture);
 		}
@@ -282,7 +271,7 @@ public class FournitureEditController implements IController {
 
 	@FXML
 	private void addPictureWeb() {
-		if (isInputValid()) {
+		if (areValidatorsValid(initializer, validators)) {
 			setTissuFromFields();
 			pictureHelper.addPictureWeb(fourniture);
 		}
@@ -290,7 +279,7 @@ public class FournitureEditController implements IController {
 
 	@FXML
 	private void addPictureFromClipboard(){
-		if (isInputValid()) {
+		if (areValidatorsValid(initializer, validators)) {
 			setTissuFromFields();
 			pictureHelper.addPictureClipBoard(fourniture);
 		}

@@ -16,14 +16,13 @@ import javafx.scene.control.Alert.AlertType;
 
 public class ShowAlert {
 
-
 	private ShowAlert(){};
 
 	public static final ButtonType DETAILS = new ButtonType("Détails");
 	public static final ButtonType SUPPRIMER = new ButtonType("Supprimer");
 
 	public static Optional<ButtonType> suppression(Stage stage, EntityToString entity, String item) {
-		String itemDisplay = item == null ? "" : " : " + item;
+		String itemDisplay = item == null ? Strings.EMPTY : " : " + item;
 		return confirmation(stage, "Suppression",
 				"Voulez vous vraiment supprimer " + ModelUtils.generateString(entity, Articles.DEMONSTRATIF),
 				"Supprimer " + ModelUtils.generateString(entity, Articles.DEFINI) + itemDisplay + " ?");
@@ -64,9 +63,7 @@ public class ShowAlert {
 		alert.setHeaderText(header);
 		alert.setContentText(errorMessage);
 
-		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add("/style/style.css");
-		dialogPane.getStylesheets().add("/style/modena.css");
+		setStyle(alert);
 
 		return alert.showAndWait();
 	}
@@ -78,9 +75,15 @@ public class ShowAlert {
 		alert.initOwner(stage);
 
 		alert.getButtonTypes().clear();
-
 		alert.getButtonTypes().addAll(DETAILS, SUPPRIMER, ButtonType.CANCEL);
 
+		setStyle(alert);
 		return alert.showAndWait();
+	}
+
+	private static void setStyle(Alert alert) {
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add("/style/style.css");
+		dialogPane.getStylesheets().add("/style/modena.css");
 	}
 }
