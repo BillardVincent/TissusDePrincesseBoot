@@ -36,9 +36,14 @@ public class SelectionController implements IController {
 		projet = data.getProjet();
 		if (projet != null) {
 			descriptionProjetPanLabel.setText(projet.getDescription());
-			marqueProjetPanLabel.setText(projet.getPatron().getMarque());
-			modelProjePantLabel.setText(projet.getPatron().getModele());
-			typeVetementPanProjetLabel.setText(projet.getPatron().getTypeVetement());
+			// TODO patron version
+
+			/*
+			marqueProjetPanLabel.setText(projet.getPatronVersion().getMarque());
+			modelProjePantLabel.setText(projet.getPatronVersion().getModele());
+			typeVetementPanProjetLabel.setText(projet.getPatronVersion().getTypeVetement());
+
+			 */
 
 		} else {
 			descriptionProjetPanLabel.setText("");
@@ -50,9 +55,12 @@ public class SelectionController implements IController {
 		tissuRequis = data.getTissuRequis();
 		if (projet != null) {
 			descriptionProjetPanLabel.setText(projet.getDescription());
-			marqueProjetPanLabel.setText(projet.getPatron().getMarque());
-			modelProjePantLabel.setText(projet.getPatron().getModele());
-			typeVetementPanProjetLabel.setText(projet.getPatron().getTypeVetement());
+			// TODO patron version
+/*
+			marqueProjetPanLabel.setText(projet.getPatronVersion().getMarque());
+			modelProjePantLabel.setText(projet.getPatronVersion().getModele());
+			typeVetementPanProjetLabel.setText(projet.getPatronVersion().getTypeVetement());
+			*/
 
 		} else {
 			descriptionProjetPanLabel.setText("");

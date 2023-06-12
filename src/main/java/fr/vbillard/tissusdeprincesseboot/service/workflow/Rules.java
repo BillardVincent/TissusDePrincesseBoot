@@ -52,17 +52,21 @@ public class Rules {
 
   public ErrorWarn verifyLength(Projet projet) {
     ErrorWarn result = new ErrorWarn();
-    List<TissuRequis> trList = tissuRequisService.getAllRequisByPatron(projet.getPatron().getId());
+    List<TissuRequis> trList = tissuRequisService.getAllByVersionId(projet.getPatronVersion().getId());
     for (TissuRequis tr : trList) {
+      // TODO patron version
+
       int longueurUtilisee =  tissuUsedService.longueurUsedByRequis(tr, projet);
       float marge = userPrefService.getUser().getLongueurMargePercent();
-
+/*
       if (tr.getLongueur() - marge * tr.getLongueur() > longueurUtilisee) {
         result.addWarn("La longueur totale alloué est inférieure à la longueur requise pour " + tr);
       }
+
+ */
     }
 
-    List<FournitureRequise> frList = fournitureRequiseService.getAllRequisByPatron(projet.getPatron().getId());
+    List<FournitureRequise> frList = fournitureRequiseService.getAllByVersionId(projet.getPatronVersion().getId());
     for (FournitureRequise fr : frList) {
       List<FournitureUsed> fuList = fournitureUsedService.getFournitureUsedByFournitureRequiseAndProjet(fr, projet);
       float quantiteUtilisee = fuList.stream().map(FournitureUsed::getQuantite).reduce(0f, Float::sum);

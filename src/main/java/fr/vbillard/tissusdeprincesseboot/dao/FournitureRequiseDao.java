@@ -12,5 +12,5 @@ public interface FournitureRequiseDao extends Idao<FournitureRequise, Integer> {
 
 	boolean existsFournitureRequiseByType(TypeFourniture typeFourniture);
 
-	List<FournitureRequise> getAllByPatronId(int id);
+	List<FournitureRequise> getAllByVersionId(int id);
 }

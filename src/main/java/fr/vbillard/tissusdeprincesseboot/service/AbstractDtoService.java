@@ -11,8 +11,8 @@ import fr.vbillard.tissusdeprincesseboot.dtos_fx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractEntity;
 
 public abstract class AbstractDtoService <T extends AbstractEntity, U extends FxDto<T>> extends AbstractService<T>{
-  abstract public T convert(U entity);
-  abstract public U convert(T dto);
+  abstract public T convert(U dto);
+  abstract public U convert(T entity);
 
   @Transactional
   public U saveOrUpdate(U dto){

@@ -29,24 +29,23 @@ public class TissuRequisService extends AbstractRequisService<TissuRequis, Tissu
 	private final CalculPoidsTissuService calculPoidsTissuService;
 	private final TissuVariantService tvs;
 	
-	public TissuRequisService(PatronService patronService, TissusRequisDao tissuRequisDao,
+	public TissuRequisService(PatronVersionService patronVersionService, TissusRequisDao tissuRequisDao,
 			UserPrefService userPrefService, CalculPoidsTissuService calculPoidsTissuService, TissuVariantService tvs,
 			MapperService mapper) {
-		super(mapper, patronService);
+		super(mapper, patronVersionService);
 		this.tissuRequisDao = tissuRequisDao;
 		this.userPrefService = userPrefService;
 		this.calculPoidsTissuService = calculPoidsTissuService;
 		this.tvs = tvs;
-		this.patronService = patronService;
 	}
 
 	@Override
-	public List<TissuRequis> getAllRequisByPatron(int id) {
-		return tissuRequisDao.getAllByPatronId(id);
+	public List<TissuRequis> getAllByVersionId(int id) {
+		return tissuRequisDao.getAllByVersionId(id);
 	}
 
 	public List<TissuRequisDto> getAllTissuRequisDtoByPatron(int id) {
-		return tissuRequisDao.getAllByPatronId(id).stream().map(tr -> mapper.map(tr))
+		return tissuRequisDao.getAllByVersionId(id).stream().map(tr -> mapper.map(tr))
 				.collect(Collectors.toList());
 	}
 
@@ -79,8 +78,8 @@ public class TissuRequisService extends AbstractRequisService<TissuRequis, Tissu
 		return tissuRequisDao;
 	}
 
-	public ObservableList<TissuRequis> getAsObservableAllTissuRequisByPatron(int id) {
-		return FXCollections.observableArrayList(getAllRequisByPatron(id));
+	public ObservableList<TissuRequis> getAsObservableAllTissuRequisByVersion(int id) {
+		return FXCollections.observableArrayList(getAllByVersionId(id));
 	}
 
 	public TissuSpecification getTissuSpecification(TissuRequisDto tr) {
@@ -88,14 +87,15 @@ public class TissuRequisService extends AbstractRequisService<TissuRequis, Tissu
 	}
 
 	public TissuSpecification getTissuSpecification(TissuRequis tr) {
+		// TODO patron version
 
 		float marge = userPrefService.getUser().getLongueurMargePercent();
 
 		NumericSearch<Integer> longueurSearch = new NumericSearch<>();
-		longueurSearch.setGreaterThanEqual(Math.round(tr.getLongueur() - tr.getLongueur() * marge));
+		//longueurSearch.setGreaterThanEqual(Math.round(tr.getLongueur() - tr.getLongueur() * marge));
 
 		NumericSearch<Integer> laizeSearch = new NumericSearch<>();
-		laizeSearch.setGreaterThanEqual(Math.round(tr.getLaize() - tr.getLaize() * marge));
+		//laizeSearch.setGreaterThanEqual(Math.round(tr.getLaize() - tr.getLaize() * marge));
 
 		NumericSearch<Integer> poidsSearch = calculPoidsTissuService.getNumericSearch(tr.getGammePoids());
 

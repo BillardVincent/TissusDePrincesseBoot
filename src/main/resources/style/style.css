@@ -199,7 +199,7 @@
     -fx-cursor: hand;
 }
 
-.title {
+.title-custom {
     -fx-background-color: -fx-primary;
     -fx-text-fill: -fx-primary-contrast;
     -fx-fill: -fx-primary-contrast;
@@ -207,7 +207,7 @@
     -fx-font-size: 30px;
 }
 
-.card .title {
+.card .title-custom {
     -fx-background-color: -fx-primary;
     -fx-text-fill: -fx-primary-contrast;
     -fx-fill: -fx-primary-contrast;
@@ -286,6 +286,24 @@
     -fx-text-fill: -fx-primary-light;
     -fx-font-style: italic;
     /*-fx-font-weight: thin;*/
+}
+/* ne marche pas.... */
+.title-acc-1 {
+    -fx-background-color: -fx-primary;
+    -fx-text-fill: -fx-primary-contrast;
+    -fx-fill: -fx-primary-contrast;
+    -fx-font-weight: bold;
+    -fx-font-size: 10px;
+}
+
+.title-pane {
+    -fx-background-color: linear-gradient(to bottom,#6a0080, #9a42c8);
+
+}
+.title-acc-1 {
+    -fx-background-color: linear-gradient(to bottom,#6a0080, #9a42c8);
+    -fx-fill: linear-gradient(to bottom,#6a0080, #9a42c8);
+
 }
 
 

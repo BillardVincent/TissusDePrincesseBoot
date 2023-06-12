@@ -61,12 +61,14 @@ public class TissuPatronEditHelper extends PatronEditHelper<Tissu, TissuVariant,
 		topGrid.add(new Label("Laize"), 0, 1);
 		topGrid.add(new Label("Gamme de poids"), 0, 2);
 		topGrid.add(new Label("Doublure"), 0, 3);
-		
+		/*
 		JFXTextField longueurSpinner = FxUtils.buildSpinner(tissu.getLongueurProperty());
 		topGrid.add(longueurSpinner, 1, 0);
 
 		JFXTextField laizeSpinner = FxUtils.buildSpinner(tissu.getLaizeProperty());
 		topGrid.add(laizeSpinner, 1, 1);
+
+		 */
 
 		JFXComboBox<String> gammePoidsChBx = buildComboBox(GammePoids.labels(),tissu.getGammePoidsProperty(), GammePoids.NON_RENSEIGNE.label);
 		topGrid.add(gammePoidsChBx, 1, 2);
@@ -77,8 +79,8 @@ public class TissuPatronEditHelper extends PatronEditHelper<Tissu, TissuVariant,
 
 		validateBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
 			tissu.setGammePoids(gammePoidsChBx.getValue());
-			tissu.setLaize(Integer.parseInt(laizeSpinner.getText()));
-			tissu.setLongueur(Integer.parseInt(longueurSpinner.getText()));
+			//tissu.setLaize(Integer.parseInt(laizeSpinner.getText()));
+			//tissu.setLongueur(Integer.parseInt(longueurSpinner.getText()));
 			tissu.setDoublure(isDoublure.isSelected());
 			saveRequis(tissu, patron);
 		});	
@@ -86,7 +88,7 @@ public class TissuPatronEditHelper extends PatronEditHelper<Tissu, TissuVariant,
 
 	@Override
 	protected void addToPatron(TissuRequisDto requis, PatronDto patron) {
-		patron.getTissusRequis().add(requis);
+		//patron.getTissusRequis().add(requis);
 	}
 
 	@Override
@@ -128,7 +130,7 @@ public class TissuPatronEditHelper extends PatronEditHelper<Tissu, TissuVariant,
 
 	@Override
 	protected void setRequisToPatron() {
-		patron.setTissusRequis(requisService.convertToDto(requisService.getAllRequisByPatron(patron.getId())));
+		//patron.setTissusRequis(requisService.convertToDto(requisService.getAllRequisByPatron(patron.getId())));
 	}
 
 	@Override
@@ -138,10 +140,11 @@ public class TissuPatronEditHelper extends PatronEditHelper<Tissu, TissuVariant,
 	}
 
 	@Override
-	protected List<TissuRequisDto> getListRequisFromPatron() {
+	protected List<TissuRequisDto> getListRequisFromPatron() {/*
 		if (patron.getTissusRequisProperty() != null && patron.getTissusRequis() != null) {
 			return patron.getTissusRequis();
 		} else
+		*/
 			return Collections.emptyList();
 	}
 

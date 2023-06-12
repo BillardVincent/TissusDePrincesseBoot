@@ -18,10 +18,8 @@ import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.components.IntegerSpinner;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.CustomSpinner;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.CharacterSearch;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
@@ -112,7 +110,7 @@ public class TissuSearchController implements IController {
   private final int margeBasseMoyen;
   private final int margeHauteMoyen;
   private final int margeBasseLourd;
-  private final static DecimalFormat df = new DecimalFormat("#.##");
+  private static final DecimalFormat df = new DecimalFormat("#.##");
 
   private final RootController root;
   private final MatiereService matiereService;

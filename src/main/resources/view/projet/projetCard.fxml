@@ -29,7 +29,7 @@
 					</children>
 				</VBox>
 				<Label fx:id="titre" alignment="CENTER" prefHeight="35.0"
-					prefWidth="265.0" styleClass="title" text="TITRE"
+					prefWidth="265.0" styleClass="title-custom" text="TITRE"
 					textAlignment="CENTER" />
 				<HBox alignment="CENTER" prefHeight="26.0" prefWidth="258.0"
 					spacing="20.0">

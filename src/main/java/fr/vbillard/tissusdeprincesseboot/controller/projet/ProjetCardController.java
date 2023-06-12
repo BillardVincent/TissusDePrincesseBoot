@@ -75,7 +75,7 @@ public class ProjetCardController implements IController {
 	private void setCardContent() {
 		Optional<Photo> pictureTissu = imageService.getImage(mapper.map(projet, Projet.class));
 		imageTissu.setImage(imageService.imageOrDefault(pictureTissu));
-		Optional<Photo> picturePatron = imageService.getImage(mapper.map(projet.getPatron(), Patron.class));
+		Optional<Photo> picturePatron = imageService.getImage(mapper.map(projet.getPatronVersion(), Patron.class));
 		imagePatron.setImage(imageService.imageOrDefault(picturePatron));
 
 		for (FontAwesomeIconView icon : listIcn) {

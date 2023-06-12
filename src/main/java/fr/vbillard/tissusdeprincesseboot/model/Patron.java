@@ -37,14 +37,10 @@ public class Patron extends AbstractEntity {
 	
 	@Enumerated(EnumType.STRING)
 	private SupportTypeEnum supportType;
-	
+
 	@Cascade(CascadeType.PERSIST)
-	@OneToMany(mappedBy = "patron", fetch = FetchType.LAZY)
-	private List<TissuRequis> tissuRequis;
-    
-    @Cascade(CascadeType.PERSIST)
-		@OneToMany(mappedBy = "patron", fetch = FetchType.LAZY)
-	private List<FournitureRequise> fournituresRequises;
+	@OneToMany(mappedBy = "patron", fetch = FetchType.EAGER)
+	private List<PatronVersion> versions;
 	
 	@PrePersist
 	private void setSupportType() {

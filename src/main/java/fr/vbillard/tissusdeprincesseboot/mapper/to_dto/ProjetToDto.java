@@ -47,7 +47,7 @@ public class ProjetToDto extends TypeMapConfigurer<Projet, ProjetDto> {
         typeMap.setPostConverter(context -> {
             Map<TissuRequisDto, List<Integer>> tuMap = new HashMap<>();
             if (context.getSource().getId() != 0){
-                List<TissuRequis> trLst = trs.getAllByPatronId(context.getSource().getPatron().getId());
+                List<TissuRequis> trLst = trs.getAllByVersionId(context.getSource().getPatronVersion().getId());
                 for (TissuRequis tr : trLst) {
                     List<TissuUsed> tu = tus.getAllByRequisAndProjet(tr, context.getSource());
                     tuMap.put(new ModelMapper().map(tr, TissuRequisDto.class), tu == null ? new ArrayList<>() : tu.stream().map(TissuUsed::getId).collect(Collectors.toList()));
@@ -57,7 +57,7 @@ public class ProjetToDto extends TypeMapConfigurer<Projet, ProjetDto> {
 
             Map<FournitureRequiseDto, List<Integer>> fuMap = new HashMap<>();
             if (context.getSource().getId() != 0){
-                List<FournitureRequise> frLst = frs.getAllByPatronId(context.getSource().getPatron().getId());
+                List<FournitureRequise> frLst = frs.getAllByVersionId(context.getSource().getPatronVersion().getId());
                 for (FournitureRequise fr : frLst) {
                     List<FournitureUsed> fu = fus.getAllByRequisAndProjet(fr, context.getSource());
                     fuMap.put(new ModelMapper().map(fr, FournitureRequiseDto.class), fu == null ? new ArrayList<>()

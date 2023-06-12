@@ -2,6 +2,7 @@ package fr.vbillard.tissusdeprincesseboot.service;
 
 import fr.vbillard.tissusdeprincesseboot.dao.ProjetDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronVersionDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.ProjetSpecification;
 import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
@@ -54,9 +55,9 @@ public class ProjetService extends AbstractDtoService<Projet, ProjetDto> {
 				dao.findAll().stream().map(this::convert).collect(Collectors.toList()));
 	}
 
-	public ProjetDto newProjetDto(PatronDto selectedPatron) {
+	public ProjetDto newProjetDto(PatronVersionDto selectedPatron) {
 		Projet p = new Projet();
-		p.setPatron(mapper.map(selectedPatron));
+		p.setPatronVersion(mapper.map(selectedPatron));
 
 		return convert(p);
 	}

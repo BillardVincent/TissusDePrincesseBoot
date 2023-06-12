@@ -164,7 +164,7 @@ public class FourniturePatronEditHelper extends
 
   @Override
   protected void addToPatron(FournitureRequiseDto requis, PatronDto patron) {
-    patron.setFournituresRequises(requisService.convertToDto(requisService.getAllRequisByPatron(patron.getId())));
+    //patron.setFournituresRequises(requisService.convertToDto(requisService.getAllRequisByPatron(patron.getId())));
   }
 
   @Override
@@ -175,7 +175,7 @@ public class FourniturePatronEditHelper extends
   @Override
   protected void setRequisToPatron() {
 
-    patron.setFournituresRequises(requisService.convertToDto(requisService.getAllRequisByPatron(patron.getId())));
+   // patron.setFournituresRequises(requisService.convertToDto(requisService.getAllRequisByPatron(patron.getId())));
   }
 
   @Override
@@ -188,9 +188,12 @@ public class FourniturePatronEditHelper extends
 
   @Override
   protected List<FournitureRequiseDto> getListRequisFromPatron() {
+    /*
     if (patron.getFournituresRequisesProperty() != null && patron.getFournituresRequises() != null) {
       return patron.getFournituresRequises();
-    } else
+    }
+
+     */
       return Collections.emptyList();
   }
 

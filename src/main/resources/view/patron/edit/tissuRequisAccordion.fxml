@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="438.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox layoutX="45.0" layoutY="33.0" prefHeight="344.0" prefWidth="376.0">
+         <children>
+            <HBox prefHeight="24.0" prefWidth="448.0">
+               <children>
+                  <Label prefHeight="26.0" prefWidth="121.0" text="Tissus">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <JFXButton fx:id="addTissuButton" onAction="#handleTissuListedit" />
+               </children>
+               <padding>
+                  <Insets top="25.0" />
+               </padding>
+            </HBox>
+            <Accordion fx:id="tissuAccordion">
+               <panes>
+                  <TitledPane animated="false" text="untitled 1">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                     </content>
+                  </TitledPane>
+                  <TitledPane animated="false" text="untitled 2">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                     </content>
+                  </TitledPane>
+               </panes>
+            </Accordion>
+            <Separator prefWidth="200.0" />
+            <HBox prefHeight="32.0" prefWidth="335.0">
+               <children>
+                  <Label prefHeight="26.0" prefWidth="121.0" text="Fournitures">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <JFXButton fx:id="addFournitureButton" onAction="#handleFournitureListedit" />
+               </children>
+               <padding>
+                  <Insets top="25.0" />
+               </padding>
+            </HBox>
+            <Accordion fx:id="fournitureAccordion">
+               <panes>
+                  <TitledPane animated="false" text="untitled 1">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                     </content>
+                  </TitledPane>
+                  <TitledPane animated="false" text="untitled 2">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                     </content>
+                  </TitledPane>
+               </panes>
+            </Accordion>
+         </children>
+      </VBox>
+   </children>
+</Pane>

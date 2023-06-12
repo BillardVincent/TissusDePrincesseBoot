@@ -67,7 +67,7 @@ public class PatronSpecification implements Specification<Patron> {
 
 		private Join<Patron, TissuRequis> joinTissuRequis(Root<Patron> root) {
 			if (joinTissuRequis == null) {
-				joinTissuRequis = root.join(Patron_.TISSU_REQUIS);
+				//joinTissuRequis = root.join(Patron_.TISSU_REQUIS);
 			}
 			return joinTissuRequis;
 		}
@@ -110,15 +110,16 @@ public class PatronSpecification implements Specification<Patron> {
 			predicateList.add(SpecificationUtils.getCharacterSearchPredicate(typeVetement,
 					patron.get(Patron_.TYPE_VETEMENT), cb));
 		}
+		// TODO patron version
 
 		if (longueur != null) {
-			predicateList.add(SpecificationUtils.getNumericSearchPredicate(longueur,
-					joins.joinTissuRequis(patron).get(TissuRequis_.LONGUEUR), cb));
+		//	predicateList.add(SpecificationUtils.getNumericSearchPredicate(longueur,
+				//	joins.joinTissuRequis(patron).get(TissuRequis_.LONGUEUR), cb));
 		}
 
 		if (laize != null) {
-			predicateList.add(SpecificationUtils.getNumericSearchPredicate(laize,
-					joins.joinTissuRequis(patron).get(TissuRequis_.LAIZE), cb));
+		//	predicateList.add(SpecificationUtils.getNumericSearchPredicate(laize,
+			//		joins.joinTissuRequis(patron).get(TissuRequis_.LAIZE), cb));
 		}
 
 		if (!CollectionUtils.isEmpty(poids)) {

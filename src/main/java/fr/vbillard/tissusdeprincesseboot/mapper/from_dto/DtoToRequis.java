@@ -21,8 +21,7 @@ public class DtoToRequis extends TypeMapConfigurer<TissuRequisDto, TissuRequis>{
 	public void configure(TypeMap<TissuRequisDto, TissuRequis> typeMap) {
 
     typeMap.addMappings(mapper -> mapper.using(new IdConverter()).map(src -> src, TissuRequis::setId));
-        typeMap.addMappings(mapper -> mapper.using(new GammePoidsConverter()).map(TissuRequisDto::getGammePoids, TissuRequis::setGammePoids));
-    typeMap.addMapping(TissuRequisDto::getLongueur, TissuRequis::setLongueur);
+
         //TODO ??!!
         typeMap.setPostConverter(context -> {
     		Patron patron = patronDao.getById(context.getSource().getPatronId());

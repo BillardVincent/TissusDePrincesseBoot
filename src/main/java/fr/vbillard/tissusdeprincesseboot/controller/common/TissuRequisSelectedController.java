@@ -34,8 +34,13 @@ public class TissuRequisSelectedController implements IController {
 		}
 		tissuRequis = data.getTissuRequis();
 		if (tissuRequis != null) {
+			// TODO patron version
+
+			/*
 			longueurLabel.setText(Integer.toString(tissuRequis.getLongueur()));
 			laizeLabel.setText(Integer.toString(tissuRequis.getLaize()));
+
+			 */
 			gammePoidsLabel.setText(tissuRequis.getGammePoids());
 			setVariantsContainer();
 

@@ -69,8 +69,11 @@ public class TissuRequisCardController implements IController {
 		tissuRequis = data.getTissuRequis();
 		projet = data.getProjet();
 		if (tissuRequis != null) {
+			/*
 			longueurLabel.setText(tissuRequis.getLongueur() + " cm");
 			laizeLabel.setText(tissuRequis.getLaize() + " cm");
+
+			 */
 			gammePoidsLabel.setText(tissuRequis.getGammePoids());
 			variantsLabel.setText(StringUtils.join(tissuRequis.getVariant(), SEPARATOR));
 			doublure.setVisible(tissuRequis.isDoublure());
@@ -88,11 +91,12 @@ public class TissuRequisCardController implements IController {
 
 	private void setPane() {
 		GlyphIcon iconStatus;
+		// TODO patron version
 
 		int longueurUtilisee = tissuUsedService.longueurUsedByRequis(tissuRequis, projet);
 		List<TissuUsed> tissuUsedTooShort = tissuUsedService.getTissuVariantLaizeTooShort(tissuRequis, projet);
 		List<TissuUsed> tissuUsedNotDecati = tissuUsedService.getTissuUsedNotDecati(tissuRequis, projet);
-
+/*
 		if (longueurUtilisee < tissuRequis.getLongueur() - tissuRequis.getLongueur() * preferenceService.getUser().getLongueurMargePercent()){
 			iconStatus = GlyphIconUtil.notOk();
 			iconStatus.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> ShowAlert.information(initializer.getPrimaryStage(),
@@ -110,12 +114,16 @@ public class TissuRequisCardController implements IController {
 				content.append("La longueur de tissu allouée est inférieure à la longueur de tissu requise.");
 			}
 
+
+
 			if (!CollectionUtils.isEmpty(tissuUsedTooShort)){
+
 
 				Utils.appendWithSeparator(header, SEPARATOR, "La laize est trop courte");
 				Utils.appendWithSeparator(content, SEPARATOR, "Laize trop courte pour ");
 				content.append(tissuUsedTooShort.stream().map(u -> u.getTissu().getReference()).collect(Collectors.joining(
 						DELIMITER)));
+
 
 			}
 
@@ -141,6 +149,6 @@ public class TissuRequisCardController implements IController {
 			iconStatus = GlyphIconUtil.ok();
 		}
 	complement.getChildren().add(iconStatus);
-
+*/
 	}
 }

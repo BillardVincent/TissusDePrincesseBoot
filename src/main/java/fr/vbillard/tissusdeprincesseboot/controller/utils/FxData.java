@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronVersionDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
@@ -48,6 +49,7 @@ public class FxData {
 	private List<Inventaire> listInventaire;
 	private IController parentController;
 	private FournitureUsed fournitureUsed;
+	private PatronVersionDto patronVersion;
 
 	public FxData getCopy() {
 		try {

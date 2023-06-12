@@ -38,12 +38,16 @@ public class TissuRequisToListElement extends TypeMapConfigurer<TissuRequisDto, 
 	private class DimensionsConverter extends AbstractConverter<TissuRequisDto, String> {
 		@Override
 		protected String convert(TissuRequisDto t) {
+			// TODO patron version
+
 			String dimension;
-			if (t.getLongueur() == 0 && t.getLaize() == 0) {
+			//if (t.getLongueur() == 0 && t.getLaize() == 0) {
 				dimension = NON_RENSEIGNE;
-			} else {
+			/*} else {
 				dimension = t.getLongueur() + " cm x " + t.getLaize() + " cm";
 			}
+
+			 */
 			return dimension;
 		}
 	}

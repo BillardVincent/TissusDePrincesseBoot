@@ -30,7 +30,10 @@ import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronDetailController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronListController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronSearchController;
+import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.FournitureRequiseAccordionController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.PatronEditController;
+import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.PatronVersionAccordionController;
+import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.TissuRequisAccordionController;
 import fr.vbillard.tissusdeprincesseboot.controller.projet.FournitureUsedCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetEditController;
@@ -144,6 +147,14 @@ public class PathService {
         return new PathHolder(pathProperties.getFournitureRequisCard().getURL(), FournitureRequiseCardController.class);
       case SET_QUANTITE:
         return new PathHolder(pathProperties.getQuantite().getURL(), SetQuantiteDialogController.class);
+      case PATRON_VERSION_ACCORDION:
+        return new PathHolder(pathProperties.getPatronVersionAccordion().getURL(),
+            PatronVersionAccordionController.class);
+      case FOURNITURE_REQUISE_ACCORDION:
+        return new PathHolder(pathProperties.getFournitureRequiseAccordion().getURL(),
+            FournitureRequiseAccordionController.class);
+      case TISSU_REQUIS_ACCORDION:
+        return new PathHolder(pathProperties.getTissuRequisAccordion().getURL(), TissuRequisAccordionController.class);
       default:
         break;
 

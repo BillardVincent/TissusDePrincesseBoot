@@ -24,8 +24,10 @@ import lombok.Setter;
 @Entity
 public class TissuRequis extends AbstractRequis<Tissu> {
 
+	@OneToMany(mappedBy = "requis")
+	@Cascade(CascadeType.PERSIST)
+	private List<TissuRequisLaizeOption> option;
 
-	private int laize;
 	@Enumerated(EnumType.STRING)
 	private GammePoids gammePoids;
 
@@ -33,13 +35,11 @@ public class TissuRequis extends AbstractRequis<Tissu> {
     @Cascade(CascadeType.PERSIST)
 	protected List<TissuVariant> variants;
 
-	private int longueur;
-
 	@Column(columnDefinition = "boolean default false")
 	private boolean doublure;
 
 	@Override
 	public String toString() {
-		return "tissu " + gammePoids +" - "+ laize + "cm x" + longueur +"cm " + (doublure ? " (doublure)" : Strings.EMPTY);
+		return "tissu " + gammePoids + (doublure ? " (doublure)" : Strings.EMPTY);
 	}
 }

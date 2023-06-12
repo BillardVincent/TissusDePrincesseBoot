@@ -24,7 +24,7 @@ public class FournitureUsed extends AbstractUsedEntity<Fourniture> {
   @Override
   public String toString() {
     return requis.getQuantite() + " de fourniture ref.\"" + fourniture.getReference() + "\" aloués au modèle "
-        + projet.getPatron().getModele();
+        + projet.getPatronVersion().getPatron().getModele();
   }
 
 

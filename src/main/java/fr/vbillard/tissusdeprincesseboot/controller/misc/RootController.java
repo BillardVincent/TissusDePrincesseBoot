@@ -38,6 +38,7 @@ import fr.vbillard.tissusdeprincesseboot.service.TissuRequisService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuUsedService;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
+import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -283,7 +284,9 @@ public class RootController implements IController {
 	}
 
 	public void addToSelected(TissuDto tissuSelected) {
-		int longueurRequiseRestante = tissuRequisSelected.getLongueur();
+		DevInProgressService.notImplemented();
+		// TODO patron version
+		/*int longueurRequiseRestante = tissuRequisSelected.getLongueur();
 		if (projetSelected.getTissuUsed() != null && projetSelected.getTissuUsed().get(tissuRequisSelected) != null) {
 			for (int id : projetSelected.getTissuUsed().get(tissuRequisSelected)) {
 				longueurRequiseRestante -= tissuUsedService.getById(id).getLongueur();
@@ -301,6 +304,8 @@ public class RootController implements IController {
 
 		displayProjetEdit(projetSelected);
 		deleteSelected();
+
+		 */
 	}
 	
 	public void addToSelected(FournitureDto fournitureSelected) {

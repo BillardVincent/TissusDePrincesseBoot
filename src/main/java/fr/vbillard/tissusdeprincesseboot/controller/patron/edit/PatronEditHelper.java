@@ -12,10 +12,12 @@ import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.GlyphIconUtil;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronVersionDto;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractEntity;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractRequis;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractUsedEntity;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractVariant;
+import fr.vbillard.tissusdeprincesseboot.model.PatronVersion;
 import fr.vbillard.tissusdeprincesseboot.service.AbstractRequisService;
 import fr.vbillard.tissusdeprincesseboot.service.AbstractUsedService;
 import fr.vbillard.tissusdeprincesseboot.service.AbstractVariantService;
@@ -118,7 +120,8 @@ public abstract class PatronEditHelper<E extends AbstractEntity, EV extends Abst
 	public void saveRequis(DTOR requis, PatronDto patron){
 		boolean edit = requis.getId() != 0;
 		patron = patronService.saveOrUpdate(patron);
-		DTOR returned = requisService.createOrUpdate(requis, patron);
+		PatronVersionDto version = new PatronVersionDto();
+		DTOR returned = requisService.createOrUpdate(requis, version);
 		if (!edit) {
 			addToPatron(requis, patron);
 			patron= patronService.saveOrUpdate(patron);
@@ -131,7 +134,7 @@ public abstract class PatronEditHelper<E extends AbstractEntity, EV extends Abst
 
 	void deleteRequis(DTOR requis) {
 		ER requisEntity = requisService.convert(requis);
-		requisEntity.setPatron(patronService.convert(patron));
+		//requisEntity.setVersion(patronService.convert(patron));
 		requisService.delete(requisEntity);
 		tissuEtFournitureContainer.getChildren().clear();
 		loadRequisForPatron();

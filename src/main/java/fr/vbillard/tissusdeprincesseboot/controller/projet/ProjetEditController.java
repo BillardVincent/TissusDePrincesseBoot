@@ -13,14 +13,18 @@ import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronVersionDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
+import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureRequiseService;
 import fr.vbillard.tissusdeprincesseboot.service.ImageService;
+import fr.vbillard.tissusdeprincesseboot.service.PatronService;
 import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuRequisService;
 import fr.vbillard.tissusdeprincesseboot.service.workflow.Workflow;
@@ -73,6 +77,7 @@ public class ProjetEditController implements IController {
 	private final TissuRequisService tissuRequisService;
 	private final FournitureRequiseService fournitureRequiseService;
 	private final ImageService imageService;
+	private final PatronService patronService;
 	private MapperService mapper;
 	private Workflow workflow;
 
@@ -80,7 +85,7 @@ public class ProjetEditController implements IController {
 
 	public ProjetEditController(RootController root, ProjetService projetService,
 			FournitureRequiseService fournitureRequiseService, TissuRequisService tissuRequisService,
-			ImageService imageService, MapperService mapper, WorkflowService workflowService) {
+			ImageService imageService, MapperService mapper, WorkflowService workflowService, PatronService patronService) {
 		this.projetService = projetService;
 		this.tissuRequisService = tissuRequisService;
 		this.root = root;
@@ -88,6 +93,7 @@ public class ProjetEditController implements IController {
 		this.mapper = mapper;
 		this.workflowService = workflowService;
 		this.fournitureRequiseService = fournitureRequiseService;
+		this.patronService = patronService;
 	}
 
 	@Override
@@ -106,10 +112,13 @@ public class ProjetEditController implements IController {
 		VBox content = new VBox();
 		content.setSpacing(10);
 
-		marque.setText(projet.getPatron().getMarque());
-		modele.setText(projet.getPatron().getModele());
+		Patron patron = patronService.getPatronByProjectId(projet.getId());
+
+
+		marque.setText(patron.getMarque());
+		modele.setText(patron.getModele());
 		description.setText(projet.getDescription());
-		List<TissuRequisDto> lst = tissuRequisService.getAllTissuRequisDtoByPatron(projet.getPatron().getId());
+		List<TissuRequisDto> lst = tissuRequisService.getAllTissuRequisDtoByPatron(projet.getPatronVersion().getId());
 		for (TissuRequisDto tr : lst) {
 			FxData data = new FxData();
 			data.setTissuRequis(tr);
@@ -118,7 +127,7 @@ public class ProjetEditController implements IController {
 			content.getChildren().add(element);
 		}
 		List<FournitureRequiseDto> lstFourniture =
-				fournitureRequiseService.getAllFournitureRequiseDtoByPatron(projet.getPatron().getId());
+				fournitureRequiseService.getAllFournitureRequiseDtoByVersion(projet.getPatronVersion().getId());
 		for (FournitureRequiseDto fr : lstFourniture) {
 			FxData data = new FxData();
 			data.setFournitureRequise(fr);
@@ -129,7 +138,8 @@ public class ProjetEditController implements IController {
 
 		scrollContent.setContent(content);
 
-		Optional<Photo> picturePatron = imageService.getImage(mapper.map(projet.getPatron()));
+
+		Optional<Photo> picturePatron = imageService.getImage(patron);
 		patronPicture.setImage(imageService.imageOrDefault(picturePatron));
 
 		ProjectStatus status = ProjectStatus.getEnum(projet.getProjectStatus());
