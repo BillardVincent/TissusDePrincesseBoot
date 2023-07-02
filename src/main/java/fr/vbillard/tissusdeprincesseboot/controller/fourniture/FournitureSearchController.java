@@ -226,7 +226,7 @@ public class FournitureSearchController implements IController {
 	
 	@FXML
 	private void choiceType() {
-		setSelectionFromChoiceBoxModale(typeFournitureService.getAllValues(), typeValuesSelected, typeLbl);
+		setSelectionFromChoiceBoxModale(typeFournitureService.getAllValues(), typeValuesSelected, typeLbl, true);
 	}
 
 }

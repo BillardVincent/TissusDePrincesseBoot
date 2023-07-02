@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
@@ -16,11 +17,9 @@ import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronVersionDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuVariantDto;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureUsed;
 import fr.vbillard.tissusdeprincesseboot.model.Inventaire;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
 import lombok.Data;
 
 @Data
@@ -36,7 +35,6 @@ public class FxData {
 	private ProjetDto projet;
 	private TissuUsed tissuUsed;
 	private TissuRequisDto tissuRequis;
-	private TissuVariantDto tissuVariant;
 	private FournitureDto fourniture;
 	private FournitureRequiseDto fournitureRequise;
 	private int longueurRequise;
@@ -50,6 +48,7 @@ public class FxData {
 	private IController parentController;
 	private FournitureUsed fournitureUsed;
 	private PatronVersionDto patronVersion;
+	private boolean allSelectedEqualsNull = true;
 
 	public FxData getCopy() {
 		try {

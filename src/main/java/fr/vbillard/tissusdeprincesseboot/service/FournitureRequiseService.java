@@ -14,7 +14,6 @@ import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSear
 import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureRequise;
-import fr.vbillard.tissusdeprincesseboot.model.FournitureVariant;
 import fr.vbillard.tissusdeprincesseboot.model.PatronVersion;
 import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
 import javafx.collections.FXCollections;
@@ -25,14 +24,12 @@ public class FournitureRequiseService
     extends AbstractRequisService<FournitureRequise, Fourniture, FournitureRequiseDto> {
 
   private final FournitureRequiseDao fournitureRequiseDao;
-  private final FournitureVariantService tvs;
   private final UserPrefService userPrefService;
 
   public FournitureRequiseService(MapperService mapper, FournitureRequiseDao fournitureRequiseDao,
-      FournitureVariantService tvs, UserPrefService userPrefService, PatronVersionService patronVersionService) {
+      UserPrefService userPrefService, PatronVersionService patronVersionService) {
     super(mapper, patronVersionService);
     this.fournitureRequiseDao = fournitureRequiseDao;
-    this.tvs = tvs;
     this.userPrefService = userPrefService;
   }
 
@@ -56,22 +53,25 @@ public class FournitureRequiseService
   }
 
   @Override
+  @Transactional
+  public FournitureRequise createNewForPatron(int patronId) {
+    FournitureRequise fr = new FournitureRequise();
+    fr.setVersion(patronVersionService.getById(patronId));
+    return saveOrUpdate(fr);
+  }
+
+  @Override
   protected void beforeSaveOrUpdate(FournitureRequise entity) {
-    //nothing to do here
   }
 
   @Transactional
   @Override
-  public void delete(FournitureRequise fourniture) {
+  public void beforeDelete(FournitureRequise fourniture) {
     PatronVersion pv = fourniture.getVersion();
     pv.getFournituresRequises().remove(fourniture);
     patronVersionService.saveOrUpdate(pv);
 
-    List<FournitureVariant> tvLst = tvs.getVariantByRequis(fourniture);
-    for (FournitureVariant tv : tvLst) {
-      tvs.delete(tv);
-    }
-    fournitureRequiseDao.delete(fourniture);
+    delete(fourniture);
 
   }
 

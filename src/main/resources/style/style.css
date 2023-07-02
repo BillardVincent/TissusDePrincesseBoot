@@ -277,6 +277,12 @@
     -fx-font-weight: bold;
 }
 
+.title2 {
+    -fx-text-fill: -fx-primary-dark;
+    -fx-font-size: 1.1em;
+    -fx-font-weight: bold;
+}
+
 .separator {
     -fx-background-color: -fx-primary;
     -fx-background-radius: 2;
@@ -305,5 +311,22 @@
     -fx-fill: linear-gradient(to bottom,#6a0080, #9a42c8);
 
 }
+
+.grid-cell {
+    -fx-border-color: dimgray;
+}
+grid-cell.middle-column {
+    -fx-border-width: 0 1 0 1 ;
+}
+
+.grid-cell.first-row {
+    -fx-border-width: 0 0 1 0 ;
+}
+
+.grid-cell.first-row-middle-column {
+    -fx-border-width: 0 1 1 1 ;
+}
+
+
 
 

@@ -10,11 +10,11 @@ import javafx.beans.property.StringProperty;
 
 public class PatronVersionDto implements FxDto<PatronVersion> {
   private IntegerProperty id;
-  private StringProperty name;
+  private StringProperty nom;
 
   public PatronVersionDto(){
     id = new SimpleIntegerProperty();
-    name = new SimpleStringProperty();
+    nom = new SimpleStringProperty();
   }
 
 
@@ -30,15 +30,15 @@ public class PatronVersionDto implements FxDto<PatronVersion> {
     this.id.set(id);
   }
 
-  public String getName() {
-    return name.get();
+  public String getNom() {
+    return nom.get();
   }
 
-  public StringProperty getIdName() {
-    return name;
+  public StringProperty getNomProperty() {
+    return nom;
   }
 
-  public void setName(String name) {
-    this.name.set(name);
+  public void setNom(String name) {
+    this.nom.set(name);
   }
 }

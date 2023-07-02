@@ -36,8 +36,4 @@ public class FournitureRequise extends AbstractRequis<Fourniture>{
   @Enumerated(EnumType.STRING)
   private Unite uniteSecondaire;
 
-  @Override
-  public List<? extends AbstractVariant<Fourniture>> getVariants() {
-    return Collections.emptyList();
-  }
 }

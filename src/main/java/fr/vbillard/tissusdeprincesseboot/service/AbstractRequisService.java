@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronVersionDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractEntity;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractRequis;
@@ -37,4 +38,5 @@ public abstract class AbstractRequisService<T extends AbstractRequis<U>, U exten
 
   public abstract void delete(V requis);
 
+  public abstract T createNewForPatron(int patronId);
 }

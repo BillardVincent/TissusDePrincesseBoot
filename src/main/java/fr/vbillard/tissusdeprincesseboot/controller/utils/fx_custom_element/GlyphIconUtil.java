@@ -34,12 +34,16 @@ public class GlyphIconUtil {
         return generateIcon(new FontAwesomeIconView(FontAwesomeIcon.EDIT), NORMAL_ICON_SIZE, null);
     }
 
-    public static GlyphIcon suppressNormal(){
+    public static GlyphIcon cancelNormal(){
         return generateIcon(new FontAwesomeIconView(FontAwesomeIcon.TIMES_CIRCLE), NORMAL_ICON_SIZE, Constants.colorDelete);
     }
 
+    public static GlyphIcon suppressNormal(){
+        return generateIcon(new FontAwesomeIconView(FontAwesomeIcon.TRASH), NORMAL_ICON_SIZE, Constants.colorDelete);
+    }
+
     public static GlyphIcon suppressTiny(){
-        return generateIcon(new FontAwesomeIconView(FontAwesomeIcon.TIMES_CIRCLE), TINY_ICONE_SIZE, Constants.colorDelete);
+        return generateIcon(new FontAwesomeIconView(FontAwesomeIcon.TRASH), TINY_ICONE_SIZE, Constants.colorDelete);
     }
 
     public static GlyphIcon searchNormal(){

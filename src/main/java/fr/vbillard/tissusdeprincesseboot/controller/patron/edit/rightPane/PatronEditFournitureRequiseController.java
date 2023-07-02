@@ -1,49 +1,71 @@
-package fr.vbillard.tissusdeprincesseboot.controller.patron.edit;
+package fr.vbillard.tissusdeprincesseboot.controller.patron.edit.rightPane;
 
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.buildComboBox;
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.buildSpinner;
 
-import java.util.Collections;
-import java.util.List;
-
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
+import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.PatronEditController;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
-import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
-import fr.vbillard.tissusdeprincesseboot.model.FournitureRequise;
-import fr.vbillard.tissusdeprincesseboot.model.FournitureUsed;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronVersionDto;
+import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureRequiseService;
-import fr.vbillard.tissusdeprincesseboot.service.FournitureUsedService;
-import fr.vbillard.tissusdeprincesseboot.service.PatronService;
+import fr.vbillard.tissusdeprincesseboot.service.PatronVersionService;
 import fr.vbillard.tissusdeprincesseboot.service.TypeFournitureService;
+import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
+import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.EntityToString;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 
-@Service
-public class FourniturePatronEditHelper extends
-    PatronEditHelper<Fourniture, FournitureRequise, FournitureUsed, FournitureDto, FournitureRequiseDto> {
+@Component
+public class PatronEditFournitureRequiseController implements IController {
 
+  @FXML
+  private JFXTextField nomField;
+  @FXML
+  private JFXButton ajouterTissuBtn;
+  @FXML
+  private JFXButton ajouterFournitureBtn;
+  @FXML
+  private GridPane topGrid;
+  @FXML
+  private JFXButton validateBtn;
+
+  private final FournitureRequiseService fournitureRequiseService;
   private final TypeFournitureService typeFournitureService;
 
-  public FourniturePatronEditHelper(PatronService patronService, TypeFournitureService typeFournitureService,
-      FournitureRequiseService requisService,FournitureUsedService usedService) {
-    this.usedService = usedService;
-    this.requisService = requisService;
+  private StageInitializer initializer;
+  private FxData data;
+
+  public PatronEditFournitureRequiseController(FournitureRequiseService fournitureRequiseService,
+      TypeFournitureService typeFournitureService) {
+    this.fournitureRequiseService = fournitureRequiseService;
     this.typeFournitureService = typeFournitureService;
-    this.patronService = patronService;
+
   }
 
   @Override
-  protected void completeTopGrid(GridPane topGrid, FournitureRequiseDto dto, JFXButton validateBtn) {
+  public void setStageInitializer(StageInitializer initializer, FxData data) {
+    this.initializer = initializer;
+    this.data = data;
+
+    FournitureRequiseDto dto = data.getFournitureRequise();
+
+    //nomField.setText("Fourniture Requise test");
+
     boolean dtoIsNotNew = dto.getId() != 0;
 
     topGrid.add(new Label("Type"), 0, 0);
@@ -136,7 +158,7 @@ public class FourniturePatronEditHelper extends
         et.setText("et");
       }
     });
-
+/*
     validateBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
 
       dto.setType(typeFournitureService.findTypeFourniture(typeChBx.getValue()));
@@ -151,45 +173,42 @@ public class FourniturePatronEditHelper extends
       saveRequis(dto, patron);
     });
 
+ */
+
     topGrid.add(typeChBx, 1, 0);
+  }
+
+  @FXML
+  public void handleDupliquer() {
+    DevInProgressService.notImplemented();
+  }
+
+  public void handleSave() {
+    DevInProgressService.notImplemented();
+  }
+  public void handleDelete() {
+    DevInProgressService.notImplemented();
+  }
+  /*
+  @FXML
+  public void handleSave() {
+    PatronVersionDto patronVersionDto = data.getPatronVersion();
+    patronVersionDto.setNom(nomField.getText());
+    patronVersionService.saveOrUpdate(patronVersionDto);
+    ((PatronEditController) data.getParentController()).reload(data.getPatronVersion().getId());
 
   }
 
-  @Override
-  protected void addToPatron(FournitureRequiseDto requis, PatronDto patron) {
-    //patron.setFournituresRequises(requisService.convertToDto(requisService.getAllRequisByPatron(patron.getId())));
-  }
+  public void handleDelete() {
+    ButtonType result = ShowAlert.suppression(initializer.getPrimaryStage(), EntityToString.PATRON_VERSION,
+        data.getPatronVersion().getNom()).orElse(ButtonType.CANCEL);
 
-  @Override
-  protected HBox completeLoadBottomRightVBox(JFXButton addTvBtn, FournitureRequiseDto requis) {
-    return null;
-  }
+    if (ButtonType.OK == result){
+      patronVersionService.delete(data.getPatronVersion().getId());
+      ((PatronEditController) data.getParentController()).reload(-1);
 
-  @Override
-  protected void setRequisToPatron() {
-
-   // patron.setFournituresRequises(requisService.convertToDto(requisService.getAllRequisByPatron(patron.getId())));
-  }
-
-
-  @Override
-  protected List<FournitureRequiseDto> getListRequisFromPatron() {
-    /*
-    if (patron.getFournituresRequisesProperty() != null && patron.getFournituresRequises() != null) {
-      return patron.getFournituresRequises();
     }
-
-     */
-      return Collections.emptyList();
   }
 
-  @Override
-  protected boolean hasVariant() {
-    return false;
-  }
-
-  @Override
-  protected Class<Fourniture> getEntityClass() {
-    return Fourniture.class;
-  }
+   */
 }

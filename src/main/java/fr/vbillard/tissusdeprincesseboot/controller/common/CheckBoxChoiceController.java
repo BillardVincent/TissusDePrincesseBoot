@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import com.jfoenix.controls.JFXCheckBox;
 
@@ -37,12 +38,13 @@ public class CheckBoxChoiceController implements IModalController {
 	 */
 	@FXML
 	public void handleValidate() {
+		boolean isAllSelectedEqualsNull = result.isAllSelectedEqualsNull();
 		result = new FxData();
 		List<String> list = content.getChildren().stream().filter(cb -> ((JFXCheckBox) cb).isSelected())
 				.map(cb -> ((JFXCheckBox) cb).getText()).collect(Collectors.toList());
-		if (list.isEmpty()) {
+		if (isAllSelectedEqualsNull && list.isEmpty()) {
 			throw new NoSelectionException();
-		} else if (!areAllCheckBoxChecked()) {
+		} else if (isAllSelectedEqualsNull || !areAllCheckBoxChecked()) {
 			result.setListValues(list);
 		}
 		dialogStage.close();
@@ -51,19 +53,19 @@ public class CheckBoxChoiceController implements IModalController {
 
 	@FXML
 	public void handleCancel() {
-		result = data;
 		dialogStage.close();
 	}
 
 	@Override
 	public void setStage(Stage dialogStage, FxData data) {
+		result = data;
 		this.dialogStage = dialogStage;
 		for (String s : data.getListDataCBox()) {
 			JFXCheckBox cb = new JFXCheckBox();
 			cb.setCheckedColor(Constants.colorSecondary);
 
 			cb.setText(s);
-			if (data.getListValues() == null || data.getListValues().isEmpty()) {
+			if (CollectionUtils.isEmpty(data.getListValues()) && data.isAllSelectedEqualsNull()) {
 				cb.setSelected(true);
 			} else {
 				cb.setSelected(data.getListValues().contains(s));
@@ -93,7 +95,7 @@ public class CheckBoxChoiceController implements IModalController {
 
 	@Override
 	public FxData result() {
-		return areAllCheckBoxChecked() ? null : result;
+		return result.isAllSelectedEqualsNull() && areAllCheckBoxChecked() ? null : result;
 	}
 
 	@FXML

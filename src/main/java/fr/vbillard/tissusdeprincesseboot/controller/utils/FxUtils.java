@@ -260,8 +260,9 @@ public class FxUtils {
 	// ----------------------------------------------
 
 	public static void setSelectionFromChoiceBoxModale(List<String> cboxList, List<String> selectionDestination,
-			Label lbl) {
+			Label lbl, boolean allSelectedEqualsNull){
 		FxData data = new FxData();
+		data.setAllSelectedEqualsNull(allSelectedEqualsNull);
 		data.setListValues(selectionDestination);
 		data.setListDataCBox(cboxList);
 		FxData result = initializer.displayModale(PathEnum.CHECKBOX_CHOICE, data, CHOIX);

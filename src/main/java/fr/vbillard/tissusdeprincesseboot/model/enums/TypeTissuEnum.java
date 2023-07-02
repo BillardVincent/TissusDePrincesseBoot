@@ -2,6 +2,7 @@ package fr.vbillard.tissusdeprincesseboot.model.enums;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public enum TypeTissuEnum {
 
@@ -24,6 +25,10 @@ public enum TypeTissuEnum {
 				return e;
 		}
 		return null;
+	}
+
+	public static List<TypeTissuEnum> getEnum(List<String> codes) {
+		return codes.stream().map(TypeTissuEnum::getEnum).collect(Collectors.toList());
 	}
 
 	public static List<String> labels() {

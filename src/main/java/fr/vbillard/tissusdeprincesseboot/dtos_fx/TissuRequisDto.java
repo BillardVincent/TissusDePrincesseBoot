@@ -1,34 +1,45 @@
 package fr.vbillard.tissusdeprincesseboot.dtos_fx;
 
+import java.util.List;
+import java.util.Map;
+
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
+import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 
 public class TissuRequisDto extends AbstractRequisDto<TissuRequis, Tissu> {
 
   private IntegerProperty id;
-  private StringProperty gammePoids;
-  private IntegerProperty patronId;
+  private ListProperty<GammePoids> gammePoids;
+  private ListProperty<TypeTissuEnum> typeTissus;
+  private ListProperty<String> matieres;
+  private ListProperty<String> tissages;
+  private IntegerProperty versionId;
   private BooleanProperty doublure;
 
   public TissuRequisDto() {
     id = new SimpleIntegerProperty(0);
-    gammePoids = new SimpleStringProperty("");
-    patronId = new SimpleIntegerProperty(0);
-    variants = new SimpleListProperty<>();
+    gammePoids = new SimpleListProperty<>();
+    versionId = new SimpleIntegerProperty(0);
     doublure = new SimpleBooleanProperty();
+    typeTissus = new SimpleListProperty<>();
+    matieres = new SimpleListProperty<>();
+    tissages = new SimpleListProperty<>();
   }
 
   @Override
   public String toString() {
-    return "Tissu " + getGammePoids();
+    return "Tissu Requis";
   }
 
   public int getId() {
@@ -43,32 +54,64 @@ public class TissuRequisDto extends AbstractRequisDto<TissuRequis, Tissu> {
     this.id.set(id);
   }
 
-  public void setGammePoids(GammePoids gammePoids2) {
-    this.gammePoids.set(gammePoids2 == null ? GammePoids.NON_RENSEIGNE.label : gammePoids2.label);
+  public void setGammePoids(List<GammePoids> gammePoids) {
+    this.gammePoids.set(FXCollections.observableList(gammePoids));
   }
 
-  public void setGammePoids(String label) {
-    this.gammePoids.set(label);
-  }
-
-  public String getGammePoids() {
+  public List<GammePoids> getGammePoids() {
     return gammePoids.get();
   }
 
-  public StringProperty getGammePoidsProperty() {
+  public ListProperty<GammePoids> getGammePoidsProperty() {
     return gammePoids;
   }
 
-  public int getPatronId() {
-    return patronId.get();
+  public void setTypeTissu(List<TypeTissuEnum> typeTissu) {
+    this.typeTissus.set(FXCollections.observableList(typeTissu));
   }
 
-  public IntegerProperty getPatronIdProperty() {
-    return patronId;
+  public List<TypeTissuEnum> getTypeTissu() {
+    return typeTissus.get();
   }
 
-  public void setPatronId(int patronId) {
-    this.patronId.set(patronId);
+  public ListProperty<TypeTissuEnum> getTypeTissuProperty() {
+    return typeTissus;
+  }
+
+  public void setTissage(List<String> tissages) {
+    this.tissages.set(FXCollections.observableList(tissages));
+  }
+
+  public List<String> getTissage() {
+    return tissages.get();
+  }
+
+  public ListProperty<String> getTissageProperty() {
+    return tissages;
+  }
+
+  public void setMatiere(List<String> matiere) {
+    this.matieres.set(FXCollections.observableList(matiere));
+  }
+
+  public List<String> getMatiere() {
+    return matieres.get();
+  }
+
+  public ListProperty<String> getMatiereProperty() {
+    return matieres;
+  }
+
+  public int getVersionId() {
+    return versionId.get();
+  }
+
+  public IntegerProperty getVersionIdProperty() {
+    return versionId;
+  }
+
+  public void setVersionId(int versionId) {
+    this.versionId.set(versionId);
   }
 
   public boolean isDoublure() {

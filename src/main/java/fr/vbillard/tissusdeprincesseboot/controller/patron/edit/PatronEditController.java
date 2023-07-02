@@ -3,6 +3,8 @@ package fr.vbillard.tissusdeprincesseboot.controller.patron.edit;
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.safePropertyToString;
 import static fr.vbillard.tissusdeprincesseboot.controller.validators.ValidatorUtils.areValidatorsValid;
 
+import java.util.Objects;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 import com.jfoenix.controls.JFXButton;
@@ -53,7 +55,7 @@ public class PatronEditController implements IController {
   @FXML
   private JFXTextField typeVetementField;
   @FXML
-  private JFXButton addTissuButton;
+  private JFXButton addVersionBtn;
   @FXML
   private VBox tissuEtFournitureContainer;
   @FXML
@@ -77,12 +79,10 @@ public class PatronEditController implements IController {
   private final ModelMapper mapper;
   private boolean okClicked = false;
   private StageInitializer mainApp;
-  // private ObservableList<TissuRequisDto> listTissuRequis;
-  private boolean unregistredPatron;
+
   private final PatronService patronService;
   private final PatronVersionService patronVersionService;
 
-  private VBox bottomRightVbox;
   private Validator[] validators;
 
   public PatronEditController(RootController root, PatronPictureHelper pictureUtils, ModelMapper mapper,
@@ -100,6 +100,7 @@ public class PatronEditController implements IController {
 
     generateReferenceButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.MAGIC));
     generateReferenceButton.setTooltip(new Tooltip("Générer une référence automatiquement"));
+    addVersionBtn.setGraphic(GlyphIconUtil.plusCircleTiny());
 
     validators = new Validator[] {new NonNullValidator<>(referenceField, "référence"),
         new NonNullValidator<>(marqueField, "marque"), new NonNullValidator<>(modeleField, "modèle"),
@@ -109,7 +110,7 @@ public class PatronEditController implements IController {
   }
 
   private void setDisabledButton() {
-    unregistredPatron = (patron == null || patron.getIdProperty() == null || patron.getId() == 0);
+    boolean unregistredPatron = (patron == null || patron.getIdProperty() == null || patron.getId() == 0);
 
   }
 
@@ -137,10 +138,8 @@ public class PatronEditController implements IController {
       setDisabledButton();
 
       okClicked = true;
-
     }
   }
-
 
   @FXML
   private void handleCancel() {
@@ -191,25 +190,14 @@ public class PatronEditController implements IController {
       pictureUtils.setPane(imagePane, patron);
       setBoutonArchiver();
 
+      reload(-1);
 
-      for (PatronVersion pv : patronVersionService.getByPatronId(patron.getId())){
-        TitledPane pane = new TitledPane();
-        pane.setText("Version : " + pv.getName());
-        FxData fxData = new FxData();
-        fxData.setPatronVersion(patronVersionService.convert(pv));
-        fxData.setParentController(this);
-        Pane content = initializer.displayPane(PathEnum.PATRON_VERSION_ACCORDION, fxData);
-        pane.setContent(content);
-        pane.expandedProperty().addListener((obs, oldValue, newValue) -> {
-          if (newValue) {
-            DevInProgressService.notImplemented();
-              // handle edit box !!!!!!!!!!!!
-          }
-        });
-        versionAccordion.getPanes().add(pane);
-
-      }
     }
+    displayRightPane();
+  }
+
+  private boolean allPanesClosed(Accordion accordion) {
+   return Objects.isNull(accordion.getExpandedPane());
   }
 
   @FXML
@@ -248,19 +236,76 @@ public class PatronEditController implements IController {
     archiverBtn.setText(patron.isArchived() ? "Désarchiver" : "Archiver");
   }
 
-  void displayRightPane(TissuRequisDto tissuRequisDto) {
-    DevInProgressService.notImplemented();
+  public void displayRightPane(TissuRequisDto tissuRequisDto) {
+    tissuEtFournitureContainer.getChildren().clear();
+    FxData data = new FxData();
+    data.setParentController(this);
+    data.setTissuRequis(tissuRequisDto);
+    tissuEtFournitureContainer.getChildren().add(initializer.displayPane(PathEnum.PATRON_EDIT_TISSU_REQUIS, data));
 
   }
 
-  void displayRightPane(FournitureRequiseDto fournitureRequiseDto) {
-    DevInProgressService.notImplemented();
+  public void displayRightPane(FournitureRequiseDto fournitureRequiseDto) {
+    tissuEtFournitureContainer.getChildren().clear();
+    FxData data = new FxData();
+    data.setParentController(this);
+    data.setFournitureRequise(fournitureRequiseDto);
+    tissuEtFournitureContainer.getChildren().add(initializer.displayPane(PathEnum.PATRON_EDIT_FOURNITURE_REQUISE, data));
 
   }
 
-  void displayRightPane(PatronVersionDto patronVersionDto) {
-    DevInProgressService.notImplemented();
+  public void displayRightPane(PatronVersionDto patronVersionDto) {
+    tissuEtFournitureContainer.getChildren().clear();
+    FxData data = new FxData();
+    data.setParentController(this);
+    data.setPatronVersion(patronVersionDto);
+    tissuEtFournitureContainer.getChildren().add(initializer.displayPane(PathEnum.PATRON_EDIT_PATRON_VERSION, data));
+  }
+
+  void displayRightPane() {
+    tissuEtFournitureContainer.getChildren().clear();
+    FxData data = new FxData();
+    data.setParentController(this);
+    data.setPatron(patron);
+    Pane p = initializer.displayPane(PathEnum.PATRON_EDIT_PATRON, data);
+    tissuEtFournitureContainer.getChildren().add(p);
 
   }
 
+  public void reload(int versionIdOpen) {
+    versionAccordion.getPanes().clear();
+    for (PatronVersion pv : patronVersionService.getByPatronId(patron.getId())){
+      TitledPane pane = new TitledPane();
+      pane.setText("Version : " + pv.getNom());
+      FxData fxData = new FxData();
+      fxData.setPatronVersion(patronVersionService.convert(pv));
+      fxData.setParentController(this);
+      Pane content = initializer.displayPane(PathEnum.PATRON_VERSION_ACCORDION, fxData);
+      pane.setContent(content);
+      pane.expandedProperty().addListener((obs, oldValue, newValue) -> {
+        if (Boolean.TRUE.equals(newValue)) {
+          displayRightPane(mapper.map(pv, PatronVersionDto.class));
+        } else {
+          if (allPanesClosed(versionAccordion)){
+            displayRightPane();
+          }
+        }
+      });
+
+      versionAccordion.getPanes().add(pane);
+      if (versionIdOpen == pv.getId()){
+        versionAccordion.setExpandedPane(pane);
+      }
+    }
+  }
+
+
+  @FXML
+  public void handleAjouterVersion() {
+    PatronVersion pv = new PatronVersion();
+    pv.setNom("nouvelle version");
+    pv.setPatron(patronService.convert(patron));
+    pv = patronVersionService.saveOrUpdate(pv);
+    reload(pv.getId());
+  }
 }

@@ -21,8 +21,6 @@ import fr.vbillard.tissusdeprincesseboot.model.Patron_;
 import fr.vbillard.tissusdeprincesseboot.model.Tissage;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis_;
-import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
-import fr.vbillard.tissusdeprincesseboot.model.TissuVariant_;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu_;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
 import fr.vbillard.tissusdeprincesseboot.model.enums.SupportTypeEnum;
@@ -63,20 +61,12 @@ public class PatronSpecification implements Specification<Patron> {
 
 	private static class Joins {
 		private Join<Patron, TissuRequis> joinTissuRequis;
-		private Join<Patron, TissuVariant> joinTissuVariant;
 
 		private Join<Patron, TissuRequis> joinTissuRequis(Root<Patron> root) {
 			if (joinTissuRequis == null) {
 				//joinTissuRequis = root.join(Patron_.TISSU_REQUIS);
 			}
 			return joinTissuRequis;
-		}
-
-		private Join<Patron, TissuVariant> joinTissuVariant(Root<Patron> root) {
-			if (joinTissuVariant == null) {
-				joinTissuVariant = joinTissuRequis(root).join(TissuVariant_.REQUIS);
-			}
-			return joinTissuVariant;
 		}
 	}
 
@@ -128,18 +118,6 @@ public class PatronSpecification implements Specification<Patron> {
 		
 		if (!CollectionUtils.isEmpty(support)) {
 			predicateList.add(patron.get(Patron_.SUPPORT_TYPE).in(support));
-		}
-
-		if (!CollectionUtils.isEmpty(matieres)) {
-			predicateList.add(joins.joinTissuVariant(patron).get(TissuVariant_.MATIERE).in(matieres));
-		}
-
-		if (!CollectionUtils.isEmpty(typeTissu)) {
-			predicateList.add(joins.joinTissuVariant(patron).get(TissuVariant_.TYPE_TISSU).in(typeTissu));
-		}
-
-		if (!CollectionUtils.isEmpty(tissages)) {
-			predicateList.add(joins.joinTissuVariant(patron).get(TissuVariant_.TISSAGE).in(tissages));
 		}
 
 		if(archived != null){

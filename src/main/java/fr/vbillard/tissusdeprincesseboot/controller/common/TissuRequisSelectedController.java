@@ -41,7 +41,7 @@ public class TissuRequisSelectedController implements IController {
 			laizeLabel.setText(Integer.toString(tissuRequis.getLaize()));
 
 			 */
-			gammePoidsLabel.setText(tissuRequis.getGammePoids());
+			//gammePoidsLabel.setText(tissuRequis.getGammePoids());
 			setVariantsContainer();
 
 		} else {

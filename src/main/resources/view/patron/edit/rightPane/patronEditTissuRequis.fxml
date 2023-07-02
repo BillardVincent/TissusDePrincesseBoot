@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXToggleButton?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="714.0" prefWidth="482.0" stylesheets="@../../../../style/style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.patron.edit.rightPane.PatronEditTissuRequisController">
+   <children>
+      <VBox layoutX="11.0" layoutY="12.0" prefHeight="695.0" prefWidth="464.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="46.0" prefWidth="464.0" styleClass="title-custom" text="Tissu Requis" />
+            <HBox alignment="CENTER_LEFT" prefHeight="56.0" prefWidth="350.0">
+               <children>
+                  <Label styleClass="title1" text="Doublure" />
+                  <JFXToggleButton fx:id="doublureToggle" prefHeight="12.0" prefWidth="78.0" text="Doublure" />
+               </children>
+            </HBox>
+            <GridPane fx:id="longueurLaizeGrid" prefHeight="39.0" prefWidth="407.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.2000244140625" minWidth="10.0" prefWidth="131.8" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="171.19998779296873" minWidth="10.0" prefWidth="135.2" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.00001525878906" minWidth="10.0" prefWidth="124.00001220703126" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <HBox alignment="CENTER" prefHeight="38.0" prefWidth="134.0" GridPane.columnIndex="1">
+                     <children>
+                        <Label styleClass="title2" text="Longueur" />
+                     </children>
+                     <styleClass>
+                       <String fx:value="grid-cell" />
+                        <String fx:value="first-row-middle-column" />
+                     </styleClass>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label styleClass="title1" text="Quantité" />
+                        <JFXButton fx:id="addQuantiteBtn" onAction="#handleAddQuantity" prefHeight="0.0" prefWidth="58.0" />
+                     </children>
+                     <styleClass>
+                        <String fx:value="grid-cell" />
+                        <String fx:value="first-row" />
+                     </styleClass>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
+                     <children>
+                        <Label styleClass="title2" text="Laize" />
+                     </children>
+                     <styleClass>
+                        <String fx:value="grid-cell" />
+                        <String fx:value="first-row" />
+                     </styleClass>
+                  </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" top="20.0" />
+               </VBox.margin>
+            </GridPane>
+            <VBox prefHeight="190.0" prefWidth="350.0">
+               <children>
+                  <Label styleClass="title1" text="Tissus conseillés" />
+                  <HBox prefHeight="122.0" prefWidth="350.0" spacing="25.0">
+                     <children>
+                        <Label styleClass="title2" text="Poids" />
+                        <JFXCheckBox fx:id="legerCbx" text="leger" />
+                        <JFXCheckBox fx:id="moyenCbx" text="moyen" />
+                        <JFXCheckBox fx:id="lourdCbx" text="lourd" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <GridPane prefHeight="207.0" prefWidth="350.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.79998779296875" minWidth="10.0" prefWidth="121.60004882812501" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="285.599951171875" minWidth="10.0" prefWidth="285.599951171875" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <JFXButton fx:id="typeBtn" onAction="#handleSelectType" text="Type" />
+                        <JFXButton fx:id="tissageBtn" onAction="#handleSelectTissage" text="Tissage" GridPane.rowIndex="1" />
+                        <JFXButton fx:id="matiereBtn" onAction="#handleSelectMatiere" text="Matiere" GridPane.rowIndex="2" />
+                        <Label fx:id="typeLbl" text="Label" wrapText="true" GridPane.columnIndex="1" />
+                        <Label fx:id="tissageLbl" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="matiereLbl" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                     </children>
+                  </GridPane>
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </VBox>
+            <HBox alignment="CENTER" prefHeight="35.0" prefWidth="350.0" spacing="20.0">
+               <children>
+                  <JFXButton onAction="#handleSave" text="Enregistrer" />
+                  <JFXButton onAction="#handleDelete" text="Supprimer" />
+                  <JFXButton onAction="#handleDupliquer" text="Dupliquer" />
+               </children>
+               <VBox.margin>
+                  <Insets top="40.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</Pane>

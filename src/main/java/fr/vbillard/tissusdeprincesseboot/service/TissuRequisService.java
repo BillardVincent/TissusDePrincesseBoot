@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import fr.vbillard.tissusdeprincesseboot.dao.TissusRequisDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
@@ -14,29 +15,26 @@ import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
-import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.utils.CalculPoidsTissuService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 @Service
-
+@Transactional
 public class TissuRequisService extends AbstractRequisService<TissuRequis, Tissu, TissuRequisDto>{
 
 	private final TissusRequisDao tissuRequisDao;
 	private final UserPrefService userPrefService;
 	private final CalculPoidsTissuService calculPoidsTissuService;
-	private final TissuVariantService tvs;
-	
+
 	public TissuRequisService(PatronVersionService patronVersionService, TissusRequisDao tissuRequisDao,
-			UserPrefService userPrefService, CalculPoidsTissuService calculPoidsTissuService, TissuVariantService tvs,
+			UserPrefService userPrefService, CalculPoidsTissuService calculPoidsTissuService,
 			MapperService mapper) {
 		super(mapper, patronVersionService);
 		this.tissuRequisDao = tissuRequisDao;
 		this.userPrefService = userPrefService;
 		this.calculPoidsTissuService = calculPoidsTissuService;
-		this.tvs = tvs;
 	}
 
 	@Override
@@ -59,18 +57,11 @@ public class TissuRequisService extends AbstractRequisService<TissuRequis, Tissu
 	}
 
 	@Override
-	protected void beforeSaveOrUpdate(TissuRequis entity) {
-		//Nothing to do
-	}
-
-	@Override
-	public void delete(TissuRequis tissu) {
-		List<TissuVariant> tvLst = tvs.getVariantByRequis(tissu);
-		for (TissuVariant tv : tvLst) {
-			tvs.delete(tv);
-		}
-		tissuRequisDao.delete(tissu);
-
+	@Transactional
+	public TissuRequis createNewForPatron(int patronId) {
+		TissuRequis tr = new TissuRequis();
+		tr.setVersion(patronVersionService.getById(patronId));
+		return saveOrUpdate(tr);
 	}
 
 	@Override
@@ -97,18 +88,14 @@ public class TissuRequisService extends AbstractRequisService<TissuRequis, Tissu
 		NumericSearch<Integer> laizeSearch = new NumericSearch<>();
 		//laizeSearch.setGreaterThanEqual(Math.round(tr.getLaize() - tr.getLaize() * marge));
 
-		NumericSearch<Integer> poidsSearch = calculPoidsTissuService.getNumericSearch(tr.getGammePoids());
+		//NumericSearch<Integer> poidsSearch = calculPoidsTissuService.getNumericSearch(tr.getGammePoids());
 
 		List<Matiere> matieres = new ArrayList<>();
 		List<TypeTissuEnum> types = new ArrayList<>();
 
-		if (tr.getVariants() != null) {
-			for (TissuVariant tv : tr.getVariants()) {
-				matieres.add(tv.getMatiere());
-				types.add(tv.getTypeTissu());
-			}
-		}
-		return TissuSpecification.builder().longueur(longueurSearch).laize(laizeSearch).poids(poidsSearch)
+
+		return TissuSpecification.builder().longueur(longueurSearch).laize(laizeSearch)
+				//.poids(poidsSearch)
 				.matieres(matieres).typeTissu(types).build();
 	}
 

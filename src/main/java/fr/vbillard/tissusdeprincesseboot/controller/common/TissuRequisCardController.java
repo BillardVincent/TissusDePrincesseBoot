@@ -74,7 +74,7 @@ public class TissuRequisCardController implements IController {
 			laizeLabel.setText(tissuRequis.getLaize() + " cm");
 
 			 */
-			gammePoidsLabel.setText(tissuRequis.getGammePoids());
+			//gammePoidsLabel.setText(tissuRequis.getGammePoids());
 			variantsLabel.setText(StringUtils.join(tissuRequis.getVariant(), SEPARATOR));
 			doublure.setVisible(tissuRequis.isDoublure());
 

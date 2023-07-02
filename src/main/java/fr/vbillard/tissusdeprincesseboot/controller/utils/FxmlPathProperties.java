@@ -51,6 +51,10 @@ public class FxmlPathProperties {
 	private Resource patronDetail;
 	private Resource patronEdit;
 	private Resource patronVersionAccordion;
+	private Resource patronEditPatronVersion;
+	private Resource patronEditTissuRequis;
+	private Resource patronEditFournitureRequise;
+	private Resource patronEditPatron;
 	private Resource patronSearch;
 
 	private Resource fourniture;

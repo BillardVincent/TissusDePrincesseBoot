@@ -38,7 +38,6 @@ public class Patron extends AbstractEntity {
 	@Enumerated(EnumType.STRING)
 	private SupportTypeEnum supportType;
 
-	@Cascade(CascadeType.PERSIST)
 	@OneToMany(mappedBy = "patron", fetch = FetchType.EAGER)
 	private List<PatronVersion> versions;
 	

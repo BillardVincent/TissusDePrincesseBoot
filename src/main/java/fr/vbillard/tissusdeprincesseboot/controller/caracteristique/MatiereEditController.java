@@ -22,7 +22,7 @@ public class MatiereEditController extends AbstractCaracteristiqueController {
 	@FXML
 	private JFXTextField editMatiere;
 
-	private MatiereService matiereService;
+	private final MatiereService matiereService;
 
 	private String editedMatiere;
 

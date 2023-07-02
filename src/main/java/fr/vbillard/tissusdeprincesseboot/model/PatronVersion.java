@@ -22,13 +22,11 @@ public class PatronVersion extends AbstractEntity {
   @ManyToOne
   private Patron patron;
 
-  private String name;
+  private String nom;
 
-  @Cascade(CascadeType.PERSIST)
   @OneToMany(mappedBy = "version", fetch = FetchType.LAZY)
   private List<TissuRequis> tissuRequis;
 
-  @Cascade(CascadeType.PERSIST)
   @OneToMany(mappedBy = "version", fetch = FetchType.LAZY)
   private List<FournitureRequise> fournituresRequises;
 }
