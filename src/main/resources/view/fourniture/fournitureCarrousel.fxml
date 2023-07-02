@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="481.0"
-      prefWidth="600.0" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/15.0.1"
+      prefWidth="600.0" stylesheets="@../../style/style.css"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="fr.vbillard.tissusdeprincesseboot.controller.fourniture.FournitureCarrouselController">
    <children>

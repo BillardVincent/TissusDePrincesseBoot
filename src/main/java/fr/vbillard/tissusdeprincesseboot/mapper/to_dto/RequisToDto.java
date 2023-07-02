@@ -24,7 +24,7 @@ public class RequisToDto extends TypeMapConfigurer<TissuRequis, TissuRequisDto>{
 			if (!CollectionUtils.isEmpty(context.getSource().getTissages()))
 					context.getDestination().setTissage(context.getSource().getTissages().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList()));
 			if (!CollectionUtils.isEmpty(context.getSource().getMatieres()))
-				context.getDestination().setMatiere(context.getSource().getTissages().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList()));
+				context.getDestination().setMatiere(context.getSource().getMatieres().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList()));
 		return context.getDestination();
 		});
 

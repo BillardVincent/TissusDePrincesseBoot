@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <Pane prefHeight="347.0" prefWidth="258.0"
-	xmlns="http://javafx.com/javafx/15.0.1"
+
 	xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetCardController">
 	<children>
