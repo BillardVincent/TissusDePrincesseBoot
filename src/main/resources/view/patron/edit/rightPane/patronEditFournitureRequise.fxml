@@ -1,36 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="566.0" prefWidth="431.0" stylesheets="@../../../../style/style.css"  xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.patron.edit.rightPane.PatronEditFournitureRequiseController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="566.0" prefWidth="431.0" stylesheets="@../../../../style/style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.patron.edit.rightPane.PatronEditFournitureRequiseController">
    <children>
-      <VBox layoutX="34.0" layoutY="40.0" prefHeight="407.0" prefWidth="350.0">
+      <VBox layoutX="34.0" layoutY="22.0" prefHeight="524.0" prefWidth="360.0">
          <children>
-            <Label prefHeight="42.0" prefWidth="366.0" text="Fourniture Requise" />
-            <GridPane fx:id="topGrid" prefHeight="109.0" prefWidth="350.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.800048828125" minWidth="10.0" prefWidth="103.800048828125" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="246.199951171875" minWidth="10.0" prefWidth="246.199951171875" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="42.0" prefWidth="366.0" styleClass="title-custom" text="Fourniture Requise">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin></Label>
+            <VBox prefHeight="146.0" prefWidth="360.0">
                <children>
-                  <Label text="Type" />
+                  <HBox prefHeight="33.0" prefWidth="360.0">
+                     <children>
+                        <Label styleClass="title2" text="Type" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="32.0" prefWidth="360.0">
+                     <children>
+                        <JFXComboBox prefHeight="26.0" prefWidth="172.0" />
+                        <JFXButton fx:id="addTypeBtn" />
+                     </children>
+                  </HBox>
+                  <Separator prefWidth="200.0">
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </VBox.margin>
+                  </Separator>
+                  <HBox prefHeight="23.0" prefWidth="360.0">
+                     <children>
+                        <Label fx:id="dimPriLbl" styleClass="title2" text="Dimension Principale" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="34.0" prefWidth="360.0" spacing="10.0">
+                     <children>
+                        <JFXTextField fx:id="dimPriSpinner" prefHeight="26.0" prefWidth="133.0">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </JFXTextField>
+                        <JFXComboBox fx:id="uniteChBx" prefHeight="26.0" prefWidth="158.0" />
+                     </children>
+                  </HBox>
                </children>
-            </GridPane>
-            <JFXButton onAction="#handleSave" text="Enregistrer" />
-            <JFXButton onAction="#handleDelete" text="supprimer" />
-            <JFXButton onAction="#handleDupliquer" text="Dupliquer" />
+            </VBox>
+            <Separator prefWidth="200.0">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </Separator>
+            <HBox prefHeight="30.0" prefWidth="360.0">
+               <children>
+                  <Label fx:id="dimSecLbl" styleClass="title2" text="Dimension Secondaire" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="360.0" spacing="10.0" styleClass="middle-row">
+               <children>
+                  <Label prefHeight="18.0" prefWidth="60.0" text="Minimum:" />
+                  <JFXTextField prefHeight="26.0" prefWidth="117.0" fx:id="dimSecSpinnerMin"/>
+                  <Label prefHeight="26.0" prefWidth="146.0" fx:id="dimSecUniteMin"/>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="360.0" spacing="10.0">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+               <children>
+                  <Label prefHeight="18.0" prefWidth="60.0" text="Maximum" />
+                  <JFXTextField prefHeight="26.0" prefWidth="117.0" fx:id="dimSecSpinnerMax"/>
+                  <JFXComboBox prefHeight="26.0" prefWidth="146.0" fx:id="dimSecUniteMax"/>
+               </children>
+            </HBox>
+            <Separator prefWidth="200.0" />
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="360.0" spacing="10.0">
+               <children>
+                  <JFXButton onAction="#handleSave" text="Enregistrer" />
+                  <JFXButton onAction="#handleDelete" text="Supprimer" />
+                  <JFXButton onAction="#handleDupliquer" text="Dupliquer" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
          </children>
       </VBox>
    </children>

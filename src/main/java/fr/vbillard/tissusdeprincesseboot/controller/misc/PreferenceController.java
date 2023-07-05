@@ -29,7 +29,7 @@ public class PreferenceController implements IModalController {
 	@FXML
 	public JFXTextField margeLongueur;
 
-	private UserPrefService userPrefService;
+	private final UserPrefService userPrefService;
 	private UserPref pref;
 	private Stage dialogStage;
 

@@ -2,6 +2,7 @@ package fr.vbillard.tissusdeprincesseboot.controller.patron.edit.rightPane;
 
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.buildComboBox;
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.buildSpinner;
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.CustomSpinner.setSpinner;
 
 import org.springframework.stereotype.Component;
 import com.jfoenix.controls.JFXButton;
@@ -34,25 +35,30 @@ import javafx.scene.layout.GridPane;
 public class PatronEditFournitureRequiseController implements IController {
 
   @FXML
-  private JFXTextField nomField;
+  public JFXButton addTypeBtn;
   @FXML
-  private JFXButton ajouterTissuBtn;
+  public JFXTextField dimPriSpinner;
   @FXML
-  private JFXButton ajouterFournitureBtn;
+  public Label dimSecLbl;
   @FXML
-  private GridPane topGrid;
+  public Label dimPriLbl;
   @FXML
-  private JFXButton validateBtn;
+  public JFXComboBox<String> uniteChBx;
+  @FXML
+  public JFXTextField dimSecSpinnerMin;
+  @FXML
+  public Label dimSecUniteMin;
+  @FXML
+  public JFXTextField dimSecSpinnerMax;
+  @FXML
+  public JFXComboBox<String> dimSecUniteMax;
 
-  private final FournitureRequiseService fournitureRequiseService;
   private final TypeFournitureService typeFournitureService;
 
   private StageInitializer initializer;
   private FxData data;
 
-  public PatronEditFournitureRequiseController(FournitureRequiseService fournitureRequiseService,
-      TypeFournitureService typeFournitureService) {
-    this.fournitureRequiseService = fournitureRequiseService;
+  public PatronEditFournitureRequiseController(TypeFournitureService typeFournitureService) {
     this.typeFournitureService = typeFournitureService;
 
   }
@@ -63,24 +69,15 @@ public class PatronEditFournitureRequiseController implements IController {
     this.data = data;
 
     FournitureRequiseDto dto = data.getFournitureRequise();
-
+    setSpinner(dimPriSpinner);
+    //setSpinner(dimSecSpinner);
     //nomField.setText("Fourniture Requise test");
 
     boolean dtoIsNotNew = dto.getId() != 0;
 
-    topGrid.add(new Label("Type"), 0, 0);
-
-    Label intitulePrincipal = new Label();
-    JFXTextField dimensionPrincipaleSpinner = buildSpinner(0f);
-    dimensionPrincipaleSpinner.setVisible(dtoIsNotNew);
-    JFXComboBox<String> uniteChBx = new JFXComboBox<>();
+    dimPriSpinner.setVisible(dtoIsNotNew);
     uniteChBx.setVisible(dtoIsNotNew);
 
-    topGrid.add(intitulePrincipal, 0, 1);
-    topGrid.add(dimensionPrincipaleSpinner, 1, 1);
-    topGrid.add(uniteChBx, 2, 1);
-
-    Label intituleSecondaire = new Label();
     Label entre = new Label();
     JFXTextField dimensionMinSpinner = buildSpinner(0f);
     dimensionMinSpinner.setVisible(dtoIsNotNew);
@@ -90,25 +87,19 @@ public class PatronEditFournitureRequiseController implements IController {
     JFXComboBox<String> uniteSecChBx = new JFXComboBox<>();
     uniteSecChBx.setVisible(dtoIsNotNew);
 
-    topGrid.add(intituleSecondaire, 0, 2);
-    topGrid.add(entre, 1, 2);
-    topGrid.add(dimensionMinSpinner, 1, 3);
-    topGrid.add(et, 2, 2);
-    topGrid.add(dimensionMaxSpinner, 2, 3);
-    topGrid.add(uniteSecChBx, 3, 3);
 
     JFXComboBox<String> typeChBx =
         buildComboBox(typeFournitureService.getAllValues(), dto.getTypeNameProperty());
 
     if (dtoIsNotNew) {
-      dimensionPrincipaleSpinner.setText(Float.toString(dto.getQuantite()));
+      dimPriSpinner.setText(Float.toString(dto.getQuantite()));
 
       if (dto.getType() != null) {
-        intitulePrincipal.setText(dto.getType().getIntitulePrincipale());
+        dimPriLbl.setText(dto.getType().getIntitulePrincipale());
         buildComboBox(Unite.getValuesByDimension(dto.getType().getDimensionPrincipale()),
             dto.getUnite().getLabel(),
             dto.getType().getDimensionPrincipale().getDefault().getLabel(), uniteChBx);
-        dimensionPrincipaleSpinner.setVisible(true);
+        dimPriSpinner.setVisible(true);
         uniteChBx.setVisible(true);
 
         if (dto.getType().getDimensionSecondaire() != null) {
@@ -116,7 +107,7 @@ public class PatronEditFournitureRequiseController implements IController {
           dimensionMinSpinner.setText(Float.toString(dto.getQuantiteSecondaireMin()));
           dimensionMaxSpinner.setText(Float.toString(dto.getQuantiteSecondaireMax()));
 
-          intituleSecondaire.setText(dto.getType().getIntituleSecondaire());
+          dimSecLbl.setText(dto.getType().getIntituleSecondaire());
           buildComboBox(Unite.getValuesByDimension(dto.getType().getDimensionSecondaire()),
               dto.getType().getUniteSecondaireConseillee().getLabel(),
               dto.getType().getDimensionSecondaire().getDefault().getLabel(), uniteSecChBx);
@@ -134,17 +125,17 @@ public class PatronEditFournitureRequiseController implements IController {
     typeChBx.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 
       TypeFourniture typeFourniture = typeFournitureService.findTypeFourniture(newValue);
-      intitulePrincipal.setText(typeFourniture.getIntitulePrincipale());
+      dimPriLbl.setText(typeFourniture.getIntitulePrincipale());
 
       buildComboBox(Unite.getValuesByDimension(typeFourniture.getDimensionPrincipale()),
           typeFourniture.getUnitePrincipaleConseillee().getLabel(),
           typeFourniture.getDimensionPrincipale().getDefault().getLabel(), uniteChBx);
-      dimensionPrincipaleSpinner.setVisible(true);
+      dimPriSpinner.setVisible(true);
       uniteChBx.setVisible(true);
 
       if (typeFourniture.getDimensionSecondaire() != null) {
 
-        intituleSecondaire.setText(typeFourniture.getIntituleSecondaire());
+        dimSecLbl.setText(typeFourniture.getIntituleSecondaire());
 
         buildComboBox(Unite.getValuesByDimension(typeFourniture.getDimensionSecondaire()),
             typeFourniture.getUniteSecondaireConseillee().getLabel(),
@@ -174,8 +165,6 @@ public class PatronEditFournitureRequiseController implements IController {
     });
 
  */
-
-    topGrid.add(typeChBx, 1, 0);
   }
 
   @FXML

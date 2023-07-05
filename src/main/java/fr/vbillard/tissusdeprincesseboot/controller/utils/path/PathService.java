@@ -30,13 +30,11 @@ import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronDetailController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronListController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronSearchController;
-import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.accordion.FournitureRequiseAccordionController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.PatronEditController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.rightPane.PatronEditFournitureRequiseController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.rightPane.PatronEditPatronController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.rightPane.PatronEditPatronVersionController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.accordion.PatronVersionAccordionController;
-import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.accordion.TissuRequisAccordionController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.rightPane.PatronEditTissuRequisController;
 import fr.vbillard.tissusdeprincesseboot.controller.projet.FournitureUsedCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetCardController;
@@ -153,11 +151,6 @@ public class PathService {
       case PATRON_VERSION_ACCORDION:
         return new PathHolder(pathProperties.getPatronVersionAccordion().getURL(),
             PatronVersionAccordionController.class);
-      case FOURNITURE_REQUISE_ACCORDION:
-        return new PathHolder(pathProperties.getFournitureRequiseAccordion().getURL(),
-            FournitureRequiseAccordionController.class);
-      case TISSU_REQUIS_ACCORDION:
-        return new PathHolder(pathProperties.getTissuRequisAccordion().getURL(), TissuRequisAccordionController.class);
       case PATRON_EDIT_PATRON_VERSION:
         return new PathHolder(pathProperties.getPatronEditPatronVersion().getURL(),
             PatronEditPatronVersionController.class);
