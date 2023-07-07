@@ -62,9 +62,13 @@ public class FournitureRequiseService
 
   @Override
   protected void beforeSaveOrUpdate(FournitureRequise entity) {
+    if (entity.getVersion() == null){
+      FournitureRequise original = getById(entity.getId());
+      entity.setVersion(original.getVersion());
+    }
   }
 
-  @Transactional
+  /*
   @Override
   public void beforeDelete(FournitureRequise fourniture) {
     PatronVersion pv = fourniture.getVersion();
@@ -74,6 +78,8 @@ public class FournitureRequiseService
     delete(fourniture);
 
   }
+
+   */
 
   public ObservableList<FournitureRequise> getAsObservableAllFournitureRequiseByVersion(int id) {
     return FXCollections.observableArrayList(getAllByVersionId(id));

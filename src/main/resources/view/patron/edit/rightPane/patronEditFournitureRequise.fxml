@@ -12,9 +12,9 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="566.0" prefWidth="431.0" stylesheets="@../../../../style/style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.patron.edit.rightPane.PatronEditFournitureRequiseController">
    <children>
-      <VBox layoutX="34.0" layoutY="22.0" prefHeight="524.0" prefWidth="360.0">
+      <VBox layoutX="15.0" layoutY="22.0" prefHeight="524.0" prefWidth="413.0">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="42.0" prefWidth="366.0" styleClass="title-custom" text="Fourniture Requise">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="46.0" prefWidth="434.0" styleClass="title-custom" text="Fourniture Requise">
                <VBox.margin>
                   <Insets bottom="20.0" />
                </VBox.margin></Label>
@@ -27,7 +27,7 @@
                   </HBox>
                   <HBox prefHeight="32.0" prefWidth="360.0">
                      <children>
-                        <JFXComboBox prefHeight="26.0" prefWidth="172.0" />
+                        <JFXComboBox fx:id="typeCbx" prefHeight="26.0" prefWidth="172.0" />
                         <JFXButton fx:id="addTypeBtn" />
                      </children>
                   </HBox>
@@ -65,9 +65,9 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="360.0" spacing="10.0" styleClass="middle-row">
                <children>
-                  <Label prefHeight="18.0" prefWidth="60.0" text="Minimum:" />
-                  <JFXTextField prefHeight="26.0" prefWidth="117.0" fx:id="dimSecSpinnerMin"/>
-                  <Label prefHeight="26.0" prefWidth="146.0" fx:id="dimSecUniteMin"/>
+                  <Label prefHeight="18.0" prefWidth="90.0" text="Minimum:" />
+                  <JFXTextField fx:id="dimSecSpinnerMin" prefHeight="26.0" prefWidth="117.0" />
+                  <JFXComboBox fx:id="dimSecUniteMax" prefHeight="26.0" prefWidth="146.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="360.0" spacing="10.0">
@@ -75,9 +75,9 @@
                   <Insets bottom="10.0" top="10.0" />
                </VBox.margin>
                <children>
-                  <Label prefHeight="18.0" prefWidth="60.0" text="Maximum" />
-                  <JFXTextField prefHeight="26.0" prefWidth="117.0" fx:id="dimSecSpinnerMax"/>
-                  <JFXComboBox prefHeight="26.0" prefWidth="146.0" fx:id="dimSecUniteMax"/>
+                  <Label prefHeight="18.0" prefWidth="90.0" text="Maximum" />
+                  <JFXTextField fx:id="dimSecSpinnerMax" prefHeight="26.0" prefWidth="117.0" />
+                  <Label fx:id="dimSecUniteMin" prefHeight="26.0" prefWidth="146.0" />
                </children>
             </HBox>
             <Separator prefWidth="200.0" />

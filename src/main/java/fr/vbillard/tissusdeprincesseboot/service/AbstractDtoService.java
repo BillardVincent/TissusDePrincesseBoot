@@ -36,5 +36,4 @@ public abstract class AbstractDtoService <T extends AbstractEntity, U extends Fx
     return convert(getById(id));
   }
 
-
 }
