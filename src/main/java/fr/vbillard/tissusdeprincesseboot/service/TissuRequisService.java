@@ -14,6 +14,7 @@ import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
 import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
+import fr.vbillard.tissusdeprincesseboot.model.PatronVersion;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequisLaizeOption;
@@ -30,10 +31,10 @@ public class TissuRequisService extends AbstractRequisService<TissuRequis, Tissu
 	private final UserPrefService userPrefService;
 	private final CalculPoidsTissuService calculPoidsTissuService;
 
-	public TissuRequisService(PatronVersionService patronVersionService, TissusRequisDao tissuRequisDao,
+	public TissuRequisService(TissusRequisDao tissuRequisDao,
 			UserPrefService userPrefService, CalculPoidsTissuService calculPoidsTissuService,
 			MapperService mapper) {
-		super(mapper, patronVersionService);
+		super(mapper);
 		this.tissuRequisDao = tissuRequisDao;
 		this.userPrefService = userPrefService;
 		this.calculPoidsTissuService = calculPoidsTissuService;
@@ -111,7 +112,12 @@ public class TissuRequisService extends AbstractRequisService<TissuRequis, Tissu
 		return mapper.map(dto);
 	}
 
-	public TissuRequisDto duplicate(int id) {
+	
+	public TissuRequis duplicate(int id) {
+		return duplicate (id, null);
+	}
+
+	public TissuRequis duplicate(int id, PatronVersion version) {
 		TissuRequis source = getById(id);
 		TissuRequis clone = new TissuRequis();
 		
@@ -120,7 +126,11 @@ public class TissuRequisService extends AbstractRequisService<TissuRequis, Tissu
 		clone.setGammePoids(new ArrayList<>(source.getGammePoids()));
 		clone.setMatieres(new ArrayList<>(source.getMatieres()));
 		clone.setTypeTissu(source.getTypeTissu());
-		clone.setVersion(source.getVersion());
+		if ( version == null) {
+			clone.setVersion(source.getVersion());
+		} else {
+			clone.setVersion(version);
+		}
 
 		
 		if (!CollectionUtils.isEmpty(source.getOption())){
@@ -133,7 +143,7 @@ public class TissuRequisService extends AbstractRequisService<TissuRequis, Tissu
 				clone.getOption().add(trloClone);
 			}
 		}
-		return convert(saveOrUpdate(clone));
+		return saveOrUpdate(clone);
 			
 	}
 }

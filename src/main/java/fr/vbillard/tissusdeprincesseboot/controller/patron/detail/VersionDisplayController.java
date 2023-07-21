@@ -2,6 +2,7 @@ package fr.vbillard.tissusdeprincesseboot.controller.patron.detail;
 
 import java.util.List;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
@@ -29,6 +30,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 
 @Component
+@Scope("prototype")
 public class VersionDisplayController implements IController {
 	
 	@FXML

@@ -21,6 +21,7 @@ import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
+import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequisLaizeOption;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
@@ -214,7 +215,7 @@ public class PatronEditTissuRequisController implements IController {
 
   @FXML
   public void handleDupliquer() {
-    TissuRequisDto clone = tissuRequisService.duplicate(tissuRequis.getId());
+    TissuRequis clone = tissuRequisService.duplicate(tissuRequis.getId());
     //TODO
     //((PatronEditController) data.getParentController()).reload(data.getPatronVersion().getId());
   }

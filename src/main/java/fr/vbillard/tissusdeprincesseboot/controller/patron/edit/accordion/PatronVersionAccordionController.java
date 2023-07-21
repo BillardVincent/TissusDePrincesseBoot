@@ -43,17 +43,15 @@ public class PatronVersionAccordionController implements IController {
 
   private final TissuRequisService tissuRequisService;
   private final FournitureRequiseService fournitureRequiseService;
-  private final PatronVersionService patronVersionService;
 
   private StageInitializer initializer;
   private PatronEditController parentController;
   private PatronVersionDto patronVersionDto;
 
   public PatronVersionAccordionController(TissuRequisService tissuRequisService,
-      FournitureRequiseService fournitureRequiseService, PatronVersionService patronVersionService) {
+      FournitureRequiseService fournitureRequiseService) {
     this.tissuRequisService = tissuRequisService;
     this.fournitureRequiseService = fournitureRequiseService;
-    this.patronVersionService = patronVersionService;
   }
 
   @Override

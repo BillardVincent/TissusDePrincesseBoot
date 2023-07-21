@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.util.Strings;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
@@ -22,6 +23,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 
 @Component
+@Scope("prototype")
 public class TissuDisplayController implements IController {
 
 	@FXML

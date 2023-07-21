@@ -6,21 +6,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import fr.vbillard.tissusdeprincesseboot.controller.components.LaizeLongueurOptionCell;
 import fr.vbillard.tissusdeprincesseboot.dao.PatronVersionDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronVersionDto;
 import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureRequise;
 import fr.vbillard.tissusdeprincesseboot.model.PatronVersion;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
-import fr.vbillard.tissusdeprincesseboot.model.TissuRequisLaizeOption;
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
 public class PatronVersionService extends AbstractDtoService<PatronVersion, PatronVersionDto> {
-	private PatronVersionDao dao;
-	private MapperService mapper;
+	private final PatronVersionDao dao;
+	private final MapperService mapper;
+	private final TissuRequisService tissuRequisService;
+	private final FournitureRequiseService fournitureRequiseService;
 
 	@Override
 	protected PatronVersionDao getDao() {
@@ -53,8 +53,29 @@ public class PatronVersionService extends AbstractDtoService<PatronVersion, Patr
 		return convertToDto(getByPatronId(id));
 	}
 
+	@Transactional
 	public void duplicate(int id) {
-		// TODO Auto-generated method stub
+		PatronVersion source = getById(id);
+		PatronVersion clone = new PatronVersion();
+		clone.setNom(source.getNom() + " (copie)");
+		clone.setPatron(source.getPatron());
+		
+		
+		clone = saveOrUpdate(clone);
+		
+		List<TissuRequis> trLst = tissuRequisService.getAllByVersionId(id);
+		if (!CollectionUtils.isEmpty(trLst)) {
+			for (TissuRequis tr : trLst) {
+				tissuRequisService.duplicate(tr.getId(), clone);
+			}
+		}
+		
+		List<FournitureRequise> frLst = fournitureRequiseService.getAllByVersionId(id);
+		if (!CollectionUtils.isEmpty(frLst)) {
+			for (FournitureRequise fr : frLst) {
+				fournitureRequiseService.duplicate(fr.getId(), clone);
+			}
+		}
 		
 	}
 }

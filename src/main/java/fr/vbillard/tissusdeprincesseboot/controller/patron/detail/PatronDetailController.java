@@ -1,6 +1,5 @@
 package fr.vbillard.tissusdeprincesseboot.controller.patron.detail;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -8,22 +7,18 @@ import org.springframework.stereotype.Component;
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.picture_helper.PatronPictureHelper;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronVersionDto;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
-import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
 import fr.vbillard.tissusdeprincesseboot.service.PatronVersionService;
 import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 
 @Component
 public class PatronDetailController implements IController {
@@ -43,7 +38,7 @@ public class PatronDetailController implements IController {
 	@FXML
 	private Label typeSupportPatronLabel;
 	@FXML
-	private VBox versionPane;
+	private HBox versionPane;
 
 	private final RootController rootController;
 	private StageInitializer initializer;

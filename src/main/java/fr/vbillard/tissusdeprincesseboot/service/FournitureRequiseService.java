@@ -21,108 +21,124 @@ import javafx.collections.ObservableList;
 
 @Service
 public class FournitureRequiseService
-    extends AbstractRequisService<FournitureRequise, Fourniture, FournitureRequiseDto> {
+		extends AbstractRequisService<FournitureRequise, Fourniture, FournitureRequiseDto> {
 
-  private final FournitureRequiseDao fournitureRequiseDao;
-  private final UserPrefService userPrefService;
+	private final FournitureRequiseDao fournitureRequiseDao;
+	private final UserPrefService userPrefService;
 
-  public FournitureRequiseService(MapperService mapper, FournitureRequiseDao fournitureRequiseDao,
-      UserPrefService userPrefService, PatronVersionService patronVersionService) {
-    super(mapper, patronVersionService);
-    this.fournitureRequiseDao = fournitureRequiseDao;
-    this.userPrefService = userPrefService;
-  }
+	public FournitureRequiseService(MapperService mapper, FournitureRequiseDao fournitureRequiseDao,
+			UserPrefService userPrefService) {
+		super(mapper);
+		this.fournitureRequiseDao = fournitureRequiseDao;
+		this.userPrefService = userPrefService;
+	}
 
-  public List<FournitureRequise> getAllByVersionId(int id) {
-    return fournitureRequiseDao.getAllByVersionId(id);
-  }
+	public List<FournitureRequise> getAllByVersionId(int id) {
+		return fournitureRequiseDao.getAllByVersionId(id);
+	}
 
-  public List<FournitureRequiseDto> getAllFournitureRequiseDtoByVersion(int id) {
-    return fournitureRequiseDao.getAllByVersionId(id).stream().map(tr -> mapper.map(tr)).collect(Collectors.toList());
-  }
+	public List<FournitureRequiseDto> getAllFournitureRequiseDtoByVersion(int id) {
+		return fournitureRequiseDao.getAllByVersionId(id).stream().map(tr -> mapper.map(tr))
+				.collect(Collectors.toList());
+	}
 
-  public FournitureRequise findFournitureRequise(int fournitureRequisId) {
+	public FournitureRequise findFournitureRequise(int fournitureRequisId) {
 
-    return fournitureRequiseDao.findById(fournitureRequisId).get();
-  }
+		return fournitureRequiseDao.findById(fournitureRequisId).get();
+	}
 
-  @Transactional
-  public void delete(FournitureRequiseDto fourniture) {
-    delete(mapper.map(fourniture));
+	@Transactional
+	public void delete(FournitureRequiseDto fourniture) {
+		delete(mapper.map(fourniture));
 
-  }
+	}
 
-  @Override
-  @Transactional
-  public FournitureRequise createNewForPatron(int patronId) {
-    FournitureRequise fr = new FournitureRequise();
-    fr.setVersion(patronVersionService.getById(patronId));
-    return saveOrUpdate(fr);
-  }
+	@Override
+	@Transactional
+	public FournitureRequise createNewForPatron(int patronId) {
+		FournitureRequise fr = new FournitureRequise();
+		fr.setVersion(patronVersionService.getById(patronId));
+		return saveOrUpdate(fr);
+	}
 
-  @Override
-  protected void beforeSaveOrUpdate(FournitureRequise entity) {
-    if (entity.getVersion() == null){
-      FournitureRequise original = getById(entity.getId());
-      entity.setVersion(original.getVersion());
-    }
-  }
+	@Override
+	protected void beforeSaveOrUpdate(FournitureRequise entity) {
+		if (entity.getVersion() == null) {
+			FournitureRequise original = getById(entity.getId());
+			entity.setVersion(original.getVersion());
+		}
+	}
 
-  /*
-  @Override
-  public void beforeDelete(FournitureRequise fourniture) {
-    PatronVersion pv = fourniture.getVersion();
-    pv.getFournituresRequises().remove(fourniture);
-    patronVersionService.saveOrUpdate(pv);
+	/*
+	 * @Override public void beforeDelete(FournitureRequise fourniture) {
+	 * PatronVersion pv = fourniture.getVersion();
+	 * pv.getFournituresRequises().remove(fourniture);
+	 * patronVersionService.saveOrUpdate(pv);
+	 * 
+	 * delete(fourniture);
+	 * 
+	 * }
+	 * 
+	 */
 
-    delete(fourniture);
+	public ObservableList<FournitureRequise> getAsObservableAllFournitureRequiseByVersion(int id) {
+		return FXCollections.observableArrayList(getAllByVersionId(id));
+	}
 
-  }
+	public FournitureSpecification getFournitureSpecification(FournitureRequiseDto tr) {
+		return getFournitureSpecification(convert(tr));
+	}
 
-   */
+	public FournitureSpecification getFournitureSpecification(FournitureRequise fr) {
 
-  public ObservableList<FournitureRequise> getAsObservableAllFournitureRequiseByVersion(int id) {
-    return FXCollections.observableArrayList(getAllByVersionId(id));
-  }
+		float marge = userPrefService.getUser().getLongueurMargePercent();
 
-  public FournitureSpecification getFournitureSpecification(FournitureRequiseDto tr) {
-    return getFournitureSpecification(convert(tr));
-  }
+		NumericSearch<Float> quantiteSearch = new NumericSearch<>();
+		quantiteSearch.setGreaterThanEqual(fr.getQuantite() - fr.getQuantite() * marge);
 
-  public FournitureSpecification getFournitureSpecification(FournitureRequise fr) {
+		List<TypeFourniture> types = new ArrayList<>();
+		types.add(fr.getType());
 
-    float marge = userPrefService.getUser().getLongueurMargePercent();
+		NumericSearch<Float> quantiteSecondaire = null;
 
-    NumericSearch<Float> quantiteSearch = new NumericSearch<>();
-    quantiteSearch.setGreaterThanEqual(fr.getQuantite() - fr.getQuantite() * marge);
+		if (fr.getType().getDimensionSecondaire() != null) {
+			quantiteSecondaire = new NumericSearch<>();
+			quantiteSecondaire.setGreaterThanEqual(fr.getQuantiteSecMin());
+			quantiteSecondaire.setLessThanEqual(fr.getQuantiteSecMax());
+		}
 
-    List<TypeFourniture> types = new ArrayList<>();
-    types.add(fr.getType());
+		return FournitureSpecification.builder().type(types).quantite(quantiteSearch)
+				.quantiteSecondaire(quantiteSecondaire).build();
+	}
 
-    NumericSearch<Float> quantiteSecondaire = null;
+	@Override
+	public FournitureRequise convert(FournitureRequiseDto dto) {
+		return mapper.map(dto);
+	}
 
-    if (fr.getType().getDimensionSecondaire() != null) {
-      quantiteSecondaire = new NumericSearch<>();
-      quantiteSecondaire.setGreaterThanEqual(fr.getQuantiteSecMin());
-      quantiteSecondaire.setLessThanEqual(fr.getQuantiteSecMax());
-    }
+	@Override
+	public FournitureRequiseDto convert(FournitureRequise entity) {
+		return mapper.map(entity);
+	}
 
-    return FournitureSpecification.builder().type(types).quantite(quantiteSearch).quantiteSecondaire(quantiteSecondaire)
-        .build();
-  }
+	@Override
+	protected FournitureRequiseDao getDao() {
+		return fournitureRequiseDao;
+	}
 
-  @Override
-  public FournitureRequise convert(FournitureRequiseDto dto) {
-    return mapper.map(dto);
-  }
-
-  @Override
-  public FournitureRequiseDto convert(FournitureRequise entity) {
-    return mapper.map(entity);
-  }
-
-  @Override
-  protected FournitureRequiseDao getDao() {
-    return fournitureRequiseDao;
-  }
+	public FournitureRequise duplicate(int id, PatronVersion version) {
+		FournitureRequise source = getById(id);
+		FournitureRequise clone = new FournitureRequise();
+		clone.setDetails(source.getDetails());
+		clone.setQuantite(source.getQuantite());
+		clone.setQuantiteSecMax(source.getQuantiteSecMax());
+		clone.setQuantiteSecMin(source.getQuantiteSecMin());
+		clone.setType(source.getType());
+		clone.setUnite(source.getUnite());
+		clone.setUniteSecondaire(source.getUniteSecondaire());
+		clone.setVersion(version);
+		saveOrUpdate(clone);
+		
+		return clone;
+	}
 }
