@@ -10,7 +10,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.vbillard.tissusdeprincesseboot.dao.Idao;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractEntity;
 
 public abstract class AbstractService<T extends AbstractEntity> {
@@ -65,32 +64,5 @@ public abstract class AbstractService<T extends AbstractEntity> {
 	}
 
 	protected abstract Idao<T, Integer> getDao();
-
-	/**
-	 * Clone an entity, reset its it and save it
-	 * @param entity
-	 * @return
-	 */
-	public final T clone(T entity) {
-		T clone = SerializationUtils.clone(entity);
-		clone.setId(0);
-		afterClone(clone);
-		saveOrUpdate(clone);
- 		return clone;
-	}
-
-	/**
-	 * operations to performe after cloning but before a saveOrUpdate
-	 * @param clone entity to clone
-	 */
-	protected void afterClone(T clone){
-
-	}
-
-	public final T clone( int id) {
-		T template = getById(id);
-		return clone(template);
-	}
-
 
 }

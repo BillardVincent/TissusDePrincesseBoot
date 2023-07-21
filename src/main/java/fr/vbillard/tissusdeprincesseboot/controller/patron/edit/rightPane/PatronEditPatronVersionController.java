@@ -53,7 +53,7 @@ public class PatronEditPatronVersionController implements IController {
 
   @FXML
   public void handleDupliquer() {
-    DevInProgressService.notImplemented();
+    patronVersionService.duplicate(data.getPatronVersion().getId());
   }
 
   @FXML

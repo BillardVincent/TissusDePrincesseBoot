@@ -30,7 +30,5 @@ public class Fourniture extends AbstractEntity{
 
   @ColumnDefault("false")
   private boolean archived;
-
-
-
+ 
 }

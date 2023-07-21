@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXToggleButton;
 
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
@@ -28,6 +29,7 @@ import fr.vbillard.tissusdeprincesseboot.service.TissageService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuRequisLaizeOptionService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuRequisService;
 import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.EntityToString;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.ButtonType;
@@ -53,7 +55,7 @@ public class PatronEditTissuRequisController implements IController {
   @FXML
   public JFXButton matiereBtn;
   @FXML
-  public Label typeLbl;
+  public JFXComboBox<String> typeField;
   @FXML
   public Label tissageLbl;
   @FXML
@@ -62,6 +64,10 @@ public class PatronEditTissuRequisController implements IController {
   public JFXToggleButton doublureToggle;
   @FXML
   public GridPane longueurLaizeGrid;
+  @FXML
+  public JFXButton addMatiereButton;
+  @FXML
+  public JFXButton addTissageButton;
 
   private final TissuRequisService tissuRequisService;
   private final TissuRequisLaizeOptionService tissuRequisLaizeOptionService;
@@ -73,7 +79,6 @@ public class PatronEditTissuRequisController implements IController {
   private TissuRequisDto tissuRequis;
 
   private List<String> tissageValuesSelected = new ArrayList<>();
-  private List<String> typeValuesSelected = new ArrayList<>();
   private List<String> matiereValuesSelected = new ArrayList<>();
 
   public PatronEditTissuRequisController(TissuRequisService tissuRequisService,
@@ -87,7 +92,9 @@ public class PatronEditTissuRequisController implements IController {
 
   @FXML
   private void initialize() {
-    addQuantiteBtn.setGraphic(GlyphIconUtil.plusCircleTiny());
+	    addQuantiteBtn.setGraphic(GlyphIconUtil.plusCircleTiny());
+	    addMatiereButton.setGraphic(GlyphIconUtil.plusCircleTiny());
+	    addTissageButton.setGraphic(GlyphIconUtil.plusCircleTiny());
   }
 
   @Override
@@ -96,11 +103,10 @@ public class PatronEditTissuRequisController implements IController {
     this.tissuRequis = data.getTissuRequis();
     setLongueurLaizeGrid();
 
-    List<String> types = null;
-    if (tissuRequis.getTypeTissu() != null) {
-      types = tissuRequis.getTypeTissu().stream().map(TypeTissuEnum::getLabel).collect(Collectors.toList());
-    }
-    setSelection(types, typeValuesSelected, typeLbl);
+    typeField.setItems(FXCollections.observableArrayList(TypeTissuEnum.labels()));
+	typeField.setValue(
+			tissuRequis.getGammePoids() == null ? TypeTissuEnum.NON_RENSEIGNE.label : tissuRequis.getTypeTissu().getLabel());
+
 
     List<String> matieres = null;
     if (tissuRequis.getMatiere() != null) {
@@ -208,7 +214,7 @@ public class PatronEditTissuRequisController implements IController {
 
   @FXML
   public void handleDupliquer() {
-    tissuRequisService.clone(tissuRequis.getId());
+    TissuRequisDto clone = tissuRequisService.duplicate(tissuRequis.getId());
     //TODO
     //((PatronEditController) data.getParentController()).reload(data.getPatronVersion().getId());
   }
@@ -232,7 +238,7 @@ public class PatronEditTissuRequisController implements IController {
     tissuRequis.setGammePoids(gammePoids);
 
     tissuRequis.setMatiere(matiereValuesSelected);
-    tissuRequis.setTypeTissu(TypeTissuEnum.getEnum(typeValuesSelected));
+    tissuRequis.setTypeTissu(TypeTissuEnum.getEnum(typeField.getValue()));
     tissuRequis.setTissage(tissageValuesSelected);
 
     tissuRequis.setDoublure(doublureToggle.isSelected());
@@ -262,13 +268,6 @@ public class PatronEditTissuRequisController implements IController {
   }
 
   @FXML
-  private void handleSelectType() {
-    setSelectionFromChoiceBoxModale(TypeTissuEnum.labels(), typeValuesSelected, typeLbl, false);
-    tissuRequis.setTypeTissu(TypeTissuEnum.getEnum(typeValuesSelected));
-    tissuRequisService.saveOrUpdate(tissuRequis);
-  }
-
-  @FXML
   private void handleSelectMatiere() {
     setSelectionFromChoiceBoxModale(matiereService.getAllValues(), matiereValuesSelected, matiereLbl, false);
     tissuRequis.setMatiere(matiereValuesSelected);
@@ -282,14 +281,18 @@ public class PatronEditTissuRequisController implements IController {
     tissuRequisService.saveOrUpdate(tissuRequis);
   }
 
+  
   @FXML
-  private void handleAddMatiere() {
-    initializer.displayModale(PathEnum.MATIERE, null, "Matière");
-  }
+	private void handleAddMatiere() {
+		initializer.displayModale(PathEnum.MATIERE, null, "Matière");
 
-  @FXML
-  private void handleAddTissage() {
-    initializer.displayModale(PathEnum.TISSAGE, null, "Tissage");
-  }
+	}
+
+	@FXML
+	private void handleAddTissage() {
+		initializer.displayModale(PathEnum.TISSAGE, null, "Tissage");
+
+	}
+ 
 
 }

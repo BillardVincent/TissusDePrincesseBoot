@@ -35,6 +35,7 @@ public class TissuRequisCardController implements IController {
 
 	public static final String SEPARATOR = " - ";
 	public static final String DELIMITER = ", ";
+	public static final String OR = " ou ";
 	@FXML
 	private Label longueurLabel;
 	@FXML
@@ -74,8 +75,8 @@ public class TissuRequisCardController implements IController {
 			laizeLabel.setText(tissuRequis.getLaize() + " cm");
 
 			 */
-			//gammePoidsLabel.setText(tissuRequis.getGammePoids());
-			variantsLabel.setText(StringUtils.join(tissuRequis.getVariant(), SEPARATOR));
+			gammePoidsLabel.setText(StringUtils.join(tissuRequis.getGammePoids(), OR));
+			//variantsLabel.setText(StringUtils.join(tissuRequis.getVariant(), SEPARATOR));
 			doublure.setVisible(tissuRequis.isDoublure());
 
 		} else {

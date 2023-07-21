@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import fr.vbillard.tissusdeprincesseboot.dao.TissusRequisDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
@@ -15,6 +16,7 @@ import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
+import fr.vbillard.tissusdeprincesseboot.model.TissuRequisLaizeOption;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.utils.CalculPoidsTissuService;
 import javafx.collections.FXCollections;
@@ -107,5 +109,31 @@ public class TissuRequisService extends AbstractRequisService<TissuRequis, Tissu
 	@Override
 	public TissuRequisDto convert(TissuRequis dto) {
 		return mapper.map(dto);
+	}
+
+	public TissuRequisDto duplicate(int id) {
+		TissuRequis source = getById(id);
+		TissuRequis clone = new TissuRequis();
+		
+		clone.setDoublure(source.isDoublure());
+		clone.setTissages(new ArrayList<>(source.getTissages()));
+		clone.setGammePoids(new ArrayList<>(source.getGammePoids()));
+		clone.setMatieres(new ArrayList<>(source.getMatieres()));
+		clone.setTypeTissu(source.getTypeTissu());
+		clone.setVersion(source.getVersion());
+
+		
+		if (!CollectionUtils.isEmpty(source.getOption())){
+			clone.setOption(new ArrayList<>());
+			for (TissuRequisLaizeOption trloSource : source.getOption()) {
+				TissuRequisLaizeOption trloClone = new TissuRequisLaizeOption();
+				trloClone.setLaize(trloSource.getLaize());
+				trloClone.setLongueur(trloSource.getLongueur());
+				trloClone.setRequis(clone);
+				clone.getOption().add(trloClone);
+			}
+		}
+		return convert(saveOrUpdate(clone));
+			
 	}
 }

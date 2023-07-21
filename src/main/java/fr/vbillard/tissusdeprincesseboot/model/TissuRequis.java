@@ -48,11 +48,7 @@ public class TissuRequis extends AbstractRequis<Tissu> {
 	private List<Tissage> tissages;
 
 	@Enumerated(EnumType.STRING)
-	@ElementCollection(targetClass = TypeTissuEnum.class)
-	@CollectionTable(name = "TISSU_REQUIS_TYPE_TISSU",	joinColumns = @JoinColumn(name = "TISSU_REQUIS_ID"))
-	private List<TypeTissuEnum> typeTissus;
-
-
+	private TypeTissuEnum typeTissu;
 
 	@Override
 	public String toString() {

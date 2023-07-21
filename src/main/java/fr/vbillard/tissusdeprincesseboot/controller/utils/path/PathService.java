@@ -27,9 +27,11 @@ import fr.vbillard.tissusdeprincesseboot.controller.fourniture.FournitureEditCon
 import fr.vbillard.tissusdeprincesseboot.controller.fourniture.FournitureSearchController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.ListElementController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronCardController;
-import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronDetailController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronListController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronSearchController;
+import fr.vbillard.tissusdeprincesseboot.controller.patron.detail.PatronDetailController;
+import fr.vbillard.tissusdeprincesseboot.controller.patron.detail.TissuDisplayController;
+import fr.vbillard.tissusdeprincesseboot.controller.patron.detail.VersionDisplayController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.PatronEditController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.rightPane.PatronEditFournitureRequiseController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.rightPane.PatronEditPatronController;
@@ -162,6 +164,10 @@ public class PathService {
       case PATRON_EDIT_FOURNITURE_REQUISE:
         return new PathHolder(pathProperties.getPatronEditFournitureRequise().getURL(),
             PatronEditFournitureRequiseController.class);
+      case PATRON_DETAIL_TISSU_DISPLAY :
+    	  return new PathHolder(pathProperties.getPatronDetailTissuDisplay().getURL(), TissuDisplayController.class);
+      case PATRON_DETAIL_VERSION_DISPLAY :
+    	  return new PathHolder(pathProperties.getPatronDetailVersionDisplay().getURL(), VersionDisplayController.class);
       default:
         break;
 

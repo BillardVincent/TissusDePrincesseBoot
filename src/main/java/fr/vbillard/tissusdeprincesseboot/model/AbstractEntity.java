@@ -1,6 +1,5 @@
 package fr.vbillard.tissusdeprincesseboot.model;
 
-import java.io.Serializable;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,9 +11,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @MappedSuperclass
-public abstract class AbstractEntity implements Serializable {
+public abstract class AbstractEntity<T> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected int id;
-}
+	}

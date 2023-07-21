@@ -29,4 +29,5 @@ public class PatronVersion extends AbstractEntity {
 
   @OneToMany(mappedBy = "version", fetch = FetchType.LAZY)
   private List<FournitureRequise> fournituresRequises;
+  
 }

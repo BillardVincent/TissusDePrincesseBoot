@@ -49,6 +49,9 @@ public class FxmlPathProperties {
 	private Resource patronList;
 	private Resource patronCard;
 	private Resource patronDetail;
+	private Resource patronDetailTissuDisplay;
+	private Resource patronDetailVersionDisplay;
+	
 	private Resource patronEdit;
 	private Resource patronVersionAccordion;
 	private Resource patronEditPatronVersion;
@@ -79,4 +82,5 @@ public class FxmlPathProperties {
 	private Resource checkBoxChoice;
 	private Resource preference;
 	private Resource inventaire;
+	
 }

@@ -1,7 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.dtos_fx;
 
 import java.util.List;
-import java.util.Map;
 
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
@@ -13,15 +12,13 @@ import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 
 public class TissuRequisDto extends AbstractRequisDto<TissuRequis, Tissu> {
 
   private IntegerProperty id;
   private ListProperty<GammePoids> gammePoids;
-  private ListProperty<TypeTissuEnum> typeTissus;
+  private TypeTissuEnum typeTissus;
   private ListProperty<String> matieres;
   private ListProperty<String> tissages;
   private IntegerProperty versionId;
@@ -32,7 +29,6 @@ public class TissuRequisDto extends AbstractRequisDto<TissuRequis, Tissu> {
     gammePoids = new SimpleListProperty<>();
     versionId = new SimpleIntegerProperty(0);
     doublure = new SimpleBooleanProperty();
-    typeTissus = new SimpleListProperty<>();
     matieres = new SimpleListProperty<>();
     tissages = new SimpleListProperty<>();
   }
@@ -66,15 +62,11 @@ public class TissuRequisDto extends AbstractRequisDto<TissuRequis, Tissu> {
     return gammePoids;
   }
 
-  public void setTypeTissu(List<TypeTissuEnum> typeTissu) {
-    this.typeTissus.set(FXCollections.observableList(typeTissu));
+  public void setTypeTissu(TypeTissuEnum typeTissu) {
+    this.typeTissus = typeTissu;
   }
 
-  public List<TypeTissuEnum> getTypeTissu() {
-    return typeTissus.get();
-  }
-
-  public ListProperty<TypeTissuEnum> getTypeTissuProperty() {
+  public TypeTissuEnum getTypeTissu() {
     return typeTissus;
   }
 

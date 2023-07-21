@@ -2,7 +2,10 @@ package fr.vbillard.tissusdeprincesseboot.controller.patron.edit.rightPane;
 
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.buildComboBox;
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.safePropertyToString;
-import static fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.CustomSpinner.setSpinner;
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.CustomSpinner.setLongSpinner;
+import static javafx.collections.FXCollections.observableArrayList;
+
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 import com.jfoenix.controls.JFXButton;
@@ -13,6 +16,8 @@ import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.GlyphIconUtil;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
 import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
@@ -20,6 +25,7 @@ import fr.vbillard.tissusdeprincesseboot.service.FournitureRequiseService;
 import fr.vbillard.tissusdeprincesseboot.service.TypeFournitureService;
 import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
 import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.EntityToString;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -28,7 +34,7 @@ import javafx.scene.control.Label;
 public class PatronEditFournitureRequiseController implements IController {
 
   @FXML
-  public JFXButton addTypeBtn;
+  public JFXButton addTypeButton;
   @FXML
   public JFXTextField dimPriSpinner;
   @FXML
@@ -65,9 +71,11 @@ public class PatronEditFournitureRequiseController implements IController {
   public void setStageInitializer(StageInitializer initializer, FxData data) {
     this.initializer = initializer;
     dto = data.getFournitureRequise();
-    setSpinner(dimPriSpinner);
-    setSpinner(dimSecSpinnerMax);
-    setSpinner(dimSecSpinnerMin);
+    setLongSpinner(dimPriSpinner);
+    setLongSpinner(dimSecSpinnerMax);
+    setLongSpinner(dimSecSpinnerMin);
+    addTypeButton.setGraphic(GlyphIconUtil.plusCircleTiny());
+
 
     boolean dtoIsNotNew = dto.getId() != 0;
 
@@ -97,13 +105,14 @@ public class PatronEditFournitureRequiseController implements IController {
           dimSecSpinnerMax.setText(safePropertyToString(dto.getQuantiteSecondaireMaxProperty()));
 
           dimSecLbl.setText(dto.getType().getIntituleSecondaire());
-          buildComboBox(Unite.getValuesByDimension(dto.getType().getDimensionSecondaire()),
-              dto.getType().getUniteSecondaireConseillee().getLabel(),
-              dto.getType().getDimensionSecondaire().getDefault().getLabel(), dimSecUniteMax);
 
           dimSecUniteMax.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             dimSecUniteMin.setText(newValue);
           });
+          
+          buildComboBox(Unite.getValuesByDimension(dto.getType().getDimensionSecondaire()),
+                  dto.getType().getUniteSecondaireConseillee().getLabel(),
+                  dto.getType().getDimensionSecondaire().getDefault().getLabel(), dimSecUniteMax);
 
           dimSecSpinnerMin.setVisible(true);
           dimSecSpinnerMax.setVisible(true);
@@ -176,6 +185,14 @@ public class PatronEditFournitureRequiseController implements IController {
       // ((PatronEditController) data.getParentController()).reload(-1);
 
     }
+  }
+  
+  @FXML
+  private void handleAddType() {
+    initializer.displayModale(PathEnum.TYPE_FOURNITURE, null, "Fourniture");
+
+    buildComboBox(typeFournitureService.getAllValues(), dto.getTypeNameProperty(), null, typeCbx);
+
   }
 
 }

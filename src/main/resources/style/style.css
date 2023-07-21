@@ -96,7 +96,6 @@
     -fx-cursor: hand;
 }
 
-
 .jfx-check-box .box {
     -fx-cursor: hand;
 }
@@ -132,8 +131,6 @@
     -fx-border-color: -fx-primary-contrast;
     -fx-border-style: solid none solid none;
     -fx-cursor: hand;
-
-
 }
 
 .mainmenu-element-selected {
@@ -152,10 +149,6 @@
 
 .text-corner-left {
     -fx-text-fill: -fx-primary-contrast;
-}
-
-.aside {
-    -fx-background-color: -fx-background-accent;
 }
 
 .aside {
@@ -293,34 +286,57 @@
     -fx-font-style: italic;
     /*-fx-font-weight: thin;*/
 }
-/* ne marche pas.... */
 .title-acc-1 {
     -fx-background-color: -fx-primary;
     -fx-text-fill: -fx-primary-contrast;
     -fx-fill: -fx-primary-contrast;
     -fx-font-weight: bold;
-    -fx-font-size: 10px;
+    -fx-font-size: 1.2em;
+}
+.title-acc-2{
+	    -fx-font-weight: bold;
+	    -fx-font-size: 1.2em;
+	    -fx-fill: -fx-primary;
+	    -fx-text-fill: -fx-primary;
 }
 
-.title-pane {
-    -fx-background-color: linear-gradient(to bottom,#6a0080, #9a42c8);
-
+.title-acc-3{
+	    -fx-font-weight: bold;
+	    -fx-font-size: 1.1em;
+	    -fx-fill: -fx-secondary;
+	    -fx-text-fill: -fx-secondary;
 }
-.title-acc-1 {
-    -fx-background-color: linear-gradient(to bottom,#6a0080, #9a42c8);
-    -fx-fill: linear-gradient(to bottom,#6a0080, #9a42c8);
+
+.title-acc-4{
+	    -fx-font-weight: bold;
+	    -fx-font-size: 1.1em;
+}
+
+.title-pane-custom {
+	    -fx-text-fill: -fx-secondary;
+	    -fx-font-weight: bold;
+	    -fx-font-size: 16px;
+	    
 
 }
 
 .grid-cell {
     -fx-border-color: dimgray;
 }
-grid-cell.middle-column {
+.grid-cell.middle-column {
     -fx-border-width: 0 1 0 1 ;
+}
+
+.grid-cell.left-column {
+    -fx-border-width: 0 1 0 0 ;
 }
 
 .grid-cell.first-row {
     -fx-border-width: 0 0 1 0 ;
+}
+
+.grid-cell.first-row-left{
+    -fx-border-width: 0 1 1 0 ;
 }
 
 .grid-cell.first-row-middle-column {
@@ -338,6 +354,7 @@ grid-cell.middle-column {
 .grid-cell.first-column-middle-row {
     -fx-border-width: 1 1 1 0 ;
 }
+
 
 
 

@@ -28,8 +28,12 @@
                   <HBox prefHeight="32.0" prefWidth="360.0">
                      <children>
                         <JFXComboBox fx:id="typeCbx" prefHeight="26.0" prefWidth="172.0" />
-                        <JFXButton fx:id="addTypeBtn" />
-                     </children>
+						<JFXButton fx:id="addTypeButton" mnemonicParsing="false" onAction="#handleAddType">
+                        <HBox.margin>
+                            <Insets left="10.0" />
+                        </HBox.margin>
+                    	</JFXButton>
+                    </children>
                   </HBox>
                   <Separator prefWidth="200.0">
                      <VBox.margin>

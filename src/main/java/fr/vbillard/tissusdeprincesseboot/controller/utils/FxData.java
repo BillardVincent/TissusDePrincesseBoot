@@ -49,6 +49,7 @@ public class FxData {
 	private FournitureUsed fournitureUsed;
 	private PatronVersionDto patronVersion;
 	private boolean allSelectedEqualsNull = true;
+	private int rank;
 
 	public FxData getCopy() {
 		try {

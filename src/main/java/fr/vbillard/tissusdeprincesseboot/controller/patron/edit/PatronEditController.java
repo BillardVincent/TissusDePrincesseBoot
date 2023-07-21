@@ -5,6 +5,7 @@ import static fr.vbillard.tissusdeprincesseboot.controller.validators.ValidatorU
 
 import java.util.Objects;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 import com.jfoenix.controls.JFXButton;
@@ -32,6 +33,7 @@ import fr.vbillard.tissusdeprincesseboot.model.PatronVersion;
 import fr.vbillard.tissusdeprincesseboot.model.enums.SupportTypeEnum;
 import fr.vbillard.tissusdeprincesseboot.service.PatronService;
 import fr.vbillard.tissusdeprincesseboot.service.PatronVersionService;
+import fr.vbillard.tissusdeprincesseboot.utils.Constants;
 import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Accordion;
@@ -277,13 +279,14 @@ public class PatronEditController implements IController {
     for (PatronVersion pv : patronVersionService.getByPatronId(patron.getId())){
       TitledPane pane = new TitledPane();
       pane.setText("Version : " + pv.getNom());
+      pane.getStyleClass().add("title-pane-custom");
       FxData fxData = new FxData();
       fxData.setPatronVersion(patronVersionService.convert(pv));
       fxData.setParentController(this);
       Pane content = initializer.displayPane(PathEnum.PATRON_VERSION_ACCORDION, fxData);
       pane.setContent(content);
       pane.expandedProperty().addListener((obs, oldValue, newValue) -> {
-        if (Boolean.TRUE.equals(newValue)) {
+        if (BooleanUtils.isTrue(newValue)) {
           displayRightPane(mapper.map(pv, PatronVersionDto.class));
         } else {
           if (allPanesClosed(versionAccordion)){
@@ -308,4 +311,6 @@ public class PatronEditController implements IController {
     pv = patronVersionService.saveOrUpdate(pv);
     reload(pv.getId());
   }
+  
+
 }
