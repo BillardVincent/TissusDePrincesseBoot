@@ -13,7 +13,7 @@
          <children>
             <VBox prefWidth="228.0" spacing="5.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="26.0" prefWidth="260.0" styleClass="title-acc-1" text="NomVersion" textAlignment="CENTER" />
+                  <Label alignment="CENTER" prefHeight="26.0" prefWidth="260.0" styleClass="title-acc-1" fx:id="nomVersion" textAlignment="CENTER" />
                   <VBox alignment="CENTER" prefHeight="36.0" prefWidth="228.0">
                      <children>
                         <JFXButton alignment="CENTER" contentDisplay="CENTER" onAction="#handleStartProject" prefHeight="30.0" prefWidth="188.0" text="Démarrer un projet" textAlignment="CENTER" />

@@ -93,8 +93,6 @@ public class PatronSearchController implements IController {
   @FXML
   public JFXRadioButton indifferentArchive;
 
-  // TODO TYPE SOPPORT
-
   private final ToggleGroup archiveGroup = new ToggleGroup();
 
   private final RootController root;

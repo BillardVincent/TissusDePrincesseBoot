@@ -30,7 +30,7 @@ import lombok.Setter;
 public class TissuRequis extends AbstractRequis<Tissu> {
 
 	@OneToMany(mappedBy = "requis")
-	@Cascade(CascadeType.PERSIST)
+	@Cascade({CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<TissuRequisLaizeOption> option;
 
 	@Enumerated(EnumType.STRING)

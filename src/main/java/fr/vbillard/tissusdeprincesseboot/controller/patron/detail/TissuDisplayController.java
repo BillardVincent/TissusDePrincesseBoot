@@ -60,8 +60,8 @@ public class TissuDisplayController implements IController {
 		tissuRequis = data.getTissuRequis();
 		
 		String rank = Strings.EMPTY;
-		if (data.getRank() != 0) {
-			rank = String.valueOf(data.getRank()) + ". ";
+		if (data.getRank() != null) {
+			rank = String.valueOf(data.getRank()+1) + ". ";
 		}
 		
 		titre.setText(rank + ModelUtils.startWithMajuscule(tissuRequis.getTypeTissu().getLabel()));

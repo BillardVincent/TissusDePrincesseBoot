@@ -33,6 +33,23 @@ public class PatronVersionService extends AbstractDtoService<PatronVersion, Patr
 			dao.findById(patronVersion.getId()).ifPresent(pv -> patronVersion.setPatron(pv.getPatron()));
 		}
 	}
+	
+	@Override
+	protected void beforeDelete(PatronVersion entity) {
+		List<TissuRequis> trLst = tissuRequisService.getAllByVersionId(entity.getId());
+		if (!CollectionUtils.isEmpty(trLst)) {
+			for (TissuRequis tr : trLst) {
+				tissuRequisService.delete(tr);
+			}
+		}
+		
+		List<FournitureRequise> frLst = fournitureRequiseService.getAllByVersionId(entity.getId());
+		if (!CollectionUtils.isEmpty(frLst)) {
+			for (FournitureRequise fr : frLst) {
+				fournitureRequiseService.delete(fr);
+			}
+		}
+	}
 
 	@Override
 	public PatronVersion convert(PatronVersionDto dto) {

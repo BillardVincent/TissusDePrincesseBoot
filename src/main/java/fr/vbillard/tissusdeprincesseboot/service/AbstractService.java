@@ -3,7 +3,6 @@ package fr.vbillard.tissusdeprincesseboot.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.commons.lang3.SerializationUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -49,6 +48,7 @@ public abstract class AbstractService<T extends AbstractEntity> {
 		delete(getById(id));
 	}
 	
+	@Transactional
 	public final void delete(T entity) {
 		beforeDelete(entity);
 		getDao().delete(entity);
