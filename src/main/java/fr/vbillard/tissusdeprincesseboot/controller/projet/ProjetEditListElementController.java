@@ -28,8 +28,8 @@ public abstract class ProjetEditListElementController <T extends AbstractRequisD
 	protected StageInitializer initializer;
 
 	protected T dtoRequis;
-	protected List<U> lstTissus;
-	protected final V tissuUsedService;
+	protected List<U> lstRequis;
+	protected final V elementUsedService;
 	protected FxData data;
 	protected boolean lock;
 	
@@ -37,8 +37,8 @@ public abstract class ProjetEditListElementController <T extends AbstractRequisD
 		return lock;
 	}
 
-	public ProjetEditListElementController(V tissuUsedService) {
-		this.tissuUsedService = tissuUsedService;
+	public ProjetEditListElementController(V elementUsedService) {
+		this.elementUsedService = elementUsedService;
 	}
 
 	@Override
@@ -61,10 +61,10 @@ public abstract class ProjetEditListElementController <T extends AbstractRequisD
 		Pane tr = initializer.displayPane(getPathEnumRequis(), data);
 		hbox.getChildren().add(tr);
 
-		for (U tissu : lstTissus) {
+		for (U requis : lstRequis) {
 			FxData subData = new FxData();
 			subData.setParentController(this);
-			setSubData(subData, tissu);
+			setSubData(subData, requis);
 			Pane tu = initializer.displayPane(getPathEnumUsed(), subData);
 			hbox.getChildren().add(tu);
 		}
@@ -101,7 +101,7 @@ public abstract class ProjetEditListElementController <T extends AbstractRequisD
 	}
 
 	public void refresh() {
-		lstTissus = refreshLst();
+		lstRequis = refreshLst();
 		initLock();
 		setPane();		
 	}

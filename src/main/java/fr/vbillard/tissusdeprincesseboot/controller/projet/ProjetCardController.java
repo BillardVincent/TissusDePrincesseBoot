@@ -20,6 +20,7 @@ import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
 import fr.vbillard.tissusdeprincesseboot.service.ImageService;
 import fr.vbillard.tissusdeprincesseboot.utils.Constants;
+import fr.vbillard.tissusdeprincesseboot.utils.Utils;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -27,7 +28,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
 @Component
-@Scope("prototype")
+@Scope(Utils.PROTOTYPE)
 public class ProjetCardController implements IController {
 	@FXML
 	public Label titre;

@@ -7,6 +7,11 @@ import java.util.Collection;
 import java.util.Map;
 
 public class Utils {
+	
+	public static final String PROTOTYPE = "prototype";
+	
+	public static final String COMMA = ", ";
+
 
 	public static boolean isEmpty(Object... objs) {
 		for (Object o : objs) {

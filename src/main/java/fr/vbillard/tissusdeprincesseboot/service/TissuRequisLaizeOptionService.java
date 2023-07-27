@@ -36,4 +36,8 @@ public class TissuRequisLaizeOptionService extends AbstractService<TissuRequisLa
 		tissuRequisLaizeOption.setRequis(tissuRequisService.getById(id));
 		saveOrUpdate(tissuRequisLaizeOption);
   }
+
+	public int getLongueurMinByRequis(int id) {
+		return dao.getLongueurMinByRequis(id);
+	}
 }

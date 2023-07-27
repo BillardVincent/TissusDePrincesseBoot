@@ -21,6 +21,7 @@ import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.service.ImageService;
 import fr.vbillard.tissusdeprincesseboot.service.UserPrefService;
 import fr.vbillard.tissusdeprincesseboot.utils.Constants;
+import fr.vbillard.tissusdeprincesseboot.utils.Utils;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils;
 import javafx.fxml.FXML;
@@ -30,7 +31,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.web.WebView;
 
 @Component
-@Scope("prototype")
+@Scope(Utils.PROTOTYPE)
 public class TissuCardController implements IController {
 
 	@FXML

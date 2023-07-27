@@ -39,6 +39,8 @@ public class FxUtils {
 			+ "être inférieure ou égale à la valeur maximale";
 	private static final String AUCUN_FILTRE = "Aucun filtre";
 	private static final String CHOIX = "Choix";
+	
+	
 	private static StageInitializer initializer;
 
 	public FxUtils(StageInitializer initializer) {

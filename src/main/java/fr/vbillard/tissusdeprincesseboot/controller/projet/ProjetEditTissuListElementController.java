@@ -10,11 +10,12 @@ import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 import fr.vbillard.tissusdeprincesseboot.service.TissuUsedService;
+import fr.vbillard.tissusdeprincesseboot.utils.Utils;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
 
 @Component
-@Scope("prototype")
+@Scope(Utils.PROTOTYPE)
 public class ProjetEditTissuListElementController extends ProjetEditListElementController<TissuRequisDto,
 		TissuUsed, TissuUsedService, TissuRequis, Tissu> {
 
@@ -45,11 +46,11 @@ public class ProjetEditTissuListElementController extends ProjetEditListElementC
 
 	@Override
 	protected List<TissuUsed> refreshLst() {
-		return tissuUsedService.getTissuUsedByTissuRequisAndProjet(dtoRequis, data.getProjet());
+		return elementUsedService.getTissuUsedByTissuRequisAndProjet(dtoRequis, data.getProjet());
 	}
 
 	@Override
 	public void displaySelected(FxData data) {
-		initializer.getRoot().displaySelected(data);
+		initializer.getRoot().displayTissuSelected(data);
 	}
 }

@@ -17,13 +17,14 @@ import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.enums.SupportTypeEnum;
 import fr.vbillard.tissusdeprincesseboot.service.ImageService;
+import fr.vbillard.tissusdeprincesseboot.utils.Utils;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 
 @Component
-@Scope("prototype")
+@Scope(Utils.PROTOTYPE)
 public class PatronCardController implements IController {
 
 	@FXML

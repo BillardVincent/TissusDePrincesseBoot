@@ -19,6 +19,7 @@ import fr.vbillard.tissusdeprincesseboot.service.FournitureRequiseService;
 import fr.vbillard.tissusdeprincesseboot.service.PatronVersionService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuRequisService;
 import fr.vbillard.tissusdeprincesseboot.utils.Constants;
+import fr.vbillard.tissusdeprincesseboot.utils.Utils;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -27,7 +28,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 @Component
-@Scope("prototype")
+@Scope(Utils.PROTOTYPE)
 public class PatronVersionAccordionController implements IController {
 
   @FXML

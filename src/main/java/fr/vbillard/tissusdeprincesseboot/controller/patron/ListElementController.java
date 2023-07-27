@@ -7,12 +7,13 @@ import org.springframework.stereotype.Component;
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ListElement;
+import fr.vbillard.tissusdeprincesseboot.utils.Utils;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 @Component
-@Scope("prototype")
+@Scope(Utils.PROTOTYPE)
 public class ListElementController implements IController {
 
 	@FXML

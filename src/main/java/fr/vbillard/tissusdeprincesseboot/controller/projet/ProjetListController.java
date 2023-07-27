@@ -68,7 +68,7 @@ public class ProjetListController extends ViewListController {
 		}
 
 		setPageInfo(projetService.count());
-		setIventaireIcone();
+		setInventaireIcone();
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class ProjetListController extends ViewListController {
 		rootController.displayProjetEdit(new ProjetDto());
 	}
 
-	private void setIventaireIcone() {
+	private void setInventaireIcone() {
 		hasIncompleteInventaire = inventaireService.hasInventairesIncomplets();
 
 		if (hasIncompleteInventaire) {
@@ -91,7 +91,7 @@ public class ProjetListController extends ViewListController {
 	private void launchInventaire() {
 		if (hasIncompleteInventaire) {
 			displayInventaireService.batchInventaire(initializer);
-			setIventaireIcone();
+			setInventaireIcone();
 		}
 	}
 }

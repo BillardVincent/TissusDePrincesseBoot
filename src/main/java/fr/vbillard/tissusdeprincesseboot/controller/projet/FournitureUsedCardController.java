@@ -17,6 +17,7 @@ import fr.vbillard.tissusdeprincesseboot.service.FournitureUsedService;
 import fr.vbillard.tissusdeprincesseboot.service.ImageService;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
+import fr.vbillard.tissusdeprincesseboot.utils.Utils;
 import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.Articles;
 import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.EntityToString;
 import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.ModelUtils;
@@ -28,7 +29,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 
 @Component
-@Scope("prototype")
+@Scope(Utils.PROTOTYPE)
 public class FournitureUsedCardController implements IController {
 
 	@FXML

@@ -10,12 +10,14 @@ import org.springframework.stereotype.Component;
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.components.LaizeLongueurOptionCell;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.ClassCssUtils;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequisLaizeOption;
 import fr.vbillard.tissusdeprincesseboot.service.TissuRequisLaizeOptionService;
+import fr.vbillard.tissusdeprincesseboot.utils.Utils;
 import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.ModelUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -23,7 +25,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 
 @Component
-@Scope("prototype")
+@Scope(Utils.PROTOTYPE)
 public class TissuDisplayController implements IController {
 
 	@FXML
@@ -35,7 +37,6 @@ public class TissuDisplayController implements IController {
 	@FXML
 	Label titre; 
 
-	public static final String COMMA = ", ";
 	
 	private final RootController rootController;
 	private StageInitializer initializer;
@@ -64,10 +65,16 @@ public class TissuDisplayController implements IController {
 			rank = String.valueOf(data.getRank()+1) + ". ";
 		}
 		
-		titre.setText(rank + ModelUtils.startWithMajuscule(tissuRequis.getTypeTissu().getLabel()));
+		String typeTissu;
+		if (tissuRequis.getTypeTissu() != null) {
+			typeTissu = ModelUtils.startWithMajuscule(tissuRequis.getTypeTissu().getLabel());
+		} else {
+			typeTissu = "Tissu";
+		}
+		titre.setText(rank + typeTissu);
 		
-		tissageValues.setText(StringUtils.join(tissuRequis.getTissage(), COMMA));
-		matiereValues.setText(StringUtils.join(tissuRequis.getMatiere(), COMMA));
+		tissageValues.setText(StringUtils.join(tissuRequis.getTissage(), Utils.COMMA));
+		matiereValues.setText(StringUtils.join(tissuRequis.getMatiere(), Utils.COMMA));
 		
 	    List<TissuRequisLaizeOption> tissuRequisLaizeOptionList =
 	            tissuRequisLaizeOptionService.getTissuRequisLaizeOptionByRequisId(tissuRequis.getId());
@@ -76,7 +83,7 @@ public class TissuDisplayController implements IController {
 		      TissuRequisLaizeOption trlo = tissuRequisLaizeOptionList.get(i);
 
 		      LaizeLongueurOptionCell laizeBox = new LaizeLongueurOptionCell(trlo.getLaize());
-		      laizeBox.getStyleClass().addAll("grid-cell", "left-column");
+		      laizeBox.getStyleClass().addAll(ClassCssUtils.GRID_CELL, ClassCssUtils.LEFT_COLUMN);
 		      LaizeLongueurOptionCell longueurBox = new LaizeLongueurOptionCell(trlo.getLongueur());
 
 		      longueurLaizeGrid.addRow(++i, laizeBox, longueurBox);
