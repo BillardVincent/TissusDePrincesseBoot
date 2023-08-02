@@ -57,8 +57,8 @@ public class ProjetListController extends ViewListController {
 			spec = ProjetSpecification.builder().projectStatus(Arrays.asList(ProjectStatus.PLANIFIE,
 					ProjectStatus.BROUILLON, ProjectStatus.EN_COURS)).build();
 		}
+		
 		lst = projetService.getObservablePage(page, PAGE_SIZE, spec);
-
 
 		for (ProjetDto p : lst) {
 			FxData data = new FxData();

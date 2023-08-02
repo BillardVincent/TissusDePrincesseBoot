@@ -79,17 +79,17 @@ public class TissuDisplayController implements IController {
 	    List<TissuRequisLaizeOption> tissuRequisLaizeOptionList =
 	            tissuRequisLaizeOptionService.getTissuRequisLaizeOptionByRequisId(tissuRequis.getId());
 
-		for (int i = 0; i < tissuRequisLaizeOptionList.size(); ) {
-		      TissuRequisLaizeOption trlo = tissuRequisLaizeOptionList.get(i);
+		for (int i = 0; i < tissuRequisLaizeOptionList.size();) {
+			TissuRequisLaizeOption trlo = tissuRequisLaizeOptionList.get(i);
 
-		      LaizeLongueurOptionCell laizeBox = new LaizeLongueurOptionCell(trlo.getLaize());
-		      laizeBox.getStyleClass().addAll(ClassCssUtils.GRID_CELL, ClassCssUtils.LEFT_COLUMN);
-		      LaizeLongueurOptionCell longueurBox = new LaizeLongueurOptionCell(trlo.getLongueur());
+			LaizeLongueurOptionCell laizeBox = new LaizeLongueurOptionCell(trlo.getLaize());
+			laizeBox.getStyleClass().addAll(ClassCssUtils.GRID_CELL, ClassCssUtils.LEFT_COLUMN);
+			LaizeLongueurOptionCell longueurBox = new LaizeLongueurOptionCell(trlo.getLongueur());
 
-		      longueurLaizeGrid.addRow(++i, laizeBox, longueurBox);
-		      longueurLaizeGrid.getRowConstraints().add(new RowConstraints(30));
+			longueurLaizeGrid.addRow(++i, laizeBox, longueurBox);
+			longueurLaizeGrid.getRowConstraints().add(new RowConstraints(30));
 
-		    }
+		}
 	}
 	
 }

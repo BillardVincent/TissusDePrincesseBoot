@@ -52,8 +52,7 @@ public class PlusCardController implements IController{
     				"Souhaitez-vous débloquer l'édition de cet élément?");
     		
     		if(result.isPresent() && result.get() == ButtonType.OK){
-    			parent.setLock(false);
-    			// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    			parent.setLock(false);   			
             	setIcone(FontAwesomeIcon.PLUS_CIRCLE);
     		}
     	}
