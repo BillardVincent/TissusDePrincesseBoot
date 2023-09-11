@@ -21,6 +21,7 @@ import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
+import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequisLaizeOption;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
@@ -101,12 +102,15 @@ public class PatronEditTissuRequisController implements IController {
   @Override
   public void setStageInitializer(StageInitializer initializer, FxData data) {
     this.initializer = initializer;
+	if (data == null || data.getTissuRequis() == null) {
+		throw new IllegalData();
+	}
     this.tissuRequis = data.getTissuRequis();
     setLongueurLaizeGrid();
 
     typeField.setItems(FXCollections.observableArrayList(TypeTissuEnum.labels()));
 	typeField.setValue(
-			tissuRequis.getGammePoids() == null ? TypeTissuEnum.NON_RENSEIGNE.label : tissuRequis.getTypeTissu().getLabel());
+			tissuRequis.getTypeTissu() == null ? TypeTissuEnum.NON_RENSEIGNE.label : tissuRequis.getTypeTissu().getLabel());
 
 
     List<String> matieres = null;

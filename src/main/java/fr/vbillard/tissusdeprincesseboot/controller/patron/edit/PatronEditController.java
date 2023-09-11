@@ -1,6 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.controller.patron.edit;
 
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.safePropertyToString;
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.textFieldToFirstCharOrX;
 import static fr.vbillard.tissusdeprincesseboot.controller.validators.ValidatorUtils.areValidatorsValid;
 
 import java.util.Objects;
@@ -33,22 +34,17 @@ import fr.vbillard.tissusdeprincesseboot.model.PatronVersion;
 import fr.vbillard.tissusdeprincesseboot.model.enums.SupportTypeEnum;
 import fr.vbillard.tissusdeprincesseboot.service.PatronService;
 import fr.vbillard.tissusdeprincesseboot.service.PatronVersionService;
-import fr.vbillard.tissusdeprincesseboot.utils.Constants;
 import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 
 @Component
 public class PatronEditController implements IController {
-
-  private static final String X = "X";
 
   @FXML
   private JFXTextField marqueField;
@@ -156,9 +152,9 @@ public class PatronEditController implements IController {
   @FXML
   private void handleGenerateReference() {
     StringBuilder sb = new StringBuilder();
-    sb.append(marqueField.getText().trim().isEmpty() ? X : marqueField.getText().toUpperCase().charAt(0))
-        .append(modeleField.getText().trim().isEmpty() ? X : modeleField.getText().toUpperCase().charAt(0))
-        .append(typeVetementField.getText().trim().isEmpty() ? X : typeVetementField.getText().toUpperCase().charAt(0))
+    sb.append(textFieldToFirstCharOrX(marqueField))
+        .append(textFieldToFirstCharOrX(modeleField))
+        .append(textFieldToFirstCharOrX(typeVetementField))
         .append("-");
     boolean ref = true;
     int refNb = 0;

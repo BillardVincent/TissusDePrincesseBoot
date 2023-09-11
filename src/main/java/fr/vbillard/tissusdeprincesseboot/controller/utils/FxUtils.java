@@ -5,6 +5,7 @@ import static fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_eleme
 import java.util.List;
 import java.util.StringJoiner;
 
+import javafx.scene.control.*;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.util.Strings;
@@ -27,9 +28,6 @@ import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
-import javafx.scene.control.ButtonBase;
-import javafx.scene.control.Label;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.paint.Color;
 
 @Component
@@ -39,8 +37,9 @@ public class FxUtils {
 			+ "être inférieure ou égale à la valeur maximale";
 	private static final String AUCUN_FILTRE = "Aucun filtre";
 	private static final String CHOIX = "Choix";
-	
-	
+	private static final char X = 'X';
+
+
 	private static StageInitializer initializer;
 
 	public FxUtils(StageInitializer initializer) {
@@ -63,6 +62,7 @@ public class FxUtils {
 		return property == null ? Strings.EMPTY : property.getValue();
 	}
 
+
 	// ---------------------------------------------
 	// Join values
 	// ----------------------------------------------
@@ -83,6 +83,24 @@ public class FxUtils {
 			sj.add(s);
 		}
 		return sj.toString();
+	}
+
+	// ---------------------------------------------
+	// TextField field manipulation
+	// ----------------------------------------------
+
+	public static char textFieldToFirstCharOrX(TextField field){
+		if (field != null && field.getText() != null && !field.getText().trim().isEmpty()){
+			return field.getText().toUpperCase().charAt(0);
+		}
+		return X;
+	}
+
+	public static char textFieldToFirstCharOrX(ComboBox<String> field){
+		if (field != null && field.getValue() != null && !field.getValue().trim().isEmpty()){
+			return field.getValue().toUpperCase().charAt(0);
+		}
+		return X;
 	}
 
 	// ---------------------------------------------
@@ -291,7 +309,7 @@ public class FxUtils {
 			JFXRadioButton undetermined) {
 		if (trueButton.isSelected()) {
 			if (falseButton.isSelected() || undetermined.isSelected()) {
-				throw new IllegalData("Un seul radio boutton doit être sélectionné");
+				throw new IllegalData("Un seul radio bouton doit être sélectionné");
 			}
 			return true;
 		} else if (falseButton.isSelected()) {
@@ -320,7 +338,7 @@ public class FxUtils {
 			NumericSearch<T> numericSearch) {
 		if (numericSearch != null && numericSearch.getLessThanEqual() != null
 				&& !numericSearch.getLessThanEqual().equals(0)) {
-			// LessThanEqual est stoqué avec Value +1
+			// LessThanEqual est stocké avec Value +1
 			field.setText(String.valueOf(numericSearch.getLessThanEqual().intValue() - 1));
 		}
 	}
@@ -404,11 +422,10 @@ public class FxUtils {
 		for (ButtonBase t: toggles) {
 			if (t instanceof JFXRadioButton){
 				((JFXRadioButton)t).setSelectedColor((Color) Constants.colorSecondary);
-
 			}
+
 			else if(t instanceof JFXCheckBox){
 				((JFXCheckBox)t).setCheckedColor(Constants.colorSecondary);
-
 			}
 		}
 

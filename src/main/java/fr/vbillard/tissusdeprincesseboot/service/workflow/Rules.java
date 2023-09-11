@@ -2,12 +2,9 @@ package fr.vbillard.tissusdeprincesseboot.service.workflow;
 
 import java.util.List;
 
+import fr.vbillard.tissusdeprincesseboot.model.*;
 import org.springframework.stereotype.Component;
 
-import fr.vbillard.tissusdeprincesseboot.model.FournitureRequise;
-import fr.vbillard.tissusdeprincesseboot.model.FournitureUsed;
-import fr.vbillard.tissusdeprincesseboot.model.Projet;
-import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureRequiseService;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureUsedService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuRequisService;
@@ -53,17 +50,18 @@ public class Rules {
   public ErrorWarn verifyLength(Projet projet) {
     ErrorWarn result = new ErrorWarn();
     List<TissuRequis> trList = tissuRequisService.getAllByVersionId(projet.getPatronVersion().getId());
+
+    float marge = userPrefService.getUser().getLongueurMargePercent();
+
     for (TissuRequis tr : trList) {
-      // TODO patron version
-
       int longueurUtilisee =  tissuUsedService.longueurUsedByRequis(tr, projet);
-      float marge = userPrefService.getUser().getLongueurMargePercent();
-/*
-      if (tr.getLongueur() - marge * tr.getLongueur() > longueurUtilisee) {
-        result.addWarn("La longueur totale alloué est inférieure à la longueur requise pour " + tr);
-      }
 
- */
+      for (TissuRequisLaizeOption trlo : tr.getOption()){
+        if ((trlo.getLongueur() - marge * trlo.getLongueur() > longueurUtilisee)) {
+          result.addWarn("La longueur totale allouée est inférieure à la longueur requise pour " + tr);
+          break;
+        }
+      }
     }
 
     List<FournitureRequise> frList = fournitureRequiseService.getAllByVersionId(projet.getPatronVersion().getId());
@@ -72,7 +70,7 @@ public class Rules {
       float quantiteUtilisee = fuList.stream().map(FournitureUsed::getQuantite).reduce(0f, Float::sum);
 
       if (fr.getQuantite()  > quantiteUtilisee) {
-        result.addWarn("La quantité totale alloué est inférieure à la quantité requise pour " + fr);
+        result.addWarn("La quantité totale allouée est inférieure à la quantité requise pour " + fr);
       }
     }
 

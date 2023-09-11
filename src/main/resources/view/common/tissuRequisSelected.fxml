@@ -4,47 +4,83 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane prefHeight="194.0" prefWidth="284.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.common.TissuRequisCardController">
+<Pane prefHeight="210.0" prefWidth="284.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.common.TissuRequisCardController">
 	<children>
-		<VBox layoutX="-1.0" layoutY="-1.0" prefHeight="190.0" prefWidth="282.0" stylesheets="@../../style/style.css">
+		<VBox layoutX="-1.0" layoutY="-1.0" prefHeight="210.0" prefWidth="282.0" styleClass="card" stylesheets="@../../style/style.css">
 			<children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="275.0" styleClass="title1" text="Tissu requis" />
-				<HBox alignment="CENTER" prefHeight="44.0" prefWidth="260.0" spacing="5.0">
-					<children>
-                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+            <Label fx:id="titleLbl" alignment="CENTER" contentDisplay="CENTER" prefHeight="22.0" prefWidth="295.0" styleClass="title-acc-1" text="Tissu requis" />
+				<HBox fx:id="typeHbx" alignment="CENTER" prefHeight="0.0" prefWidth="169.0">
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="90.0" text="Longueur" />
-      						<Label fx:id="longueurLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="89.0" text="valuer lo." textAlignment="CENTER" />
+                        <Label fx:id="typeLbl" alignment="CENTER" contentDisplay="CENTER" prefHeight="19.0" prefWidth="311.0" styleClass="title-acc-3" stylesheets="@../../style/style.css" text="type Matiere Tissage" textAlignment="CENTER" wrapText="true" />
                      </children>
-                  </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+                  </HBox>
+                  <HBox fx:id="matiereHbx" alignment="CENTER" prefHeight="0.0" prefWidth="169.0">
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="90.0" text="Laize" />
-      						<Label fx:id="laizeLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="89.0" text="valeur la." />
+                        <Label fx:id="matiereLbl" alignment="CENTER" contentDisplay="CENTER" prefHeight="19.0" prefWidth="304.0" styleClass="title-acc-3" stylesheets="@../../style/style.css" text="type Matiere Tissage" textAlignment="CENTER" wrapText="true" />
                      </children>
-                  </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+                  </HBox>
+                  <HBox fx:id="tissageHbx" alignment="CENTER" prefHeight="0.0" prefWidth="169.0">
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="90.0" text="Poids" />
-      						<Label fx:id="gammePoidsLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="87.0" text="valeur P." textAlignment="CENTER" />
+                        <Label fx:id="tissageLbl" alignment="CENTER" contentDisplay="CENTER" prefHeight="19.0" prefWidth="287.0" styleClass="title-acc-3" stylesheets="@../../style/style.css" text="type Matiere Tissage" textAlignment="CENTER" wrapText="true" />
                      </children>
-                  </VBox>
-					</children>
-					<padding>
-						<Insets top="5.0" />
-					</padding>
-				</HBox>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="73.0" prefWidth="126.0">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="17.0" prefWidth="315.0">
+                           <children>
+                              <Label fx:id="gammePoidsLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="253.0" text="poid" textAlignment="CENTER" />
+                           </children>
+                        </VBox>
+                     </children>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </HBox>
             <Separator prefWidth="200.0" />
-            <VBox fx:id="variantContainer" prefHeight="110.0" prefWidth="282.0" />
-			</children>
-			<styleClass>
-				<String fx:value="global" />
-				<String fx:value="card" />
-			</styleClass>
-		</VBox>
+                  <VBox alignment="TOP_CENTER" prefHeight="183.0" prefWidth="282.0">
+                     <GridPane fx:id="longueurLaizeGrid">
+      			<columnConstraints>
+      				<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      				<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      			</columnConstraints>
+      			<rowConstraints>
+      				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      			</rowConstraints>
+      			<children>
+         				<VBox alignment="CENTER">
+         					<styleClass>
+         						<String fx:value="grid-cell" />
+         						<String fx:value="first-row-left" />
+         					</styleClass>
+         					<Label styleClass="title-acc-4" text="Laize" />
+         				</VBox>
+         				<VBox alignment="CENTER" GridPane.columnIndex="1">
+         					<styleClass>
+         						<String fx:value="grid-cell" />
+         						<String fx:value="first-row" />
+         					</styleClass>
+            					<Label styleClass="title-acc-4" text="Longueur" />
+         				</VBox>
+      			</children>
+      		</GridPane>
+                  </VBox>
+               </children>
+            </VBox>
 	</children>
 </Pane>

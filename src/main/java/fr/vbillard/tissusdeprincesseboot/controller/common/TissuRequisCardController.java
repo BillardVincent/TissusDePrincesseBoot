@@ -19,6 +19,7 @@ import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequisLaizeOption;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
+import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.service.TissuRequisLaizeOptionService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuUsedService;
 import fr.vbillard.tissusdeprincesseboot.service.UserPrefService;
@@ -84,7 +85,6 @@ public class TissuRequisCardController implements IController {
 		}
 		tissuRequis = data.getTissuRequis();
 		projet = data.getProjet();
-		if (tissuRequis != null) {
 
 			List<TissuRequisLaizeOption> tissuRequisLaizeOptionList = trloService
 					.getTissuRequisLaizeOptionByRequisId(tissuRequis.getId());
@@ -101,20 +101,16 @@ public class TissuRequisCardController implements IController {
 
 			}
 			gammePoidsLabel.setText(StringUtils.join(tissuRequis.getGammePoids(), Utils.OR));
-			// variantsLabel.setText(StringUtils.join(tissuRequis.getVariant(), Utils.SEPARATOR));
 			doublure.setVisible(tissuRequis.isDoublure());
+			setLabelWithOrCollection(tissuRequis.getMatiere(), matiereHbx, matiereLbl);
+			setLabelWithOrCollection(tissuRequis.getTissage(), tissageHbx, tissageLbl);
+			typeLbl.setText(
+					tissuRequis.getTypeTissu() == null ? TypeTissuEnum.NON_RENSEIGNE.label : tissuRequis.getTypeTissu().getLabel());
 
-		} else {
-
-			gammePoidsLabel.setText(Strings.EMPTY);
-			variantsLabel.setText(Strings.EMPTY);
-			doublure.setVisible(false);
-
-		}
-		setPane();
+			setIcones();
 	}
 
-	private void setPane() {
+	private void setIcones() {
 		GlyphIcon iconStatus;
 
 		int longueurMin = trloService.getLongueurMinByRequis(tissuRequis.getId());
@@ -175,5 +171,13 @@ public class TissuRequisCardController implements IController {
 
 		doublurHbx.getChildren().add(iconStatus);
 
+	}
+	
+	private void setLabelWithOrCollection(List data, HBox content, Label label) {
+		if (CollectionUtils.isEmpty(data)){
+			content.setVisible(false);
+		} else {
+			label.setText(StringUtils.join(StringUtils.join(tissuRequis.getGammePoids(), Utils.OR)));
+		}
 	}
 }

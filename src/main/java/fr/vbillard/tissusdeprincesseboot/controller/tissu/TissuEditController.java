@@ -1,6 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.controller.tissu;
 
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.safePropertyToString;
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.textFieldToFirstCharOrX;
 import static fr.vbillard.tissusdeprincesseboot.controller.validators.ValidatorUtils.areValidatorsValid;
 
 import java.util.Arrays;
@@ -178,6 +179,7 @@ public class TissuEditController implements IController {
 		addPictureBtn.setDisable(tissuIsNew);
 		imageNotSaved.setVisible(tissuIsNew);
 		addPictureClipboardBtn.setDisable(tissuIsNew);
+		archiverBtn.setDisable(tissuIsNew);
 		setBoutonArchiver();
 	}
 
@@ -206,7 +208,7 @@ public class TissuEditController implements IController {
 
 			setTissuFromFields();
 			okClicked = true;
-			root.displayTissusDetails(tissu);
+			//root.displayTissusDetails(tissu);
 		}
 	}
 
@@ -252,18 +254,12 @@ public class TissuEditController implements IController {
 		tissageField.setValue(safePropertyToString(tissu.getTissageProperty()));
 	}
 
-	private String getFirstCharOrX(JFXComboBox<String> field) {
-		if (field == null || Strings.isBlank(field.getValue())) {
-			return "X";
-		}
-		return field.getValue().toUpperCase().substring(0, 1);
-	}
 
 	@FXML
 	private void handleGenerateReference() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(getFirstCharOrX(typeField)).append(getFirstCharOrX(matiereField))
-				.append(getFirstCharOrX(tissageField)).append("-");
+		sb.append(textFieldToFirstCharOrX(typeField)).append(textFieldToFirstCharOrX(matiereField))
+				.append(textFieldToFirstCharOrX(tissageField)).append("-");
 		if (chuteField.isSelected()) {
 			sb.append("cp-");
 		}
