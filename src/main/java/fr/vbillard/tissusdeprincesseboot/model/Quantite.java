@@ -12,4 +12,5 @@ import lombok.Setter;
 public class Quantite extends AbstractEntity{
   private Unite unite;
   private Float quantite;
+  
 }

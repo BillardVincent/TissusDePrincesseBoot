@@ -37,7 +37,7 @@ public class PatronService extends AbstractDtoService<Patron, PatronDto> {
 	}
 
 	public void delete(PatronDto selected) {
-		tissuRequisDao.deleteAll(tissuRequisDao.getAllByPatronId(selected.getId()));
+		tissuRequisDao.deleteAll(tissuRequisDao.getAllByVersionId(selected.getId()));
 		delete(mapper.map(selected, Patron.class));
 	}
 
@@ -86,5 +86,9 @@ public class PatronService extends AbstractDtoService<Patron, PatronDto> {
 	@Override
 	public PatronDto convert(Patron dto) {
 		return mapper.map(dto, PatronDto.class);
+	}
+
+	public Patron getPatronByProjectId(int id) {
+		return patronDao.getPatronByProjetId(id);
 	}
 }

@@ -34,10 +34,13 @@ import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureRequiseService;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureService;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureUsedService;
+import fr.vbillard.tissusdeprincesseboot.service.TissuRequisLaizeOptionService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuRequisService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuUsedService;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.ClassCssUtils;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
+import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -49,10 +52,8 @@ import javafx.scene.layout.VBox;
 @Component
 public class RootController implements IController {
 
-	private static final String SELECTED = "mainmenu-element-selected";
-
 	private static final Logger LOGGER = LogManager.getLogger(RootController.class);
-	  
+
 	@FXML
 	private Pane mainWindow;
 	@FXML
@@ -79,18 +80,21 @@ public class RootController implements IController {
 	private TissuRequisDto tissuRequisSelected;
 	private ProjetDto projetSelected;
 	private FournitureRequiseDto fournitureRequiseSelected;
+	
+	private final CustomIcon customIcon;
+	private final TissuRequisLaizeOptionService tissuRequisLaizeOptionService;
 	private final TissuUsedService tissuUsedService;
 	private final ModelMapper mapper;
-	private CustomIcon customIcon;
 	private final TissuRequisService tissuRequisService;
 	private final FournitureRequiseService fournitureRequiseService;
 	private final FournitureUsedService fournitureUsedService;
 	private final FournitureService fournitureService;
 
 	public RootController(FournitureService fournitureService, FournitureUsedService fournitureUsedService,
-			TissuUsedService tissuUsedService,
-			ModelMapper mapper, CustomIcon customIcon,
-			TissuRequisService tissuRequisService, FournitureRequiseService fournitureRequiseService) {
+			TissuUsedService tissuUsedService, ModelMapper mapper, CustomIcon customIcon,
+			TissuRequisService tissuRequisService, FournitureRequiseService fournitureRequiseService, 
+			TissuRequisLaizeOptionService tissuRequisLaizeOptionService) {
+		this.tissuRequisLaizeOptionService = tissuRequisLaizeOptionService;
 		this.tissuUsedService = tissuUsedService;
 		this.mapper = mapper;
 		this.customIcon = customIcon;
@@ -98,7 +102,7 @@ public class RootController implements IController {
 		this.fournitureRequiseService = fournitureRequiseService;
 		this.fournitureUsedService = fournitureUsedService;
 		this.fournitureService = fournitureService;
-		
+
 		LOGGER.info("Lancement de l'application");
 	}
 
@@ -215,7 +219,7 @@ public class RootController implements IController {
 		mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSAGE));
 	}
 
-	public void displaySelected(FxData fxData) {
+	public void displayTissuSelected(FxData fxData) {
 		projetSelected = fxData.getProjet();
 
 		beforeDisplay(tissuMenu);
@@ -252,20 +256,20 @@ public class RootController implements IController {
 	private void beforeDisplay(HBox menuToSelect) {
 		mainWindow.getChildren().clear();
 		searchPane.getChildren().clear();
-		LOGGER.info("menu selected = " +menuToSelect.getId());
+		LOGGER.info("menu selected = " + menuToSelect.getId());
 		for (HBox hb : menuElements) {
 			if (hb != null && hb.getStyleClass() != null && !hb.getStyleClass().isEmpty()) {
-				hb.getStyleClass().removeIf(style -> style.equals(SELECTED));
+				hb.getStyleClass().removeIf(style -> style.equals(ClassCssUtils.SELECTED));
 			}
 		}
 		if (menuToSelect != null) {
-			menuToSelect.getStyleClass().add(SELECTED);
+			menuToSelect.getStyleClass().add(ClassCssUtils.SELECTED);
 		}
 	}
 
 	@FXML
 	public void displayPref() {
-		initializer.displayModale(PathEnum.PREF, null, "");
+		initializer.displayModale(PathEnum.PREF, null, Strings.EMPTY);
 	}
 
 	@Override
@@ -274,8 +278,9 @@ public class RootController implements IController {
 		menuElements = Arrays.asList(tissuMenu, fournitureMenu, patronMenu, projetMenu);
 		deleteSelectedButton.setVisible(false);
 		researchButton.setVisible(false);
-		//TODO a suppr
-		testIcons();
+
+		// TODO a suppr ------------ TEST d'icones -----------------------
+		// testIcons();
 	}
 
 	public boolean hasTissuRequisSelected() {
@@ -283,7 +288,7 @@ public class RootController implements IController {
 	}
 
 	public void addToSelected(TissuDto tissuSelected) {
-		int longueurRequiseRestante = tissuRequisSelected.getLongueur();
+		int longueurRequiseRestante = tissuRequisLaizeOptionService.getLongueurMinByRequis(tissuSelected.getId());
 		if (projetSelected.getTissuUsed() != null && projetSelected.getTissuUsed().get(tissuRequisSelected) != null) {
 			for (int id : projetSelected.getTissuUsed().get(tissuRequisSelected)) {
 				longueurRequiseRestante -= tissuUsedService.getById(id).getLongueur();
@@ -301,11 +306,13 @@ public class RootController implements IController {
 
 		displayProjetEdit(projetSelected);
 		deleteSelected();
+
 	}
-	
+
 	public void addToSelected(FournitureDto fournitureSelected) {
 		float longueurRequiseRestante = fournitureRequiseSelected.getQuantite();
-		if (projetSelected.getFournitureUsed() != null && projetSelected.getFournitureUsed().get(fournitureRequiseSelected) != null) {
+		if (projetSelected.getFournitureUsed() != null
+				&& projetSelected.getFournitureUsed().get(fournitureRequiseSelected) != null) {
 			for (int id : projetSelected.getFournitureUsed().get(fournitureRequiseSelected)) {
 				longueurRequiseRestante -= fournitureUsedService.getById(id).getQuantite();
 			}
@@ -330,7 +337,7 @@ public class RootController implements IController {
 		fxData.setTissu(tissuSelected);
 		return initializer.displayModale(PathEnum.SET_LONGUEUR, fxData, Strings.EMPTY);
 	}
-	
+
 	private FxData displaySetQuantiteDialog(float quantiteRequiseRestante, FournitureDto fournitureSelected) {
 		FxData fxData = new FxData();
 		fxData.setQuantiteRequise(quantiteRequiseRestante);
@@ -342,7 +349,7 @@ public class RootController implements IController {
 	private void createResearch() {
 		if (tissuRequisSelected != null) {
 			displayTissu(tissuRequisService.getTissuSpecification(tissuRequisSelected));
-		} else if (fournitureRequiseSelected != null){
+		} else if (fournitureRequiseSelected != null) {
 			displayFourniture(fournitureRequiseService.getFournitureSpecification(fournitureRequiseSelected));
 		}
 	}
@@ -351,12 +358,16 @@ public class RootController implements IController {
 		return fournitureRequiseSelected != null;
 
 	}
-	
+
+	/**
+	 * A supprimer plus tard
+	 * Test pour l'affichage des icones
+	 */
 	private void testIcons() {
-		FlowPane pane = new FlowPane(5,5);
-		 ScrollPane s1 = new ScrollPane();
-		 s1.setPrefSize(1600, 800);
-		 s1.setContent(pane);
+		FlowPane pane = new FlowPane(5, 5);
+		ScrollPane s1 = new ScrollPane();
+		s1.setPrefSize(1600, 800);
+		s1.setContent(pane);
 		pane.setPrefWrapLength(1580.0);
 		mainWindow.getChildren().add(s1);
 		for (MaterialDesignIcon icn : MaterialDesignIcon.values()) {

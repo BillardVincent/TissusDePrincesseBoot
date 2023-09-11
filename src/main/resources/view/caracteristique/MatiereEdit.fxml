@@ -6,14 +6,15 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.HBox?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0"
-	stylesheets="@../../style/style.css"
-	xmlns="http://javafx.com/javafx/15.0.1"
-	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="fr.vbillard.tissusdeprincesseboot.controller.caracteristique.MatiereEditController">
+			stylesheets="@../../style/style.css"
+
+			xmlns:fx="http://javafx.com/fxml/1"
+			fx:controller="fr.vbillard.tissusdeprincesseboot.controller.caracteristique.MatiereEditController">
 	<children>
-		<JFXListView fx:id="listMatieres" layoutX="21.0"
+		<JFXListView fx:id="listElement" layoutX="21.0"
 			layoutY="43.0" prefHeight="327.0" prefWidth="264.0" />
 		<JFXButton fx:id="ajouterButton" layoutX="518.0"
 			layoutY="44.0" mnemonicParsing="false" onAction="#handleAddElement"
@@ -21,16 +22,22 @@
 		<JFXButton fx:id="fermerButton" layoutX="527.0"
 			layoutY="353.0" mnemonicParsing="false" onAction="#handleClose"
 			text="Fermer" />
-		<JFXTextField fx:id="editMatiere" layoutX="300.0"
+		<JFXTextField fx:id="editElement" layoutX="300.0"
 			layoutY="162.0" prefHeight="25.0" prefWidth="211.0" />
-		<JFXTextField fx:id="newMatiere" layoutX="300.0"
+		<JFXTextField fx:id="newElement" layoutX="300.0"
 			layoutY="44.0" prefHeight="25.0" prefWidth="211.0" />
 		<JFXButton fx:id="editerButton" layoutX="519.0"
 			layoutY="162.0" mnemonicParsing="false" onAction="#handleEditElement"
 			text="Editer" />
-		<JFXButton fx:id="supprimerButton" layoutX="303.0"
-			layoutY="223.0" mnemonicParsing="false"
+	<HBox layoutX="303.0" layoutY="223.0" spacing="10.0">
+	<children>
+		<JFXButton fx:id="supprimerButton"
+			 mnemonicParsing="false"
 			onAction="#handleSuppressElement" text="Supprimer" />
+		<JFXButton fx:id="cancelButton" mnemonicParsing="false"
+				   onAction="#handleCancelSelection" text="annuler" />
+	</children>
+	</HBox>
 		<Label layoutX="303.0" layoutY="123.0" prefHeight="40.0"
 			prefWidth="278.0"
 			text="L'édition d'un élément sera répercutée sur les patrons et tissus utilisant cet élément"

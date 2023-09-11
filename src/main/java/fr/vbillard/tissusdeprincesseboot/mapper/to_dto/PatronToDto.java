@@ -36,27 +36,7 @@ public class PatronToDto extends TypeMapConfigurer<Patron, PatronDto> {
     public void configure(TypeMap<Patron, PatronDto> typeMap) {
 		typeMap.addMapping(Patron::getSupportType,
         (DestinationSetter<PatronDto, SupportTypeEnum>) PatronDto::setTypeSupport);
-        typeMap.setPostConverter(context -> {
-        	List<TissuRequisDto> trLst = null;
-        	if (context.getSource().getId() != 0){
-                trLst = trs.getAllByPatronId(
-                		context.getSource().getId())
-                		.stream().map(tr-> mapper.map(tr, TissuRequisDto.class ))
-                		.collect(Collectors.toList());
-            }
-            context.getDestination().setTissusRequis(trLst);
 
-        	List<FournitureRequiseDto> frLst = null;
-        	if (context.getSource().getId() != 0){
-        		frLst = frs.getAllByPatronId(
-                		context.getSource().getId())
-                		.stream().map(fr-> mapper.map(fr, FournitureRequiseDto.class ))
-                		.collect(Collectors.toList());
-            }
-            context.getDestination().setFournituresRequises(frLst);
-            
-            return context.getDestination();
-        });
     }
 
 }

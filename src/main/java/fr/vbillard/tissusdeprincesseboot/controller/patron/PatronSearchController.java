@@ -93,8 +93,6 @@ public class PatronSearchController implements IController {
   @FXML
   public JFXRadioButton indifferentArchive;
 
-  // TODO TYPE SOPPORT
-
   private final ToggleGroup archiveGroup = new ToggleGroup();
 
   private final RootController root;
@@ -295,17 +293,17 @@ public class PatronSearchController implements IController {
 
   @FXML
   private void choiceType() {
-    setSelectionFromChoiceBoxModale(TypeTissuEnum.labels(), typeValuesSelected, typeLbl);
+    setSelectionFromChoiceBoxModale(TypeTissuEnum.labels(), typeValuesSelected, typeLbl, true);
   }
 
   @FXML
   private void choiceMatiere() {
-    setSelectionFromChoiceBoxModale(matiereService.getAllValues(), matiereValuesSelected, matiereLbl);
+    setSelectionFromChoiceBoxModale(matiereService.getAllValues(), matiereValuesSelected, matiereLbl, true);
   }
 
   @FXML
   private void choiceTissage() {
-    setSelectionFromChoiceBoxModale(tissageService.getAllValues(), tissageValuesSelected, tissageLbl);
+    setSelectionFromChoiceBoxModale(tissageService.getAllValues(), tissageValuesSelected, tissageLbl, true);
   }
 
   @FXML

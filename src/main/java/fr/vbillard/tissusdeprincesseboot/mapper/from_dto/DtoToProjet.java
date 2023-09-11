@@ -5,8 +5,10 @@ import org.springframework.stereotype.Component;
 
 import com.github.rozidan.springboot.modelmapper.TypeMapConfigurer;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronVersionDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
+import fr.vbillard.tissusdeprincesseboot.model.PatronVersion;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
 import org.modelmapper.AbstractConverter;
@@ -19,7 +21,8 @@ public class DtoToProjet extends TypeMapConfigurer<ProjetDto, Projet> {
     @Override
     public void configure(TypeMap<ProjetDto, Projet> typeMap) {
         typeMap.addMappings(mapper -> mapper.using(new StatusConverter()).map(dto -> dto, Projet::setStatus));
-        typeMap.addMappings(mapper -> mapper.using(new PatronConverter()).map(ProjetDto::getPatron, Projet::setPatron));
+        typeMap.addMappings(mapper -> mapper.using(new PatronConverter()).map(ProjetDto::getPatronVersion,
+            Projet::setPatronVersion));
     }
 
     private class StatusConverter extends AbstractConverter<ProjetDto, ProjectStatus> {
@@ -29,10 +32,10 @@ public class DtoToProjet extends TypeMapConfigurer<ProjetDto, Projet> {
         }
     }
 
-    private class PatronConverter extends AbstractConverter<PatronDto, Patron> {
+    private class PatronConverter extends AbstractConverter<PatronVersionDto, PatronVersion> {
         @Override
-        protected Patron convert(PatronDto dto) {
-            return dto == null ? new Patron() : new ModelMapper().map(dto, Patron.class);
+        protected PatronVersion convert(PatronVersionDto dto) {
+            return dto == null ? new PatronVersion() : new ModelMapper().map(dto, PatronVersion.class);
         }
     }
 }

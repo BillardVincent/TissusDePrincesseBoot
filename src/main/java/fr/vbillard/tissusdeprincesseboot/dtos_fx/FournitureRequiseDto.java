@@ -31,6 +31,7 @@ public class FournitureRequiseDto extends AbstractRequisDto<FournitureRequise, F
 		quantite = new SimpleFloatProperty();
 		quantiteSecondaireMin = new SimpleFloatProperty();
 		quantiteSecondaireMax = new SimpleFloatProperty();
+		typeName = new SimpleStringProperty();
 	}
 
 
@@ -80,7 +81,9 @@ public class FournitureRequiseDto extends AbstractRequisDto<FournitureRequise, F
 
 	public void setType(TypeFourniture type) {
 		this.type = type;
-		this.typeName.set(type.getValue());
+		if (type != null){
+			this.typeName.set(type.getValue());
+		}
 	}
 	
 	public TypeFourniture getType() {

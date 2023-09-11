@@ -27,10 +27,17 @@ import fr.vbillard.tissusdeprincesseboot.controller.fourniture.FournitureEditCon
 import fr.vbillard.tissusdeprincesseboot.controller.fourniture.FournitureSearchController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.ListElementController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronCardController;
-import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronDetailController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronListController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronSearchController;
+import fr.vbillard.tissusdeprincesseboot.controller.patron.detail.PatronDetailController;
+import fr.vbillard.tissusdeprincesseboot.controller.patron.detail.TissuDisplayController;
+import fr.vbillard.tissusdeprincesseboot.controller.patron.detail.VersionDisplayController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.PatronEditController;
+import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.rightPane.PatronEditFournitureRequiseController;
+import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.rightPane.PatronEditPatronController;
+import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.rightPane.PatronEditPatronVersionController;
+import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.accordion.PatronVersionAccordionController;
+import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.rightPane.PatronEditTissuRequisController;
 import fr.vbillard.tissusdeprincesseboot.controller.projet.FournitureUsedCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetEditController;
@@ -55,7 +62,6 @@ public class PathService {
     super();
     this.pathProperties = pathProperties;
   }
-
 
   public PathHolder pathEnumToURL(PathEnum pathEnum) throws IOException {
     switch (pathEnum) {
@@ -144,6 +150,24 @@ public class PathService {
         return new PathHolder(pathProperties.getFournitureRequisCard().getURL(), FournitureRequiseCardController.class);
       case SET_QUANTITE:
         return new PathHolder(pathProperties.getQuantite().getURL(), SetQuantiteDialogController.class);
+      case PATRON_VERSION_ACCORDION:
+        return new PathHolder(pathProperties.getPatronVersionAccordion().getURL(),
+            PatronVersionAccordionController.class);
+      case PATRON_EDIT_PATRON_VERSION:
+        return new PathHolder(pathProperties.getPatronEditPatronVersion().getURL(),
+            PatronEditPatronVersionController.class);
+      case PATRON_EDIT_PATRON:
+        return new PathHolder(pathProperties.getPatronEditPatron().getURL(), PatronEditPatronController.class);
+      case PATRON_EDIT_TISSU_REQUIS:
+        return new PathHolder(pathProperties.getPatronEditTissuRequis().getURL(),
+            PatronEditTissuRequisController.class);
+      case PATRON_EDIT_FOURNITURE_REQUISE:
+        return new PathHolder(pathProperties.getPatronEditFournitureRequise().getURL(),
+            PatronEditFournitureRequiseController.class);
+      case PATRON_DETAIL_TISSU_DISPLAY :
+    	  return new PathHolder(pathProperties.getPatronDetailTissuDisplay().getURL(), TissuDisplayController.class);
+      case PATRON_DETAIL_VERSION_DISPLAY :
+    	  return new PathHolder(pathProperties.getPatronDetailVersionDisplay().getURL(), VersionDisplayController.class);
       default:
         break;
 

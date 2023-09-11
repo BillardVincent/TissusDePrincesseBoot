@@ -1,47 +1,37 @@
 package fr.vbillard.tissusdeprincesseboot.controller.patron.edit;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
-
 import com.jfoenix.controls.JFXButton;
 
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FxDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.GlyphIconUtil;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronVersionDto;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractEntity;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractRequis;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractUsedEntity;
-import fr.vbillard.tissusdeprincesseboot.model.AbstractVariant;
 import fr.vbillard.tissusdeprincesseboot.service.AbstractRequisService;
 import fr.vbillard.tissusdeprincesseboot.service.AbstractUsedService;
-import fr.vbillard.tissusdeprincesseboot.service.AbstractVariantService;
 import fr.vbillard.tissusdeprincesseboot.service.PatronService;
-import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
 import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.EntityToString;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import lombok.Getter;
 
-public abstract class PatronEditHelper<E extends AbstractEntity, EV extends AbstractVariant<E>,
-		ER extends AbstractRequis<E>, UE extends AbstractUsedEntity<E>, DTO extends FxDto<E>,
-		DTOV extends FxDto<EV>, DTOR extends FxDto<ER>> {
+public abstract class PatronEditHelper<E extends AbstractEntity, ER extends AbstractRequis<E>,
+		UE extends AbstractUsedEntity<E>, DTO extends FxDto<E>, DTOR extends FxDto<ER>> {
 
 	
-	protected AbstractVariantService<EV, E, DTOV> variantService;
 	protected AbstractRequisService<ER, E, DTOR> requisService;
 	protected AbstractUsedService<UE, E> usedService;
 	protected PatronService patronService;
@@ -49,18 +39,15 @@ public abstract class PatronEditHelper<E extends AbstractEntity, EV extends Abst
 	protected VBox tissuEtFournitureContainer;
 	protected GridPane listGrid;
 
-	protected ObservableList<DTOV> tvList;
-	
 	protected PatronDto patron;
-
-	protected DTOV variantSelected;
 
 	protected StageInitializer initializer;
 
 
 	@Getter
 	protected boolean editingVariant;
-	
+	private String labelText;
+
 	public void setContainer(VBox tissuEtFournitureContainer, GridPane listGrid, PatronDto patron, StageInitializer initializer) {
 		this.tissuEtFournitureContainer = tissuEtFournitureContainer;
 		this.listGrid = listGrid;
@@ -72,7 +59,6 @@ public abstract class PatronEditHelper<E extends AbstractEntity, EV extends Abst
 	public void displayRequis(DTOR requis) {
 
 		tissuEtFournitureContainer.getChildren().clear();
-		tvList = FXCollections.observableArrayList(new ArrayList<>());
 		String labelText = EntityToString.getByEntity(getEntityClass()).getLabel() + " recommandés : ";
 
 		tissuEtFournitureContainer.getChildren().add(new Label(labelText));
@@ -100,7 +86,6 @@ public abstract class PatronEditHelper<E extends AbstractEntity, EV extends Abst
 		hboxBtn.setPadding(new Insets(20, 20, 20, 20));
 
 		tissuEtFournitureContainer.getChildren().add(hboxBtn);
-		tvList = FXCollections.observableArrayList(variantService.getVariantDtoByRequis(requisService.convert(requis)));
 
 		if (hasVariant()) {
 			tissuEtFournitureContainer.getChildren().add(loadBottomRightVbox(requis));
@@ -118,7 +103,8 @@ public abstract class PatronEditHelper<E extends AbstractEntity, EV extends Abst
 	public void saveRequis(DTOR requis, PatronDto patron){
 		boolean edit = requis.getId() != 0;
 		patron = patronService.saveOrUpdate(patron);
-		DTOR returned = requisService.createOrUpdate(requis, patron);
+		PatronVersionDto version = new PatronVersionDto();
+		DTOR returned = requisService.createOrUpdate(requis, version);
 		if (!edit) {
 			addToPatron(requis, patron);
 			patron= patronService.saveOrUpdate(patron);
@@ -131,7 +117,7 @@ public abstract class PatronEditHelper<E extends AbstractEntity, EV extends Abst
 
 	void deleteRequis(DTOR requis) {
 		ER requisEntity = requisService.convert(requis);
-		requisEntity.setPatron(patronService.convert(patron));
+		//requisEntity.setVersion(patronService.convert(patron));
 		requisService.delete(requisEntity);
 		tissuEtFournitureContainer.getChildren().clear();
 		loadRequisForPatron();
@@ -142,18 +128,6 @@ public abstract class PatronEditHelper<E extends AbstractEntity, EV extends Abst
 		VBox bottomRightVbox = new VBox();
 
 		bottomRightVbox.getChildren().addAll(new Separator(Orientation.HORIZONTAL), new Label("Possibilités :"));
-
-		if (!CollectionUtils.isEmpty(tvList )) {
-			GridPane bottomGrid = new GridPane();
-			bottomGrid.setPadding(new Insets(5, 0, 5, 0));
-			bottomRightVbox.getChildren().add(bottomGrid);
-			bottomGrid.getColumnConstraints().addAll(new ColumnConstraints(300), new ColumnConstraints(100));
-
-			for (int i = 0; i < tvList.size(); i++) {
-				DTOV tv = tvList.get(i);
-				buildVariantDisplay(requis, bottomGrid, i, tv);
-			}
-		}
 
 		if (requis != null && requis.getId() != 0) {
 
@@ -208,45 +182,6 @@ public abstract class PatronEditHelper<E extends AbstractEntity, EV extends Abst
 
 	}
 
-	private void buildVariantDisplay(DTOR requis, GridPane bottomGrid, int i, DTOV tv) {
-		JFXButton editButton = new JFXButton();
-		editButton.setGraphic(GlyphIconUtil.editNormal());
-		editButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-			editingVariant = true;
-			editVariant(tv);
-		});
-
-		JFXButton deleteButton = new JFXButton();
-		deleteButton.setGraphic(GlyphIconUtil.suppressNormal());
-		deleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-				e -> deleteVariant(requis, tv));
-		HBox btns = new HBox(editButton, deleteButton);
-		btns.setAlignment(Pos.CENTER_RIGHT);
-		btns.setSpacing(10);
-
-		displayVariant(bottomGrid, tv, i);
-
-		bottomGrid.add(btns, 1, i * 2);
-
-		if (i != tvList.size() - 1) {
-			HBox hbox = new HBox(new Label("-------------   OU   --------------  "));
-			hbox.setAlignment(Pos.CENTER);
-			bottomGrid.add(hbox, 0, i * 2 + 1, 2, 1);
-			// displayTissuRequis(tissu);
-		}
-	}
-
-	protected abstract void displayVariant(GridPane bottomGrid, DTOV tv, int index);
-
-	protected void editVariant(DTOV tv){
-		DevInProgressService.notImplemented();
-	}
-
-	protected void deleteVariant(DTOR requis, DTOV tv){
-		variantService.delete(tv.getId());
-		DTOR requisReloaded = requisService.getDtoById(requis.getId());
-		displayRequis(requisReloaded);
-	}
 
 	public void setPatron(PatronDto patron){
 		this.patron = patron;

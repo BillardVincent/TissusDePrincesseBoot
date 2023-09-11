@@ -28,7 +28,7 @@ public class ProjetDto implements FxDto<Projet> {
 
 	private StringProperty description;
 
-	private ObjectProperty<PatronDto> patron;
+	private ObjectProperty<PatronVersionDto> patronVersion;
 
 	private MapProperty<TissuRequisDto, List<Integer>> tissuUsed;
 
@@ -42,8 +42,8 @@ public class ProjetDto implements FxDto<Projet> {
 		this.description = new SimpleStringProperty();
 
 		this.status = new SimpleStringProperty();
-		this.patron = new SimpleObjectProperty<>();
-		setPatron(new PatronDto());
+		this.patronVersion = new SimpleObjectProperty<>();
+		setPatronVersion(new PatronVersionDto());
 
 		this.tissuUsed = new SimpleMapProperty<>();
 		setTissuUsed(new HashMap<>());
@@ -96,16 +96,16 @@ public class ProjetDto implements FxDto<Projet> {
 		return status;
 	}
 
-	public PatronDto getPatron() {
-		return patron.get();
+	public PatronVersionDto getPatronVersion() {
+		return patronVersion.get();
 	}
 
-	public ObjectProperty<PatronDto> getPatronProperty() {
-		return patron;
+	public ObjectProperty<PatronVersionDto> getPatronProperty() {
+		return patronVersion;
 	}
 
-	public void setPatron(PatronDto patron) {
-		this.patron.set(patron);
+	public void setPatronVersion(PatronVersionDto patronVersion) {
+		this.patronVersion.set(patronVersion);
 	}
 
 	public Map<TissuRequisDto, List<Integer>> getTissuUsed() {

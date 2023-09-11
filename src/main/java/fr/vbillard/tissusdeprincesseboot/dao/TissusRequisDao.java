@@ -9,6 +9,6 @@ import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 @Repository
 public interface TissusRequisDao extends Idao<TissuRequis, Integer> {
 
-	List<TissuRequis> getAllByPatronId(int id);
+	List<TissuRequis> getAllByVersionId(int id);
 
 }

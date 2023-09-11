@@ -7,12 +7,14 @@ import org.springframework.transaction.annotation.Transactional;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronVersionDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureRequise;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
+import fr.vbillard.tissusdeprincesseboot.model.PatronVersion;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
@@ -68,4 +70,9 @@ public class MapperService {
 	public TissuRequis map(TissuRequisDto source) {
 		return mapper.map(source, TissuRequis.class);
 	}
+
+  public PatronVersion map(PatronVersionDto source) { return mapper.map(source, PatronVersion.class); }
+
+	public PatronVersionDto map(PatronVersion source) { return mapper.map(source, PatronVersionDto.class); }
+
 }

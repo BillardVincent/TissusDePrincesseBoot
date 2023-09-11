@@ -6,11 +6,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import fr.vbillard.tissusdeprincesseboot.dao.TissageDao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissuDao;
-import fr.vbillard.tissusdeprincesseboot.dao.TissuVariantDao;
 import fr.vbillard.tissusdeprincesseboot.exception.CantBeDeletedException;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
 import fr.vbillard.tissusdeprincesseboot.model.Tissage;
@@ -23,7 +21,6 @@ import lombok.AllArgsConstructor;
 public class TissageService extends AbstractService<Tissage> {
 	private TissageDao dao;
 	private TissuDao tissuDao;
-	private TissuVariantDao tissuVariantDao;
 
 	public Tissage findTissage(String value) {
 		return dao.getByValue(value);
@@ -58,9 +55,7 @@ public class TissageService extends AbstractService<Tissage> {
 		if (tissuDao.existsTissuByTissage(tissage)) {
 			throw new CantBeDeletedException(tissage, null);
 		}
-		if (tissuVariantDao.existsTissuVariantByTissage(tissage)) {
-			throw new CantBeDeletedException(tissage, null);
-		}
+
 	}
 
 	public List<String> getAllValues() {

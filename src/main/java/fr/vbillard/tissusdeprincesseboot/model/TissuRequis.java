@@ -2,11 +2,15 @@ package fr.vbillard.tissusdeprincesseboot.model;
 
 import java.util.List;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import org.apache.logging.log4j.util.Strings;
@@ -14,6 +18,7 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
+import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,22 +29,29 @@ import lombok.Setter;
 @Entity
 public class TissuRequis extends AbstractRequis<Tissu> {
 
-
-	private int laize;
-	@Enumerated(EnumType.STRING)
-	private GammePoids gammePoids;
-
 	@OneToMany(mappedBy = "requis")
-    @Cascade(CascadeType.PERSIST)
-	protected List<TissuVariant> variants;
+	@Cascade({CascadeType.PERSIST, CascadeType.REMOVE})
+	private List<TissuRequisLaizeOption> option;
 
-	private int longueur;
+	@Enumerated(EnumType.STRING)
+	@ElementCollection(targetClass = GammePoids.class)
+	@CollectionTable(name = "TISSU_REQUIS_GAMME_POIDS",	joinColumns = @JoinColumn(name = "TISSU_REQUIS_ID"))
+	private List<GammePoids> gammePoids;
 
 	@Column(columnDefinition = "boolean default false")
 	private boolean doublure;
 
+	@ManyToMany
+	private List<Matiere> matieres;
+
+	@ManyToMany
+	private List<Tissage> tissages;
+
+	@Enumerated(EnumType.STRING)
+	private TypeTissuEnum typeTissu;
+
 	@Override
 	public String toString() {
-		return "tissu " + gammePoids +" - "+ laize + "cm x" + longueur +"cm " + (doublure ? " (doublure)" : Strings.EMPTY);
+		return "tissu " + gammePoids + (doublure ? " (doublure)" : Strings.EMPTY);
 	}
 }

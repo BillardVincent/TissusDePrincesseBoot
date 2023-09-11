@@ -20,6 +20,7 @@ import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
 import fr.vbillard.tissusdeprincesseboot.service.ImageService;
 import fr.vbillard.tissusdeprincesseboot.utils.Constants;
+import fr.vbillard.tissusdeprincesseboot.utils.Utils;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -27,7 +28,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
 @Component
-@Scope("prototype")
+@Scope(Utils.PROTOTYPE)
 public class ProjetCardController implements IController {
 	@FXML
 	public Label titre;
@@ -75,7 +76,7 @@ public class ProjetCardController implements IController {
 	private void setCardContent() {
 		Optional<Photo> pictureTissu = imageService.getImage(mapper.map(projet, Projet.class));
 		imageTissu.setImage(imageService.imageOrDefault(pictureTissu));
-		Optional<Photo> picturePatron = imageService.getImage(mapper.map(projet.getPatron(), Patron.class));
+		Optional<Photo> picturePatron = imageService.getImage(mapper.map(projet.getPatronVersion(), Patron.class));
 		imagePatron.setImage(imageService.imageOrDefault(picturePatron));
 
 		for (FontAwesomeIconView icon : listIcn) {

@@ -9,45 +9,57 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.vbillard.tissusdeprincesseboot.dao.Idao;
+import fr.vbillard.tissusdeprincesseboot.model.AbstractEntity;
 
-public abstract class AbstractService<T> {
+public abstract class AbstractService<T extends AbstractEntity> {
 
+	/**
+	 * methode to override if an action is required during a saveOrUpdate() operation
+	 * @param entity
+	 */
 	protected void beforeSaveOrUpdate(T entity){
-
 	}
 
+	/**
+	 * methode to override if an action is required during a delete() operation
+	 * @param entity
+	 */
 	protected void beforeDelete(T entity){
 	}
 
 	@Transactional
+	/**
+	 * Do not Override this method. Use beforeSaveOrUpdate()
+	 */
 	public T saveOrUpdate(T entity) {
 		beforeSaveOrUpdate(entity);
 		return getDao().save(entity);
 	}
 
-	public List<T> getAll() {
+	public final List<T> getAll() {
 		return getDao().findAll();
 	}
 
-	public Page<T> getAll(Specification<T> spec, Pageable page) {
+	public final Page<T> getAll(Specification<T> spec, Pageable page) {
 		return getDao().findAll(spec, page);
 	}
 
-	public void delete(int id) {
+	public final void delete(int id) {
 		delete(getById(id));
 	}
 	
-	public void delete(T entity) {
+	@Transactional
+	public final void delete(T entity) {
 		beforeDelete(entity);
 		getDao().delete(entity);
 	}
 
-	public T getById(int id) {
+	public final T getById(int id) {
 		Optional<T> opt = getDao().findById(id);
 			return opt.orElse(null);
 	}
 
-	public long count() {
+	public final long count() {
 		return getDao().count();
 	}
 

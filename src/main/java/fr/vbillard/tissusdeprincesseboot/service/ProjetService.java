@@ -1,11 +1,15 @@
 package fr.vbillard.tissusdeprincesseboot.service;
 
+import fr.vbillard.tissusdeprincesseboot.dao.PatronVersionDao;
 import fr.vbillard.tissusdeprincesseboot.dao.ProjetDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronVersionDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.ProjetSpecification;
 import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
+import fr.vbillard.tissusdeprincesseboot.model.PatronVersion;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
+import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.AllArgsConstructor;
@@ -23,6 +27,7 @@ import java.util.stream.Collectors;
 public class ProjetService extends AbstractDtoService<Projet, ProjetDto> {
 	MapperService mapper;
 	ProjetDao dao;
+	private PatronVersionDao patronVersionDao;
 
 	@Override
 	protected void beforeSaveOrUpdate(Projet entity) {
@@ -54,9 +59,9 @@ public class ProjetService extends AbstractDtoService<Projet, ProjetDto> {
 				dao.findAll().stream().map(this::convert).collect(Collectors.toList()));
 	}
 
-	public ProjetDto newProjetDto(PatronDto selectedPatron) {
+	public ProjetDto newProjetDto(PatronVersionDto selectedPatron) {
 		Projet p = new Projet();
-		p.setPatron(mapper.map(selectedPatron));
+		p.setPatronVersion(mapper.map(selectedPatron));
 
 		return convert(p);
 	}
@@ -79,6 +84,15 @@ public class ProjetService extends AbstractDtoService<Projet, ProjetDto> {
 					.map(this::convert).collect(Collectors.toList()));
 		}
 		return FXCollections.emptyObservableList();
+	}
+
+	public ProjetDto startNewProjet(int id) {
+		Projet projet = new Projet();
+
+		PatronVersion version = patronVersionDao.getById(id);
+		projet.setPatronVersion(version);
+		projet.setStatus(ProjectStatus.BROUILLON);
+		return convert(saveOrUpdate(projet));
 	}
 
 }

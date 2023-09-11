@@ -18,9 +18,7 @@ public abstract class AbstractRequis<T> extends AbstractEntity{
 	
 	@ManyToOne
 	@Cascade(CascadeType.PERSIST)
-	protected Patron patron;
-
-	public abstract List<? extends AbstractVariant<T>> getVariants();
+	protected PatronVersion version;
 
 
 }

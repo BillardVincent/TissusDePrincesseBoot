@@ -57,8 +57,8 @@ public class ProjetListController extends ViewListController {
 			spec = ProjetSpecification.builder().projectStatus(Arrays.asList(ProjectStatus.PLANIFIE,
 					ProjectStatus.BROUILLON, ProjectStatus.EN_COURS)).build();
 		}
+		
 		lst = projetService.getObservablePage(page, PAGE_SIZE, spec);
-
 
 		for (ProjetDto p : lst) {
 			FxData data = new FxData();
@@ -68,7 +68,7 @@ public class ProjetListController extends ViewListController {
 		}
 
 		setPageInfo(projetService.count());
-		setIventaireIcone();
+		setInventaireIcone();
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class ProjetListController extends ViewListController {
 		rootController.displayProjetEdit(new ProjetDto());
 	}
 
-	private void setIventaireIcone() {
+	private void setInventaireIcone() {
 		hasIncompleteInventaire = inventaireService.hasInventairesIncomplets();
 
 		if (hasIncompleteInventaire) {
@@ -91,7 +91,7 @@ public class ProjetListController extends ViewListController {
 	private void launchInventaire() {
 		if (hasIncompleteInventaire) {
 			displayInventaireService.batchInventaire(initializer);
-			setIventaireIcone();
+			setInventaireIcone();
 		}
 	}
 }

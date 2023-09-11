@@ -7,6 +7,14 @@ import java.util.Collection;
 import java.util.Map;
 
 public class Utils {
+	
+	public static final String PROTOTYPE = "prototype";
+	
+	public static final String COMMA = ", ";
+
+	public static final String SEPARATOR = " - ";
+	public static final String OR = " ou ";
+
 
 	public static boolean isEmpty(Object... objs) {
 		for (Object o : objs) {

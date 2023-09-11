@@ -28,8 +28,8 @@ public class PatronDto implements FxDto<Patron>{
 	private BooleanProperty archived;
 	
 	private StringProperty typeSupport;
-	private ListProperty<TissuRequisDto> tissusRequis;
-	private ListProperty<FournitureRequiseDto> fournituresRequises;
+
+
 	
 	public PatronDto() {
 		id = new SimpleIntegerProperty();
@@ -39,10 +39,6 @@ public class PatronDto implements FxDto<Patron>{
 		this.typeVetement = new SimpleStringProperty();
 		this.description = new SimpleStringProperty();
 		typeSupport = new SimpleStringProperty();
-		this.tissusRequis = new SimpleListProperty<>();
-		setTissusRequis(new ArrayList<>());
-		this.fournituresRequises = new SimpleListProperty<>();
-		setFournituresRequises(new ArrayList<>());
 		this.archived = new SimpleBooleanProperty();
 	}
 	
@@ -112,12 +108,7 @@ public class PatronDto implements FxDto<Patron>{
 		this.description.set(description);
 	}
 
-	public List<TissuRequisDto> getTissusRequis() {
-		return tissusRequis.get();
-	}
-	public ListProperty<TissuRequisDto> getTissusRequisProperty() {
-		return tissusRequis;
-	}
+
 
 	public void setTypeSupport(SupportTypeEnum typeSupport) {
 		if (typeSupport == null)
@@ -138,23 +129,6 @@ public class PatronDto implements FxDto<Patron>{
 		return typeSupport;
 	}
 	
-	
-	public void setTissusRequis(List<TissuRequisDto> tissusRequis) {
-		ObservableList obs = FXCollections.observableArrayList(tissusRequis);
-		this.tissusRequis.set(obs);
-	}
-	
-	public void setFournituresRequises(List<FournitureRequiseDto> fournituresRequises) {
-		ObservableList obs = FXCollections.observableArrayList(fournituresRequises);
-		this.fournituresRequises.set(obs);
-	}
-	public List<FournitureRequiseDto> getFournituresRequises() {
-		return fournituresRequises.get();
-	}
-	public ListProperty<FournitureRequiseDto> getFournituresRequisesProperty() {
-		return fournituresRequises;
-	}
-
 	@Override
 	public String toString() {
 		return " " + modele.getValue()+" ("+typeVetement.getValue() + ") de la marque "+marque.getValue()+" (ref. " + reference.getValue() + ").";

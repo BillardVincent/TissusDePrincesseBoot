@@ -2,13 +2,17 @@ package fr.vbillard.tissusdeprincesseboot.controller.projet;
 
 import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.util.Strings;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
@@ -16,24 +20,43 @@ import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 import fr.vbillard.tissusdeprincesseboot.service.ImageService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuUsedService;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
-import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.Articles;
+import fr.vbillard.tissusdeprincesseboot.utils.Utils;
 import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.EntityToString;
 import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.ModelUtils;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 
 @Component
-@Scope("prototype")
+@Scope(Utils.PROTOTYPE)
 public class TissuUsedCardController implements IController {
 
 	@FXML
-	private Label longueur;
+	private Label typeLbl;	
+	@FXML
+	private Label matiereLbl;	
+	@FXML
+	private Label tissageLbl;
+	@FXML
+	private Label longueurLbl;
+	@FXML
+	private Label laizeLbl;
+	@FXML
+	private Label poidsLbL;
+	@FXML
+	private HBox typeHbx;	
+	@FXML
+	private HBox tissageHbx;	
+	@FXML
+	private HBox matiereHbx;
+	@FXML
+	private HBox laizeHbx;
+	@FXML
+	private HBox poidsHbx;
+	
+	
 	@FXML
 	private ImageView image;
 
@@ -74,7 +97,12 @@ public class TissuUsedCardController implements IController {
 	}
 
 	private void setCardContent() {
-		longueur.setText(tissuUsed.getLongueur() + " cm");
+		longueurLbl.setText(tissuUsed.getLongueur() + " cm");
+		laizeLbl.setText(tissu.getLaize() + " cm");
+		poidsLbL.setText(tissu.getPoids() + tissu.getUnitePoids());
+		typeLbl.setText(ModelUtils.startWithMajuscule(tissu.getTypeTissu()));
+		tissageLbl.setText(tissu.getTissage());
+		matiereLbl.setText(tissu.getMatiere());
 		Optional<Photo> pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
 		image.setImage(imageService.imageOrDefault(pictures));
 

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <Pane prefHeight="347.0" prefWidth="258.0"
-	xmlns="http://javafx.com/javafx/15.0.1"
+
 	xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetCardController">
 	<children>
@@ -29,7 +29,7 @@
 					</children>
 				</VBox>
 				<Label fx:id="titre" alignment="CENTER" prefHeight="35.0"
-					prefWidth="265.0" styleClass="title" text="TITRE"
+					prefWidth="265.0" styleClass="title-custom" text="TITRE"
 					textAlignment="CENTER" />
 				<HBox alignment="CENTER" prefHeight="26.0" prefWidth="258.0"
 					spacing="20.0">

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import fr.vbillard.tissusdeprincesseboot.dao.MatiereDao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissuDao;
-import fr.vbillard.tissusdeprincesseboot.dao.TissuVariantDao;
 import fr.vbillard.tissusdeprincesseboot.exception.CantBeDeletedException;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
@@ -22,7 +21,6 @@ import lombok.AllArgsConstructor;
 public class MatiereService extends AbstractService<Matiere> {
 	private MatiereDao dao;
 	private TissuDao tissuDao;
-	private TissuVariantDao tissuVariantDao;
 
 	@Override
 	protected void beforeSaveOrUpdate(Matiere entity) {
@@ -64,9 +62,6 @@ public class MatiereService extends AbstractService<Matiere> {
 
 	public void checkIfMatiereIsUsed(Matiere matiere) {
 		if (tissuDao.existsTissuByMatiere(matiere)) {
-			throw new CantBeDeletedException(matiere, null);
-		}
-		if (tissuVariantDao.existsTissuVariantByMatiere(matiere)) {
 			throw new CantBeDeletedException(matiere, null);
 		}
 	}

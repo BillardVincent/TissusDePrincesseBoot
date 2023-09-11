@@ -12,12 +12,13 @@ import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetEditListElement
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
+import fr.vbillard.tissusdeprincesseboot.utils.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.HBox;
 
 @Component
-@Scope("prototype")
+@Scope(Utils.PROTOTYPE)
 public class PlusCardController implements IController{
 
     protected StageInitializer initializer;
@@ -51,8 +52,7 @@ public class PlusCardController implements IController{
     				"Souhaitez-vous débloquer l'édition de cet élément?");
     		
     		if(result.isPresent() && result.get() == ButtonType.OK){
-    			parent.setLock(false);
-    			// TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    			parent.setLock(false);   			
             	setIcone(FontAwesomeIcon.PLUS_CIRCLE);
     		}
     	}

@@ -17,12 +17,13 @@ import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSear
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.SpecificationUtils;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
+import fr.vbillard.tissusdeprincesseboot.model.PatronVersion_;
 import fr.vbillard.tissusdeprincesseboot.model.Patron_;
 import fr.vbillard.tissusdeprincesseboot.model.Tissage;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
+import fr.vbillard.tissusdeprincesseboot.model.TissuRequisLaizeOption;
+import fr.vbillard.tissusdeprincesseboot.model.TissuRequisLaizeOption_;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis_;
-import fr.vbillard.tissusdeprincesseboot.model.TissuVariant;
-import fr.vbillard.tissusdeprincesseboot.model.TissuVariant_;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu_;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
 import fr.vbillard.tissusdeprincesseboot.model.enums.SupportTypeEnum;
@@ -63,20 +64,20 @@ public class PatronSpecification implements Specification<Patron> {
 
 	private static class Joins {
 		private Join<Patron, TissuRequis> joinTissuRequis;
-		private Join<Patron, TissuVariant> joinTissuVariant;
+		private Join<Patron, TissuRequisLaizeOption> joinTissuRequisLaizeOption;
 
 		private Join<Patron, TissuRequis> joinTissuRequis(Root<Patron> root) {
 			if (joinTissuRequis == null) {
-				joinTissuRequis = root.join(Patron_.TISSU_REQUIS);
+				joinTissuRequis = root.join(Patron_.VERSIONS).join(PatronVersion_.TISSU_REQUIS);
 			}
 			return joinTissuRequis;
 		}
-
-		private Join<Patron, TissuVariant> joinTissuVariant(Root<Patron> root) {
-			if (joinTissuVariant == null) {
-				joinTissuVariant = joinTissuRequis(root).join(TissuVariant_.REQUIS);
+		
+		private Join<Patron, TissuRequisLaizeOption> joinTissuRequisLaizeOption(Root<Patron> root) {
+			if (joinTissuRequisLaizeOption == null) {
+				joinTissuRequisLaizeOption = root.join(Patron_.VERSIONS).join(PatronVersion_.TISSU_REQUIS).join(TissuRequis_.OPTION);
 			}
-			return joinTissuVariant;
+			return joinTissuRequisLaizeOption;
 		}
 	}
 
@@ -110,15 +111,23 @@ public class PatronSpecification implements Specification<Patron> {
 			predicateList.add(SpecificationUtils.getCharacterSearchPredicate(typeVetement,
 					patron.get(Patron_.TYPE_VETEMENT), cb));
 		}
-
+		if (matieres != null) {
+			predicateList.add(joins.joinTissuRequis(patron).get(TissuRequis_.MATIERES).in(matieres));
+		}
+		if (typeTissu != null) {
+			predicateList.add(joins.joinTissuRequis(patron).get(TissuRequis_.TYPE_TISSU).in(typeTissu));
+		}
+		if (tissages != null) {
+			predicateList.add(joins.joinTissuRequis(patron).get(TissuRequis_.TISSAGES).in(tissages));
+		}
 		if (longueur != null) {
 			predicateList.add(SpecificationUtils.getNumericSearchPredicate(longueur,
-					joins.joinTissuRequis(patron).get(TissuRequis_.LONGUEUR), cb));
+					joins.joinTissuRequisLaizeOption(patron).get(TissuRequisLaizeOption_.LONGUEUR), cb));
 		}
 
 		if (laize != null) {
 			predicateList.add(SpecificationUtils.getNumericSearchPredicate(laize,
-					joins.joinTissuRequis(patron).get(TissuRequis_.LAIZE), cb));
+					joins.joinTissuRequisLaizeOption(patron).get(TissuRequisLaizeOption_.LAIZE), cb));
 		}
 
 		if (!CollectionUtils.isEmpty(poids)) {
@@ -127,18 +136,6 @@ public class PatronSpecification implements Specification<Patron> {
 		
 		if (!CollectionUtils.isEmpty(support)) {
 			predicateList.add(patron.get(Patron_.SUPPORT_TYPE).in(support));
-		}
-
-		if (!CollectionUtils.isEmpty(matieres)) {
-			predicateList.add(joins.joinTissuVariant(patron).get(TissuVariant_.MATIERE).in(matieres));
-		}
-
-		if (!CollectionUtils.isEmpty(typeTissu)) {
-			predicateList.add(joins.joinTissuVariant(patron).get(TissuVariant_.TYPE_TISSU).in(typeTissu));
-		}
-
-		if (!CollectionUtils.isEmpty(tissages)) {
-			predicateList.add(joins.joinTissuVariant(patron).get(TissuVariant_.TISSAGE).in(tissages));
 		}
 
 		if(archived != null){

@@ -18,6 +18,7 @@ import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureService;
 import fr.vbillard.tissusdeprincesseboot.service.ImageService;
 import fr.vbillard.tissusdeprincesseboot.utils.Constants;
+import fr.vbillard.tissusdeprincesseboot.utils.Utils;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils;
 import javafx.fxml.FXML;
@@ -26,7 +27,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
 @Component
-@Scope("prototype")
+@Scope(Utils.PROTOTYPE)
 public class FournitureCardController implements IController {
 
 	@FXML

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="648.0" prefWidth="421.0" stylesheets="@../../../../style/style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.patron.edit.accordion.PatronVersionAccordionController">
+  <children>
+    <ScrollPane fx:id="wrapperPane" accessibleRole="PARENT" hbarPolicy="NEVER" prefHeight="648.0" prefWidth="370.0">
+    <VBox layoutX="-2.0" layoutY="1.0" prefHeight="642.0" prefWidth="370.0">
+      <children>
+        <HBox prefHeight="24.0" prefWidth="448.0">
+          <children>
+            <Label prefHeight="26.0" prefWidth="121.0" text="Tissus">
+              <font>
+                <Font size="18.0" />
+              </font>
+            </Label>
+            <JFXButton fx:id="addTissuButton" onAction="#handleAjouterTissu" />
+          </children>
+          <padding>
+            <Insets left="10.0" top="25.0" />
+          </padding>
+        </HBox>
+            <VBox fx:id="tissuVbox" prefHeight="234.0" prefWidth="402.0" spacing="10.0">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </VBox>
+        <Separator prefWidth="200.0">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin></Separator>
+        <HBox prefHeight="32.0" prefWidth="335.0">
+          <children>
+            <Label prefHeight="26.0" prefWidth="121.0" text="Fournitures">
+              <font>
+                <Font size="18.0" />
+              </font>
+            </Label>
+            <JFXButton fx:id="addFournitureButton" onAction="#handleAjouterFourniture" />
+          </children>
+          <padding>
+            <Insets left="10.0" top="25.0" />
+          </padding>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+        </HBox>
+        <VBox fx:id="fournitureVbox" prefHeight="234.0" prefWidth="354.0" spacing="10.0">
+          <VBox.margin>
+            <Insets bottom="10.0" top="10.0" />
+          </VBox.margin>
+        </VBox>
+      </children>
+    </VBox>
+    </ScrollPane>
+  </children>
+</Pane>

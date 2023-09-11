@@ -16,4 +16,4 @@ public abstract class AbstractEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected int id;
-}
+	}

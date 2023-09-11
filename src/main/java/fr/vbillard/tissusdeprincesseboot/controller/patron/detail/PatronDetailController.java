@@ -1,25 +1,24 @@
-package fr.vbillard.tissusdeprincesseboot.controller.patron;
+package fr.vbillard.tissusdeprincesseboot.controller.patron.detail;
+
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.picture_helper.PatronPictureHelper;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
-import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
-import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
-import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronVersionDto;
+import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
+import fr.vbillard.tissusdeprincesseboot.service.PatronVersionService;
+import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.TilePane;
+import javafx.scene.layout.HBox;
 
 @Component
 public class PatronDetailController implements IController {
@@ -39,7 +38,7 @@ public class PatronDetailController implements IController {
 	@FXML
 	private Label typeSupportPatronLabel;
 	@FXML
-	private TilePane listFournitures;
+	private HBox versionPane;
 
 	private final RootController rootController;
 	private StageInitializer initializer;
@@ -47,12 +46,14 @@ public class PatronDetailController implements IController {
 
 	private final ProjetService projetService;
 	private final PatronPictureHelper pictureUtils;
+	private final PatronVersionService patronVersionservice;
 
-	PatronDetailController(PatronPictureHelper pictureUtils, RootController rootController,
+	PatronDetailController(PatronPictureHelper pictureUtils, RootController rootController, PatronVersionService patronVersionservice,
 			ProjetService projetService) {
 		this.rootController = rootController;
 		this.projetService = projetService;
 		this.pictureUtils = pictureUtils;
+		this.patronVersionservice = patronVersionservice;
 	}
 
 	@Override
@@ -68,6 +69,18 @@ public class PatronDetailController implements IController {
 		typeVetementPatronLabel.setText(patron.getTypeVetement());
 		typeSupportPatronLabel.setText(patron.getTypeSupport());
 
+		// TODO patron version
+		
+		List<PatronVersionDto> patronVersionList = patronVersionservice.getDtoByPatronId(patron.getId());
+		
+		for (PatronVersionDto version : patronVersionList) {
+			FxData versionData = new FxData();
+			versionData.setPatronVersion(version);
+			versionPane.getChildren().add(initializer.displayPane(PathEnum.PATRON_DETAIL_VERSION_DISPLAY, versionData));
+		}
+
+
+		/*
 		for (TissuRequisDto t : patron.getTissusRequis()) {
 			FxData fxData = new FxData();
 			fxData.setTissuRequis(t);
@@ -81,6 +94,8 @@ public class PatronDetailController implements IController {
 			Pane element = initializer.displayPane(PathEnum.LIST_ELEMENT, fxData);
 			listFournitures.getChildren().add(element);
 		}
+
+		 */
 		
 		pictureUtils.setPane(image, patron);
 
@@ -91,16 +106,5 @@ public class PatronDetailController implements IController {
 
 	}
 
-	public void createProject() {
-		ProjetDto projet = new ProjetDto();
-		projet.setPatron(patron);
-		projet.setProjectStatus(ProjectStatus.BROUILLON);
-		projet = projetService.saveOrUpdate(projet);
-		rootController.displayProjetEdit(projet);
-	}
-
-	/*
-	 * txtInput.setEditable(false); txtInput.setMouseTransparent(true);
-	 * txtInput.setFocusTraversable(false);
-	 */
+	
 }

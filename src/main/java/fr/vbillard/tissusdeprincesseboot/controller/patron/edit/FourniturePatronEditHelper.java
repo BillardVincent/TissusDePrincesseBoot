@@ -13,21 +13,16 @@ import com.jfoenix.controls.JFXTextField;
 
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureVariantDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureRequise;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureUsed;
-import fr.vbillard.tissusdeprincesseboot.model.FournitureVariant;
 import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureRequiseService;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureUsedService;
-import fr.vbillard.tissusdeprincesseboot.service.FournitureVariantService;
 import fr.vbillard.tissusdeprincesseboot.service.PatronService;
 import fr.vbillard.tissusdeprincesseboot.service.TypeFournitureService;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils;
-import fr.vbillard.tissusdeprincesseboot.utils.Utils;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -35,14 +30,12 @@ import javafx.scene.layout.HBox;
 
 @Service
 public class FourniturePatronEditHelper extends
-    PatronEditHelper<Fourniture, FournitureVariant, FournitureRequise, FournitureUsed, FournitureDto, FournitureVariantDto, FournitureRequiseDto> {
+    PatronEditHelper<Fourniture, FournitureRequise, FournitureUsed, FournitureDto, FournitureRequiseDto> {
 
   private final TypeFournitureService typeFournitureService;
 
   public FourniturePatronEditHelper(PatronService patronService, TypeFournitureService typeFournitureService,
-      FournitureRequiseService requisService,
-      FournitureVariantService variantService, FournitureUsedService usedService) {
-    this.variantService = variantService;
+      FournitureRequiseService requisService,FournitureUsedService usedService) {
     this.usedService = usedService;
     this.requisService = requisService;
     this.typeFournitureService = typeFournitureService;
@@ -164,7 +157,7 @@ public class FourniturePatronEditHelper extends
 
   @Override
   protected void addToPatron(FournitureRequiseDto requis, PatronDto patron) {
-    patron.setFournituresRequises(requisService.convertToDto(requisService.getAllRequisByPatron(patron.getId())));
+    //patron.setFournituresRequises(requisService.convertToDto(requisService.getAllRequisByPatron(patron.getId())));
   }
 
   @Override
@@ -175,22 +168,18 @@ public class FourniturePatronEditHelper extends
   @Override
   protected void setRequisToPatron() {
 
-    patron.setFournituresRequises(requisService.convertToDto(requisService.getAllRequisByPatron(patron.getId())));
+   // patron.setFournituresRequises(requisService.convertToDto(requisService.getAllRequisByPatron(patron.getId())));
   }
 
-  @Override
-  protected void displayVariant(GridPane bottomGrid, FournitureVariantDto tv, int index) {
-    bottomGrid.add(new Label(
-        Utils.safeString(tv.getTypeName()) + " - " + tv.getIntituleSecondaire() + ":  " + FxUtils.safePropertyToString(
-            tv.getQuantiteSecondaireMinProperty()) + "/" + FxUtils.safePropertyToString(
-            tv.getQuantiteSecondaireMaxProperty()) + Utils.safeString(tv.getUniteSecondaire())), 0, index * 2);
-  }
 
   @Override
   protected List<FournitureRequiseDto> getListRequisFromPatron() {
+    /*
     if (patron.getFournituresRequisesProperty() != null && patron.getFournituresRequises() != null) {
       return patron.getFournituresRequises();
-    } else
+    }
+
+     */
       return Collections.emptyList();
   }
 

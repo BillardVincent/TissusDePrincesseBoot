@@ -1,8 +1,12 @@
 package fr.vbillard.tissusdeprincesseboot.controller.patron.edit;
 
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.safePropertyToString;
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.textFieldToFirstCharOrX;
 import static fr.vbillard.tissusdeprincesseboot.controller.validators.ValidatorUtils.areValidatorsValid;
 
+import java.util.Objects;
+
+import org.apache.commons.lang3.BooleanUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 import com.jfoenix.controls.JFXButton;
@@ -18,25 +22,29 @@ import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.GlyphIconUtil;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
 import fr.vbillard.tissusdeprincesseboot.controller.validators.NonNullValidator;
 import fr.vbillard.tissusdeprincesseboot.controller.validators.Validator;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronVersionDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
+import fr.vbillard.tissusdeprincesseboot.model.PatronVersion;
 import fr.vbillard.tissusdeprincesseboot.model.enums.SupportTypeEnum;
 import fr.vbillard.tissusdeprincesseboot.service.PatronService;
+import fr.vbillard.tissusdeprincesseboot.service.PatronVersionService;
 import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
 import javafx.fxml.FXML;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 @Component
 public class PatronEditController implements IController {
-
-  private static final String X = "X";
 
   @FXML
   private JFXTextField marqueField;
@@ -45,17 +53,9 @@ public class PatronEditController implements IController {
   @FXML
   private JFXTextField typeVetementField;
   @FXML
-  private JFXButton addTissuButton;
-  @FXML
-  private JFXButton addFournitureButton;
+  private JFXButton addVersionBtn;
   @FXML
   private VBox tissuEtFournitureContainer;
-  @FXML
-  private VBox conseilleContainer;
-  @FXML
-  private GridPane tissusPatronListGrid;
-  @FXML
-  private GridPane fournituresPatronListGrid;
   @FXML
   private JFXButton generateReferenceButton;
   @FXML
@@ -66,6 +66,8 @@ public class PatronEditController implements IController {
   public JFXComboBox<String> typeSupportCbBox;
   @FXML
   public JFXButton archiverBtn;
+  @FXML
+  private Accordion versionAccordion;
 
   private StageInitializer initializer;
   private final RootController root;
@@ -75,47 +77,39 @@ public class PatronEditController implements IController {
   private final ModelMapper mapper;
   private boolean okClicked = false;
   private StageInitializer mainApp;
-  // private ObservableList<TissuRequisDto> listTissuRequis;
-  private boolean unregistredPatron;
+
   private final PatronService patronService;
+  private final PatronVersionService patronVersionService;
 
-  // private HBox tissuRequisDisplayHbox;
-
-  private VBox bottomRightVbox;
   private Validator[] validators;
 
-  private final TissuPatronEditHelper tissuPatronEditHelper;
-  private final FourniturePatronEditHelper fourniturePatronEditHelper;
-
   public PatronEditController(RootController root, PatronPictureHelper pictureUtils, ModelMapper mapper,
-      PatronService patronService, FourniturePatronEditHelper fourniturePatronEditHelper,
-      TissuPatronEditHelper tissuPatronEditHelper) {
+      PatronService patronService, PatronVersionService patronVersionService) {
 
     this.mapper = mapper;
     this.patronService = patronService;
     this.pictureUtils = pictureUtils;
     this.root = root;
-    this.fourniturePatronEditHelper = fourniturePatronEditHelper;
-    this.tissuPatronEditHelper = tissuPatronEditHelper;
+    this.patronVersionService = patronVersionService;
   }
 
   @FXML
   private void initialize() {
-    addTissuButton.setGraphic(GlyphIconUtil.plusCircleNormal());
-    addFournitureButton.setGraphic(GlyphIconUtil.plusCircleNormal());
 
     generateReferenceButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.MAGIC));
     generateReferenceButton.setTooltip(new Tooltip("Générer une référence automatiquement"));
+    addVersionBtn.setGraphic(GlyphIconUtil.plusCircleTiny());
 
     validators = new Validator[] {new NonNullValidator<>(referenceField, "référence"),
         new NonNullValidator<>(marqueField, "marque"), new NonNullValidator<>(modeleField, "modèle"),
-        new NonNullValidator<>(typeVetementField, "type")};
+        new NonNullValidator<>(typeVetementField, "type")
+    };
+
   }
 
   private void setDisabledButton() {
-    unregistredPatron = (patron == null || patron.getIdProperty() == null || patron.getId() == 0);
-    addTissuButton.setDisable(unregistredPatron);
-    addFournitureButton.setDisable(unregistredPatron);
+    boolean unregistredPatron = (patron == null || patron.getIdProperty() == null || patron.getId() == 0);
+
   }
 
   /**
@@ -138,15 +132,12 @@ public class PatronEditController implements IController {
       patron.setTypeSupport(typeSupportCbBox.getValue());
 
       patron = patronService.create(patron);
-      fourniturePatronEditHelper.setPatron(patron);
-      tissuPatronEditHelper.setPatron(patron);
+
       setDisabledButton();
 
       okClicked = true;
-
     }
   }
-
 
   @FXML
   private void handleCancel() {
@@ -161,9 +152,9 @@ public class PatronEditController implements IController {
   @FXML
   private void handleGenerateReference() {
     StringBuilder sb = new StringBuilder();
-    sb.append(marqueField.getText().trim().isEmpty() ? X : marqueField.getText().toUpperCase().charAt(0))
-        .append(modeleField.getText().trim().isEmpty() ? X : modeleField.getText().toUpperCase().charAt(0))
-        .append(typeVetementField.getText().trim().isEmpty() ? X : typeVetementField.getText().toUpperCase().charAt(0))
+    sb.append(textFieldToFirstCharOrX(marqueField))
+        .append(textFieldToFirstCharOrX(modeleField))
+        .append(textFieldToFirstCharOrX(typeVetementField))
         .append("-");
     boolean ref = true;
     int refNb = 0;
@@ -174,25 +165,13 @@ public class PatronEditController implements IController {
     referenceField.setText(sb.append(refNb).toString());
   }
 
-  @FXML
-  private void handleTissuListedit() {
-    tissuPatronEditHelper.displayRequis(new TissuRequisDto());
-  }
-
-  @FXML
-  private void handleFournitureListedit() {
-    fourniturePatronEditHelper.displayRequis(new FournitureRequiseDto());
-  }
-
-
-
   @Override
   public void setStageInitializer(StageInitializer initializer, FxData data) {
     this.initializer = initializer;
 
     if (data == null || data.getPatron() == null) {
       patron =
-          mapper.map(new Patron("", "", "", "", "", false, SupportTypeEnum.NON_RENSEIGNE, null, null), PatronDto.class);
+          mapper.map(new Patron("", "", "", "", "", false, SupportTypeEnum.NON_RENSEIGNE, null), PatronDto.class);
       setDisabledButton();
 
     } else {
@@ -207,15 +186,16 @@ public class PatronEditController implements IController {
       FxUtils.buildComboBox(SupportTypeEnum.labels(), patron.getTypeSupportProperty(),
           SupportTypeEnum.NON_RENSEIGNE.label, typeSupportCbBox);
       pictureUtils.setPane(imagePane, patron);
-
-      tissuPatronEditHelper.setContainer(tissuEtFournitureContainer, tissusPatronListGrid, patron, initializer);
-      fourniturePatronEditHelper.setContainer(tissuEtFournitureContainer, fournituresPatronListGrid, patron,
-          initializer);
-
-      tissuPatronEditHelper.loadRequisForPatron();
-      fourniturePatronEditHelper.loadRequisForPatron();
       setBoutonArchiver();
+
+      reload(-1);
+
     }
+    displayRightPane();
+  }
+
+  private boolean allPanesClosed(Accordion accordion) {
+   return Objects.isNull(accordion.getExpandedPane());
   }
 
   @FXML
@@ -253,5 +233,80 @@ public class PatronEditController implements IController {
   private void setBoutonArchiver() {
     archiverBtn.setText(patron.isArchived() ? "Désarchiver" : "Archiver");
   }
+
+  public void displayRightPane(TissuRequisDto tissuRequisDto) {
+    tissuEtFournitureContainer.getChildren().clear();
+    FxData data = new FxData();
+    data.setParentController(this);
+    data.setTissuRequis(tissuRequisDto);
+    tissuEtFournitureContainer.getChildren().add(initializer.displayPane(PathEnum.PATRON_EDIT_TISSU_REQUIS, data));
+
+  }
+
+  public void displayRightPane(FournitureRequiseDto fournitureRequiseDto) {
+    tissuEtFournitureContainer.getChildren().clear();
+    FxData data = new FxData();
+    data.setParentController(this);
+    data.setFournitureRequise(fournitureRequiseDto);
+    tissuEtFournitureContainer.getChildren().add(initializer.displayPane(PathEnum.PATRON_EDIT_FOURNITURE_REQUISE, data));
+
+  }
+
+  public void displayRightPane(PatronVersionDto patronVersionDto) {
+    tissuEtFournitureContainer.getChildren().clear();
+    FxData data = new FxData();
+    data.setParentController(this);
+    data.setPatronVersion(patronVersionDto);
+    tissuEtFournitureContainer.getChildren().add(initializer.displayPane(PathEnum.PATRON_EDIT_PATRON_VERSION, data));
+  }
+
+  void displayRightPane() {
+    tissuEtFournitureContainer.getChildren().clear();
+    FxData data = new FxData();
+    data.setParentController(this);
+    data.setPatron(patron);
+    Pane p = initializer.displayPane(PathEnum.PATRON_EDIT_PATRON, data);
+    tissuEtFournitureContainer.getChildren().add(p);
+
+  }
+
+  public void reload(int versionIdOpen) {
+    versionAccordion.getPanes().clear();
+    for (PatronVersion pv : patronVersionService.getByPatronId(patron.getId())){
+      TitledPane pane = new TitledPane();
+      pane.setText("Version : " + pv.getNom());
+      pane.getStyleClass().add("title-pane-custom");
+      FxData fxData = new FxData();
+      fxData.setPatronVersion(patronVersionService.convert(pv));
+      fxData.setParentController(this);
+      Pane content = initializer.displayPane(PathEnum.PATRON_VERSION_ACCORDION, fxData);
+      pane.setContent(content);
+      pane.expandedProperty().addListener((obs, oldValue, newValue) -> {
+        if (BooleanUtils.isTrue(newValue)) {
+          displayRightPane(mapper.map(pv, PatronVersionDto.class));
+        } else {
+          if (allPanesClosed(versionAccordion)){
+            displayRightPane();
+          }
+        }
+      });
+
+      versionAccordion.getPanes().add(pane);
+      if (versionIdOpen == pv.getId()){
+        versionAccordion.setExpandedPane(pane);
+      }
+    }
+  }
+
+
+  @FXML
+  public void handleAjouterVersion() {
+    PatronVersion pv = new PatronVersion();
+    pv.setNom("nouvelle version");
+    pv.setPatron(patronService.convert(patron));
+    pv = patronVersionService.saveOrUpdate(pv);
+    reload(pv.getId());
+  }
+  
 
 }
