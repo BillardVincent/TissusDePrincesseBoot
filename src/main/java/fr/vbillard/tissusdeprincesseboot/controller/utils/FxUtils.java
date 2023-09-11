@@ -5,6 +5,8 @@ import static fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_eleme
 import java.util.List;
 import java.util.StringJoiner;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.*;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -429,6 +431,22 @@ public class FxUtils {
 			}
 		}
 
+	}
+
+	// ---------------------------------------------
+	// Listeners
+	// ----------------------------------------------
+
+	/**
+	 * Si une valeur observable change, la BooleanProperty passe à true
+	 * @param values TextField.textProperty(), ToggleButton.selectedProperty(), ComboBox.valueProperty()
+	 * @param hasChanged BooleanProperty à observer
+	 */
+	public static void onChangeListener(ObservableValue<?>[] values, BooleanProperty hasChanged) {
+		for (ObservableValue<?> ov : values) {
+			ov.addListener((observable, oldValue, newValue) -> {
+				if (!oldValue.equals(newValue)) hasChanged.setValue(true);});
+		}
 	}
 
 }

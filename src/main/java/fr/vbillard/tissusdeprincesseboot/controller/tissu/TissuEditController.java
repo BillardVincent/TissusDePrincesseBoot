@@ -1,14 +1,22 @@
 package fr.vbillard.tissusdeprincesseboot.controller.tissu;
 
-import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.safePropertyToString;
-import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.textFieldToFirstCharOrX;
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.*;
 import static fr.vbillard.tissusdeprincesseboot.controller.validators.ValidatorUtils.areValidatorsValid;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Predicate;
 
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
+import fr.vbillard.tissusdeprincesseboot.utils.Constants;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.logging.log4j.util.Strings;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -56,275 +64,294 @@ import javafx.scene.image.ImageView;
 
 @Component
 public class TissuEditController implements IController {
+    @FXML
+    public JFXToggleButton decatiField;
+    @FXML
+    public JFXTextField descriptionField;
+    @FXML
+    public JFXTextField lieuDachatField;
+    @FXML
+    public IntegerSpinner poidsField;
+    @FXML
+    public JFXComboBox<String> unitePoidsField;
+    @FXML
+    public IntegerSpinner laizeField;
+    @FXML
+    public IntegerSpinner longueurField;
+    @FXML
+    public JFXToggleButton chuteField;
+    @FXML
+    public JFXComboBox<String> typeField;
+    @FXML
+    public JFXComboBox<String> matiereField;
+    @FXML
+    public JFXButton addMatiereButton;
+    @FXML
+    public JFXComboBox<String> tissageField;
+    @FXML
+    public JFXButton addTissageButton;
+    @FXML
+    public JFXTextField referenceField;
+    @FXML
+    public JFXButton generateReferenceButton;
+    @FXML
+    public Label ancienneValeurLabel;
+    @FXML
+    public Label ancienneValeurInfo;
+    @FXML
+    public Label consommeLabel;
+    @FXML
+    public Label consommeIndo;
+    @FXML
+    public ImageView imagePane;
+    @FXML
+    public JFXButton addPictureWebBtn;
+    @FXML
+    public JFXButton pictureExpendBtn;
+    @FXML
+    public JFXButton addPictureBtn;
+    @FXML
+    public Label imageNotSaved;
+    @FXML
+    public JFXButton addPictureClipboardBtn;
+    @FXML
+    public JFXButton archiverBtn;
+    @FXML
+	public FontAwesomeIconView warningSaveIcon;
 	@FXML
-	public JFXToggleButton decatiField;
-	@FXML
-	public JFXTextField descriptionField;
-	@FXML
-	public JFXTextField lieuDachatField;
-	@FXML
-	public IntegerSpinner poidsField;
-	@FXML
-	public JFXComboBox<String> unitePoidsField;
-	@FXML
-	public IntegerSpinner laizeField;
-	@FXML
-	public IntegerSpinner longueurField;
-	@FXML
-	public JFXToggleButton chuteField;
-	@FXML
-	public JFXComboBox<String> typeField;
-	@FXML
-	public JFXComboBox<String> matiereField;
-	@FXML
-	public JFXButton addMatiereButton;
-	@FXML
-	public JFXComboBox<String> tissageField;
-	@FXML
-	public JFXButton addTissageButton;
-	@FXML
-	public JFXTextField referenceField;
-	@FXML
-	public JFXButton generateReferenceButton;
-	@FXML
-	public Label ancienneValeurLabel;
-	@FXML
-	public Label ancienneValeurInfo;
-	@FXML
-	public Label consommeLabel;
-	@FXML
-	public Label consommeIndo;
-	@FXML
-	public ImageView imagePane;
-	@FXML
-	public JFXButton addPictureWebBtn;
-	@FXML
-	public JFXButton pictureExpendBtn;
-	@FXML
-	public JFXButton addPictureBtn;
-	@FXML
-	public Label imageNotSaved;
-	@FXML
-	public JFXButton addPictureClipboardBtn;
-	@FXML
-	public JFXButton archiverBtn;
+	public Label warningSaveLbl;
+
 
 	private final RootController root;
 	private StageInitializer initializer;
 
-	private TissuDto tissu;
-	private boolean okClicked = false;
+    private TissuDto tissu;
+    private boolean okClicked = false;
 
-	private final MapperService mapper;
-	private final MatiereService matiereService;
-	private final TissageService tissageService;
-	private final TissuService tissuService;
-	private final TissuPictureHelper pictureHelper;
-	private final ConstantesMetier constantesMetier;
+    private final MapperService mapper;
+    private final MatiereService matiereService;
+    private final TissageService tissageService;
+    private final TissuService tissuService;
+    private final TissuPictureHelper pictureHelper;
+    private final ConstantesMetier constantesMetier;
 
-	private Validator[] validators;
+    private BooleanProperty hasChanged = new SimpleBooleanProperty(false);
 
-	public TissuEditController(TissuPictureHelper pictureHelper, MapperService mapper, TissuService tissuService,
-			MatiereService matiereService, TissageService tissageService, RootController root,
-			ConstantesMetier constantesMetier) {
-		this.mapper = mapper;
-		this.tissuService = tissuService;
-		this.matiereService = matiereService;
-		this.tissageService = tissageService;
-		this.pictureHelper = pictureHelper;
-		this.root = root;
-		this.constantesMetier = constantesMetier;
-	}
+    private Validator[] validators;
 
-	@Override
-	public void setStageInitializer(StageInitializer initializer, FxData data) {
-		this.initializer = initializer;
+    public TissuEditController(TissuPictureHelper pictureHelper, MapperService mapper, TissuService tissuService,
+                               MatiereService matiereService, TissageService tissageService, RootController root,
+                               ConstantesMetier constantesMetier) {
+        this.mapper = mapper;
+        this.tissuService = tissuService;
+        this.matiereService = matiereService;
+        this.tissageService = tissageService;
+        this.pictureHelper = pictureHelper;
+        this.root = root;
+        this.constantesMetier = constantesMetier;
+    }
 
-		if (data == null || data.getTissu() == null) {
-			throw new IllegalData();
-		}
-		tissu = data.getTissu();
-		if (tissu == null || tissu.getChuteProperty() == null) {
-			tissu = mapper.map(new Tissu(0, "", 0, 0, "", null, TypeTissuEnum.NON_RENSEIGNE, 0,
-					UnitePoids.NON_RENSEIGNE, false, "", null, false, false));
-		}
+    @Override
+    public void setStageInitializer(StageInitializer initializer, FxData data) {
+        this.initializer = initializer;
 
-		longueurField.setText(safePropertyToString(tissu.getLongueurProperty()));
-		laizeField.setText(safePropertyToString(tissu.getLaizeProperty()));
-		poidsField.setText(safePropertyToString(tissu.getPoidseProperty()));
-		referenceField.setText(safePropertyToString(tissu.getReferenceProperty()));
-		descriptionField.setText(safePropertyToString(tissu.getDescriptionProperty()));
-		decatiField.setSelected(tissu.getDecatiProperty() != null && tissu.isDecati());
-		lieuDachatField.setText(safePropertyToString(tissu.getLieuAchatProperty()));
-		chuteField.setSelected(tissu.getChuteProperty() != null && tissu.isChute());
+        if (data == null || data.getTissu() == null) {
+            throw new IllegalData();
+        }
+        tissu = data.getTissu();
+        if (tissu == null || tissu.getChuteProperty() == null) {
+            tissu = mapper.map(new Tissu(0, "", 0, 0, "", null, TypeTissuEnum.NON_RENSEIGNE, 0,
+                    UnitePoids.NON_RENSEIGNE, false, "", null, false, false));
+        }
 
-		unitePoidsField.setItems(FXCollections.observableArrayList(UnitePoids.labels()));
-		unitePoidsField.setValue(
-				tissu.getUnitePoidsProperty() == null ? UnitePoids.NON_RENSEIGNE.label : tissu.getUnitePoids());
+        longueurField.setText(safePropertyToString(tissu.getLongueurProperty()));
+        laizeField.setText(safePropertyToString(tissu.getLaizeProperty()));
+        poidsField.setText(safePropertyToString(tissu.getPoidseProperty()));
+        referenceField.setText(safePropertyToString(tissu.getReferenceProperty()));
+        descriptionField.setText(safePropertyToString(tissu.getDescriptionProperty()));
+        decatiField.setSelected(tissu.getDecatiProperty() != null && tissu.isDecati());
+        lieuDachatField.setText(safePropertyToString(tissu.getLieuAchatProperty()));
+        chuteField.setSelected(tissu.getChuteProperty() != null && tissu.isChute());
 
-		typeField.setItems(FXCollections.observableArrayList(TypeTissuEnum.labels()));
-		typeField.setValue(
-				tissu.getUnitePoidsProperty() == null ? TypeTissuEnum.NON_RENSEIGNE.label : tissu.getTypeTissu());
+        unitePoidsField.setItems(FXCollections.observableArrayList(UnitePoids.labels()));
+        unitePoidsField.setValue(
+                tissu.getUnitePoidsProperty() == null ? UnitePoids.NON_RENSEIGNE.label : tissu.getUnitePoids());
 
-		matiereField.setItems(FXCollections.observableArrayList(matiereService.getAllMatieresValues()));
-		matiereField.setValue(safePropertyToString(tissu.getMatiereProperty()));
+        typeField.setItems(FXCollections.observableArrayList(TypeTissuEnum.labels()));
+        typeField.setValue(
+                tissu.getUnitePoidsProperty() == null ? TypeTissuEnum.NON_RENSEIGNE.label : tissu.getTypeTissu());
 
-		tissageField.setItems(FXCollections.observableArrayList(tissageService.getAllValues()));
-		tissageField.setValue(safePropertyToString(tissu.getTissageProperty()));
+        matiereField.setItems(FXCollections.observableArrayList(matiereService.getAllMatieresValues()));
+        matiereField.setValue(safePropertyToString(tissu.getMatiereProperty()));
 
-		pictureHelper.setPane(imagePane, tissu);
-		boolean tissuIsNew = tissu.getId() == 0;
-		addPictureWebBtn.setDisable(tissuIsNew);
-		pictureExpendBtn.setDisable(tissuIsNew);
-		addPictureBtn.setDisable(tissuIsNew);
-		imageNotSaved.setVisible(tissuIsNew);
-		addPictureClipboardBtn.setDisable(tissuIsNew);
-		archiverBtn.setDisable(tissuIsNew);
-		setBoutonArchiver();
-	}
+        tissageField.setItems(FXCollections.observableArrayList(tissageService.getAllValues()));
+        tissageField.setValue(safePropertyToString(tissu.getTissageProperty()));
 
-	@FXML
-	private void initialize() {
-		addTissageButton.setGraphic(GlyphIconUtil.plusCircleTiny());
-		addMatiereButton.setGraphic(GlyphIconUtil.plusCircleTiny());
-		FontAwesomeIconView magicIcon = new FontAwesomeIconView(FontAwesomeIcon.MAGIC);
-		generateReferenceButton.setGraphic(magicIcon);
-		generateReferenceButton.setTooltip(new Tooltip("Générer une référence automatiquement"));
+        pictureHelper.setPane(imagePane, tissu);
+        boolean tissuIsNew = tissu.getId() == 0;
+        addPictureWebBtn.setDisable(tissuIsNew);
+        pictureExpendBtn.setDisable(tissuIsNew);
+        addPictureBtn.setDisable(tissuIsNew);
+        imageNotSaved.setVisible(tissuIsNew);
+        addPictureClipboardBtn.setDisable(tissuIsNew);
+        archiverBtn.setDisable(tissuIsNew);
+		warningSaveIcon.setVisible(false);
+		warningSaveLbl.setVisible(false);
+		GlyphIconUtil.generateIcon(warningSaveIcon, GlyphIconUtil.VERY_BIG_ICONE_SIZE, Constants.colorWarning);
+        setBoutonArchiver();
 
-		validators = new Validator[] {new NonNullValidator<>(referenceField, "référence"),
-				new NonNullValidator<>(matiereField, "matière"),
-				new NonNullValidator<>(unitePoidsField, "unité de poids"),
-				new NonNullValidator<>(poidsField, "poids"),
-				new NonNullValidator<>(typeField, "type")};
-	}
+        onChangeListener(new ObservableValue[]{longueurField.textProperty(), laizeField.textProperty(),
+                poidsField.textProperty(), referenceField.textProperty(), descriptionField.textProperty(),
+                decatiField.selectedProperty(), lieuDachatField.textProperty(), chuteField.selectedProperty(),
+                unitePoidsField.valueProperty(), typeField.valueProperty(), matiereField.valueProperty(),
+                tissageField.valueProperty()
+        }, hasChanged);
 
-	public boolean isOkClicked() {
-		return okClicked;
-	}
+		hasChanged.addListener((observable, oldValue, newValue) -> {
+			warningSaveIcon.setVisible(newValue);
+			warningSaveLbl.setVisible(newValue);
+		});
+    }
 
-	@FXML
-	private void handleOk() {
-		if (areValidatorsValid(initializer, validators)) {
+    @FXML
+    private void initialize() {
+        addTissageButton.setGraphic(GlyphIconUtil.plusCircleTiny());
+        addMatiereButton.setGraphic(GlyphIconUtil.plusCircleTiny());
+        FontAwesomeIconView magicIcon = new FontAwesomeIconView(FontAwesomeIcon.MAGIC);
+        generateReferenceButton.setGraphic(magicIcon);
+        generateReferenceButton.setTooltip(new Tooltip("Générer une référence automatiquement"));
 
+        validators = new Validator[]{new NonNullValidator<>(referenceField, "référence"),
+                new NonNullValidator<>(matiereField, "matière"),
+                new NonNullValidator<>(unitePoidsField, "unité de poids"),
+                new NonNullValidator<>(poidsField, "poids"),
+                new NonNullValidator<>(typeField, "type")};
+    }
+
+    public boolean isOkClicked() {
+        return okClicked;
+    }
+
+    @FXML
+    private void handleOk() {
+        if (areValidatorsValid(initializer, validators)) {
+			hasChanged.setValue(false);
 			setTissuFromFields();
-			okClicked = true;
-			//root.displayTissusDetails(tissu);
-		}
-	}
+            okClicked = true;
+            //root.displayTissusDetails(tissu);
+        }
+    }
 
-	private void setTissuFromFields() {
-		tissu.setReference(referenceField.getText());
-		tissu.setLongueur(Integer.parseInt(longueurField.getText()));
-		tissu.setLaize(Integer.parseInt(laizeField.getText()));
-		tissu.setDescription(descriptionField.getText());
-		tissu.setMatiere(matiereField.getValue());
-		tissu.setTypeTissu(typeField.getValue());
-		tissu.setPoids(Integer.parseInt(poidsField.getText()));
-		tissu.setUnitePoids(unitePoidsField.getValue());
-		tissu.setDecati(decatiField.isSelected());
-		tissu.setLieuAchat(lieuDachatField.getText());
-		tissu.setChute(chuteField.isSelected());
-		tissu.setTissage(tissageField.getValue());
+    private void setTissuFromFields() {
+        tissu.setReference(referenceField.getText());
+        tissu.setLongueur(Integer.parseInt(longueurField.getText()));
+        tissu.setLaize(Integer.parseInt(laizeField.getText()));
+        tissu.setDescription(descriptionField.getText());
+        tissu.setMatiere(matiereField.getValue());
+        tissu.setTypeTissu(typeField.getValue());
+        tissu.setPoids(Integer.parseInt(poidsField.getText()));
+        tissu.setUnitePoids(unitePoidsField.getValue());
+        tissu.setDecati(decatiField.isSelected());
+        tissu.setLieuAchat(lieuDachatField.getText());
+        tissu.setChute(chuteField.isSelected());
+        tissu.setTissage(tissageField.getValue());
 
-		tissu = tissuService.saveOrUpdate(tissu);
-	}
+        tissu = tissuService.saveOrUpdate(tissu);
+    }
 
-	@FXML
-	private void handleCancel() {
+    @FXML
+    private void handleCancel() {
+		hasChanged.setValue(false);
 		if (tissu.getId() != 0) {
-			root.displayTissusDetails(tissu);
-		} else {
-			root.displayTissus();
-		}
-	}
+            root.displayTissusDetails(tissu);
+        } else {
+            root.displayTissus();
+        }
+    }
 
-	@FXML
-	private void handleAddMatiere() {
-		initializer.displayModale(PathEnum.MATIERE, null, "Matière");
+    @FXML
+    private void handleAddMatiere() {
+        initializer.displayModale(PathEnum.MATIERE, null, "Matière");
 
-		matiereField.setItems(FXCollections.observableArrayList(matiereService.getAllMatieresValues()));
-		matiereField.setValue(safePropertyToString(tissu.getMatiereProperty()));
-	}
+        matiereField.setItems(FXCollections.observableArrayList(matiereService.getAllMatieresValues()));
+        matiereField.setValue(safePropertyToString(tissu.getMatiereProperty()));
+    }
 
-	@FXML
-	private void handleAddTissage() {
-		initializer.displayModale(PathEnum.TISSAGE, null, "Tissage");
+    @FXML
+    private void handleAddTissage() {
+        initializer.displayModale(PathEnum.TISSAGE, null, "Tissage");
 
-		tissageField.setItems(FXCollections.observableArrayList(tissageService.getAllValues()));
-		tissageField.setValue(safePropertyToString(tissu.getTissageProperty()));
-	}
+        tissageField.setItems(FXCollections.observableArrayList(tissageService.getAllValues()));
+        tissageField.setValue(safePropertyToString(tissu.getTissageProperty()));
+    }
 
+    @FXML
+    private void handleGenerateReference() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(textFieldToFirstCharOrX(typeField)).append(textFieldToFirstCharOrX(matiereField))
+                .append(textFieldToFirstCharOrX(tissageField)).append("-");
+        if (chuteField.isSelected()) {
+            sb.append("cp-");
+        }
+        boolean ref = true;
+        int refNb = 0;
+        while (ref) {
+            refNb++;
+            ref = tissuService.existByReference(sb.toString() + refNb);
+        }
+        referenceField.setText(sb.append(refNb).toString());
+    }
 
-	@FXML
-	private void handleGenerateReference() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(textFieldToFirstCharOrX(typeField)).append(textFieldToFirstCharOrX(matiereField))
-				.append(textFieldToFirstCharOrX(tissageField)).append("-");
-		if (chuteField.isSelected()) {
-			sb.append("cp-");
-		}
-		boolean ref = true;
-		int refNb = 0;
-		while (ref) {
-			refNb++;
-			ref = tissuService.existByReference(sb.toString() + refNb);
-		}
-		referenceField.setText(sb.append(refNb).toString());
-	}
+    @FXML
+    private void addPicture() {
+        if (areValidatorsValid(initializer, validators)) {
+            setTissuFromFields();
 
-	private void nextTissu(TissuDto tissu, Map<TissuDto, Integer> mapTissu) {
-		mapTissu.remove(tissu);
-	}
+            pictureHelper.addPictureLocal(tissu);
+        }
+    }
 
-	@FXML
-	private void addPicture() {
-		if (areValidatorsValid(initializer, validators)) {
-			setTissuFromFields();
+    @FXML
+    private void addPictureWeb() {
+        if (areValidatorsValid(initializer, validators)) {
+            setTissuFromFields();
+            pictureHelper.addPictureWeb(tissu);
+        }
+    }
 
-			pictureHelper.addPictureLocal(tissu);
-		}
-	}
+    @FXML
+    private void addPictureFromClipboard() {
+        if (areValidatorsValid(initializer, validators)) {
+            setTissuFromFields();
+            pictureHelper.addPictureClipBoard(tissu);
+        }
+    }
 
-	@FXML
-	private void addPictureWeb() {
-		if (areValidatorsValid(initializer, validators)) {
-			setTissuFromFields();
-			pictureHelper.addPictureWeb(tissu);
-		}
-	}
+    @FXML
+    private void pictureExpend() {
+        DevInProgressService.notImplemented();
+    }
 
-	@FXML
-	private void addPictureFromClipboard(){
-		if (areValidatorsValid(initializer, validators)) {
-			setTissuFromFields();
-			pictureHelper.addPictureClipBoard(tissu);
-		}
-	}
+    @FXML
+    public void poidsHelp() {
+        ShowAlert.information(initializer.getPrimaryStage(), "Aide", "Poids",
+                "Un poids renseigné en g/m sera converti en g/m² lors de l'enregistrement (laize doit être renseigné). Un "
+                        + "tissu léger sera entre  0 et " + constantesMetier.getMinPoidsMoyen()
+                        + "g/m², un tissu moyen entre " + constantesMetier.getMinPoidsMoyen() + "g/m² et "
+                        + constantesMetier.getMaxPoidsMoyen() + "g/m², un tissu lourd aura un poids supérieur à "
+                        + constantesMetier.getMaxPoidsMoyen() + "g/m².");
+    }
 
-	@FXML
-	private void pictureExpend() {
-		DevInProgressService.notImplemented();
-	}
+    @FXML
+    public void archiver() {
+        tissu.setArchived(!tissu.isArchived());
+        tissu = tissuService.saveOrUpdate(tissu);
+        setBoutonArchiver();
+    }
 
-	@FXML
-	public void poidsHelp() {
-		ShowAlert.information(initializer.getPrimaryStage(), "Aide", "Poids",
-				"Un poids renseigné en g/m sera converti en g/m² lors de l'enregistrement (laize doit être renseigné). Un "
-						+ "tissu léger sera entre  0 et " + constantesMetier.getMinPoidsMoyen()
-						+ "g/m², un tissu moyen entre " + constantesMetier.getMinPoidsMoyen() + "g/m² et "
-						+ constantesMetier.getMaxPoidsMoyen() + "g/m², un tissu lourd aura un poids supérieur à "
-						+ constantesMetier.getMaxPoidsMoyen() + "g/m².");
-	}
+    private void setBoutonArchiver() {
+        archiverBtn.setText(tissu.isArchived() ? "Désarchiver" : "Archiver");
+    }
 
-	@FXML
-	public void archiver(){
-		tissu.setArchived(!tissu.isArchived());
-		tissu = tissuService.saveOrUpdate(tissu);
-		setBoutonArchiver();
-	}
-
-	private void setBoutonArchiver() {
-		archiverBtn.setText(tissu.isArchived() ? "Désarchiver" :"Archiver");
-	}
 
 }

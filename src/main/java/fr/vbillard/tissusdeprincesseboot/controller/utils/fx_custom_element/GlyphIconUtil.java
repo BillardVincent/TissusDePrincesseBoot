@@ -10,14 +10,14 @@ import javafx.scene.paint.Paint;
 
 public class GlyphIconUtil {
 
-    private static final String NORMAL_ICON_SIZE = "1.5em";
-    private static final String TINY_ICONE_SIZE = "1em";
-    private static final String BIG_ICONE_SIZE = "2em";
-    private static final String VERY_BIG_ICONE_SIZE = "4em";
-    private static final String GIANT_ICONE_SIZE = "10em";
+    public static final String NORMAL_ICON_SIZE = "1.5em";
+    public static final String TINY_ICONE_SIZE = "1em";
+    public static final String BIG_ICONE_SIZE = "2em";
+    public static final String VERY_BIG_ICONE_SIZE = "4em";
+    public static final String GIANT_ICONE_SIZE = "10em";
 
 
-    private static GlyphIcon generateIcon(GlyphIcon icon, String size, Paint color){
+    public static GlyphIcon generateIcon(GlyphIcon icon, String size, Paint color){
         icon.setSize(size);
         if (color != null ) icon.setFill(color);
         return icon;
