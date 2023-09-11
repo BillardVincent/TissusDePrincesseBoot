@@ -16,7 +16,7 @@ public class IntegerSpinner extends CustomSpinner<Integer>{
       if (c.isContentChange()) {
         ParsePosition parsePosition = new ParsePosition(0);
         format.parse(c.getControlNewText(), parsePosition);
-        if (/* parsePosition.getIndex() == 0 || */ parsePosition.getIndex() < c.getControlNewText().length()) {
+        if (/* parsePosition.getIndex() == 0 || */ parsePosition.getIndex() < c.getControlNewText().length() || parsePosition.getIndex() > 8) {
           return null;
         }
       }

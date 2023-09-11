@@ -18,7 +18,7 @@ public class FloatSpinner extends CustomSpinner<Float> {
         ParsePosition parsePosition = new ParsePosition(0);
         boolean match = Pattern.matches("\\d+.?\\d{0,2}", c.getControlNewText());
         format.parse(c.getControlNewText(), parsePosition);
-        if (!match) {
+        if (!match || parsePosition.getIndex() > 8) {
           return null;
         }
       }

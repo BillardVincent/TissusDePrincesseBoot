@@ -35,7 +35,7 @@
 			 mnemonicParsing="false"
 			onAction="#handleSuppressElement" text="Supprimer" />
 		<JFXButton fx:id="cancelButton" mnemonicParsing="false"
-				   onAction="#handleCancelSelection" text="annuler" />
+				   onAction="#handleCancelSelection" text="Annuler" />
 	</children>
 	</HBox>
 		<Label layoutX="303.0" layoutY="123.0" prefHeight="40.0"
