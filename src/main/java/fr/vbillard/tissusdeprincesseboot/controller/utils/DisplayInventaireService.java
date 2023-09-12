@@ -1,19 +1,17 @@
 package fr.vbillard.tissusdeprincesseboot.controller.utils;
 
-import java.util.Iterator;
-
-import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
-
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
 import fr.vbillard.tissusdeprincesseboot.model.Inventaire;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 import fr.vbillard.tissusdeprincesseboot.service.InventaireService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuService;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+
+import java.util.Iterator;
 
 @Component
 @AllArgsConstructor

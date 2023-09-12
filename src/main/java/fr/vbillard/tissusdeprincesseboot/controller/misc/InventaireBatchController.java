@@ -1,20 +1,18 @@
 package fr.vbillard.tissusdeprincesseboot.controller.misc;
 
-import java.util.List;
-
-import org.springframework.stereotype.Component;
-
 import com.jfoenix.controls.JFXButton;
-
+import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IModalController;
 import fr.vbillard.tissusdeprincesseboot.model.Inventaire;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class InventaireBatchController implements IModalController{

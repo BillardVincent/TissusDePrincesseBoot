@@ -1,38 +1,35 @@
 package fr.vbillard.tissusdeprincesseboot.controller.fourniture;
 
-import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.*;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextField;
+import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.controller.components.FloatSpinner;
+import fr.vbillard.tissusdeprincesseboot.controller.components.IntegerSpinner;
+import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
+import fr.vbillard.tissusdeprincesseboot.filtre.specification.FournitureSpecification;
+import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification;
+import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.CharacterSearch;
+import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
+import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
+import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
+import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
+import fr.vbillard.tissusdeprincesseboot.service.TypeFournitureService;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import org.apache.logging.log4j.util.Strings;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.logging.log4j.util.Strings;
-import org.springframework.stereotype.Component;
-
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextField;
-
-import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
-import fr.vbillard.tissusdeprincesseboot.controller.components.FloatSpinner;
-import fr.vbillard.tissusdeprincesseboot.controller.components.IntegerSpinner;
-import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
-import fr.vbillard.tissusdeprincesseboot.filtre.specification.FournitureSpecification;
-import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification;
-import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.CharacterSearch;
-import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.CustomSpinner;
-import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
-import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
-import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
-import fr.vbillard.tissusdeprincesseboot.service.TypeFournitureService;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.*;
 
 @Component
 public class FournitureSearchController implements IController {

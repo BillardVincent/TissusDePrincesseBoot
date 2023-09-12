@@ -1,18 +1,13 @@
 package fr.vbillard.tissusdeprincesseboot.model;
 
-import java.util.Collections;
-import java.util.List;
+import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
-import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
-import lombok.Getter;
-import lombok.Setter;
 
 
 @Getter

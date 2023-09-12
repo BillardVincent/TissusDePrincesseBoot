@@ -1,18 +1,9 @@
 package fr.vbillard.tissusdeprincesseboot.controller.patron.edit.rightPane;
 
-import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.setSelection;
-import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.setSelectionFromChoiceBoxModale;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Component;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXToggleButton;
-
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.components.LaizeLongueurOptionCell;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
@@ -39,6 +30,13 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.setSelection;
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.setSelectionFromChoiceBoxModale;
 
 @Component
 public class PatronEditTissuRequisController implements IController {

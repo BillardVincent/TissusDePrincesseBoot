@@ -1,13 +1,11 @@
 package fr.vbillard.tissusdeprincesseboot.mapper.to_list_element;
 
+import com.github.rozidan.springboot.modelmapper.TypeMapConfigurer;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.ListElement;
+import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import org.modelmapper.AbstractConverter;
 import org.modelmapper.TypeMap;
 import org.springframework.stereotype.Component;
-
-import com.github.rozidan.springboot.modelmapper.TypeMapConfigurer;
-
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.ListElement;
-import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 
 
 @Component

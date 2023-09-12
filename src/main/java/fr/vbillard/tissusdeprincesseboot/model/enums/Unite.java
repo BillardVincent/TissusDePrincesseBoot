@@ -1,10 +1,10 @@
 package fr.vbillard.tissusdeprincesseboot.model.enums;
 
+import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 
 public enum Unite {
 	M("mètre", "m", 100), CM("centimètre", "cm", 1), MM("milimètre", "mm", 0.1f), UNITE("unité", "", 1), G("gramme", "g", 1),

@@ -1,19 +1,14 @@
 package fr.vbillard.tissusdeprincesseboot.service.workflow;
 
-import java.util.List;
-
 import fr.vbillard.tissusdeprincesseboot.model.*;
-import org.springframework.stereotype.Component;
-
-import fr.vbillard.tissusdeprincesseboot.service.FournitureRequiseService;
-import fr.vbillard.tissusdeprincesseboot.service.FournitureUsedService;
-import fr.vbillard.tissusdeprincesseboot.service.TissuRequisService;
-import fr.vbillard.tissusdeprincesseboot.service.TissuUsedService;
-import fr.vbillard.tissusdeprincesseboot.service.UserPrefService;
+import fr.vbillard.tissusdeprincesseboot.service.*;
 import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.Articles;
 import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.EntityToString;
 import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.ModelUtils;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @AllArgsConstructor

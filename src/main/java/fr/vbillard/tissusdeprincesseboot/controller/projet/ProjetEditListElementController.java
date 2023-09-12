@@ -1,10 +1,9 @@
 package fr.vbillard.tissusdeprincesseboot.controller.projet;
 
-import java.util.List;
-import java.util.Objects;
-
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.AbstractRequisDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractEntity;
@@ -12,11 +11,12 @@ import fr.vbillard.tissusdeprincesseboot.model.AbstractRequis;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractUsedEntity;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
 import fr.vbillard.tissusdeprincesseboot.service.AbstractUsedService;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
 import javafx.fxml.FXML;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+
+import java.util.List;
+import java.util.Objects;
 
 public abstract class ProjetEditListElementController <T extends AbstractRequisDto<W, X>,
 		U extends AbstractUsedEntity<X>, V extends AbstractUsedService<U, X>, W extends AbstractRequis<X>,

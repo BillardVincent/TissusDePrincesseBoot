@@ -1,18 +1,16 @@
 package fr.vbillard.tissusdeprincesseboot.controller.utils;
 
-import java.util.Optional;
-
-import org.apache.logging.log4j.util.Strings;
-
 import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.Articles;
 import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.EntityToString;
 import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.ModelUtils;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.stage.Stage;
-import javafx.scene.control.Alert.AlertType;
+import org.apache.logging.log4j.util.Strings;
+
+import java.util.Optional;
 
 public class ShowAlert {
 

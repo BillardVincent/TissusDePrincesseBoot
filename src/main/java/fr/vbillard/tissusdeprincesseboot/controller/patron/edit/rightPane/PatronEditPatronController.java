@@ -1,18 +1,14 @@
 package fr.vbillard.tissusdeprincesseboot.controller.patron.edit.rightPane;
 
-import org.springframework.stereotype.Component;
 import com.jfoenix.controls.JFXButton;
-
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
-import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.PatronEditController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronVersionDto;
-import fr.vbillard.tissusdeprincesseboot.model.PatronVersion;
 import fr.vbillard.tissusdeprincesseboot.service.PatronService;
 import fr.vbillard.tissusdeprincesseboot.service.PatronVersionService;
 import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
 import javafx.fxml.FXML;
+import org.springframework.stereotype.Component;
 
 @Component
 public class PatronEditPatronController implements IController {

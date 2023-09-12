@@ -1,23 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXComboBox?>
-<?import com.jfoenix.controls.JFXTextField?>
-<?import com.jfoenix.controls.JFXToggleButton?>
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-
+<?import com.jfoenix.controls.*?>
+<?import de.jensd.fx.glyphs.fontawesome.*?>
 <?import fr.vbillard.tissusdeprincesseboot.controller.components.IntegerSpinner?>
-<?import javafx.scene.layout.VBox?>
-<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
 <AnchorPane prefHeight="747.0" prefWidth="1275.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuEditController">
     <GridPane layoutX="54.0" layoutY="124.0" prefHeight="515.0" prefWidth="578.0">
         <columnConstraints>
@@ -122,14 +111,14 @@
                     </JFXButton>
                 </children>
             </HBox>
-            <Label fx:id="ancienneValeurLabel" text="Longueur avant" GridPane.rowIndex="4" />
+            <Label fx:id="ancienneValeurLabel" text="Longueur (réelle en stock)" GridPane.rowIndex="4" />
             <Label fx:id="ancienneValeurInfo" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
                 <padding>
                     <Insets left="10.0" />
                 </padding>
             </Label>
-            <Label fx:id="consommeLabel" text="Longueur consommée" GridPane.rowIndex="5" />
-            <Label fx:id="consommeIndo" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <Label fx:id="consommeLabel" text="Longueur alloués dans des projets" GridPane.rowIndex="5" />
+            <Label fx:id="consommeInfo" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5">
                 <padding>
                     <Insets left="10.0" />
                 </padding>

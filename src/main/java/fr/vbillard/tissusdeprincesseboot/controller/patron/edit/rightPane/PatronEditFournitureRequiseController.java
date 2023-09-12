@@ -1,17 +1,8 @@
 package fr.vbillard.tissusdeprincesseboot.controller.patron.edit.rightPane;
 
-import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.buildComboBox;
-import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.safePropertyToString;
-import static fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.CustomSpinner.setLongSpinner;
-import static javafx.collections.FXCollections.observableArrayList;
-
-import java.util.List;
-
-import org.springframework.stereotype.Component;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
@@ -25,10 +16,14 @@ import fr.vbillard.tissusdeprincesseboot.service.FournitureRequiseService;
 import fr.vbillard.tissusdeprincesseboot.service.TypeFournitureService;
 import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
 import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.EntityToString;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import org.springframework.stereotype.Component;
+
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.buildComboBox;
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.safePropertyToString;
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.CustomSpinner.setLongSpinner;
 
 @Component
 public class PatronEditFournitureRequiseController implements IController {

@@ -1,23 +1,21 @@
 package fr.vbillard.tissusdeprincesseboot.controller.common;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
-
 import com.jfoenix.controls.JFXCheckBox;
-
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IModalController;
 import fr.vbillard.tissusdeprincesseboot.exception.NoSelectionException;
 import fr.vbillard.tissusdeprincesseboot.utils.Constants;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
+import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class CheckBoxChoiceController implements IModalController {

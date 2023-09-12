@@ -1,11 +1,10 @@
 package fr.vbillard.tissusdeprincesseboot.service;
 
-import javax.swing.filechooser.FileSystemView;
-
-import org.springframework.stereotype.Service;
-
 import fr.vbillard.tissusdeprincesseboot.dao.PreferenceDao;
 import fr.vbillard.tissusdeprincesseboot.model.Preference;
+import org.springframework.stereotype.Service;
+
+import javax.swing.filechooser.FileSystemView;
 
 @Service
 public class PreferenceService {

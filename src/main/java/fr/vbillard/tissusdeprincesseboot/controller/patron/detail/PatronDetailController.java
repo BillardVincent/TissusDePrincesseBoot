@@ -1,9 +1,5 @@
 package fr.vbillard.tissusdeprincesseboot.controller.patron.detail;
 
-import java.util.List;
-
-import org.springframework.stereotype.Component;
-
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.picture_helper.PatronPictureHelper;
@@ -19,6 +15,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class PatronDetailController implements IController {

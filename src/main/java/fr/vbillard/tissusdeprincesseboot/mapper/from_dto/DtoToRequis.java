@@ -1,10 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.mapper.from_dto;
 
-import org.modelmapper.AbstractConverter;
-import org.modelmapper.TypeMap;
-import org.springframework.stereotype.Component;
 import com.github.rozidan.springboot.modelmapper.TypeMapConfigurer;
-
 import fr.vbillard.tissusdeprincesseboot.dao.PatronVersionDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
@@ -12,6 +8,9 @@ import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
 import fr.vbillard.tissusdeprincesseboot.service.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.service.TissageService;
 import lombok.AllArgsConstructor;
+import org.modelmapper.AbstractConverter;
+import org.modelmapper.TypeMap;
+import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor

@@ -1,10 +1,10 @@
 package fr.vbillard.tissusdeprincesseboot.filtre.specification.common;
 
-import java.time.LocalDate;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor

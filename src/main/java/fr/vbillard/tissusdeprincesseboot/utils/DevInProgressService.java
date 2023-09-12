@@ -1,8 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.utils;
 
 import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 
 public class DevInProgressService {
 

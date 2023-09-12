@@ -1,24 +1,18 @@
 package fr.vbillard.tissusdeprincesseboot.controller.common;
 
-import com.jfoenix.controls.JFXTextField;
-
-import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.*;
-
-
-import org.springframework.stereotype.Component;
-
 import com.jfoenix.controls.JFXButton;
-
+import com.jfoenix.controls.JFXTextField;
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IModalController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.CustomSpinner;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import org.springframework.stereotype.Component;
+
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.intFromJFXTextField;
 
 @Component
 public class SetLongueurDialogController implements IModalController {

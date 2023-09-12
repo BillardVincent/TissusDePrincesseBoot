@@ -1,9 +1,9 @@
 package fr.vbillard.tissusdeprincesseboot.utils.model_to_string;
 
-import lombok.Getter;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.model.*;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
+import lombok.Getter;
 
 @Getter
 public enum EntityToString {

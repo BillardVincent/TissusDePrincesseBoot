@@ -1,5 +1,11 @@
 package fr.vbillard.tissusdeprincesseboot;
 
+import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
+import fr.vbillard.tissusdeprincesseboot.exception.AbstractTissuDePricesseException;
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.util.Strings;
@@ -8,14 +14,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ConfigurableApplicationContext;
-
-import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
-import fr.vbillard.tissusdeprincesseboot.exception.AbstractTissuDePricesseException;
-import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.stage.Stage;
 
 public class TissusDePrincesseFxApp extends Application {
 

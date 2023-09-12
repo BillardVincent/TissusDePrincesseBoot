@@ -1,11 +1,11 @@
 package fr.vbillard.tissusdeprincesseboot.controller.components;
 
+import javafx.scene.control.TextFormatter;
+import javafx.util.converter.IntegerStringConverter;
+
 import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.util.function.UnaryOperator;
-
-import javafx.scene.control.TextFormatter;
-import javafx.util.converter.IntegerStringConverter;
 
 public class IntegerSpinner extends CustomSpinner<Integer>{
 

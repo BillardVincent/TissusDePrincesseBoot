@@ -1,26 +1,23 @@
 package fr.vbillard.tissusdeprincesseboot.controller.tissu;
 
-import static fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.CustomSpinner.setSpinner;
-
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Component;
-
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
-
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IModalController;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.CustomSpinner;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 import fr.vbillard.tissusdeprincesseboot.service.TissuService;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
+
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.CustomSpinner.setSpinner;
 
 @Component
 public class CarrouselController implements IModalController{

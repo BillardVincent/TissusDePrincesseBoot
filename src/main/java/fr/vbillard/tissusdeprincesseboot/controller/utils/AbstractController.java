@@ -1,8 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.controller.utils;
 
-import org.springframework.stereotype.Component;
-
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
+import org.springframework.stereotype.Component;
 
 @Component
 public class AbstractController {

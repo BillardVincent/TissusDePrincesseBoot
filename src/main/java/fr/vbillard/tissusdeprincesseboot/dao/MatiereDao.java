@@ -1,10 +1,9 @@
 package fr.vbillard.tissusdeprincesseboot.dao;
 
-import java.util.List;
-
+import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import org.springframework.stereotype.Repository;
 
-import fr.vbillard.tissusdeprincesseboot.model.Matiere;
+import java.util.List;
 
 @Repository
 public interface MatiereDao extends Idao<Matiere, Integer> {

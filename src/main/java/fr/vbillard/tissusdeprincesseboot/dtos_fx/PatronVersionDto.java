@@ -2,7 +2,6 @@ package fr.vbillard.tissusdeprincesseboot.dtos_fx;
 
 import fr.vbillard.tissusdeprincesseboot.model.PatronVersion;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;

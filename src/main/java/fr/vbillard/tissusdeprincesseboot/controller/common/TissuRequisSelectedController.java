@@ -1,12 +1,5 @@
 package fr.vbillard.tissusdeprincesseboot.controller.common;
 
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.util.Strings;
-import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
-
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.components.LaizeLongueurOptionCell;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.ClassCssUtils;
@@ -23,6 +16,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+
+import java.util.List;
 
 @Component
 public class TissuRequisSelectedController implements IController {

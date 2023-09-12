@@ -1,10 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.controller.patron.edit;
 
-import java.util.List;
-
-import org.springframework.transaction.annotation.Transactional;
 import com.jfoenix.controls.JFXButton;
-
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FxDto;
@@ -27,6 +23,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import lombok.Getter;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 public abstract class PatronEditHelper<E extends AbstractEntity, ER extends AbstractRequis<E>,
 		UE extends AbstractUsedEntity<E>, DTO extends FxDto<E>, DTOR extends FxDto<ER>> {

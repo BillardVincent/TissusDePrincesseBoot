@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import com.jfoenix.controls.JFXTextField?>
 
+<?import com.jfoenix.controls.JFXTextField?>
 <JFXTextField xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
               fx:controller="fr.vbillard.tissusdeprincesseboot.controller.components.IntegerSpinner">
 </JFXTextField>

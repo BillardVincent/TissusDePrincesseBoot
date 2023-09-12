@@ -1,10 +1,9 @@
 package fr.vbillard.tissusdeprincesseboot.service.workflow;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
 import fr.vbillard.tissusdeprincesseboot.exception.NotAllowed;
 import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 @Component("terminé")
 @Scope("prototype")

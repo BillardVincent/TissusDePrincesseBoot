@@ -1,11 +1,9 @@
 package fr.vbillard.tissusdeprincesseboot.config;
 
-import org.springframework.stereotype.Component;
-
 import com.github.rozidan.springboot.modelmapper.ConfigurationConfigurer;
-
 import org.modelmapper.config.Configuration;
 import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.stereotype.Component;
 
 @Component
 

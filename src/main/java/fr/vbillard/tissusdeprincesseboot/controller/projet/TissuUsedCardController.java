@@ -1,13 +1,5 @@
 package fr.vbillard.tissusdeprincesseboot.controller.projet;
 
-import java.util.Optional;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.util.Strings;
-import org.modelmapper.ModelMapper;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
@@ -28,6 +20,11 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 @Scope(Utils.PROTOTYPE)

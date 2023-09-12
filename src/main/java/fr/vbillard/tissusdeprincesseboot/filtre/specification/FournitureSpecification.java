@@ -1,28 +1,15 @@
 package fr.vbillard.tissusdeprincesseboot.filtre.specification;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
-import org.springframework.data.jpa.domain.Specification;
-
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.CharacterSearch;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.SpecificationUtils;
-import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
-import fr.vbillard.tissusdeprincesseboot.model.Fourniture_;
-import fr.vbillard.tissusdeprincesseboot.model.Quantite;
-import fr.vbillard.tissusdeprincesseboot.model.Quantite_;
-import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import fr.vbillard.tissusdeprincesseboot.model.*;
+import lombok.*;
+import org.springframework.data.jpa.domain.Specification;
+
+import javax.persistence.criteria.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @Builder

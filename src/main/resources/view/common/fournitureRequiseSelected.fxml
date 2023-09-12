@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-
-<Pane prefHeight="194.0" prefWidth="284.0"  xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.common.FournitureRequiseSelectedController">
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<Pane prefHeight="194.0" prefWidth="284.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.common.FournitureRequiseSelectedController">
   <children>
     <VBox layoutX="-1.0" layoutY="-1.0" prefHeight="190.0" prefWidth="282.0" stylesheets="@../../style/style.css">
       <children>

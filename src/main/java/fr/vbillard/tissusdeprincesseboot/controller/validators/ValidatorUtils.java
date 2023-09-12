@@ -1,9 +1,8 @@
 package fr.vbillard.tissusdeprincesseboot.controller.validators;
 
-import org.apache.logging.log4j.util.Strings;
-
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
+import org.apache.logging.log4j.util.Strings;
 
 public class ValidatorUtils {
 

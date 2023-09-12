@@ -1,10 +1,9 @@
 package fr.vbillard.tissusdeprincesseboot.utils;
 
-import java.util.LinkedList;
-
+import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import org.springframework.stereotype.Component;
 
-import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
+import java.util.LinkedList;
 
 @Component
 public class History {

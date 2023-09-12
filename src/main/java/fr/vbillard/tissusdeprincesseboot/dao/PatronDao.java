@@ -1,11 +1,10 @@
 package fr.vbillard.tissusdeprincesseboot.dao;
 
+import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import fr.vbillard.tissusdeprincesseboot.model.Patron;
 
 @Repository
 public interface PatronDao extends Idao<Patron, Integer> {

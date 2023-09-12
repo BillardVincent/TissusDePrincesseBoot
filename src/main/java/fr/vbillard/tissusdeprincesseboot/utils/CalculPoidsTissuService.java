@@ -1,16 +1,15 @@
 package fr.vbillard.tissusdeprincesseboot.utils;
 
-import java.util.EnumMap;
-import java.util.Map;
-
-import org.springframework.stereotype.Component;
-
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.UserPref;
 import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Recommendation;
 import fr.vbillard.tissusdeprincesseboot.service.UserPrefService;
+import org.springframework.stereotype.Component;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 @Component
 public class CalculPoidsTissuService {

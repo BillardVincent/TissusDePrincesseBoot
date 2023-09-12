@@ -1,13 +1,12 @@
 package fr.vbillard.tissusdeprincesseboot.service;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import fr.vbillard.tissusdeprincesseboot.dao.TissuRequisLaizeOptionDao;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequisLaizeOption;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor

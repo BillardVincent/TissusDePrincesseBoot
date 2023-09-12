@@ -1,31 +1,26 @@
 package fr.vbillard.tissusdeprincesseboot.controller.common;
 
-import java.awt.HeadlessException;
-import java.awt.Toolkit;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
+import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.IModalController;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
+import fr.vbillard.tissusdeprincesseboot.exception.NotFoundException;
+import fr.vbillard.tissusdeprincesseboot.model.enums.ImageFormat;
+import javafx.fxml.FXML;
+import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTextField;
-
-import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.IModalController;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
-import fr.vbillard.tissusdeprincesseboot.exception.NotFoundException;
-import fr.vbillard.tissusdeprincesseboot.model.enums.ImageFormat;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
-import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.stage.Stage;
+import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 @Component
 public class SetWebUrlDialogController implements IModalController {

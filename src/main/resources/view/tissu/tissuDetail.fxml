@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.Label?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-
+<?import javafx.scene.layout.*?>
 <AnchorPane prefHeight="747.0" prefWidth="1150.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuDetailController">
     <GridPane layoutX="54.0" layoutY="95.0" prefHeight="501.0" prefWidth="594.0">
         <columnConstraints>
@@ -36,7 +30,7 @@
             <Label text="Longueur utilisable" GridPane.rowIndex="6" />
             <Label text="Laize" GridPane.rowIndex="7" />
             <Label text="Description" GridPane.rowIndex="9" />
-            <Label fx:id="decatiField" mnemonicParsing="false" text="Décati" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+            <Label fx:id="decatiField" text="Décati" GridPane.columnIndex="1" GridPane.rowIndex="11" />
             <Label text="Matiere" GridPane.rowIndex="3" />
             <Label text="Type" GridPane.rowIndex="1" />
             <Label text="Poids" GridPane.rowIndex="8" />
@@ -72,7 +66,7 @@
             </HBox>
             <Label text="Tissage" GridPane.rowIndex="2" />
             <Label text="Chute" GridPane.rowIndex="12" />
-            <Label fx:id="chuteField" mnemonicParsing="false" text="Chute" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+            <Label fx:id="chuteField" text="Chute" GridPane.columnIndex="1" GridPane.rowIndex="12" />
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                 <children>
                     <Label fx:id="typeField" prefHeight="25.0" prefWidth="241.0" />

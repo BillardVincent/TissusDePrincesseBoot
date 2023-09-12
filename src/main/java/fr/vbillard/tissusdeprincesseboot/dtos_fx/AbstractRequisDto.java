@@ -1,11 +1,9 @@
 package fr.vbillard.tissusdeprincesseboot.dtos_fx;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import fr.vbillard.tissusdeprincesseboot.model.AbstractRequis;
 import javafx.beans.property.ListProperty;
-import javafx.collections.FXCollections;
+
+import java.util.List;
 
 public abstract class AbstractRequisDto<T extends AbstractRequis<U>, U> implements FxDto<T> {
 	

@@ -1,20 +1,18 @@
 package fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.ParsePosition;
-import java.util.function.UnaryOperator;
-import java.util.regex.Pattern;
-
-import org.springframework.stereotype.Component;
-
 import com.jfoenix.controls.JFXTextField;
-
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextFormatter;
 import javafx.util.converter.FloatStringConverter;
 import javafx.util.converter.IntegerStringConverter;
+import org.springframework.stereotype.Component;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParsePosition;
+import java.util.function.UnaryOperator;
+import java.util.regex.Pattern;
 
 @Component
 public class CustomSpinner {

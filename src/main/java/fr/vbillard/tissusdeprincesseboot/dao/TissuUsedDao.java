@@ -1,13 +1,12 @@
 package fr.vbillard.tissusdeprincesseboot.dao;
 
-import java.util.List;
-
-import org.springframework.stereotype.Repository;
-
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface TissuUsedDao extends Idao<TissuUsed, Integer> {

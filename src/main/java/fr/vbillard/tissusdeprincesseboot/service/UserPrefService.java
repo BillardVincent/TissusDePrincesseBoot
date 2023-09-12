@@ -1,13 +1,12 @@
 package fr.vbillard.tissusdeprincesseboot.service;
 
-import java.util.Optional;
-
-import org.springframework.stereotype.Service;
-
 import fr.vbillard.tissusdeprincesseboot.dao.UserPrefDao;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.model.UserPref;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor

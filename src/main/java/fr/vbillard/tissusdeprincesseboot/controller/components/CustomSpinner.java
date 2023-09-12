@@ -1,7 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.controller.components;
 
 import com.jfoenix.controls.JFXTextField;
-
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextFormatter;

@@ -1,11 +1,10 @@
 package fr.vbillard.tissusdeprincesseboot.dao;
 
-import java.util.List;
-
-import org.springframework.stereotype.Repository;
-
 import fr.vbillard.tissusdeprincesseboot.model.FournitureRequise;
 import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface FournitureRequiseDao extends Idao<FournitureRequise, Integer> {

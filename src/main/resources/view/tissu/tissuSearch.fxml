@@ -2,13 +2,12 @@
 
 <?import com.jfoenix.controls.*?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.layout.*?>
 <?import fr.vbillard.tissusdeprincesseboot.controller.components.IntegerSpinner?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <AnchorPane prefHeight="594.0" prefWidth="312.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-			fx:controller="fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuSearchController">
+            fx:controller="fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuSearchController">
   <VBox prefHeight="594.0" prefWidth="312.0" spacing="5.0">
     <children>
       <Separator prefWidth="200.0"/>

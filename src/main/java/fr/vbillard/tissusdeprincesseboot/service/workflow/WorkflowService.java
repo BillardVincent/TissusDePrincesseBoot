@@ -1,10 +1,9 @@
 package fr.vbillard.tissusdeprincesseboot.service.workflow;
 
-import java.util.Map;
-
+import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import org.springframework.stereotype.Component;
 
-import fr.vbillard.tissusdeprincesseboot.model.Projet;
+import java.util.Map;
 
 @Component
 public class WorkflowService {

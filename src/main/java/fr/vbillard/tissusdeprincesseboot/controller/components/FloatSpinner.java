@@ -1,12 +1,12 @@
 package fr.vbillard.tissusdeprincesseboot.controller.components;
 
+import javafx.scene.control.TextFormatter;
+import javafx.util.converter.FloatStringConverter;
+
 import java.text.DecimalFormat;
 import java.text.ParsePosition;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
-
-import javafx.scene.control.TextFormatter;
-import javafx.util.converter.FloatStringConverter;
 
 public class FloatSpinner extends CustomSpinner<Float> {
 

@@ -1,10 +1,9 @@
 package fr.vbillard.tissusdeprincesseboot.controller.validators;
 
-import javafx.scene.control.Control;
-
-import org.apache.logging.log4j.util.Strings;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import javafx.scene.control.Control;
+import org.apache.logging.log4j.util.Strings;
 
 public class NonNullValidator<T extends Control> implements Validator {
 

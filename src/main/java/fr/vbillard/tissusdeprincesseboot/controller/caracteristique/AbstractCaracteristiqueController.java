@@ -2,12 +2,11 @@ package fr.vbillard.tissusdeprincesseboot.controller.caracteristique;
 
 
 import com.jfoenix.controls.JFXButton;
-
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.IModalController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.IModalController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

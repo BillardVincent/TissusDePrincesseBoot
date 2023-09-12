@@ -1,10 +1,9 @@
 package fr.vbillard.tissusdeprincesseboot.dao;
 
-import java.util.List;
-
+import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
 import org.springframework.stereotype.Repository;
 
-import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
+import java.util.List;
 
 @Repository
 public interface TypeFournitureDao extends Idao<TypeFourniture, Integer> {

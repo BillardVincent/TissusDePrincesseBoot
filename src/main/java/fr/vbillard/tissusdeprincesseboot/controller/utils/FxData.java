@@ -1,26 +1,19 @@
 package fr.vbillard.tissusdeprincesseboot.controller.utils;
 
-import java.net.URL;
-import java.util.List;
-
+import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.*;
+import fr.vbillard.tissusdeprincesseboot.model.FournitureUsed;
+import fr.vbillard.tissusdeprincesseboot.model.Inventaire;
+import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
+import lombok.Data;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
-import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronVersionDto;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
-import fr.vbillard.tissusdeprincesseboot.model.FournitureUsed;
-import fr.vbillard.tissusdeprincesseboot.model.Inventaire;
-import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
-import lombok.Data;
+import java.net.URL;
+import java.util.List;
 
 @Data
 @Component

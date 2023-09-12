@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import java.lang.String?>
+<?import de.jensd.fx.glyphs.fontawesome.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-
+<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
 <Pane prefHeight="347.0" prefWidth="258.0"
 
-	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetCardController">
+	  xmlns:fx="http://javafx.com/fxml/1"
+	  fx:controller="fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetCardController">
 	<children>
 		<VBox onMouseClicked="#showDetail" prefHeight="347.0"
 			prefWidth="259.0" stylesheets="@../../style/style.css">

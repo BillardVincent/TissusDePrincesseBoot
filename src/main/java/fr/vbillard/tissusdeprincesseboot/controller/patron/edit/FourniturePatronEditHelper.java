@@ -1,16 +1,8 @@
 package fr.vbillard.tissusdeprincesseboot.controller.patron.edit;
 
-import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.buildComboBox;
-import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.buildSpinner;
-
-import java.util.Collections;
-import java.util.List;
-
-import org.springframework.stereotype.Service;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
@@ -27,6 +19,13 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.List;
+
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.buildComboBox;
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.buildSpinner;
 
 @Service
 public class FourniturePatronEditHelper extends

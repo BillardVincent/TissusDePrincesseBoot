@@ -1,9 +1,9 @@
 package fr.vbillard.tissusdeprincesseboot.model;
 
-import javax.persistence.MappedSuperclass;
-
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 @Getter

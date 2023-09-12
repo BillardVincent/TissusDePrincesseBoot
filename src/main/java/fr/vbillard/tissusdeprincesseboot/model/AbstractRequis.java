@@ -1,15 +1,12 @@
 package fr.vbillard.tissusdeprincesseboot.model;
 
-import java.util.List;
-
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
-import lombok.Getter;
-import lombok.Setter;
+import javax.persistence.ManyToOne;
+import javax.persistence.MappedSuperclass;
 
 @Getter
 @Setter

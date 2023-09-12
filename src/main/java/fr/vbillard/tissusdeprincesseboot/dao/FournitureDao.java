@@ -1,12 +1,11 @@
 package fr.vbillard.tissusdeprincesseboot.dao;
 
+import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
+import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
-import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
 
 @Repository
 public interface FournitureDao extends Idao<Fourniture, Integer>{

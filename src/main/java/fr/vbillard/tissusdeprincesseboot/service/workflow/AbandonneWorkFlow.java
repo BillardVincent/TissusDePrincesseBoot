@@ -1,13 +1,12 @@
 package fr.vbillard.tissusdeprincesseboot.service.workflow;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
 import fr.vbillard.tissusdeprincesseboot.exception.NotAllowed;
 import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuRequisService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuUsedService;
 import fr.vbillard.tissusdeprincesseboot.service.UserPrefService;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 @Component("abandonné")
 @Scope("prototype")

@@ -1,12 +1,11 @@
 package fr.vbillard.tissusdeprincesseboot.mapper.to_dto;
 
-import org.modelmapper.TypeMap;
-import org.springframework.stereotype.Component;
 import com.github.rozidan.springboot.modelmapper.TypeMapConfigurer;
-
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureRequise;
 import lombok.AllArgsConstructor;
+import org.modelmapper.TypeMap;
+import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor

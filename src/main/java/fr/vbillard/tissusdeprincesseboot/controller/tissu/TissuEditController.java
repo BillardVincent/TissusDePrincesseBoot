@@ -1,45 +1,24 @@
 package fr.vbillard.tissusdeprincesseboot.controller.tissu;
 
-import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.*;
-import static fr.vbillard.tissusdeprincesseboot.controller.validators.ValidatorUtils.areValidatorsValid;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Predicate;
-
-import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
-import fr.vbillard.tissusdeprincesseboot.utils.Constants;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import org.apache.commons.lang3.BooleanUtils;
-import org.apache.logging.log4j.util.Strings;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Component;
-
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
-
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.components.IntegerSpinner;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.picture_helper.TissuPictureHelper;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.GlyphIconUtil;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
 import fr.vbillard.tissusdeprincesseboot.controller.validators.NonNullValidator;
 import fr.vbillard.tissusdeprincesseboot.controller.validators.Validator;
-import fr.vbillard.tissusdeprincesseboot.controller.validators.ValidatorUtils;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.GlyphIconUtil;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.CustomSpinner;
 import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
@@ -48,19 +27,20 @@ import fr.vbillard.tissusdeprincesseboot.service.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.service.TissageService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuService;
 import fr.vbillard.tissusdeprincesseboot.utils.ConstantesMetier;
+import fr.vbillard.tissusdeprincesseboot.utils.Constants;
 import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
+import org.springframework.stereotype.Component;
+
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.*;
+import static fr.vbillard.tissusdeprincesseboot.controller.validators.ValidatorUtils.areValidatorsValid;
 
 @Component
 public class TissuEditController implements IController {
@@ -101,7 +81,7 @@ public class TissuEditController implements IController {
     @FXML
     public Label consommeLabel;
     @FXML
-    public Label consommeIndo;
+    public Label consommeInfo;
     @FXML
     public ImageView imagePane;
     @FXML
@@ -117,13 +97,13 @@ public class TissuEditController implements IController {
     @FXML
     public JFXButton archiverBtn;
     @FXML
-	public FontAwesomeIconView warningSaveIcon;
-	@FXML
-	public Label warningSaveLbl;
+    public FontAwesomeIconView warningSaveIcon;
+    @FXML
+    public Label warningSaveLbl;
 
 
-	private final RootController root;
-	private StageInitializer initializer;
+    private final RootController root;
+    private StageInitializer initializer;
 
     private TissuDto tissu;
     private boolean okClicked = false;
@@ -172,6 +152,8 @@ public class TissuEditController implements IController {
         decatiField.setSelected(tissu.getDecatiProperty() != null && tissu.isDecati());
         lieuDachatField.setText(safePropertyToString(tissu.getLieuAchatProperty()));
         chuteField.setSelected(tissu.getChuteProperty() != null && tissu.isChute());
+        ancienneValeurInfo.setText(tissu.getLongueurProperty() == null ? "0" : Integer.toString(tissu.getLongueur()));
+        consommeInfo.setText(Integer.toString(tissuService.getLongueurUtilisee(tissu.getId())));
 
         unitePoidsField.setItems(FXCollections.observableArrayList(UnitePoids.labels()));
         unitePoidsField.setValue(
@@ -195,9 +177,9 @@ public class TissuEditController implements IController {
         imageNotSaved.setVisible(tissuIsNew);
         addPictureClipboardBtn.setDisable(tissuIsNew);
         archiverBtn.setDisable(tissuIsNew);
-		warningSaveIcon.setVisible(false);
-		warningSaveLbl.setVisible(false);
-		GlyphIconUtil.generateIcon(warningSaveIcon, GlyphIconUtil.VERY_BIG_ICONE_SIZE, Constants.colorWarning);
+        warningSaveIcon.setVisible(false);
+        warningSaveLbl.setVisible(false);
+        GlyphIconUtil.generateIcon(warningSaveIcon, GlyphIconUtil.VERY_BIG_ICONE_SIZE, Constants.colorWarning);
         setBoutonArchiver();
 
         onChangeListener(new ObservableValue[]{longueurField.textProperty(), laizeField.textProperty(),
@@ -207,10 +189,10 @@ public class TissuEditController implements IController {
                 tissageField.valueProperty()
         }, hasChanged);
 
-		hasChanged.addListener((observable, oldValue, newValue) -> {
-			warningSaveIcon.setVisible(newValue);
-			warningSaveLbl.setVisible(newValue);
-		});
+        hasChanged.addListener((observable, oldValue, newValue) -> {
+            warningSaveIcon.setVisible(newValue);
+            warningSaveLbl.setVisible(newValue);
+        });
     }
 
     @FXML
@@ -235,8 +217,8 @@ public class TissuEditController implements IController {
     @FXML
     private void handleOk() {
         if (areValidatorsValid(initializer, validators)) {
-			hasChanged.setValue(false);
-			setTissuFromFields();
+            hasChanged.setValue(false);
+            setTissuFromFields();
             okClicked = true;
             //root.displayTissusDetails(tissu);
         }
@@ -261,8 +243,8 @@ public class TissuEditController implements IController {
 
     @FXML
     private void handleCancel() {
-		hasChanged.setValue(false);
-		if (tissu.getId() != 0) {
+        hasChanged.setValue(false);
+        if (tissu.getId() != 0) {
             root.displayTissusDetails(tissu);
         } else {
             root.displayTissus();

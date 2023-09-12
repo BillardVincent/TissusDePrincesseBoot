@@ -1,18 +1,16 @@
 package fr.vbillard.tissusdeprincesseboot.mapper.to_dto;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.modelmapper.AbstractConverter;
-import org.modelmapper.TypeMap;
-import org.springframework.stereotype.Component;
-
 import com.github.rozidan.springboot.modelmapper.TypeMapConfigurer;
-
 import fr.vbillard.tissusdeprincesseboot.dao.FournitureDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import lombok.AllArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.modelmapper.AbstractConverter;
+import org.modelmapper.TypeMap;
+import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="566.0"
-      prefWidth="431.0"  xmlns:fx="http://javafx.com/fxml/1"
+      prefWidth="431.0" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="fr.vbillard.tissusdeprincesseboot.controller.patron.edit.rightPane.PatronEditPatronController">
   <children>
     <VBox layoutX="34.0" layoutY="142.0" prefHeight="200.0" prefWidth="350.0">

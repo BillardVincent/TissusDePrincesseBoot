@@ -1,19 +1,9 @@
 package fr.vbillard.tissusdeprincesseboot.controller.tissu;
 
-import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.*;
-
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.apache.logging.log4j.util.Strings;
-import org.springframework.stereotype.Component;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
-
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.components.IntegerSpinner;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
@@ -34,6 +24,15 @@ import fr.vbillard.tissusdeprincesseboot.service.UserPrefService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
+import org.apache.logging.log4j.util.Strings;
+import org.springframework.stereotype.Component;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.*;
 
 @Component
 public class TissuSearchController implements IController {

@@ -1,30 +1,17 @@
 package fr.vbillard.tissusdeprincesseboot.controller;
 
-import java.io.File;
-import java.io.IOException;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationListener;
-import org.springframework.stereotype.Component;
-
 import fr.vbillard.tissusdeprincesseboot.TissusDePrincesseFxApp;
 import fr.vbillard.tissusdeprincesseboot.config.PathImgProperties;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.DisplayInventaireService;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.FxmlPathProperties;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.IModalController;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.*;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathHolder;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathService;
 import fr.vbillard.tissusdeprincesseboot.model.Preference;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ImageFormat;
 import fr.vbillard.tissusdeprincesseboot.service.PreferenceService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuService;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.utils.History;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathHolder;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathService;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -33,6 +20,14 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationListener;
+import org.springframework.stereotype.Component;
+
+import java.io.File;
+import java.io.IOException;
 
 @Component
 public class StageInitializer implements ApplicationListener<TissusDePrincesseFxApp.StageReadyEvent> {

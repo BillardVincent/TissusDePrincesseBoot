@@ -1,10 +1,9 @@
 package fr.vbillard.tissusdeprincesseboot.controller.caracteristique;
 
-import org.springframework.stereotype.Component;
-
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.model.Tissage;
 import fr.vbillard.tissusdeprincesseboot.service.TissageService;
+import org.springframework.stereotype.Component;
 
 @Component
 public class TissageEditController extends AbstractCaracteristiqueController {

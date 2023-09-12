@@ -1,10 +1,9 @@
 package fr.vbillard.tissusdeprincesseboot.dao;
 
-import java.util.List;
-
+import fr.vbillard.tissusdeprincesseboot.model.PatronVersion;
 import org.springframework.stereotype.Repository;
 
-import fr.vbillard.tissusdeprincesseboot.model.PatronVersion;
+import java.util.List;
 
 @Repository
 public interface PatronVersionDao extends Idao<PatronVersion, Integer> {

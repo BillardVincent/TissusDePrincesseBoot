@@ -1,10 +1,5 @@
 package fr.vbillard.tissusdeprincesseboot.controller.picture_helper;
 
-import java.io.ByteArrayInputStream;
-
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
@@ -13,6 +8,10 @@ import fr.vbillard.tissusdeprincesseboot.service.PatronService;
 import fr.vbillard.tissusdeprincesseboot.service.PreferenceService;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+import java.io.ByteArrayInputStream;
 
 @Component
 @Scope("prototype")

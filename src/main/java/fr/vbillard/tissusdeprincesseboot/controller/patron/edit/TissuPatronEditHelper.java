@@ -1,30 +1,19 @@
 package fr.vbillard.tissusdeprincesseboot.controller.patron.edit;
 
-import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.buildComboBox;
-
-import java.util.List;
-
-import org.springframework.stereotype.Service;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXComboBox;
-
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
-import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
-import fr.vbillard.tissusdeprincesseboot.service.MatiereService;
-import fr.vbillard.tissusdeprincesseboot.service.PatronService;
-import fr.vbillard.tissusdeprincesseboot.service.TissageService;
-import fr.vbillard.tissusdeprincesseboot.service.TissuRequisService;
-import fr.vbillard.tissusdeprincesseboot.service.TissuUsedService;
+import fr.vbillard.tissusdeprincesseboot.service.*;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TissuPatronEditHelper extends PatronEditHelper<Tissu, TissuRequis, TissuUsed, TissuDto,

@@ -1,11 +1,10 @@
 package fr.vbillard.tissusdeprincesseboot.service.workflow;
 
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
 import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
 import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 @Component("planifié")
 @Scope("prototype")

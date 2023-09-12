@@ -1,19 +1,16 @@
 package fr.vbillard.tissusdeprincesseboot.mapper.from_dto;
 
-import org.apache.logging.log4j.util.Strings;
-import org.springframework.stereotype.Component;
-
 import com.github.rozidan.springboot.modelmapper.TypeMapConfigurer;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronVersionDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
-import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.PatronVersion;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
+import org.apache.logging.log4j.util.Strings;
 import org.modelmapper.AbstractConverter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
+import org.springframework.stereotype.Component;
 
 
 @Component

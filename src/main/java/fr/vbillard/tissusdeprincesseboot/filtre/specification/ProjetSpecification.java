@@ -1,23 +1,17 @@
 package fr.vbillard.tissusdeprincesseboot.filtre.specification;
 
-import java.util.ArrayList;
-import java.util.List;
+import fr.vbillard.tissusdeprincesseboot.model.Projet;
+import fr.vbillard.tissusdeprincesseboot.model.Projet_;
+import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
+import lombok.*;
+import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
-import org.springframework.data.jpa.domain.Specification;
-
-import fr.vbillard.tissusdeprincesseboot.model.Projet;
-import fr.vbillard.tissusdeprincesseboot.model.Projet_;
-import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @Builder

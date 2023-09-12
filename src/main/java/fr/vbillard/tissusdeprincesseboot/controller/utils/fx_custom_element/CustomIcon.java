@@ -1,21 +1,18 @@
 package fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element;
 
-import java.io.IOException;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Component;
-
 import com.sun.javafx.webkit.Accessor;
-
 import fr.vbillard.tissusdeprincesseboot.config.PathIconsProperties;
-import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.exception.PersistanceException;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.web.WebView;
 import lombok.AllArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
 
 @Component
 @AllArgsConstructor

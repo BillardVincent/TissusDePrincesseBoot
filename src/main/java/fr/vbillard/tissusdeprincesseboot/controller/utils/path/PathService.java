@@ -1,30 +1,13 @@
 package fr.vbillard.tissusdeprincesseboot.controller.utils.path;
 
-import java.io.IOException;
-
-import org.springframework.stereotype.Service;
-
-import fr.vbillard.tissusdeprincesseboot.controller.misc.InventaireBatchController;
-import fr.vbillard.tissusdeprincesseboot.controller.misc.PreferenceController;
-import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.caracteristique.MatiereEditController;
 import fr.vbillard.tissusdeprincesseboot.controller.caracteristique.TissageEditController;
 import fr.vbillard.tissusdeprincesseboot.controller.caracteristique.TypeFournitureEditController;
-import fr.vbillard.tissusdeprincesseboot.controller.common.CheckBoxChoiceController;
-import fr.vbillard.tissusdeprincesseboot.controller.common.FournitureRequiseCardController;
-import fr.vbillard.tissusdeprincesseboot.controller.common.FournitureRequiseSelectedController;
-import fr.vbillard.tissusdeprincesseboot.controller.common.PlusCardController;
-import fr.vbillard.tissusdeprincesseboot.controller.common.SetLongueurDialogController;
-import fr.vbillard.tissusdeprincesseboot.controller.common.SetQuantiteDialogController;
-import fr.vbillard.tissusdeprincesseboot.controller.common.SetWebUrlDialogController;
-import fr.vbillard.tissusdeprincesseboot.controller.common.TissuRequisCardController;
-import fr.vbillard.tissusdeprincesseboot.controller.common.TissuRequisSelectedController;
-import fr.vbillard.tissusdeprincesseboot.controller.fourniture.FournitureCardController;
-import fr.vbillard.tissusdeprincesseboot.controller.fourniture.FournitureCarrouselController;
-import fr.vbillard.tissusdeprincesseboot.controller.fourniture.FournitureController;
-import fr.vbillard.tissusdeprincesseboot.controller.fourniture.FournitureDetailController;
-import fr.vbillard.tissusdeprincesseboot.controller.fourniture.FournitureEditController;
-import fr.vbillard.tissusdeprincesseboot.controller.fourniture.FournitureSearchController;
+import fr.vbillard.tissusdeprincesseboot.controller.common.*;
+import fr.vbillard.tissusdeprincesseboot.controller.fourniture.*;
+import fr.vbillard.tissusdeprincesseboot.controller.misc.InventaireBatchController;
+import fr.vbillard.tissusdeprincesseboot.controller.misc.PreferenceController;
+import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.ListElementController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronListController;
@@ -33,25 +16,17 @@ import fr.vbillard.tissusdeprincesseboot.controller.patron.detail.PatronDetailCo
 import fr.vbillard.tissusdeprincesseboot.controller.patron.detail.TissuDisplayController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.detail.VersionDisplayController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.PatronEditController;
+import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.accordion.PatronVersionAccordionController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.rightPane.PatronEditFournitureRequiseController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.rightPane.PatronEditPatronController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.rightPane.PatronEditPatronVersionController;
-import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.accordion.PatronVersionAccordionController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.rightPane.PatronEditTissuRequisController;
-import fr.vbillard.tissusdeprincesseboot.controller.projet.FournitureUsedCardController;
-import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetCardController;
-import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetEditController;
-import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetEditListElementController;
-import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetListController;
-import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetSearchController;
-import fr.vbillard.tissusdeprincesseboot.controller.projet.TissuUsedCardController;
-import fr.vbillard.tissusdeprincesseboot.controller.tissu.CarrouselController;
-import fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuCardController;
-import fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuDetailController;
-import fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuEditController;
-import fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuSearchController;
-import fr.vbillard.tissusdeprincesseboot.controller.tissu.TissusController;
+import fr.vbillard.tissusdeprincesseboot.controller.projet.*;
+import fr.vbillard.tissusdeprincesseboot.controller.tissu.*;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxmlPathProperties;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
 
 @Service
 public class PathService {

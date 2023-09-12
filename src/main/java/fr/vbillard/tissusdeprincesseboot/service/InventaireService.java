@@ -1,9 +1,8 @@
 package fr.vbillard.tissusdeprincesseboot.service;
 
-import org.springframework.stereotype.Service;
-
 import fr.vbillard.tissusdeprincesseboot.dao.InventaireDao;
 import fr.vbillard.tissusdeprincesseboot.model.Inventaire;
+import org.springframework.stereotype.Service;
 
 @Service
 public class InventaireService extends AbstractService<Inventaire>{

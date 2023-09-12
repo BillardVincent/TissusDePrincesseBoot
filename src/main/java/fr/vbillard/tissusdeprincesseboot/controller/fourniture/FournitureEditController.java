@@ -1,15 +1,8 @@
 package fr.vbillard.tissusdeprincesseboot.controller.fourniture;
 
-import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.safePropertyToString;
-import static fr.vbillard.tissusdeprincesseboot.controller.validators.ValidatorUtils.areValidatorsValid;
-import static javafx.collections.FXCollections.observableArrayList;
-
-import org.apache.logging.log4j.util.Strings;
-import org.springframework.stereotype.Component;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
@@ -33,6 +26,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
+import org.apache.logging.log4j.util.Strings;
+import org.springframework.stereotype.Component;
+
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.safePropertyToString;
+import static fr.vbillard.tissusdeprincesseboot.controller.validators.ValidatorUtils.areValidatorsValid;
+import static javafx.collections.FXCollections.observableArrayList;
 
 @Component
 public class FournitureEditController implements IController {

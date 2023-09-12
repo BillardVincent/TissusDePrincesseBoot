@@ -1,14 +1,10 @@
 package fr.vbillard.tissusdeprincesseboot.model;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Lob;
-import javax.persistence.OneToOne;
-
 import fr.vbillard.tissusdeprincesseboot.model.enums.ImageFormat;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.*;
 
 @Getter
 @Setter

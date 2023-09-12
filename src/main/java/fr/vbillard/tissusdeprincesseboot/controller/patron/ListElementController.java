@@ -1,16 +1,15 @@
 package fr.vbillard.tissusdeprincesseboot.controller.patron;
 
-import org.modelmapper.ModelMapper;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ListElement;
 import fr.vbillard.tissusdeprincesseboot.utils.Utils;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 @Component
 @Scope(Utils.PROTOTYPE)

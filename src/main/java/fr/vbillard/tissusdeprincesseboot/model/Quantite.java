@@ -1,10 +1,10 @@
 package fr.vbillard.tissusdeprincesseboot.model;
 
-import javax.persistence.Entity;
-
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.Entity;
 
 @Entity
 @Getter
