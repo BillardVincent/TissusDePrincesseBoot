@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 
@@ -107,7 +108,6 @@ public class TypeFournitureEditController implements IModalController {
 						? DimensionEnum.NON_RENSEIGNE.getLabel()
 						: typeFourniture.getUnitePrincipaleConseillee().getLabel());
 			} else {
-				
 				unitePrimCombo.setDisable(true);
 				uniteConsPrimLbl.setDisable(true);
 				unitePrimCombo.setItems(null);
@@ -236,6 +236,7 @@ public class TypeFournitureEditController implements IModalController {
 		this.dialogStage = dialogStage;
 	}
 
+	@Transactional
 	private void resetField() {
 		deselectionnerButton.setVisible(typeFourniture != null);
 		supprimerButton.setVisible(typeFourniture != null);
@@ -246,9 +247,6 @@ public class TypeFournitureEditController implements IModalController {
 
 		dimensionLockIcn.setVisible(isUsed);
 		dimensionPrimCombo.setDisable(isUsed);
-
-		allTypes = typeFournitureService.getAllTypeFournituresValues();
-		listType.setItems(allTypes);
 
 		nomField.setText(typeIsNull ? Strings.EMPTY : typeFourniture.getValue());
 
@@ -265,6 +263,9 @@ public class TypeFournitureEditController implements IModalController {
 			} else {
 				ajouterButton.setText("Editer");
 			}
+
+		allTypes = typeFournitureService.getAllTypeFournituresValues();
+		listType.setItems(allTypes);
 
 		setSecondPane(typeIsNull);
 	}

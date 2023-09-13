@@ -444,7 +444,9 @@ public class FxUtils {
 	public static void onChangeListener(ObservableValue<?>[] values, BooleanProperty hasChanged) {
 		for (ObservableValue<?> ov : values) {
 			ov.addListener((observable, oldValue, newValue) -> {
-				if (!oldValue.equals(newValue)) hasChanged.setValue(true);});
+				if ( oldValue != null && newValue != null && !oldValue.equals(newValue)){
+					hasChanged.setValue(true);
+				}});
 		}
 	}
 

@@ -9,7 +9,7 @@ import java.util.List;
 public enum Unite {
 	M("mètre", "m", 100), CM("centimètre", "cm", 1), MM("milimètre", "mm", 0.1f), UNITE("unité", "", 1), G("gramme", "g", 1),
 	KG("kilogramme", "kg", 1000), L("litre", "l", 1000), ML("millilitre",
-			"ml", 1), M2("mètre carré", "m²", 1), NON_RENSEIGNE("N/A",	"N/A",0);
+			"ml", 1), M2("mètre carré", "m²", 1), NON_RENSEIGNE("N/A",	"N/A",1);
 
 	private final String label;
 	private final String abbreviation;

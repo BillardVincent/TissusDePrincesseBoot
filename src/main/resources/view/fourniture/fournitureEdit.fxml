@@ -59,8 +59,8 @@
                     </JFXButton>
                 </children>
             </HBox>
-            <Label fx:id="consommeLabel" text="Quantité utilisée" GridPane.rowIndex="5" />
-            <Label fx:id="consommeIndo" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <Label text="Quantité utilisée" GridPane.rowIndex="5" />
+            <Label fx:id="quantiteUtiliseeLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5">
                 <padding>
                     <Insets left="10.0" />
                 </padding>
@@ -77,13 +77,21 @@
          </HBox>
         </children>
     </GridPane>
-    <ButtonBar layoutX="304.0" layoutY="667.0" prefHeight="40.0" prefWidth="214.0">
-        <buttons>
-            <JFXButton mnemonicParsing="false" onAction="#handleOk" prefHeight="25.0" prefWidth="123.0" text="Valider" />
-            <JFXButton mnemonicParsing="false" onAction="#handleCancel" text="Annuler" />
-          <JFXButton fx:id="archiverBtn" mnemonicParsing="false" onMouseClicked="#archiver"/>
-        </buttons>
-    </ButtonBar>
+    <VBox layoutX="304.0" layoutY="667.0" spacing="10.0">
+        <children>
+            <ButtonBar prefHeight="40.0" prefWidth="214.0">
+                <buttons>
+                    <JFXButton mnemonicParsing="false" onAction="#handleOk" prefHeight="25.0" prefWidth="123.0" text="Valider" />
+                    <JFXButton mnemonicParsing="false" onAction="#handleCancel" text="Annuler" />
+                    <JFXButton fx:id="archiverBtn" mnemonicParsing="false" onMouseClicked="#archiver"/>
+                </buttons>
+            </ButtonBar>
+            <HBox spacing="5" alignment="CENTER_LEFT">
+                <FontAwesomeIconView fx:id="warningSaveIcon" glyphName="EXCLAMATION_TRIANGLE"/>
+                <Label fx:id="warningSaveLbl" text="Des modifications ne sont pas sauvegardées"/>
+            </HBox>
+        </children>
+    </VBox>
    <ImageView fx:id="imagePane" fitHeight="400.0" fitWidth="600.0" layoutX="681.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true" />
    <JFXButton fx:id="addPictureBtn" layoutX="847.0" layoutY="566.0" mnemonicParsing="false" onMouseClicked="#addPicture">
       <graphic>
