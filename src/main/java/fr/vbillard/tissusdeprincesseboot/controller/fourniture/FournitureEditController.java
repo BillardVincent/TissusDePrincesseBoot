@@ -21,14 +21,23 @@ import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureService;
 import fr.vbillard.tissusdeprincesseboot.service.TypeFournitureService;
+import fr.vbillard.tissusdeprincesseboot.utils.Constants;
 import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.onChangeListener;
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.safePropertyToString;
 import static fr.vbillard.tissusdeprincesseboot.controller.validators.ValidatorUtils.areValidatorsValid;
 import static javafx.collections.FXCollections.observableArrayList;
@@ -58,7 +67,7 @@ public class FournitureEditController implements IController {
   @FXML
   public JFXButton generateReferenceButton;
   @FXML
-  public Label quantiteDisponibleLabel;
+  public Label quantiteUtiliseeLabel;
   @FXML
   public ImageView imagePane;
   @FXML
@@ -77,6 +86,10 @@ public class FournitureEditController implements IController {
   public Label intituleSecLbl;
   @FXML
   public JFXButton archiverBtn;
+  @FXML
+  public FontAwesomeIconView warningSaveIcon;
+  @FXML
+  public Label warningSaveLbl;
 
   private final RootController root;
   private StageInitializer initializer;
@@ -87,6 +100,8 @@ public class FournitureEditController implements IController {
   private final TypeFournitureService typeService;
   private final FournitureService fournitureService;
   private final FourniturePictureHelper pictureHelper;
+
+  private BooleanProperty hasChanged = new SimpleBooleanProperty(false);
 
   private Validator[] validators;
 
@@ -110,53 +125,48 @@ public class FournitureEditController implements IController {
       fourniture = new FournitureDto();
     }
 
+    typeField.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+      if (newValue != null && !newValue.equals(oldValue)) {
+        TypeFourniture type = typeService.findTypeFourniture(newValue);
+
+        uniteField.setDisable(false);
+        quantiteField.setDisable(false);
+
+        boolean dimSecondaireIsNull = type.getDimensionSecondaire() == null;
+
+        quantiteField.setText("0.0");
+
+        fourniture.setType(typeService.findTypeFourniture(newValue));
+        uniteField.setItems(
+                observableArrayList(Unite.getValuesByDimension(fourniture.getType().getDimensionPrincipale())));
+        uniteField.setValue(type.getUnitePrincipaleConseillee() == null ? type.getDimensionPrincipale().getDefault().getLabel() : type.getUnitePrincipaleConseillee().getLabel());
+        intitulePrimLbl.setText(type.getIntitulePrincipale());
+
+        uniteSecField.setDisable(dimSecondaireIsNull);
+        quantiteSecField.setDisable(dimSecondaireIsNull);
+        quantiteSecField.setText("0.0");
+
+        if (!dimSecondaireIsNull) {
+          uniteSecField.setItems(
+                  observableArrayList(Unite.getValuesByDimension(fourniture.getType().getDimensionSecondaire())));
+          uniteSecField.setValue(type.getUniteSecondaireConseillee() == null ? type.getDimensionSecondaire().getDefault().getLabel() : type.getUniteSecondaireConseillee().getLabel());
+          intituleSecLbl.setText(type.getIntituleSecondaire());
+        } else {
+          uniteSecField.setValue(Strings.EMPTY);
+          intituleSecLbl.setText("N/A");
+        }
+      }
+    });
+
+    typeField.setItems(observableArrayList(typeService.getAllTypeFournituresValues()));
+    typeField.setValue(safePropertyToString(fourniture.getTypeNameProperty()));
+
     quantiteField.setText(safePropertyToString(fourniture.getQuantiteProperty()));
     quantiteSecField.setText(safePropertyToString(fourniture.getQuantiteSecondaireProperty()));
     referenceField.setText(safePropertyToString(fourniture.getReferenceProperty()));
     descriptionField.setText(safePropertyToString(fourniture.getDescriptionProperty()));
     lieuDachatField.setText(safePropertyToString(fourniture.getLieuAchatProperty()));
     nomField.setText(safePropertyToString(fourniture.getNomProperty()));
-
-
-    typeField.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-      TypeFourniture type = typeService.findTypeFourniture(newValue);
-      boolean typeIsNull = type == null;
-      boolean dimSecondaireIsNull = typeIsNull || type.getDimensionSecondaire() == null;
-
-      uniteField.setDisable(typeIsNull);
-      quantiteField.setDisable(typeIsNull);
-      quantiteField.setText("0");
-
-      if (!typeIsNull) {
-        fourniture.setType(typeService.findTypeFourniture(newValue));
-        uniteField.setItems(
-            observableArrayList(Unite.getValuesByDimension(fourniture.getType().getDimensionPrincipale())));
-        uniteField.setValue(type.getDimensionPrincipale().getDefault().getLabel());
-        intitulePrimLbl.setText(type.getIntitulePrincipale());
-
-      } else {
-        uniteField.setValue(Strings.EMPTY);
-        intitulePrimLbl.setText("N/A");
-      }
-
-      uniteSecField.setDisable(dimSecondaireIsNull);
-      quantiteSecField.setDisable(dimSecondaireIsNull);
-      quantiteSecField.setText("0");
-
-      if (!dimSecondaireIsNull) {
-        uniteSecField.setItems(
-            observableArrayList(Unite.getValuesByDimension(fourniture.getType().getDimensionSecondaire())));
-        uniteSecField.setValue(type.getDimensionSecondaire().getDefault().getLabel());
-        intituleSecLbl.setText(type.getIntituleSecondaire());
-      } else {
-        uniteSecField.setValue(Strings.EMPTY);
-        intituleSecLbl.setText("N/A");
-      }
-    });
-
-
-    typeField.setItems(observableArrayList(typeService.getAllTypeFournituresValues()));
-    typeField.setValue(safePropertyToString(fourniture.getTypeNameProperty()));
 
     intitulePrimLbl.setText(safePropertyToString(fourniture.getIntituleDimensionProperty()));
     intituleSecLbl.setText(safePropertyToString(fourniture.getIntituleSecondaireProperty()));
@@ -170,7 +180,22 @@ public class FournitureEditController implements IController {
       uniteField.setValue(safePropertyToString(fourniture.getUniteProperty()));
       intitulePrimLbl.setText(fourniture.getType().getIntitulePrincipale());
       intituleSecLbl.setText(fourniture.getType().getIntituleSecondaire());
+
+      Unite unite = Unite.getEnum(fourniture.getUnite());
+      float facteur = unite == null ? 0f : unite.getFacteur();
+      String abbreviation = unite == null ? Strings.EMPTY : unite.getAbbreviation();
+      quantiteUtiliseeLabel.setText(fournitureService.getQuantiteUtilisee(fourniture.getId()) * facteur + " " + abbreviation);
+
+    } else {
+      uniteField.setDisable(true);
+      quantiteField.setDisable(true);
+      uniteSecField.setDisable(true);
+      quantiteSecField.setDisable(true);
+      quantiteUtiliseeLabel.setText(Strings.EMPTY);
     }
+
+    warningSaveIcon.setVisible(false);
+    warningSaveLbl.setVisible(false);
 
     pictureHelper.setPane(imagePane, fourniture);
     boolean tissuIsNew = fourniture.getId() == 0;
@@ -179,6 +204,20 @@ public class FournitureEditController implements IController {
     addPictureBtn.setDisable(tissuIsNew);
     imageNotSaved.setVisible(tissuIsNew);
     addPictureClipboardBtn.setDisable(tissuIsNew);
+
+    GlyphIconUtil.generateIcon(warningSaveIcon, GlyphIconUtil.VERY_BIG_ICONE_SIZE, Constants.colorWarning);
+    setBoutonArchiver();
+
+    onChangeListener(new ObservableValue[]{ referenceField.textProperty(), quantiteField.textProperty(),
+            quantiteSecField.textProperty(), intitulePrimLbl.textProperty(), descriptionField.textProperty(),
+            typeField.valueProperty(), uniteField.valueProperty(), uniteSecField.valueProperty(),
+            intituleSecLbl.textProperty(),lieuDachatField.textProperty(), nomField.textProperty()
+    }, hasChanged);
+
+    hasChanged.addListener((observable, oldValue, newValue) -> {
+      warningSaveIcon.setVisible(newValue);
+      warningSaveLbl.setVisible(newValue);
+    });
   }
 
   @FXML
@@ -203,7 +242,6 @@ public class FournitureEditController implements IController {
 
       setTissuFromFields();
       okClicked = true;
-      root.displayFournituresDetails(fourniture);
     }
   }
 
@@ -245,9 +283,7 @@ public class FournitureEditController implements IController {
   @FXML
   private void handleGenerateReference() {
     StringBuilder sb = new StringBuilder();
-    sb.append(typeField == null || Strings.isBlank(typeField.getValue()) ?
-        "XXX" :
-        typeField.getValue().length() > 3 ? typeField.getValue().substring(0, 3) : typeField.getValue());
+    sb.append(typeField == null || Strings.isBlank(typeField.getValue()) ? "XXX" : getSubstringValueMax3(typeField));
 
     boolean ref = true;
     int refNb = 0;
@@ -256,6 +292,10 @@ public class FournitureEditController implements IController {
       ref = fournitureService.existByReference(sb.toString() + refNb);
     }
     referenceField.setText(sb.append(refNb).toString());
+  }
+
+  private String getSubstringValueMax3(JFXComboBox<String> field){
+    return field.getValue().length() > 3 ? typeField.getValue().substring(0, 3) : typeField.getValue();
   }
 
   @FXML
