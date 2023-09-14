@@ -4,13 +4,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import java.lang.String?>
-<VBox prefWidth="234.0" stylesheets="@../../style/style.css"
-	  xmlns="http://javafx.com/javafx/15.0.1"
+<VBox prefWidth="234.0" stylesheets="@../../../style/style.css"
 	  xmlns:fx="http://javafx.com/fxml/1"
 	  fx:controller="fr.vbillard.tissusdeprincesseboot.controller.patron.detail.TissuDisplayController">
 	<children>
-		<Label styleClass="title-acc-2" fx:id="titre"/>
-		<Label styleClass="title-acc-3" text="Tissages conseillés : ">
+		<Label styleClass="title-acc-3" fx:id="titre"/>
+		<Label styleClass="title-acc-4" text="Tissages conseillés : ">
 			<padding>
 				<Insets top="5.0" />
 			</padding>
@@ -20,7 +19,7 @@
 				<Insets top="5.0" />
 			</padding>
 		</Label>
-		<Label styleClass="title-acc-3" text="Matieres conseillées :" />
+		<Label styleClass="title-acc-4" text="Matieres conseillées :" />
 		<Label text="Matieres values" fx:id="matiereValues" />
 
 		<GridPane fx:id="longueurLaizeGrid">
@@ -40,14 +39,14 @@
 						<String fx:value="grid-cell" />
 						<String fx:value="first-row-left" />
 					</styleClass>
-					<Label styleClass="title-acc-4" text="Laize" />
+					<Label styleClass="title-acc-5" text="Laize" />
 				</VBox>
 				<VBox GridPane.columnIndex="1" alignment="CENTER">
 					<styleClass>
 						<String fx:value="grid-cell" />
 						<String fx:value="first-row" />
 					</styleClass>
-					<Label styleClass="title-acc-4" text="Longueur" />
+					<Label styleClass="title-acc-5" text="Longueur" />
 				</VBox>
 			</children>
 			<padding>

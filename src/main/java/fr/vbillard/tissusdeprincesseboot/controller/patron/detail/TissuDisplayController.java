@@ -20,8 +20,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+
+import static fr.vbillard.tissusdeprincesseboot.utils.Utils.N_A;
 
 @Component
 @Scope(Utils.PROTOTYPE)
@@ -61,7 +64,7 @@ public class TissuDisplayController implements IController {
 		
 		String rank = Strings.EMPTY;
 		if (data.getRank() != null) {
-			rank = String.valueOf(data.getRank()+1) + ". ";
+			rank = (data.getRank() + 1) + ". ";
 		}
 		
 		String typeTissu;
@@ -71,24 +74,34 @@ public class TissuDisplayController implements IController {
 			typeTissu = "Tissu";
 		}
 		titre.setText(rank + typeTissu);
-		
-		tissageValues.setText(StringUtils.join(tissuRequis.getTissage(), Utils.COMMA));
-		matiereValues.setText(StringUtils.join(tissuRequis.getMatiere(), Utils.COMMA));
+
+		tissageValues.setText(concatOrNA(tissuRequis.getTissage()));
+		matiereValues.setText(concatOrNA(tissuRequis.getMatiere()));
 		
 	    List<TissuRequisLaizeOption> tissuRequisLaizeOptionList =
 	            tissuRequisLaizeOptionService.getTissuRequisLaizeOptionByRequisId(tissuRequis.getId());
 
-		for (int i = 0; i < tissuRequisLaizeOptionList.size();) {
-			TissuRequisLaizeOption trlo = tissuRequisLaizeOptionList.get(i);
+	    if (CollectionUtils.isEmpty(tissuRequisLaizeOptionList)){
+			longueurLaizeGrid.setVisible(false);
+		} else {
+			for (int i = 0; i < tissuRequisLaizeOptionList.size(); i++) {
+				TissuRequisLaizeOption trlo = tissuRequisLaizeOptionList.get(i);
 
-			LaizeLongueurOptionCell laizeBox = new LaizeLongueurOptionCell(trlo.getLaize());
-			laizeBox.getStyleClass().addAll(ClassCssUtils.GRID_CELL, ClassCssUtils.LEFT_COLUMN);
-			LaizeLongueurOptionCell longueurBox = new LaizeLongueurOptionCell(trlo.getLongueur());
+				LaizeLongueurOptionCell laizeBox = new LaizeLongueurOptionCell(trlo.getLaize());
+				laizeBox.getStyleClass().addAll(ClassCssUtils.GRID_CELL, ClassCssUtils.LEFT_COLUMN);
+				LaizeLongueurOptionCell longueurBox = new LaizeLongueurOptionCell(trlo.getLongueur());
 
-			longueurLaizeGrid.addRow(++i, laizeBox, longueurBox);
-			longueurLaizeGrid.getRowConstraints().add(new RowConstraints(30));
-
+				longueurLaizeGrid.addRow(i + 1, laizeBox, longueurBox);
+				longueurLaizeGrid.getRowConstraints().add(new RowConstraints(30));
+			}
 		}
+	}
+
+	private String concatOrNA(List<String> list){
+		if (CollectionUtils.isEmpty(list)){
+			return N_A;
+		}
+		return StringUtils.join(list, Utils.COMMA);
 	}
 	
 }

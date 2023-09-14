@@ -108,7 +108,6 @@ public class PatronSearchController implements IController {
   private int margeBasseMoyen;
   private int margeHauteMoyen;
   private int margeBasseLourd;
-  private final static DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
 
   private boolean okClicked = false;
 

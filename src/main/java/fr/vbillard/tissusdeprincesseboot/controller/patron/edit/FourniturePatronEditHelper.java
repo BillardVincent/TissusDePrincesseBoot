@@ -24,8 +24,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 
-import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.buildComboBox;
-import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.buildSpinner;
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.*;
 
 @Service
 public class FourniturePatronEditHelper extends
@@ -78,7 +77,7 @@ public class FourniturePatronEditHelper extends
         buildComboBox(typeFournitureService.getAllValues(), dto.getTypeNameProperty());
 
     if (dtoIsNotNew) {
-      dimensionPrincipaleSpinner.setText(Float.toString(dto.getQuantite()));
+      dimensionPrincipaleSpinner.setText(DECIMAL_FORMAT.format(dto.getQuantite()));
 
       if (dto.getType() != null) {
         intitulePrincipal.setText(dto.getType().getIntitulePrincipale());
@@ -90,8 +89,8 @@ public class FourniturePatronEditHelper extends
 
         if (dto.getType().getDimensionSecondaire() != null) {
 
-          dimensionMinSpinner.setText(Float.toString(dto.getQuantiteSecondaireMin()));
-          dimensionMaxSpinner.setText(Float.toString(dto.getQuantiteSecondaireMax()));
+          dimensionMinSpinner.setText(DECIMAL_FORMAT.format(dto.getQuantiteSecondaireMin()));
+          dimensionMaxSpinner.setText(DECIMAL_FORMAT.format(dto.getQuantiteSecondaireMax()));
 
           intituleSecondaire.setText(dto.getType().getIntituleSecondaire());
           buildComboBox(Unite.getValuesByDimension(dto.getType().getDimensionSecondaire()),

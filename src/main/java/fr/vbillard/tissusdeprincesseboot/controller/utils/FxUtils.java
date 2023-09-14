@@ -26,6 +26,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -39,6 +40,7 @@ public class FxUtils {
 	private static final String AUCUN_FILTRE = "Aucun filtre";
 	private static final String CHOIX = "Choix";
 	private static final char X = 'X';
+	public static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
 
 
 	private static StageInitializer initializer;
@@ -56,7 +58,7 @@ public class FxUtils {
 	}
 
 	public static String safePropertyToString(FloatProperty property) {
-		return property == null ? "0" : Float.toString(property.getValue());
+		return property == null ? "0" : DECIMAL_FORMAT.format(property.getValue());
 	}
 
 	public static String safePropertyToString(StringProperty property) {
@@ -407,7 +409,7 @@ public class FxUtils {
 		JFXTextField spinner = new JFXTextField();
 		setSpinnerFocused(spinner);
 		spinner.setTextFormatter(CustomSpinner.getLongFormatter());
-		spinner.setText(Float.toString(value));
+		spinner.setText(DECIMAL_FORMAT.format(value));
 		return spinner;
 	}
 

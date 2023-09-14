@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
 
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.DECIMAL_FORMAT;
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.floatFromJFXTextField;
 
 @Component
@@ -70,7 +71,7 @@ public class SetQuantiteDialogController implements IModalController {
 
 	@FXML
 	public void handleAuto() {
-		longueurValue.setText(Float.toString(Math.min(required, available)));
+		longueurValue.setText(DECIMAL_FORMAT.format(Math.min(required, available)));
 	}
 
 	@Override

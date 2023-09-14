@@ -308,9 +308,17 @@
 }
 
 .title-acc-4{
+	    -fx-text-fill: -fx-primary-light;
+	    -fx-fill: -fx-primary-light;
 	    -fx-font-weight: bold;
 	    -fx-font-size: 1.1em;
 }
+
+.title-acc-5{
+	    -fx-font-weight: bold;
+	    -fx-font-size: 1.1em;
+}
+
 
 .title-pane-custom {
 	    -fx-text-fill: -fx-secondary;

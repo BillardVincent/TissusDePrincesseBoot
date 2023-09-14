@@ -5,7 +5,6 @@
 <?import javafx.scene.layout.*?>
 <?import java.lang.*?>
 <Pane prefHeight="260.0" prefWidth="170.0"
-	  xmlns="http://javafx.com/javafx/15.0.1"
 	  xmlns:fx="http://javafx.com/fxml/1"
 	  fx:controller="fr.vbillard.tissusdeprincesseboot.controller.common.TissuRequisCardController">
 	<children>

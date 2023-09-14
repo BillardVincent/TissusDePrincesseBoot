@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.DECIMAL_FORMAT;
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.safePropertyToString;
 
 @Component
@@ -101,8 +102,8 @@ public class FournitureDetailController implements IController {
 			fourniture = new FournitureDto();
 		}
 
-		ancienneValeurInfo.setText(fourniture.getQuantiteProperty() == null ? "0" : Float.toString(fourniture.getQuantite()));
-		consommeInfo.setText(Float.toString(fournitureService.getQuantiteUtilisee(fourniture.getId())));
+		ancienneValeurInfo.setText(fourniture.getQuantiteProperty() == null ? "0" : DECIMAL_FORMAT.format(fourniture.getQuantite()));
+		consommeInfo.setText(DECIMAL_FORMAT.format(fournitureService.getQuantiteUtilisee(fourniture.getId())));
 
 		quantitePrimField.setText(safePropertyToString(fourniture.getQuantiteProperty()));
 		quantiteSecField.setText(safePropertyToString(fourniture.getQuantiteSecondaireProperty()));

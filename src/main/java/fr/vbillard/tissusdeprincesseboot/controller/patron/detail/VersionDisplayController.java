@@ -15,12 +15,18 @@ import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuRequisService;
 import fr.vbillard.tissusdeprincesseboot.utils.Utils;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.ClassCssUtils.TITLE_ACC_3;
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.ClassCssUtils.setStyle;
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.DECIMAL_FORMAT;
 
 @Component
 @Scope(Utils.PROTOTYPE)
@@ -62,15 +68,25 @@ public class VersionDisplayController implements IController {
 		
 		nomVersion.setText(version.getNom());
 		
-		List<FournitureRequiseDto> fournitureRequises = fournitureRequisService.getAllFournitureRequiseDtoByVersion(data.getPatronVersion().getId());
+		List<FournitureRequiseDto> fournitureRequises =
+				fournitureRequisService.getAllFournitureRequiseDtoByVersion(data.getPatronVersion().getId());
 		
 		for (FournitureRequiseDto f : fournitureRequises) {
-			Label label = new Label();
-			label.setText(f.toString());
-			fournitureBox.getChildren().add(label);
+			Label type = new Label();
+			type.setText(f.getType().getValue());
+			setStyle(type, TITLE_ACC_3, true);
+
+			Label description = new Label (f.getType().getIntitulePrincipale() + " : " +
+					DECIMAL_FORMAT.format(f.getQuantite()) + " " + f.getUnite().getAbbreviation());
+
+			HBox hBox = new HBox(type, description);
+			hBox.setAlignment(Pos.CENTER_LEFT);
+			hBox.setSpacing(5);
+			fournitureBox.getChildren().add(hBox);
 		}
 		
-		List<TissuRequisDto> tissusRequis = tissuRequisService.getAllTissuRequisDtoByPatron(data.getPatronVersion().getId());
+		List<TissuRequisDto> tissusRequis =
+				tissuRequisService.getAllTissuRequisDtoByPatron(data.getPatronVersion().getId());
 
 		for (int i = 0; i <  tissusRequis.size(); i++) {
 			TissuRequisDto t = tissusRequis.get(i);

@@ -11,9 +11,12 @@ public class Utils {
 	public static final String PROTOTYPE = "prototype";
 	
 	public static final String COMMA = ", ";
+	public static final String N_A = "N/A";
 
 	public static final String SEPARATOR = " - ";
 	public static final String OR = " ou ";
+
+	private Utils(){}
 
 
 	public static boolean isEmpty(Object... objs) {

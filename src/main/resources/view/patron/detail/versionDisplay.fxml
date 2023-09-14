@@ -4,7 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.*?>
-<AnchorPane prefWidth="246.0" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.patron.detail.VersionDisplayController">
+<AnchorPane prefWidth="246.0" stylesheets="@../../../style/style.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.patron.detail.VersionDisplayController">
 <ScrollPane>
    <content>
       <AnchorPane  prefWidth="228.0">

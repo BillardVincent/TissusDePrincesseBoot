@@ -17,7 +17,7 @@
                </children>
             </HBox>
             <Label fx:id="dimensions" alignment="CENTER" prefHeight="18.0" prefWidth="246.0" styleClass="list-element-dim" text="Dimensions" />
-            <HBox prefHeight="85.0" prefWidth="271.0" stylesheets="@../style/style.css">
+            <HBox prefHeight="85.0" prefWidth="271.0" stylesheets="@../../style/style.css">
                <children>
                   <Label fx:id="description" prefHeight="54.0" prefWidth="246.0" styleClass="list-element-desc" text="Description" wrapText="true" />
                </children>
