@@ -14,7 +14,7 @@
   <name>tissu-de-princesse-boot</name>
   <description>Application de gestion de projets de couture</description>
   <properties>
-    <java.version>1.8</java.version>
+    <java.version>17</java.version>
     <springboot-javafx-test.version>0.0.4</springboot-javafx-test.version>
 
   </properties>
@@ -48,15 +48,36 @@
     </dependency>
 
     <!-- Composants Java FX -->
+      <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-controls</artifactId>
+        <version>20</version>
+      </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-fxml</artifactId>
+      <version>20</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-web</artifactId>
+      <version>20</version>
+    </dependency>
+
     <dependency>
       <groupId>de.jensd</groupId>
-      <artifactId>fontawesomefx</artifactId>
-      <version>8.9</version>
+      <artifactId>fontawesomefx-fontawesome</artifactId>
+      <version>4.7.0-9.1.2</version>
+    </dependency>
+    <dependency>
+      <groupId>de.jensd</groupId>
+      <artifactId>fontawesomefx-materialdesignfont</artifactId>
+      <version>2.0.26-9.1.2</version>
     </dependency>
     <dependency>
       <groupId>com.jfoenix</groupId>
       <artifactId>jfoenix</artifactId>
-      <version>8.0.9</version>
+      <version>9.0.1</version>
     </dependency>
 
     <!-- Modification de fichier image -->
@@ -80,7 +101,7 @@
     <dependency>
       <groupId>org.modelmapper</groupId>
       <artifactId>modelmapper</artifactId>
-      <version>2.3.9</version>
+      <version>2.4.1</version>
     </dependency>
     <dependency>
       <groupId>com.github.rozidan</groupId>
@@ -137,6 +158,11 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-maven-plugin</artifactId>
+        <version>0.0.8</version>
       </plugin>
     </plugins>
   </build>

@@ -22,7 +22,7 @@ public class DtoToPatron extends TypeMapConfigurer<PatronDto, Patron> {
         typeMap.addMappings(mapper -> mapper.using(new TypeSupportConverter()).map(PatronDto::getTypeSupportProperty, Patron::setSupportType));
 	}
 	
-    private class TypeSupportConverter extends AbstractConverter<StringProperty, SupportTypeEnum> {
+    private static class TypeSupportConverter extends AbstractConverter<StringProperty, SupportTypeEnum> {
         @Override
         protected SupportTypeEnum convert(StringProperty prop) {
             return prop == null || Strings.isEmpty(prop.get()) ? SupportTypeEnum.NON_RENSEIGNE : SupportTypeEnum.getEnum(prop.get());

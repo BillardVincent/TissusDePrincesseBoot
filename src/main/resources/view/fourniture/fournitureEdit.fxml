@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.*?>
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import de.jensd.fx.glyphs.fontawesome.*?>
 <?import fr.vbillard.tissusdeprincesseboot.controller.components.FloatSpinner?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
