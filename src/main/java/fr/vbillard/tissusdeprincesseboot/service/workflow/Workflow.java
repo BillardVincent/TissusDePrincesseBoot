@@ -135,7 +135,7 @@ public abstract class Workflow {
 	private void buildError (ErrorWarn errors) {
 		throw new InvalidWorkflowException(
 				"Vous ne pouvez pas passser à l'étape suivante. Corrigez les erreurs suivantes : "
-						+ String.join(",\n", errors.getError()));
+						+ String.join(",\n", errors.getError()) + "\n Souhaitez vous quand même continuer?");
 	}
 	
 	public String getDescription() {

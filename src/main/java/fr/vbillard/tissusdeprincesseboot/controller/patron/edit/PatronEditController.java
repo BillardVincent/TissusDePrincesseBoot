@@ -7,6 +7,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
+import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.accordion.PatronVersionAccordionController;
 import fr.vbillard.tissusdeprincesseboot.controller.picture_helper.PatronPictureHelper;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils;
@@ -38,6 +39,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.ClassCssUtils.TITLE_PANE_CUSTOM;
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.ClassCssUtils.setStyle;
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.safePropertyToString;
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.textFieldToFirstCharOrX;
 import static fr.vbillard.tissusdeprincesseboot.controller.validators.ValidatorUtils.areValidatorsValid;
@@ -233,19 +236,19 @@ public class PatronEditController implements IController {
     archiverBtn.setText(patron.isArchived() ? "Désarchiver" : "Archiver");
   }
 
-  public void displayRightPane(TissuRequisDto tissuRequisDto) {
+  public void displayRightPane(TissuRequisDto tissuRequisDto, PatronVersionAccordionController parent) {
     tissuEtFournitureContainer.getChildren().clear();
     FxData data = new FxData();
-    data.setParentController(this);
+    data.setParentController(parent);
     data.setTissuRequis(tissuRequisDto);
     tissuEtFournitureContainer.getChildren().add(initializer.displayPane(PathEnum.PATRON_EDIT_TISSU_REQUIS, data));
 
   }
 
-  public void displayRightPane(FournitureRequiseDto fournitureRequiseDto) {
+  public void displayRightPane(FournitureRequiseDto fournitureRequiseDto, PatronVersionAccordionController parent) {
     tissuEtFournitureContainer.getChildren().clear();
     FxData data = new FxData();
-    data.setParentController(this);
+    data.setParentController(parent);
     data.setFournitureRequise(fournitureRequiseDto);
     tissuEtFournitureContainer.getChildren().add(initializer.displayPane(PathEnum.PATRON_EDIT_FOURNITURE_REQUISE, data));
 
@@ -259,7 +262,7 @@ public class PatronEditController implements IController {
     tissuEtFournitureContainer.getChildren().add(initializer.displayPane(PathEnum.PATRON_EDIT_PATRON_VERSION, data));
   }
 
-  void displayRightPane() {
+  public void displayRightPane() {
     tissuEtFournitureContainer.getChildren().clear();
     FxData data = new FxData();
     data.setParentController(this);
@@ -274,7 +277,7 @@ public class PatronEditController implements IController {
     for (PatronVersion pv : patronVersionService.getByPatronId(patron.getId())){
       TitledPane pane = new TitledPane();
       pane.setText("Version : " + pv.getNom());
-      pane.getStyleClass().add("title-pane-custom");
+      setStyle(pane, TITLE_PANE_CUSTOM, true);
       FxData fxData = new FxData();
       fxData.setPatronVersion(patronVersionService.convert(pv));
       fxData.setParentController(this);
@@ -306,6 +309,5 @@ public class PatronEditController implements IController {
     pv = patronVersionService.saveOrUpdate(pv);
     reload(pv.getId());
   }
-  
 
 }

@@ -19,6 +19,7 @@ import fr.vbillard.tissusdeprincesseboot.service.*;
 import fr.vbillard.tissusdeprincesseboot.service.workflow.Workflow;
 import fr.vbillard.tissusdeprincesseboot.service.workflow.WorkflowService;
 import fr.vbillard.tissusdeprincesseboot.utils.Constants;
+import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -107,7 +108,6 @@ public class ProjetEditController implements IController {
 
 		Patron patron = patronService.getPatronByProjectId(projet.getId());
 
-
 		marque.setText(patron.getMarque());
 		modele.setText(patron.getModele());
 		description.setText(projet.getDescription());
@@ -193,7 +193,7 @@ public class ProjetEditController implements IController {
 
 	@FXML
 	private void delete() {
-
+		DevInProgressService.notImplemented();
 	}
 
 }

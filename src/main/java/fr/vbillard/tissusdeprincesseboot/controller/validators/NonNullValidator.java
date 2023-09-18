@@ -3,8 +3,10 @@ package fr.vbillard.tissusdeprincesseboot.controller.validators;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import javafx.scene.control.Control;
+import lombok.Getter;
 import org.apache.logging.log4j.util.Strings;
 
+@Getter
 public class NonNullValidator<T extends Control> implements Validator {
 
   private T field;
@@ -17,8 +19,8 @@ public class NonNullValidator<T extends Control> implements Validator {
 
   @Override
   public boolean Validate() {
-    if (field instanceof JFXComboBox)
-    return ((JFXComboBox)field).getValue() != null;
+    if (field instanceof JFXComboBox<?>)
+      return ((JFXComboBox<?>)field).getValue() != null;
     else if(field instanceof JFXTextField){
       return Strings.isNotEmpty(((JFXTextField) field).getText());
     }else{

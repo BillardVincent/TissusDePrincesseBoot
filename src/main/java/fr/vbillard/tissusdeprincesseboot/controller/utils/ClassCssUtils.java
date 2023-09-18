@@ -13,6 +13,7 @@ public class ClassCssUtils {
 	public static final String LEFT_COLUMN = "left-column";
 	public static final String SELECTED = "mainmenu-element-selected";
 	public static final String TITLE_ACC_3 = "title-acc-3";
+	public static final String TITLE_PANE_CUSTOM= "title-pane-custom";
 
 
 	public static void setStyle(Node node, String cssClass, boolean add) {

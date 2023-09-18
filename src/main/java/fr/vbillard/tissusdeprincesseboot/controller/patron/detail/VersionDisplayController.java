@@ -17,6 +17,7 @@ import fr.vbillard.tissusdeprincesseboot.utils.Utils;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.springframework.context.annotation.Scope;
@@ -27,11 +28,14 @@ import java.util.List;
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.ClassCssUtils.TITLE_ACC_3;
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.ClassCssUtils.setStyle;
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.DECIMAL_FORMAT;
+import static javafx.scene.control.ScrollPane.ScrollBarPolicy.AS_NEEDED;
+import static javafx.scene.control.ScrollPane.ScrollBarPolicy.NEVER;
 
 @Component
 @Scope(Utils.PROTOTYPE)
 public class VersionDisplayController implements IController {
-	
+	@FXML
+	private ScrollPane scrollPane;
 	@FXML
 	private VBox tissuBox;
 	@FXML
@@ -63,7 +67,10 @@ public class VersionDisplayController implements IController {
 		if (data == null || data.getPatronVersion() == null) {
 			throw new IllegalData();
 		}
-		
+
+		scrollPane.setHbarPolicy(AS_NEEDED);
+		scrollPane.setVbarPolicy(NEVER);
+
 		version = data.getPatronVersion();
 		
 		nomVersion.setText(version.getNom());
@@ -73,16 +80,18 @@ public class VersionDisplayController implements IController {
 		
 		for (FournitureRequiseDto f : fournitureRequises) {
 			Label type = new Label();
-			type.setText(f.getType().getValue());
-			setStyle(type, TITLE_ACC_3, true);
+			if (f.getType() != null) {
+				type.setText(f.getType().getValue());
+				setStyle(type, TITLE_ACC_3, true);
 
-			Label description = new Label (f.getType().getIntitulePrincipale() + " : " +
-					DECIMAL_FORMAT.format(f.getQuantite()) + " " + f.getUnite().getAbbreviation());
+				Label description = new Label(f.getType().getIntitulePrincipale() + " : " +
+						DECIMAL_FORMAT.format(f.getQuantite()) + " " + f.getUnite().getAbbreviation());
 
-			HBox hBox = new HBox(type, description);
-			hBox.setAlignment(Pos.CENTER_LEFT);
-			hBox.setSpacing(5);
-			fournitureBox.getChildren().add(hBox);
+				HBox hBox = new HBox(type, description);
+				hBox.setAlignment(Pos.CENTER_LEFT);
+				hBox.setSpacing(5);
+				fournitureBox.getChildren().add(hBox);
+			}
 		}
 		
 		List<TissuRequisDto> tissusRequis =

@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import java.lang.String?>
-<VBox prefWidth="234.0" stylesheets="@../../../style/style.css"
+<VBox prefWidth="240.0" stylesheets="@../../../style/style.css"
 	  xmlns:fx="http://javafx.com/fxml/1"
 	  fx:controller="fr.vbillard.tissusdeprincesseboot.controller.patron.detail.TissuDisplayController">
 	<children>

@@ -20,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -66,7 +67,15 @@ public class PatronVersionAccordionController implements IController {
     wrapperPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
     wrapperPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 
+    reload();
+
+  }
+
+  public void reload() {
     List<TissuRequisDto> tissuRequisList = tissuRequisService.getAllTissuRequisDtoByPatron(patronVersionDto.getId());
+    tissuVbox.getChildren().clear();
+    fournitureVbox.getChildren().clear();
+    parentController.displayRightPane(patronVersionDto);
 
     for (TissuRequisDto tissuRequisDto : tissuRequisList) {
 
@@ -75,11 +84,11 @@ public class PatronVersionAccordionController implements IController {
       btn.setPadding(new Insets(10));
       HBox hBox = new HBox();
       btn.setGraphic(hBox);
-      Label lbl = new Label("Tissu : ");
-      //Label lbl2 = new Label(tissuRequisDto.getGammePoids());
+      Label lbl = new Label("Tissu : " +
+              (tissuRequisDto.getTypeTissu() != null ? tissuRequisDto.getTypeTissu().getLabel() : Strings.EMPTY));
       lbl.setTextFill(Constants.colorSecondary);
       hBox.getChildren().addAll(lbl);
-      btn.setOnAction(e -> parentController.displayRightPane(tissuRequisDto));
+      btn.setOnAction(e -> parentController.displayRightPane(tissuRequisDto, this));
       tissuVbox.getChildren().add(btn);
 
     }
@@ -94,15 +103,15 @@ public class PatronVersionAccordionController implements IController {
       btn.setPadding(new Insets(10));
       HBox hBox = new HBox();
       btn.setGraphic(hBox);
-      Label lbl = new Label("Fourniture : ");
+      Label lbl = new Label("Fourniture : "+
+              (fournitureRequiseDto.getType() != null ? fournitureRequiseDto.getTypeName() : Strings.EMPTY));
       //Label lbl2 = new Label(tissuRequisDto.getGammePoids());
       lbl.setTextFill(Constants.colorSecondary);
       hBox.getChildren().addAll(lbl);
-      btn.setOnAction(e -> parentController.displayRightPane(fournitureRequiseDto));
+      btn.setOnAction(e -> parentController.displayRightPane(fournitureRequiseDto, this));
       fournitureVbox.getChildren().add(btn);
 
     }
-
   }
 
   @FXML

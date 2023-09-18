@@ -12,6 +12,6 @@ public interface TissuRequisLaizeOptionDao extends Idao<TissuRequisLaizeOption, 
 
   @Query(value = "SELECT (MIN(trlo.LONGUEUR)) FROM TISSU_REQUIS_LAIZE_OPTION trlo WHERE trlo.REQUIS_ID = ?1 ",
 			nativeQuery =	true)
-  int getLongueurMinByRequis(int id);
+  Integer getLongueurMinByRequis(int id);
 
 }

@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXToggleButton;
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.components.LaizeLongueurOptionCell;
+import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.accordion.PatronVersionAccordionController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
@@ -74,6 +75,7 @@ public class PatronEditTissuRequisController implements IController {
   private final MatiereService matiereService;
   private final TissageService tissageService;
 
+  private PatronVersionAccordionController parent;
 
   private StageInitializer initializer;
   private TissuRequisDto tissuRequis;
@@ -100,9 +102,10 @@ public class PatronEditTissuRequisController implements IController {
   @Override
   public void setStageInitializer(StageInitializer initializer, FxData data) {
     this.initializer = initializer;
-	if (data == null || data.getTissuRequis() == null) {
+	if (data == null || data.getTissuRequis() == null || data.getParentController() == null) {
 		throw new IllegalData();
 	}
+	this.parent = (PatronVersionAccordionController)data.getParentController();
     this.tissuRequis = data.getTissuRequis();
     setLongueurLaizeGrid();
 
@@ -182,6 +185,7 @@ public class PatronEditTissuRequisController implements IController {
           .orElse(ButtonType.CANCEL) == ButtonType.OK) {
         tissuRequisLaizeOptionService.delete(trlo);
         setLongueurLaizeGrid();
+        parent.reload();
       }
     });
 

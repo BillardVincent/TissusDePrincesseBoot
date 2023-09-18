@@ -88,14 +88,14 @@ public class TissuRequisCardController implements IController {
 			List<TissuRequisLaizeOption> tissuRequisLaizeOptionList = trloService
 					.getTissuRequisLaizeOptionByRequisId(tissuRequis.getId());
 
-			for (int i = 0; i < tissuRequisLaizeOptionList.size();) {
+			for (int i = 0; i < tissuRequisLaizeOptionList.size(); i++) {
 				TissuRequisLaizeOption trlo = tissuRequisLaizeOptionList.get(i);
 
 				LaizeLongueurOptionCell laizeBox = new LaizeLongueurOptionCell(trlo.getLaize());
 				laizeBox.getStyleClass().addAll(ClassCssUtils.GRID_CELL, ClassCssUtils.LEFT_COLUMN);
 				LaizeLongueurOptionCell longueurBox = new LaizeLongueurOptionCell(trlo.getLongueur());
 
-				longueurLaizeGrid.addRow(++i, laizeBox, longueurBox);
+				longueurLaizeGrid.addRow(i + 1, laizeBox, longueurBox);
 				longueurLaizeGrid.getRowConstraints().add(new RowConstraints(30));
 
 			}
@@ -103,14 +103,14 @@ public class TissuRequisCardController implements IController {
 			doublure.setVisible(tissuRequis.isDoublure());
 			setLabelWithOrCollection(tissuRequis.getMatiere(), matiereHbx, matiereLbl);
 			setLabelWithOrCollection(tissuRequis.getTissage(), tissageHbx, tissageLbl);
-			typeLbl.setText(
-					tissuRequis.getTypeTissu() == null ? TypeTissuEnum.NON_RENSEIGNE.label : tissuRequis.getTypeTissu().getLabel());
+			typeLbl.setText(tissuRequis.getTypeTissu() == null ?
+					TypeTissuEnum.NON_RENSEIGNE.label : tissuRequis.getTypeTissu().getLabel());
 
 			setIcones();
 	}
 
 	private void setIcones() {
-		GlyphIcon iconStatus;
+		GlyphIcon<?> iconStatus;
 
 		int longueurMin = trloService.getLongueurMinByRequis(tissuRequis.getId());
 		int longueurUtilisee = tissuUsedService.longueurUsedByRequis(tissuRequis, projet);
@@ -148,13 +148,13 @@ public class TissuRequisCardController implements IController {
 			if (!CollectionUtils.isEmpty(tissuUsedNotDecati)) {
 				boolean plusieursTissus = tissuUsedNotDecati.size() > 1;
 
-				String tissu_s = ModelUtils.generateString(EntityToString.TISSU, Articles.DEFINI, plusieursTissus,
+				String tissuS = ModelUtils.generateString(EntityToString.TISSU, Articles.DEFINI, plusieursTissus,
 						true);
-				Utils.appendWithSeparator(header, Utils.SEPARATOR, tissu_s);
+				Utils.appendWithSeparator(header, Utils.SEPARATOR, tissuS);
 				header.append(" non décati");
 				header.append(plusieursTissus ? "s" : Strings.EMPTY);
 
-				Utils.appendWithSeparator(content, Utils.SEPARATOR, tissu_s);
+				Utils.appendWithSeparator(content, Utils.SEPARATOR, tissuS);
 				content.append(tissuUsedNotDecati.stream().map(u -> u.getTissu().getReference())
 						.collect(Collectors.joining(Utils.COMMA)));
 				content.append(plusieursTissus ? " ne sont pas décatis" : " n'est pas décati ");
@@ -172,7 +172,7 @@ public class TissuRequisCardController implements IController {
 
 	}
 	
-	private void setLabelWithOrCollection(List data, HBox content, Label label) {
+	private void setLabelWithOrCollection(List<?> data, HBox content, Label label) {
 		if (CollectionUtils.isEmpty(data)){
 			content.setVisible(false);
 		} else {

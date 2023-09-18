@@ -4,12 +4,14 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.accordion.PatronVersionAccordionController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
+import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureRequiseService;
@@ -51,6 +53,7 @@ public class PatronEditFournitureRequiseController implements IController {
 
   private final TypeFournitureService typeFournitureService;
   private final FournitureRequiseService fournitureRequiseService;
+  private PatronVersionAccordionController parent;
 
   private StageInitializer initializer;
   private FournitureRequiseDto dto;
@@ -64,6 +67,12 @@ public class PatronEditFournitureRequiseController implements IController {
 
   @Override
   public void setStageInitializer(StageInitializer initializer, FxData data) {
+
+    if (data == null || data.getFournitureRequise() == null || data.getParentController() == null) {
+      throw new IllegalData();
+    }
+    this.parent = (PatronVersionAccordionController)data.getParentController();
+
     this.initializer = initializer;
     dto = data.getFournitureRequise();
     setLongSpinner(dimPriSpinner);
@@ -165,7 +174,7 @@ public class PatronEditFournitureRequiseController implements IController {
     dto.setQuantiteSecondaireMax(Float.parseFloat(dimSecSpinnerMax.getText()));
 
     fournitureRequiseService.saveOrUpdate(dto);
-    ;
+
   }
 
   public void handleDelete() {
@@ -176,8 +185,7 @@ public class PatronEditFournitureRequiseController implements IController {
 
     if (ButtonType.OK == result) {
       fournitureRequiseService.delete(dto.getId());
-      // TODO
-      // ((PatronEditController) data.getParentController()).reload(-1);
+      parent.reload();
 
     }
   }

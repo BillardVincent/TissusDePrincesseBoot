@@ -37,6 +37,10 @@ public class TissuRequisLaizeOptionService extends AbstractService<TissuRequisLa
   }
 
 	public int getLongueurMinByRequis(int id) {
-		return dao.getLongueurMinByRequis(id);
+		Integer longueurMin =  dao.getLongueurMinByRequis(id);
+		if (longueurMin != null){
+			return longueurMin.intValue();
+		}
+		return 0;
 	}
 }
