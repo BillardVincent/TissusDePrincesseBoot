@@ -5,12 +5,10 @@ import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.ColumnDefault;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -40,6 +38,9 @@ public class Tissu extends AbstractEntity {
 	private UnitePoids unitePoids = UnitePoids.NON_RENSEIGNE;
 	private boolean decati;
 	private String lieuAchat;
+	@OneToOne
+	@Cascade({org.hibernate.annotations.CascadeType.ALL})
+	private ColorEntity color;
 
 	@ColumnDefault("false")
 	private boolean archived;
@@ -63,5 +64,7 @@ public class Tissu extends AbstractEntity {
 		this.tissage = tissage;
 		this.archived = false;
 	}
+
+
 
 }

@@ -4,6 +4,7 @@ import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
 import javafx.beans.property.*;
+import javafx.scene.paint.Color;
 import org.springframework.util.StringUtils;
 
 public class TissuDto implements FxDto<Tissu> {
@@ -31,6 +32,7 @@ public class TissuDto implements FxDto<Tissu> {
 	private StringProperty tissage;
 	private BooleanProperty chute;
 	private BooleanProperty archived;
+	private ObjectProperty<Color> color;
 
 	public TissuDto() {
 		this.id = new SimpleIntegerProperty();
@@ -252,5 +254,17 @@ public class TissuDto implements FxDto<Tissu> {
 
 	public void setArchived(boolean archived){
 		this.archived.set(archived);
+	}
+
+	public Color getColor() {
+		return color.get();
+	}
+
+	public ObjectProperty<Color> getColorProperty() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color.set(color);
 	}
 }

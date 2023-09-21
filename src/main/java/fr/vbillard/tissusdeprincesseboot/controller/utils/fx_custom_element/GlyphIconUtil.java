@@ -22,6 +22,11 @@ public class GlyphIconUtil {
         if (color != null ) icon.setFill(color);
         return icon;
     }
+
+    public static GlyphIcon palette(){
+        return generateIcon(new MaterialDesignIconView(MaterialDesignIcon.PALETTE), BIG_ICONE_SIZE, null );
+    }
+
     public static GlyphIcon plusCircleTiny(){
         return generateIcon(new MaterialDesignIconView(MaterialDesignIcon.PLUS_CIRCLE), TINY_ICONE_SIZE, Constants.colorAdd);
     }

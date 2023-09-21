@@ -8,6 +8,8 @@ import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
+import fr.vbillard.tissusdeprincesseboot.service.ColorUtils;
+import javafx.scene.paint.Color;
 import lombok.AllArgsConstructor;
 import org.modelmapper.AbstractConverter;
 import org.modelmapper.TypeMap;
@@ -28,7 +30,9 @@ public class DtoToTissu extends TypeMapConfigurer<TissuDto, Tissu> {
 		typeMap.addMappings(mapper -> mapper.using(new MatiereConverter()).map(src -> src, Tissu::setMatiere));
 		typeMap.addMappings(
 				mapper -> mapper.using(new TypeTissuConverter()).map(TissuDto::getTypeTissu, Tissu::setTypeTissu));
-
+		typeMap.addMappings(
+				mapper -> mapper.using(new TypeTissuConverter()).map(TissuDto::getTypeTissu, Tissu::setTypeTissu));
+		typeMap.addMapping(TissuDto::getColor, (Tissu d, Color v) -> d.setColor(ColorUtils.colorToEntity(v)));
 		typeMap.setPostConverter(context -> {
 			context.getDestination().setTissage(ts.getByValue(context.getSource().getTissage()));
 			return context.getDestination();
