@@ -3,18 +3,15 @@ package fr.vbillard.tissusdeprincesseboot.filtre.specification;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.CharacterSearch;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.SpecificationUtils;
-import fr.vbillard.tissusdeprincesseboot.model.Matiere;
-import fr.vbillard.tissusdeprincesseboot.model.Tissage;
-import fr.vbillard.tissusdeprincesseboot.model.Tissu;
-import fr.vbillard.tissusdeprincesseboot.model.Tissu_;
+import fr.vbillard.tissusdeprincesseboot.model.*;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
+import fr.vbillard.tissusdeprincesseboot.utils.color.ColorUtils;
+import fr.vbillard.tissusdeprincesseboot.utils.color.LabColor;
+import fr.vbillard.tissusdeprincesseboot.utils.color.RGBColor;
 import lombok.*;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,9 +37,22 @@ public class TissuSpecification implements Specification<Tissu> {
 	private Boolean decati;
 	private CharacterSearch lieuAchat;
 	private Boolean archived;
+	private RGBColor color;
+
+
+	private static class Joins {
+		private Join<Tissu, ColorEntity> joinColor;
+		private Join<Tissu, ColorEntity> joinColor(Root<Tissu> root) {
+			if (joinColor == null) {
+				joinColor = root.join(Tissu_.COLOR);
+			}
+			return joinColor;
+		}
+	}
 
 	@Override
 	public Predicate toPredicate(Root<Tissu> tissu, CriteriaQuery<?> query, CriteriaBuilder cb) {
+		TissuSpecification.Joins joins = new TissuSpecification.Joins();
 		query.distinct(true);
 
 		List<Predicate> predicateList = new ArrayList<>();
@@ -98,6 +108,13 @@ public class TissuSpecification implements Specification<Tissu> {
 
 		if(archived != null){
 			predicateList.add(tissu.get(Tissu_.ARCHIVED).in(archived));
+		}
+
+		if (color != null) {
+			predicateList.add(SpecificationUtils.getColorPredicate(ColorUtils.rgbToLab(color),
+					new Path[]{joins.joinColor(tissu).get(ColorEntity_.L),
+							joins.joinColor(tissu).get(ColorEntity_.A),
+							joins.joinColor(tissu).get(ColorEntity_.B)}, cb));
 		}
 
 		return cb.and(predicateList.toArray(new Predicate[] {}));

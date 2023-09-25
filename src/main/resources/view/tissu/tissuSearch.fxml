@@ -115,6 +115,11 @@
           </HBox>
         </children>
       </VBox>
+      <HBox alignment="CENTER" fillHeight="false" prefHeight="30.0" prefWidth="324.0" spacing="10.0">
+        <children>
+          <ColorPicker  fx:id="colorPicker"/>
+        </children>
+      </HBox>
       <JFXTextField fx:id="descriptionField" prefHeight="38.0" prefWidth="270.0" promptText="Description"/>
       <JFXTextField fx:id="lieuDachatField" prefHeight="36.0" prefWidth="270.0" text="Lieu d'achat"/>
       <HBox alignment="CENTER" fillHeight="false" prefHeight="30.0" prefWidth="324.0" spacing="10.0">

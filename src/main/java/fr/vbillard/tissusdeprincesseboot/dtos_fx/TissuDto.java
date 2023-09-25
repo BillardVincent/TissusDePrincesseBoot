@@ -33,6 +33,7 @@ public class TissuDto implements FxDto<Tissu> {
 	private BooleanProperty chute;
 	private BooleanProperty archived;
 	private ObjectProperty<Color> color;
+	public int colorId;
 
 	public TissuDto() {
 		this.id = new SimpleIntegerProperty();
@@ -51,6 +52,7 @@ public class TissuDto implements FxDto<Tissu> {
 		this.chute = new SimpleBooleanProperty();
 		this.archived = new SimpleBooleanProperty();
 		this.longueurRestante = new SimpleIntegerProperty();
+		this.color = new SimpleObjectProperty<>();
 
 	}
 

@@ -1,9 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.controller.tissu;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXRadioButton;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.components.IntegerSpinner;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
@@ -21,9 +18,14 @@ import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.service.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.service.TissageService;
 import fr.vbillard.tissusdeprincesseboot.service.UserPrefService;
+import fr.vbillard.tissusdeprincesseboot.utils.color.ColorUtils;
+import fr.vbillard.tissusdeprincesseboot.utils.color.LabColor;
+import fr.vbillard.tissusdeprincesseboot.utils.color.RGBColor;
 import javafx.fxml.FXML;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.paint.Color;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
 
@@ -92,6 +94,8 @@ public class TissuSearchController implements IController {
   public JFXRadioButton notArchive;
   @FXML
   public JFXRadioButton indifferentArchive;
+  @FXML
+  public ColorPicker colorPicker;
 
   private StageInitializer initializer;
 
@@ -203,6 +207,12 @@ public class TissuSearchController implements IController {
       setToggleGroupFromBoolean(specification.getDecati(), decatiTrue, decatiFalse, decatiAll);
       setToggleGroupFromBoolean(specification.getChute(), chute, coupon, chuteEtCoupon);
 
+      if (specification.getColor() != null){
+        colorPicker.setValue(Color.rgb(specification.getColor().getRed(), specification.getColor().getGreen(), specification.getColor().getBlue()));
+      } else {
+        colorPicker.setValue(Color.TRANSPARENT);
+      }
+
     } else {
       specification = new TissuSpecification();
 
@@ -221,6 +231,8 @@ public class TissuSearchController implements IController {
       moyenCBox.setSelected(true);
       legerCBox.setSelected(true);
       ncCBox.setSelected(true);
+      colorPicker.setValue(Color.TRANSPARENT);
+
     }
   }
 
@@ -300,10 +312,12 @@ public class TissuSearchController implements IController {
     Boolean chuteOuCoupon = getBooleanFromRadioButtons(chute, coupon, chuteEtCoupon);
     Boolean archived = getBooleanFromRadioButtons(archive, notArchive, indifferentArchive);
 
+    RGBColor color = ColorUtils.colorToRgb(colorPicker.getValue());
+
     specification =
         TissuSpecification.builder().reference(reference).description(description).chute(chuteOuCoupon).decati(decati)
             .laize(laizeSearch).poids(poidsSearch).poidsNC(poidsSearchNc).longueur(longueurSearch).typeTissu(types)
-            .matieres(matieres).tissages(tissages).archived(archived).build();
+            .matieres(matieres).tissages(tissages).archived(archived).color(color).build();
 
     root.displayTissu(specification);
   }

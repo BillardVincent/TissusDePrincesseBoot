@@ -3,11 +3,9 @@ package fr.vbillard.tissusdeprincesseboot.mapper.to_dto;
 import com.github.rozidan.springboot.modelmapper.TypeMapConfigurer;
 import fr.vbillard.tissusdeprincesseboot.dao.TissuDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
-import fr.vbillard.tissusdeprincesseboot.model.ColorEntity;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
-import fr.vbillard.tissusdeprincesseboot.service.ColorUtils;
-import javafx.scene.paint.Color;
+import fr.vbillard.tissusdeprincesseboot.utils.color.ColorUtils;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,7 +28,15 @@ public class TissuToDto extends TypeMapConfigurer<Tissu, TissuDto> {
 				TissuDto::setLongueurRestante));
 		typeMap.addMapping(src -> src.getMatiere().getValue(), TissuDto::setMatiere);
 		typeMap.addMapping(src -> src.getTissage().getValue(), TissuDto::setTissage);
-		typeMap.addMapping(Tissu::getColor, (TissuDto d, ColorEntity v) -> d.setColor(ColorUtils.entityToColor(v)));
+
+		typeMap.setPostConverter(context -> {
+			if (context.getSource().getColor() != null){
+				context.getDestination().setColor(ColorUtils.entityToColor(context.getSource().getColor()));
+				context.getDestination().colorId = context.getSource().getColor().getId();
+			}
+			return context.getDestination();
+		});
+
 		typeMap.addMapping(Tissu::getTypeTissu, (DestinationSetter<TissuDto, TypeTissuEnum>) TissuDto::setTypeTissu);
 
 	}

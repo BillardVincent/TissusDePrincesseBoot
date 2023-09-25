@@ -4,12 +4,12 @@ import com.github.rozidan.springboot.modelmapper.TypeMapConfigurer;
 import fr.vbillard.tissusdeprincesseboot.dao.MatiereDao;
 import fr.vbillard.tissusdeprincesseboot.dao.TissageDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
+import fr.vbillard.tissusdeprincesseboot.model.ColorEntity;
 import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
-import fr.vbillard.tissusdeprincesseboot.service.ColorUtils;
-import javafx.scene.paint.Color;
+import fr.vbillard.tissusdeprincesseboot.utils.color.ColorUtils;
 import lombok.AllArgsConstructor;
 import org.modelmapper.AbstractConverter;
 import org.modelmapper.TypeMap;
@@ -30,9 +30,10 @@ public class DtoToTissu extends TypeMapConfigurer<TissuDto, Tissu> {
 		typeMap.addMappings(mapper -> mapper.using(new MatiereConverter()).map(src -> src, Tissu::setMatiere));
 		typeMap.addMappings(
 				mapper -> mapper.using(new TypeTissuConverter()).map(TissuDto::getTypeTissu, Tissu::setTypeTissu));
+
 		typeMap.addMappings(
-				mapper -> mapper.using(new TypeTissuConverter()).map(TissuDto::getTypeTissu, Tissu::setTypeTissu));
-		typeMap.addMapping(TissuDto::getColor, (Tissu d, Color v) -> d.setColor(ColorUtils.colorToEntity(v)));
+				mapper -> mapper.using(new ColorConverter()).map(src -> src, Tissu::setColor));
+
 		typeMap.setPostConverter(context -> {
 			context.getDestination().setTissage(ts.getByValue(context.getSource().getTissage()));
 			return context.getDestination();
@@ -71,6 +72,19 @@ public class DtoToTissu extends TypeMapConfigurer<TissuDto, Tissu> {
 		@Override
 		protected Matiere convert(TissuDto source) {
 			return ms.getByValue(source.getMatiere());
+		}
+	}
+
+	private class ColorConverter extends AbstractConverter<TissuDto, ColorEntity> {
+		@Override
+		protected ColorEntity convert(TissuDto source) {
+			if (source.getColor() == null) {
+				return null;
+			}
+
+			ColorEntity color = ColorUtils.colorToEntity(source.getColor());
+			color.setId(source.colorId);
+			return color;
 		}
 	}
 }

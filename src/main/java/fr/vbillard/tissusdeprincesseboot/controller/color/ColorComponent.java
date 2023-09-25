@@ -4,29 +4,38 @@ import com.jfoenix.controls.JFXButton;
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.GlyphIconUtil;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 public class ColorComponent extends HBox {
 
-    SimpleObjectProperty<Color> colorProperty;
+    SimpleObjectProperty<Color> colorProperty = new SimpleObjectProperty<>();
     StageInitializer initializer;
     Image image;
     JFXButton btn = new JFXButton();
-    Rectangle rectangle = new Rectangle(20, 20, Color.GREEN);
+    Rectangle rectangle = new Rectangle(20, 20, Color.TRANSPARENT);
 
     public ColorComponent(StageInitializer initializer, Color color, Image image){
+       initialize(initializer, color, image);
+    }
+
+    public void initialize (StageInitializer initializer, Color color, Image image){
         this.initializer = initializer;
-        colorProperty.set(color);
+        if (color != null) {
+            colorProperty.set(color);
+        }
         this.image = image;
 
         setColorButton();
 
         btn.setOnAction(e -> {
             PictureColorDialog dialog = new PictureColorDialog(initializer.getPrimaryStage(), image);
-            dialog.setShowUseBtn(false);
+            dialog.setCurrentColor(colorProperty.get());
             dialog.setOnSave(() -> {
                 setColor(dialog.getCustomColor());
             });
@@ -34,15 +43,20 @@ public class ColorComponent extends HBox {
 
         });
 
-        getChildren().addAll(rectangle, btn);
+        getChildren().addAll(btn);
     }
 
     private void setColorButton() {
+        HBox content = new HBox();
+        content.setSpacing(5);
+        content.setAlignment(Pos.CENTER);
         if (colorProperty == null || colorProperty.get() == null) {
-            btn.setGraphic( GlyphIconUtil.palette());
+             content.getChildren().addAll(GlyphIconUtil.palette(), GlyphIconUtil.chevronDown());
         } else {
             rectangle.setFill(colorProperty.get());
+            content.getChildren().addAll(rectangle, GlyphIconUtil.chevronDown());
         }
+        btn.setGraphic(content);
     }
 
     private void setColor(Color color){
@@ -52,5 +66,13 @@ public class ColorComponent extends HBox {
 
     public void setImage(Image image){
         this.image = image;
+    }
+
+    public  SimpleObjectProperty<Color> getColorProperty(){
+        return colorProperty;
+    }
+
+    public  Color getColor(){
+        return Color.TRANSPARENT.equals(colorProperty.get())? null : colorProperty.get();
     }
 }

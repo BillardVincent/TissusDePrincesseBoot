@@ -7,6 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
+<?import fr.vbillard.tissusdeprincesseboot.controller.color.ColorComponent?>
 <AnchorPane prefHeight="747.0" prefWidth="1275.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuEditController">
     <GridPane layoutX="54.0" layoutY="124.0" prefHeight="515.0" prefWidth="578.0">
         <columnConstraints>
@@ -27,79 +28,9 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
         <children>
-            <Label text="Longueur" GridPane.rowIndex="6" />
-            <Label text="Laize" GridPane.rowIndex="7" />
-            <Label text="Description" GridPane.rowIndex="9" />
-            <JFXToggleButton fx:id="decatiField" mnemonicParsing="false" text="Décati" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-            <Label text="Matiere" GridPane.rowIndex="3" />
-            <Label text="Type" GridPane.rowIndex="1" />
-            <Label text="Poids" GridPane.rowIndex="8" />
-            <Label text="Lieu d'achat" GridPane.rowIndex="10" />
-            <Label text="Décati" GridPane.rowIndex="11" />
-            <JFXTextField fx:id="descriptionField" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-            <JFXTextField fx:id="lieuDachatField" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-            <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="0.0" prefWidth="324.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
-                <children>
-                    <IntegerSpinner fx:id="poidsField" prefHeight="26.0" prefWidth="239.0" />
-                    <JFXComboBox fx:id="unitePoidsField" prefHeight="26.0" prefWidth="94.0" />
-               <FontAwesomeIconView styleClass="clickable" glyphName="QUESTION_CIRCLE" onMouseClicked="#poidsHelp"
-                                    size="24" wrappingWidth="26.171464920043945">
-                  <HBox.margin>
-                     <Insets left="10.0" />
-                  </HBox.margin>
-               </FontAwesomeIconView>
-                </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                <children>
-                    <IntegerSpinner fx:id="laizeField" prefHeight="23.0" prefWidth="248.0" />
-                    <Label prefHeight="43.0" prefWidth="65.0" text="cm">
-                        <HBox.margin>
-                            <Insets left="15.0" />
-                        </HBox.margin>
-                    </Label>
-                </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                <children>
-                    <IntegerSpinner fx:id="longueurField" prefHeight="26.0" prefWidth="250.0" />
-                    <Label prefHeight="43.0" prefWidth="65.0" text="cm">
-                        <HBox.margin>
-                            <Insets left="15.0" />
-                        </HBox.margin>
-                    </Label>
-                </children>
-            </HBox>
-            <Label text="Tissage" GridPane.rowIndex="2" />
-            <Label text="Chute" GridPane.rowIndex="12" />
-            <JFXToggleButton fx:id="chuteField" mnemonicParsing="false" text="Chute" GridPane.columnIndex="1" GridPane.rowIndex="12" />
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                <children>
-                    <JFXComboBox fx:id="typeField" prefHeight="25.0" prefWidth="241.0" />
-                </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                <children>
-                    <JFXComboBox fx:id="matiereField" prefHeight="25.0" prefWidth="241.0" />
-                    <JFXButton fx:id="addMatiereButton" mnemonicParsing="false" onAction="#handleAddMatiere">
-                        <HBox.margin>
-                            <Insets left="10.0" />
-                        </HBox.margin>
-                    </JFXButton>
-                </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                <children>
-                    <JFXComboBox fx:id="tissageField" prefHeight="25.0" prefWidth="241.0" />
-                    <JFXButton fx:id="addTissageButton" mnemonicParsing="false" onAction="#handleAddTissage">
-                        <HBox.margin>
-                            <Insets left="10.0" />
-                        </HBox.margin>
-                    </JFXButton>
-                </children>
-            </HBox>
             <Label text="Reference" />
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                 <children>
@@ -111,18 +42,108 @@
                     </JFXButton>
                 </children>
             </HBox>
+
+            <Label text="Type" GridPane.rowIndex="1" />
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <children>
+                    <JFXComboBox fx:id="typeField" prefHeight="25.0" prefWidth="241.0" />
+                </children>
+            </HBox>
+
+            <Label text="Tissage" GridPane.rowIndex="2" />
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <children>
+                    <JFXComboBox fx:id="tissageField" prefHeight="25.0" prefWidth="241.0" />
+                    <JFXButton fx:id="addTissageButton" mnemonicParsing="false" onAction="#handleAddTissage">
+                        <HBox.margin>
+                            <Insets left="10.0" />
+                        </HBox.margin>
+                    </JFXButton>
+                </children>
+            </HBox>
+
+            <Label text="Matiere" GridPane.rowIndex="3" />
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                <children>
+                    <JFXComboBox fx:id="matiereField" prefHeight="25.0" prefWidth="241.0" />
+                    <JFXButton fx:id="addMatiereButton" mnemonicParsing="false" onAction="#handleAddMatiere">
+                        <HBox.margin>
+                            <Insets left="10.0" />
+                        </HBox.margin>
+                    </JFXButton>
+                </children>
+            </HBox>
+
             <Label fx:id="ancienneValeurLabel" text="Longueur (réelle en stock)" GridPane.rowIndex="4" />
             <Label fx:id="ancienneValeurInfo" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
                 <padding>
                     <Insets left="10.0" />
                 </padding>
             </Label>
+
             <Label fx:id="consommeLabel" text="Longueur alloués dans des projets" GridPane.rowIndex="5" />
             <Label fx:id="consommeInfo" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5">
                 <padding>
                     <Insets left="10.0" />
                 </padding>
             </Label>
+
+            <Label text="Longueur" GridPane.rowIndex="6" />
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                <children>
+                    <IntegerSpinner fx:id="longueurField" prefHeight="26.0" prefWidth="250.0" />
+                    <Label prefHeight="43.0" prefWidth="65.0" text="cm">
+                        <HBox.margin>
+                            <Insets left="15.0" />
+                        </HBox.margin>
+                    </Label>
+                </children>
+            </HBox>
+
+            <Label text="Laize" GridPane.rowIndex="7" />
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                <children>
+                    <IntegerSpinner fx:id="laizeField" prefHeight="23.0" prefWidth="248.0" />
+                    <Label prefHeight="43.0" prefWidth="65.0" text="cm">
+                        <HBox.margin>
+                            <Insets left="15.0" />
+                        </HBox.margin>
+                    </Label>
+                </children>
+            </HBox>
+
+            <Label text="Poids" GridPane.rowIndex="8" />
+            <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="0.0" prefWidth="324.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                <children>
+                    <IntegerSpinner fx:id="poidsField" prefHeight="26.0" prefWidth="239.0" />
+                    <JFXComboBox fx:id="unitePoidsField" prefHeight="26.0" prefWidth="94.0" />
+                    <FontAwesomeIconView styleClass="clickable" glyphName="QUESTION_CIRCLE" onMouseClicked="#poidsHelp"
+                                         size="24" wrappingWidth="26.171464920043945">
+                        <HBox.margin>
+                            <Insets left="10.0" />
+                        </HBox.margin>
+                    </FontAwesomeIconView>
+                </children>
+            </HBox>
+
+            <Label text="Couleur" GridPane.rowIndex="9" />
+            <ColorComponent fx:id="colorComp" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+
+            <Label text="Description" GridPane.rowIndex="10" />
+            <JFXTextField fx:id="descriptionField" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+
+            <Label text="Lieu d'achat" GridPane.rowIndex="11" />
+            <JFXTextField fx:id="lieuDachatField" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+
+            <Label text="Décati" GridPane.rowIndex="12" />
+            <JFXToggleButton fx:id="decatiField" mnemonicParsing="false" text="Décati" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+
+            <Label text="Chute" GridPane.rowIndex="13" />
+            <JFXToggleButton fx:id="chuteField" mnemonicParsing="false" text="Chute" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+
+
+
+
         </children>
     </GridPane>
     <VBox layoutX="304.0" layoutY="667.0" spacing="10.0">

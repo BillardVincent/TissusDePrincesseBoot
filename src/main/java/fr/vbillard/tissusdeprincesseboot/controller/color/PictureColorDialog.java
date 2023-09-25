@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -19,6 +20,7 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.stage.*;
 import lombok.Getter;
+import org.springframework.lang.NonNull;
 
 @Getter
 class PictureColorDialog extends HBox {
@@ -44,19 +46,17 @@ class PictureColorDialog extends HBox {
         this.webField = webField;
     }
 
-    PictureColorDialog(Window var1, Image image) {
+    PictureColorDialog(@NonNull Window window, Image image) {
         this.image = image;
-        currentColorProperty = new SimpleObjectProperty(Color.WHITE);
-        customColorProperty = new SimpleObjectProperty(Color.TRANSPARENT);
+        currentColorProperty = new SimpleObjectProperty<>(Color.WHITE);
+        customColorProperty = new SimpleObjectProperty<>(Color.TRANSPARENT);
         webField = null;
         showUseBtn = true;
         showOpacitySlider = true;
-        keyEventListener = (var1x) -> {
-            switch (var1x.getCode()) {
-                case ESCAPE:
-                    dialog.setScene((Scene) null);
-                    dialog.close();
-                default:
+        keyEventListener = var1x -> {
+            if (var1x.getCode() == KeyCode.ESCAPE) {
+                dialog.setScene(null);
+                dialog.close();
             }
         };
         positionAdjuster = var11 -> {
@@ -67,9 +67,8 @@ class PictureColorDialog extends HBox {
             }
         };
         getStyleClass().add("custom-color-dialog");
-        if (var1 != null) {
-            dialog.initOwner(var1);
-        }
+        dialog.initOwner(window);
+
 
         dialog.setTitle(Properties.getColorPickerString("customColorDialogTitle"));
         dialog.initModality(Modality.APPLICATION_MODAL);
@@ -77,7 +76,7 @@ class PictureColorDialog extends HBox {
         dialog.setResizable(false);
         dialog.addEventHandler(KeyEvent.ANY, keyEventListener);
         customScene = new Scene(this);
-        Scene var2 = var1.getScene();
+        Scene var2 = window.getScene();
         if (var2 != null) {
             if (var2.getUserAgentStylesheet() != null) {
                 customScene.setUserAgentStylesheet(var2.getUserAgentStylesheet());
@@ -93,14 +92,18 @@ class PictureColorDialog extends HBox {
     void buildUI() {
         colorRectPane = new ColorRectPane(this);
         controlsPane = new ControlsPane(this);
-        pictureRectPane = new PictureRectPane(this, image);
-
         setHgrow(controlsPane, Priority.ALWAYS);
-        getChildren().setAll(pictureRectPane, colorRectPane, controlsPane);
+
+        if (image != null){
+            pictureRectPane = new PictureRectPane(this, image);
+            getChildren().setAll(pictureRectPane, colorRectPane, controlsPane);
+        } else {
+            getChildren().setAll(colorRectPane, controlsPane);
+        }
     }
 
-    void setCurrentColor(Color var1) {
-        currentColorProperty.set(var1);
+    void setCurrentColor(Color color) {
+        currentColorProperty.set(color);
     }
 
     final Color getCurrentColor() {
@@ -178,7 +181,9 @@ class PictureColorDialog extends HBox {
         }
 
         colorRectPane.updateValues();
-        pictureRectPane.updateValues();
+        if (pictureRectPane != null){
+            pictureRectPane.updateValues();
+        }
         dialog.show();
     }
 

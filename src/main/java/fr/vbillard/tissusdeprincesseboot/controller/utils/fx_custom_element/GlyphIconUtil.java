@@ -27,6 +27,10 @@ public class GlyphIconUtil {
         return generateIcon(new MaterialDesignIconView(MaterialDesignIcon.PALETTE), BIG_ICONE_SIZE, null );
     }
 
+    public static GlyphIcon chevronDown(){
+        return generateIcon(new MaterialDesignIconView(MaterialDesignIcon.CHEVRON_DOWN), TINY_ICONE_SIZE, null );
+    }
+
     public static GlyphIcon plusCircleTiny(){
         return generateIcon(new MaterialDesignIconView(MaterialDesignIcon.PLUS_CIRCLE), TINY_ICONE_SIZE, Constants.colorAdd);
     }

@@ -102,6 +102,8 @@ public class TissuEditController implements IController {
     public FontAwesomeIconView warningSaveIcon;
     @FXML
     public Label warningSaveLbl;
+    @FXML
+    public ColorComponent colorComp;
 
 
     private final RootController root;
@@ -172,6 +174,8 @@ public class TissuEditController implements IController {
         tissageField.setValue(safePropertyToString(tissu.getTissageProperty()));
 
         pictureHelper.setPane(imagePane, tissu);
+        colorComp.initialize(initializer, tissu.getColor(), imagePane.getImage());
+
         boolean tissuIsNew = tissu.getId() == 0;
         addPictureWebBtn.setDisable(tissuIsNew);
         pictureExpendBtn.setDisable(tissuIsNew);
@@ -188,16 +192,13 @@ public class TissuEditController implements IController {
                 poidsField.textProperty(), referenceField.textProperty(), descriptionField.textProperty(),
                 decatiField.selectedProperty(), lieuDachatField.textProperty(), chuteField.selectedProperty(),
                 unitePoidsField.valueProperty(), typeField.valueProperty(), matiereField.valueProperty(),
-                tissageField.valueProperty()
+                tissageField.valueProperty(), colorComp.getColorProperty()
         }, hasChanged);
 
         hasChanged.addListener((observable, oldValue, newValue) -> {
             warningSaveIcon.setVisible(newValue);
             warningSaveLbl.setVisible(newValue);
         });
-
-        // test color picker
-               ((AnchorPane)addPictureBtn.getParent()).getChildren().add(new ColorComponent(initializer, null, imagePane.getImage()));
 
     }
 
@@ -243,6 +244,7 @@ public class TissuEditController implements IController {
         tissu.setLieuAchat(lieuDachatField.getText());
         tissu.setChute(chuteField.isSelected());
         tissu.setTissage(tissageField.getValue());
+        tissu.setColor(colorComp.getColor());
 
         tissu = tissuService.saveOrUpdate(tissu);
     }

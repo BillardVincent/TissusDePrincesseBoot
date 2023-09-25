@@ -1,12 +1,10 @@
-package fr.vbillard.tissusdeprincesseboot.service;
-
-import javafx.scene.paint.Color;
+package fr.vbillard.tissusdeprincesseboot.utils.color;
 
 import java.awt.color.ColorSpace;
 
-public class CIELab extends ColorSpace {
+class CIELab extends ColorSpace {
 
-    public static CIELab getInstance() {
+    static CIELab getInstance() {
         return Holder.INSTANCE;
     }
 
@@ -30,6 +28,7 @@ public class CIELab extends ColorSpace {
         double b = 200.0 * (l - f(colorvalue[2]));
         return new float[]{(float) L, (float) a, (float) b};
     }
+
 
     @Override
     public float[] fromRGB(float[] rgbvalue) {
@@ -75,23 +74,10 @@ public class CIELab extends ColorSpace {
         if (x > 216.0 / 24389.0) {
             return Math.cbrt(x);
         } else {
-            return (841.0 / 108.0) * x + N;
+            return (841.0 / 108.0) * (x + N);
         }
     }
 
-    public float[] rgbToLab(Color color) {
-        return fromRGB( new float[]{(float)color.getRed(), (float)color.getGreen(), (float)color.getBlue()});
-    }
-
-    public double distance(Color target, Color control) {
-        float[] a = rgbToLab(target);
-        float[] b = rgbToLab(control);
-        double L = a[0] - b[0];
-        double A = a[1] - b[1];
-        double B = a[2] - b[2];
-
-        return Math.sqrt((L * L) + (A * A) + (B * B));
-    }
 
     private static double fInv(double x) {
         if (x > 6.0 / 29.0) {
