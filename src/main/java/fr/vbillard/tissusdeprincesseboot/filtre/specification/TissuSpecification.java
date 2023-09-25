@@ -6,7 +6,6 @@ import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.Specificati
 import fr.vbillard.tissusdeprincesseboot.model.*;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.utils.color.ColorUtils;
-import fr.vbillard.tissusdeprincesseboot.utils.color.LabColor;
 import fr.vbillard.tissusdeprincesseboot.utils.color.RGBColor;
 import lombok.*;
 import org.springframework.data.jpa.domain.Specification;

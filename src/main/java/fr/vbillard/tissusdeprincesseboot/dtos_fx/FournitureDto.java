@@ -4,6 +4,7 @@ import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
 import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import javafx.beans.property.*;
+import javafx.scene.paint.Color;
 
 public class FournitureDto implements FxDto<Fourniture> {
 
@@ -24,6 +25,8 @@ public class FournitureDto implements FxDto<Fourniture> {
 	private StringProperty typeName;
 	private BooleanProperty archived;
 	private TypeFourniture type;
+	private ObjectProperty<Color> color;
+	public int colorId;
 
 	public FournitureDto() {
 		this.id = new SimpleIntegerProperty();
@@ -42,6 +45,7 @@ public class FournitureDto implements FxDto<Fourniture> {
 		this.uniteSecondaireShort = new SimpleStringProperty();
 		this.intituleDimension = new SimpleStringProperty();
 		this.intituleSecondaire = new SimpleStringProperty();
+		this.color = new SimpleObjectProperty<>();
 	}
 
 	public int getId() {
@@ -236,6 +240,18 @@ public class FournitureDto implements FxDto<Fourniture> {
 
 	public void setIntituleSecondaire(String intituleSecondaire) {
 		this.intituleSecondaire.set(intituleSecondaire);
+	}
+
+	public Color getColor() {
+		return color.get();
+	}
+
+	public ObjectProperty<Color> getColorProperty() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color.set(color);
 	}
 
 	@Override

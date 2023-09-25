@@ -19,6 +19,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -60,11 +62,14 @@ public class FournitureDetailController implements IController {
 	public Label consommeInfo;
 	@FXML
 	public ImageView imagePane;
+	@FXML
+	public Rectangle color;
 
 	public RowConstraints ancienneValeurRow;
 	public RowConstraints consommeRow;
 
-	@FXML
+
+    @FXML
 	private JFXButton addToButton;
 	@FXML
 	private JFXButton editButton;
@@ -121,6 +126,9 @@ public class FournitureDetailController implements IController {
 				fourniture.getUniteSecondaire() == null ? Unite.NON_RENSEIGNE.getLabel() : fourniture.getUniteSecondaire());
 		pictures = imageService.getImage(fournitureService.convert(fourniture));
 		imagePane.setImage(imageService.imageOrDefault(pictures));
+
+
+		color.setFill(fourniture.getColor() != null ? fourniture.getColor() : Color.TRANSPARENT);
 
 		addToButton.setVisible(rootController.hasFournitureRequiseSelected());
 		editButton.setVisible(!rootController.hasFournitureRequiseSelected());

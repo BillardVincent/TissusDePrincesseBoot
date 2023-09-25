@@ -5,6 +5,7 @@ import fr.vbillard.tissusdeprincesseboot.dao.FournitureDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
+import fr.vbillard.tissusdeprincesseboot.utils.color.ColorUtils;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -61,6 +62,11 @@ public class FournitureToDto extends TypeMapConfigurer<Fourniture, FournitureDto
 						context.getDestination().setQuantiteSec(qte);
 					}
 				}
+
+			if (context.getSource().getColor() != null){
+				context.getDestination().setColor(ColorUtils.entityToColor(context.getSource().getColor()));
+				context.getDestination().colorId = context.getSource().getColor().getId();
+			}
 
 			return context.getDestination();
 		});

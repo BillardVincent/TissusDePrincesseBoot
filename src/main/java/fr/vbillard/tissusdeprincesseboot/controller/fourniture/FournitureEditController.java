@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXTextField;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.controller.color.ColorComponent;
 import fr.vbillard.tissusdeprincesseboot.controller.components.FloatSpinner;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.picture_helper.FourniturePictureHelper;
@@ -32,7 +33,6 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
-
 
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.onChangeListener;
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.safePropertyToString;
@@ -87,6 +87,8 @@ public class FournitureEditController implements IController {
   public FontAwesomeIconView warningSaveIcon;
   @FXML
   public Label warningSaveLbl;
+  @FXML
+  public ColorComponent colorComp;
 
   private final RootController root;
   private StageInitializer initializer;
@@ -202,13 +204,16 @@ public class FournitureEditController implements IController {
     imageNotSaved.setVisible(tissuIsNew);
     addPictureClipboardBtn.setDisable(tissuIsNew);
 
+    colorComp.initialize(initializer, fourniture.getColor(), imagePane.getImage());
+
     GlyphIconUtil.generateIcon(warningSaveIcon, GlyphIconUtil.VERY_BIG_ICONE_SIZE, Constants.colorWarning);
     setBoutonArchiver();
 
     onChangeListener(new ObservableValue[]{ referenceField.textProperty(), quantiteField.textProperty(),
             quantiteSecField.textProperty(), intitulePrimLbl.textProperty(), descriptionField.textProperty(),
             typeField.valueProperty(), uniteField.valueProperty(), uniteSecField.valueProperty(),
-            intituleSecLbl.textProperty(),lieuDachatField.textProperty(), nomField.textProperty()
+            intituleSecLbl.textProperty(),lieuDachatField.textProperty(), nomField.textProperty(),
+            colorComp.getColorProperty()
     }, hasChanged);
 
     hasChanged.addListener((observable, oldValue, newValue) -> {
@@ -237,12 +242,12 @@ public class FournitureEditController implements IController {
   private void handleOk() {
     if (areValidatorsValid(initializer, validators)) {
 
-      setTissuFromFields();
+      setFournitureFromFields();
       okClicked = true;
     }
   }
 
-  private void setTissuFromFields() {
+  private void setFournitureFromFields() {
     fourniture.setReference(referenceField.getText());
     fourniture.setQuantite(Float.parseFloat(quantiteField.getText()));
     fourniture.setQuantiteSec(Float.parseFloat(quantiteSecField.getText()));
@@ -254,6 +259,7 @@ public class FournitureEditController implements IController {
     fourniture.setIntituleSecondaire(intituleSecLbl.getText());
     fourniture.setLieuAchat(lieuDachatField.getText());
     fourniture.setNom(nomField.getText());
+    fourniture.setColor(colorComp.getColor());
 
     fourniture = fournitureService.saveOrUpdate(fourniture);
   }
@@ -298,7 +304,7 @@ public class FournitureEditController implements IController {
   @FXML
   private void addPicture() {
     if (areValidatorsValid(initializer, validators)) {
-      setTissuFromFields();
+      setFournitureFromFields();
       pictureHelper.addPictureLocal(fourniture);
     }
   }
@@ -306,7 +312,7 @@ public class FournitureEditController implements IController {
   @FXML
   private void addPictureWeb() {
     if (areValidatorsValid(initializer, validators)) {
-      setTissuFromFields();
+      setFournitureFromFields();
       pictureHelper.addPictureWeb(fourniture);
     }
   }
@@ -314,7 +320,7 @@ public class FournitureEditController implements IController {
   @FXML
   private void addPictureFromClipboard() {
     if (areValidatorsValid(initializer, validators)) {
-      setTissuFromFields();
+      setFournitureFromFields();
       pictureHelper.addPictureClipBoard(fourniture);
     }
   }

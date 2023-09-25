@@ -4,12 +4,15 @@ import fr.vbillard.tissusdeprincesseboot.dao.FournitureDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.FournitureSpecification;
 import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
+import fr.vbillard.tissusdeprincesseboot.model.ColorEntity;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Quantite;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
+import fr.vbillard.tissusdeprincesseboot.utils.color.ColorUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.paint.Color;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -130,6 +133,12 @@ public class FournitureService extends AbstractDtoService<Fourniture, Fourniture
 				entity.getQuantiteSecondaire().setQuantite(Unite.convertir(dto.getQuantiteSec(), uniteSecondaire));
 				entity.getQuantiteSecondaire().setUnite(uniteSecondaire);
 			}
+		}
+
+		if (dto.getColor() != null && !Color.TRANSPARENT.equals(dto.getColor())) {
+			ColorEntity color = ColorUtils.colorToEntity(dto.getColor());
+			color.setId(dto.colorId);
+			entity.setColor(color);
 		}
 		
 		return entity;

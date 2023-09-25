@@ -3,6 +3,7 @@ package fr.vbillard.tissusdeprincesseboot.controller.color;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.image.Image;
+import javafx.scene.image.PixelFormat;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -48,14 +49,18 @@ public class PictureRectPane extends HBox {
         colorRectOverlayOne = new Pane();
         colorRectOverlayOne.getStyleClass().add("color-rect");
         colorRectOverlayOne.setBackground(new Background(new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,  new BackgroundSize(1.0, 1.0, true, true, false, false))));
-        EventHandler<MouseEvent> eventHandler = (var1x) -> {
+        EventHandler<MouseEvent> eventHandler = (mouseEvent) -> {
             changeIsLocal = true;
-            double var2 = var1x.getX();
-            double var4 = var1x.getY();
+            double x = mouseEvent.getX();
+            double y = mouseEvent.getY();
             colorRectIndicator.setVisible(true);
-            colorRectIndicator.setLayoutX(var2);
-            colorRectIndicator.setLayoutY(var4);
-            Color color = image.getPixelReader().getColor((int)var2, (int)var4);
+            colorRectIndicator.setLayoutX(mouseEvent.getX());
+            colorRectIndicator.setLayoutY(mouseEvent.getY());
+
+            int xImage = (int)Math.round(image.getWidth() * (x/getWidth()));
+            int yImage = (int)Math.round(image.getHeight() * (y/getHeight()));
+
+            Color color = image.getPixelReader().getColor(xImage, yImage);
             parentDialog.setCustomColor(color);
 
         };

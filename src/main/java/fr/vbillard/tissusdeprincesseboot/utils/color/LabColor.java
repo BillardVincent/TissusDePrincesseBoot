@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class LabColor {
-    private float l;
-    private float a;
-    private float b;
+    private double l;
+    private double a;
+    private double b;
 }

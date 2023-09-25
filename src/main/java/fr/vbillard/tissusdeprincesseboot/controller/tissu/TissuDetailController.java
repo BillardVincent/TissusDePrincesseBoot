@@ -21,6 +21,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -62,10 +64,6 @@ public class TissuDetailController implements IController {
 	public Label consommeInfo;
 	@FXML
 	public ImageView imagePane;
-
-	public RowConstraints ancienneValeurRow;
-	public RowConstraints consommeRow;
-
 	@FXML
 	private JFXButton addToButton;
 	@FXML
@@ -74,6 +72,9 @@ public class TissuDetailController implements IController {
 	private JFXButton genererChuteButton;
 	@FXML
 	private JFXButton supprimerButton;
+	@FXML
+	public Rectangle color;
+
 
 	private Optional<Photo> pictures;
 
@@ -133,6 +134,8 @@ public class TissuDetailController implements IController {
 		addToButton.setVisible(rootController.hasTissuRequisSelected());
 		editButton.setVisible(!rootController.hasTissuRequisSelected());
 		genererChuteButton.setVisible(!rootController.hasTissuRequisSelected());
+		color.setFill(tissu.getColor() != null ? tissu.getColor() : Color.TRANSPARENT);
+
 
 	}
 

@@ -6,8 +6,11 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
+/**
+ * stock canaux de couleurs entre 0 et 1
+ */
 public class RGBColor {
-    private int red;
-    private int green;
-    private int blue;
+    private double red;
+    private double green;
+    private double blue;
 }

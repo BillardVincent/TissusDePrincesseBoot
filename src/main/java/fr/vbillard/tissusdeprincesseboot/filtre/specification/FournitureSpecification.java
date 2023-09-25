@@ -4,6 +4,8 @@ import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.CharacterSe
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.SpecificationUtils;
 import fr.vbillard.tissusdeprincesseboot.model.*;
+import fr.vbillard.tissusdeprincesseboot.utils.color.ColorUtils;
+import fr.vbillard.tissusdeprincesseboot.utils.color.RGBColor;
 import lombok.*;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -29,10 +31,13 @@ public class FournitureSpecification implements Specification<Fourniture> {
 	private NumericSearch<Float> quantite;
 	private NumericSearch<Float> quantiteDisponible;
 	private NumericSearch<Float> quantiteSecondaire;
+	private RGBColor color;
 
 	private static class Joins {
 		private Join<Fourniture, Quantite> joinQuantitePrimaire;
 		private Join<Fourniture, Quantite> joinQuantiteSecondaire;
+		private Join<Tissu, ColorEntity> joinColor;
+
 
 		private Join<Fourniture, Quantite> joinQuantitePrimaire(Root<Fourniture> root) {
 			if (joinQuantitePrimaire == null) {
@@ -46,6 +51,13 @@ public class FournitureSpecification implements Specification<Fourniture> {
 				joinQuantiteSecondaire = root.join(Fourniture_.QUANTITE_SECONDAIRE);
 			}
 			return joinQuantiteSecondaire;
+		}
+
+		private Join<Tissu, ColorEntity> joinColor(Root<Fourniture> root) {
+			if (joinColor == null) {
+				joinColor = root.join(Fourniture_.COLOR);
+			}
+			return joinColor;
 		}
 	}
 
@@ -95,6 +107,13 @@ public class FournitureSpecification implements Specification<Fourniture> {
 		if (lieuAchat != null) {
 			predicateList.add(
 					SpecificationUtils.getCharacterSearchPredicate(description, root.get(Fourniture_.LIEU_ACHAT), cb));
+		}
+
+		if (color != null) {
+			predicateList.add(SpecificationUtils.getColorPredicate(ColorUtils.rgbToLab(color),
+					new Path[]{joins.joinColor(root).get(ColorEntity_.L),
+							joins.joinColor(root).get(ColorEntity_.A),
+							joins.joinColor(root).get(ColorEntity_.B)}, cb));
 		}
 
 		return cb.and(predicateList.toArray(new Predicate[] {}));

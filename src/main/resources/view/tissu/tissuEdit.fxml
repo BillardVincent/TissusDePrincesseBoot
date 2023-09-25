@@ -2,12 +2,12 @@
 
 <?import com.jfoenix.controls.*?>
 <?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import fr.vbillard.tissusdeprincesseboot.controller.color.ColorComponent?>
 <?import fr.vbillard.tissusdeprincesseboot.controller.components.IntegerSpinner?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<?import fr.vbillard.tissusdeprincesseboot.controller.color.ColorComponent?>
 <AnchorPane prefHeight="747.0" prefWidth="1275.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuEditController">
     <GridPane layoutX="54.0" layoutY="124.0" prefHeight="515.0" prefWidth="578.0">
         <columnConstraints>

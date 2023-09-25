@@ -2,6 +2,7 @@ package fr.vbillard.tissusdeprincesseboot.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -23,6 +24,9 @@ public class Fourniture extends AbstractEntity{
 
   @ManyToOne
   private TypeFourniture type;
+  @OneToOne
+  @Cascade({org.hibernate.annotations.CascadeType.ALL})
+  private ColorEntity color;
 
   @ColumnDefault("false")
   private boolean archived;

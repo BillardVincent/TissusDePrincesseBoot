@@ -1,10 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.filtre.specification.common;
 
-import fr.vbillard.tissusdeprincesseboot.model.ColorEntity_;
-import fr.vbillard.tissusdeprincesseboot.utils.color.ColorUtils;
 import fr.vbillard.tissusdeprincesseboot.utils.color.LabColor;
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.jpamodelgen.xml.jaxb.PrePersist;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Expression;
@@ -167,13 +164,13 @@ public class SpecificationUtils {
 		return cb.and(predicateList.toArray(new Predicate[] {}));
 	}
 
-	public static Predicate getColorPredicate(LabColor color, Path<Float>[] path, CriteriaBuilder cb){
-		Expression<Float> lDiff = cb.diff(path[0], color.getL());
-		Expression<Float> aDiff = cb.diff(path[1], color.getA());
-		Expression<Float> bDiff = cb.diff(path[2], color.getB());
+	public static Predicate getColorPredicate(LabColor color, Path<Double>[] path, CriteriaBuilder cb){
+		Expression<Double> lDiff = cb.diff(path[0], color.getL());
+		Expression<Double> aDiff = cb.diff(path[1], color.getA());
+		Expression<Double> bDiff = cb.diff(path[2], color.getB());
 
 		Expression<Double> distance = cb.sqrt(cb.sum(cb.sum(cb.prod(lDiff, lDiff), cb.prod(aDiff, aDiff)), cb.prod(bDiff, bDiff)));
-		return cb.lessThanOrEqualTo(distance, 80.0);
+		return cb.lessThanOrEqualTo(distance, 50.0);
 	}
 
 	private static String addWildcardLast(String str) {

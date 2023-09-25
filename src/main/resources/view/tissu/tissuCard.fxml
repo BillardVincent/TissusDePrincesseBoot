@@ -5,8 +5,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<?import java.lang.String?>
 <?import javafx.scene.web.WebView?>
+<?import java.lang.String?>
 <Pane prefHeight="347.0" prefWidth="258.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuCardController">
    <children>
       <VBox layoutX="-1.0" layoutY="-1.0" onMouseClicked="#showDetail" prefHeight="347.0" prefWidth="260.0" stylesheets="@../../style/style.css">

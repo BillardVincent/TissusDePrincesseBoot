@@ -7,6 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
+<?import fr.vbillard.tissusdeprincesseboot.controller.color.ColorComponent?>
 <AnchorPane prefHeight="747.0" prefWidth="1275.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.fourniture.FournitureEditController">
     <GridPane layoutX="54.0" layoutY="124.0" prefHeight="375.0" prefWidth="500.0">
         <columnConstraints>
@@ -22,32 +23,9 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
         <children>
-            <Label text="Description" GridPane.rowIndex="6" />
-            <Label text="Lieu d'achat" GridPane.rowIndex="7" />
-            <JFXTextField fx:id="descriptionField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <JFXTextField fx:id="lieuDachatField" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="0.0" prefWidth="324.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                <children>
-                    <FloatSpinner fx:id="quantiteField" prefHeight="26.0" prefWidth="205.0" />
-                    <JFXComboBox fx:id="uniteField" prefHeight="26.0" prefWidth="125.0" />
-                </children>
-            </HBox>
-            <Label text="Type" GridPane.rowIndex="2" />
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                <children>
-                    <JFXComboBox fx:id="typeField" prefHeight="25.0" prefWidth="241.0" />
-                    <JFXButton fx:id="addTypeButton" mnemonicParsing="false" onAction="#handleAddType">
-                        <HBox.margin>
-                            <Insets left="10.0" />
-                        </HBox.margin>
-                    </JFXButton>
-                </children>
-            <opaqueInsets>
-               <Insets />
-            </opaqueInsets>
-            </HBox>
             <Label text="Reference" />
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                 <children>
@@ -59,22 +37,56 @@
                     </JFXButton>
                 </children>
             </HBox>
+
+            <Label text="Nom" GridPane.rowIndex="1" />
+            <JFXTextField fx:id="nomField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+            <Label text="Type" GridPane.rowIndex="2" />
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <children>
+                    <JFXComboBox fx:id="typeField" prefHeight="25.0" prefWidth="241.0" />
+                    <JFXButton fx:id="addTypeButton" mnemonicParsing="false" onAction="#handleAddType">
+                        <HBox.margin>
+                            <Insets left="10.0" />
+                        </HBox.margin>
+                    </JFXButton>
+                </children>
+                <opaqueInsets>
+                    <Insets />
+                </opaqueInsets>
+            </HBox>
+
+            <Label fx:id="intitulePrimLbl" text="Quantité" GridPane.rowIndex="3" />
+            <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="0.0" prefWidth="324.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                <children>
+                    <FloatSpinner fx:id="quantiteField" prefHeight="26.0" prefWidth="205.0" />
+                    <JFXComboBox fx:id="uniteField" prefHeight="26.0" prefWidth="125.0" />
+                </children>
+            </HBox>
+            <Label fx:id="intituleSecLbl" text="Quantité" GridPane.rowIndex="4" />
+            <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="0.0" prefWidth="324.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                <children>
+                    <FloatSpinner fx:id="quantiteSecField" prefHeight="26.0" prefWidth="205.0" />
+                    <JFXComboBox fx:id="uniteSecField" prefHeight="26.0" prefWidth="125.0" />
+                </children>
+            </HBox>
+
             <Label text="Quantité utilisée" GridPane.rowIndex="5" />
             <Label fx:id="quantiteUtiliseeLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5">
                 <padding>
                     <Insets left="10.0" />
                 </padding>
             </Label>
-         <Label text="Nom" GridPane.rowIndex="1" />
-         <JFXTextField fx:id="nomField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-         <Label fx:id="intitulePrimLbl" text="Quantité" GridPane.rowIndex="3" />
-         <Label fx:id="intituleSecLbl" text="Quantité" GridPane.rowIndex="4" />
-         <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="0.0" prefWidth="324.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-            <children>
-               <FloatSpinner fx:id="quantiteSecField" prefHeight="26.0" prefWidth="205.0" />
-               <JFXComboBox fx:id="uniteSecField" prefHeight="26.0" prefWidth="125.0" />
-            </children>
-         </HBox>
+
+            <Label text="Couleur" GridPane.rowIndex="6" />
+            <ColorComponent fx:id="colorComp" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+
+            <Label text="Description" GridPane.rowIndex="7" />
+            <JFXTextField fx:id="descriptionField" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+
+            <Label text="Lieu d'achat" GridPane.rowIndex="8" />
+            <JFXTextField fx:id="lieuDachatField" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+
         </children>
     </GridPane>
     <VBox layoutX="304.0" layoutY="667.0" spacing="10.0">
