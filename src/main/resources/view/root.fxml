@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import de.jensd.fx.glyphs.fontawesome.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<Pane prefHeight="1080.0" prefWidth="1920" styleClass="global" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.misc.RootController">
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<Pane prefHeight="1080.0" prefWidth="1920" styleClass="global" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.misc.RootController">
    <children>
       <VBox prefHeight="1080.0" prefWidth="1920">
          <children>
@@ -80,9 +84,7 @@
                                           </Label>
                                        </children>
                                     </HBox>
-                                    <HBox fx:id="fournitureMenu" alignment="CENTER_LEFT"
-                                          onMouseClicked="#displayFourniture" prefHeight="74.0" prefWidth="225.0"
-                                          styleClass="mainmenu-element">
+                                    <HBox fx:id="fournitureMenu" alignment="CENTER_LEFT" onMouseClicked="#displayFourniture" prefHeight="74.0" prefWidth="225.0" styleClass="mainmenu-element">
                                        <children>
                                           <HBox prefHeight="89.0" prefWidth="77.0">
                                              <children>
@@ -123,6 +125,24 @@
                                                 </Label>
                                              </children>
                                           </HBox>
+                                       </children>
+                                    </HBox>
+                                    <HBox fx:id="rangementMenu" alignment="CENTER_LEFT" onMouseClicked="#displayRangement" prefHeight="100.0" prefWidth="225.0" styleClass="mainmenu-element">
+                                       <children>
+                                          <HBox prefHeight="100.0" prefWidth="77.0">
+                                             <children>
+                                                <MaterialDesignIconView fill="WHITE" glyphName="GARAGE" size="3em" styleClass="mainmenu-element-text">
+                                                   <HBox.margin>
+                                                      <Insets bottom="18.0" left="25.0" right="15.0" top="18.0" />
+                                                   </HBox.margin>
+                                                </MaterialDesignIconView>
+                                             </children>
+                                          </HBox>
+                                          <Label alignment="BOTTOM_LEFT" contentDisplay="CENTER" style="-fx-font-family: Calibri;" styleClass="mainmenu-element-text" text="RANGEMENTS">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
                                        </children>
                                     </HBox>
                                     <HBox alignment="CENTER" prefHeight="74.0" prefWidth="225.0" styleClass="mainmenu-element">

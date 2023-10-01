@@ -14,6 +14,7 @@ import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.TilePane;
 import javafx.scene.web.WebView;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +24,7 @@ import java.util.List;
 @Component
 public class ProjetListController extends ViewListController {
 
-	boolean hasIncompleteInventaire;
+    boolean hasIncompleteInventaire;
 
 	@FXML
 	private WebView hasIncompleteInventaireIcn;

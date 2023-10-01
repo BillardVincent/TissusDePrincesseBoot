@@ -35,6 +35,7 @@ import java.util.List;
 public class RootController implements IController {
 
 	private static final Logger LOGGER = LogManager.getLogger(RootController.class);
+	public HBox rangementMenu;
 
 	@FXML
 	private Pane mainWindow;
@@ -114,6 +115,35 @@ public class RootController implements IController {
 		fxData.setTissu(tissu);
 		mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSUS_EDIT, fxData));
 	}
+
+	@FXML
+	public void displayRangement() {
+		displayRangement(null);
+	}
+
+	public void displayRangement(Specification spec) {
+		FxData fxData = new FxData();
+		fxData.setSpecification(spec);
+		beforeDisplay(rangementMenu);
+		//searchPane.getChildren().add(initializer.displayPane(PathEnum.TISSU_SEARCH, fxData));
+		mainWindow.getChildren().add(initializer.displayPane(PathEnum.RANGEMENT_ROOT, fxData));
+	}
+/*
+	public void displayRangementsDetails(TissuDto tissu) {
+		beforeDisplay(rangementMenu);
+		FxData fxData = new FxData();
+		fxData.setTissu(tissu);
+		mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSUS_DETAILS, fxData));
+	}
+
+	public void displayRangementsEdit(TissuDto tissu) {
+		beforeDisplay(rangementMenu);
+		FxData fxData = new FxData();
+		fxData.setTissu(tissu);
+		mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSUS_EDIT, fxData));
+	}
+
+ */
 
 	@FXML
 	public void displayProjets() {
@@ -257,12 +287,30 @@ public class RootController implements IController {
 	@Override
 	public void setStageInitializer(StageInitializer initializer, FxData data) {
 		this.initializer = initializer;
-		menuElements = Arrays.asList(tissuMenu, fournitureMenu, patronMenu, projetMenu);
+		menuElements = Arrays.asList(tissuMenu, fournitureMenu, patronMenu, projetMenu, rangementMenu);
 		deleteSelectedButton.setVisible(false);
 		researchButton.setVisible(false);
 
 		// TODO a suppr ------------ TEST d'icones -----------------------
-		//testIcons();
+		testIcons();
+
+/*
+		TreeItem<Rangement> it0 = new TreeItem<>(new Rangement());
+		TreeItem<Rangement> it1 = new TreeItem<>(new Rangement());
+		TreeItem<Rangement> it2 = new TreeItem<>(new Rangement());
+		it1.getChildren().add(it2);
+		TreeItem<Rangement> it3 = new TreeItem<>(new Rangement());
+		TreeItem<Rangement> it4 = new TreeItem<>(new Rangement());
+		TreeItem<Rangement> it5 = new TreeItem<>(new Rangement());
+		it3.getChildren().addAll(it4, it5);
+it0.getChildren().addAll(it1, it3);
+		JFXTreeView<Rangement> tv = new JFXTreeView<>(it0);
+		mainWindow.getChildren().add(tv);
+
+
+
+ */
+
 	}
 
 	public boolean hasTissuRequisSelected() {

@@ -74,6 +74,10 @@ public class FxmlPathProperties {
 
 	private Resource typeFournitureEdit;
 
+	private Resource newRangementModale;
+	private Resource rangementTree;
+	private Resource rootList;
+
 	private Resource plusCard;
 	private Resource longueur;
 	private Resource quantite;

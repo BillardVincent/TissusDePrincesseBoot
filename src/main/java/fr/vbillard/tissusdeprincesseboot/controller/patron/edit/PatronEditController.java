@@ -173,7 +173,7 @@ public class PatronEditController implements IController {
 
     if (data == null || data.getPatron() == null) {
       patron =
-          mapper.map(new Patron("", "", "", "", "", false, SupportTypeEnum.NON_RENSEIGNE, null), PatronDto.class);
+          mapper.map(new Patron("", "", "", "", "", false, SupportTypeEnum.NON_RENSEIGNE, null, null), PatronDto.class);
       setDisabledButton();
 
     } else {

@@ -22,6 +22,9 @@ import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.rightPane.Patron
 import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.rightPane.PatronEditPatronVersionController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.edit.rightPane.PatronEditTissuRequisController;
 import fr.vbillard.tissusdeprincesseboot.controller.projet.*;
+import fr.vbillard.tissusdeprincesseboot.controller.rangement.NewRangementModale;
+import fr.vbillard.tissusdeprincesseboot.controller.rangement.RangementTreeController;
+import fr.vbillard.tissusdeprincesseboot.controller.rangement.RootListController;
 import fr.vbillard.tissusdeprincesseboot.controller.tissu.*;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxmlPathProperties;
 import org.springframework.stereotype.Service;
@@ -143,6 +146,12 @@ public class PathService {
     	  return new PathHolder(pathProperties.getPatronDetailTissuDisplay().getURL(), TissuDisplayController.class);
       case PATRON_DETAIL_VERSION_DISPLAY :
     	  return new PathHolder(pathProperties.getPatronDetailVersionDisplay().getURL(), VersionDisplayController.class);
+      case RANGEMENT_TREE:
+        return new PathHolder(pathProperties.getRangementTree().getURL(), RangementTreeController.class);
+      case RANGEMENT_ROOT:
+        return new PathHolder(pathProperties.getRootList().getURL(), RootListController.class);
+      case RANGEMENTS_MODALE:
+        return new PathHolder(pathProperties.getNewRangementModale().getURL(), NewRangementModale.class);
       default:
         break;
 

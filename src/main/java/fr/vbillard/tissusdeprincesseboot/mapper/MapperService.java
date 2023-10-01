@@ -1,5 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.mapper;
 
+import fr.vbillard.tissusdeprincesseboot.dao.RangementDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.*;
 import fr.vbillard.tissusdeprincesseboot.model.*;
 import lombok.AllArgsConstructor;

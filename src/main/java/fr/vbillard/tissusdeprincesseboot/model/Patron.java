@@ -31,6 +31,10 @@ public class Patron extends AbstractEntity {
 
 	@OneToMany(mappedBy = "patron", fetch = FetchType.EAGER)
 	private List<PatronVersion> versions;
+
+
+	@ManyToOne
+	private Rangement rangement;
 	
 	@PrePersist
 	private void setSupportType() {

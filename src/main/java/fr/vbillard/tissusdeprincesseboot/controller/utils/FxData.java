@@ -2,9 +2,7 @@ package fr.vbillard.tissusdeprincesseboot.controller.utils;
 
 import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.*;
-import fr.vbillard.tissusdeprincesseboot.model.FournitureUsed;
-import fr.vbillard.tissusdeprincesseboot.model.Inventaire;
-import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
+import fr.vbillard.tissusdeprincesseboot.model.*;
 import lombok.Data;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -43,6 +41,9 @@ public class FxData {
 	private PatronVersionDto patronVersion;
 	private boolean allSelectedEqualsNull = true;
 	private Integer rank;
+	private RangementRoot rangementRoot;
+	private RangementRootDemat rangementRootDemat;
+	private String nom;
 
 	public FxData getCopy() {
 		try {
@@ -52,4 +53,5 @@ public class FxData {
 			throw new RuntimeException("Echec du clonage : " + this.toString());
 		}
 	}
+
 }

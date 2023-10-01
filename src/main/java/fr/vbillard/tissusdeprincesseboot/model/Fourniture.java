@@ -28,6 +28,9 @@ public class Fourniture extends AbstractEntity{
   @Cascade({org.hibernate.annotations.CascadeType.ALL})
   private ColorEntity color;
 
+  @ManyToOne
+  private Rangement rangement;
+
   @ColumnDefault("false")
   private boolean archived;
  
