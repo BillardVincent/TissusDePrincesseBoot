@@ -13,7 +13,17 @@ public class RangementDto {
         this.id = new SimpleIntegerProperty();
         this.rang = new SimpleIntegerProperty();
         this.nom = new SimpleStringProperty();
+    }
 
+    public RangementDto(int rank, String nom) {
+        this();
+        setRang(rank);
+        setNom(nom);
+    }
+
+    @Override
+    public String toString() {
+        return nom.get();
     }
 
     public int getId() {

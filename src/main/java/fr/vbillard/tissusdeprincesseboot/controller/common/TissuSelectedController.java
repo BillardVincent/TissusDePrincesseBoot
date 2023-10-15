@@ -1,4 +1,4 @@
-package fr.vbillard.tissusdeprincesseboot.controller.tissu;
+package fr.vbillard.tissusdeprincesseboot.controller.common;
 
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
@@ -31,7 +31,7 @@ import java.util.Optional;
 
 @Component
 @Scope(Utils.PROTOTYPE)
-public class TissuCardController implements IController {
+public class TissuSelectedController implements IController {
 
 	@FXML
 	public Label description;
@@ -45,16 +45,6 @@ public class TissuCardController implements IController {
 	private WebView typeView;
 	@FXML
 	private Label tissage;
-	@FXML
-	private Label poids;
-	@FXML
-	private Label unitePoids;
-	@FXML
-	private MaterialDesignIconView masse;
-	@FXML
-	private HBox footer;
-	@FXML
-	private ImageView decatiIcn;
 	@FXML
 	private ImageView image;
 
@@ -72,8 +62,8 @@ public class TissuCardController implements IController {
 
 	private UserPrefService userPrefService;
 
-	public TissuCardController(Constants constants, UserPrefService userPrefService, CustomIcon customIcon,
-			ImageService imageService, RootController rootController, ModelMapper mapper) {
+	public TissuSelectedController(Constants constants, UserPrefService userPrefService, CustomIcon customIcon,
+                                   ImageService imageService, RootController rootController, ModelMapper mapper) {
 		this.imageService = imageService;
 		this.rootController = rootController;
 		this.mapper = mapper;
@@ -98,29 +88,12 @@ public class TissuCardController implements IController {
 		laizeXlongueur.setText(FxUtils.safePropertyToString(tissu.getLongueurRestanteProperty()) + " cm x "
 				+ FxUtils.safePropertyToString(tissu.getLaizeProperty()) + " cm");
 		matiere.setText(FxUtils.safePropertyToString(tissu.getMatiereProperty()));
-		customIcon.typeTissu(typeView, TypeTissuEnum.getEnum(tissu.getTypeTissu()), 40);
+		customIcon.typeTissu(typeView, TypeTissuEnum.getEnum(tissu.getTypeTissu()), 20);
 		tissage.setText(FxUtils.safePropertyToString(tissu.getTissageProperty()));
-		poids.setText(FxUtils.safePropertyToString(tissu.getPoidseProperty()));
-		unitePoids.setText(tissu.getUnitePoids());
-		WebView decatiView = new WebView();
-		if (tissu.isDecati()) {
-			customIcon.washingMachinIcon(decatiView, 20);
-		} else {
-			customIcon.noWashingMachinIcon(decatiView, 20);
-		}
-		footer.getChildren().add(decatiView);
 
-		UserPref pref = userPrefService.getUser();
-
-		masse.setStyleClass(tissu.getPoids() > pref.getMaxPoidsMoyen() ? "heavy-weight"
-				: tissu.getPoids() > pref.getMinPoidsMoyen() ? "standard-weight" : "light-weight");
 		Optional<Photo> pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
 		image.setImage(imageService.imageOrDefault(pictures));
 
-	}
-
-	public void setPrefHeight(Double height) {
-		System.out.println(height);
 	}
 
 	@FXML

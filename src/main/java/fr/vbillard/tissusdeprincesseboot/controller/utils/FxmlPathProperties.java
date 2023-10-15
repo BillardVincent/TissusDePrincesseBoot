@@ -27,6 +27,7 @@ public class FxmlPathProperties {
 	private Resource tissuDetail;
 	private Resource tissuEdit;
 	private Resource tissuSearch;
+	private Resource tissuSelected;
 	private Resource carrousel;
 
 	private Resource tissuRequisCard;

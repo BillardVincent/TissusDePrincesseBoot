@@ -152,6 +152,8 @@ public class PathService {
         return new PathHolder(pathProperties.getRootList().getURL(), RootListController.class);
       case RANGEMENTS_MODALE:
         return new PathHolder(pathProperties.getNewRangementModale().getURL(), NewRangementModale.class);
+      case TISSU_SELECTED:
+        return new PathHolder(pathProperties.getTissuSelected().getURL(), TissuSelectedController.class);
       default:
         break;
 

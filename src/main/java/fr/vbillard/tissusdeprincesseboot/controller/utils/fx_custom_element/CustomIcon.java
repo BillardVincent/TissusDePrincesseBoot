@@ -42,7 +42,7 @@ public class CustomIcon {
 		loadSVG(view, pathProperties.getTextBoxRemove(), size, pathProperties.getTextBoxRemoveSize());
 	}
 
-	public WebView typeTissu(WebView view, TypeTissuEnum typeTissu) {
+	public WebView typeTissu(WebView view, TypeTissuEnum typeTissu, int size) {
 		if (typeTissu == null) {
 			return new WebView();
 		}
@@ -69,7 +69,7 @@ public class CustomIcon {
 			return new WebView();
 		}
 
-		loadSVG(view, path, 40, originalSize);
+		loadSVG(view, path, size, originalSize);
 		return view;
 	}
 

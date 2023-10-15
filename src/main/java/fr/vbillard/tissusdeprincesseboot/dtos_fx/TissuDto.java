@@ -1,5 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.dtos_fx;
 
+import fr.vbillard.tissusdeprincesseboot.model.Rangement;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
@@ -33,6 +34,7 @@ public class TissuDto implements FxDto<Tissu> {
 	private BooleanProperty chute;
 	private BooleanProperty archived;
 	private ObjectProperty<Color> color;
+	private ObjectProperty<Rangement> rangement;
 	public int colorId;
 
 	public TissuDto() {
@@ -53,6 +55,7 @@ public class TissuDto implements FxDto<Tissu> {
 		this.archived = new SimpleBooleanProperty();
 		this.longueurRestante = new SimpleIntegerProperty();
 		this.color = new SimpleObjectProperty<>();
+		this.rangement = new SimpleObjectProperty<>();
 
 	}
 
@@ -268,5 +271,17 @@ public class TissuDto implements FxDto<Tissu> {
 
 	public void setColor(Color color) {
 		this.color.set(color);
+	}
+
+	public Rangement getRangement() {
+		return rangement.get();
+	}
+
+	public ObjectProperty<Rangement> getRangementProperty() {
+		return rangement;
+	}
+
+	public void setRangement(Rangement rangement) {
+		this.rangement.set(rangement);
 	}
 }

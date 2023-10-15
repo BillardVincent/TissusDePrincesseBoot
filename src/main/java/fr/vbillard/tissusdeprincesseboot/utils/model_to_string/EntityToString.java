@@ -22,7 +22,8 @@ public enum EntityToString {
 	FOURNITURE_REQUISE(FournitureRequise.class, "fourniture requise", "fournitures requises", false),
 	FOURNITURE_USED(FournitureUsed.class, "fourniture utilisée", "fournitures utilisées", false),
 	TYPE_FOURNITURE(TypeFourniture.class, "type de fourniture", "types de fourniture", true),
-	PATRON_VERSION(PatronVersion.class, "version de patron" , "versions de patron", false);
+	PATRON_VERSION(PatronVersion.class, "version de patron" , "versions de patron", false),
+	RANGEMENT(Rangement.class, "rangement" , null, true);
 
 	private final String label;
 	private final String pluriel;

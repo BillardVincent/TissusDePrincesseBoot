@@ -34,7 +34,9 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
@@ -103,7 +105,10 @@ public class TissuEditController implements IController {
     public Label warningSaveLbl;
     @FXML
     public ColorComponent colorComp;
-
+    @FXML
+    public Label lieuDeStockageField;
+    @FXML
+    public JFXButton changerLieuStockage;
 
     private final RootController root;
     private StageInitializer initializer;
@@ -343,4 +348,13 @@ public class TissuEditController implements IController {
     }
 
 
+    public void handleStockage() {
+        if (!hasChanged.get() || ButtonType.OK.equals(ShowAlert.warn(initializer.getPrimaryStage(), "Données non sauvegardées",
+                    "Des modifications risquent d'être perdues",
+                    "Vous allez être redirigé(e) vers la section \"Rangement\". Des modifications ont été faites, mais n'ont pas été enregistrées. Souhaitez vous tout de même continuer?").orElse(ButtonType.CANCEL))){
+                FxData data = new FxData();
+                data.setTissu(tissu);
+                root.displayTissuSelected(data);
+            }
+        }
 }

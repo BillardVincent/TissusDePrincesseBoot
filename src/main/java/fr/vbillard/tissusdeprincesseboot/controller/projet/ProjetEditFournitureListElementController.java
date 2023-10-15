@@ -50,7 +50,7 @@ public class ProjetEditFournitureListElementController extends ProjetEditListEle
 
 	@Override
 	public void displaySelected(FxData data) {
-		initializer.getRoot().displayFournitureSelected(data);
+		initializer.getRoot().displayFournitureRequiseSelected(data);
 
 	}
 }

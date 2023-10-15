@@ -61,10 +61,10 @@ public class RootListController implements IController {
             box.setPadding(new Insets(10, 10, 10,10));
             box.getStyleClass().addAll("global", "card", ClassCssUtils.CLICKABLE);
             Pane p = new Pane(box);
-            box.setOnMouseClicked(e -> {
+            box.setOnMousePressed(e -> {
                 FxData data2 = new FxData();
                 data2.setRangementRoot(rr);
-                initializer.displayPane(PathEnum.RANGEMENT_TREE, data2);
+                initializer.getRoot().displayRangementTree(data2);
             });
 
             tilePane.getChildren().add(p);
@@ -99,10 +99,10 @@ public class RootListController implements IController {
             box.setPadding(new Insets(10, 10, 10,10));
             box.getStyleClass().addAll("global", "card", ClassCssUtils.CLICKABLE);
             Pane p = new Pane(box);
-            box.setOnMouseClicked(e -> {
+            box.setOnMousePressed(e -> {
                 FxData data2 = new FxData();
                 data2.setRangementRootDemat(rr);
-                initializer.displayPane(PathEnum.RANGEMENT_TREE, data2);
+                initializer.getRoot().displayRangementTree(data2);
             });
 
             tilePaneDemat.getChildren().add(p);

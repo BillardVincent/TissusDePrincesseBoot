@@ -50,6 +50,6 @@ public class ProjetEditTissuListElementController extends ProjetEditListElementC
 
 	@Override
 	public void displaySelected(FxData data) {
-		initializer.getRoot().displayTissuSelected(data);
+		initializer.getRoot().displayTissuRequisSelected(data);
 	}
 }

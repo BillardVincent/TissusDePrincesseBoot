@@ -13,7 +13,7 @@ import java.util.List;
 public class RangementRoot extends AbstractEntity{
 
     private String nom;
-    @OneToMany(mappedBy = "conteneur")
+    @OneToMany(mappedBy = "conteneurRoot")
     private List<Rangement> subdivision;
 
     public List<Rangement> getSubdivision() {

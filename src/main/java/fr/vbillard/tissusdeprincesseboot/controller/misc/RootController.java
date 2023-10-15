@@ -63,7 +63,10 @@ public class RootController implements IController {
 	private TissuRequisDto tissuRequisSelected;
 	private ProjetDto projetSelected;
 	private FournitureRequiseDto fournitureRequiseSelected;
-	
+	private TissuDto tissuSelected;
+	private FournitureDto fournitureSelected;
+
+
 	private final CustomIcon customIcon;
 	private final TissuRequisLaizeOptionService tissuRequisLaizeOptionService;
 	private final TissuUsedService tissuUsedService;
@@ -128,14 +131,12 @@ public class RootController implements IController {
 		//searchPane.getChildren().add(initializer.displayPane(PathEnum.TISSU_SEARCH, fxData));
 		mainWindow.getChildren().add(initializer.displayPane(PathEnum.RANGEMENT_ROOT, fxData));
 	}
-/*
-	public void displayRangementsDetails(TissuDto tissu) {
-		beforeDisplay(rangementMenu);
-		FxData fxData = new FxData();
-		fxData.setTissu(tissu);
-		mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSUS_DETAILS, fxData));
-	}
 
+	public void displayRangementTree(FxData data) {
+		beforeDisplay(rangementMenu);
+		mainWindow.getChildren().add(initializer.displayPane(PathEnum.RANGEMENT_TREE, data));
+	}
+/*
 	public void displayRangementsEdit(TissuDto tissu) {
 		beforeDisplay(rangementMenu);
 		FxData fxData = new FxData();
@@ -232,6 +233,17 @@ public class RootController implements IController {
 	}
 
 	public void displayTissuSelected(FxData fxData) {
+		tissuSelected = fxData.getTissu();
+		beforeDisplay(rangementMenu);
+
+		selectedElement.getChildren().add(initializer.displayPane(PathEnum.TISSU_SELECTED, fxData));
+		mainWindow.getChildren().add(initializer.displayPane(PathEnum.RANGEMENT_ROOT));
+
+		deleteSelectedButton.setVisible(true);
+		researchButton.setVisible(true);
+	}
+
+	public void displayTissuRequisSelected(FxData fxData) {
 		projetSelected = fxData.getProjet();
 
 		beforeDisplay(tissuMenu);
@@ -243,7 +255,7 @@ public class RootController implements IController {
 		researchButton.setVisible(true);
 	}
 
-	public void displayFournitureSelected(FxData fxData) {
+	public void displayFournitureRequiseSelected(FxData fxData) {
 		projetSelected = fxData.getProjet();
 
 		beforeDisplay(fournitureMenu);
@@ -254,6 +266,7 @@ public class RootController implements IController {
 		deleteSelectedButton.setVisible(true);
 		researchButton.setVisible(true);
 	}
+
 
 	@FXML
 	public void deleteSelected() {
@@ -293,23 +306,6 @@ public class RootController implements IController {
 
 		// TODO a suppr ------------ TEST d'icones -----------------------
 		testIcons();
-
-/*
-		TreeItem<Rangement> it0 = new TreeItem<>(new Rangement());
-		TreeItem<Rangement> it1 = new TreeItem<>(new Rangement());
-		TreeItem<Rangement> it2 = new TreeItem<>(new Rangement());
-		it1.getChildren().add(it2);
-		TreeItem<Rangement> it3 = new TreeItem<>(new Rangement());
-		TreeItem<Rangement> it4 = new TreeItem<>(new Rangement());
-		TreeItem<Rangement> it5 = new TreeItem<>(new Rangement());
-		it3.getChildren().addAll(it4, it5);
-it0.getChildren().addAll(it1, it3);
-		JFXTreeView<Rangement> tv = new JFXTreeView<>(it0);
-		mainWindow.getChildren().add(tv);
-
-
-
- */
 
 	}
 
