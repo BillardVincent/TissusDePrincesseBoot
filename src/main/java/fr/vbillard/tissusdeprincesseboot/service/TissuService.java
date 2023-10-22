@@ -106,4 +106,7 @@ public class TissuService extends AbstractDtoService<Tissu, TissuDto> {
 		return mapper.map(entity, TissuDto.class);
 	}
 
+    public int countByRangementId(int id) {
+		return getDao().countByRangementIdAndArchived(id, false);
+    }
 }

@@ -42,7 +42,6 @@ public class FxData {
 	private boolean allSelectedEqualsNull = true;
 	private Integer rank;
 	private RangementRoot rangementRoot;
-	private RangementRootDemat rangementRootDemat;
 	private String nom;
 
 	public FxData getCopy() {

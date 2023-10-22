@@ -1,4 +1,4 @@
-package fr.vbillard.tissusdeprincesseboot.controller.utils;
+package fr.vbillard.tissusdeprincesseboot.controller.utils.path;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -77,7 +77,6 @@ public class FxmlPathProperties {
 
 	private Resource newRangementModale;
 	private Resource rangementTree;
-	private Resource rootList;
 
 	private Resource plusCard;
 	private Resource longueur;

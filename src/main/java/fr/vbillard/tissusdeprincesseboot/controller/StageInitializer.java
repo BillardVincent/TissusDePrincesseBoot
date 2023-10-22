@@ -4,6 +4,7 @@ import fr.vbillard.tissusdeprincesseboot.TissusDePrincesseFxApp;
 import fr.vbillard.tissusdeprincesseboot.config.PathImgProperties;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.*;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.path.FxmlPathProperties;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathHolder;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathService;
@@ -157,7 +158,9 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
 
 	public File directoryChooser(Preference pref) {
 		FileChooser fileChooser = new FileChooser();
-		pref = preferenceService.getPreferences();
+		if (pref == null) {
+			pref = preferenceService.getPreferences();
+		}
 		String path = pref.getPictureLastUploadPath();
 
 		fileChooser.setInitialDirectory(new File(path));

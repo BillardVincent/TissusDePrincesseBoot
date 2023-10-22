@@ -10,23 +10,22 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Rangement extends AbstractEntity{
+public class Rangement extends AbstractRangement{
 
-    @OneToMany(mappedBy = "conteneur")
-    private List<Rangement> subdivision;
     @ManyToOne
     private Rangement conteneur;
     @ManyToOne
     private RangementRoot conteneurRoot;
 
-    private String nom;
     @OneToMany(mappedBy = "rangement")
     private List<Fourniture> fournitures;
     @OneToMany(mappedBy = "rangement")
     private List<Tissu> tissus;
     @OneToMany(mappedBy = "rangement")
     private List<Patron> patron;
-    private int rang;
+
+    @OneToMany(mappedBy = "conteneur")
+    private List<Rangement> subdivision;
 
     public List<Rangement> getSubdivision() {
         if (subdivision == null){
@@ -34,6 +33,7 @@ public class Rangement extends AbstractEntity{
         }
         return subdivision;
     }
+
 
     public List<Fourniture> getFournitures() {
         if (fournitures == null){

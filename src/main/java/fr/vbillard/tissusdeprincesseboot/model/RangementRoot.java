@@ -10,9 +10,8 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class RangementRoot extends AbstractEntity{
+public class RangementRoot extends AbstractRangement{
 
-    private String nom;
     @OneToMany(mappedBy = "conteneurRoot")
     private List<Rangement> subdivision;
 

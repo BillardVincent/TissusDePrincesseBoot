@@ -22,7 +22,7 @@ public class RangementRootService extends AbstractService<RangementRoot> {
 	public RangementDto convert(RangementRoot source){
 		RangementDto dto = new RangementDto();
 		dto.setId(source.getId());
-		dto.setRang(0);
+		dto.setRang(source.getRang());
 		dto.setNom(source.getNom());
 		dto.setType(TypeRangement.ROOT);
 		return dto;

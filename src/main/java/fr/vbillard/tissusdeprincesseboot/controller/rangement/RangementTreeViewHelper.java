@@ -4,10 +4,10 @@ import com.jfoenix.controls.JFXTreeView;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.RangementDto;
 import fr.vbillard.tissusdeprincesseboot.model.Rangement;
 import fr.vbillard.tissusdeprincesseboot.model.RangementRoot;
-import fr.vbillard.tissusdeprincesseboot.model.RangementRootDemat;
 import fr.vbillard.tissusdeprincesseboot.service.RangementRootService;
 import fr.vbillard.tissusdeprincesseboot.service.RangementService;
 import javafx.scene.control.TreeItem;
+import javafx.scene.layout.HBox;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,25 +27,23 @@ public class RangementTreeViewHelper {
 
 
     @Transactional
-    public JFXTreeView<RangementDto> buildByRoot(RangementRoot root, JFXTreeView<RangementDto> treeView){
+    public JFXTreeView<RangementDto> buildByRoot(JFXTreeView<RangementDto> treeView){
 
-        RangementDto commonRoot = new RangementDto(0, "Tous");
-        RangementDto physicalRoot = new RangementDto(1, "Lieux de rangement");
-        RangementDto dematerializedRoot = new RangementDto(2, "Supports dématérialisés");
+        RangementDto commonRoot = new RangementDto(0, "tous");
+        TreeItem<RangementDto> rootItem = new TreeItem<>(commonRoot);
 
-
-
-        List<RangementRoot> rrList = rangementRootService.getAll();
-
-        RangementRoot rr = rangementRootService.getById(root.getId());
-        TreeItem<RangementDto> rootItem = new TreeItem<>(rangementRootService.convert(rr));
-
-        for (Rangement r : rr.getSubdivision()){
-            rootItem.getChildren().add(buildItem(r));
+        List<RangementRoot> allArangementRoot = rangementRootService.getAll();
+        allArangementRoot.sort(Comparator.comparingInt(RangementRoot::getRang));
+        for (RangementRoot rr : allArangementRoot) {
+            TreeItem<RangementDto> rangementRootItem = new TreeItem<>(rangementRootService.convert(rr));
+            rootItem.getChildren().add(rangementRootItem);
+            for (Rangement r : rr.getSubdivision()) {
+                rangementRootItem.getChildren().add(buildItem(r));
+            }
         }
 
         treeView.setRoot(rootItem);
-
+        treeView.setShowRoot(false);
 
         return treeView;
     }
@@ -65,14 +63,6 @@ public class RangementTreeViewHelper {
 
     }
 
-    @Transactional
-    public JFXTreeView<RangementDto> buildByRoot(RangementRootDemat root, JFXTreeView<RangementDto> treeView){
-
-        // TODO
-
-
-        return treeView;
-    }
 
     /**
      * Ajoute une subdivision à un élément racine. nécessite d'etre dans une transaction
@@ -106,4 +96,5 @@ public class RangementTreeViewHelper {
         return r.getRang();
 
     }
+
 }

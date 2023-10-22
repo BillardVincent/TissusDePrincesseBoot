@@ -32,6 +32,7 @@ public class FournitureSpecification implements Specification<Fourniture> {
 	private NumericSearch<Float> quantiteDisponible;
 	private NumericSearch<Float> quantiteSecondaire;
 	private RGBColor color;
+	private Rangement rangement;
 
 	private static class Joins {
 		private Join<Fourniture, Quantite> joinQuantitePrimaire;
@@ -114,6 +115,11 @@ public class FournitureSpecification implements Specification<Fourniture> {
 					new Path[]{joins.joinColor(root).get(ColorEntity_.L),
 							joins.joinColor(root).get(ColorEntity_.A),
 							joins.joinColor(root).get(ColorEntity_.B)}, cb));
+		}
+
+
+		if (rangement != null){
+			predicateList.add(root.get(Fourniture_.RANGEMENT).in(rangement));
 		}
 
 		return cb.and(predicateList.toArray(new Predicate[] {}));

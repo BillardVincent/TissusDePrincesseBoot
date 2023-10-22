@@ -90,4 +90,8 @@ public class PatronService extends AbstractDtoService<Patron, PatronDto> {
 	public Patron getPatronByProjectId(int id) {
 		return patronDao.getPatronByProjetId(id);
 	}
+
+	public int countByRangementId(int id) {
+		return getDao().countByRangementIdAndArchived(id, false);
+	}
 }

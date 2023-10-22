@@ -37,6 +37,7 @@ public class TissuSpecification implements Specification<Tissu> {
 	private CharacterSearch lieuAchat;
 	private Boolean archived;
 	private RGBColor color;
+	private Rangement rangement;
 
 
 	private static class Joins {
@@ -114,6 +115,10 @@ public class TissuSpecification implements Specification<Tissu> {
 					new Path[]{joins.joinColor(tissu).get(ColorEntity_.L),
 							joins.joinColor(tissu).get(ColorEntity_.A),
 							joins.joinColor(tissu).get(ColorEntity_.B)}, cb));
+		}
+
+		if (rangement != null){
+			predicateList.add(tissu.get(Tissu_.RANGEMENT).in(rangement));
 		}
 
 		return cb.and(predicateList.toArray(new Predicate[] {}));

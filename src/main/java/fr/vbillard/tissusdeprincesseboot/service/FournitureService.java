@@ -149,4 +149,7 @@ public class FournitureService extends AbstractDtoService<Fourniture, Fourniture
 		return mapper.map(source);
 	}
 
+    public int countByRangementId(int id) {
+		return getDao().countByRangementIdAndArchived(id, false);
+    }
 }

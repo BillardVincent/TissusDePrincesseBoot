@@ -127,24 +127,13 @@ public class RootController implements IController {
 	public void displayRangement(Specification spec) {
 		FxData fxData = new FxData();
 		fxData.setSpecification(spec);
-		beforeDisplay(rangementMenu);
-		//searchPane.getChildren().add(initializer.displayPane(PathEnum.TISSU_SEARCH, fxData));
-		mainWindow.getChildren().add(initializer.displayPane(PathEnum.RANGEMENT_ROOT, fxData));
+		displayRangementTree(fxData);
 	}
 
 	public void displayRangementTree(FxData data) {
 		beforeDisplay(rangementMenu);
 		mainWindow.getChildren().add(initializer.displayPane(PathEnum.RANGEMENT_TREE, data));
 	}
-/*
-	public void displayRangementsEdit(TissuDto tissu) {
-		beforeDisplay(rangementMenu);
-		FxData fxData = new FxData();
-		fxData.setTissu(tissu);
-		mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSUS_EDIT, fxData));
-	}
-
- */
 
 	@FXML
 	public void displayProjets() {
@@ -237,7 +226,7 @@ public class RootController implements IController {
 		beforeDisplay(rangementMenu);
 
 		selectedElement.getChildren().add(initializer.displayPane(PathEnum.TISSU_SELECTED, fxData));
-		mainWindow.getChildren().add(initializer.displayPane(PathEnum.RANGEMENT_ROOT));
+		mainWindow.getChildren().add(initializer.displayPane(PathEnum.RANGEMENT_TREE));
 
 		deleteSelectedButton.setVisible(true);
 		researchButton.setVisible(true);

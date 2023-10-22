@@ -30,6 +30,7 @@ public class PatronSpecification implements Specification<Patron> {
 	private CharacterSearch typeVetement;
 	private CharacterSearch description;
 	private List<SupportTypeEnum> support;
+	private Rangement rangement;
 
 	// TissuRequis
 	private NumericSearch<Integer> longueur;
@@ -121,6 +122,10 @@ public class PatronSpecification implements Specification<Patron> {
 
 		if(archived != null){
 			predicateList.add(patron.get(Patron_.ARCHIVED).in(archived));
+		}
+
+		if (rangement != null){
+			predicateList.add(patron.get(Patron_.RANGEMENT).in(rangement));
 		}
 
 		return cb.and(predicateList.toArray(new Predicate[] {}));

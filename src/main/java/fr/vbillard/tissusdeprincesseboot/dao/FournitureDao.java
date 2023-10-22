@@ -22,4 +22,7 @@ public interface FournitureDao extends Idao<Fourniture, Integer>{
   boolean existsFournitureByType(TypeFourniture typeFourniture);
 
   Page<Fourniture> findAllByArchived(Pageable pageable, boolean b);
+
+  int countByRangementIdAndArchived(int id, boolean archived);
+
 }

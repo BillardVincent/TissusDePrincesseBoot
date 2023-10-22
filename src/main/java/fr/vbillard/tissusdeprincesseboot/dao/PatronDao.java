@@ -18,4 +18,6 @@ public interface PatronDao extends Idao<Patron, Integer> {
 			+ "pv ON pv.PATRON_ID = pa.ID INNER JOIN PROJET P on p.PATRON_VERSION_ID = pv.ID WHERE P.ID = ?1",
 			nativeQuery =	true)
 	Patron getPatronByProjetId(int id);
+
+	int countByRangementIdAndArchived(int id, boolean archived);
 }

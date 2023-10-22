@@ -32,4 +32,6 @@ public interface TissuDao extends Idao<Tissu, Integer> {
 	Integer longueurUtilisee(int tissuId);
 
 	Page<Tissu> findAllByArchived(Pageable pageable, boolean archived);
+
+    int countByRangementIdAndArchived(int id, boolean archived);
 }
