@@ -4,10 +4,13 @@ import javafx.application.Application;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.scheduling.annotation.Async;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 @SpringBootApplication
 public class TissuDePrincesseBootApplication {
@@ -19,10 +22,22 @@ public class TissuDePrincesseBootApplication {
 		frame = new JFrame("Spring Boot Swing App");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(300,300);
-		JPanel panel = new JPanel(new BorderLayout());
-		JTextField text = new JTextField("Spring Boot can be used with Swing apps");
-		panel.add(text, BorderLayout.CENTER);
-		frame.setContentPane(panel);
+		try {
+			//TODO refaire l'image
+			BufferedImage myPicture = ImageIO.read(new File(".\\src\\main\\resources\\img\\intro.jpg"));
+			Image dimg = myPicture.getScaledInstance(300, 213, Image.SCALE_DEFAULT);
+			JLabel picLabel = new JLabel(new ImageIcon(dimg));
+			frame.setContentPane(picLabel);
+		}catch (IOException ex){
+			JPanel panel = new JPanel(new BorderLayout());
+			JTextField text = new JTextField("Les Tissus de Princesse");
+			panel.add(text, BorderLayout.CENTER);
+			frame.setContentPane(panel);
+		}
+		frame.setUndecorated(true);
+
+		frame.pack();
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		Application.launch(TissusDePrincesseFxApp.class, args);
 	}
