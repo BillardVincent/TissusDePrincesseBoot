@@ -8,6 +8,8 @@ import fr.vbillard.tissusdeprincesseboot.model.ColorEntity;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Quantite;
+import fr.vbillard.tissusdeprincesseboot.model.Rangement;
+import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import fr.vbillard.tissusdeprincesseboot.utils.color.ColorUtils;
 import javafx.collections.FXCollections;
@@ -151,5 +153,13 @@ public class FournitureService extends AbstractDtoService<Fourniture, Fourniture
 
     public int countByRangementId(int id) {
 		return getDao().countByRangementIdAndArchived(id, false);
+    }
+
+    public FournitureDto addRangement(int id, Rangement rangement) {
+	    Fourniture f = getById(id);
+	    f.setRangement(rangement);
+	    saveOrUpdate(f);
+	    return convert(f);
+
     }
 }

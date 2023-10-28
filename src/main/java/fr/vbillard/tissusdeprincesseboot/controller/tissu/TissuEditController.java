@@ -25,6 +25,7 @@ import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
 import fr.vbillard.tissusdeprincesseboot.service.MatiereService;
+import fr.vbillard.tissusdeprincesseboot.service.RangementService;
 import fr.vbillard.tissusdeprincesseboot.service.TissageService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuService;
 import fr.vbillard.tissusdeprincesseboot.utils.ConstantesMetier;
@@ -34,7 +35,6 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -120,6 +120,7 @@ public class TissuEditController implements IController {
     private final MatiereService matiereService;
     private final TissageService tissageService;
     private final TissuService tissuService;
+    private final RangementService rangementService;
     private final TissuPictureHelper pictureHelper;
     private final ConstantesMetier constantesMetier;
 
@@ -128,14 +129,15 @@ public class TissuEditController implements IController {
     private Validator[] validators;
 
     public TissuEditController(TissuPictureHelper pictureHelper, MapperService mapper, TissuService tissuService,
-                               MatiereService matiereService, TissageService tissageService, RootController root,
-                               ConstantesMetier constantesMetier) {
+            MatiereService matiereService, TissageService tissageService, RootController root,
+            RangementService rangementService, ConstantesMetier constantesMetier) {
         this.mapper = mapper;
         this.tissuService = tissuService;
         this.matiereService = matiereService;
         this.tissageService = tissageService;
         this.pictureHelper = pictureHelper;
         this.root = root;
+        this.rangementService = rangementService;
         this.constantesMetier = constantesMetier;
     }
 
@@ -177,6 +179,12 @@ public class TissuEditController implements IController {
         tissageField.setItems(FXCollections.observableArrayList(tissageService.getAllValues()));
         tissageField.setValue(safePropertyToString(tissu.getTissageProperty()));
 
+        if (tissu.getRangement() == null) {
+            lieuDeStockageField.setText("Non renseigné");
+        } else {
+            lieuDeStockageField.setText(rangementService.getRangementPath(tissu.getRangement().getId()));
+        }
+
         pictureHelper.setPane(imagePane, tissu);
         colorComp.initialize(initializer, tissu.getColor(), imagePane.getImage());
 
@@ -192,7 +200,7 @@ public class TissuEditController implements IController {
         GlyphIconUtil.generateIcon(warningSaveIcon, GlyphIconUtil.VERY_BIG_ICONE_SIZE, Constants.colorWarning);
         setBoutonArchiver();
 
-        onChangeListener(new ObservableValue[]{longueurField.textProperty(), laizeField.textProperty(),
+        onChangeListener(new ObservableValue[] { longueurField.textProperty(), laizeField.textProperty(),
                 poidsField.textProperty(), referenceField.textProperty(), descriptionField.textProperty(),
                 decatiField.selectedProperty(), lieuDachatField.textProperty(), chuteField.selectedProperty(),
                 unitePoidsField.valueProperty(), typeField.valueProperty(), matiereField.valueProperty(),
@@ -214,11 +222,11 @@ public class TissuEditController implements IController {
         generateReferenceButton.setGraphic(magicIcon);
         generateReferenceButton.setTooltip(new Tooltip("Générer une référence automatiquement"));
 
-        validators = new Validator[]{new NonNullValidator<>(referenceField, "référence"),
+        validators = new Validator[] { new NonNullValidator<>(referenceField, "référence"),
                 new NonNullValidator<>(matiereField, "matière"),
                 new NonNullValidator<>(unitePoidsField, "unité de poids"),
                 new NonNullValidator<>(poidsField, "poids"),
-                new NonNullValidator<>(typeField, "type")};
+                new NonNullValidator<>(typeField, "type") };
     }
 
     public boolean isOkClicked() {
@@ -347,14 +355,15 @@ public class TissuEditController implements IController {
         archiverBtn.setText(tissu.isArchived() ? "Désarchiver" : "Archiver");
     }
 
-
     public void handleStockage() {
-        if (!hasChanged.get() || ButtonType.OK.equals(ShowAlert.warn(initializer.getPrimaryStage(), "Données non sauvegardées",
-                    "Des modifications risquent d'être perdues",
-                    "Vous allez être redirigé(e) vers la section \"Rangement\". Des modifications ont été faites, mais n'ont pas été enregistrées. Souhaitez vous tout de même continuer?").orElse(ButtonType.CANCEL))){
-                FxData data = new FxData();
-                data.setTissu(tissu);
-                root.displayTissuSelected(data);
-            }
+        if (!hasChanged.get() || ButtonType.OK.equals(
+                ShowAlert.warn(initializer.getPrimaryStage(), "Données non sauvegardées",
+                                "Des modifications risquent d'être perdues",
+                                "Vous allez être redirigé(e) vers la section \"Rangement\". Des modifications ont été faites, mais n'ont pas été enregistrées. Souhaitez vous tout de même continuer?")
+                        .orElse(ButtonType.CANCEL))) {
+            FxData data = new FxData();
+            data.setTissu(tissu);
+            root.displayTissuSelected(data);
         }
+    }
 }

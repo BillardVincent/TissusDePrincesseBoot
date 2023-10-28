@@ -34,8 +34,8 @@ public class TissusController extends ViewListController {
 			lstTissu = tissuService.getObservablePage(page, PAGE_SIZE, (TissuSpecification) specification);
 		} else {
 			lstTissu = tissuService.getObservablePage(page, PAGE_SIZE);
-
 		}
+
 		for (TissuDto t : lstTissu) {
 			FxData data = new FxData();
 			data.setTissu(t);

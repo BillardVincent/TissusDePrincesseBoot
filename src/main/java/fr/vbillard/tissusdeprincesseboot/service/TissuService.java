@@ -4,6 +4,7 @@ import fr.vbillard.tissusdeprincesseboot.dao.TissuDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification;
+import fr.vbillard.tissusdeprincesseboot.model.Rangement;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
 import javafx.collections.FXCollections;
@@ -108,5 +109,12 @@ public class TissuService extends AbstractDtoService<Tissu, TissuDto> {
 
     public int countByRangementId(int id) {
 		return getDao().countByRangementIdAndArchived(id, false);
+    }
+
+    public TissuDto addRangement(int id, Rangement rangement) {
+		Tissu t = getById(id);
+		t.setRangement(rangement);
+		saveOrUpdate(t);
+		return convert(t);
     }
 }

@@ -11,9 +11,24 @@ import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.CustomIcon;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.*;
-import fr.vbillard.tissusdeprincesseboot.model.*;
-import fr.vbillard.tissusdeprincesseboot.service.*;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
+import fr.vbillard.tissusdeprincesseboot.model.FournitureRequise;
+import fr.vbillard.tissusdeprincesseboot.model.FournitureUsed;
+import fr.vbillard.tissusdeprincesseboot.model.Projet;
+import fr.vbillard.tissusdeprincesseboot.model.Tissu;
+import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
+import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
+import fr.vbillard.tissusdeprincesseboot.service.FournitureRequiseService;
+import fr.vbillard.tissusdeprincesseboot.service.FournitureService;
+import fr.vbillard.tissusdeprincesseboot.service.FournitureUsedService;
+import fr.vbillard.tissusdeprincesseboot.service.TissuRequisLaizeOptionService;
+import fr.vbillard.tissusdeprincesseboot.service.TissuRequisService;
+import fr.vbillard.tissusdeprincesseboot.service.TissuUsedService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -65,7 +80,7 @@ public class RootController implements IController {
 	private FournitureRequiseDto fournitureRequiseSelected;
 	private TissuDto tissuSelected;
 	private FournitureDto fournitureSelected;
-
+	private PatronDto patronSelected;
 
 	private final CustomIcon customIcon;
 	private final TissuRequisLaizeOptionService tissuRequisLaizeOptionService;
@@ -209,24 +224,12 @@ public class RootController implements IController {
 		mainWindow.getChildren().add(initializer.displayPane(PathEnum.FOURNITURES_EDIT, fxData));
 	}
 
-	@FXML
-	public void displayMatiereEdit() {
-		beforeDisplay(null);
-		mainWindow.getChildren().add(initializer.displayPane(PathEnum.MATIERE));
-	}
-
-	@FXML
-	public void displayTissageEdit() {
-		beforeDisplay(null);
-		mainWindow.getChildren().add(initializer.displayPane(PathEnum.TISSAGE));
-	}
-
 	public void displayTissuSelected(FxData fxData) {
 		tissuSelected = fxData.getTissu();
 		beforeDisplay(rangementMenu);
 
 		selectedElement.getChildren().add(initializer.displayPane(PathEnum.TISSU_SELECTED, fxData));
-		mainWindow.getChildren().add(initializer.displayPane(PathEnum.RANGEMENT_TREE));
+		mainWindow.getChildren().add(initializer.displayPane(PathEnum.RANGEMENT_TREE, fxData));
 
 		deleteSelectedButton.setVisible(true);
 		researchButton.setVisible(true);
@@ -264,6 +267,10 @@ public class RootController implements IController {
 		tissuRequisSelected = null;
 		fournitureRequiseSelected = null;
 		projetSelected = null;
+		tissuSelected = null;
+		fournitureSelected = null;
+		patronSelected = null;
+
 		selectedElement.getChildren().clear();
 	}
 

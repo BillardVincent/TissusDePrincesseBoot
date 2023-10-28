@@ -5,6 +5,8 @@ import fr.vbillard.tissusdeprincesseboot.dao.TissusRequisDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.PatronSpecification;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
+import fr.vbillard.tissusdeprincesseboot.model.Rangement;
+import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.AllArgsConstructor;
@@ -94,4 +96,12 @@ public class PatronService extends AbstractDtoService<Patron, PatronDto> {
 	public int countByRangementId(int id) {
 		return getDao().countByRangementIdAndArchived(id, false);
 	}
+
+    public PatronDto addRangement(int id, Rangement rangement) {
+	    Patron p = getById(id);
+	    p.setRangement(rangement);
+	    saveOrUpdate(p);
+	    return convert(p);
+
+    }
 }

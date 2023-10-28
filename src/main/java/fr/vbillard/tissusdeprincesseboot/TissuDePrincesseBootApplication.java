@@ -19,9 +19,12 @@ public class TissuDePrincesseBootApplication {
 
 	public static void main(String[] args) {
 
-		frame = new JFrame("Spring Boot Swing App");
+		System.setProperty("prism.allowhidpi", "false");
+		System.setProperty("glass.win.uiScale", "100%");
+
+		frame = new JFrame("Démarrage TissusDePrincesses");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(300,300);
+		frame.setSize(300,213);
 		try {
 			//TODO refaire l'image
 			BufferedImage myPicture = ImageIO.read(new File(".\\src\\main\\resources\\img\\intro.jpg"));
