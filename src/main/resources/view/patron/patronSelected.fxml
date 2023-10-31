@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+<?import java.lang.String?>
+<Pane prefHeight="194.0" prefWidth="258.0" styleClass="card" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.patron.PatronSelectedController">
+	<children>
+		<VBox prefHeight="190.0" prefWidth="259.0" stylesheets="@../../style/style.css">
+			<children>
+				<Label fx:id="typeVetementPatronLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="259.0" text="Type" textAlignment="CENTER" />
+				<VBox prefHeight="110.0" prefWidth="258.0" styleClass="light-background">
+					<children>
+					<HBox alignment="CENTER" prefHeight="110.0" prefWidth="258.0">
+							<children>
+								<ImageView fx:id="image" fitHeight="119.0" fitWidth="258.0" pickOnBounds="true" preserveRatio="true" />
+							</children>
+						</HBox>
+					</children>
+				</VBox>
+				<Label fx:id="modelPatronLabel" alignment="CENTER" prefHeight="30.0" prefWidth="265.0" text="MODELE" textAlignment="CENTER" />
+
+				<Label fx:id="marquePatronLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="259.0" text="Marque" textAlignment="CENTER" />
+			</children>
+			<styleClass>
+				<String fx:value="global" />
+				<String fx:value="card" />
+			</styleClass>
+		</VBox>
+      <Pane layoutX="200.0" layoutY="20.0" prefHeight="40.0" prefWidth="40.0">
+         <children>
+            <Circle centerX="20.0" centerY="20.0" fill="WHITE" radius="20.0" stroke="#9c27b0" strokeType="INSIDE" styleClass="card" />
+            <MaterialDesignIconView fx:id="typeSupportIcn" layoutX="6.0" layoutY="31.0" size="2.5em" />
+         </children>
+      </Pane>
+	</children>
+</Pane>

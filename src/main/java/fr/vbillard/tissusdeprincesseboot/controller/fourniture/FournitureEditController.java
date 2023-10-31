@@ -12,6 +12,7 @@ import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.picture_helper.FourniturePictureHelper;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
 import fr.vbillard.tissusdeprincesseboot.controller.validators.NonNullValidator;
@@ -21,6 +22,7 @@ import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureService;
+import fr.vbillard.tissusdeprincesseboot.service.RangementService;
 import fr.vbillard.tissusdeprincesseboot.service.TypeFournitureService;
 import fr.vbillard.tissusdeprincesseboot.utils.Constants;
 import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
@@ -28,6 +30,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
@@ -62,6 +65,8 @@ public class FournitureEditController implements IController {
   @FXML
   public JFXTextField referenceField;
   @FXML
+  public Label lieuDeStockageField;
+  @FXML
   public JFXButton generateReferenceButton;
   @FXML
   public Label quantiteUtiliseeLabel;
@@ -89,6 +94,8 @@ public class FournitureEditController implements IController {
   public Label warningSaveLbl;
   @FXML
   public ColorComponent colorComp;
+  @FXML
+  public JFXButton changerLieuStockage;
 
   private final RootController root;
   private StageInitializer initializer;
@@ -98,18 +105,20 @@ public class FournitureEditController implements IController {
 
   private final TypeFournitureService typeService;
   private final FournitureService fournitureService;
+  private final RangementService rangementService;
   private final FourniturePictureHelper pictureHelper;
 
-  private BooleanProperty hasChanged = new SimpleBooleanProperty(false);
+  private final BooleanProperty hasChanged = new SimpleBooleanProperty(false);
 
   private Validator[] validators;
 
   public FournitureEditController(FourniturePictureHelper pictureHelper, FournitureService fournitureService,
-      TypeFournitureService typeService, RootController root) {
+      TypeFournitureService typeService, RootController root, RangementService rangementService) {
     this.fournitureService = fournitureService;
     this.typeService = typeService;
     this.pictureHelper = pictureHelper;
     this.root = root;
+    this.rangementService = rangementService;
   }
 
   @Override
@@ -169,6 +178,12 @@ public class FournitureEditController implements IController {
 
     intitulePrimLbl.setText(safePropertyToString(fourniture.getIntituleDimensionProperty()));
     intituleSecLbl.setText(safePropertyToString(fourniture.getIntituleSecondaireProperty()));
+
+    if (fourniture.getRangement() == null) {
+      lieuDeStockageField.setText("Non renseigné");
+    } else {
+      lieuDeStockageField.setText(rangementService.getRangementPath(fourniture.getRangement().getId()));
+    }
 
     if (fourniture.getType() != null) {
       uniteSecField.setValue(safePropertyToString(fourniture.getUniteSecondaireProperty()));
@@ -244,6 +259,7 @@ public class FournitureEditController implements IController {
 
       setFournitureFromFields();
       okClicked = true;
+      hasChanged.setValue(false);
     }
   }
 
@@ -341,4 +357,15 @@ public class FournitureEditController implements IController {
     archiverBtn.setText(fourniture.isArchived() ? "Désarchiver" : "Archiver");
   }
 
+  public void handleStockage() {
+    if (!hasChanged.get() || ButtonType.OK.equals(
+            ShowAlert.warn(initializer.getPrimaryStage(), "Données non sauvegardées",
+                            "Des modifications risquent d'être perdues",
+                            "Vous allez être redirigé(e) vers la section \"Rangement\". Des modifications ont été faites, mais n'ont pas été enregistrées. Souhaitez vous tout de même continuer?")
+                    .orElse(ButtonType.CANCEL))) {
+      FxData data = new FxData();
+      data.setFourniture(fourniture);
+      root.displayFournitureSelected(data);
+    }
+  }
 }

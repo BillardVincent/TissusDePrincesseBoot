@@ -11,6 +11,7 @@ import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronVersionDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.service.PatronVersionService;
 import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
+import fr.vbillard.tissusdeprincesseboot.service.RangementService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -24,6 +25,8 @@ public class PatronDetailController implements IController {
 
 	@FXML
 	public Label titre;
+	@FXML
+	public Label lieuDeStockageLbl;
 	@FXML
 	private ImageView image;
 	@FXML
@@ -44,15 +47,18 @@ public class PatronDetailController implements IController {
 	private PatronDto patron;
 
 	private final ProjetService projetService;
+	private final RangementService rangementService;
 	private final PatronPictureHelper pictureUtils;
 	private final PatronVersionService patronVersionservice;
 
+
 	PatronDetailController(PatronPictureHelper pictureUtils, RootController rootController, PatronVersionService patronVersionservice,
-			ProjetService projetService) {
+			ProjetService projetService, RangementService rangementService) {
 		this.rootController = rootController;
 		this.projetService = projetService;
 		this.pictureUtils = pictureUtils;
 		this.patronVersionservice = patronVersionservice;
+		this.rangementService = rangementService;
 	}
 
 	@Override
@@ -67,6 +73,11 @@ public class PatronDetailController implements IController {
 		modelPatronLabel.setText(patron.getModele());
 		typeVetementPatronLabel.setText(patron.getTypeVetement());
 		typeSupportPatronLabel.setText(patron.getTypeSupport());
+		if (patron.getRangement() == null){
+			lieuDeStockageLbl.setText("Non renseigné");
+		} else {
+			lieuDeStockageLbl.setText(rangementService.getRangementPath(patron.getRangement().getId()));
+		}
 
 		// TODO patron version
 		

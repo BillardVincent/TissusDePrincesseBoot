@@ -1,6 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.dtos_fx;
 
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
+import fr.vbillard.tissusdeprincesseboot.model.Rangement;
 import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import javafx.beans.property.*;
@@ -27,6 +28,8 @@ public class FournitureDto implements FxDto<Fourniture> {
 	private TypeFourniture type;
 	private ObjectProperty<Color> color;
 	public int colorId;
+	private ObjectProperty<Rangement> rangement;
+
 
 	public FournitureDto() {
 		this.id = new SimpleIntegerProperty();
@@ -46,6 +49,8 @@ public class FournitureDto implements FxDto<Fourniture> {
 		this.intituleDimension = new SimpleStringProperty();
 		this.intituleSecondaire = new SimpleStringProperty();
 		this.color = new SimpleObjectProperty<>();
+		this.rangement = new SimpleObjectProperty<>();
+
 	}
 
 	public int getId() {
@@ -252,6 +257,18 @@ public class FournitureDto implements FxDto<Fourniture> {
 
 	public void setColor(Color color) {
 		this.color.set(color);
+	}
+
+	public Rangement getRangement() {
+		return rangement.get();
+	}
+
+	public ObjectProperty<Rangement> getRangementProperty() {
+		return rangement;
+	}
+
+	public void setRangement(Rangement rangement) {
+		this.rangement.set(rangement);
 	}
 
 	@Override

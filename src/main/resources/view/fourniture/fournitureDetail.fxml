@@ -29,14 +29,15 @@
          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
         <children>
             <Label text="Description" GridPane.rowIndex="8" />
             <Label text="Type" GridPane.rowIndex="1" />
             <Label fx:id="intitulePrimLbl" text="Quantité" GridPane.rowIndex="5" />
-            <Label text="Lieu d'achat" GridPane.rowIndex="9" />
+            <Label text="Lieu d'achat" GridPane.rowIndex="10" />
             <Label fx:id="descriptionField" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-            <Label fx:id="lieuDachatField" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            <Label fx:id="lieuDachatField" GridPane.columnIndex="1" GridPane.rowIndex="10" />
             <HBox fillHeight="false" prefHeight="0.0" prefWidth="324.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                 <children>
                     <Label fx:id="quantitePrimField" prefHeight="26.0" prefWidth="239.0" />
@@ -81,6 +82,8 @@
          </HBox>
          <Label text="Couleur" GridPane.rowIndex="7" />
          <Rectangle fx:id="color" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="27.0" stroke="BLACK" strokeType="INSIDE" width="28.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label text="Lieu de stockage" GridPane.rowIndex="9" />
+            <Label fx:id="lieuDeStockageLbl" GridPane.columnIndex="1" GridPane.rowIndex="9" />
         </children>
     </GridPane>
     <ButtonBar layoutX="292.0" layoutY="639.0" prefHeight="40.0" prefWidth="521.0">

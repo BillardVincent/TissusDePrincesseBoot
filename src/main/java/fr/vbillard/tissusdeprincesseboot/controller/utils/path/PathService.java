@@ -12,6 +12,7 @@ import fr.vbillard.tissusdeprincesseboot.controller.patron.ListElementController
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronListController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronSearchController;
+import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronSelectedController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.detail.PatronDetailController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.detail.TissuDisplayController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.detail.VersionDisplayController;
@@ -150,7 +151,12 @@ public class PathService {
         return new PathHolder(pathProperties.getNewRangementModale().getURL(), NewRangementModale.class);
       case TISSU_SELECTED:
         return new PathHolder(pathProperties.getTissuSelected().getURL(), TissuSelectedController.class);
-      default:
+    case FOURNITURE_SELECTED:
+      return new PathHolder(pathProperties.getFournitureSelected().getURL(), FournitureSelectedController.class);
+    case PATRON_SELECTED:
+      return new PathHolder(pathProperties.getPatronSelected().getURL(), PatronSelectedController.class);
+
+    default:
         break;
 
     }

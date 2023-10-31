@@ -1,12 +1,12 @@
 package fr.vbillard.tissusdeprincesseboot.dtos_fx;
 
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
+import fr.vbillard.tissusdeprincesseboot.model.Rangement;
 import fr.vbillard.tissusdeprincesseboot.model.enums.SupportTypeEnum;
 import javafx.beans.property.*;
 
 public class PatronDto implements FxDto<Patron>{
 
-	
 	private IntegerProperty id;
 	private StringProperty reference;
 	private StringProperty marque;
@@ -14,9 +14,8 @@ public class PatronDto implements FxDto<Patron>{
 	private StringProperty typeVetement;
 	private StringProperty description;
 	private BooleanProperty archived;
-	
 	private StringProperty typeSupport;
-
+	private ObjectProperty<Rangement> rangement;
 
 	
 	public PatronDto() {
@@ -28,6 +27,8 @@ public class PatronDto implements FxDto<Patron>{
 		this.description = new SimpleStringProperty();
 		typeSupport = new SimpleStringProperty();
 		this.archived = new SimpleBooleanProperty();
+		this.rangement = new SimpleObjectProperty<>();
+
 	}
 	
 	public int getId() {
@@ -132,5 +133,17 @@ public class PatronDto implements FxDto<Patron>{
 
 	public void setArchived(boolean archived) {
 		this.archived.set(archived);
+	}
+
+	public Rangement getRangement() {
+		return rangement.get();
+	}
+
+	public ObjectProperty<Rangement> getRangementProperty() {
+		return rangement;
+	}
+
+	public void setRangement(Rangement rangement) {
+		this.rangement.set(rangement);
 	}
 }

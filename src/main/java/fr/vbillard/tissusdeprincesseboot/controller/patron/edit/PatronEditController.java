@@ -12,6 +12,7 @@ import fr.vbillard.tissusdeprincesseboot.controller.picture_helper.PatronPicture
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
 import fr.vbillard.tissusdeprincesseboot.controller.validators.NonNullValidator;
@@ -25,9 +26,15 @@ import fr.vbillard.tissusdeprincesseboot.model.PatronVersion;
 import fr.vbillard.tissusdeprincesseboot.model.enums.SupportTypeEnum;
 import fr.vbillard.tissusdeprincesseboot.service.PatronService;
 import fr.vbillard.tissusdeprincesseboot.service.PatronVersionService;
+import fr.vbillard.tissusdeprincesseboot.service.RangementService;
 import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
@@ -41,13 +48,16 @@ import java.util.Objects;
 
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.ClassCssUtils.TITLE_PANE_CUSTOM;
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.ClassCssUtils.setStyle;
-import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.safePropertyToString;
-import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.textFieldToFirstCharOrX;
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.*;
 import static fr.vbillard.tissusdeprincesseboot.controller.validators.ValidatorUtils.areValidatorsValid;
 
 @Component
 public class PatronEditController implements IController {
 
+  @FXML
+  public Label lieuDeStockageField;
+  @FXML
+  public JFXButton changerLieuStockage;
   @FXML
   private JFXTextField marqueField;
   @FXML
@@ -82,17 +92,21 @@ public class PatronEditController implements IController {
 
   private final PatronService patronService;
   private final PatronVersionService patronVersionService;
+  private final RangementService rangementService;
 
   private Validator[] validators;
+  private final BooleanProperty hasChanged = new SimpleBooleanProperty(false);
+
 
   public PatronEditController(RootController root, PatronPictureHelper pictureUtils, ModelMapper mapper,
-      PatronService patronService, PatronVersionService patronVersionService) {
+      PatronService patronService, PatronVersionService patronVersionService, RangementService rangementService) {
 
     this.mapper = mapper;
     this.patronService = patronService;
     this.pictureUtils = pictureUtils;
     this.root = root;
     this.patronVersionService = patronVersionService;
+    this.rangementService = rangementService;
   }
 
   @FXML
@@ -188,11 +202,20 @@ public class PatronEditController implements IController {
       FxUtils.buildComboBox(SupportTypeEnum.labels(), patron.getTypeSupportProperty(),
           SupportTypeEnum.NON_RENSEIGNE.label, typeSupportCbBox);
       pictureUtils.setPane(imagePane, patron);
+      if (patron.getRangement() == null) {
+        lieuDeStockageField.setText("Non renseigné");
+      } else {
+        lieuDeStockageField.setText(rangementService.getRangementPath(patron.getRangement().getId()));
+      }
+
       setBoutonArchiver();
 
       reload(-1);
 
     }
+    onChangeListener(new ObservableValue[]{ referenceField.textProperty(), marqueField.textProperty(),
+            modeleField.textProperty(), typeVetementField.textProperty(), typeSupportCbBox.valueProperty()
+    }, hasChanged);
     displayRightPane();
   }
 
@@ -308,6 +331,18 @@ public class PatronEditController implements IController {
     pv.setPatron(patronService.convert(patron));
     pv = patronVersionService.saveOrUpdate(pv);
     reload(pv.getId());
+  }
+
+  public void handleStockage() {
+    if (!hasChanged.get() || ButtonType.OK.equals(
+            ShowAlert.warn(initializer.getPrimaryStage(), "Données non sauvegardées",
+                            "Des modifications risquent d'être perdues",
+                            "Vous allez être redirigé(e) vers la section \"Rangement\". Des modifications ont été faites, mais n'ont pas été enregistrées. Souhaitez vous tout de même continuer?")
+                    .orElse(ButtonType.CANCEL))) {
+      FxData data = new FxData();
+      data.setPatron(patron);
+      root.displayPatronSelected(data);
+    }
   }
 
 }

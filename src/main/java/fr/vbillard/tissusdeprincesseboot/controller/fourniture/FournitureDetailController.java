@@ -13,6 +13,7 @@ import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureService;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureUsedService;
 import fr.vbillard.tissusdeprincesseboot.service.ImageService;
+import fr.vbillard.tissusdeprincesseboot.service.RangementService;
 import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.EntityToString;
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
@@ -67,7 +68,7 @@ public class FournitureDetailController implements IController {
 
 	public RowConstraints ancienneValeurRow;
 	public RowConstraints consommeRow;
-
+    public Label lieuDeStockageLbl;
 
     @FXML
 	private JFXButton addToButton;
@@ -83,16 +84,18 @@ public class FournitureDetailController implements IController {
 	private FournitureDto fourniture;
 	private boolean okClicked = false;
 
-	private FournitureService fournitureService;
-	private RootController rootController;
-	private ImageService imageService;
+	private final FournitureService fournitureService;
+	private final RootController rootController;
+	private final ImageService imageService;
+	private final RangementService rangementService;
 	private FournitureUsedService fournitureUsedService;
 
 	public FournitureDetailController(ImageService imageService, RootController rootController,
-			FournitureService fournitureService, FournitureUsedService tissuUsedService) {
+			FournitureService fournitureService, RangementService rangementService, FournitureUsedService tissuUsedService) {
 		this.fournitureService = fournitureService;
 		this.rootController = rootController;
 		this.imageService = imageService;
+		this.rangementService = rangementService;
 		this.fournitureUsedService = tissuUsedService;
 	}
 
@@ -127,6 +130,11 @@ public class FournitureDetailController implements IController {
 		pictures = imageService.getImage(fournitureService.convert(fourniture));
 		imagePane.setImage(imageService.imageOrDefault(pictures));
 
+		if (fourniture.getRangement() == null){
+			lieuDeStockageLbl.setText("Non renseigné");
+		} else {
+			lieuDeStockageLbl.setText(rangementService.getRangementPath(fourniture.getRangement().getId()));
+		}
 
 		color.setFill(fourniture.getColor() != null ? fourniture.getColor() : Color.TRANSPARENT);
 
@@ -146,7 +154,6 @@ public class FournitureDetailController implements IController {
 
 	public void addTo() {
 		rootController.addToSelected(fourniture);
-
 	}
 
 	public void delete() {
@@ -155,9 +162,9 @@ public class FournitureDetailController implements IController {
 		} else {
 		Optional<ButtonType> result = ShowAlert.suppression(initializer.getPrimaryStage(), EntityToString.FOURNITURE,
 				fourniture.toString());
-		if (result.isPresent() && result.get().equals(ButtonType.OK)) {
+		if (result.orElse(ButtonType.CANCEL).equals(ButtonType.OK)) {
 
-				pictures.ifPresent(photo -> imageService.delete(photo));
+				pictures.ifPresent(imageService::delete);
 				fournitureService.delete(fourniture);
 			}
 			rootController.displayFourniture();

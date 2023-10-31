@@ -84,8 +84,14 @@
             <Label text="Description" GridPane.rowIndex="7" />
             <JFXTextField fx:id="descriptionField" GridPane.columnIndex="1" GridPane.rowIndex="7" />
 
-            <Label text="Lieu d'achat" GridPane.rowIndex="8" />
-            <JFXTextField fx:id="lieuDachatField" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <Label text="Lieu de stockage" GridPane.rowIndex="8" />
+            <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="0.0" prefWidth="324.0" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                <Label text="Lieu de stockage" fx:id="lieuDeStockageField" />
+                <JFXButton text="Changer" fx:id="changerLieuStockage" mnemonicParsing="false" onAction="#handleStockage"/>
+            </HBox>
+
+            <Label text="Lieu d'achat" GridPane.rowIndex="9" />
+            <JFXTextField fx:id="lieuDachatField" GridPane.columnIndex="1" GridPane.rowIndex="9" />
 
         </children>
     </GridPane>

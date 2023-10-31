@@ -59,12 +59,14 @@ public class FxmlPathProperties {
 	private Resource patronEditFournitureRequise;
 	private Resource patronEditPatron;
 	private Resource patronSearch;
+	private Resource patronSelected;
 
 	private Resource fourniture;
 	private Resource fournitureCard;
 	private Resource fournitureDetail;
 	private Resource fournitureEdit;
 	private Resource fournitureSearch;
+	private Resource fournitureSelected;
 	private Resource fournitureCarrousel;
 
 	private Resource fournitureUsedCard;
