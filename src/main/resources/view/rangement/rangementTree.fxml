@@ -9,38 +9,76 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="503.0"
-      prefWidth="805.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1"
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.text.Font?>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0"
+      prefWidth="1618.0" styleClass="global" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="fr.vbillard.tissusdeprincesseboot.controller.rangement.RangementTreeController">
     <children>
-        <VBox spacing="30" alignment="CENTER_LEFT">
-            <HBox spacing="30" alignment="CENTER_LEFT">
-                <children>
-                    <Label text="Ajouter un nouveau rangement principal"/>
-                    <FontAwesomeIconView styleClass="clickable" glyphName="PLUS_CIRCLE"
-                                         onMouseClicked="#addNewElement" size="3em" wrappingWidth="37.0"/>
-                </children>
-            </HBox>
+        <VBox>
             <children>
-                <HBox spacing="30">
+                <HBox>
                     <children>
-                        <ScrollPane layoutX="27.0" layoutY="48.0" prefHeight="400.0" prefWidth="267.0">
-                            <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="377.0" prefWidth="248.0">
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="91.0" prefWidth="1263.0"
+                               styleClass="title-main-pane" text="Rangements" textAlignment="CENTER">
+                            <font>
+                                <Font size="36.0"/>
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+                <HBox>
+                    <children>
+                        <VBox spacing="15" alignment="CENTER_LEFT">
+                            <HBox spacing="30" alignment="CENTER_LEFT">
+                                <children>
+                                    <Label text="Ajouter un nouveau rangement principal" styleClass="title-acc-2"/>
+                                    <FontAwesomeIconView styleClass="clickable" glyphName="PLUS_CIRCLE"
+                                                         onMouseClicked="#addNewElement" size="3em"
+                                                         wrappingWidth="37.0"/>
+                                </children>
+                            </HBox>
+                            <HBox spacing="30">
+                                <children>
+                                    <JFXButton onAction="#handleCloseAll" text="Fermer tout"/>
+                                    <JFXButton onAction="#handleCloseAllExceptSelected" text="Fermer les autres"/>
+                                </children>
+                            </HBox>
+                            <children>
+                                <HBox spacing="30">
                                     <children>
-                                        <JFXTreeView fx:id="treeView" layoutY="1.0" prefHeight="378.0"
-                                                     prefWidth="247.0"/>
+                                        <ScrollPane layoutX="27.0" layoutY="48.0" prefHeight="650.0" prefWidth="400.0">
+                                            <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="635.0"
+                                                            prefWidth="380.0">
+                                                    <children>
+                                                        <JFXTreeView fx:id="treeView" AnchorPane.topAnchor="0.0"
+                                                                     AnchorPane.leftAnchor="0.0"
+                                                                     AnchorPane.rightAnchor="0.0"
+                                                                     AnchorPane.bottomAnchor="0.0"/>
+                                                    </children>
+                                                </AnchorPane>
+                                            </content>
+                                        </ScrollPane>
                                     </children>
-                                </AnchorPane>
-                            </content>
-                        </ScrollPane>
-                        <Pane fx:id="detailPane" layoutX="325.0" layoutY="48.0" prefHeight="400.0" prefWidth="463.0"/>
+                                </HBox>
+                            </children>
+                            <padding>
+                                <Insets bottom="20.0" left="50.0" right="50.0" top="20.0"/>
+                            </padding>
+                        </VBox>
+                        <HBox>
+                            <children>
+                                <Pane fx:id="detailPane" prefHeight="650.0"
+                                      prefWidth="500.0"/>
+                            </children>
+                            <padding>
+                                <Insets top="100"/>
+                            </padding>
+                        </HBox>
                     </children>
                 </HBox>
             </children>
-            <padding>
-                <Insets bottom="20.0" left="50.0" right="50.0" top="20.0" />
-            </padding>
         </VBox>
     </children>
 </Pane>

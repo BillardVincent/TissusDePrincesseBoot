@@ -37,6 +37,7 @@ public class RangementTreeViewHelper {
         for (RangementRoot rr : allArangementRoot) {
             TreeItem<RangementDto> rangementRootItem = new TreeItem<>(rangementRootService.convert(rr));
             rootItem.getChildren().add(rangementRootItem);
+            rr.getSubdivision().sort(Comparator.comparingInt(Rangement::getRang));
             for (Rangement r : rr.getSubdivision()) {
                 rangementRootItem.getChildren().add(buildItem(r));
             }

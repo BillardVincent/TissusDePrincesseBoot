@@ -4,10 +4,7 @@ import javafx.scene.Node;
 
 public class ClassCssUtils {
 
-
-    private ClassCssUtils() {
-	}
-
+    public static final String TITLE_ACC_2 = "title-acc-2";
 	public static final String CLICKABLE = "clickable";
 	public static final String TITRE = "title-custom";
 	public static final String GRID_CELL ="grid-cell";
@@ -20,6 +17,8 @@ public class ClassCssUtils {
 	public static final String LIGHT_BACKGROUND = "light-background";
 
 
+	private ClassCssUtils() {
+	}
 
 	public static void setStyle(Node node, String cssClass, boolean add) {
 		boolean nodeHasStyle = node.getStyleClass().contains(cssClass);

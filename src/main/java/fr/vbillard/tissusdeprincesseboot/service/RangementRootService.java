@@ -18,7 +18,6 @@ public class RangementRootService extends AbstractService<RangementRoot> {
 		return dao;
 	}
 
-
 	public RangementDto convert(RangementRoot source){
 		RangementDto dto = new RangementDto();
 		dto.setId(source.getId());

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 import java.util.List;
 
 @Getter
@@ -15,8 +16,10 @@ public abstract class AbstractRangement extends AbstractEntity{
 
 	protected int rang;
 
+	@Transient
 	public abstract List<Rangement> getSubdivision();
 
+	@Transient
 	public abstract void setSubdivision(List<Rangement> rangements);
 
 

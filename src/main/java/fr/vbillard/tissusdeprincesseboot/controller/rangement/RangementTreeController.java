@@ -134,7 +134,7 @@ public class RangementTreeController implements IController {
         RangementRoot rr = rangementRootService.getById(id);
 
         Label nom = new Label("Nom du rangement : ");
-        ClassCssUtils.setStyle(nom, ClassCssUtils.TITLE_ACC_1, true);
+        ClassCssUtils.setStyle(nom, ClassCssUtils.TITLE_ACC_2, true);
         JFXTextField nomField = new JFXTextField(rr.getNom());
         JFXButton addSubdivision = new JFXButton("Ajouter une subdivision");
         addSubdivision.onActionProperty().setValue(e -> {
@@ -181,7 +181,7 @@ public class RangementTreeController implements IController {
         }
 
         Label nom = new Label("Nom du rangement : ");
-        ClassCssUtils.setStyle(nom, ClassCssUtils.TITLE_ACC_1, true);
+        ClassCssUtils.setStyle(nom, ClassCssUtils.TITLE_ACC_2, true);
         JFXTextField nomField = new JFXTextField(r.getNom());
         JFXButton addSubdivision = new JFXButton("Ajouter une subdivision");
         addSubdivision.onActionProperty().setValue(e -> {
@@ -279,16 +279,39 @@ public class RangementTreeController implements IController {
         }
     }
 
-    private HBox deplacerHbox(EventHandler<ActionEvent> o, EventHandler<ActionEvent> o1) {
+    private HBox deplacerHbox(EventHandler<ActionEvent> minusOne, EventHandler<ActionEvent> plusOne) {
         Label rangLbl = new Label("Déplacer");
         JFXButton haut = new JFXButton("remonter");
-        haut.onActionProperty().setValue(o);
+        if (canPlus()){
+            haut.onActionProperty().setValue(minusOne);
+        }else {
+            haut.setDisable(true);
+        }
         JFXButton bas = new JFXButton("descendre");
-        bas.onActionProperty().setValue(o1);
+        if (canMinus()){
+            bas.onActionProperty().setValue(plusOne);
+        }else {
+            bas.setDisable(true);
+        }
         HBox rangs = new HBox(rangLbl, haut, bas);
         rangs.setSpacing(10);
         rangs.setAlignment(Pos.CENTER_LEFT);
         return rangs;
+    }
+
+    private boolean canMinus() {
+        TreeItem<RangementDto> item = treeView.getSelectionModel().getSelectedItem();
+        System.out.println(item.getParent().getChildren().size());
+        System.out.println(item.getValue().getRang());
+        System.out.println(item.getParent().getChildren().size() > item.getValue().getRang() + 1);
+        return item.getParent().getChildren().size() > item.getValue().getRang() + 1;
+    }
+
+    private boolean canPlus() {
+        TreeItem<RangementDto> item = treeView.getSelectionModel().getSelectedItem();
+        System.out.println(item.getValue().getRang());
+        System.out.println(item.getValue().getRang() != 0);
+        return item.getValue().getRang() != 0;
     }
 
     @FXML
@@ -478,7 +501,7 @@ public class RangementTreeController implements IController {
 
     private void setRootRankAfterRemove(TreeItem<RangementDto> parent) {
         List<RangementDto> toRearange = parent.getChildren().stream().map(TreeItem::getValue)
-                .sorted(Comparator.comparingInt(RangementDto::getRang)).collect(Collectors.toList());
+                .sorted(Comparator.comparingInt(RangementDto::getRang)).toList();
         for (int i = 0; i < toRearange.size() - 1; i++) {
             if (i + 1 != toRearange.get(i).getRang()) {
                 RangementRoot r = rangementRootService.getById(toRearange.get(i).getId());
@@ -486,5 +509,14 @@ public class RangementTreeController implements IController {
                 rangementRootService.saveOrUpdate(r);
             }
         }
+    }
+
+    public void handleCloseAll() {
+        treeView.getRoot().getChildren().forEach(i -> i.setExpanded(false));
+        treeView.getSelectionModel().select(treeView.getRoot());
+    }
+
+    public void handleCloseAllExceptSelected() {
+        init();
     }
 }
