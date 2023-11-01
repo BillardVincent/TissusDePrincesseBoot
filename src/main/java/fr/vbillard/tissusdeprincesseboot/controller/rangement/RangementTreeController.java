@@ -38,7 +38,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Component
 public class RangementTreeController implements IController {
@@ -301,16 +300,11 @@ public class RangementTreeController implements IController {
 
     private boolean canMinus() {
         TreeItem<RangementDto> item = treeView.getSelectionModel().getSelectedItem();
-        System.out.println(item.getParent().getChildren().size());
-        System.out.println(item.getValue().getRang());
-        System.out.println(item.getParent().getChildren().size() > item.getValue().getRang() + 1);
         return item.getParent().getChildren().size() > item.getValue().getRang() + 1;
     }
 
     private boolean canPlus() {
         TreeItem<RangementDto> item = treeView.getSelectionModel().getSelectedItem();
-        System.out.println(item.getValue().getRang());
-        System.out.println(item.getValue().getRang() != 0);
         return item.getValue().getRang() != 0;
     }
 
@@ -481,9 +475,7 @@ public class RangementTreeController implements IController {
         TreeItem<RangementDto> parent = treeView.getSelectionModel().getSelectedItem().getParent();
         switch (parent.getValue().getType()) {
         case RANGEMENT, ROOT_PHYSIQUE -> setRankAfterRemove(parent);
-        case ROOT -> setRootRankAfterRemove(parent);
-        default -> {
-        }
+        default -> setRootRankAfterRemove(parent);
         }
     }
 
