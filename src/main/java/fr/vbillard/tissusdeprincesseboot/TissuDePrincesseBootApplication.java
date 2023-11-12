@@ -9,7 +9,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 @SpringBootApplication
@@ -23,17 +22,18 @@ public class TissuDePrincesseBootApplication {
 		System.setProperty("glass.win.uiScale", "100%");
 
 		frame = new JFrame("Démarrage TissusDePrincesses");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setSize(300,213);
 		try {
 			//TODO refaire l'image
-			BufferedImage myPicture = ImageIO.read(new File(".\\src\\main\\resources\\img\\intro.jpg"));
-			Image dimg = myPicture.getScaledInstance(300, 213, Image.SCALE_DEFAULT);
+
+			BufferedImage myPicture = ImageIO.read(TissuDePrincesseBootApplication.class.getResourceAsStream("/img/introTDP.jpg"));
+			Image dimg = myPicture.getScaledInstance(600, 400, Image.SCALE_SMOOTH);
 			JLabel picLabel = new JLabel(new ImageIcon(dimg));
 			frame.setContentPane(picLabel);
 		}catch (IOException ex){
 			JPanel panel = new JPanel(new BorderLayout());
-			JTextField text = new JTextField("Les Tissus de Princesse");
+			JTextField text = new JTextField("Les Tissus de Princesse " + ex);
 			panel.add(text, BorderLayout.CENTER);
 			frame.setContentPane(panel);
 		}
@@ -42,6 +42,7 @@ public class TissuDePrincesseBootApplication {
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+
 		Application.launch(TissusDePrincesseFxApp.class, args);
 	}
 

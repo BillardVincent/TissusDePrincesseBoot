@@ -368,7 +368,7 @@ public class RootController implements IController {
         researchButton.setVisible(false);
 
         // TODO a suppr ------------ TEST d'icones -----------------------
-        testIcons();
+        // testIcons();
 
     }
 

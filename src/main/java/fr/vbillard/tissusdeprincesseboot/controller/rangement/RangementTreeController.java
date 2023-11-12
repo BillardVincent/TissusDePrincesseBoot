@@ -39,6 +39,9 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 
+import static fr.vbillard.tissusdeprincesseboot.dtos_fx.TypeRangement.RANGEMENT;
+import static fr.vbillard.tissusdeprincesseboot.dtos_fx.TypeRangement.ROOT_PHYSIQUE;
+
 @Component
 public class RangementTreeController implements IController {
 
@@ -120,7 +123,7 @@ public class RangementTreeController implements IController {
         detailPane.getChildren().clear();
         if (newValue == null || newValue == treeView.getRoot()) {
             detailPane.getChildren().add(getEditPaneBase());
-        } else if (newValue.getValue().getType() == TypeRangement.RANGEMENT) {
+        } else if (newValue.getValue().getType() == RANGEMENT) {
             detailPane.getChildren().add(getEditPane(newValue.getValue().getId()));
         } else {
             detailPane.getChildren().add(getEditRootPane(newValue.getValue().getId()));
@@ -473,9 +476,10 @@ public class RangementTreeController implements IController {
 
     private void setRankAfterRemove() {
         TreeItem<RangementDto> parent = treeView.getSelectionModel().getSelectedItem().getParent();
-        switch (parent.getValue().getType()) {
-        case RANGEMENT, ROOT_PHYSIQUE -> setRankAfterRemove(parent);
-        default -> setRootRankAfterRemove(parent);
+        if (RANGEMENT == parent.getValue().getType() || ROOT_PHYSIQUE == parent.getValue().getType()) {
+            setRankAfterRemove(parent);
+        }else{
+            setRootRankAfterRemove(parent);
         }
     }
 
@@ -483,9 +487,9 @@ public class RangementTreeController implements IController {
         List<RangementDto> toRearange = parent.getChildren().stream().map(TreeItem::getValue)
                 .sorted(Comparator.comparingInt(RangementDto::getRang)).toList();
         for (int i = 0; i < toRearange.size() - 1; i++) {
-            if (i + 1 != toRearange.get(i).getRang()) {
+            if (i != toRearange.get(i).getRang()) {
                 Rangement r = rangementService.getById(toRearange.get(i).getId());
-                r.setRang(i + 1);
+                r.setRang(i);
                 rangementService.saveOrUpdate(r);
             }
         }
@@ -495,9 +499,9 @@ public class RangementTreeController implements IController {
         List<RangementDto> toRearange = parent.getChildren().stream().map(TreeItem::getValue)
                 .sorted(Comparator.comparingInt(RangementDto::getRang)).toList();
         for (int i = 0; i < toRearange.size() - 1; i++) {
-            if (i + 1 != toRearange.get(i).getRang()) {
+            if (i != toRearange.get(i).getRang()) {
                 RangementRoot r = rangementRootService.getById(toRearange.get(i).getId());
-                r.setRang(i + 1);
+                r.setRang(i);
                 rangementRootService.saveOrUpdate(r);
             }
         }

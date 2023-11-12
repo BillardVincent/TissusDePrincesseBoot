@@ -11,7 +11,7 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.text.Font?>
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0"
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" stylesheets="@../../style/style.css" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0"
       prefWidth="1618.0" styleClass="global" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="fr.vbillard.tissusdeprincesseboot.controller.rangement.RangementTreeController">
     <children>
@@ -27,10 +27,10 @@
                         </Label>
                     </children>
                 </HBox>
-                <HBox>
+                <HBox style="-fx-background-color: -fx-background-workspace;" spacing="15">
                     <children>
-                        <VBox spacing="15" alignment="CENTER_LEFT">
-                            <HBox spacing="30" alignment="CENTER_LEFT">
+                        <VBox spacing="15" alignment="CENTER_LEFT" styleClass="card">
+                            <HBox spacing="30" alignment="CENTER_LEFT" >
                                 <children>
                                     <Label text="Ajouter un nouveau rangement principal" styleClass="title-acc-2"/>
                                     <FontAwesomeIconView styleClass="clickable" glyphName="PLUS_CIRCLE"
@@ -67,16 +67,23 @@
                                 <Insets bottom="20.0" left="50.0" right="50.0" top="20.0"/>
                             </padding>
                         </VBox>
-                        <HBox>
+                        <HBox styleClass="card">
                             <children>
                                 <Pane fx:id="detailPane" prefHeight="650.0"
-                                      prefWidth="500.0"/>
+                                      prefWidth="500.0" >
+                                <padding>
+                                    <Insets bottom="20.0" left="50.0" right="50.0" top="20.0"/>
+                                </padding>
+                                </Pane>
                             </children>
                             <padding>
-                                <Insets top="100"/>
+                                <Insets bottom="20.0" left="50.0" right="50.0" top="20.0"/>
                             </padding>
                         </HBox>
                     </children>
+                    <padding>
+                        <Insets bottom="20.0" left="50.0" right="50.0" top="20.0"/>
+                    </padding>
                 </HBox>
             </children>
         </VBox>
