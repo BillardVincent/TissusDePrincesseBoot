@@ -26,4 +26,9 @@ public interface PhotoDao extends Idao<Photo, Integer> {
 
 	Optional<Photo> getByFourniture(Fourniture fourniture);
 
+    boolean existsByPatronId(int id);
+
+	boolean existsByTissuId(int id);
+
+	boolean existsByFournitureId(int id);
 }

@@ -10,7 +10,6 @@ import fr.vbillard.tissusdeprincesseboot.controller.utils.ClassCssUtils;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
-import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.CustomIcon;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
@@ -18,9 +17,12 @@ import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
+import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureRequise;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureUsed;
+import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
+import fr.vbillard.tissusdeprincesseboot.model.Rangement;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
@@ -52,8 +54,9 @@ import java.util.List;
 public class RootController implements IController {
 
     private static final Logger LOGGER = LogManager.getLogger(RootController.class);
-    public HBox rangementMenu;
 
+    @FXML
+    private HBox rangementMenu;
     @FXML
     private Pane mainWindow;
     @FXML
@@ -83,8 +86,6 @@ public class RootController implements IController {
     private TissuDto tissuSelected;
     private FournitureDto fournitureSelected;
     private PatronDto patronSelected;
-
-    private final CustomIcon customIcon;
     private final TissuRequisLaizeOptionService tissuRequisLaizeOptionService;
     private final TissuUsedService tissuUsedService;
     private final ModelMapper mapper;
@@ -94,13 +95,12 @@ public class RootController implements IController {
     private final FournitureService fournitureService;
 
     public RootController(FournitureService fournitureService, FournitureUsedService fournitureUsedService,
-            TissuUsedService tissuUsedService, ModelMapper mapper, CustomIcon customIcon,
-            TissuRequisService tissuRequisService, FournitureRequiseService fournitureRequiseService,
+            TissuUsedService tissuUsedService, ModelMapper mapper, TissuRequisService tissuRequisService,
+            FournitureRequiseService fournitureRequiseService,
             TissuRequisLaizeOptionService tissuRequisLaizeOptionService) {
         this.tissuRequisLaizeOptionService = tissuRequisLaizeOptionService;
         this.tissuUsedService = tissuUsedService;
         this.mapper = mapper;
-        this.customIcon = customIcon;
         this.tissuRequisService = tissuRequisService;
         this.fournitureRequiseService = fournitureRequiseService;
         this.fournitureUsedService = fournitureUsedService;
@@ -114,7 +114,7 @@ public class RootController implements IController {
         displayTissu(null);
     }
 
-    public void displayTissu(Specification spec) {
+    public void displayTissu(Specification<Tissu> spec) {
         FxData fxData = new FxData();
         fxData.setSpecification(spec);
         beforeDisplay(tissuMenu);
@@ -141,7 +141,7 @@ public class RootController implements IController {
         displayRangement(null);
     }
 
-    public void displayRangement(Specification spec) {
+    public void displayRangement(Specification<Rangement> spec) {
         FxData fxData = new FxData();
         fxData.setSpecification(spec);
         displayRangementTree(fxData);
@@ -157,7 +157,7 @@ public class RootController implements IController {
         displayProjets(null);
     }
 
-    public void displayProjets(Specification spec) {
+    public void displayProjets(Specification<Projet> spec) {
         if (canChange(projetMenu)) {
             beforeDisplay(projetMenu);
             FxData fxData = new FxData();
@@ -181,7 +181,7 @@ public class RootController implements IController {
         displayPatrons(null);
     }
 
-    public void displayPatrons(Specification spec) {
+    public void displayPatrons(Specification<Patron> spec) {
         if (canChange(patronMenu)) {
             FxData fxData = new FxData();
             fxData.setSpecification(spec);
@@ -214,7 +214,7 @@ public class RootController implements IController {
         displayFourniture(null);
     }
 
-    public void displayFourniture(Specification spec) {
+    public void displayFourniture(Specification<Fourniture> spec) {
         if(canChange(fournitureMenu)) {
             beforeDisplay(fournitureMenu);
             FxData fxData = new FxData();
@@ -345,7 +345,7 @@ public class RootController implements IController {
 
         mainWindow.getChildren().clear();
         searchPane.getChildren().clear();
-        LOGGER.info("menu selected = " + menuToSelect.getId());
+        LOGGER.info("menu selected = {}", menuToSelect.getId());
         for (HBox hb : menuElements) {
             if (hb != null && hb.getStyleClass() != null && !hb.getStyleClass().isEmpty()) {
                 hb.getStyleClass().removeIf(style -> style.equals(ClassCssUtils.SELECTED));

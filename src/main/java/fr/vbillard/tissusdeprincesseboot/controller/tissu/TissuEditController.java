@@ -124,7 +124,7 @@ public class TissuEditController implements IController {
     private final TissuPictureHelper pictureHelper;
     private final ConstantesMetier constantesMetier;
 
-    private BooleanProperty hasChanged = new SimpleBooleanProperty(false);
+    private final BooleanProperty hasChanged = new SimpleBooleanProperty(false);
 
     private Validator[] validators;
 
@@ -186,7 +186,7 @@ public class TissuEditController implements IController {
         }
 
         pictureHelper.setPane(imagePane, tissu);
-        colorComp.initialize(initializer, tissu.getColor(), imagePane.getImage());
+        colorComp.initialize(initializer, tissu.getColor(), pictureHelper.hasImage(tissu) ? imagePane.getImage() : null);
 
         boolean tissuIsNew = tissu.getId() == 0;
         addPictureWebBtn.setDisable(tissuIsNew);

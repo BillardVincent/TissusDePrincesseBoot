@@ -1,6 +1,5 @@
 package fr.vbillard.tissusdeprincesseboot.controller.common;
 
-import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
@@ -11,7 +10,6 @@ import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
-import fr.vbillard.tissusdeprincesseboot.model.UserPref;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.service.ImageService;
 import fr.vbillard.tissusdeprincesseboot.service.UserPrefService;
@@ -20,7 +18,6 @@ import fr.vbillard.tissusdeprincesseboot.utils.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.web.WebView;
 import org.apache.logging.log4j.util.Strings;
 import org.modelmapper.ModelMapper;

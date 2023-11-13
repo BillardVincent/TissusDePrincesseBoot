@@ -219,7 +219,7 @@ public class FournitureEditController implements IController {
     imageNotSaved.setVisible(tissuIsNew);
     addPictureClipboardBtn.setDisable(tissuIsNew);
 
-    colorComp.initialize(initializer, fourniture.getColor(), imagePane.getImage());
+    colorComp.initialize(initializer, fourniture.getColor(), pictureHelper.hasImage(fourniture) ? imagePane.getImage() : null);
 
     GlyphIconUtil.generateIcon(warningSaveIcon, GlyphIconUtil.VERY_BIG_ICONE_SIZE, Constants.colorWarning);
     setBoutonArchiver();

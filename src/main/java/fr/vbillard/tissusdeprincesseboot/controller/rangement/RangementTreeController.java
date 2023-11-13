@@ -3,11 +3,16 @@ package fr.vbillard.tissusdeprincesseboot.controller.rangement;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeView;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.ClassCssUtils;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
+import fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element.GlyphIconUtil;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.path.PathEnum;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
@@ -137,30 +142,18 @@ public class RangementTreeController implements IController {
 
         Label nom = new Label("Nom du rangement : ");
         ClassCssUtils.setStyle(nom, ClassCssUtils.TITLE_ACC_2, true);
+
         JFXTextField nomField = new JFXTextField(rr.getNom());
+
+        JFXButton save = buildSaveBtn(rr, rangementRootService, nomField);
+
         JFXButton addSubdivision = new JFXButton("Ajouter une subdivision");
         addSubdivision.onActionProperty().setValue(e -> {
             openPath.add(rangementTreeViewHelper.addSubdivision(rr));
             init();
         });
 
-        JFXButton save = new JFXButton("Valider");
-        save.onActionProperty().setValue(e -> {
-            rr.setNom(nomField.getText());
-            rangementRootService.saveOrUpdate(rr);
-            init();
-        });
-
-        JFXButton delete = new JFXButton("Supprimer");
-        delete.onActionProperty().setValue(e -> {
-            Optional<ButtonType> validation = ShowAlert.suppression(initializer.getPrimaryStage(),
-                    EntityToString.RANGEMENT, rr.getNom());
-            if (validation.orElse(ButtonType.CANCEL).equals(ButtonType.OK)) {
-                rangementRootService.delete(rr.getId());
-                setRankAfterRemove();
-                init();
-            }
-        });
+        JFXButton delete = buildDeleteBtn(rr, rangementRootService);
 
         HBox rangs = deplacerHbox(e -> minusRootRank(), e -> plusRootRank());
 
@@ -170,13 +163,25 @@ public class RangementTreeController implements IController {
         return result;
     }
 
+    private <T extends AbstractRangement> JFXButton buildSaveBtn(T rangement, AbstractService<T> service, JFXTextField nomField){
+        JFXButton save = new JFXButton("Valider");
+        save.onActionProperty().setValue(e -> {
+            rangement.setNom(nomField.getText());
+            service.saveOrUpdate(rangement);
+            init();
+        });
+        return save;
+    }
+
     public VBox getEditPane(int id) {
 
         Rangement r = rangementService.getById(id);
 
         VBox result = new VBox();
         if (hasSelection) {
-            JFXButton addSelection = new JFXButton("Ranger ici");
+            MaterialDesignIconView ajouterAuRangementIcn = new MaterialDesignIconView(MaterialDesignIcon.IMPORT);
+            JFXButton addSelection = new JFXButton();
+            addSelection.setGraphic(ajouterAuRangementIcn);
             addSelection.getStyleClass().add(ClassCssUtils.TITLE_MAIN_PANE);
             addSelection.setOnAction(e -> handleAddSelection(r));
             result.getChildren().add(addSelection);
@@ -184,82 +189,74 @@ public class RangementTreeController implements IController {
 
         Label nom = new Label("Nom du rangement : ");
         ClassCssUtils.setStyle(nom, ClassCssUtils.TITLE_ACC_2, true);
+
         JFXTextField nomField = new JFXTextField(r.getNom());
+
         JFXButton addSubdivision = new JFXButton("Ajouter une subdivision");
         addSubdivision.onActionProperty().setValue(e -> {
             openPath.add(rangementTreeViewHelper.addSubdivision(r));
             init();
         });
 
-        JFXButton save = new JFXButton("Valider");
-        save.onActionProperty().setValue(e -> {
-            r.setNom(nomField.getText());
-            rangementService.saveOrUpdate(r);
-            init();
-        });
+        JFXButton save = buildSaveBtn(r, rangementService, nomField);
 
         HBox rangs = deplacerHbox(e -> minusRank(), e -> plusRank());
         result.getChildren().addAll(nom, new HBox(nomField, save), rangs, addSubdivision);
 
         VBox contenu = new VBox();
 
-        int tissuCount = tissuService.countByRangementId(id);
+        buildContentBox(EntityToString.TISSU, tissuService.countByRangementId(id), contenu,
+                e -> initializer.getRoot().displayTissu(
+                        TissuSpecification.builder().rangement(r).archived(false).build()));
 
-        if (tissuCount != 0) {
-            Label tissuLbl = new Label(tissuCount + "tissu" + (tissuCount > 1 ? "s" : Strings.EMPTY));
-            JFXButton tissuBtn = new JFXButton("Voir");
-            tissuBtn.onActionProperty().setValue(e -> initializer.getRoot().displayTissu(
-                    TissuSpecification.builder().rangement(r).archived(false).build()));
-            HBox tissuBox = new HBox(tissuLbl, tissuBtn);
-            tissuBox.setSpacing(10);
-            contenu.getChildren().add(tissuBox);
-        }
+        buildContentBox(EntityToString.FOURNITURE, fournitureService.countByRangementId(id), contenu,
+                e -> initializer.getRoot().displayFourniture(
+                        FournitureSpecification.builder().rangement(r).archived(false).build()));
 
-        int fournitureCount = fournitureService.countByRangementId(id);
-
-        if (fournitureCount != 0) {
-            Label fournitureLbl = new Label(
-                    fournitureCount + "fourniture" + (fournitureCount > 1 ? "s" : Strings.EMPTY));
-            JFXButton fournitureBtn = new JFXButton("Voir");
-            fournitureBtn.onActionProperty().setValue(e -> initializer.getRoot().displayFourniture(
-                    FournitureSpecification.builder().rangement(r).archived(false).build()));
-            HBox fournitureBox = new HBox(fournitureLbl, fournitureBtn);
-            fournitureBox.setSpacing(10);
-            contenu.getChildren().add(fournitureBox);
-        }
-
-        int patronCount = patronService.countByRangementId(id);
-
-        if (patronCount != 0) {
-            Label patronLbl = new Label(patronCount + "patron" + (patronCount > 1 ? "s" : Strings.EMPTY));
-            JFXButton patronBtn = new JFXButton("Voir");
-            patronBtn.onActionProperty().setValue(e -> initializer.getRoot().displayPatrons(
-                    PatronSpecification.builder().rangement(r).archived(false).build()));
-            HBox patronBox = new HBox(patronLbl, patronBtn);
-            patronBox.setSpacing(10);
-            contenu.getChildren().add(patronBox);
-        }
+        buildContentBox(EntityToString.PATRON, patronService.countByRangementId(id), contenu,
+                e -> initializer.getRoot().displayPatrons(
+                PatronSpecification.builder().rangement(r).archived(false).build()));
 
         if (!contenu.getChildren().isEmpty()) {
             contenu.getChildren().add(0, new Label("Contenu :"));
             result.getChildren().add(contenu);
         }
 
-        JFXButton delete = new JFXButton("Supprimer");
-        delete.onActionProperty().setValue(e -> {
-            Optional<ButtonType> validation = ShowAlert.suppression(initializer.getPrimaryStage(),
-                    EntityToString.RANGEMENT, r.getNom());
-            if (validation.orElse(ButtonType.CANCEL).equals(ButtonType.OK)) {
-                rangementService.delete(r.getId());
-                setRankAfterRemove();
-                init();
-            }
-        });
+        JFXButton delete = buildDeleteBtn(r, rangementService);
 
         result.getChildren().add(delete);
         result.setSpacing(10);
 
         return result;
+    }
+
+
+    public void buildContentBox (EntityToString entity, int count, VBox contenu, EventHandler<ActionEvent> viewContentAction){
+        if (count != 0) {
+            Label patronLbl = new Label(count + " " + (count > 1 ? entity.getPluriel(): entity.getLabel()));
+            JFXButton patronBtn = new JFXButton();
+            patronBtn.setGraphic(new MaterialDesignIconView(MaterialDesignIcon.MAGNIFY));
+            patronBtn.onActionProperty().setValue(viewContentAction);
+            HBox patronBox = new HBox(patronLbl, patronBtn);
+            patronBox.setSpacing(10);
+            contenu.getChildren().add(patronBox);
+        }
+    }
+
+    private <T extends AbstractRangement> JFXButton buildDeleteBtn(T rangement, AbstractService<T> service){
+        JFXButton delete = new JFXButton();
+        delete.setGraphic(GlyphIconUtil.suppressNormal());
+
+        delete.onActionProperty().setValue(e -> {
+            Optional<ButtonType> validation = ShowAlert.suppression(initializer.getPrimaryStage(),
+                    EntityToString.RANGEMENT, rangement.getNom());
+            if (validation.orElse(ButtonType.CANCEL).equals(ButtonType.OK)) {
+                service.delete(rangement.getId());
+                setRankAfterRemove();
+                init();
+            }
+        });
+        return delete;
     }
 
     private void handleAddSelection(Rangement rangement) {
@@ -283,13 +280,15 @@ public class RangementTreeController implements IController {
 
     private HBox deplacerHbox(EventHandler<ActionEvent> minusOne, EventHandler<ActionEvent> plusOne) {
         Label rangLbl = new Label("Déplacer");
-        JFXButton haut = new JFXButton("remonter");
+        JFXButton haut = new JFXButton();
+        haut.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.ANGLE_UP));
         if (canPlus()){
             haut.onActionProperty().setValue(minusOne);
         }else {
             haut.setDisable(true);
         }
-        JFXButton bas = new JFXButton("descendre");
+        JFXButton bas = new JFXButton();
+        bas.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.ANGLE_DOWN));
         if (canMinus()){
             bas.onActionProperty().setValue(plusOne);
         }else {
@@ -407,6 +406,14 @@ public class RangementTreeController implements IController {
          return null;
      }
 
+    private void plusRootRank() {
+        TreeItem<RangementDto> item = treeView.getSelectionModel().getSelectedItem();
+        List<RangementRoot> rangements = rangementRootService.getAll();
+        if (item.getValue().getRang() == rangements.size()) {
+            return;
+        }
+        changeRank(item, rangementRootService, rangements, 1);
+    }
 
     private void plusRank() {
         TreeItem<RangementDto> item = treeView.getSelectionModel().getSelectedItem();
@@ -416,6 +423,16 @@ public class RangementTreeController implements IController {
             return;
         }
         changeRank(item, rangementService, rangements, 1);
+
+    }
+
+    private void minusRootRank() {
+        TreeItem<RangementDto> item = treeView.getSelectionModel().getSelectedItem();
+        if (item.getValue().getRang() == 0) {
+            return;
+        }
+        List<RangementRoot> rangements = rangementRootService.getAll();
+        changeRank(item, rangementRootService, rangements, -1);
 
     }
 
@@ -439,24 +456,6 @@ public class RangementTreeController implements IController {
         return rangements;
     }
 
-    private void plusRootRank() {
-        TreeItem<RangementDto> item = treeView.getSelectionModel().getSelectedItem();
-        List<RangementRoot> rangements = rangementRootService.getAll();
-        if (item.getValue().getRang() == rangements.size()) {
-            return;
-        }
-        changeRank(item, rangementRootService, rangements, 1);
-    }
-
-    private void minusRootRank() {
-        TreeItem<RangementDto> item = treeView.getSelectionModel().getSelectedItem();
-        if (item.getValue().getRang() == 0) {
-            return;
-        }
-        List<RangementRoot> rangements = rangementRootService.getAll();
-        changeRank(item, rangementRootService, rangements, -1);
-
-    }
 
     private <T extends AbstractRangement> void changeRank(TreeItem<RangementDto> item, AbstractService<T> service,
             List<T> rangements, int plusOrMinus1) {
@@ -477,32 +476,20 @@ public class RangementTreeController implements IController {
     private void setRankAfterRemove() {
         TreeItem<RangementDto> parent = treeView.getSelectionModel().getSelectedItem().getParent();
         if (RANGEMENT == parent.getValue().getType() || ROOT_PHYSIQUE == parent.getValue().getType()) {
-            setRankAfterRemove(parent);
+            setRankAfterRemove(parent, rangementService);
         }else{
-            setRootRankAfterRemove(parent);
+            setRankAfterRemove(parent, rangementRootService);
         }
     }
 
-    private void setRankAfterRemove(TreeItem<RangementDto> parent) {
+    private  <T extends AbstractRangement> void setRankAfterRemove(TreeItem<RangementDto> parent, AbstractService<T> service) {
         List<RangementDto> toRearange = parent.getChildren().stream().map(TreeItem::getValue)
                 .sorted(Comparator.comparingInt(RangementDto::getRang)).toList();
         for (int i = 0; i < toRearange.size() - 1; i++) {
             if (i != toRearange.get(i).getRang()) {
-                Rangement r = rangementService.getById(toRearange.get(i).getId());
+                T r = service.getById(toRearange.get(i).getId());
                 r.setRang(i);
-                rangementService.saveOrUpdate(r);
-            }
-        }
-    }
-
-    private void setRootRankAfterRemove(TreeItem<RangementDto> parent) {
-        List<RangementDto> toRearange = parent.getChildren().stream().map(TreeItem::getValue)
-                .sorted(Comparator.comparingInt(RangementDto::getRang)).toList();
-        for (int i = 0; i < toRearange.size() - 1; i++) {
-            if (i != toRearange.get(i).getRang()) {
-                RangementRoot r = rangementRootService.getById(toRearange.get(i).getId());
-                r.setRang(i);
-                rangementRootService.saveOrUpdate(r);
+                service.saveOrUpdate(r);
             }
         }
     }

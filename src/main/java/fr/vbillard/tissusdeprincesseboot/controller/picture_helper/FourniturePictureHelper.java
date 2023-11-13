@@ -2,6 +2,7 @@ package fr.vbillard.tissusdeprincesseboot.controller.picture_helper;
 
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureService;
 import fr.vbillard.tissusdeprincesseboot.service.ImageService;
@@ -39,6 +40,10 @@ public class FourniturePictureHelper extends PictureHelper {
 		picture.get().setFourniture(fourniture);
 		imageService.saveOrUpdate(picture.get());
 		imagePane.setImage(new Image(new ByteArrayInputStream(picture.get().getData())));
+	}
+
+	public boolean hasImage(FournitureDto dto){
+		return imageService.hasImage(dto);
 	}
 
 	public void addPictureWeb(FournitureDto dto) {

@@ -2,8 +2,16 @@ package fr.vbillard.tissusdeprincesseboot.service;
 
 import fr.vbillard.tissusdeprincesseboot.config.PathImgProperties;
 import fr.vbillard.tissusdeprincesseboot.dao.PhotoDao;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.exception.PersistanceException;
-import fr.vbillard.tissusdeprincesseboot.model.*;
+import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
+import fr.vbillard.tissusdeprincesseboot.model.Patron;
+import fr.vbillard.tissusdeprincesseboot.model.Photo;
+import fr.vbillard.tissusdeprincesseboot.model.Projet;
+import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ImageFormat;
 import javafx.scene.image.Image;
 import lombok.AllArgsConstructor;
@@ -33,6 +41,14 @@ public class ImageService extends AbstractService<Photo> {
 			return Optional.empty();
 		}
 		return dao.getByProjet(projet.getId());
+	}
+
+	public boolean hasImage(TissuDto tissu) {
+		return dao.existsByTissuId(tissu.getId());
+	}
+
+	public boolean hasImage(FournitureDto fourniture) {
+		return dao.existsByFournitureId(fourniture.getId());
 	}
 
 	public Optional<Photo> getImage(Patron patron) {

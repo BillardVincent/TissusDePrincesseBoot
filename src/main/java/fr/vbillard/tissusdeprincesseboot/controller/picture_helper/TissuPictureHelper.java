@@ -34,6 +34,10 @@ public class TissuPictureHelper extends PictureHelper {
 		imagePane.setImage(imageService.imageOrDefault(picture));
 	}
 
+	public boolean hasImage(TissuDto dto){
+		return imageService.hasImage(dto);
+	}
+
 	protected void setImage() {
 		tissuService.saveOrUpdate(tissu);
 		picture.orElseThrow(RuntimeException::new).setTissu(tissu);
