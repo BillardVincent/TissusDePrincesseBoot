@@ -220,7 +220,8 @@
                         <Pane fx:id="searchPane" prefHeight="713.0" prefWidth="320.0">
                            <padding>
                               <Insets top="10.0" />
-                           </padding></Pane>
+                           </padding>
+                        </Pane>
                      </children>
                   </VBox>
                   <Pane fx:id="mainWindow" prefHeight="795.0" prefWidth="1600.0" />

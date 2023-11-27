@@ -1,31 +1,26 @@
 package fr.vbillard.tissusdeprincesseboot.model.enums;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Getter
 public enum DimensionEnum {
-  LONGUEUR("longueur", Arrays.asList(Unite.CM, Unite.MM, Unite.M, Unite.NON_RENSEIGNE)),
-  POIDS("poids", Arrays.asList(Unite.G, Unite.KG, Unite.NON_RENSEIGNE)),
-  SURFACE("surface",Arrays.asList(Unite.M2, Unite.NON_RENSEIGNE)),
-  NON_RENSEIGNE("N/A", Arrays.asList(Unite.NON_RENSEIGNE)),
-  NOMBRE("nombre", Arrays.asList(Unite.UNITE)),
-  VOLUME("volume", Arrays.asList(Unite.L, Unite.ML, Unite.NON_RENSEIGNE));
+  LONGUEUR("longueur", List.of(Unite.CM, Unite.MM, Unite.M, Unite.NON_RENSEIGNE)),
+  POIDS("poids", List.of(Unite.G, Unite.KG, Unite.NON_RENSEIGNE)),
+  SURFACE("surface",List.of(Unite.M2, Unite.NON_RENSEIGNE)),
+  NON_RENSEIGNE("N/A", List.of(Unite.NON_RENSEIGNE)),
+  NOMBRE("nombre", List.of(Unite.UNITE)),
+  VOLUME("volume", List.of(Unite.L, Unite.ML, Unite.NON_RENSEIGNE));
 
-  private String label;
-  private List<Unite> unites;
+  private final String label;
+  private final List<Unite> unites;
 
   DimensionEnum(String label, List<Unite> unites) {
     this.label = label;
     this.unites = unites;
-  }
-
-  public String getLabel() {
-    return label;
-  }
-
-  public List<Unite> getUnites() {
-    return unites;
   }
   
   public static List<String> labels(){
