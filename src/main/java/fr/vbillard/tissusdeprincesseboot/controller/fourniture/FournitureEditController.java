@@ -40,6 +40,7 @@ import org.springframework.stereotype.Component;
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.onChangeListener;
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.safePropertyToString;
 import static fr.vbillard.tissusdeprincesseboot.controller.validators.ValidatorUtils.areValidatorsValid;
+import static fr.vbillard.tissusdeprincesseboot.utils.model_to_string.ModelUtils.startWithMajuscule;
 import static javafx.collections.FXCollections.observableArrayList;
 
 @Component
@@ -176,8 +177,8 @@ public class FournitureEditController implements IController {
     lieuDachatField.setText(safePropertyToString(fourniture.getLieuAchatProperty()));
     nomField.setText(safePropertyToString(fourniture.getNomProperty()));
 
-    intitulePrimLbl.setText(safePropertyToString(fourniture.getIntituleDimensionProperty()));
-    intituleSecLbl.setText(safePropertyToString(fourniture.getIntituleSecondaireProperty()));
+    intitulePrimLbl.setText(startWithMajuscule(safePropertyToString(fourniture.getIntituleDimensionProperty())));
+    intituleSecLbl.setText(startWithMajuscule(safePropertyToString(fourniture.getIntituleSecondaireProperty())));
 
     if (fourniture.getRangement() == null) {
       lieuDeStockageField.setText("Non renseigné");
@@ -297,7 +298,6 @@ public class FournitureEditController implements IController {
     typeField.setValue(safePropertyToString(fourniture.getTypeNameProperty()));
 
   }
-
 
   @FXML
   private void handleGenerateReference() {

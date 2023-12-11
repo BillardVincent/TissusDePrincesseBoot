@@ -28,6 +28,7 @@ import java.util.Optional;
 
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.DECIMAL_FORMAT;
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.safePropertyToString;
+import static fr.vbillard.tissusdeprincesseboot.utils.model_to_string.ModelUtils.startWithMajuscule;
 
 @Component
 public class FournitureDetailController implements IController {
@@ -115,8 +116,8 @@ public class FournitureDetailController implements IController {
 
 		quantitePrimField.setText(safePropertyToString(fourniture.getQuantiteProperty()));
 		quantiteSecField.setText(safePropertyToString(fourniture.getQuantiteSecondaireProperty()));
-		intitulePrimLbl.setText(safePropertyToString(fourniture.getIntituleDimensionProperty()));
-		intituleSecLbl.setText(safePropertyToString(fourniture.getIntituleSecondaireProperty()));
+		intitulePrimLbl.setText(startWithMajuscule(safePropertyToString(fourniture.getIntituleDimensionProperty())));
+		intituleSecLbl.setText(startWithMajuscule(safePropertyToString(fourniture.getIntituleSecondaireProperty())));
 		referenceField.setText(safePropertyToString(fourniture.getReferenceProperty()));
 		descriptionField.setText(safePropertyToString(fourniture.getDescriptionProperty()));
 		lieuDachatField.setText(safePropertyToString(fourniture.getLieuAchatProperty()));

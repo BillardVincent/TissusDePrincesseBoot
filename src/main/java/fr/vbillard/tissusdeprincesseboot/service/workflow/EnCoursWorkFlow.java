@@ -40,8 +40,7 @@ public class EnCoursWorkFlow extends Workflow {
 		this.inventaireService = inventaireService;
 		this.stage = stage;
 		description = "Le premier coup de ciseaux est donné ! Les tissus ne peuvent plus revenir dans le stock ! Les modifications sont plus difficiles.\r\n" + 
-				"Les longueurs de tissus sont réservées. Elles ne sont pas retirées du stock, mais ne sont pas disponibles pour les autres projets.\r\n" + 
-				"";
+				"Les longueurs de tissus sont réservées. Elles ne sont pas retirées du stock, mais ne sont pas disponibles pour les autres projets.\r\n";
 	}
 
 	@Override
@@ -75,7 +74,7 @@ public class EnCoursWorkFlow extends Workflow {
 
 			}
 			
-			if (inventaire.getTissus().size() == 0) {
+			if (inventaire.getTissus().isEmpty()) {
 				inventaireService.delete(inventaire);
 			}
 			//deleteTissuLenght(projet);

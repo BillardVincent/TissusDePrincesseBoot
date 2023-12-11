@@ -1,5 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.utils.model_to_string;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class ModelUtils {
 
 	private ModelUtils(){}
@@ -53,6 +55,9 @@ public class ModelUtils {
 	}
 	
 	public static String startWithMajuscule(String string) {
+		if (StringUtils.isBlank(string)){
+			return string;
+		}
 		return string.substring(0, 1).toUpperCase() + string.substring(1);
 	}
 

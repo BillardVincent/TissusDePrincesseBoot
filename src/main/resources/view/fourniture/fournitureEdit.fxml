@@ -8,90 +8,161 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import fr.vbillard.tissusdeprincesseboot.controller.color.ColorComponent?>
-<AnchorPane prefHeight="747.0" prefWidth="1275.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.fourniture.FournitureEditController">
-    <GridPane layoutX="54.0" layoutY="124.0" prefHeight="375.0" prefWidth="500.0">
+<AnchorPane prefHeight="747.0" prefWidth="1275.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="fr.vbillard.tissusdeprincesseboot.controller.fourniture.FournitureEditController">
+    <GridPane layoutX="54.0" layoutY="95.0" prefHeight="500.0" prefWidth="560.0">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="236.0" minWidth="10.0" prefWidth="155.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="376.0" minWidth="10.0" prefWidth="327.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="10.0" prefWidth="155.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="155.0" minWidth="10.0" prefWidth="155.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="250.0"/>
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
         </rowConstraints>
         <children>
-            <Label text="Reference" />
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+            <HBox GridPane.columnIndex="1" alignment="CENTER_LEFT">
                 <children>
-                    <JFXTextField fx:id="referenceField" prefHeight="26.0" prefWidth="242.0" />
-                    <JFXButton fx:id="generateReferenceButton" mnemonicParsing="false" onAction="#handleGenerateReference">
-                        <HBox.margin>
-                            <Insets left="10.0" />
-                        </HBox.margin>
+                    <Label text="Reference"  styleClass="grid-intitule"/>
+                </children>
+            </HBox>
+
+            <HBox GridPane.columnIndex="2" spacing="10">
+                <children>
+                    <JFXTextField fx:id="referenceField"/>
+                    <JFXButton fx:id="generateReferenceButton" mnemonicParsing="false"
+                               onAction="#handleGenerateReference">
                     </JFXButton>
                 </children>
             </HBox>
 
-            <Label text="Nom" GridPane.rowIndex="1" />
-            <JFXTextField fx:id="nomField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-
-            <Label text="Type" GridPane.rowIndex="2" />
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <VBox GridPane.rowIndex="1" GridPane.columnSpan="3">
+                <Label text="Caractéristiques" styleClass="title-acc-3"/>
+            </VBox>
+            <HBox GridPane.rowIndex="2" GridPane.columnIndex="1" alignment="CENTER_LEFT">
                 <children>
-                    <JFXComboBox fx:id="typeField" prefHeight="25.0" prefWidth="241.0" />
-                    <JFXButton fx:id="addTypeButton" mnemonicParsing="false" onAction="#handleAddType">
-                        <HBox.margin>
-                            <Insets left="10.0" />
-                        </HBox.margin>
-                    </JFXButton>
-                </children>
-                <opaqueInsets>
-                    <Insets />
-                </opaqueInsets>
-            </HBox>
-
-            <Label fx:id="intitulePrimLbl" text="Quantité" GridPane.rowIndex="3" />
-            <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="0.0" prefWidth="324.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                <children>
-                    <FloatSpinner fx:id="quantiteField" prefHeight="26.0" prefWidth="205.0" />
-                    <JFXComboBox fx:id="uniteField" prefHeight="26.0" prefWidth="125.0" />
+                    <Label text="Nom" styleClass="grid-intitule"/>
                 </children>
             </HBox>
-            <Label fx:id="intituleSecLbl" text="Quantité" GridPane.rowIndex="4" />
-            <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="0.0" prefWidth="324.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <HBox GridPane.rowIndex="2" GridPane.columnIndex="2" alignment="CENTER_LEFT">
                 <children>
-                    <FloatSpinner fx:id="quantiteSecField" prefHeight="26.0" prefWidth="205.0" />
-                    <JFXComboBox fx:id="uniteSecField" prefHeight="26.0" prefWidth="125.0" />
+                    <JFXTextField fx:id="nomField"/>
+                </children>
+            </HBox>
+            <HBox GridPane.rowIndex="3" GridPane.columnIndex="1" alignment="CENTER_LEFT">
+                <children>
+                    <Label text="Type" styleClass="grid-intitule"/>
+                </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" GridPane.columnIndex="2" GridPane.rowIndex="3" spacing="10">
+                <children>
+                    <JFXComboBox fx:id="typeField"/>
+                    <JFXButton fx:id="addTypeButton" mnemonicParsing="false" onAction="#handleAddType"/>
                 </children>
             </HBox>
 
-            <Label text="Quantité utilisée" GridPane.rowIndex="5" />
-            <Label fx:id="quantiteUtiliseeLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                <padding>
-                    <Insets left="10.0" />
-                </padding>
-            </Label>
-
-            <Label text="Couleur" GridPane.rowIndex="6" />
-            <ColorComponent fx:id="colorComp" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-
-            <Label text="Description" GridPane.rowIndex="7" />
-            <JFXTextField fx:id="descriptionField" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-
-            <Label text="Lieu de stockage" GridPane.rowIndex="8" />
-            <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="0.0" prefWidth="324.0" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="8">
-                <Label text="Lieu de stockage" fx:id="lieuDeStockageField" />
-                <JFXButton text="Changer" fx:id="changerLieuStockage" mnemonicParsing="false" onAction="#handleStockage"/>
+            <HBox GridPane.rowIndex="4" GridPane.columnIndex="1" alignment="CENTER_LEFT">
+                <children>
+                    <Label text="Couleur" styleClass="grid-intitule"/>
+                </children>
+            </HBox>
+            <HBox GridPane.rowIndex="4" GridPane.columnIndex="2" alignment="CENTER_LEFT">
+                <children>
+                    <ColorComponent fx:id="colorComp"/>
+                </children>
             </HBox>
 
-            <Label text="Lieu d'achat" GridPane.rowIndex="9" />
-            <JFXTextField fx:id="lieuDachatField" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            <VBox GridPane.rowIndex="5" GridPane.columnSpan="3" alignment="CENTER_LEFT">
+                <Label text="Quantité" styleClass="title-acc-3"/>
+            </VBox>
+
+            <HBox GridPane.rowIndex="6" GridPane.columnIndex="1" alignment="CENTER_LEFT">
+                <children>
+                    <Label fx:id="intitulePrimLbl" text="Quantité"  styleClass="grid-intitule"/>
+                </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" fillHeight="false" GridPane.columnIndex="2" GridPane.rowIndex="6" spacing="10">
+                <children>
+                    <FloatSpinner fx:id="quantiteField" prefHeight="26.0" prefWidth="100.0"/>
+                    <JFXComboBox fx:id="uniteField" prefHeight="26.0" prefWidth="125.0"/>
+                </children>
+            </HBox>
+            <HBox GridPane.rowIndex="7" GridPane.columnIndex="1" alignment="CENTER_LEFT">
+                <children>
+                    <Label fx:id="intituleSecLbl" text="Quantité" styleClass="grid-intitule"/>
+                </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" fillHeight="false" GridPane.columnIndex="2" GridPane.rowIndex="7" spacing="10">
+                <children>
+                    <FloatSpinner fx:id="quantiteSecField" prefHeight="26.0" prefWidth="100.0"/>
+                    <JFXComboBox fx:id="uniteSecField" prefHeight="26.0" prefWidth="125.0"/>
+                </children>
+            </HBox>
+
+
+
+            <HBox GridPane.rowIndex="8" GridPane.columnIndex="1" alignment="CENTER_LEFT">
+                <children>
+                    <Label text="Quantité utilisée" styleClass="grid-intitule"/>
+                </children>
+            </HBox>
+            <HBox GridPane.rowIndex="8" GridPane.columnIndex="2" alignment="CENTER_LEFT">
+                <children>
+                    <Label fx:id="quantiteUtiliseeLabel" text="Label"/>
+                </children>
+            </HBox>
+
+
+            <VBox GridPane.rowIndex="9" GridPane.columnSpan="3">
+                <Label text="Informations" styleClass="title-acc-3"/>
+            </VBox>
+
+            <HBox GridPane.rowIndex="10" GridPane.columnIndex="1" alignment="CENTER_LEFT">
+                <children>
+                    <Label text="Description"  styleClass="grid-intitule"/>
+                </children>
+            </HBox>
+
+            <HBox GridPane.rowIndex="10" GridPane.columnIndex="2" alignment="CENTER_LEFT">
+                <children>
+                    <JFXTextField fx:id="descriptionField" GridPane.columnIndex="1" GridPane.rowIndex="7" prefWidth="250.0"/>
+                </children>
+            </HBox>
+
+            <HBox GridPane.rowIndex="11" GridPane.columnIndex="1" alignment="CENTER_LEFT">
+                <children>
+                    <Label text="Lieu de stockage"  styleClass="grid-intitule"/>
+                </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" fillHeight="false" spacing="10" GridPane.columnIndex="2"
+                  GridPane.rowIndex="11">
+                <Label text="Lieu de stockage" fx:id="lieuDeStockageField"/>
+                <JFXButton text="Changer" fx:id="changerLieuStockage" mnemonicParsing="false"
+                           onAction="#handleStockage"/>
+            </HBox>
+
+            <HBox GridPane.rowIndex="12" GridPane.columnIndex="1" alignment="CENTER_LEFT">
+                <children>
+                    <Label text="Lieu d'achat" GridPane.rowIndex="9" styleClass="grid-intitule"/>
+                </children>
+            </HBox>
+
+            <HBox GridPane.rowIndex="12" GridPane.columnIndex="2" alignment="CENTER_LEFT">
+                <children>
+                    <JFXTextField fx:id="lieuDachatField" GridPane.columnIndex="1" GridPane.rowIndex="9" prefWidth="250.0"/>
+                </children>
+            </HBox>
 
         </children>
     </GridPane>
@@ -99,8 +170,9 @@
         <children>
             <ButtonBar prefHeight="40.0" prefWidth="214.0">
                 <buttons>
-                    <JFXButton mnemonicParsing="false" onAction="#handleOk" prefHeight="25.0" prefWidth="123.0" text="Valider" />
-                    <JFXButton mnemonicParsing="false" onAction="#handleCancel" text="Annuler" />
+                    <JFXButton mnemonicParsing="false" onAction="#handleOk" prefHeight="25.0" prefWidth="123.0"
+                               text="Valider"/>
+                    <JFXButton mnemonicParsing="false" onAction="#handleCancel" text="Annuler"/>
                     <JFXButton fx:id="archiverBtn" mnemonicParsing="false" onMouseClicked="#archiver"/>
                 </buttons>
             </ButtonBar>
@@ -110,30 +182,35 @@
             </HBox>
         </children>
     </VBox>
-   <ImageView fx:id="imagePane" fitHeight="400.0" fitWidth="600.0" layoutX="681.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true" />
-   <JFXButton fx:id="addPictureBtn" layoutX="847.0" layoutY="566.0" mnemonicParsing="false" onMouseClicked="#addPicture">
-      <graphic>
-         <FontAwesomeIconView glyphName="FOLDER" size="20px" />
-      </graphic>
-   </JFXButton>
-   <JFXButton fx:id="pictureExpendBtn" layoutX="1021.0" layoutY="566.0" mnemonicParsing="false" onMouseClicked="#pictureExpend" prefHeight="28.0" prefWidth="26.0">
-      <graphic>
-         <FontAwesomeIconView glyphName="EXPAND" size="20px" />
-      </graphic>
-   </JFXButton>
-   <JFXButton fx:id="addPictureWebBtn" layoutX="891.0" layoutY="566.0" mnemonicParsing="false" onMouseClicked="#addPictureWeb">
-      <graphic>
-         <FontAwesomeIconView glyphName="DOWNLOAD" size="20" />
-      </graphic>
-   </JFXButton>
-  <JFXButton fx:id="addPictureClipboardBtn" layoutX="940.0" layoutY="566.0" mnemonicParsing="false"
-             onMouseClicked="#addPictureFromClipboard">
-    <graphic>
-      <FontAwesomeIconView glyphName="CLIPBOARD" size="20" />
-    </graphic>
-  </JFXButton>
-   <Label fx:id="imageNotSaved" layoutX="780.0" layoutY="594.0" text="Sauvegardez une première fois le tissu avant de choisir une image" />
-   <padding>
-      <Insets bottom="75.0" left="75.0" right="75.0" top="75.0" />
-   </padding>
+    <ImageView fx:id="imagePane" fitHeight="400.0" fitWidth="600.0" layoutX="681.0" layoutY="124.0" pickOnBounds="true"
+               preserveRatio="true"/>
+    <JFXButton fx:id="addPictureBtn" layoutX="847.0" layoutY="566.0" mnemonicParsing="false"
+               onMouseClicked="#addPicture">
+        <graphic>
+            <FontAwesomeIconView glyphName="FOLDER" size="20px"/>
+        </graphic>
+    </JFXButton>
+    <JFXButton fx:id="pictureExpendBtn" layoutX="1021.0" layoutY="566.0" mnemonicParsing="false"
+               onMouseClicked="#pictureExpend" prefHeight="28.0" prefWidth="26.0">
+        <graphic>
+            <FontAwesomeIconView glyphName="EXPAND" size="20px"/>
+        </graphic>
+    </JFXButton>
+    <JFXButton fx:id="addPictureWebBtn" layoutX="891.0" layoutY="566.0" mnemonicParsing="false"
+               onMouseClicked="#addPictureWeb">
+        <graphic>
+            <FontAwesomeIconView glyphName="DOWNLOAD" size="20"/>
+        </graphic>
+    </JFXButton>
+    <JFXButton fx:id="addPictureClipboardBtn" layoutX="940.0" layoutY="566.0" mnemonicParsing="false"
+               onMouseClicked="#addPictureFromClipboard">
+        <graphic>
+            <FontAwesomeIconView glyphName="CLIPBOARD" size="20"/>
+        </graphic>
+    </JFXButton>
+    <Label fx:id="imageNotSaved" layoutX="780.0" layoutY="594.0"
+           text="Sauvegardez une première fois le tissu avant de choisir une image"/>
+    <padding>
+        <Insets bottom="75.0" left="75.0" right="75.0" top="75.0"/>
+    </padding>
 </AnchorPane>
