@@ -14,10 +14,9 @@ import java.io.IOException;
 @Component
 public class PreferenceDao {
 
-	private static File file = new File("preferences.yaml");
+	private static final File file = new File("preferences.yaml");
 
 	private static final Logger LOGGER = LogManager.getLogger(PreferenceDao.class);
-
 
 	public Preference getPreference() {
 		Preference pref = new Preference();
