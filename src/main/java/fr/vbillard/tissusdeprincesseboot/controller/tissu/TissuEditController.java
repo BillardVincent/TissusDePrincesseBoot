@@ -189,12 +189,7 @@ public class TissuEditController implements IController {
         colorComp.initialize(initializer, tissu.getColor(), pictureHelper.hasImage(tissu) ? imagePane.getImage() : null);
 
         boolean tissuIsNew = tissu.getId() == 0;
-        addPictureWebBtn.setDisable(tissuIsNew);
-        pictureExpendBtn.setDisable(tissuIsNew);
-        addPictureBtn.setDisable(tissuIsNew);
-        imageNotSaved.setVisible(tissuIsNew);
-        addPictureClipboardBtn.setDisable(tissuIsNew);
-        archiverBtn.setDisable(tissuIsNew);
+        setIcons(tissuIsNew);
         warningSaveIcon.setVisible(false);
         warningSaveLbl.setVisible(false);
         GlyphIconUtil.generateIcon(warningSaveIcon, GlyphIconUtil.VERY_BIG_ICONE_SIZE, Constants.colorWarning);
@@ -211,6 +206,17 @@ public class TissuEditController implements IController {
             warningSaveIcon.setVisible(newValue);
             warningSaveLbl.setVisible(newValue);
         });
+
+    }
+
+    private void setIcons(boolean tissuIsNew) {
+        addPictureWebBtn.setDisable(tissuIsNew);
+        pictureExpendBtn.setDisable(tissuIsNew);
+        addPictureBtn.setDisable(tissuIsNew);
+        imageNotSaved.setVisible(tissuIsNew);
+        addPictureClipboardBtn.setDisable(tissuIsNew);
+        archiverBtn.setDisable(tissuIsNew);
+        changerLieuStockage.setDisable(tissuIsNew);
 
     }
 
@@ -259,6 +265,8 @@ public class TissuEditController implements IController {
         tissu.setColor(colorComp.getColor());
 
         tissu = tissuService.saveOrUpdate(tissu);
+        setIcons(false);
+
     }
 
     @FXML

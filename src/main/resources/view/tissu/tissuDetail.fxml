@@ -222,7 +222,7 @@
                     <Label text="Chute" styleClass="grid-intitule"/>
                 </children>
             </HBox>
-            <HBox GridPane.columnIndex="2" GridPane.rowIndex="16" alignment="CENTER_LEFT">
+            <HBox GridPane.columnIndex="2" GridPane.rowIndex="19" alignment="CENTER_LEFT">
                 <children>
                     <Label fx:id="chuteField" text="Chute"/>
                 </children>

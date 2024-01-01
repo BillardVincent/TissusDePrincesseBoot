@@ -180,9 +180,10 @@ public class RangementTreeController implements IController {
         VBox result = new VBox();
         if (hasSelection) {
             MaterialDesignIconView ajouterAuRangementIcn = new MaterialDesignIconView(MaterialDesignIcon.IMPORT);
+            ajouterAuRangementIcn.setSize("2 em");
             JFXButton addSelection = new JFXButton();
             addSelection.setGraphic(ajouterAuRangementIcn);
-            addSelection.getStyleClass().add(ClassCssUtils.TITLE_MAIN_PANE);
+            //addSelection.getStyleClass().add(ClassCssUtils.TITLE_MAIN_PANE);
             addSelection.setOnAction(e -> handleAddSelection(r));
             result.getChildren().add(addSelection);
         }
