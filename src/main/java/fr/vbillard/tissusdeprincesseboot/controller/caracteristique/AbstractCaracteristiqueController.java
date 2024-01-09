@@ -1,6 +1,5 @@
 package fr.vbillard.tissusdeprincesseboot.controller.caracteristique;
 
-
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
