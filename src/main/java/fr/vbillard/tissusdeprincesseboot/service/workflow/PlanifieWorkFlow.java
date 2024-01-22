@@ -19,7 +19,6 @@ public class PlanifieWorkFlow extends Workflow {
 	protected void doNextStep() {
 		projet.setStatus(ProjectStatus.EN_COURS);
 		projetService.saveOrUpdate(projet);
-
 	}
 
 	@Override
@@ -28,44 +27,6 @@ public class PlanifieWorkFlow extends Workflow {
 		projetService.saveOrUpdate(projet);
 	}
 
-	@Override
-	protected ErrorWarn verifyNextStep() {
-		ErrorWarn errorwarn = new ErrorWarn();
-		// TODO Auto-generated method stub
-		return errorwarn;
-	}
-
-	@Override
-	protected ErrorWarn verifyCancel() {
-		ErrorWarn errorwarn = new ErrorWarn();
-		// TODO Auto-generated method stub
-		return errorwarn;
-	}
-
-	@Override
-	protected ErrorWarn verifyDelete() {
-		ErrorWarn errorwarn = new ErrorWarn();
-		// TODO Auto-generated method stub
-		return errorwarn;
-	}
-
-	@Override
-	protected void doDelete() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected ErrorWarn verifyArchive() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected void doArchive() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public boolean isNextPossible() {
@@ -75,16 +36,6 @@ public class PlanifieWorkFlow extends Workflow {
 	@Override
 	public boolean isCancelPossible() {
 		return true;
-	}
-
-	@Override
-	public boolean isDeletePossible() {
-		return false;
-	}
-
-	@Override
-	public boolean isArchivePossible() {
-		return false;
 	}
 
 }

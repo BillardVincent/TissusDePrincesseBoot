@@ -38,7 +38,7 @@ public class FournitureRequiseService
 
 	public List<FournitureRequiseDto> getAllFournitureRequiseDtoByVersion(int id) {
 		return fournitureRequiseDao.getAllByVersionId(id).stream().map(tr -> mapper.map(tr))
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	public FournitureRequise findFournitureRequise(int fournitureRequisId) {
@@ -121,7 +121,7 @@ public class FournitureRequiseService
 	}
 
 	@Override
-	protected FournitureRequiseDao getDao() {
+	public FournitureRequiseDao getDao() {
 		return fournitureRequiseDao;
 	}
 

@@ -42,7 +42,7 @@ public class TissuUsedService extends AbstractUsedService<TissuUsed, Tissu> {
 	}
 
 	@Override
-	protected TissuUsedDao getDao() {
+	public TissuUsedDao getDao() {
 		return dao;
 	}
 

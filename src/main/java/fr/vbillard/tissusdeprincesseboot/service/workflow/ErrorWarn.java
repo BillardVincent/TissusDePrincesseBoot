@@ -1,21 +1,16 @@
 package fr.vbillard.tissusdeprincesseboot.service.workflow;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class ErrorWarn {
 	
-	private List<String> error = new ArrayList<>();
-	private List<String> warn = new ArrayList<>();
-	
-	public List<String> getError() {
-		return error;
-	}
-	
-	public List<String> getWarn() {
-		return warn;
-	}
-	
+	private final List<String> error = new ArrayList<>();
+	private final List<String> warn = new ArrayList<>();
+
 	public void addError(String e) {
 		error.add(e);
 	}

@@ -1,11 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.service.workflow;
 
-import fr.vbillard.tissusdeprincesseboot.exception.NotAllowed;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
 import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
-import fr.vbillard.tissusdeprincesseboot.service.TissuRequisService;
-import fr.vbillard.tissusdeprincesseboot.service.TissuUsedService;
-import fr.vbillard.tissusdeprincesseboot.service.UserPrefService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -14,18 +10,11 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 public class BrouillonWorkFlow extends Workflow {
 
-	private final TissuRequisService tissuRequisService;
-	private final TissuUsedService tissuUsedService;
-	private final UserPrefService userPrefService;
 	private final Rules rules;
 	
 	@Autowired
-	public BrouillonWorkFlow(Rules rules, UserPrefService userPrefService, ProjetService projetService,
-			TissuRequisService tissuRequisService, TissuUsedService tissuUsedService) {
+	public BrouillonWorkFlow(Rules rules, ProjetService projetService) {
 		this.projetService = projetService;
-		this.tissuRequisService = tissuRequisService;
-		this.tissuUsedService = tissuUsedService;
-		this.userPrefService = userPrefService;
 		this.rules = rules;
 		description = "Les projets « Brouillon » permettent de faire des essais. Les longueurs de tissus qui sont attribuées à un « Brouillon » ne sont pas retirées du stock et ne sont pas réservées pour ce projet.";
 	}
@@ -34,60 +23,16 @@ public class BrouillonWorkFlow extends Workflow {
 	protected void doNextStep() {
 		projet.setStatus(ProjectStatus.PLANIFIE);
 		projetService.saveOrUpdate(projet);
-
-	}
-
-	@Override
-	public void doCancel() {
-		throw new NotAllowed();
 	}
 
 	@Override
 	protected ErrorWarn verifyNextStep() {
-		ErrorWarn errorwarn = rules.verifyLength(projet);
-
-		return errorwarn;
-	}
-
-	@Override
-	protected ErrorWarn verifyCancel() {
-		return nonAutorise();
-	}
-
-	@Override
-	protected ErrorWarn verifyDelete() {
-		ErrorWarn errorwarn = new ErrorWarn();
-		// TODO Auto-generated method stub
-		return errorwarn;
-	}
-
-	@Override
-	protected void doDelete() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected ErrorWarn verifyArchive() {
-		ErrorWarn errorwarn = new ErrorWarn();
-		// TODO Auto-generated method stub
-		return errorwarn;
-	}
-
-	@Override
-	protected void doArchive() {
-		// TODO Auto-generated method stub
-		
+        return rules.verifyLength(projet);
 	}
 
 	@Override
 	public boolean isNextPossible() {
 		return true;
-	}
-
-	@Override
-	public boolean isCancelPossible() {
-		return false;
 	}
 
 	@Override

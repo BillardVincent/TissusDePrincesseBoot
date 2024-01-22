@@ -2,9 +2,11 @@ package fr.vbillard.tissusdeprincesseboot.service.workflow;
 
 import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
 import fr.vbillard.tissusdeprincesseboot.exception.InvalidWorkflowException;
+import fr.vbillard.tissusdeprincesseboot.exception.NotAllowed;
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
 import javafx.scene.control.ButtonType;
+import lombok.Getter;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
@@ -24,6 +26,7 @@ public abstract class Workflow {
 	/**
 	 * Description du workflow
 	 */
+	@Getter
 	protected String description;
 
 	protected ProjetService projetService;
@@ -38,7 +41,9 @@ public abstract class Workflow {
 
 	// ------ partie "Next" -----------
 
-	public abstract boolean isNextPossible();
+	public boolean isNextPossible(){
+		return false;
+	}
 
 	/**
 	 * Point d'entrée de la stratégie
@@ -61,16 +66,22 @@ public abstract class Workflow {
 	 * 
 	 * @return une liste d'erreurs sous forme de String
 	 */
-	protected abstract ErrorWarn verifyNextStep();
+	protected ErrorWarn verifyNextStep() {
+		return new ErrorWarn();
+	}
 
 	/**
 	 * Application de la stratégie à définir dans la stratégie
 	 */
-	protected abstract void doNextStep();
+	protected void doNextStep() {
+		throw new NotAllowed();
+	}
 
 	// ------ partie "Cancel" -----------
 
-	public abstract boolean isCancelPossible();
+	public boolean isCancelPossible(){
+		return false;
+	}
 	
 	@Transactional
 	public void cancel(Projet projet) {
@@ -82,13 +93,19 @@ public abstract class Workflow {
 		}
 	}
 
-	protected abstract ErrorWarn verifyCancel();
+	protected ErrorWarn verifyCancel() {
+		return new ErrorWarn();
+	}
 
-	protected abstract void doCancel();
+	protected void doCancel(){
+		throw new NotAllowed();
+	}
 
 	// --------- suppression ----------
 	
-	public abstract boolean isDeletePossible();
+	public boolean isDeletePossible(){
+		return false;
+	}
 
 	@Transactional
 	public void delete(Projet projet) {
@@ -100,13 +117,20 @@ public abstract class Workflow {
 		}
 	}
 
-	protected abstract ErrorWarn verifyDelete();
+	protected ErrorWarn verifyDelete(){
+		return new ErrorWarn();
+	}
 
-	protected abstract void doDelete();
-	
+	protected void doDelete(){
+		throw new NotAllowed();
+	}
+
+
 	// --------- archive ----------
 	
-	public abstract boolean isArchivePossible();
+	public boolean isArchivePossible() {
+		return false;
+	}
 	
 	@Transactional
 	public void archive(Projet projet) {
@@ -118,9 +142,13 @@ public abstract class Workflow {
 		}
 	}
 	
-	protected abstract ErrorWarn verifyArchive();
+	protected ErrorWarn verifyArchive() {
+		return new ErrorWarn();
+	}
 	
-	protected abstract void doArchive();
+	protected void doArchive() {
+		throw new NotAllowed();
+	}
 		
 	private boolean warnAlert(List<String> warn) {
 		if (CollectionUtils.isEmpty(warn)) {
@@ -137,11 +165,7 @@ public abstract class Workflow {
 				"Vous ne pouvez pas passser à l'étape suivante. Corrigez les erreurs suivantes : "
 						+ String.join(",\n", errors.getError()) + "\n Souhaitez vous quand même continuer?");
 	}
-	
-	public String getDescription() {
-		return description;
-	}
-	
+
 	public void setProjet(Projet projet) {
 		this.projet = projet;
 	}

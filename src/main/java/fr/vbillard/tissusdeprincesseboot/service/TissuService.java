@@ -60,7 +60,7 @@ public class TissuService extends AbstractDtoService<Tissu, TissuDto> {
 	}
 
 	@Override
-	protected TissuDao getDao() {
+	public TissuDao getDao() {
 		return dao;
 	}
 

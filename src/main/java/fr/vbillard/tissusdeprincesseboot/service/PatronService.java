@@ -23,9 +23,9 @@ import java.util.stream.Collectors;
 @Service
 public class PatronService extends AbstractDtoService<Patron, PatronDto> {
 
-	PatronDao patronDao;
-	ModelMapper mapper;
-	TissusRequisDao tissuRequisDao;
+	private PatronDao patronDao;
+	private ModelMapper mapper;
+	private TissusRequisDao tissuRequisDao;
 
 	@Transactional
 	public PatronDto create(PatronDto patron) {
@@ -48,7 +48,7 @@ public class PatronService extends AbstractDtoService<Patron, PatronDto> {
 	}
 
 	@Override
-	protected PatronDao getDao() {
+	public PatronDao getDao() {
 		return patronDao;
 	}
 

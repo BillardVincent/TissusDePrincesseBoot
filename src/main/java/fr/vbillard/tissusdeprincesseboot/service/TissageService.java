@@ -40,7 +40,7 @@ public class TissageService extends AbstractService<Tissage> {
 	}
 
 	@Override
-	protected TissageDao getDao() {
+	public TissageDao getDao() {
 		return dao;
 	}
 

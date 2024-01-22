@@ -20,10 +20,9 @@ public class RangementService extends AbstractService<Rangement> {
 	private RangementDao dao;
 
 	@Override
-	protected RangementDao getDao() {
+	public RangementDao getDao() {
 		return dao;
 	}
-
 
 	public List<Rangement> getByParent(int id){
 		return dao.getByConteneur_Id(id, Sort.by(Rangement_.RANG));

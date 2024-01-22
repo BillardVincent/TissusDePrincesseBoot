@@ -36,7 +36,7 @@ public class FournitureUsedService extends AbstractUsedService<FournitureUsed, F
 	}
 
 	@Override
-	protected FournitureUsedDao getDao() {
+	public FournitureUsedDao getDao() {
 		return dao;
 	}
 

@@ -100,8 +100,7 @@ public class CarrouselController implements IModalController{
 		    }
 		});
 	}
-	
-	
+
 	@FXML
 	public void validate() {
 		result = new FxData();
@@ -111,7 +110,5 @@ public class CarrouselController implements IModalController{
 		dialogStage.close();
 		
 	}
-	
-	
 
 }

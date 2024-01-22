@@ -21,14 +21,11 @@ public class CalculPoidsTissuService {
 	}
 
 	public int poidsFromTissu(Tissu tissu) {
-		switch (tissu.getUnitePoids()) {
-		case GRAMME_M:
-			return tissu.getPoids() / tissu.getLaize() * 100;
-		case GRAMME_M_CARRE:
-			return tissu.getPoids();
-		default:
-			return -1;
-		}
+        return switch (tissu.getUnitePoids()) {
+            case GRAMME_M -> tissu.getPoids() / tissu.getLaize() * 100;
+            case GRAMME_M_CARRE -> tissu.getPoids();
+            default -> -1;
+        };
 	}
 
 	public Map<GammePoids, Recommendation> setRecommendations(Tissu tissu) {

@@ -22,7 +22,7 @@ public class PatronVersionService extends AbstractDtoService<PatronVersion, Patr
 	private final FournitureRequiseService fournitureRequiseService;
 
 	@Override
-	protected PatronVersionDao getDao() {
+	public PatronVersionDao getDao() {
 		return dao;
 	}
 

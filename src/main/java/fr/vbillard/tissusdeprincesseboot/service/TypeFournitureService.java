@@ -23,12 +23,7 @@ public class TypeFournitureService extends AbstractService<TypeFourniture> {
 	private FournitureRequiseDao fournitureRequiseDao;
 
 	@Override
-	protected void beforeSaveOrUpdate(TypeFourniture entity) {
-
-	}
-
-	@Override
-	protected TypeFournitureDao getDao() {
+	public TypeFournitureDao getDao() {
 		return dao;
 	}
 

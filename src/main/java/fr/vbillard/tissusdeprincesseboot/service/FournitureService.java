@@ -61,7 +61,7 @@ public class FournitureService extends AbstractDtoService<Fourniture, Fourniture
 	}
 
 	@Override
-	protected FournitureDao getDao() {
+	public FournitureDao getDao() {
 		return dao;
 	}
 

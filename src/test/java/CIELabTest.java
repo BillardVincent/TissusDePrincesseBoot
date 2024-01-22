@@ -8,12 +8,11 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CIELabTest {
-
+class CIELabTest {
 
     @ParameterizedTest
     @MethodSource("parameters")
-    public void testCielAb(Color colorA, Color colorB, boolean expectedClose, boolean expectedSomewhat){
+    void testCielAb(Color colorA, Color colorB, boolean expectedClose, boolean expectedSomewhat){
         double distance = ColorUtils.distance(colorA, colorB);
         System.out.println(colorA + " -> " + colorB +" = " + distance);
         assertEquals(expectedClose, distance < 50);

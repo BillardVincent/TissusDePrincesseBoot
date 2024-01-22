@@ -26,10 +26,10 @@ public abstract class AbstractService<T extends AbstractEntity> {
 	protected void beforeDelete(T entity){
 	}
 
-	@Transactional
 	/**
 	 * Do not Override this method. Use beforeSaveOrUpdate()
 	 */
+	@Transactional
 	public T saveOrUpdate(T entity) {
 		beforeSaveOrUpdate(entity);
 		return getDao().save(entity);
@@ -43,12 +43,19 @@ public abstract class AbstractService<T extends AbstractEntity> {
 		return getDao().findAll(spec, page);
 	}
 
-	public final void delete(int id) {
+	/**
+	 * Do not Override this method. Use beforeDelete()
+	 */
+	@Transactional
+	public void delete(int id) {
 		delete(getById(id));
 	}
-	
+
+	/**
+	 * Do not Override this method. Use beforeDelete()
+	 */
 	@Transactional
-	public final void delete(T entity) {
+	public void delete(T entity) {
 		beforeDelete(entity);
 		getDao().delete(entity);
 	}
@@ -62,6 +69,6 @@ public abstract class AbstractService<T extends AbstractEntity> {
 		return getDao().count();
 	}
 
-	protected abstract Idao<T, Integer> getDao();
+	public abstract Idao<T, Integer> getDao();
 
 }

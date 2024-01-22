@@ -77,7 +77,6 @@ public class EnCoursWorkFlow extends Workflow {
 			if (inventaire.getTissus().isEmpty()) {
 				inventaireService.delete(inventaire);
 			}
-			//deleteTissuLenght(projet);
 
 		}
 
@@ -89,60 +88,11 @@ public class EnCoursWorkFlow extends Workflow {
 		projetService.saveOrUpdate(projet);
 	}
 
-	private void deleteTissuLength(Projet projet) {
-		List<TissuUsed> tissuUsedList = tissuUsedService.getByProjet(projet);
-		for (TissuUsed tu : tissuUsedList) {
-			Tissu t = tu.getTissu();
-			t.setLongueur(t.getLongueur() - tu.getLongueur());
-			tissuService.saveOrUpdate(t);
-		}
-	}
 
 	private Optional<ButtonType> validateNextStep() {
 
 		return ShowAlert.confirmation(null, "Terminer le projet", "Cette opération est définitive",
 				"Souhaitez vous terminer ce projet? Vos stocks font être définitivement réduit de la quantité allouée à ce projet. Cette opération est définitive");
-	}
-
-	@Override
-	protected ErrorWarn verifyNextStep() {
-		ErrorWarn errorwarn = new ErrorWarn();
-		// TODO Auto-generated method stub
-		return errorwarn;
-	}
-
-
-	@Override
-	protected ErrorWarn verifyCancel() {
-		ErrorWarn errorwarn = new ErrorWarn();
-		// TODO Auto-generated method stub
-		return errorwarn;
-	}
-
-	@Override
-	protected ErrorWarn verifyDelete() {
-		ErrorWarn errorwarn = new ErrorWarn();
-		// TODO Auto-generated method stub
-		return errorwarn;
-	}
-
-	@Override
-	protected void doDelete() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected ErrorWarn verifyArchive() {
-		ErrorWarn errorwarn = new ErrorWarn();
-		// TODO Auto-generated method stub
-		return errorwarn;
-	}
-
-	@Override
-	protected void doArchive() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -154,16 +104,5 @@ public class EnCoursWorkFlow extends Workflow {
 	public boolean isCancelPossible() {
 		return true;
 	}
-
-	@Override
-	public boolean isDeletePossible() {
-		return false;
-	}
-
-	@Override
-	public boolean isArchivePossible() {
-		return false;
-	}
-
 
 }

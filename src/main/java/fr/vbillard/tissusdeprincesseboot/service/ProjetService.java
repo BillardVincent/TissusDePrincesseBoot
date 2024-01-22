@@ -24,17 +24,12 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class ProjetService extends AbstractDtoService<Projet, ProjetDto> {
-	MapperService mapper;
-	ProjetDao dao;
+	private MapperService mapper;
+	private ProjetDao dao;
 	private PatronVersionDao patronVersionDao;
 
 	@Override
-	protected void beforeSaveOrUpdate(Projet entity) {
-
-	}
-
-	@Override
-	protected ProjetDao getDao() {
+	public ProjetDao getDao() {
 		return dao;
 	}
 
@@ -49,13 +44,14 @@ public class ProjetService extends AbstractDtoService<Projet, ProjetDto> {
 	}
 
 	@Override
+	@Transactional
 	public ProjetDto saveOrUpdate(ProjetDto dto) {
 		return convert(saveOrUpdate(convert(dto)));
 	}
 
 	public ObservableList<ProjetDto> getObservableList() {
 		return FXCollections.observableArrayList(
-				dao.findAll().stream().map(this::convert).collect(Collectors.toList()));
+				dao.findAll().stream().map(this::convert).toList());
 	}
 
 	public ProjetDto newProjetDto(PatronVersionDto selectedPatron) {

@@ -42,7 +42,7 @@ public class TissuRequisService extends AbstractRequisService<TissuRequis, Tissu
 
 	public List<TissuRequisDto> getAllTissuRequisDtoByPatron(int id) {
 		return tissuRequisDao.getAllByVersionId(id).stream().map(tr -> mapper.map(tr))
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	public TissuRequis findTissuRequis(int tissuRequisId) {
@@ -63,7 +63,7 @@ public class TissuRequisService extends AbstractRequisService<TissuRequis, Tissu
 	}
 
 	@Override
-	protected TissusRequisDao getDao() {
+	public TissusRequisDao getDao() {
 		return tissuRequisDao;
 	}
 

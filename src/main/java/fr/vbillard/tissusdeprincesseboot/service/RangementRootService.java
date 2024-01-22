@@ -14,7 +14,7 @@ public class RangementRootService extends AbstractService<RangementRoot> {
 	private RangementRootDao dao;
 
 	@Override
-	protected RangementRootDao getDao() {
+	public RangementRootDao getDao() {
 		return dao;
 	}
 

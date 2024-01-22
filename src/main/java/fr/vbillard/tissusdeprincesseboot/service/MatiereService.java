@@ -27,7 +27,7 @@ public class MatiereService extends AbstractService<Matiere> {
 	}
 
 	@Override
-	protected MatiereDao getDao() {
+	public MatiereDao getDao() {
 		return dao;
 	}
 
