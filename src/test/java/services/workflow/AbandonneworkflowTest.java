@@ -1,4 +1,4 @@
-package workflow;
+package services.workflow;
 
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;

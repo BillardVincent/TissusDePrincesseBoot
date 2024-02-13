@@ -52,14 +52,6 @@ public class FournitureService extends AbstractDtoService<Fourniture, Fourniture
 		p.ifPresent(photo -> imageService.delete(photo));
 	}
 
-	/**
-	 * Contient la conversion de l'unité
-	 */
-	@Override
-	protected void beforeSaveOrUpdate(Fourniture entity) {
-
-	}
-
 	@Override
 	public FournitureDao getDao() {
 		return dao;
