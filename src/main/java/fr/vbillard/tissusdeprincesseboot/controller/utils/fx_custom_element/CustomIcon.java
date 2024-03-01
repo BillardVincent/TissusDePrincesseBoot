@@ -1,94 +1,126 @@
 package fr.vbillard.tissusdeprincesseboot.controller.utils.fx_custom_element;
 
-import com.sun.javafx.webkit.Accessor;
 import fr.vbillard.tissusdeprincesseboot.config.PathIconsProperties;
-import fr.vbillard.tissusdeprincesseboot.exception.PersistanceException;
+import fr.vbillard.tissusdeprincesseboot.exception.UnexpectedException;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
-import javafx.scene.effect.BlendMode;
-import javafx.scene.web.WebView;
-import lombok.AllArgsConstructor;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
+import org.apache.batik.transcoder.TranscoderException;
+import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.BeanUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
-@AllArgsConstructor
 public class CustomIcon {
 
-	PathIconsProperties pathProperties;
+    private static final Logger LOGGER = LogManager.getLogger(CustomIcon.class);
 
-	private static final Logger LOGGER = LogManager.getLogger(CustomIcon.class);
+    private final PathIconsProperties pathProperties;
 
-	public void washingMachinIcon(WebView view, double size) {
-		Resource path = pathProperties.getWashingMachine();
-		double originalSize = pathProperties.getWashingMachineSize();
-		loadSVG(view, path, size, originalSize);
-	}
+    private final Map<Resource, Map<Integer, ImageView>> iconsPool = new HashMap<>();
 
-	public void noWashingMachinIcon(WebView view, double size) {
-		Resource path = pathProperties.getNoWashingMachine();
-		double originalSize = pathProperties.getNoWashingMachineSize();
-		loadSVG(view, path, size, originalSize);
-	}
-	
-	public void textBoxCheck(WebView view, double size) {
-		loadSVG(view, pathProperties.getTextBoxCheck(), size, pathProperties.getTextBoxCheckSize());
-	}
+    public CustomIcon(PathIconsProperties pathProperties) {
+        this.pathProperties = pathProperties;
+    }
 
-	public void  textBoxRemove(WebView view, double size) {
-		loadSVG(view, pathProperties.getTextBoxRemove(), size, pathProperties.getTextBoxRemoveSize());
-	}
+    public ImageView getIcon(Resource path, int size) {
 
-	public WebView typeTissu(WebView view, TypeTissuEnum typeTissu, int size) {
-		if (typeTissu == null) {
-			return new WebView();
-		}
-		Resource path;
-		double originalSize;
-		switch (typeTissu) {
-		case CHAINE_ET_TRAME:
-			path = pathProperties.getChaineEtTrame();
-			originalSize = pathProperties.getChaineEtTrameSize();
-			break;
-		case MAILLE:
-			path = pathProperties.getMaille();
-			originalSize = pathProperties.getMailleSize();
-			break;
-		case MIXILIGNE:
-			path = pathProperties.getMultiligne();
-			originalSize = pathProperties.getMultiligneSize();
-			break;
-		case NON_TISSE:
-			path = pathProperties.getNonTisse();
-			originalSize = pathProperties.getNonTisseSize();
-			break;
-		default:
-			return new WebView();
-		}
+        ImageView returnedImage = new ImageView();
+        ImageView imageFromPool = iconsPool.computeIfAbsent(path, p -> new HashMap<>())
+                .computeIfAbsent(size, s -> {
+                    WritableImage writableImage = buildImageFromPath(path, size);
+                    return buildImageView(writableImage, size);
+                });
 
-		loadSVG(view, path, size, originalSize);
-		return view;
-	}
+        BeanUtils.copyProperties(imageFromPool, returnedImage);
 
-	private void loadSVG(WebView view, Resource path, double size, double originalSize) {
-		Accessor.getPageFor(view.getEngine()).setBackgroundColor(0);
-		view.setBlendMode(BlendMode.DARKEN);
+        return returnedImage;
+    }
 
-		view.setMinSize(size, size);
-		view.setPrefSize(size, size);
-		try {
-			view.getEngine().load(path.getURL().toString());
-		} catch (IOException e) {
-			LOGGER.error(e);
-			throw new PersistanceException(path.getFilename());
-		}
+    @PostConstruct
+    private void loadAllSVGs() {
+        washingMachinIcon(20);
+        noWashingMachinIcon(20);
+        textBoxRemove(40);
+        textBoxCheck(40);
 
-		double scale = size / originalSize;
+        for (TypeTissuEnum type : TypeTissuEnum.values())
+            for (int size : new int[] { 20, 40 }) {
+                typeTissu(type, size);
+            }
+    }
 
-		view.setZoom(scale);
-	}
+    public ImageView washingMachinIcon(int size) {
+        return getIcon(pathProperties.getWashingMachine(), size);
+    }
+
+    public ImageView noWashingMachinIcon(int size) {
+        return getIcon(pathProperties.getNoWashingMachine(), size);
+    }
+
+    public ImageView textBoxCheck(int size) {
+        return getIcon(pathProperties.getTextBoxCheck(), size);
+    }
+
+    public ImageView textBoxRemove(int size) {
+        return getIcon(pathProperties.getTextBoxRemove(), size);
+    }
+
+    public ImageView typeTissu(TypeTissuEnum typeTissu, int size) {
+        if (typeTissu == null) {
+            return new ImageView();
+        }
+        Resource path;
+        switch (typeTissu) {
+        case CHAINE_ET_TRAME:
+            path = pathProperties.getChaineEtTrame();
+            break;
+        case MAILLE:
+            path = pathProperties.getMaille();
+            break;
+        case MIXILIGNE:
+            path = pathProperties.getMultiligne();
+            break;
+        case NON_TISSE:
+            path = pathProperties.getNonTisse();
+            break;
+        default:
+            return new ImageView();
+        }
+        return getIcon(path, size);
+
+    }
+
+    public ImageView buildImageView(WritableImage image, int size) {
+        ImageView imgView = new ImageView();
+        imgView.setImage(image);
+        imgView.setFitHeight(size);
+        imgView.setFitWidth(size);
+        return imgView;
+    }
+
+    private WritableImage buildImageFromPath(Resource resource, int size) {
+        BufferedImageTranscoder trans = new BufferedImageTranscoder();
+        try (InputStream file = resource.getInputStream()) {
+            TranscoderInput transIn = new TranscoderInput(file);
+            WritableImage img = new WritableImage(size, size);
+            trans.transcode(transIn, null);
+            return SwingFXUtils.toFXImage(trans.getBufferedImage(), img);
+
+        } catch (TranscoderException | IOException ex) {
+            LOGGER.error(ex.getMessage());
+            throw new UnexpectedException();
+        }
+    }
 
 }

@@ -14,8 +14,6 @@ import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.TilePane;
-import javafx.scene.web.WebView;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -26,72 +24,72 @@ public class ProjetListController extends ViewListController {
 
     boolean hasIncompleteInventaire;
 
-	@FXML
-	private WebView hasIncompleteInventaireIcn;
+    @FXML
+    private Pane hasIncompleteInventaireIcn;
 
-	private ProjetService projetService;
-	private RootController rootController;
-	private DisplayInventaireService displayInventaireService;
-	private InventaireService inventaireService;
-	private CustomIcon customIcon;
+    private final ProjetService projetService;
+    private final RootController rootController;
+    private final DisplayInventaireService displayInventaireService;
+    private final InventaireService inventaireService;
+    private final CustomIcon customIcon;
 
-	public ProjetListController(CustomIcon customIcon, InventaireService inventaireService, ProjetService projetService,
-			RootController rootController, DisplayInventaireService displayInventaireService) {
-		this.projetService = projetService;
-		this.rootController = rootController;
-		this.displayInventaireService = displayInventaireService;
-		this.inventaireService = inventaireService;
-		this.customIcon = customIcon;
-		page = 0;
-	}
+    public ProjetListController(CustomIcon customIcon, InventaireService inventaireService, ProjetService projetService,
+            RootController rootController, DisplayInventaireService displayInventaireService) {
+        this.projetService = projetService;
+        this.rootController = rootController;
+        this.displayInventaireService = displayInventaireService;
+        this.inventaireService = inventaireService;
+        this.customIcon = customIcon;
+        page = 0;
+    }
 
-	@Override
-	protected void setElements() {
-		cardPane.getChildren().clear();
+    @Override
+    protected void setElements() {
+        cardPane.getChildren().clear();
 
-		List<ProjetDto> lst;
-		ProjetSpecification spec;
-		if (specification != null && specification instanceof ProjetSpecification) {
-			spec = (ProjetSpecification) specification;
-		} else {
-			spec = ProjetSpecification.builder().projectStatus(Arrays.asList(ProjectStatus.PLANIFIE,
-					ProjectStatus.BROUILLON, ProjectStatus.EN_COURS)).build();
-		}
-		
-		lst = projetService.getObservablePage(page, PAGE_SIZE, spec);
+        List<ProjetDto> lst;
+        ProjetSpecification spec;
+        if (specification instanceof ProjetSpecification s) {
+            spec = s;
+        } else {
+            spec = ProjetSpecification.builder().projectStatus(Arrays.asList(ProjectStatus.PLANIFIE,
+                    ProjectStatus.BROUILLON, ProjectStatus.EN_COURS)).build();
+        }
 
-		for (ProjetDto p : lst) {
-			FxData data = new FxData();
-			data.setProjet(p);
-			Pane card = initializer.displayPane(PathEnum.PROJET_CARD, data);
-			cardPane.getChildren().add(card);
-		}
+        lst = projetService.getObservablePage(page, PAGE_SIZE, spec);
 
-		setPageInfo(projetService.count());
-		setInventaireIcone();
-	}
+        for (ProjetDto p : lst) {
+            FxData data = new FxData();
+            data.setProjet(p);
+            Pane card = initializer.displayPane(PathEnum.PROJET_CARD, data);
+            cardPane.getChildren().add(card);
+        }
 
-	@Override
-	@FXML
-	public void addNewElement(MouseEvent mouseEvent) {
-		rootController.displayProjetEdit(new ProjetDto());
-	}
+        setPageInfo(projetService.count());
+        setInventaireIcone();
+    }
 
-	private void setInventaireIcone() {
-		hasIncompleteInventaire = inventaireService.hasInventairesIncomplets();
+    @Override
+    @FXML
+    public void addNewElement(MouseEvent mouseEvent) {
+        rootController.displayProjetEdit(new ProjetDto());
+    }
 
-		if (hasIncompleteInventaire) {
-			customIcon.textBoxRemove(hasIncompleteInventaireIcn, 40);
-		} else {
-			customIcon.textBoxCheck(hasIncompleteInventaireIcn, 40);
-		}
-	}
+    private void setInventaireIcone() {
+        hasIncompleteInventaire = inventaireService.hasInventairesIncomplets();
+        hasIncompleteInventaireIcn.getChildren().clear();
+        if (hasIncompleteInventaire) {
+            hasIncompleteInventaireIcn.getChildren().add(customIcon.textBoxRemove(40));
+        } else {
+            hasIncompleteInventaireIcn.getChildren().add(customIcon.textBoxCheck(40));
+        }
+    }
 
-	@FXML
-	private void launchInventaire() {
-		if (hasIncompleteInventaire) {
-			displayInventaireService.batchInventaire(initializer);
-			setInventaireIcone();
-		}
-	}
+    @FXML
+    private void launchInventaire() {
+        if (hasIncompleteInventaire) {
+            displayInventaireService.batchInventaire(initializer);
+            setInventaireIcone();
+        }
+    }
 }

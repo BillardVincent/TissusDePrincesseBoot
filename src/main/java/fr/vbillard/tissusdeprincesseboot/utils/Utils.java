@@ -21,9 +21,9 @@ public class Utils {
 
 	public static boolean isEmpty(Object... objs) {
 		for (Object o : objs) {
-			if (o == null || (o instanceof String && StringUtils.isBlank((String) o))
-					|| (o instanceof Collection<?> && ((Collection<?>) o).isEmpty())
-					|| (o instanceof Map && ((Map<?, ?>) o).isEmpty())) {
+			if (o == null || (o instanceof String s && StringUtils.isBlank(s))
+					|| (o instanceof Collection<?> c && c.isEmpty())
+					|| (o instanceof Map<?,?> m && m.isEmpty())) {
 				return true;
 			}
 		}

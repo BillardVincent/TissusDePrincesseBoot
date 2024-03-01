@@ -1,6 +1,7 @@
 package fr.vbillard.tissusdeprincesseboot.controller.tissu;
 
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
+import fr.vbillard.tissusdeprincesseboot.TissusDePrincesseFxApp;
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
@@ -21,7 +22,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.web.WebView;
+import javafx.scene.layout.Pane;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.util.Strings;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Scope;
@@ -33,6 +36,8 @@ import java.util.Optional;
 @Scope(Utils.PROTOTYPE)
 public class TissuCardController implements IController {
 
+	private static final Logger LOGGER = LogManager.getLogger(TissuCardController.class);
+
 	@FXML
 	public Label description;
 	@FXML
@@ -42,7 +47,7 @@ public class TissuCardController implements IController {
 	@FXML
 	private Label matiere;
 	@FXML
-	private WebView typeView;
+	private Pane typeView;
 	@FXML
 	private Label tissage;
 	@FXML
@@ -58,19 +63,19 @@ public class TissuCardController implements IController {
 	@FXML
 	private ImageView image;
 
-	private ImageService imageService;
+	private final ImageService imageService;
 
-	private RootController rootController;
+	private final RootController rootController;
 
-	private Constants constants;
+	private final Constants constants;
 
-	private ModelMapper mapper;
+	private final ModelMapper mapper;
 
 	private TissuDto tissu;
 
-	private CustomIcon customIcon;
+	private final CustomIcon customIcon;
 
-	private UserPrefService userPrefService;
+	private final UserPrefService userPrefService;
 
 	public TissuCardController(Constants constants, UserPrefService userPrefService, CustomIcon customIcon,
 			ImageService imageService, RootController rootController, ModelMapper mapper) {
@@ -98,29 +103,40 @@ public class TissuCardController implements IController {
 		laizeXlongueur.setText(FxUtils.safePropertyToString(tissu.getLongueurRestanteProperty()) + " cm x "
 				+ FxUtils.safePropertyToString(tissu.getLaizeProperty()) + " cm");
 		matiere.setText(FxUtils.safePropertyToString(tissu.getMatiereProperty()));
-		customIcon.typeTissu(typeView, TypeTissuEnum.getEnum(tissu.getTypeTissu()), 40);
+		typeView.getChildren().add(customIcon.typeTissu(TypeTissuEnum.getEnum(tissu.getTypeTissu()), 40));
 		tissage.setText(FxUtils.safePropertyToString(tissu.getTissageProperty()));
 		poids.setText(FxUtils.safePropertyToString(tissu.getPoidseProperty()));
 		unitePoids.setText(tissu.getUnitePoids());
-		WebView decatiView = new WebView();
+		ImageView decatiView;
 		if (tissu.isDecati()) {
-			customIcon.washingMachinIcon(decatiView, 20);
+			decatiView = customIcon.washingMachinIcon(20);
 		} else {
-			customIcon.noWashingMachinIcon(decatiView, 20);
+			decatiView = customIcon.noWashingMachinIcon(20);
 		}
 		footer.getChildren().add(decatiView);
 
-		UserPref pref = userPrefService.getUser();
 
-		masse.setStyleClass(tissu.getPoids() > pref.getMaxPoidsMoyen() ? "heavy-weight"
-				: tissu.getPoids() > pref.getMinPoidsMoyen() ? "standard-weight" : "light-weight");
+		masse.setStyleClass(styleWeight());
 		Optional<Photo> pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
 		image.setImage(imageService.imageOrDefault(pictures));
 
 	}
 
+	private String styleWeight(){
+		UserPref pref = userPrefService.getUser();
+
+		if (tissu.getPoids() > pref.getMaxPoidsMoyen()) {
+			return "heavy-weight";
+		}
+		if (tissu.getPoids() > pref.getMinPoidsMoyen()) {
+			return "standard-weight";
+		}
+		return "light-weight";
+	}
+
+	//TODO
 	public void setPrefHeight(Double height) {
-		System.out.println(height);
+		LOGGER.error(height);
 	}
 
 	@FXML

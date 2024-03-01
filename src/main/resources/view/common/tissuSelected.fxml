@@ -15,11 +15,11 @@
             <children>
                 <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="260.0">
                     <children>
-                        <WebView fx:id="typeView" prefHeight="20.0" prefWidth="20.0">
+                        <Pane fx:id="typeView" prefHeight="20.0" prefWidth="20.0">
                             <HBox.margin>
                                 <Insets />
                             </HBox.margin>
-                        </WebView>
+                        </Pane>
                         <Label fx:id="tissage" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="107.0" text="Tissage" />
                         <Label fx:id="matiere" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="107.0" text="Matiere" textAlignment="CENTER" />
                     </children>

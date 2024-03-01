@@ -23,7 +23,7 @@
                            <children>
                               <Pane prefHeight="40.0" prefWidth="40.0" styleClass="clickable">
                                  <children>
-                                    <WebView fx:id="hasIncompleteInventaireIcn" onMouseClicked="#launchInventaire" prefHeight="40.0" prefWidth="40.0" />
+                                    <Pane fx:id="hasIncompleteInventaireIcn" onMouseClicked="#launchInventaire" prefHeight="40.0" prefWidth="40.0" />
                                  </children>
                               </Pane>
                            </children>

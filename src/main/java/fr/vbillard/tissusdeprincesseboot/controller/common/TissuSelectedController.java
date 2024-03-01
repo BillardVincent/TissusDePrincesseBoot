@@ -12,13 +12,12 @@ import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.service.ImageService;
-import fr.vbillard.tissusdeprincesseboot.service.UserPrefService;
 import fr.vbillard.tissusdeprincesseboot.utils.Constants;
 import fr.vbillard.tissusdeprincesseboot.utils.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.web.WebView;
+import javafx.scene.layout.Pane;
 import org.apache.logging.log4j.util.Strings;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Scope;
@@ -39,33 +38,31 @@ public class TissuSelectedController implements IController {
 	@FXML
 	private Label matiere;
 	@FXML
-	private WebView typeView;
+	private Pane typeView;
 	@FXML
 	private Label tissage;
 	@FXML
 	private ImageView image;
 
-	private ImageService imageService;
+	private final ImageService imageService;
 
-	private RootController rootController;
+	private final RootController rootController;
 
-	private Constants constants;
+	private final Constants constants;
 
-	private ModelMapper mapper;
+	private final ModelMapper mapper;
 
 	private TissuDto tissu;
 
-	private CustomIcon customIcon;
+	private final CustomIcon customIcon;
 
-	private UserPrefService userPrefService;
 
-	public TissuSelectedController(Constants constants, UserPrefService userPrefService, CustomIcon customIcon,
+	public TissuSelectedController(Constants constants, CustomIcon customIcon,
                                    ImageService imageService, RootController rootController, ModelMapper mapper) {
 		this.imageService = imageService;
 		this.rootController = rootController;
 		this.mapper = mapper;
 		this.customIcon = customIcon;
-		this.userPrefService = userPrefService;
 		this.constants = constants;
 	}
 
@@ -85,7 +82,8 @@ public class TissuSelectedController implements IController {
 		laizeXlongueur.setText(FxUtils.safePropertyToString(tissu.getLongueurRestanteProperty()) + " cm x "
 				+ FxUtils.safePropertyToString(tissu.getLaizeProperty()) + " cm");
 		matiere.setText(FxUtils.safePropertyToString(tissu.getMatiereProperty()));
-		customIcon.typeTissu(typeView, TypeTissuEnum.getEnum(tissu.getTypeTissu()), 20);
+		typeView.getChildren().add(customIcon.typeTissu(TypeTissuEnum.getEnum(tissu.getTypeTissu()), 20));
+		typeView.setPrefSize(20, 20);
 		tissage.setText(FxUtils.safePropertyToString(tissu.getTissageProperty()));
 
 		Optional<Photo> pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
