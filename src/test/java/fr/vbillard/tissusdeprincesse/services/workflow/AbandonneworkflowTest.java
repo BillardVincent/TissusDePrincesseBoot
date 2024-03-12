@@ -1,4 +1,4 @@
-package services.workflow;
+package fr.vbillard.tissusdeprincesse.services.workflow;
 
 import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
@@ -12,10 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringJUnitConfig
 class AbandonneWorkflowTest {
-
     @InjectMocks
     AbandonneWorkFlow workFlow;
-
     @Test
     void firstTest(){
         Projet p = new Projet();

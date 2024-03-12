@@ -14,20 +14,21 @@ public abstract class AbstractService<T extends AbstractEntity> {
 
 	/**
 	 * methode to override if an action is required during a saveOrUpdate() operation
-	 * @param entity
+	 * @param entity AbstractEntity to save or update
 	 */
 	protected void beforeSaveOrUpdate(T entity){
 	}
 
 	/**
 	 * methode to override if an action is required during a delete() operation
-	 * @param entity
+	 * @param entity AbstractEntity to delete
 	 */
 	protected void beforeDelete(T entity){
 	}
 
 	/**
 	 * Do not Override this method. Use beforeSaveOrUpdate()
+	 * Can't be final because of @Transactional
 	 */
 	@Transactional
 	public T saveOrUpdate(T entity) {
@@ -45,6 +46,7 @@ public abstract class AbstractService<T extends AbstractEntity> {
 
 	/**
 	 * Do not Override this method. Use beforeDelete()
+	 * Can't be final because of @Transactional
 	 */
 	@Transactional
 	public void delete(int id) {
@@ -53,6 +55,7 @@ public abstract class AbstractService<T extends AbstractEntity> {
 
 	/**
 	 * Do not Override this method. Use beforeDelete()
+	 * Can't be final because of @Transactional
 	 */
 	@Transactional
 	public void delete(T entity) {

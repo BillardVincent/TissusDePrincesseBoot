@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 @Entity
 public class ColorEntity extends AbstractEntity {
 
+    // 0 - 255
     private int red;
     private int green;
     private int blue;

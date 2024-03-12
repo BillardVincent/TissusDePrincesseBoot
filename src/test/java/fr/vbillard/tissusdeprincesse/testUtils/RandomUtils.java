@@ -1,7 +1,8 @@
-package services;
+package fr.vbillard.tissusdeprincesse.testUtils;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
+import java.util.List;
 import java.util.Random;
 
 public class RandomUtils {
@@ -31,5 +32,10 @@ public class RandomUtils {
 
     public static Float getRandomFloat(int max) {
         return random.nextFloat(max);
+    }
+
+    public static <T> T getRandomList(List<T> list) {
+        int random = getRandomNumber(list.size());
+        return list.get(random);
     }
 }

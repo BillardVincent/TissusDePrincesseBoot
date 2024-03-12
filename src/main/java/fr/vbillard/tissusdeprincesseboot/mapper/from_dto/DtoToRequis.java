@@ -4,7 +4,6 @@ import com.github.rozidan.springboot.modelmapper.TypeMapConfigurer;
 import fr.vbillard.tissusdeprincesseboot.dao.PatronVersionDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
-import fr.vbillard.tissusdeprincesseboot.model.enums.GammePoids;
 import fr.vbillard.tissusdeprincesseboot.service.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.service.TissageService;
 import lombok.AllArgsConstructor;
@@ -36,20 +35,11 @@ public class DtoToRequis extends TypeMapConfigurer<TissuRequisDto, TissuRequis> 
     });
   }
 
-  private class IdConverter extends AbstractConverter<TissuRequisDto, Integer> {
+  private static class IdConverter extends AbstractConverter<TissuRequisDto, Integer> {
     @Override
     protected Integer convert(TissuRequisDto dto) {
       return dto.getIdProperty() == null ? 0 : dto.getId();
     }
   }
-
-
-  private class GammePoidsConverter extends AbstractConverter<String, GammePoids> {
-    @Override
-    protected GammePoids convert(String source) {
-      return GammePoids.getEnum(source);
-    }
-  }
-
 
 }

@@ -40,28 +40,28 @@ public class DtoToTissu extends TypeMapConfigurer<TissuDto, Tissu> {
 		});
 	}
 
-	private class IdConverter extends AbstractConverter<TissuDto, Integer> {
+	private static class IdConverter extends AbstractConverter<TissuDto, Integer> {
 		@Override
 		protected Integer convert(TissuDto dto) {
 			return dto.getIdProperty() == null ? 0 : dto.getId();
 		}
 	}
 
-	private class ReferenceConverter extends AbstractConverter<TissuDto, String> {
+	private static class ReferenceConverter extends AbstractConverter<TissuDto, String> {
 		@Override
 		protected String convert(TissuDto dto) {
 			return dto.getReferenceProperty() == null ? "" : dto.getReference();
 		}
 	}
 
-	private class UnitePoidsConverter extends AbstractConverter<String, UnitePoids> {
+	private static class UnitePoidsConverter extends AbstractConverter<String, UnitePoids> {
 		@Override
 		protected UnitePoids convert(String source) {
 			return UnitePoids.getEnum(source);
 		}
 	}
 
-	private class TypeTissuConverter extends AbstractConverter<String, TypeTissuEnum> {
+	private static class TypeTissuConverter extends AbstractConverter<String, TypeTissuEnum> {
 		@Override
 		protected TypeTissuEnum convert(String source) {
 			return TypeTissuEnum.getEnum(source);
@@ -75,7 +75,7 @@ public class DtoToTissu extends TypeMapConfigurer<TissuDto, Tissu> {
 		}
 	}
 
-	private class ColorConverter extends AbstractConverter<TissuDto, ColorEntity> {
+	private static class ColorConverter extends AbstractConverter<TissuDto, ColorEntity> {
 		@Override
 		protected ColorEntity convert(TissuDto source) {
 			if (source.getColor() == null) {

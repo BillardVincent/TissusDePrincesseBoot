@@ -1,3 +1,5 @@
+package fr.vbillard.tissusdeprincesse;
+
 import fr.vbillard.tissusdeprincesseboot.utils.color.ColorUtils;
 import javafx.scene.paint.Color;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,7 +21,6 @@ class CIELabTest {
         assertEquals(expectedSomewhat, distance < 100);
     }
 
-    // 80 ?
 
     private static Stream<Arguments> parameters() {
         return Stream.of(

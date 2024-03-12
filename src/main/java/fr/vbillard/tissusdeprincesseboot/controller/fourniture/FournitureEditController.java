@@ -34,6 +34,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
+import lombok.Getter;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
 
@@ -102,6 +103,7 @@ public class FournitureEditController implements IController {
   private StageInitializer initializer;
 
   private FournitureDto fourniture;
+  @Getter
   private boolean okClicked = false;
 
   private final TypeFournitureService typeService;
@@ -167,6 +169,10 @@ public class FournitureEditController implements IController {
       }
     });
 
+   // TODO tester la solution :
+    // Bindings.bindBidirectional(quantiteField.textProperty(), fourniture.getQuantiteProperty(), new NumberStringConverter());
+
+
     typeField.setItems(observableArrayList(typeService.getAllTypeFournituresValues()));
     typeField.setValue(safePropertyToString(fourniture.getTypeNameProperty()));
 
@@ -223,6 +229,7 @@ public class FournitureEditController implements IController {
     colorComp.initialize(initializer, fourniture.getColor(), pictureHelper.hasImage(fourniture) ? imagePane.getImage() : null);
 
     GlyphIconUtil.generateIcon(warningSaveIcon, GlyphIconUtil.VERY_BIG_ICONE_SIZE, Constants.colorWarning);
+
     setBoutonArchiver();
 
     onChangeListener(new ObservableValue[]{ referenceField.textProperty(), quantiteField.textProperty(),
@@ -248,10 +255,6 @@ public class FournitureEditController implements IController {
     validators =
         new Validator[] {new NonNullValidator<>(referenceField, "référence"), new NonNullValidator<>(typeField, "type"),
             new NonNullValidator<>(uniteField, "unité primaire")};
-  }
-
-  public boolean isOkClicked() {
-    return okClicked;
   }
 
   @FXML
@@ -304,11 +307,11 @@ public class FournitureEditController implements IController {
     StringBuilder sb = new StringBuilder();
     sb.append(typeField == null || Strings.isBlank(typeField.getValue()) ? "XXX" : getSubstringValueMax3(typeField));
 
-    boolean ref = true;
+    boolean refExists = true;
     int refNb = 0;
-    while (ref) {
+    while (refExists) {
       refNb++;
-      ref = fournitureService.existByReference(sb.toString() + refNb);
+      refExists = fournitureService.existByReference(sb.toString() + refNb);
     }
     referenceField.setText(sb.append(refNb).toString());
   }
@@ -361,7 +364,9 @@ public class FournitureEditController implements IController {
     if (!hasChanged.get() || ButtonType.OK.equals(
             ShowAlert.warn(initializer.getPrimaryStage(), "Données non sauvegardées",
                             "Des modifications risquent d'être perdues",
-                            "Vous allez être redirigé(e) vers la section \"Rangement\". Des modifications ont été faites, mais n'ont pas été enregistrées. Souhaitez vous tout de même continuer?")
+                            "Vous allez être redirigé(e) vers la section \"Rangement\". Des modifications " +
+                                    "ont été faites, mais n'ont pas été enregistrées. Souhaitez vous tout de même" +
+                                    " continuer?")
                     .orElse(ButtonType.CANCEL))) {
       FxData data = new FxData();
       data.setFourniture(fourniture);

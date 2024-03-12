@@ -43,7 +43,7 @@ public class ColorUtils {
     }
 
     public static ColorEntity colorToEntity(Color color) {
-        if (color == null) {
+        if (color == null || color.equals(Color.TRANSPARENT)) {
             return null;
         }
 

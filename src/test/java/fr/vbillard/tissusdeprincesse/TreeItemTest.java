@@ -1,3 +1,5 @@
+package fr.vbillard.tissusdeprincesse;
+
 import com.jfoenix.controls.JFXTreeView;
 import fr.vbillard.tissusdeprincesseboot.controller.rangement.RangementTreeViewHelper;
 import fr.vbillard.tissusdeprincesseboot.dao.RangementRootDao;

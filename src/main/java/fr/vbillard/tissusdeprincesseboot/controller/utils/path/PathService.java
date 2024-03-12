@@ -8,7 +8,6 @@ import fr.vbillard.tissusdeprincesseboot.controller.fourniture.*;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.InventaireBatchController;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.PreferenceController;
 import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
-import fr.vbillard.tissusdeprincesseboot.controller.patron.ListElementController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronCardController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronListController;
 import fr.vbillard.tissusdeprincesseboot.controller.patron.PatronSearchController;
@@ -70,8 +69,6 @@ public class PathService {
         return new PathHolder(pathProperties.getMatiereEdit().getURL(), MatiereEditController.class);
       case TISSAGE:
         return new PathHolder(pathProperties.getTissageEdit().getURL(), TissageEditController.class);
-      case LIST_ELEMENT:
-        return new PathHolder(pathProperties.getListElement().getURL(), ListElementController.class);
       case TISSU_REQUIS:
         return new PathHolder(pathProperties.getTissuRequisCard().getURL(), TissuRequisCardController.class);
       case PROJET_EDIT_TISSU_LIST_ELEMENT:

@@ -4,7 +4,6 @@ import com.github.rozidan.springboot.modelmapper.TypeMapConfigurer;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.enums.SupportTypeEnum;
-import fr.vbillard.tissusdeprincesseboot.service.TypeFournitureService;
 import javafx.beans.property.StringProperty;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Component;
 @Component
 @AllArgsConstructor
 public class DtoToPatron extends TypeMapConfigurer<PatronDto, Patron> {
-	TypeFournitureService tfs;
 
 	@Override
 	public void configure(TypeMap<PatronDto, Patron> typeMap) {

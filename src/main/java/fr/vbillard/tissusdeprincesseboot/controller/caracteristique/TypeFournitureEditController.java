@@ -1,6 +1,10 @@
 package fr.vbillard.tissusdeprincesseboot.controller.caracteristique;
 
-import com.jfoenix.controls.*;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXTextField;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
@@ -20,7 +24,6 @@ import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 
@@ -236,7 +239,6 @@ public class TypeFournitureEditController implements IModalController {
 		this.dialogStage = dialogStage;
 	}
 
-	@Transactional
 	private void resetField() {
 		deselectionnerButton.setVisible(typeFourniture != null);
 		supprimerButton.setVisible(typeFourniture != null);
