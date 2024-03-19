@@ -25,7 +25,7 @@ public class ProjetListController extends ViewListController {
     boolean hasIncompleteInventaire;
 
     @FXML
-    private Pane hasIncompleteInventaireIcn;
+    public Pane hasIncompleteInventaireIcn;
 
     private final ProjetService projetService;
     private final RootController rootController;
@@ -86,7 +86,7 @@ public class ProjetListController extends ViewListController {
     }
 
     @FXML
-    private void launchInventaire() {
+    public void launchInventaire() {
         if (hasIncompleteInventaire) {
             displayInventaireService.batchInventaire(initializer);
             setInventaireIcone();

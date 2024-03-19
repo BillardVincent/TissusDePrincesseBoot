@@ -9,26 +9,26 @@ import javafx.scene.paint.Color;
 
 public class FournitureDto implements FxDto<Fourniture> {
 
-	private IntegerProperty id;
-	private StringProperty nom;
-	private StringProperty intituleDimension;
-	private FloatProperty quantite;
-	private StringProperty unite;
-	private StringProperty uniteShort;
-	private StringProperty intituleSecondaire;
-	private FloatProperty quantiteSec;
-	private StringProperty uniteSecondaire;
-	private StringProperty uniteSecondaireShort;
-	private StringProperty lieuAchat;
-	private StringProperty reference;
-	private StringProperty description;
-	private FloatProperty quantiteDisponible;
-	private StringProperty typeName;
-	private BooleanProperty archived;
+	private final IntegerProperty id;
+	private final StringProperty nom;
+	private final StringProperty intituleDimension;
+	private final FloatProperty quantite;
+	private final StringProperty unite;
+	private final StringProperty uniteShort;
+	private final StringProperty intituleSecondaire;
+	private final FloatProperty quantiteSec;
+	private final StringProperty uniteSecondaire;
+	private final StringProperty uniteSecondaireShort;
+	private final StringProperty lieuAchat;
+	private final StringProperty reference;
+	private final StringProperty description;
+	private final FloatProperty quantiteDisponible;
+	private final StringProperty typeName;
+	private final BooleanProperty archived;
 	private TypeFourniture type;
-	private ObjectProperty<Color> color;
+	private final ObjectProperty<Color> color;
 	public int colorId;
-	private ObjectProperty<Rangement> rangement;
+	private final ObjectProperty<Rangement> rangement;
 
 
 	public FournitureDto() {
@@ -276,4 +276,5 @@ public class FournitureDto implements FxDto<Fourniture> {
 		return "Fourniture - "+typeName.get()+" [ nom : " + nom.get() + ", " + intituleDimension.get() + " : " + quantite.get() + unite.get() + ", " +
 				intituleSecondaire.get() + " : " + quantiteSec.get() + uniteSecondaire.get() + ']';
 	}
+
 }

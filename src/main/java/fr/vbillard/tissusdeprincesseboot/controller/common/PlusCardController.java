@@ -24,7 +24,7 @@ public class PlusCardController implements IController{
     protected FxData data;
     
     @FXML
-    private HBox iconContainer;
+    public HBox iconContainer;
     
     boolean isAddButton;
     

@@ -59,19 +59,19 @@ public class PatronEditController implements IController {
   @FXML
   public JFXButton changerLieuStockage;
   @FXML
-  private JFXTextField marqueField;
+  public JFXTextField marqueField;
   @FXML
-  private JFXTextField modeleField;
+  public JFXTextField modeleField;
   @FXML
-  private JFXTextField typeVetementField;
+  public JFXTextField typeVetementField;
   @FXML
-  private JFXButton addVersionBtn;
+  public JFXButton addVersionBtn;
   @FXML
-  private VBox tissuEtFournitureContainer;
+  public VBox tissuEtFournitureContainer;
   @FXML
-  private JFXButton generateReferenceButton;
+  public JFXButton generateReferenceButton;
   @FXML
-  private JFXTextField referenceField;
+  public JFXTextField referenceField;
   @FXML
   public ImageView imagePane;
   @FXML
@@ -79,7 +79,7 @@ public class PatronEditController implements IController {
   @FXML
   public JFXButton archiverBtn;
   @FXML
-  private Accordion versionAccordion;
+  public Accordion versionAccordion;
 
   private StageInitializer initializer;
   private final RootController root;
@@ -110,7 +110,7 @@ public class PatronEditController implements IController {
   }
 
   @FXML
-  private void initialize() {
+  public void initialize() {
 
     generateReferenceButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.MAGIC));
     generateReferenceButton.setTooltip(new Tooltip("Générer une référence automatiquement"));
@@ -138,7 +138,7 @@ public class PatronEditController implements IController {
   }
 
   @FXML
-  private void handleSavePatron() {
+  public void handleSavePatron() {
     if (areValidatorsValid(initializer, validators)) {
 
       patron.setReference(referenceField.getText());
@@ -156,7 +156,7 @@ public class PatronEditController implements IController {
   }
 
   @FXML
-  private void handleCancel() {
+  public void handleCancel() {
     if (patron.getId() != 0) {
       root.displayPatronDetails(patron);
     } else {
@@ -166,7 +166,7 @@ public class PatronEditController implements IController {
   }
 
   @FXML
-  private void handleGenerateReference() {
+  public void handleGenerateReference() {
     StringBuilder sb = new StringBuilder();
     sb.append(textFieldToFirstCharOrX(marqueField))
         .append(textFieldToFirstCharOrX(modeleField))
@@ -224,26 +224,26 @@ public class PatronEditController implements IController {
   }
 
   @FXML
-  private void addPicture() {
+  public void addPicture() {
     handleSavePatron();
     pictureUtils.addPictureLocal(patron);
   }
 
   @FXML
-  private void addPictureWeb() {
+  public void addPictureWeb() {
     handleSavePatron();
     pictureUtils.addPictureWeb(patron);
   }
 
   @FXML
-  private void addPictureFromClipboard() {
+  public void addPictureFromClipboard() {
     handleSavePatron();
     pictureUtils.addPictureClipBoard(patron);
 
   }
 
   @FXML
-  private void pictureExpend() {
+  public void pictureExpend() {
     DevInProgressService.notImplemented();
 
   }

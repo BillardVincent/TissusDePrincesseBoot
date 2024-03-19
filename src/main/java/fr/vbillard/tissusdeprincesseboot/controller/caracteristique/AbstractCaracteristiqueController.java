@@ -16,21 +16,21 @@ import org.apache.logging.log4j.util.Strings;
 public abstract class AbstractCaracteristiqueController implements IModalController {
 
     @FXML
-    protected JFXListView<String> listElement;
+    public JFXListView<String> listElement;
     @FXML
-    protected JFXTextField newElement;
+    public JFXTextField newElement;
     @FXML
-    protected JFXTextField editElement;
+    public JFXTextField editElement;
     @FXML
-    protected JFXButton ajouterButton;
+    public JFXButton ajouterButton;
     @FXML
-    protected JFXButton editerButton;
+    public JFXButton editerButton;
     @FXML
-    protected JFXButton supprimerButton;
+    public JFXButton supprimerButton;
     @FXML
-    protected JFXButton fermerButton;
+    public JFXButton fermerButton;
     @FXML
-    protected JFXButton cancelButton;
+    public JFXButton cancelButton;
 
     protected String editedElements;
 
@@ -111,7 +111,7 @@ public abstract class AbstractCaracteristiqueController implements IModalControl
     }
 
     @FXML
-    protected void initialize() {
+    public void initialize() {
         setElements();
         listElement.setItems(allElements);
         listElement.getSelectionModel().selectedItemProperty()
@@ -142,7 +142,7 @@ public abstract class AbstractCaracteristiqueController implements IModalControl
     protected abstract void delete();
 
     @FXML
-    private void handleCancelSelection() {
+    public void handleCancelSelection() {
         newElement.setText(Strings.EMPTY);
         editElement.setText(Strings.EMPTY);
         setButton();

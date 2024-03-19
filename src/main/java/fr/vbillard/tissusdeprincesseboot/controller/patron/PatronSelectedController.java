@@ -26,18 +26,18 @@ import java.util.Optional;
 public class PatronSelectedController implements IController {
 
     @FXML
-    private Label titre;
+    public Label titre;
     @FXML
-    private ImageView image;
+    public ImageView image;
 
     @FXML
-    private Label marquePatronLabel;
+    public Label marquePatronLabel;
     @FXML
-    private Label modelPatronLabel;
+    public Label modelPatronLabel;
     @FXML
-    private Label typeVetementPatronLabel;
+    public Label typeVetementPatronLabel;
     @FXML
-    private MaterialDesignIconView typeSupportIcn;
+    public MaterialDesignIconView typeSupportIcn;
 
     private ImageService imageService;
 

@@ -67,7 +67,7 @@ public class FournitureSearchController implements IController {
     @FXML
     public FloatSpinner dimSecMin;
     @FXML
-    private JFXComboBox<String> uniteSecCombo;
+    public JFXComboBox<String> uniteSecCombo;
     @FXML
     public FloatSpinner dimSecMax;
     @FXML
@@ -77,7 +77,7 @@ public class FournitureSearchController implements IController {
     @FXML
     public FloatSpinner dimPrimMax;
     @FXML
-    private JFXComboBox<String> unitePrimCombo;
+    public JFXComboBox<String> unitePrimCombo;
     @FXML
     public JFXCheckBox archiveTrue;
     @FXML
@@ -172,7 +172,7 @@ public class FournitureSearchController implements IController {
     }
 
     @FXML
-    private void initialize() {
+    public void initialize() {
 
     }
 
@@ -181,14 +181,14 @@ public class FournitureSearchController implements IController {
     }
 
     @FXML
-    private void handleCancel() {
+    public void handleCancel() {
         FxData data = new FxData();
         data.setSpecification(new TissuSpecification());
         setData(data);
     }
 
     @FXML
-    private void handleOk() {
+    public void handleOk() {
 
         List<TypeFourniture> type = typeFournitureService.findTypeFourniture(typeValuesSelected);
 
@@ -229,14 +229,14 @@ public class FournitureSearchController implements IController {
     }
 
     @FXML
-    private void utilisableHelp() {
+    public void utilisableHelp() {
         ShowAlert.information(initializer.getPrimaryStage(), "Aide", "Quantité utilisable",
                 "Définit si la recherche doit porter sur la quantité de fourniture en stock (\"Utilisable\" décoché) ou sur "
                         + "la quantité de fourniture disponible (\"Utilisable\" coché)");
     }
 
     @FXML
-    private void choiceType() {
+    public void choiceType() {
         setSelectionFromChoiceBoxModale(typeFournitureService.getAllValues(), typeValuesSelected, typeLbl, true);
     }
 

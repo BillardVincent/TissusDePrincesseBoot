@@ -269,7 +269,7 @@ public class TissuSearchController implements IController {
   }
 
   @FXML
-  private void initialize() {
+  public void initialize() {
     // nothing to do here
   }
 
@@ -278,14 +278,14 @@ public class TissuSearchController implements IController {
   }
 
   @FXML
-  private void handleCancel() {
+  public void handleCancel() {
     FxData data = new FxData();
     data.setSpecification(new TissuSpecification());
     setData(data);
   }
 
   @FXML
-  private void handleOk() {
+  public void handleOk() {
     List<Matiere> matieres = matiereService.findMatiere(matiereValuesSelected);
 
     List<Tissage> tissages = tissageService.tissageValuesSelected(tissageValuesSelected);
@@ -325,28 +325,28 @@ public class TissuSearchController implements IController {
   }
 
   @FXML
-  private void lourdAction() {
+  public void lourdAction() {
     if (!moyenCBox.isSelected() && legerCBox.isSelected()) {
       moyenCBox.setSelected(true);
     }
   }
 
   @FXML
-  private void moyenAction() {
+  public void moyenAction() {
     if (!moyenCBox.isSelected() && lourdCBox.isSelected() && legerCBox.isSelected()) {
       lourdCBox.setSelected(false);
     }
   }
 
   @FXML
-  private void legerAction() {
+  public void legerAction() {
     if (!moyenCBox.isSelected() && lourdCBox.isSelected()) {
       moyenCBox.setSelected(true);
     }
   }
 
   @FXML
-  private void poidsHelp() {
+  public void poidsHelp() {
     ShowAlert.information(initializer.getPrimaryStage(), "Aide", "Poids des tissus",
         "Définissez une plage de poids à filtrer. La plage doit être continue. Léger = inférieur à " + df.format(
             margeHauteLeger) + ", Moyen = entre " + df.format(margeBasseMoyen) + " et " + df.format(margeHauteMoyen)
@@ -354,23 +354,23 @@ public class TissuSearchController implements IController {
   }
 
   @FXML
-  private void utilisableHelp() {
+  public void utilisableHelp() {
     ShowAlert.information(initializer.getPrimaryStage(), "Aide", "Tissu utilisable",
         "Définit si la recherche doit porter sur la quantité de tissu en stock (\"Utilisable\" décoché) ou sur la quantité de tissu disponible (\"Utilisable\" coché)");
   }
 
   @FXML
-  private void choiceType() {
+  public void choiceType() {
     setSelectionFromChoiceBoxModale(TypeTissuEnum.labels(), typeValuesSelected, typeLbl, true);
   }
 
   @FXML
-  private void choiceMatiere() {
+  public void choiceMatiere() {
     setSelectionFromChoiceBoxModale(matiereService.getAllValues(), matiereValuesSelected, matiereLbl, true);
   }
 
   @FXML
-  private void choiceTissage() {
+  public void choiceTissage() {
     setSelectionFromChoiceBoxModale(tissageService.getAllValues(), tissageValuesSelected, tissageLbl, true);
   }
 

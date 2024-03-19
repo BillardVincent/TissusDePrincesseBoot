@@ -78,11 +78,8 @@ public enum Unite {
             return value;
         }
 
-        List<Unite> lst = Arrays.asList(fromUnite, toUnite);
-        if (DimensionEnum.LONGUEUR.getUnites().containsAll(lst)
-                || DimensionEnum.POIDS.getUnites().containsAll(lst)
-                || DimensionEnum.VOLUME.getUnites().containsAll(lst)) {
-            return value / fromUnite.getFacteur() * toUnite.getFacteur();
+        if (DimensionEnum.unitsAreInSameDimension(fromUnite, toUnite)) {
+            return value * fromUnite.getFacteur() / toUnite.getFacteur();
         }
 
         throw new IllegalData("conversion impossible de " + fromUnite.label + " en " + toUnite.label);
@@ -95,4 +92,6 @@ public enum Unite {
         }
         return value / fromUnite.getFacteur();
     }
+
+
 }

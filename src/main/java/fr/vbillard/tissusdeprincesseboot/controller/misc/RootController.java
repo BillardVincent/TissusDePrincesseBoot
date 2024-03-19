@@ -56,27 +56,27 @@ public class RootController implements IController {
     private static final Logger LOGGER = LogManager.getLogger(RootController.class);
 
     @FXML
-    private HBox rangementMenu;
+    public HBox rangementMenu;
     @FXML
-    private Pane mainWindow;
+    public Pane mainWindow;
     @FXML
-    private Pane searchPane;
+    public Pane searchPane;
     @FXML
-    private Pane selectedElement;
+    public Pane selectedElement;
     @FXML
-    private HBox tissuMenu;
+    public HBox tissuMenu;
     @FXML
-    private HBox fournitureMenu;
+    public HBox fournitureMenu;
     @FXML
-    private HBox patronMenu;
+    public HBox patronMenu;
     @FXML
-    private HBox projetMenu;
+    public HBox projetMenu;
     @FXML
-    private JFXButton deleteSelectedButton;
+    public JFXButton deleteSelectedButton;
     @FXML
-    private JFXButton researchButton;
+    public JFXButton researchButton;
     @FXML
-    private VBox test;
+    public VBox test;
 
     private List<HBox> menuElements;
     private StageInitializer initializer;
@@ -435,7 +435,7 @@ public class RootController implements IController {
     }
 
     @FXML
-    private void createResearch() {
+    public void createResearch() {
         if (tissuRequisSelected != null) {
             displayTissu(tissuRequisService.getTissuSpecification(tissuRequisSelected));
         } else if (fournitureRequiseSelected != null) {

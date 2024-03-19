@@ -246,7 +246,7 @@ public class FournitureEditController implements IController {
   }
 
   @FXML
-  private void initialize() {
+  public void initialize() {
     addTypeButton.setGraphic(GlyphIconUtil.plusCircleTiny());
     FontAwesomeIconView magicIcon = new FontAwesomeIconView(FontAwesomeIcon.MAGIC);
     generateReferenceButton.setGraphic(magicIcon);
@@ -258,7 +258,7 @@ public class FournitureEditController implements IController {
   }
 
   @FXML
-  private void handleOk() {
+  public void handleOk() {
     if (areValidatorsValid(initializer, validators)) {
 
       setFournitureFromFields();
@@ -285,7 +285,7 @@ public class FournitureEditController implements IController {
   }
 
   @FXML
-  private void handleCancel() {
+  public void handleCancel() {
     if (fourniture.getId() != 0) {
       root.displayFournituresDetails(fourniture);
     } else {
@@ -294,7 +294,7 @@ public class FournitureEditController implements IController {
   }
 
   @FXML
-  private void handleAddType() {
+  public void handleAddType() {
     initializer.displayModale(PathEnum.TYPE_FOURNITURE, null, "Fourniture");
 
     typeField.setItems(observableArrayList(typeService.getAllTypeFournituresValues()));
@@ -303,7 +303,7 @@ public class FournitureEditController implements IController {
   }
 
   @FXML
-  private void handleGenerateReference() {
+  public void handleGenerateReference() {
     StringBuilder sb = new StringBuilder();
     sb.append(typeField == null || Strings.isBlank(typeField.getValue()) ? "XXX" : getSubstringValueMax3(typeField));
 
@@ -321,7 +321,7 @@ public class FournitureEditController implements IController {
   }
 
   @FXML
-  private void addPicture() {
+  public void addPicture() {
     if (areValidatorsValid(initializer, validators)) {
       setFournitureFromFields();
       pictureHelper.addPictureLocal(fourniture);
@@ -329,7 +329,7 @@ public class FournitureEditController implements IController {
   }
 
   @FXML
-  private void addPictureWeb() {
+  public void addPictureWeb() {
     if (areValidatorsValid(initializer, validators)) {
       setFournitureFromFields();
       pictureHelper.addPictureWeb(fourniture);
@@ -337,7 +337,7 @@ public class FournitureEditController implements IController {
   }
 
   @FXML
-  private void addPictureFromClipboard() {
+  public void addPictureFromClipboard() {
     if (areValidatorsValid(initializer, validators)) {
       setFournitureFromFields();
       pictureHelper.addPictureClipBoard(fourniture);
@@ -345,7 +345,7 @@ public class FournitureEditController implements IController {
   }
 
   @FXML
-  private void pictureExpend() {
+  public void pictureExpend() {
     DevInProgressService.notImplemented();
   }
 

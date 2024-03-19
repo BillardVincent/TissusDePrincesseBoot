@@ -93,7 +93,7 @@ public class PatronEditTissuRequisController implements IController {
   }
 
   @FXML
-  private void initialize() {
+  public void initialize() {
 	    addQuantiteBtn.setGraphic(GlyphIconUtil.plusCircleTiny());
 	    addMatiereButton.setGraphic(GlyphIconUtil.plusCircleTiny());
 	    addTissageButton.setGraphic(GlyphIconUtil.plusCircleTiny());
@@ -275,14 +275,14 @@ public class PatronEditTissuRequisController implements IController {
   }
 
   @FXML
-  private void handleSelectMatiere() {
+  public void handleSelectMatiere() {
     setSelectionFromChoiceBoxModale(matiereService.getAllValues(), matiereValuesSelected, matiereLbl, false);
     tissuRequis.setMatiere(matiereValuesSelected);
     tissuRequisService.saveOrUpdate(tissuRequis);
   }
 
   @FXML
-  private void handleSelectTissage() {
+  public void handleSelectTissage() {
     setSelectionFromChoiceBoxModale(tissageService.getAllValues(), tissageValuesSelected, tissageLbl, false);
     tissuRequis.setTissage(tissageValuesSelected);
     tissuRequisService.saveOrUpdate(tissuRequis);

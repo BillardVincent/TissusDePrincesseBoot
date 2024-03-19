@@ -128,7 +128,7 @@ public class PatronVersionAccordionController implements IController {
   }
 
   @FXML
-  private void initialize() {
+  public void initialize() {
     addTissuButton.setGraphic(GlyphIconUtil.plusCircleTiny());
     addFournitureButton.setGraphic(GlyphIconUtil.plusCircleTiny());
   }

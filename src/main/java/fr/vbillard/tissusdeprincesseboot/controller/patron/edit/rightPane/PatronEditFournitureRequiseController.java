@@ -191,7 +191,7 @@ public class PatronEditFournitureRequiseController implements IController {
   }
   
   @FXML
-  private void handleAddType() {
+  public void handleAddType() {
     initializer.displayModale(PathEnum.TYPE_FOURNITURE, null, "Fourniture");
 
     buildComboBox(typeFournitureService.getAllValues(), dto.getTypeNameProperty(), null, typeCbx);

@@ -1,4 +1,4 @@
-package fr.vbillard.tissusdeprincesse;
+package fr.vbillard.tissusdeprincesse.controller;
 
 import com.jfoenix.controls.JFXTreeView;
 import fr.vbillard.tissusdeprincesseboot.controller.rangement.RangementTreeViewHelper;
@@ -8,7 +8,6 @@ import fr.vbillard.tissusdeprincesseboot.model.Rangement;
 import fr.vbillard.tissusdeprincesseboot.model.RangementRoot;
 import fr.vbillard.tissusdeprincesseboot.service.RangementRootService;
 import fr.vbillard.tissusdeprincesseboot.service.RangementService;
-import javafx.application.Platform;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,6 +18,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.ArrayList;
 import java.util.List;
 
+import static fr.vbillard.tissusdeprincesse.testUtils.JavaFxTestUtil.initJavaFx;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -28,7 +28,7 @@ class TreeItemTest {
 
     @BeforeAll
     static void initJfxRuntime() {
-        Platform.startup(() -> {});
+        initJavaFx();
     }
 
     @InjectMocks

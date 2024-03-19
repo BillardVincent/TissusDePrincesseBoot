@@ -218,7 +218,7 @@ public class PatronSearchController implements IController {
   }
 
   @FXML
-  private void initialize(){
+  public void initialize(){
     // nothing to initialize
   }
 
@@ -227,7 +227,7 @@ public class PatronSearchController implements IController {
   }
 
   @FXML
-  private void handleOk() {
+  public void handleOk() {
 
     List<Matiere> matieres = matiereService.findMatiere(matiereValuesSelected);
 
@@ -281,29 +281,29 @@ public class PatronSearchController implements IController {
   }
 
   @FXML
-  private void handleCancel() {
+  public void handleCancel() {
     FxData data = new FxData();
     data.setSpecification(new PatronSpecification());
     setData(data);
   }
 
   @FXML
-  private void choiceType() {
+  public void choiceType() {
     setSelectionFromChoiceBoxModale(TypeTissuEnum.labels(), typeValuesSelected, typeLbl, true);
   }
 
   @FXML
-  private void choiceMatiere() {
+  public void choiceMatiere() {
     setSelectionFromChoiceBoxModale(matiereService.getAllValues(), matiereValuesSelected, matiereLbl, true);
   }
 
   @FXML
-  private void choiceTissage() {
+  public void choiceTissage() {
     setSelectionFromChoiceBoxModale(tissageService.getAllValues(), tissageValuesSelected, tissageLbl, true);
   }
 
   @FXML
-  private void poidsHelp() {
+  public void poidsHelp() {
     ShowAlert.information(initializer.getPrimaryStage(), "Aide", "Poids des tissus",
         "Définissez une plage de poids à filtrer. La plage doit être continue. Léger = inférieur à " + DECIMAL_FORMAT.format(
             margeHauteLeger) + ", Moyen = entre " + DECIMAL_FORMAT.format(margeBasseMoyen) + " et " + DECIMAL_FORMAT.format(margeHauteMoyen)

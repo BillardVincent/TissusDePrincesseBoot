@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class PatronEditPatronController implements IController {
 
   @FXML
-  private JFXButton ajouterVersionBtn;
+  public JFXButton ajouterVersionBtn;
 
   private StageInitializer initializer;
   private FxData data;
@@ -42,7 +42,7 @@ public class PatronEditPatronController implements IController {
   }
 
   @FXML
-  private void initialize() {
+  public void initialize() {
 
   }
 

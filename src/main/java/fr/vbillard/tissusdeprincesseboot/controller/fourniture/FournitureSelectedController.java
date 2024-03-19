@@ -30,11 +30,11 @@ public class FournitureSelectedController implements IController {
     @FXML
     public Label nom;
     @FXML
-    private Label nombreEtUnite;
+    public Label nombreEtUnite;
     @FXML
-    private Label type;
+    public Label type;
     @FXML
-    private ImageView image;
+    public ImageView image;
 
     private final ImageService imageService;
 

@@ -1,28 +1,46 @@
 package fr.vbillard.tissusdeprincesse.testUtils;
 
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
+import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.model.ColorEntity;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
+import fr.vbillard.tissusdeprincesseboot.model.FournitureRequise;
+import fr.vbillard.tissusdeprincesseboot.model.Patron;
+import fr.vbillard.tissusdeprincesseboot.model.PatronVersion;
 import fr.vbillard.tissusdeprincesseboot.model.Quantite;
 import fr.vbillard.tissusdeprincesseboot.model.Rangement;
 import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
 import fr.vbillard.tissusdeprincesseboot.model.enums.DimensionEnum;
+import fr.vbillard.tissusdeprincesseboot.model.enums.SupportTypeEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
+import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
 import javafx.scene.paint.Color;
 
 import java.util.List;
 import java.util.function.Supplier;
 
+import static fr.vbillard.tissusdeprincesse.testUtils.RandomUtils.getRandomBoolean;
+import static fr.vbillard.tissusdeprincesse.testUtils.RandomUtils.getRandomDouble;
+import static fr.vbillard.tissusdeprincesse.testUtils.RandomUtils.getRandomEnum;
+import static fr.vbillard.tissusdeprincesse.testUtils.RandomUtils.getRandomFloat;
+import static fr.vbillard.tissusdeprincesse.testUtils.RandomUtils.getRandomList;
+import static fr.vbillard.tissusdeprincesse.testUtils.RandomUtils.getRandomNumber;
+import static fr.vbillard.tissusdeprincesse.testUtils.RandomUtils.getRandomString;
+
 public class TestContexte {
 
     private Fourniture fourniture;
     private TypeFourniture typeFourniture;
-    private ColorEntity color;
+    private ColorEntity colorEntity;
     private Quantite quantite1;
     private Quantite quantite2;
     private Rangement rangement;
     private FournitureDto fournitureDto;
-
+    private FournitureRequise fournitureRequise;
+    private PatronVersion patronVersion;
+    private Patron patron;
+    private TissuDto tissuDto;
+    private Color color;
     public FournitureDto getFournitureDto(){
         return getOrBuildIfNull(fournitureDto, this::buildFournitureDto);
     }
@@ -31,8 +49,8 @@ public class TestContexte {
         return getOrBuildIfNull(fourniture, this::buildFourniture);
     }
 
-    public ColorEntity getColor() {
-        return getOrBuildIfNull(color, this::buildColor);
+    public ColorEntity getColorEntity() {
+        return getOrBuildIfNull(colorEntity, this::buildColorEntity);
     }
 
     public TypeFourniture getTypeFourniture() {
@@ -44,64 +62,72 @@ public class TestContexte {
     }
 
     public Quantite getQuantite1() {
-        return getOrBuildIfNull(quantite1, () -> quantite1 = buildQuantite());
+        return getOrBuildIfNull(quantite1, () -> {
+            quantite1 = buildQuantite();
+            quantite1.setUnite(getRandomList(getTypeFourniture().getDimensionPrincipale().getUnites()));
+            return quantite1;
+        });
     }
 
     public Quantite getQuantite2() {
-        return getOrBuildIfNull(quantite2, () -> quantite2 = buildQuantite());
+        return getOrBuildIfNull(quantite2, () -> {
+            quantite2 = buildQuantite();
+            quantite2.setUnite((getRandomList(getTypeFourniture().getDimensionSecondaire().getUnites())));
+            return quantite2;
+        });
     }
 
     private FournitureDto buildFournitureDto(){
         fournitureDto = new FournitureDto();
-        fournitureDto.setNom(RandomUtils.getRandomString(8));
+        fournitureDto.setNom(getRandomString(8));
         fournitureDto.setType(getTypeFourniture());
-        fournitureDto.setColor(Color.rgb(RandomUtils.getRandomNumber(255),
-                RandomUtils.getRandomNumber(255),RandomUtils.getRandomNumber(255)));
-        fournitureDto.setUnite(RandomUtils.getRandomEnum(Unite.class));
-        fournitureDto.setUniteSecondaire(RandomUtils.getRandomEnum(Unite.class));
-        fournitureDto.setId(RandomUtils.getRandomNumber(100));
-        fournitureDto.setArchived(RandomUtils.getRandomBoolean());
-        fournitureDto.setQuantite(RandomUtils.getRandomFloat(100));
-        fournitureDto.setQuantiteSec(RandomUtils.getRandomFloat(100));
-        fournitureDto.setQuantiteDisponible(RandomUtils.getRandomFloat(100));
-        fournitureDto.setIntituleDimension(RandomUtils.getRandomString(10));
-        fournitureDto.setIntituleSecondaire(RandomUtils.getRandomString(10));
-        fournitureDto.setLieuAchat(RandomUtils.getRandomString(10));
-        fournitureDto.setReference(RandomUtils.getRandomString(5));
-        fournitureDto.setDescription(RandomUtils.getRandomString(100));
+        fournitureDto.setColor(Color.rgb(getRandomNumber(255),
+                getRandomNumber(255), getRandomNumber(255)));
+        fournitureDto.setUnite(getRandomList(getTypeFourniture().getDimensionPrincipale().getUnites()));
+        fournitureDto.setUniteSecondaire(getRandomList(getTypeFourniture().getDimensionSecondaire().getUnites()));
+        fournitureDto.setId(getRandomNumber(100));
+        fournitureDto.setArchived(getRandomBoolean());
+        fournitureDto.setQuantite(getRandomFloat(100));
+        fournitureDto.setQuantiteSec(getRandomFloat(100));
+        fournitureDto.setQuantiteDisponible(getRandomFloat(100));
+        fournitureDto.setIntituleDimension(getRandomString(10));
+        fournitureDto.setIntituleSecondaire(getRandomString(10));
+        fournitureDto.setLieuAchat(getRandomString(10));
+        fournitureDto.setReference(getRandomString(5));
+        fournitureDto.setDescription(getRandomString(100));
         fournitureDto.setRangement(getRangement());
         return fournitureDto;
     }
 
     private TypeFourniture buildTypeFourniture() {
         typeFourniture = new TypeFourniture();
-        typeFourniture.setId(RandomUtils.getRandomNumber(100));
+        typeFourniture.setId(getRandomNumber(100));
         typeFourniture.setFournitures(List.of(getFourniture()));
-        typeFourniture.setDimensionPrincipale(RandomUtils.getRandomEnum(DimensionEnum.class));
-        typeFourniture.setIntitulePrincipale(RandomUtils.getRandomString(8));
-        typeFourniture.setDimensionSecondaire(RandomUtils.getRandomEnum(DimensionEnum.class));
-        typeFourniture.setValue(RandomUtils.getRandomString(12));
-        typeFourniture.setIntituleSecondaire(RandomUtils.getRandomString(8));
-        typeFourniture.setUnitePrincipaleConseillee(RandomUtils.getRandomEnum(Unite.class));
-        typeFourniture.setUniteSecondaireConseillee(RandomUtils.getRandomEnum(Unite.class));
+        typeFourniture.setDimensionPrincipale(getRandomEnum(DimensionEnum.class));
+        typeFourniture.setIntitulePrincipale(getRandomString(8));
+        typeFourniture.setDimensionSecondaire(getRandomEnum(DimensionEnum.class));
+        typeFourniture.setValue(getRandomString(12));
+        typeFourniture.setIntituleSecondaire(getRandomString(8));
+        typeFourniture.setUnitePrincipaleConseillee(getRandomEnum(Unite.class));
+        typeFourniture.setUniteSecondaireConseillee(getRandomEnum(Unite.class));
 
         return typeFourniture;
     }
 
     private Fourniture buildFourniture() {
         fourniture = new Fourniture();
-        fourniture.setId(RandomUtils.getRandomNumber(100));
-        fourniture.setNom(RandomUtils.getRandomString(8));
-        fourniture.setColor(getColor());
+        fourniture.setId(getRandomNumber(100));
+        fourniture.setNom(getRandomString(8));
+        fourniture.setColor(getColorEntity());
         fourniture.setType(getTypeFourniture());
-        fourniture.setNom(RandomUtils.getRandomString(12));
-        fourniture.setDescription(RandomUtils.getRandomString(100));
-        fourniture.setArchived(RandomUtils.getRandomBoolean());
+        fourniture.setNom(getRandomString(12));
+        fourniture.setDescription(getRandomString(100));
+        fourniture.setArchived(getRandomBoolean());
         fourniture.setQuantitePrincipale(getQuantite1());
-        fourniture.setQuantiteDisponible(RandomUtils.getRandomFloat(4));
+        fourniture.setQuantiteDisponible(getRandomFloat(4));
         fourniture.setQuantiteSecondaire(getQuantite2());
-        fourniture.setLieuAchat(RandomUtils.getRandomString(10));
-        fourniture.setReference(RandomUtils.getRandomString(5));
+        fourniture.setLieuAchat(getRandomString(10));
+        fourniture.setReference(getRandomString(5));
         fourniture.setRangement(getRangement());
 
         return fourniture;
@@ -109,31 +135,30 @@ public class TestContexte {
 
     private Rangement buildRangement() {
         rangement = new Rangement();
-        rangement.setNom(RandomUtils.getRandomString(8));
-        rangement.setId(RandomUtils.getRandomNumber(100));
+        rangement.setNom(getRandomString(8));
+        rangement.setId(getRandomNumber(100));
 
         return rangement;
     }
 
     private Quantite buildQuantite() {
         Quantite q = new Quantite();
-        q.setId(RandomUtils.getRandomNumber(100));
-        q.setQuantite(RandomUtils.getRandomFloat(10));
-        q.setUnite(RandomUtils.getRandomEnum(Unite.class));
+        q.setId(getRandomNumber(100));
+        q.setQuantite(getRandomFloat(10));
         return q;
     }
 
-    private ColorEntity buildColor() {
-        color = new ColorEntity();
-        color.setId(RandomUtils.getRandomNumber(100));
-        color.setBlue(RandomUtils.getRandomNumber(255));
-        color.setRed(RandomUtils.getRandomNumber(255));
-        color.setGreen(RandomUtils.getRandomNumber(255));
-        color.setA(RandomUtils.getRandomDouble(1));
-        color.setB(RandomUtils.getRandomDouble(1));
-        color.setL(RandomUtils.getRandomDouble(1));
+    private ColorEntity buildColorEntity() {
+        colorEntity = new ColorEntity();
+        colorEntity.setId(getRandomNumber(100));
+        colorEntity.setBlue(getRandomNumber(255));
+        colorEntity.setRed(getRandomNumber(255));
+        colorEntity.setGreen(getRandomNumber(255));
+        colorEntity.setA(getRandomDouble(1));
+        colorEntity.setB(getRandomDouble(1));
+        colorEntity.setL(getRandomDouble(1));
 
-        return color;
+        return colorEntity;
     }
 
     private <T> T getOrBuildIfNull(T object, Supplier<T> supplier) {
@@ -142,4 +167,86 @@ public class TestContexte {
         }
         return object;
     }
+
+    public FournitureRequise getFournitureRequise() {
+        return getOrBuildIfNull(fournitureRequise, this::buildFournitureRequise);
+    }
+
+    private FournitureRequise buildFournitureRequise() {
+        fournitureRequise = new FournitureRequise();
+        fournitureRequise.setType(getTypeFourniture());
+        fournitureRequise.setUnite(getRandomList(getTypeFourniture().getDimensionPrincipale().getUnites()));
+        fournitureRequise.setDetails(getRandomString(50));
+        fournitureRequise.setId(getRandomNumber(10));
+        fournitureRequise.setQuantite(getRandomFloat(50));
+        fournitureRequise.setUniteSecondaire(getRandomList(getTypeFourniture().getDimensionPrincipale().getUnites()));
+        fournitureRequise.setVersion(getPatronVersion());
+        fournitureRequise.setQuantiteSecMin(getRandomFloat(50));
+        fournitureRequise.setQuantiteSecMax(getRandomFloat(50));
+        return fournitureRequise;
+    }
+
+    private PatronVersion getPatronVersion() {
+        return getOrBuildIfNull(patronVersion, this::buildPatronVersion);
+
+    }
+
+    private PatronVersion buildPatronVersion() {
+        patronVersion = new PatronVersion();
+        // TODO
+
+        return patronVersion;
+    }
+
+    public Patron getPatron() {
+        return getOrBuildIfNull(patron, this::buildPatron);
+    }
+
+    private Patron buildPatron() {
+        patron = new Patron();
+        patron.setId(getRandomNumber(50));
+        patron.setRangement(getRangement());
+        patron.setDescription(getRandomString(10));
+        patron.setArchived(getRandomBoolean());
+        patron.setMarque(getRandomString(10));
+        patron.setModele(getRandomString(10));
+        patron.setSupportType(getRandomEnum(SupportTypeEnum.class));
+        patron.setReference(getRandomString(5));
+        patron.setVersions(List.of(getPatronVersion()));
+
+        return patron;
+    }
+
+    public TissuDto getTissuDto() {
+        return getOrBuildIfNull(tissuDto, this::buildTissuDto);
+    }
+
+    private TissuDto buildTissuDto() {
+        TissuDto dto = new TissuDto();
+        dto.setId(getRandomNumber(50));
+        dto.setDescription(getRandomString(50));
+        dto.setColor(getColor());
+        dto.setTypeTissu(getRandomString(10));
+        dto.setArchived(getRandomBoolean());
+        dto.setLongueurRestante(getRandomNumber(50));
+        dto.setChute(getRandomBoolean());
+        dto.setTissage(getRandomString(50));
+        dto.setMatiere(getRandomString(50));
+        dto.setReference(getRandomString(50));
+        dto.setDecati(getRandomBoolean());
+        dto.setUnitePoids(getRandomEnum(UnitePoids.class));
+
+        return dto;
+    }
+
+    private Color getColor() {
+        return getOrBuildIfNull(color, this::buildColor);
+    }
+
+    private Color buildColor() {
+        color = new Color(getRandomDouble(1), getRandomDouble(1),
+                getRandomDouble(1), getRandomNumber(1));
+        return color;
+    }
+
 }

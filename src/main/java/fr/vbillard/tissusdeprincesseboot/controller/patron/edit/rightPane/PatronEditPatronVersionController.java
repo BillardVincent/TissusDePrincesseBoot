@@ -19,11 +19,11 @@ import org.springframework.stereotype.Component;
 public class PatronEditPatronVersionController implements IController {
 
   @FXML
-  private JFXTextField nomField;
+  public JFXTextField nomField;
   @FXML
-  private JFXButton ajouterTissuBtn;
+  public JFXButton ajouterTissuBtn;
   @FXML
-  private JFXButton ajouterFournitureBtn;
+  public JFXButton ajouterFournitureBtn;
 
   private final PatronVersionService patronVersionService;
 
