@@ -2,8 +2,6 @@ package fr.vbillard.tissusdeprincesseboot;
 
 import javafx.application.Application;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -46,10 +44,5 @@ public class TissuDePrincesseBootApplication {
 		Application.launch(TissusDePrincesseFxApp.class, args);
 	}
 
-	@EventListener(ApplicationReadyEvent.class)
-	public void afterStartup() {
-		frame.setVisible(false);
-		frame.dispose();
-	}
 
 }

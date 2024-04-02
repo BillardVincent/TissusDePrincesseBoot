@@ -64,7 +64,8 @@ public class TestContexte {
     public Quantite getQuantite1() {
         return getOrBuildIfNull(quantite1, () -> {
             quantite1 = buildQuantite();
-            quantite1.setUnite(getRandomList(getTypeFourniture().getDimensionPrincipale().getUnites()));
+            DimensionEnum d = getTypeFourniture().getDimensionPrincipale();
+            quantite1.setUnite(getRandomList(d.getUnites()));
             return quantite1;
         });
     }
@@ -102,7 +103,6 @@ public class TestContexte {
     private TypeFourniture buildTypeFourniture() {
         typeFourniture = new TypeFourniture();
         typeFourniture.setId(getRandomNumber(100));
-        typeFourniture.setFournitures(List.of(getFourniture()));
         typeFourniture.setDimensionPrincipale(getRandomEnum(DimensionEnum.class));
         typeFourniture.setIntitulePrincipale(getRandomString(8));
         typeFourniture.setDimensionSecondaire(getRandomEnum(DimensionEnum.class));

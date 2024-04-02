@@ -7,8 +7,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -112,15 +110,6 @@ public class SpecificationUtils {
 		}
 
 		return cb.and(predicateList.toArray(new Predicate[] {}));
-	}
-
-	public static Predicate getDateSearchPredicate(DateSearch dateSearch, Path<LocalDate> path, CriteriaBuilder cb) {
-		return getCommonSearchPredicate(dateSearch, path, cb);
-	}
-
-	public static Predicate getDateTimeSearchPredicate(DateTimeSearch dateTimeSearch, Path<LocalDateTime> path,
-			CriteriaBuilder cb) {
-		return getCommonSearchPredicate(dateTimeSearch, path, cb);
 	}
 
 	public static <T extends Number & Comparable<? super T>> Predicate getNumericSearchPredicate(

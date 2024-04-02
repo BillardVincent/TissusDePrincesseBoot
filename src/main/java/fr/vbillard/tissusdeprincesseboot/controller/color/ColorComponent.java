@@ -9,11 +9,13 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public class ColorComponent extends HBox {
 
+    @Getter
     SimpleObjectProperty<Color> colorProperty = new SimpleObjectProperty<>();
     StageInitializer initializer;
     Image image;
@@ -36,9 +38,7 @@ public class ColorComponent extends HBox {
         btn.setOnAction(e -> {
             PictureColorDialog dialog = new PictureColorDialog(initializer.getPrimaryStage(), image);
             dialog.setCurrentColor(colorProperty.get());
-            dialog.setOnSave(() -> {
-                setColor(dialog.getCustomColor());
-            });
+            dialog.setOnSave(() -> setColor(dialog.getCustomColor()));
             dialog.show();
 
         });
@@ -66,10 +66,6 @@ public class ColorComponent extends HBox {
 
     public void setImage(Image image){
         this.image = image;
-    }
-
-    public  SimpleObjectProperty<Color> getColorProperty(){
-        return colorProperty;
     }
 
     public  Color getColor(){

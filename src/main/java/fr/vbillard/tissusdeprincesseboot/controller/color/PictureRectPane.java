@@ -31,14 +31,17 @@ public class PictureRectPane extends HBox {
         colorRectIndicator.setCache(true);
         StackPane stackPane = new StackPane();
         colorRect = new StackPane() {
+            @Override
             public Orientation getContentBias() {
                 return Orientation.VERTICAL;
             }
 
+            @Override
             protected double computePrefWidth(double var1) {
                 return var1;
             }
 
+            @Override
             protected double computeMaxWidth(double var1) {
                 return var1;
             }
@@ -49,7 +52,7 @@ public class PictureRectPane extends HBox {
         colorRectOverlayOne = new Pane();
         colorRectOverlayOne.getStyleClass().add("color-rect");
         colorRectOverlayOne.setBackground(new Background(new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,  new BackgroundSize(1.0, 1.0, true, true, false, false))));
-        EventHandler<MouseEvent> eventHandler = (mouseEvent) -> {
+        EventHandler<MouseEvent> eventHandler = mouseEvent -> {
             changeIsLocal = true;
             double x = mouseEvent.getX();
             double y = mouseEvent.getY();
@@ -82,6 +85,7 @@ public class PictureRectPane extends HBox {
         changeIsLocal = false;
     }
 
+    @Override
     protected void layoutChildren() {
         super.layoutChildren();
         colorRectIndicator.autosize();

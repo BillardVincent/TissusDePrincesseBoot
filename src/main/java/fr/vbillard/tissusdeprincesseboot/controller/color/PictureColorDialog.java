@@ -214,6 +214,7 @@ class PictureColorDialog extends HBox {
         dialog.setY(var10);
     }
 
+    @Override
     public void layoutChildren() {
         super.layoutChildren();
         if (dialog.getMinWidth() <= 0.0D || dialog.getMinHeight() <= 0.0D) {

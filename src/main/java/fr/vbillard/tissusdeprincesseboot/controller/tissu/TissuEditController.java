@@ -32,6 +32,7 @@ import fr.vbillard.tissusdeprincesseboot.service.TissuService;
 import fr.vbillard.tissusdeprincesseboot.utils.ConstantesMetier;
 import fr.vbillard.tissusdeprincesseboot.utils.Constants;
 import fr.vbillard.tissusdeprincesseboot.utils.DevInProgressService;
+import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.EntityToString;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
@@ -51,6 +52,7 @@ import org.springframework.stereotype.Component;
 import static com.sun.javafx.binding.BidirectionalBinding.bind;
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.*;
 import static fr.vbillard.tissusdeprincesseboot.controller.validators.ValidatorUtils.areValidatorsValid;
+import static fr.vbillard.tissusdeprincesseboot.utils.model_to_string.ModelUtils.startWithMajuscule;
 
 @Component
 public class TissuEditController implements IController {
@@ -257,8 +259,7 @@ public class TissuEditController implements IController {
 
     private void setTissuFromFields() {
         tissu.setColor(colorComp.getColor());
-
-        tissu = tissuService.saveOrUpdate(tissu);
+        tissu.setId(tissuService.saveOrUpdate(tissu).getId());
         setIcons(false);
 
     }
@@ -275,18 +276,14 @@ public class TissuEditController implements IController {
 
     @FXML
     public void handleAddMatiere() {
-        initializer.displayModale(PathEnum.MATIERE, null, "Matière");
-
+        initializer.displayModale(PathEnum.MATIERE, null, startWithMajuscule(EntityToString.MATIERE.getLabel()));
         matiereField.setItems(FXCollections.observableArrayList(matiereService.getAllMatieresValues()));
-        matiereField.setValue(safePropertyToString(tissu.getMatiereProperty()));
     }
 
     @FXML
     public void handleAddTissage() {
-        initializer.displayModale(PathEnum.TISSAGE, null, "Tissage");
-
+        initializer.displayModale(PathEnum.TISSAGE, null,  startWithMajuscule(EntityToString.TISSAGE.getLabel()));
         tissageField.setItems(FXCollections.observableArrayList(tissageService.getAllValues()));
-        tissageField.setValue(safePropertyToString(tissu.getTissageProperty()));
     }
 
     @FXML
@@ -310,7 +307,6 @@ public class TissuEditController implements IController {
     public void addPicture() {
         if (areValidatorsValid(initializer, validators)) {
             setTissuFromFields();
-
             pictureHelper.addPictureLocal(tissu);
         }
     }

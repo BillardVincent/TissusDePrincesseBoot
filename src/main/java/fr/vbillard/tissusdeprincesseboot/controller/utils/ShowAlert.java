@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public class ShowAlert {
 
-	private ShowAlert(){};
+	private ShowAlert(){}
 
 	public static final ButtonType DETAILS = new ButtonType("Détails");
 	public static final ButtonType SUPPRIMER = new ButtonType("Supprimer");
@@ -43,15 +43,15 @@ public class ShowAlert {
 		return alert(AlertType.CONFIRMATION, stage, titre, header, content);
 	}
 
-  public static  Optional<ButtonType> erreur(Stage stage, String titre, String header, String errorMessage) {
+  public static Optional<ButtonType> erreur(Stage stage, String titre, String header, String errorMessage) {
 		return alert(AlertType.ERROR, stage, titre, header, errorMessage);
   }
 
-	public static  Optional<ButtonType> warn(Stage stage, String titre, String header, String errorMessage) {
+	public static Optional<ButtonType> warn(Stage stage, String titre, String header, String errorMessage) {
 		return alert(AlertType.WARNING, stage, titre, header, errorMessage);
 	}
 
-	public static  Optional<ButtonType> alert(AlertType type, Stage stage, String titre, String header,
+	public static Optional<ButtonType> alert(AlertType type, Stage stage, String titre, String header,
 			String errorMessage){
 		Alert alert = new Alert(type);
 		if (stage != null){

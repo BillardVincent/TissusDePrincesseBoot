@@ -9,23 +9,30 @@ import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.service.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.service.TissageService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuService;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.scene.paint.Color;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
+import static fr.vbillard.tissusdeprincesse.testUtils.RandomUtils.getRandomBoolean;
+import static fr.vbillard.tissusdeprincesse.testUtils.RandomUtils.getRandomNumber;
+import static fr.vbillard.tissusdeprincesse.testUtils.RandomUtils.getRandomString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringJUnitConfig
-public class TissuEditControllerTest extends ControllerTest {
+class TissuEditControllerTest extends ControllerTest {
 
     @InjectMocks
     TissuEditController controller;
@@ -39,17 +46,16 @@ public class TissuEditControllerTest extends ControllerTest {
     @Mock
     TissuPictureHelper tissuPictureHelper;
 
+    private TissuDto generateSource(){
+        TestContexte context = new TestContexte();
+        return context.getTissuDto();
+    }
     @Test
     void initTestOK(){
         when(matiereService.getAllMatieresValues()).thenReturn(FXCollections.observableArrayList(new ArrayList<>()));
 
-        initJFX_FXML(controller);
-        controller.initialize();
-        FxData data = new FxData();
-        TestContexte context = new TestContexte();
-        TissuDto source = context.getTissuDto();
-        data.setTissu(source);
-        controller.setStageInitializer(stageInitializer, data);
+        TissuDto source = generateSource();
+        initController(source);
 
         assertEquals(source.getReference(), controller.referenceField.getText());
         assertEquals(String.valueOf(source.getLongueur()), controller.longueurField.getText());
@@ -63,42 +69,89 @@ public class TissuEditControllerTest extends ControllerTest {
         assertEquals(source.getUnitePoids(), controller.unitePoidsField.getValue());
         assertEquals(source.getTissage(), controller.tissageField.getValue());
         assertEquals(source.isChute(), controller.chuteField.isSelected());
-        // TODO archive
-        // TODO restante?
-        // assertEquals(String.valueOf(source.getLongueurRestante()), controller.ancienneValeurLabel.getText());
         assertEquals(source.getColor(), controller.colorComp.getColor());
 
     }
 
-
-    @Test
-    void editAndSaveOK(){
-        when(matiereService.getAllMatieresValues()).thenReturn(FXCollections.observableArrayList(new ArrayList<>()));
-
+    private void initController(TissuDto source) {
         initJFX_FXML(controller);
         controller.initialize();
         FxData data = new FxData();
-        TestContexte context = new TestContexte();
-        TissuDto source = context.getTissuDto();
         data.setTissu(source);
         controller.setStageInitializer(stageInitializer, data);
+    }
 
-        assertEquals(source.getReference(), controller.referenceField.getText());
-        assertEquals(String.valueOf(source.getLongueur()), controller.longueurField.getText());
-        assertEquals(String.valueOf(source.getLaize()), controller.laizeField.getText());
-        assertEquals(source.getDescription(), controller.descriptionField.getText());
-        assertEquals(source.getMatiere(), controller.matiereField.getValue());
-        assertEquals(source.getTypeTissu(), controller.typeField.getValue());
-        assertEquals(String.valueOf(source.getPoids()), controller.poidsField.getText());
-        assertEquals(source.getLieuAchat(), controller.lieuDachatField.getText());
-        assertEquals(source.isDecati(), controller.decatiField.isSelected());
-        assertEquals(source.getUnitePoids(), controller.unitePoidsField.getValue());
-        assertEquals(source.getTissage(), controller.tissageField.getValue());
-        assertEquals(source.isChute(), controller.chuteField.isSelected());
-        // TODO archive
-        // TODO restante?
-        // assertEquals(String.valueOf(source.getLongueurRestante()), controller.ancienneValeurLabel.getText());
-        assertEquals(source.getColor(), controller.colorComp.getColor());
+    @Test
+    void editAndSaveOK(){
+        TissuDto source = generateSource();
+
+        when(matiereService.getAllMatieresValues()).thenReturn(FXCollections.observableArrayList(new ArrayList<>()));
+        when(tissuService.saveOrUpdate(any(TissuDto.class))).thenReturn(source);
+
+        initController(source);
+
+        String fakeString = getRandomString(10);
+        String fakeIntValue = String.valueOf(getRandomNumber(50));
+        boolean fakeBoolean = getRandomBoolean();
+
+        controller.referenceField.setText(fakeString);
+        controller.longueurField.setText(fakeIntValue);
+        controller.laizeField.setText(fakeIntValue);
+        controller.descriptionField.setText(fakeString);
+        controller.matiereField.setValue(fakeString);
+        controller.typeField.setValue(fakeString);
+        controller.poidsField.setText(fakeIntValue);
+        controller.lieuDachatField.setText(fakeString);
+        controller.decatiField.setSelected(fakeBoolean);
+        controller.unitePoidsField.setValue(fakeString);
+        controller.tissageField.setValue(fakeString);
+        controller.chuteField.setSelected(fakeBoolean);
+
+        controller.handleOk();
+        verify(tissuService, times(1)).saveOrUpdate(any(TissuDto.class));
+
+        assertEquals(fakeString, source.getReference());
+        assertEquals(fakeIntValue, String.valueOf(source.getLongueur()));
+        assertEquals(fakeIntValue,  String.valueOf(source.getLaize()));
+        assertEquals(fakeString, source.getDescription());
+        assertEquals(fakeString, source.getMatiere());
+        assertEquals(fakeString, source.getTypeTissu());
+        assertEquals(fakeIntValue, String.valueOf(source.getPoids()));
+        assertEquals(fakeString, source.getLieuAchat());
+        assertEquals(fakeBoolean, source.isDecati());
+        assertEquals(fakeString, source.getUnitePoids());
+        assertEquals(fakeString, source.getTissage());
+        assertEquals(fakeBoolean, source.isChute());
+
+    }
+
+    @ParameterizedTest
+    @MethodSource("handleReferenceParameters")
+    void handleReference(String type, String matiere, String tissage, boolean chute, Boolean[] existsAfterFirst, String expected){
+
+        if (existsAfterFirst == null) {
+            when(tissuService.existByReference(any())).thenReturn(false);
+        } else {
+            when(tissuService.existByReference(any())).thenReturn(true, existsAfterFirst);
+        }
+
+        initController(generateSource());
+
+        controller.typeField.setValue(type);
+        controller.matiereField.setValue(matiere);
+        controller.tissageField.setValue(tissage);
+        controller.chuteField.setSelected(chute);
+
+        controller.handleGenerateReference();
+
+        assertEquals(expected, controller.referenceField.getText());
+
+    }
+
+    private static Stream<Arguments> handleReferenceParameters() {
+        return Stream.of(
+                Arguments.of("aze", "qsd", "wxc", false, null, "AQW-1"),
+                Arguments.of("aze", "qsd", "wxc", true, new Boolean[]{true, false}, "AQW-cp-3"));
 
     }
 

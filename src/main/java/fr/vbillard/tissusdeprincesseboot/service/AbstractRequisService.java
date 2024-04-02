@@ -1,14 +1,11 @@
 package fr.vbillard.tissusdeprincesseboot.service;
 
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FxDto;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronVersionDto;
 import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractEntity;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractRequis;
-import fr.vbillard.tissusdeprincesseboot.model.PatronVersion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,14 +21,6 @@ public abstract class AbstractRequisService<T extends AbstractRequis<U>, U exten
   protected AbstractRequisService(MapperService mapper){
 	  this.mapper = mapper;
       }
-
-  @Transactional
-  public V createOrUpdate(V tissu, PatronVersionDto versionDto) {
-    T t = convert(tissu);
-    PatronVersion p = patronVersionService.saveOrUpdate(mapper.map(versionDto));
-    t.setVersion(p);
-    return convert(saveOrUpdate(t));
-  }
   
   public abstract List<T> getAllByVersionId(int id);
 

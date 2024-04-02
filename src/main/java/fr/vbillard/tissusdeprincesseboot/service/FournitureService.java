@@ -22,6 +22,7 @@ import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -42,6 +43,7 @@ public class FournitureService extends AbstractDtoService<Fourniture, Fourniture
 		return dao.existsByReference(string);
 	}
 
+	@Transactional
 	public void delete(FournitureDto dto) {
 		delete(convert(dto));
 	}
@@ -65,11 +67,7 @@ public class FournitureService extends AbstractDtoService<Fourniture, Fourniture
 	public float getQuantiteUtilisee(int fournitureId) {
 		Float result = null;
 		if (fournitureId != 0) {
-			try {
-				result = dao.quantiteUtilisee(fournitureId);
-			} catch (Exception e) {
-				LOGGER.error(e);
-			}
+			result = dao.quantiteUtilisee(fournitureId);
 		}
 		return result == null ? 0f : result;
 	}
@@ -81,6 +79,7 @@ public class FournitureService extends AbstractDtoService<Fourniture, Fourniture
 	/**
 	 * S'exécute au démarrage pour recalculer les quantités restantes
 	 */
+	/*
 	public void batchFournitureDisponible() {
 		for (Fourniture f : getAll()) {
 			if (f.getQuantitePrincipale() != null) {
@@ -90,6 +89,7 @@ public class FournitureService extends AbstractDtoService<Fourniture, Fourniture
 			}
 		}
 	}
+	 */
 
 	@Override
 	public Fourniture convert(FournitureDto dto) {

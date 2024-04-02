@@ -21,7 +21,7 @@ public class ValidatorUtils {
   public static boolean areValidatorsValid(StageInitializer initializer, Validator... validators) {
     String errorMessage = validate(validators);
 
-    if (errorMessage.length() == 0) {
+    if (errorMessage.isEmpty()) {
       return true;
     } else {
       ShowAlert.erreur(initializer.getPrimaryStage(), "Champ(s) invalide(s)", "Merci de corriger :", errorMessage);
