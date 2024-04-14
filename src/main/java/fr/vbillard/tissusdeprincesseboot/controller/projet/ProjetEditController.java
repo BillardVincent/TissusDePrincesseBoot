@@ -61,15 +61,18 @@ public class ProjetEditController implements IController {
 	private JFXButton previousStep;
 
 	private List<FontAwesomeIconView> listIcn;
+
 	private StageInitializer initializer;
+
 	private final WorkflowService workflowService;
+
 	private final RootController root;
 	private final ProjetService projetService;
 	private final TissuRequisService tissuRequisService;
 	private final FournitureRequiseService fournitureRequiseService;
 	private final ImageService imageService;
 	private final PatronService patronService;
-	private final MapperService mapper;
+	private MapperService mapper;
 	private Workflow workflow;
 
 	private ProjetDto projet;

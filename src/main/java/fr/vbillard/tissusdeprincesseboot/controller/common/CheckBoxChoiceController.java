@@ -25,6 +25,7 @@ public class CheckBoxChoiceController implements IModalController {
 
 	protected StageInitializer initializer;
 	private Stage dialogStage;
+	private FxData data;
 	private FxData result;
 
 	@FXML
@@ -38,7 +39,7 @@ public class CheckBoxChoiceController implements IModalController {
 		boolean isAllSelectedEqualsNull = result.isAllSelectedEqualsNull();
 		result = new FxData();
 		List<String> list = content.getChildren().stream().filter(cb -> ((JFXCheckBox) cb).isSelected())
-				.map(cb -> ((JFXCheckBox) cb).getText()).toList();
+				.map(cb -> ((JFXCheckBox) cb).getText()).collect(Collectors.toList());
 		if (isAllSelectedEqualsNull && list.isEmpty()) {
 			throw new NoSelectionException();
 		} else if (isAllSelectedEqualsNull || !areAllCheckBoxChecked()) {

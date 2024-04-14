@@ -3,17 +3,27 @@ package fr.vbillard.tissusdeprincesseboot.controller.validators;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import javafx.scene.control.Control;
+import lombok.Getter;
 import org.apache.logging.log4j.util.Strings;
 
-public record NonNullValidator<T extends Control>(T field, String name) implements Validator {
+@Getter
+public class NonNullValidator<T extends Control> implements Validator {
+
+  private T field;
+  private String name;
+
+  public NonNullValidator(T field, String name){
+    this.field = field;
+    this.name = name;
+  }
 
   @Override
   public boolean Validate() {
-    if (field instanceof JFXComboBox<?> box)
-      return box.getValue() != null;
-    else if (field instanceof JFXTextField textField) {
-      return Strings.isNotEmpty(textField.getText());
-    } else {
+    if (field instanceof JFXComboBox<?>)
+      return ((JFXComboBox<?>)field).getValue() != null;
+    else if(field instanceof JFXTextField){
+      return Strings.isNotEmpty(((JFXTextField) field).getText());
+    }else{
       return false;
     }
   }

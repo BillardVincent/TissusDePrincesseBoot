@@ -1,33 +1,21 @@
 package fr.vbillard.tissusdeprincesse.testUtils;
 
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronVersionDto;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.model.ColorEntity;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureRequise;
-import fr.vbillard.tissusdeprincesseboot.model.FournitureUsed;
-import fr.vbillard.tissusdeprincesseboot.model.Matiere;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
 import fr.vbillard.tissusdeprincesseboot.model.PatronVersion;
-import fr.vbillard.tissusdeprincesseboot.model.Projet;
 import fr.vbillard.tissusdeprincesseboot.model.Quantite;
 import fr.vbillard.tissusdeprincesseboot.model.Rangement;
-import fr.vbillard.tissusdeprincesseboot.model.Tissage;
-import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
-import fr.vbillard.tissusdeprincesseboot.model.UserPref;
 import fr.vbillard.tissusdeprincesseboot.model.enums.DimensionEnum;
-import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
 import fr.vbillard.tissusdeprincesseboot.model.enums.SupportTypeEnum;
-import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
 import javafx.scene.paint.Color;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -42,9 +30,6 @@ import static fr.vbillard.tissusdeprincesse.testUtils.RandomUtils.getRandomStrin
 public class TestContexte {
 
     private Fourniture fourniture;
-    private Tissu tissu;
-    private Matiere matiere;
-    private Tissage tissage;
     private TypeFourniture typeFourniture;
     private ColorEntity colorEntity;
     private Quantite quantite1;
@@ -52,47 +37,11 @@ public class TestContexte {
     private Rangement rangement;
     private FournitureDto fournitureDto;
     private FournitureRequise fournitureRequise;
-    private FournitureRequiseDto fournitureRequiseDto;
     private PatronVersion patronVersion;
     private Patron patron;
     private TissuDto tissuDto;
     private Color color;
-    private UserPref userPref;
-    private FournitureUsed fournitureUsed;
-    private Projet projet;
-    private ProjetDto projetDto;
-    private PatronVersionDto patronVersionDto;
-
-    public FournitureRequiseDto getFournitureRequiseDto() {
-        return getOrBuildIfNull(fournitureRequiseDto, this::buildFournitureRequiseDto);
-    }
-
-    private FournitureRequiseDto buildFournitureRequiseDto() {
-        fournitureRequiseDto = new FournitureRequiseDto();
-        fournitureRequiseDto.setId(getRandomNumber(10));
-        fournitureRequiseDto.setUnite(getRandomList(getTypeFourniture().getDimensionPrincipale().getUnites()));
-        fournitureRequiseDto.setUniteSecondaire(
-                getRandomList(getTypeFourniture().getDimensionSecondaire().getUnites()));
-        fournitureRequiseDto.setQuantiteSecondaireMax(getRandomFloat(10));
-        fournitureRequiseDto.setQuantite(getRandomFloat(10));
-        fournitureRequiseDto.setQuantiteSecondaireMin(getRandomFloat(10));
-        fournitureRequiseDto.setQuantiteDisponible(getRandomFloat(10));
-        return fournitureRequiseDto;
-    }
-
-    public Matiere getMatiere() {
-        return getOrBuildIfNull(matiere, this::buildMatiere);
-    }
-
-    public Tissage getTissage() {
-        return getOrBuildIfNull(tissage, this::buildTissage);
-    }
-
-    public Tissu getTissu() {
-        return getOrBuildIfNull(tissu, this::buildTissu);
-    }
-
-    public FournitureDto getFournitureDto() {
+    public FournitureDto getFournitureDto(){
         return getOrBuildIfNull(fournitureDto, this::buildFournitureDto);
     }
 
@@ -129,7 +78,7 @@ public class TestContexte {
         });
     }
 
-    private FournitureDto buildFournitureDto() {
+    private FournitureDto buildFournitureDto(){
         fournitureDto = new FournitureDto();
         fournitureDto.setNom(getRandomString(8));
         fournitureDto.setType(getTypeFourniture());
@@ -149,43 +98,6 @@ public class TestContexte {
         fournitureDto.setDescription(getRandomString(100));
         fournitureDto.setRangement(getRangement());
         return fournitureDto;
-    }
-
-    private Tissu buildTissu() {
-        tissu = new Tissu();
-        tissu.setRangement(getRangement());
-        tissu.setTypeTissu(getRandomEnum(TypeTissuEnum.class));
-        tissu.setPoids(getRandomNumber(10));
-        tissu.setColor(getColorEntity());
-        tissu.setMatiere(getMatiere());
-        tissu.setTissage(getTissage());
-        tissu.setChute(getRandomBoolean());
-        tissu.setDecati(getRandomBoolean());
-        tissu.setReference(getRandomString(5));
-        tissu.setArchived(getRandomBoolean());
-        tissu.setPoids(getRandomNumber(100));
-        tissu.setLongueurDisponible(getRandomNumber(100));
-        tissu.setLongueur(getRandomNumber(100));
-        tissu.setLaize(getRandomNumber(100));
-        tissu.setLieuAchat(getRandomString(20));
-        tissu.setUnitePoids(getRandomEnum(UnitePoids.class));
-        tissu.setDescription(getRandomString(50));
-        tissu.setId(10);
-        return tissu;
-    }
-
-    private Matiere buildMatiere() {
-        matiere = new Matiere();
-        matiere.setId(getRandomNumber(10));
-        matiere.setValue(getRandomString(10));
-        return matiere;
-    }
-
-    private Tissage buildTissage() {
-        tissage = new Tissage();
-        tissage.setId(getRandomNumber(10));
-        tissage.setValue(getRandomString(10));
-        return tissage;
     }
 
     private TypeFourniture buildTypeFourniture() {
@@ -265,7 +177,7 @@ public class TestContexte {
         fournitureRequise.setType(getTypeFourniture());
         fournitureRequise.setUnite(getRandomList(getTypeFourniture().getDimensionPrincipale().getUnites()));
         fournitureRequise.setDetails(getRandomString(50));
-        fournitureRequise.setId(getRandomNumber(1000));
+        fournitureRequise.setId(getRandomNumber(10));
         fournitureRequise.setQuantite(getRandomFloat(50));
         fournitureRequise.setUniteSecondaire(getRandomList(getTypeFourniture().getDimensionPrincipale().getUnites()));
         fournitureRequise.setVersion(getPatronVersion());
@@ -274,16 +186,14 @@ public class TestContexte {
         return fournitureRequise;
     }
 
-    public PatronVersion getPatronVersion() {
+    private PatronVersion getPatronVersion() {
         return getOrBuildIfNull(patronVersion, this::buildPatronVersion);
 
     }
 
     private PatronVersion buildPatronVersion() {
         patronVersion = new PatronVersion();
-        patronVersion.setPatron(getPatron());
-        patronVersion.setId(getRandomNumber(10));
-        patronVersion.setNom(getRandomString(10));
+        // TODO
 
         return patronVersion;
     }
@@ -312,21 +222,21 @@ public class TestContexte {
     }
 
     private TissuDto buildTissuDto() {
-        tissuDto = new TissuDto();
-        tissuDto.setId(getRandomNumber(50));
-        tissuDto.setDescription(getRandomString(50));
-        tissuDto.setColor(getColor());
-        tissuDto.setTypeTissu(getRandomString(10));
-        tissuDto.setArchived(getRandomBoolean());
-        tissuDto.setLongueurRestante(getRandomNumber(50));
-        tissuDto.setChute(getRandomBoolean());
-        tissuDto.setTissage(getRandomString(50));
-        tissuDto.setMatiere(getRandomString(50));
-        tissuDto.setReference(getRandomString(50));
-        tissuDto.setDecati(getRandomBoolean());
-        tissuDto.setUnitePoids(getRandomEnum(UnitePoids.class));
+        TissuDto dto = new TissuDto();
+        dto.setId(getRandomNumber(50));
+        dto.setDescription(getRandomString(50));
+        dto.setColor(getColor());
+        dto.setTypeTissu(getRandomString(10));
+        dto.setArchived(getRandomBoolean());
+        dto.setLongueurRestante(getRandomNumber(50));
+        dto.setChute(getRandomBoolean());
+        dto.setTissage(getRandomString(50));
+        dto.setMatiere(getRandomString(50));
+        dto.setReference(getRandomString(50));
+        dto.setDecati(getRandomBoolean());
+        dto.setUnitePoids(getRandomEnum(UnitePoids.class));
 
-        return tissuDto;
+        return dto;
     }
 
     private Color getColor() {
@@ -339,70 +249,4 @@ public class TestContexte {
         return color;
     }
 
-    public UserPref getUser() {
-        return getOrBuildIfNull(userPref, this::buildUserPref);
-    }
-
-    private UserPref buildUserPref() {
-        userPref = new UserPref();
-        userPref.setId(getRandomNumber(10));
-        userPref.setMinPoidsMoyen(getRandomNumber(50));
-        userPref.setMaxPoidsMoyen(userPref.getMinPoidsMoyen() * 2);
-        userPref.setLongueurMargePercent(getRandomFloat(1));
-        userPref.setPoidsMargePercent(getRandomFloat(1));
-        return userPref;
-    }
-
-    public FournitureUsed getFournitureUsed() {
-        return getOrBuildIfNull(fournitureUsed, this::buildFournitureUsed);
-    }
-
-    private FournitureUsed buildFournitureUsed() {
-        fournitureUsed = new FournitureUsed();
-        fournitureUsed.setId(getRandomNumber(10));
-        fournitureUsed.setFourniture(getFourniture());
-        fournitureUsed.setQuantite(getRandomFloat(10));
-        fournitureUsed.setProjet(getProjet());
-        fournitureUsed.setRequis(getFournitureRequise());
-        return fournitureUsed;
-    }
-
-    public Projet getProjet() {
-        return getOrBuildIfNull(projet, this::buildProjet);
-    }
-
-    private Projet buildProjet() {
-        projet = new Projet();
-        projet.setId(getRandomNumber(20));
-        projet.setDescription(getRandomString(50));
-        projet.setStatus(getRandomEnum(ProjectStatus.class));
-        projet.setPatronVersion(getPatronVersion());
-        return projet;
-    }
-
-    public ProjetDto getProjetDto() {
-        return getOrBuildIfNull(projetDto, this::buildProjetDto);
-    }
-
-    private ProjetDto buildProjetDto() {
-        projetDto = new ProjetDto();
-        projetDto.setId(getRandomNumber(20));
-        projetDto.setDescription(getRandomString(50));
-        projetDto.setPatronVersion(getPatronVersionDto());
-        projetDto.setProjectStatus(getRandomEnum(ProjectStatus.class).label);
-        projetDto.setTissuUsed(new HashMap<>());
-        projetDto.setFournitureUsed(new HashMap<>());
-        return projetDto;
-    }
-
-    private PatronVersionDto getPatronVersionDto() {
-        return getOrBuildIfNull(patronVersionDto, this::buildPatronVersionDto);
-    }
-
-    private PatronVersionDto buildPatronVersionDto() {
-        patronVersionDto = new PatronVersionDto();
-        patronVersionDto.setId(getRandomNumber(20));
-        patronVersionDto.setNom(getRandomString(20));
-        return patronVersionDto;
-    }
 }

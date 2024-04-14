@@ -10,22 +10,30 @@ import fr.vbillard.tissusdeprincesseboot.model.enums.TypeTissuEnum;
 import fr.vbillard.tissusdeprincesseboot.utils.CalculPoidsTissuService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
 @Transactional
 public class TissuRequisService extends AbstractRequisService<TissuRequis, Tissu, TissuRequisDto>{
 
 	private final TissusRequisDao tissuRequisDao;
 	private final UserPrefService userPrefService;
 	private final CalculPoidsTissuService calculPoidsTissuService;
+
+	public TissuRequisService(TissusRequisDao tissuRequisDao,
+			UserPrefService userPrefService, CalculPoidsTissuService calculPoidsTissuService,
+			MapperService mapper) {
+		super(mapper);
+		this.tissuRequisDao = tissuRequisDao;
+		this.userPrefService = userPrefService;
+		this.calculPoidsTissuService = calculPoidsTissuService;
+	}
 
 	@Override
 	public List<TissuRequis> getAllByVersionId(int id) {
@@ -50,7 +58,7 @@ public class TissuRequisService extends AbstractRequisService<TissuRequis, Tissu
 	@Transactional
 	public TissuRequis createNewForPatron(int patronId) {
 		TissuRequis tr = new TissuRequis();
-		tr.setVersion(patronVersionDao.getById(patronId));
+		tr.setVersion(patronVersionService.getById(patronId));
 		return saveOrUpdate(tr);
 	}
 

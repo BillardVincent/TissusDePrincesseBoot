@@ -1,7 +1,6 @@
 package fr.vbillard.tissusdeprincesseboot.service;
 
 import fr.vbillard.tissusdeprincesseboot.dao.FournitureRequiseDao;
-import fr.vbillard.tissusdeprincesseboot.dao.PatronVersionDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.FournitureSpecification;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
@@ -17,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FournitureRequiseService
@@ -25,12 +25,11 @@ public class FournitureRequiseService
 	private final FournitureRequiseDao fournitureRequiseDao;
 	private final UserPrefService userPrefService;
 
-	public FournitureRequiseService(MapperService mapperService, PatronVersionDao patronVersionDao,
-			FournitureRequiseDao fournitureRequiseDao, UserPrefService userPrefService) {
+	public FournitureRequiseService(MapperService mapper, FournitureRequiseDao fournitureRequiseDao,
+			UserPrefService userPrefService) {
+		super(mapper);
 		this.fournitureRequiseDao = fournitureRequiseDao;
 		this.userPrefService = userPrefService;
-		this.patronVersionDao = patronVersionDao;
-		this.mapper = mapperService;
 	}
 
 	public List<FournitureRequise> getAllByVersionId(int id) {
@@ -40,6 +39,11 @@ public class FournitureRequiseService
 	public List<FournitureRequiseDto> getAllFournitureRequiseDtoByVersion(int id) {
 		return fournitureRequiseDao.getAllByVersionId(id).stream().map(tr -> mapper.map(tr))
 				.toList();
+	}
+
+	public FournitureRequise findFournitureRequise(int fournitureRequisId) {
+
+		return fournitureRequiseDao.findById(fournitureRequisId).get();
 	}
 
 	@Transactional
@@ -52,7 +56,7 @@ public class FournitureRequiseService
 	@Transactional
 	public FournitureRequise createNewForPatron(int patronId) {
 		FournitureRequise fr = new FournitureRequise();
-		fr.setVersion(patronVersionDao.getById(patronId));
+		fr.setVersion(patronVersionService.getById(patronId));
 		return saveOrUpdate(fr);
 	}
 
@@ -75,7 +79,7 @@ public class FournitureRequiseService
 	 * }
 	 * 
 	 */
-	
+
 	public ObservableList<FournitureRequise> getAsObservableAllFournitureRequiseByVersion(int id) {
 		return FXCollections.observableArrayList(getAllByVersionId(id));
 	}
@@ -132,7 +136,7 @@ public class FournitureRequiseService
 		clone.setUnite(source.getUnite());
 		clone.setUniteSecondaire(source.getUniteSecondaire());
 		clone.setVersion(version);
-		clone = saveOrUpdate(clone);
+		saveOrUpdate(clone);
 		
 		return clone;
 	}

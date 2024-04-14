@@ -4,7 +4,6 @@ import fr.vbillard.tissusdeprincesseboot.dao.TissuDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.TissuSpecification;
-import fr.vbillard.tissusdeprincesseboot.mapper.MapperService;
 import fr.vbillard.tissusdeprincesseboot.model.Rangement;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.enums.UnitePoids;
@@ -13,17 +12,18 @@ import javafx.collections.ObservableList;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class TissuService extends AbstractDtoService<Tissu, TissuDto> {
 
-	private MapperService mapper;
+	private ModelMapper mapper;
 	private TissuDao dao;
 
 	private static final Logger LOGGER = LogManager.getLogger(TissuService.class);
@@ -33,9 +33,8 @@ public class TissuService extends AbstractDtoService<Tissu, TissuDto> {
 		return dao.existsByReference(string);
 	}
 
-	@Transactional
 	public void delete(TissuDto dto) {
-		delete(convert(dto));
+		delete(mapper.map(dto, Tissu.class));
 	}
 
 	@Override
@@ -67,7 +66,7 @@ public class TissuService extends AbstractDtoService<Tissu, TissuDto> {
 
 	public ObservableList<TissuDto> getObservablePage(int page, int pageSize) {
 		return FXCollections.observableArrayList(dao.findAllByArchived(PageRequest.of(page, pageSize), false).stream()
-				.map(this::convert).toList());
+				.map(this::convert).collect(Collectors.toList()));
 	}
 
 	public int getLongueurUtilisee(int tissuId) {
@@ -84,7 +83,7 @@ public class TissuService extends AbstractDtoService<Tissu, TissuDto> {
 
 	public List<TissuDto> getObservablePage(int page, int pageSize, TissuSpecification specification) {
 		return FXCollections.observableArrayList(dao.findAll(specification, PageRequest.of(page, pageSize)).stream()
-				.map(this::convert).toList());
+				.map(this::convert).collect(Collectors.toList()));
 	}
 
 	/**
@@ -100,12 +99,12 @@ public class TissuService extends AbstractDtoService<Tissu, TissuDto> {
 
 	@Override
 	public Tissu convert(TissuDto dto) {
-		return mapper.map(dto);
+		return mapper.map(dto, Tissu.class);
 	}
 
 	@Override
 	public TissuDto convert(Tissu entity) {
-		return mapper.map(entity);
+		return mapper.map(entity, TissuDto.class);
 	}
 
     public int countByRangementId(int id) {

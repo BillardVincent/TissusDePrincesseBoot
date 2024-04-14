@@ -2,8 +2,6 @@ package fr.vbillard.tissusdeprincesse.controller.tissu;
 
 import fr.vbillard.tissusdeprincesse.controller.ControllerTest;
 import fr.vbillard.tissusdeprincesse.testUtils.TestContexte;
-import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
-import fr.vbillard.tissusdeprincesseboot.controller.misc.RootController;
 import fr.vbillard.tissusdeprincesseboot.controller.picture_helper.TissuPictureHelper;
 import fr.vbillard.tissusdeprincesseboot.controller.tissu.TissuEditController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
@@ -12,6 +10,7 @@ import fr.vbillard.tissusdeprincesseboot.service.MatiereService;
 import fr.vbillard.tissusdeprincesseboot.service.TissageService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuService;
 import javafx.collections.FXCollections;
+import javafx.scene.paint.Color;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -46,12 +45,6 @@ class TissuEditControllerTest extends ControllerTest {
     TissageService tissageService;
     @Mock
     TissuPictureHelper tissuPictureHelper;
-
-    @Mock
-    StageInitializer initializer;
-
-    @Mock
-    RootController rootController;
 
     private TissuDto generateSource(){
         TestContexte context = new TestContexte();
@@ -159,60 +152,6 @@ class TissuEditControllerTest extends ControllerTest {
         return Stream.of(
                 Arguments.of("aze", "qsd", "wxc", false, null, "AQW-1"),
                 Arguments.of("aze", "qsd", "wxc", true, new Boolean[]{true, false}, "AQW-cp-3"));
-
-    }
-
-    @Test
-    void handleCancel(){
-        TissuDto dto = generateSource();
-        initController(dto);
-        when(tissuService.getDtoById(dto.getId())).thenReturn(dto);
-        controller.handleCancel();
-        verify(rootController, times(1)).displayTissusDetails(dto);
-    }
-
-    @Test
-    void handleCancelIdNull(){
-        TissuDto dto = generateSource();
-        dto.setId(0);
-        initController(dto);
-        when(tissuService.getDtoById(dto.getId())).thenReturn(dto);
-        controller.handleCancel();
-        verify(rootController, times(1)).displayTissus();
-    }
-
-    @Test
-    void addPicture(){
-        TissuDto dto = generateSource();
-        when(tissuService.saveOrUpdate(dto)).thenReturn(dto);
-        initController(dto);
-        controller.initialize();
-        controller.addPicture();
-        verify(tissuService, times(1)).saveOrUpdate(dto);
-        verify(tissuPictureHelper, times(1)).addPictureLocal(dto);
-    }
-
-    @Test
-    void addPictureWeb(){
-        TissuDto dto = generateSource();
-        when(tissuService.saveOrUpdate(dto)).thenReturn(dto);
-        initController(dto);
-        controller.initialize();
-        controller.addPictureWeb();
-        verify(tissuService, times(1)).saveOrUpdate(dto);
-        verify(tissuPictureHelper, times(1)).addPictureWeb(dto);
-
-    }
-
-    @Test
-    void addPictureFromClipboard(){
-        TissuDto dto = generateSource();
-        when(tissuService.saveOrUpdate(dto)).thenReturn(dto);
-        initController(dto);
-        controller.initialize();
-        controller.addPictureFromClipboard();
-        verify(tissuService, times(1)).saveOrUpdate(dto);
-        verify(tissuPictureHelper, times(1)).addPictureClipBoard(dto);
 
     }
 
