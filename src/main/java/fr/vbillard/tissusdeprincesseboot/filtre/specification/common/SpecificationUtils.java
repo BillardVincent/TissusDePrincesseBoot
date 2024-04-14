@@ -18,6 +18,8 @@ public class SpecificationUtils {
 	private static final char QUOTE_CHAR = '"';
 	private static final String SPACE = " ";
 
+	private SpecificationUtils(){}
+
 	public static Predicate getCharacterSearchPredicate(CharacterSearch characterSearch, Path<String> path,
 			CriteriaBuilder cb) {
 
@@ -41,61 +43,7 @@ public class SpecificationUtils {
 			if (StringUtils.isNotBlank(characterSearch.getContains())) {
 				predicateList.add(cb.like(applyIgnoreCaseOnPath, addWildcardsAround(characterSearch.getContains())));
 			}
-			if (StringUtils.isNotBlank(characterSearch.getContainsMultiple())) {
 
-				if (characterSearch.getContainsMultiple().contains(QUOTE)) {
-					List<Integer> quoteIndex = new ArrayList<>();
-
-					for (int i = 0; i < characterSearch.getContainsMultiple().length(); i++) {
-						if (characterSearch.getContainsMultiple().charAt(i) == QUOTE_CHAR) {
-							quoteIndex.add(i);
-						}
-					}
-
-					if (quoteIndex.size() % 2 != 0) {
-						quoteIndex.remove(quoteIndex.size() - 1);
-					}
-
-					List<String> elements = new ArrayList<>();
-					if (!quoteIndex.isEmpty()) {
-						elements.addAll(Arrays.asList(
-								characterSearch.getContainsMultiple().substring(0, quoteIndex.get(0)).split(SPACE)));
-
-						for (int i = 0; i < quoteIndex.size();) {
-
-							if (i % 2 == 0) {
-								elements.add(characterSearch.getContainsMultiple().substring(quoteIndex.get(i) + 1,
-										quoteIndex.get(++i)));
-							} else if (i + 1 == quoteIndex.size()) {
-
-								elements.addAll(Arrays.asList(characterSearch.getContainsMultiple()
-										.substring(quoteIndex.get(i++) + 1).split(SPACE)));
-							} else {
-								elements.addAll(Arrays.asList(characterSearch.getContainsMultiple()
-										.substring(quoteIndex.get(i) + 1, quoteIndex.get(++i)).split(SPACE)));
-							}
-
-						}
-
-					} else {
-						elements.addAll(Arrays.asList(characterSearch.getContainsMultiple().split(SPACE)));
-					}
-
-					for (String s : elements) {
-						if (!s.isEmpty()) {
-							predicateList.add(cb.like(applyIgnoreCaseOnPath, addWildcardsAround(s)));
-						}
-
-					}
-
-				} else {
-					for (String s : characterSearch.getContainsMultiple().split(SPACE)) {
-						predicateList.add(cb.like(applyIgnoreCaseOnPath, addWildcardsAround(s)));
-
-					}
-				}
-
-			}
 			if (StringUtils.isNotBlank(characterSearch.getNotContains())) {
 				predicateList
 						.add(cb.notLike(applyIgnoreCaseOnPath, addWildcardsAround(characterSearch.getNotContains())));
@@ -107,9 +55,69 @@ public class SpecificationUtils {
 				predicateList.add(cb.isNotNull(path));
 			}
 
+			caracterSearchWithMultipleWords(characterSearch, cb, predicateList, applyIgnoreCaseOnPath);
 		}
 
 		return cb.and(predicateList.toArray(new Predicate[] {}));
+	}
+
+	private static void caracterSearchWithMultipleWords(CharacterSearch characterSearch, CriteriaBuilder cb, List<Predicate> predicateList,
+			Expression<String> applyIgnoreCaseOnPath) {
+		if (StringUtils.isNotBlank(characterSearch.getContainsMultiple())) {
+
+			if (characterSearch.getContainsMultiple().contains(QUOTE)) {
+				List<Integer> quoteIndex = new ArrayList<>();
+
+				for (int i = 0; i < characterSearch.getContainsMultiple().length(); i++) {
+					if (characterSearch.getContainsMultiple().charAt(i) == QUOTE_CHAR) {
+						quoteIndex.add(i);
+					}
+				}
+
+				if (quoteIndex.size() % 2 != 0) {
+					quoteIndex.remove(quoteIndex.size() - 1);
+				}
+
+				List<String> elements = new ArrayList<>();
+				if (!quoteIndex.isEmpty()) {
+					elements.addAll(Arrays.asList(
+							characterSearch.getContainsMultiple().substring(0, quoteIndex.get(0)).split(SPACE)));
+
+					for (int i = 0; i < quoteIndex.size();) {
+
+						if (i % 2 == 0) {
+							elements.add(characterSearch.getContainsMultiple().substring(quoteIndex.get(i) + 1,
+									quoteIndex.get(++i)));
+						} else if (i + 1 == quoteIndex.size()) {
+
+							elements.addAll(Arrays.asList(characterSearch.getContainsMultiple()
+									.substring(quoteIndex.get(i++) + 1).split(SPACE)));
+						} else {
+							elements.addAll(Arrays.asList(characterSearch.getContainsMultiple()
+									.substring(quoteIndex.get(i) + 1, quoteIndex.get(++i)).split(SPACE)));
+						}
+
+					}
+
+				} else {
+					elements.addAll(Arrays.asList(characterSearch.getContainsMultiple().split(SPACE)));
+				}
+
+				for (String s : elements) {
+					if (!s.isEmpty()) {
+						predicateList.add(cb.like(applyIgnoreCaseOnPath, addWildcardsAround(s)));
+					}
+
+				}
+
+			} else {
+				for (String s : characterSearch.getContainsMultiple().split(SPACE)) {
+					predicateList.add(cb.like(applyIgnoreCaseOnPath, addWildcardsAround(s)));
+
+				}
+			}
+
+		}
 	}
 
 	public static <T extends Number & Comparable<? super T>> Predicate getNumericSearchPredicate(

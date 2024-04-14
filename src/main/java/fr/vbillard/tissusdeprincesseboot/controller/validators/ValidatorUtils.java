@@ -6,9 +6,11 @@ import org.apache.logging.log4j.util.Strings;
 
 public class ValidatorUtils {
 
+  private ValidatorUtils(){}
+
   private static final String SEPARATOR = "\n";
 
-  public static String validate(Validator... validators) {
+  private static String validate(Validator... validators) {
     StringBuilder result = new StringBuilder(Strings.EMPTY);
     for (Validator v : validators) {
       if (!v.Validate()) {

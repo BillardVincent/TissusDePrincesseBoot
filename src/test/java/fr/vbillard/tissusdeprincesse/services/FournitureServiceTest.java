@@ -141,8 +141,9 @@ class FournitureServiceTest {
     @Test
     void  testAddRangement(){
         when(fournitureDao.findById(1)).thenReturn(Optional.of(testContexte.getFourniture()));
-        when(fournitureDao.save(argThat(f -> f.getRangement() == testContexte.getRangement()))).thenReturn(testContexte.getFourniture());
-        FournitureDto result = fournitureService.addRangement(1, testContexte.getRangement());
+        when(fournitureDao.save(any())).thenReturn(testContexte.getFourniture());
+        fournitureService.addRangement(1, testContexte.getRangement());
+        verify(fournitureDao, times(1)).save(argThat(f -> f.getRangement().equals(testContexte.getRangement())));
     }
 
 }
