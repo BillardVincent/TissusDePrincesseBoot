@@ -29,6 +29,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.util.Strings;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -36,6 +37,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@Scope(Utils.PROTOTYPE)
 public class TissuRequisCardController implements IController {
 
 	@FXML
@@ -132,33 +134,11 @@ public class TissuRequisCardController implements IController {
 			StringBuilder header = new StringBuilder();
 			StringBuilder content = new StringBuilder();
 
-			if (longueurUtilisee < longueurMin) {
-				header.append("Pas assez de tissu");
-				content.append("La longueur de tissu allouée est inférieure à la longueur de tissu requise.");
-			}
+			getMessageForLongueur(longueurUtilisee, longueurMin, header, content);
 
-			if (!CollectionUtils.isEmpty(tissuUsedTooShort)) {
+			getMessageForLaize(tissuUsedTooShort, header, content);
 
-				Utils.appendWithSeparator(header, Utils.SEPARATOR, "La laize est trop courte");
-				Utils.appendWithSeparator(content, Utils.SEPARATOR, "Laize trop courte pour ");
-				content.append(tissuUsedTooShort.stream().map(u -> u.getTissu().getReference())
-						.collect(Collectors.joining(Utils.COMMA)));
-			}
-
-			if (!CollectionUtils.isEmpty(tissuUsedNotDecati)) {
-				boolean plusieursTissus = tissuUsedNotDecati.size() > 1;
-
-				String tissuS = ModelUtils.generateString(EntityToString.TISSU, Articles.DEFINI, plusieursTissus,
-						true);
-				Utils.appendWithSeparator(header, Utils.SEPARATOR, tissuS);
-				header.append(" non décati");
-				header.append(plusieursTissus ? "s" : Strings.EMPTY);
-
-				Utils.appendWithSeparator(content, Utils.SEPARATOR, tissuS);
-				content.append(tissuUsedNotDecati.stream().map(u -> u.getTissu().getReference())
-						.collect(Collectors.joining(Utils.COMMA)));
-				content.append(plusieursTissus ? " ne sont pas décatis" : " n'est pas décati ");
-			}
+			getMesageForDecati(tissuUsedNotDecati, header, content);
 
 			iconStatus.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> ShowAlert
 					.information(initializer.getPrimaryStage(), "Attention", header.toString(), content.toString()));
@@ -171,7 +151,41 @@ public class TissuRequisCardController implements IController {
 		doublurHbx.getChildren().add(iconStatus);
 
 	}
-	
+
+	private static void getMesageForDecati(List<TissuUsed> tissuUsedNotDecati, StringBuilder header, StringBuilder content) {
+		if (!CollectionUtils.isEmpty(tissuUsedNotDecati)) {
+			boolean plusieursTissus = tissuUsedNotDecati.size() > 1;
+
+			String tissuS = ModelUtils.generateString(EntityToString.TISSU, Articles.DEFINI, plusieursTissus,
+					true);
+			Utils.appendWithSeparator(header, Utils.SEPARATOR, tissuS);
+			header.append(" non décati");
+			header.append(plusieursTissus ? "s" : Strings.EMPTY);
+
+			Utils.appendWithSeparator(content, Utils.SEPARATOR, tissuS);
+			content.append(tissuUsedNotDecati.stream().map(u -> u.getTissu().getReference())
+					.collect(Collectors.joining(Utils.COMMA)));
+			content.append(plusieursTissus ? " ne sont pas décatis" : " n'est pas décati ");
+		}
+	}
+
+	private static void getMessageForLaize(List<TissuUsed> tissuUsedTooShort, StringBuilder header, StringBuilder content) {
+		if (!CollectionUtils.isEmpty(tissuUsedTooShort)) {
+
+			Utils.appendWithSeparator(header, Utils.SEPARATOR, "La laize est trop courte");
+			Utils.appendWithSeparator(content, Utils.SEPARATOR, "Laize trop courte pour ");
+			content.append(tissuUsedTooShort.stream().map(u -> u.getTissu().getReference())
+					.collect(Collectors.joining(Utils.COMMA)));
+		}
+	}
+
+	private static void getMessageForLongueur(int longueurUtilisee, int longueurMin, StringBuilder header, StringBuilder content) {
+		if (longueurUtilisee < longueurMin) {
+			header.append("Pas assez de tissu");
+			content.append("La longueur de tissu allouée est inférieure à la longueur de tissu requise.");
+		}
+	}
+
 	private void setLabelWithOrCollection(List<?> data, HBox content, Label label) {
 		if (CollectionUtils.isEmpty(data)){
 			content.setVisible(false);

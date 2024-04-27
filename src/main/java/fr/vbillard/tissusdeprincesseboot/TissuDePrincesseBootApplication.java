@@ -2,12 +2,15 @@ package fr.vbillard.tissusdeprincesseboot;
 
 import javafx.application.Application;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
 
 @SpringBootApplication
 public class TissuDePrincesseBootApplication {
@@ -25,7 +28,8 @@ public class TissuDePrincesseBootApplication {
 		try {
 			//TODO refaire l'image
 
-			BufferedImage myPicture = ImageIO.read(TissuDePrincesseBootApplication.class.getResourceAsStream("/img/introTDP.jpg"));
+			BufferedImage myPicture = ImageIO.read(Objects.requireNonNull(
+					TissuDePrincesseBootApplication.class.getResourceAsStream("/img/introTDP.jpg")));
 			Image dimg = myPicture.getScaledInstance(600, 400, Image.SCALE_SMOOTH);
 			JLabel picLabel = new JLabel(new ImageIcon(dimg));
 			frame.setContentPane(picLabel);
@@ -44,5 +48,9 @@ public class TissuDePrincesseBootApplication {
 		Application.launch(TissusDePrincesseFxApp.class, args);
 	}
 
-
+	@EventListener(ApplicationReadyEvent.class)
+	public void afterStartup() {
+		frame.setVisible(false);
+		frame.dispose();
+	}
 }

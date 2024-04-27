@@ -15,9 +15,10 @@ public class ClassCssUtils {
 	public static final String TITLE_ACC_3 = "title-acc-3";
 	public static final String TITLE_PANE_CUSTOM= "title-pane-custom";
 	public static final String LIGHT_BACKGROUND = "light-background";
+	public static final String TEXT_ERROR = "text-error";
+	public static final String BORDER_ERROR = "border-error";
 
-
-	private ClassCssUtils() {
+    private ClassCssUtils() {
 	}
 
 	public static void setStyle(Node node, String cssClass, boolean add) {

@@ -12,7 +12,7 @@
                <children>
                  <VBox prefHeight="38.0" prefWidth="169.0" spacing="5.0">
                    <children>
-                     <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="169.0" text="Type" />
+                     <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="169.0" text="Type" styleClass="title-acc-3" />
                      <Label fx:id="typeLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="169.0" text="valuer lo." textAlignment="CENTER" />
                    </children>
                  </VBox>
@@ -23,8 +23,8 @@
                <children>
                  <VBox prefHeight="200.0" prefWidth="160.0" spacing="5.0">
                    <children>
-                     <Label fx:id="uniteLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="169.0" text="Quantité" />
-                     <Label fx:id="quantiteLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="169.0" text="valeur la." />
+                     <Label fx:id="uniteLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="169.0" text="Quantité" styleClass="title-acc-4"/>
+                     <Label fx:id="quantiteLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="169.0"  />
                    </children>
                  </VBox>
                </children>
@@ -37,8 +37,8 @@
                <children>
                  <VBox prefHeight="44.0" prefWidth="169.0" spacing="5.0">
                    <children>
-                     <Label fx:id="uniteSecLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="169.0" text="Quantité secondaire" />
-                     <Label fx:id="quantiteSecLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="169.0" text="valeur P." textAlignment="CENTER" />
+                     <Label fx:id="uniteSecLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="169.0" text="Quantité secondaire" styleClass="title-acc-4"/>
+                     <Label fx:id="quantiteSecLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="169.0" textAlignment="CENTER" />
                    </children>
                  </VBox>
                </children>

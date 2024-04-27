@@ -64,6 +64,7 @@ public class TissusDePrincesseFxApp extends Application {
     private void showError(Thread t, Throwable e) {
         LOGGER.error("***Default exception handler***");
         LOGGER.error(e);
+        e.printStackTrace();
         if (Platform.isFxApplicationThread()) {
 
             Throwable e1 = e.getCause();

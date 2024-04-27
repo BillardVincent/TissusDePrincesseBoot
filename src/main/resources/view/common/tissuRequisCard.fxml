@@ -21,7 +21,7 @@
 							<children>
 								<Label fx:id="typeLbl" alignment="CENTER"
 									contentDisplay="CENTER" prefHeight="43.0" prefWidth="117.0"
-									styleClass="title-acc-3" stylesheets="@../../style/style.css"
+									styleClass="title-acc-3"
 									text="type Matiere Tissage" textAlignment="CENTER"
 									wrapText="true" />
 							</children>
@@ -34,7 +34,7 @@
 							<children>
 								<Label fx:id="matiereLbl" alignment="CENTER"
 									contentDisplay="CENTER" prefHeight="0.0" prefWidth="117.0"
-									styleClass="title-acc-3" stylesheets="@../../style/style.css"
+									styleClass="title-acc-3"
 									text="type Matiere Tissage" textAlignment="CENTER"
 									wrapText="true" />
 							</children>
@@ -47,7 +47,7 @@
 							<children>
 								<Label fx:id="tissageLbl" alignment="CENTER"
 									contentDisplay="CENTER" prefHeight="43.0" prefWidth="117.0"
-									styleClass="title-acc-3" stylesheets="@../../style/style.css"
+									styleClass="title-acc-3"
 									text="type Matiere Tissage" textAlignment="CENTER"
 									wrapText="true" />
 							</children>
@@ -101,7 +101,7 @@
 							<children>
 								<Label fx:id="gammePoidsLabel" alignment="CENTER"
 									contentDisplay="CENTER" prefHeight="6.0" prefWidth="63.0"
-									text="poid" textAlignment="CENTER" />
+									text="poids" textAlignment="CENTER" />
 							</children>
 						</VBox>
 					</children>
