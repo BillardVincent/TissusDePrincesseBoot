@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
+
 @Component("brouillon")
-@Scope("prototype")
+@Scope(SCOPE_PROTOTYPE)
 public class BrouillonWorkFlow extends Workflow {
 
 	private final Rules rules;

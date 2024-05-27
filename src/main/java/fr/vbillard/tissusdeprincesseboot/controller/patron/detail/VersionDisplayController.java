@@ -13,7 +13,6 @@ import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureRequiseService;
 import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuRequisService;
-import fr.vbillard.tissusdeprincesseboot.utils.Utils;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -30,9 +29,10 @@ import static fr.vbillard.tissusdeprincesseboot.controller.utils.ClassCssUtils.s
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.DECIMAL_FORMAT;
 import static javafx.scene.control.ScrollPane.ScrollBarPolicy.AS_NEEDED;
 import static javafx.scene.control.ScrollPane.ScrollBarPolicy.NEVER;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
 @Component
-@Scope(Utils.PROTOTYPE)
+@Scope(SCOPE_PROTOTYPE)
 public class VersionDisplayController implements IController {
 	@FXML
 	private ScrollPane scrollPane;

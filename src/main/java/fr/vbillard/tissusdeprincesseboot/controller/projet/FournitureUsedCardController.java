@@ -12,19 +12,21 @@ import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureService;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureUsedService;
 import fr.vbillard.tissusdeprincesseboot.service.ImageService;
-import fr.vbillard.tissusdeprincesseboot.utils.Utils;
 import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.EntityToString;
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
+
 @Component
-@Scope(Utils.PROTOTYPE)
+@Scope(SCOPE_PROTOTYPE)
 public class FournitureUsedCardController implements IController {
 
 	@FXML
@@ -71,7 +73,8 @@ public class FournitureUsedCardController implements IController {
 	}
 
 	private void setCardContent() {
-		longueur.setText(fournitureUsed.getQuantite() + fournitureUsed.getRequis().getUnite().getAbbreviation());
+		String abbreviation = fournitureUsed.getRequis().getUnite() != null ? fournitureUsed.getRequis().getUnite().getAbbreviation(): Strings.EMPTY;
+		longueur.setText(fournitureUsed.getQuantite() + abbreviation);
 		Optional<Photo> pictures = imageService.getImage(fournitureService.convert(fournitureDto));
 		image.setImage(imageService.imageOrDefault(pictures));
 

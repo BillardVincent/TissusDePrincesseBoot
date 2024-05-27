@@ -7,14 +7,16 @@ import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuRequis;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 import fr.vbillard.tissusdeprincesseboot.service.TissuUsedService;
-import fr.vbillard.tissusdeprincesseboot.utils.Utils;
+import javafx.scene.layout.Pane;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
+
 @Component
-@Scope(Utils.PROTOTYPE)
+@Scope(SCOPE_PROTOTYPE)
 public class ProjetEditTissuListElementController extends ProjetEditListElementController<TissuRequisDto,
 		TissuUsed, TissuUsedService, TissuRequis, Tissu> {
 
@@ -25,6 +27,11 @@ public class ProjetEditTissuListElementController extends ProjetEditListElementC
 	@Override
 	protected TissuRequisDto requisFromData(FxData data) {
 		return data.getTissuRequis();
+	}
+
+	@Override
+	protected Pane getPane() {
+		return null;
 	}
 
 	@Override

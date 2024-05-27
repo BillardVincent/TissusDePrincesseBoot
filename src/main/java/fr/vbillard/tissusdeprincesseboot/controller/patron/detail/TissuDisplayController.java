@@ -25,9 +25,10 @@ import org.springframework.util.CollectionUtils;
 import java.util.List;
 
 import static fr.vbillard.tissusdeprincesseboot.utils.Utils.N_A;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
 @Component
-@Scope(Utils.PROTOTYPE)
+@Scope(SCOPE_PROTOTYPE)
 public class TissuDisplayController implements IController {
 
 	@FXML

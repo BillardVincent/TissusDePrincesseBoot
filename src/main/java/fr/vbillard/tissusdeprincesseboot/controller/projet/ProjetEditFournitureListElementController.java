@@ -7,19 +7,31 @@ import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureRequise;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureUsed;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureUsedService;
-import fr.vbillard.tissusdeprincesseboot.utils.Utils;
+import javafx.scene.layout.Pane;
+import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
+
 @Component
-@Scope(Utils.PROTOTYPE)
+@Scope(SCOPE_PROTOTYPE)
 public class ProjetEditFournitureListElementController extends ProjetEditListElementController<FournitureRequiseDto,
 		FournitureUsed, FournitureUsedService, FournitureRequise, Fourniture> {
 
-	public ProjetEditFournitureListElementController(FournitureUsedService fournitureUsedService) {
+
+	private ObjectFactory<FournitureUsedCardComponent> factory;
+
+	public ProjetEditFournitureListElementController(FournitureUsedService fournitureUsedService, ObjectFactory<FournitureUsedCardComponent> factory) {
 		super(fournitureUsedService);
+		this.factory = factory;
+	}
+
+	@Override
+	protected Pane getPane(){
+		return factory.getObject();
 	}
 
 	@Override

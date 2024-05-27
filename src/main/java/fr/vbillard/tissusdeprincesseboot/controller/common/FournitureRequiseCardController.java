@@ -14,7 +14,6 @@ import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureUsed;
 import fr.vbillard.tissusdeprincesseboot.model.enums.DimensionEnum;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureUsedService;
-import fr.vbillard.tissusdeprincesseboot.utils.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -24,8 +23,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
+
+/**
+ * @Deprecated
+ */
 @Component
-@Scope(Utils.PROTOTYPE)
+@Scope(SCOPE_PROTOTYPE)
 public class FournitureRequiseCardController implements IController {
 
     @FXML
@@ -42,7 +46,6 @@ public class FournitureRequiseCardController implements IController {
     private StageInitializer initializer;
     private FournitureRequiseDto fournitureRequise;
     private FournitureUsedService fournitureUsedService;
-
     private RootController rootController;
     private ProjetDto projetDto;
 

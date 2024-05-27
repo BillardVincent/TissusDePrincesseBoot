@@ -7,6 +7,7 @@ import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureRequiseDto;
 import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -34,13 +35,19 @@ public class FournitureRequiseSelectedController implements IController {
 		}
 		fournitureRequise = data.getFournitureRequise();
 		if (fournitureRequise != null) {
-			quantiteLabel.setText(fournitureRequise.getQuantite()+fournitureRequise.getUnite().getAbbreviation());
+			String abbreviation = fournitureRequise.getUnite() == null || fournitureRequise.getUnite().getAbbreviation() == null ?
+					Strings.EMPTY : fournitureRequise.getUnite().getAbbreviation();
+			quantiteLabel.setText(fournitureRequise.getQuantite() + abbreviation);
 			typeLabel.setText(fournitureRequise.getTypeName());
-			uniteLabel.setText(fournitureRequise.getType().getIntitulePrincipale());
+			uniteLabel.setText(fournitureRequise.getUnite() == null ? Strings.EMPTY : fournitureRequise.getType().getIntitulePrincipale());
 
-			uniteSecLabel.setText(fournitureRequise.getType().getIntituleSecondaire());
+			if (fournitureRequise.getUnite() != null) {
+				uniteSecLabel.setText(fournitureRequise.getType().getIntituleSecondaire());
+			}
+			String abbreviationSec = fournitureRequise.getUniteSecondaire() == null || fournitureRequise.getUniteSecondaire().getAbbreviation() == null ?
+					Strings.EMPTY : fournitureRequise.getUniteSecondaire().getAbbreviation();
 			quantiteSecLabel.setText(fournitureRequise.getQuantiteSecondaireMin()+"-"+
-					fournitureRequise.getQuantiteSecondaireMax()+fournitureRequise.getUniteSecondaire().getAbbreviation());
+					fournitureRequise.getQuantiteSecondaireMax()+abbreviationSec);
 
 
 		} else {

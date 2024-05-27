@@ -9,6 +9,7 @@ import fr.vbillard.tissusdeprincesseboot.exception.IllegalData;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractEntity;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractRequis;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractUsedEntity;
+import fr.vbillard.tissusdeprincesseboot.model.FournitureUsed;
 import fr.vbillard.tissusdeprincesseboot.model.enums.ProjectStatus;
 import fr.vbillard.tissusdeprincesseboot.service.AbstractUsedService;
 import javafx.fxml.FXML;
@@ -16,11 +17,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 import java.util.List;
-import java.util.Objects;
 
 public abstract class ProjetEditListElementController <T extends AbstractRequisDto<W, X>,
 		U extends AbstractUsedEntity<X>, V extends AbstractUsedService<U, X>, W extends AbstractRequis<X>,
 		X extends AbstractEntity> implements IController {
+
+	private static final List<ProjectStatus> lockedStatus = List.of(ProjectStatus.ABANDONNE, ProjectStatus.TERMINE, ProjectStatus.EN_COURS);
 
 	@FXML
 	protected HBox hbox;
@@ -37,7 +39,7 @@ public abstract class ProjetEditListElementController <T extends AbstractRequisD
 		return lock;
 	}
 
-	public ProjetEditListElementController(V elementUsedService) {
+	ProjetEditListElementController(V elementUsedService) {
 		this.elementUsedService = elementUsedService;
 	}
 
@@ -65,7 +67,13 @@ public abstract class ProjetEditListElementController <T extends AbstractRequisD
 			FxData subData = new FxData();
 			subData.setParentController(this);
 			setSubData(subData, requis);
-			Pane tu = initializer.displayPane(getPathEnumUsed(), subData);
+			Pane tu;
+			if(requis instanceof FournitureUsed){
+				tu = getPane();
+				((FournitureUsedCardComponent)tu).setStageInitializer(initializer, subData);
+			} else {
+				tu = initializer.displayPane(getPathEnumUsed(), subData);
+			}
 			hbox.getChildren().add(tu);
 		}
 
@@ -73,6 +81,8 @@ public abstract class ProjetEditListElementController <T extends AbstractRequisD
 		hbox.getChildren().add(plusCard);
 
 	}
+
+	protected abstract Pane getPane();
 
 	protected abstract PathEnum getPathEnumUsed();
 
@@ -82,17 +92,7 @@ public abstract class ProjetEditListElementController <T extends AbstractRequisD
 
 	public void initLock(){
 		ProjectStatus status = ProjectStatus.getEnum(data.getProjet().getProjectStatus());
-        switch(Objects.requireNonNull(status)) {
-        case ABANDONNE:
-        case TERMINE:
-        case EN_COURS:
-        	lock = true;
-        	break;
-        case BROUILLON:
-        case PLANIFIE:
-        	lock = false;
-        	break;
-        }
+		lock = lockedStatus.contains(status);
 	}
 	
 	public void setLock(boolean lock){

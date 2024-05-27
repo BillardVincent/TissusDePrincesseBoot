@@ -13,8 +13,10 @@ import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
 
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
+
 @Component
-@Scope("prototype")
+@Scope(SCOPE_PROTOTYPE)
 public class TissuPictureHelper extends PictureHelper {
 
 	private final TissuService tissuService;

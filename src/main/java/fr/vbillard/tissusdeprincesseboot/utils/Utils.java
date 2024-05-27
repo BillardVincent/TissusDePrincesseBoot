@@ -7,9 +7,6 @@ import java.util.Collection;
 import java.util.Map;
 
 public class Utils {
-	
-	public static final String PROTOTYPE = "prototype";
-	
 	public static final String COMMA = ", ";
 	public static final String N_A = "N/A";
 

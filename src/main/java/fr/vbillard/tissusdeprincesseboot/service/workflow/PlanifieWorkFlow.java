@@ -6,8 +6,10 @@ import fr.vbillard.tissusdeprincesseboot.service.ProjetService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
+
 @Component("planifié")
-@Scope("prototype")
+@Scope(SCOPE_PROTOTYPE)
 public class PlanifieWorkFlow extends Workflow {
 
 	public PlanifieWorkFlow(ProjetService projetService) {

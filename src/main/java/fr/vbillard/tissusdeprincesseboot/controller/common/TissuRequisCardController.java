@@ -36,8 +36,10 @@ import org.springframework.util.CollectionUtils;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
+
 @Component
-@Scope(Utils.PROTOTYPE)
+@Scope(SCOPE_PROTOTYPE)
 public class TissuRequisCardController implements IController {
 
 	@FXML
@@ -102,7 +104,8 @@ public class TissuRequisCardController implements IController {
 
 			}
 			gammePoidsLabel.setText(StringUtils.join(tissuRequis.getGammePoids(), Utils.OR));
-			doublure.setVisible(tissuRequis.isDoublure());
+			//TODO
+			//doublure.setVisible(tissuRequis.isDoublure());
 			setLabelWithOrCollection(tissuRequis.getMatiere(), matiereHbx, matiereLbl);
 			setLabelWithOrCollection(tissuRequis.getTissage(), tissageHbx, tissageLbl);
 			typeLbl.setText(tissuRequis.getTypeTissu() == null ?
@@ -148,7 +151,7 @@ public class TissuRequisCardController implements IController {
 			iconStatus = GlyphIconUtil.ok();
 		}
 
-		doublurHbx.getChildren().add(iconStatus);
+		//TODO doublurHbx.getChildren().add(iconStatus);
 
 	}
 

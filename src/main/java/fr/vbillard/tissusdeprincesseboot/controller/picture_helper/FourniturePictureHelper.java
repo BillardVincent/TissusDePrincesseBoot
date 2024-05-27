@@ -2,7 +2,6 @@ package fr.vbillard.tissusdeprincesseboot.controller.picture_helper;
 
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
 import fr.vbillard.tissusdeprincesseboot.service.FournitureService;
 import fr.vbillard.tissusdeprincesseboot.service.ImageService;
@@ -14,8 +13,10 @@ import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
 
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
+
 @Component
-@Scope("prototype")
+@Scope(SCOPE_PROTOTYPE)
 public class FourniturePictureHelper extends PictureHelper {
 
 	private FournitureService fournitureService;
@@ -29,7 +30,10 @@ public class FourniturePictureHelper extends PictureHelper {
 	}
 
 	public void setPane(ImageView imagePane, FournitureDto dto) {
-		fourniture = fournitureService.convert(dto);
+		setPane(imagePane, fournitureService.convert(dto));
+	}
+	public void setPane(ImageView imagePane, Fourniture fourniture) {
+		this.fourniture = fourniture;
 		picture = imageService.getImage(fourniture);
 		this.imagePane = imagePane;
 		imagePane.setImage(imageService.imageOrDefault(picture));

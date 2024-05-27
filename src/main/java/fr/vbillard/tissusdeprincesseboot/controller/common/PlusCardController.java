@@ -7,7 +7,6 @@ import fr.vbillard.tissusdeprincesseboot.controller.projet.ProjetEditListElement
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.ShowAlert;
-import fr.vbillard.tissusdeprincesseboot.utils.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.HBox;
@@ -16,8 +15,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
+
 @Component
-@Scope(Utils.PROTOTYPE)
+@Scope(SCOPE_PROTOTYPE)
 public class PlusCardController implements IController{
 
     protected StageInitializer initializer;

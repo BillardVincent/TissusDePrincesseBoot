@@ -12,7 +12,6 @@ import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.model.TissuUsed;
 import fr.vbillard.tissusdeprincesseboot.service.ImageService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuUsedService;
-import fr.vbillard.tissusdeprincesseboot.utils.Utils;
 import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.EntityToString;
 import fr.vbillard.tissusdeprincesseboot.utils.model_to_string.ModelUtils;
 import javafx.fxml.FXML;
@@ -26,8 +25,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
+
 @Component
-@Scope(Utils.PROTOTYPE)
+@Scope(SCOPE_PROTOTYPE)
 public class TissuUsedCardController implements IController {
 
 	@FXML

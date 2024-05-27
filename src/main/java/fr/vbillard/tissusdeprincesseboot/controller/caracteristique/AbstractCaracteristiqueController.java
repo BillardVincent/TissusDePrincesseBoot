@@ -95,10 +95,6 @@ public abstract class AbstractCaracteristiqueController implements IModalControl
         dialogStage.close();
     }
 
-    public boolean isOkClicked() {
-        return okClicked;
-    }
-
     @Override
     public FxData result() {
         return null;
