@@ -6,6 +6,9 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
+import fr.vbillard.tissusdeprincesseboot.controller.components.aside.Aside;
+import fr.vbillard.tissusdeprincesseboot.controller.components.aside.AsideController;
+import fr.vbillard.tissusdeprincesseboot.controller.components.aside.search.FournitureSearchComponent;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.ClassCssUtils;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.FxData;
 import fr.vbillard.tissusdeprincesseboot.controller.utils.IController;
@@ -17,7 +20,7 @@ import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuRequisDto;
-import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
+import fr.vbillard.tissusdeprincesseboot.filtre.specification.FournitureSpecification;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureRequise;
 import fr.vbillard.tissusdeprincesseboot.model.FournitureUsed;
 import fr.vbillard.tissusdeprincesseboot.model.Patron;
@@ -77,7 +80,14 @@ public class RootController implements IController {
     public JFXButton researchButton;
     @FXML
     public VBox test;
+    @FXML
+    public Pane asideContainer;
+    // TODO changer le bloc Aside pour le rendre + dynamique :
+    //  - bloc "selection" facultatif
+    //  - scroll bar sur la recherche. Menu collapsable?
 
+    //private Aside aside;
+    private final AsideController asideController;
     private List<HBox> menuElements;
     private StageInitializer initializer;
     private TissuRequisDto tissuRequisSelected;
@@ -94,10 +104,11 @@ public class RootController implements IController {
     private final FournitureUsedService fournitureUsedService;
     private final FournitureService fournitureService;
 
-    public RootController(FournitureService fournitureService, FournitureUsedService fournitureUsedService,
+    public RootController(AsideController asideController, FournitureService fournitureService, FournitureUsedService fournitureUsedService,
             TissuUsedService tissuUsedService, ModelMapper mapper, TissuRequisService tissuRequisService,
             FournitureRequiseService fournitureRequiseService,
             TissuRequisLaizeOptionService tissuRequisLaizeOptionService) {
+        this.asideController = asideController;
         this.tissuRequisLaizeOptionService = tissuRequisLaizeOptionService;
         this.tissuUsedService = tissuUsedService;
         this.mapper = mapper;
@@ -214,12 +225,15 @@ public class RootController implements IController {
         displayFourniture(null);
     }
 
-    public void displayFourniture(Specification<Fourniture> spec) {
+    public void displayFourniture(FournitureSpecification spec) {
         if(canChange(fournitureMenu)) {
             beforeDisplay(fournitureMenu);
             FxData fxData = new FxData();
+            if (spec == null){
+                spec = new FournitureSpecification();
+            }
             fxData.setSpecification(spec);
-            searchPane.getChildren().add(initializer.displayPane(PathEnum.FOURNITURE_SEARCH, fxData));
+            asideController.setSearch(spec);
             mainWindow.getChildren().add(initializer.displayPane(PathEnum.FOURNITURES, fxData));
         }
     }
@@ -303,7 +317,7 @@ public class RootController implements IController {
             projetSelected = fxData.getProjet();
 
             fournitureRequiseSelected = fxData.getFournitureRequise();
-            selectedElement.getChildren().add(initializer.displayPane(PathEnum.FOURNITURE_REQUIS_SELECTED, fxData));
+            asideController.getAside().addSelectionPane(initializer.displayPane(PathEnum.FOURNITURE_REQUIS_SELECTED, fxData));
             mainWindow.getChildren().add(initializer.displayPane(PathEnum.FOURNITURES));
 
             deleteSelectedButton.setVisible(true);
@@ -370,6 +384,9 @@ public class RootController implements IController {
         // TODO a suppr ------------ TEST d'icones -----------------------
         // testIcons();
 
+        asideController.getAside();
+        asideContainer.getChildren().add(asideController.getAside());
+        asideController.getAside().setButtons(e -> createResearch(), e -> deleteSelected());
     }
 
     public boolean hasTissuRequisSelected() {

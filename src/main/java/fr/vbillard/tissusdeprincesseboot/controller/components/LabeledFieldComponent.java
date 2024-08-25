@@ -21,7 +21,7 @@ public class LabeledFieldComponent extends HBox {
     protected Label fieldName;
     protected List<Validator> validators;
 
-    LabeledFieldComponent(String name, String content, int labelSize, int fieldSize){
+    public LabeledFieldComponent(String name, String content, int labelSize, int fieldSize){
 
         fieldName.setText(name);
 

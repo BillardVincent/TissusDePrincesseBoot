@@ -13,7 +13,7 @@ public class ConstrainSizeFieldComponent extends LabeledFieldComponent {
 
     private Label errorLabel;
 
-    ConstrainSizeFieldComponent(String name, String content, int labelSize, int fieldSize, int textSize) {
+    public ConstrainSizeFieldComponent(String name, String content, int labelSize, int fieldSize, int textSize) {
         super(name, content, labelSize, fieldSize);
         Validator maxLengthValidator = new MaxLenghtValidator(textField, name, textSize);
         validators.add(maxLengthValidator);

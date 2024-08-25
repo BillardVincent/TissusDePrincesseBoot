@@ -4,7 +4,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
-import com.sun.javafx.binding.BidirectionalBinding;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
@@ -42,15 +41,14 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
-import javafx.util.StringConverter;
-import javafx.util.converter.FloatStringConverter;
-import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.NumberStringConverter;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 import static com.sun.javafx.binding.BidirectionalBinding.bind;
-import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.*;
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.onChangeListener;
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.safePropertyToString;
+import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.textFieldToFirstCharOrX;
 import static fr.vbillard.tissusdeprincesseboot.controller.validators.ValidatorUtils.areValidatorsValid;
 import static fr.vbillard.tissusdeprincesseboot.utils.model_to_string.ModelUtils.startWithMajuscule;
 

@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import fr.vbillard.tissusdeprincesseboot.controller.components.aside.Aside?>
 <Pane prefHeight="1080.0" prefWidth="1920" styleClass="global" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.vbillard.tissusdeprincesseboot.controller.misc.RootController">
    <children>
       <VBox prefHeight="1080.0" prefWidth="1920">
@@ -195,7 +196,7 @@
                </children></HBox>
             <HBox prefHeight="982.0" prefWidth="1920.0">
                <children>
-                  <VBox maxWidth="-Infinity" prefHeight="950.0" prefWidth="320.0" styleClass="aside">
+                  <Pane maxWidth="-Infinity" prefHeight="950.0" prefWidth="320.0" styleClass="aside" fx:id="asideContainer">
                      <padding>
                         <Insets bottom="5.0" />
                      </padding>
@@ -223,7 +224,7 @@
                            </padding>
                         </Pane>
                      </children>
-                  </VBox>
+                  </Pane>
                   <Pane fx:id="mainWindow" prefHeight="795.0" prefWidth="1600.0" />
                </children>
             </HBox>

@@ -18,6 +18,7 @@ import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.CharacterSe
 import fr.vbillard.tissusdeprincesseboot.filtre.specification.common.NumericSearch;
 import fr.vbillard.tissusdeprincesseboot.model.AbstractSimpleValueEntity;
 import fr.vbillard.tissusdeprincesseboot.model.TypeFourniture;
+import fr.vbillard.tissusdeprincesseboot.model.enums.DimensionEnum;
 import fr.vbillard.tissusdeprincesseboot.model.enums.Unite;
 import fr.vbillard.tissusdeprincesseboot.service.TypeFournitureService;
 import fr.vbillard.tissusdeprincesseboot.utils.color.ColorUtils;
@@ -34,9 +35,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static fr.vbillard.tissusdeprincesseboot.controller.utils.FxUtils.*;
+import static javafx.collections.FXCollections.observableArrayList;
 
 @Component
 public class FournitureSearchController implements IController {
+
+    /* TODO
+    On ne peut chercher par dimension que si tous les types selectionnés ont des dimentions identiques
+     */
+
 
     private static final String AUCUN_FILTRE = "Aucun filtre";
     private static final String CHOIX = "Choix";
@@ -114,19 +121,26 @@ public class FournitureSearchController implements IController {
     }
 
     private void setData(FxData data) {
+
+        unitePrimCombo.setItems(observableArrayList(Unite.labels()));
+        uniteSecCombo.setItems(observableArrayList(Unite.labels()));
+        //typeField.setItems(typeFournitureService.getAllTypeFournituresValues());
+
+
+
         if (data != null && data.getSpecification() != null
-                && data.getSpecification() instanceof FournitureSpecification) {
+                && data.getSpecification() instanceof FournitureSpecification fournitureSpecification) {
 
             margeField.setText("0");
             margeSecField.setText("0");
             margeCbx.setSelected(false);
             margeSecCbx.setSelected(false);
 
-            specification = (FournitureSpecification) data.getSpecification();
+            specification = fournitureSpecification;
 
             List<String> types = null;
             if (specification.getType() != null) {
-                types = specification.getType().stream().map(AbstractSimpleValueEntity::getValue).collect(Collectors.toList());
+                types = specification.getType().stream().map(AbstractSimpleValueEntity::getValue).toList();
             }
             FxUtils.setSelection(types, typeValuesSelected, typeLbl);
 
@@ -148,8 +162,7 @@ public class FournitureSearchController implements IController {
 
             List<String> typesSearch = null;
             if (specification.getType() != null) {
-                typesSearch = specification.getType().stream().map(AbstractSimpleValueEntity::getValue)
-                        .collect(Collectors.toList());
+                typesSearch = specification.getType().stream().map(AbstractSimpleValueEntity::getValue).toList();
             }
             FxUtils.setSelection(typesSearch, typeValuesSelected, typeLbl);
 
@@ -238,6 +251,21 @@ public class FournitureSearchController implements IController {
     @FXML
     public void choiceType() {
         setSelectionFromChoiceBoxModale(typeFournitureService.getAllValues(), typeValuesSelected, typeLbl, true);
+        TypeFourniture value = null;
+
+        if (typeValuesSelected.isEmpty()){
+            unitePrimCombo.setItems(observableArrayList(Unite.labels()));
+            uniteSecCombo.setItems(observableArrayList(Unite.labels()));
+        } else {
+            //TODO !!!!!!!!
+            List<TypeFourniture> typesSelected = typeFournitureService.findTypeFourniture(typeValuesSelected);
+            List<DimensionEnum> dimEnum = typesSelected.stream().map(TypeFourniture::getDimensionPrincipale).distinct().toList();
+            if (dimEnum.size() == 1){
+                unitePrimCombo.setItems(observableArrayList(Unite.getValuesByDimension(dimEnum.get(0))));
+            } else {
+                unitePrimCombo.getItems().clear();
+            }
+        }
     }
 
 }
