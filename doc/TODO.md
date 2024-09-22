@@ -1,0 +1,6 @@
+- Rangement -> "mettre ici" trop petit
+- bug si correction de Tissage ?
+- couleur depuis l'image ne fonctionne pas à la création
+- choisir couleur est à "transparent" si nouvelle
+- à la création : rangement innaccessible -> manque explication savegarde nécessaire
+- message d'erreur non necessaire si ajout d'un rangement lors de l'édition d'un tissu

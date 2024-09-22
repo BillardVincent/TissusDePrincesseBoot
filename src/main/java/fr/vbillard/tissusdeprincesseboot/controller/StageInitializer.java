@@ -162,8 +162,10 @@ public class StageInitializer implements ApplicationListener<TissusDePrincesseFx
 			pref = preferenceService.getPreferences();
 		}
 		String path = pref.getPictureLastUploadPath();
-
-		fileChooser.setInitialDirectory(new File(path));
+		File directory =  new File(path);
+		if (directory.exists()) {
+			fileChooser.setInitialDirectory(new File(path));
+		}
 
 		ImageFormat[] values = ImageFormat.values();
 		String[] extensions = new String[values.length];
