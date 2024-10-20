@@ -180,9 +180,13 @@ public class RangementTreeController implements IController {
         VBox result = new VBox();
         if (hasSelection) {
             MaterialDesignIconView ajouterAuRangementIcn = new MaterialDesignIconView(MaterialDesignIcon.IMPORT);
-            ajouterAuRangementIcn.setSize("2em");
+            ajouterAuRangementIcn.setSize("4em");
             JFXButton addSelection = new JFXButton();
+            addSelection.getStyleClass().addAll("search-box", "title-acc-3");
             addSelection.setGraphic(ajouterAuRangementIcn);
+            addSelection.getGraphic().getStyleClass().add("title-acc-3");
+            addSelection.setText("Ranger ici");
+
             //addSelection.getStyleClass().add(ClassCssUtils.TITLE_MAIN_PANE);
             addSelection.setOnAction(e -> handleAddSelection(r));
             result.getChildren().add(addSelection);
