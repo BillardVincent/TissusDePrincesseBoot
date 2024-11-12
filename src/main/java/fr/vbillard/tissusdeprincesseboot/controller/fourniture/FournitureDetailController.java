@@ -67,8 +67,6 @@ public class FournitureDetailController implements IController {
 	@FXML
 	public Rectangle color;
 
-	public RowConstraints ancienneValeurRow;
-	public RowConstraints consommeRow;
     public Label lieuDeStockageLbl;
 
     @FXML
@@ -129,7 +127,7 @@ public class FournitureDetailController implements IController {
 		uniteSecField.setText(
 				fourniture.getUniteSecondaire() == null ? Unite.NON_RENSEIGNE.getLabel() : fourniture.getUniteSecondaire());
 		pictures = imageService.getImage(fournitureService.convert(fourniture));
-		imagePane.setImage(imageService.imageOrDefault(pictures));
+		imagePane.setImage(imageService.imageOrDefault(pictures.orElse(null)));
 
 		if (fourniture.getRangement() == null){
 			lieuDeStockageLbl.setText("Non renseigné");

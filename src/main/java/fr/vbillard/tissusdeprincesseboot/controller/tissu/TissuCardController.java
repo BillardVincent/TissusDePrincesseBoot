@@ -118,7 +118,7 @@ public class TissuCardController implements IController {
 
 		masse.setStyleClass(styleWeight());
 		Optional<Photo> pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
-		image.setImage(imageService.imageOrDefault(pictures));
+		image.setImage(imageService.imageOrDefault(pictures.orElse(null)));
 
 	}
 

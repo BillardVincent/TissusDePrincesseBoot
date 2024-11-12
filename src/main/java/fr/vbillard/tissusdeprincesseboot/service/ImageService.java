@@ -3,8 +3,6 @@ package fr.vbillard.tissusdeprincesseboot.service;
 import fr.vbillard.tissusdeprincesseboot.config.PathImgProperties;
 import fr.vbillard.tissusdeprincesseboot.dao.PhotoDao;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.FournitureDto;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.PatronDto;
-import fr.vbillard.tissusdeprincesseboot.dtos_fx.ProjetDto;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
 import fr.vbillard.tissusdeprincesseboot.exception.PersistanceException;
 import fr.vbillard.tissusdeprincesseboot.model.Fourniture;
@@ -72,9 +70,9 @@ public class ImageService extends AbstractService<Photo> {
 		return dao.getByFourniture(fourniture);
 	}
 
-	public Image imageOrDefault(Optional<Photo> photo) {
-		if (photo.isPresent()) {
-			return new Image(new ByteArrayInputStream(photo.get().getData()));
+	public Image imageOrDefault(Photo photo) {
+		if (photo != null) {
+			return new Image(new ByteArrayInputStream(photo.getData()));
 		}
 		try {
 			return new Image(pathProperties.getImageDefault().getURL().toString());
@@ -87,7 +85,7 @@ public class ImageService extends AbstractService<Photo> {
 
 	@Override
 	protected void beforeSaveOrUpdate(Photo entity) {
-
+		// Nothing To Do
 	}
 
 	@Override
@@ -95,7 +93,7 @@ public class ImageService extends AbstractService<Photo> {
 		return dao;
 	}
 
-	public Photo setImage(Optional<Photo> imageOpt, String name, String extension, BufferedImage bufferedImage)
+	public Photo setImage(Photo imageOpt, String name, String extension, BufferedImage bufferedImage)
 			throws IOException {
 		bufferedImage = Scalr.resize(bufferedImage, 900);
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -103,7 +101,7 @@ public class ImageService extends AbstractService<Photo> {
 		byte[] data = baos.toByteArray();
 		baos.close();
 
-		Photo image = imageOpt.orElseGet(Photo::new);
+		Photo image = imageOpt == null ? new Photo() : imageOpt;
 
 		image.setData(data);
 		image.setNom(name);

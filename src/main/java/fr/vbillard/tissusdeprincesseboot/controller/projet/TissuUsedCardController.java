@@ -102,7 +102,7 @@ public class TissuUsedCardController implements IController {
 		tissageLbl.setText(tissu.getTissage());
 		matiereLbl.setText(tissu.getMatiere());
 		Optional<Photo> pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
-		image.setImage(imageService.imageOrDefault(pictures));
+		image.setImage(imageService.imageOrDefault(pictures.orElse(null)));
 
 	}
 

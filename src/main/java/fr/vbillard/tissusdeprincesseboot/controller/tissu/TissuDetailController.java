@@ -133,7 +133,7 @@ public class TissuDetailController implements IController {
 		matiereField.setText(tissu.getMatiereProperty() == null ? "" : tissu.getMatiere());
 		tissageField.setText(tissu.getTissageProperty() == null ? "" : tissu.getTissage());
 		pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
-		imagePane.setImage(imageService.imageOrDefault(pictures));
+		imagePane.setImage(imageService.imageOrDefault(pictures.orElse(null)));
 		if (tissu.getRangement() == null){
 			lieuDeStockageLbl.setText("Non renseigné");
 		} else {

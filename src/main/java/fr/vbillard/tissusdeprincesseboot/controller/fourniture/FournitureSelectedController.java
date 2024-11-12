@@ -42,14 +42,11 @@ public class FournitureSelectedController implements IController {
 
     private FournitureDto fourniture;
 
-    private final Constants constants;
-
-    public FournitureSelectedController(Constants constants, ImageService imageService, RootController rootController,
+    public FournitureSelectedController(ImageService imageService, RootController rootController,
             FournitureService fournitureService) {
         this.imageService = imageService;
         this.rootController = rootController;
         this.fournitureService = fournitureService;
-        this.constants = constants;
     }
 
     @Override
@@ -68,7 +65,7 @@ public class FournitureSelectedController implements IController {
         type.setText(safePropertyToString(fourniture.getTypeNameProperty()));
         nom.setText(safePropertyToString(fourniture.getNomProperty()));
         Optional<Photo> pictures = imageService.getImage(fournitureService.convert(fourniture));
-        image.setImage(imageService.imageOrDefault(pictures));
+        image.setImage(imageService.imageOrDefault(pictures.orElse(null)));
 
     }
 

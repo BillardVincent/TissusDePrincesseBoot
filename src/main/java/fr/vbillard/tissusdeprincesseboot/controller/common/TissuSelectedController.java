@@ -88,7 +88,7 @@ public class TissuSelectedController implements IController {
 		tissage.setText(FxUtils.safePropertyToString(tissu.getTissageProperty()));
 
 		Optional<Photo> pictures = imageService.getImage(mapper.map(tissu, Tissu.class));
-		image.setImage(imageService.imageOrDefault(pictures));
+		image.setImage(imageService.imageOrDefault(pictures.orElse(null)));
 
 	}
 

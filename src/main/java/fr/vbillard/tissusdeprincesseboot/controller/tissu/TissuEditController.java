@@ -4,7 +4,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
-import com.sun.javafx.binding.BidirectionalBinding;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
@@ -42,9 +41,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
-import javafx.util.StringConverter;
-import javafx.util.converter.FloatStringConverter;
-import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.NumberStringConverter;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
@@ -199,6 +195,7 @@ public class TissuEditController implements IController {
 
         pictureHelper.setPane(imagePane, tissu);
         colorComp.initialize(initializer, tissu.getColor(), pictureHelper.hasImage(tissu) ? imagePane.getImage() : null);
+        pictureHelper.setColorComponent(colorComp);
 
         boolean tissuIsNew = tissu.getId() == 0;
         setIcons(tissuIsNew);

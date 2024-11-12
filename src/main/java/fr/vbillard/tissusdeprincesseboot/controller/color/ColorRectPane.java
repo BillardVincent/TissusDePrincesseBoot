@@ -133,9 +133,7 @@ class ColorRectPane extends HBox {
     public ColorRectPane(PictureColorDialog parentDialog) {
         this.parentDialog = parentDialog;
         getStyleClass().add("color-rect-pane");
-        parentDialog.customColorProperty().addListener((var1x, var2x, var3x) -> {
-            colorChanged();
-        });
+        parentDialog.customColorProperty().addListener((var1x, var2x, var3x) -> colorChanged());
         colorRectIndicator = new Region();
         colorRectIndicator.setId("color-rect-indicator");
         colorRectIndicator.setManaged(false);
@@ -169,7 +167,7 @@ class ColorRectPane extends HBox {
         colorRectOverlayOne = new Pane();
         colorRectOverlayOne.getStyleClass().add("color-rect");
         colorRectOverlayOne.setBackground(new Background(new BackgroundFill(new LinearGradient(0.0D, 0.0D, 1.0D, 0.0D, true, CycleMethod.NO_CYCLE, new Stop(0.0D, Color.rgb(255, 255, 255, 1.0D)), new Stop(1.0D, Color.rgb(255, 255, 255, 0.0D))), CornerRadii.EMPTY, Insets.EMPTY)));
-        EventHandler<MouseEvent> eventHandler = (var1x) -> {
+        EventHandler<MouseEvent> eventHandler = var1x -> {
             double var2 = var1x.getX();
             double var4 = var1x.getY();
             sat.set(PictureColorDialog.clamp(var2 / colorRect.getWidth()) * 100.0D);
@@ -194,7 +192,7 @@ class ColorRectPane extends HBox {
         colorRectIndicator.layoutYProperty().bind(Bindings.subtract(1, bright.divide(100)).multiply(colorRect.heightProperty()));
         colorBarIndicator.layoutYProperty().bind(hue.divide(360).multiply(colorBar.heightProperty()));
         stackPane.opacityProperty().bind(alpha.divide(100));
-        EventHandler<MouseEvent> var6 = (var1x) -> {
+        EventHandler<MouseEvent> var6 = var1x -> {
             double var2 = var1x.getY();
             hue.set(PictureColorDialog.clamp(var2 / colorRect.getHeight()) * 360.0D);
         };
@@ -216,7 +214,7 @@ class ColorRectPane extends HBox {
         hue.set(parentDialog.getCurrentColor().getHue());
         sat.set(parentDialog.getCurrentColor().getSaturation() * 100.0D);
         bright.set(parentDialog.getCurrentColor().getBrightness() * 100.0D);
-        alpha.set(parentDialog.getCurrentColor().getOpacity() * 100.0D);
+        alpha.set(100.0D);
         parentDialog.setCustomColor(Color.hsb(hue.get(), PictureColorDialog.clamp(sat.get() / 100.0D), PictureColorDialog.clamp(bright.get() / 100.0D), PictureColorDialog.clamp(alpha.get() / 100.0D)));
         red.set(PictureColorDialog.doubleToInt(parentDialog.getCustomColor().getRed()));
         green.set(PictureColorDialog.doubleToInt(parentDialog.getCustomColor().getGreen()));

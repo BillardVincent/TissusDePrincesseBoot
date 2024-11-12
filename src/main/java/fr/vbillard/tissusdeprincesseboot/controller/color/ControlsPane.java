@@ -7,6 +7,7 @@ import com.sun.javafx.scene.control.skin.IntegerFieldSkin;
 import com.sun.javafx.scene.control.skin.WebColorFieldSkin;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.Property;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -158,7 +159,7 @@ public class ControlsPane extends VBox {
             }
         }
 
-        set(3, Properties.getColorPickerString("opacity_colon"), 100, parentDialog.getColorRectPane().getAlpha());
+        set(3, Properties.getColorPickerString("opacity_colon"), 100, new SimpleDoubleProperty(100));
         hsbButton.setToggleGroup(var2);
         rgbButton.setToggleGroup(var2);
         webButton.setToggleGroup(var2);

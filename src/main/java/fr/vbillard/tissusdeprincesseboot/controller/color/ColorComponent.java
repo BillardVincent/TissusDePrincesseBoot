@@ -12,6 +12,9 @@ import javafx.scene.shape.Rectangle;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * Composant constitué d'un bouton
+ */
 @NoArgsConstructor
 public class ColorComponent extends HBox {
 
@@ -36,7 +39,7 @@ public class ColorComponent extends HBox {
         setColorButton();
 
         btn.setOnAction(e -> {
-            PictureColorDialog dialog = new PictureColorDialog(initializer.getPrimaryStage(), image);
+            PictureColorDialog dialog = new PictureColorDialog(initializer.getPrimaryStage(), this.image);
             dialog.setCurrentColor(colorProperty.get());
             dialog.setOnSave(() -> setColor(dialog.getCustomColor()));
             dialog.show();
@@ -69,6 +72,6 @@ public class ColorComponent extends HBox {
     }
 
     public  Color getColor(){
-        return Color.TRANSPARENT.equals(colorProperty.get())? null : colorProperty.get();
+        return colorProperty.get();
     }
 }

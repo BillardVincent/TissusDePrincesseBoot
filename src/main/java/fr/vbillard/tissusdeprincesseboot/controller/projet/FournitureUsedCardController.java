@@ -76,7 +76,7 @@ public class FournitureUsedCardController implements IController {
 		String abbreviation = fournitureUsed.getRequis().getUnite() != null ? fournitureUsed.getRequis().getUnite().getAbbreviation(): Strings.EMPTY;
 		longueur.setText(fournitureUsed.getQuantite() + abbreviation);
 		Optional<Photo> pictures = imageService.getImage(fournitureService.convert(fournitureDto));
-		image.setImage(imageService.imageOrDefault(pictures));
+		image.setImage(imageService.imageOrDefault(pictures.orElse(null)));
 
 	}
 
@@ -84,12 +84,12 @@ public class FournitureUsedCardController implements IController {
 	public void showDetail() {
 		if (!parent.isLocked()) {
 
-			Optional<ButtonType> option = ShowAlert.detailSuppressionAnnuler(initializer.getPrimaryStage(),
+			Optional<ButtonType> optionBtn = ShowAlert.detailSuppressionAnnuler(initializer.getPrimaryStage(),
 					EntityToString.FOURNITURE_USED);
 
-			if (option.orElse(ButtonType.CANCEL) == ShowAlert.DETAILS) {
+			if (optionBtn.orElse(ButtonType.CANCEL) == ShowAlert.DETAILS) {
 				rootController.displayFournituresDetails(fournitureDto);
-			} else if (option.orElse(ButtonType.CANCEL) == ShowAlert.SUPPRIMER) {
+			} else if (optionBtn.orElse(ButtonType.CANCEL) == ShowAlert.SUPPRIMER) {
 				Optional<ButtonType> confirm = ShowAlert.suppression(initializer.getPrimaryStage(), EntityToString.FOURNITURE_USED,
 						fournitureUsed.toString());
 				if (confirm.orElse(ButtonType.CANCEL) == ButtonType.OK) {

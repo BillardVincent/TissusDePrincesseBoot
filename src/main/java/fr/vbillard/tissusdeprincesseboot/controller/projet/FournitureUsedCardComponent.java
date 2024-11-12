@@ -56,7 +56,7 @@ public class FournitureUsedCardComponent extends Card implements IController {
         //setWidth(170);
         setTitre(fournitureUsed.getFourniture().getNom());
         Optional<Photo> picture = imageService.getImage(fournitureUsed.getFourniture());
-        getImage().setImage(imageService.imageOrDefault(picture));
+        getImage().setImage(imageService.imageOrDefault(picture.orElse(null)));
         getImage().setFitWidth(169.0);
         Label label = new Label(setTextFromQuantity(fournitureUsed.getQuantite(), fournitureUsed.getFourniture().getQuantitePrincipale().getUnite()));
         label.setAlignment(Pos.CENTER);

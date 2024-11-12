@@ -78,7 +78,7 @@ public class FournitureCardController implements IController {
 		type.setText(safePropertyToString(fourniture.getTypeNameProperty()));
 		nom.setText(safePropertyToString(fourniture.getNomProperty()));
 		Optional<Photo> pictures = imageService.getImage(fournitureService.convert(fourniture));
-		image.setImage(imageService.imageOrDefault(pictures));
+		image.setImage(imageService.imageOrDefault(pictures.orElse(null)));
 
 	}
 

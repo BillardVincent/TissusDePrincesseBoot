@@ -2,63 +2,40 @@ package fr.vbillard.tissusdeprincesseboot.controller.picture_helper;
 
 import fr.vbillard.tissusdeprincesseboot.controller.StageInitializer;
 import fr.vbillard.tissusdeprincesseboot.dtos_fx.TissuDto;
+import fr.vbillard.tissusdeprincesseboot.model.Photo;
 import fr.vbillard.tissusdeprincesseboot.model.Tissu;
 import fr.vbillard.tissusdeprincesseboot.service.ImageService;
 import fr.vbillard.tissusdeprincesseboot.service.PreferenceService;
 import fr.vbillard.tissusdeprincesseboot.service.TissuService;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.io.ByteArrayInputStream;
+import java.util.Optional;
 
 import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
 
 @Component
 @Scope(SCOPE_PROTOTYPE)
-public class TissuPictureHelper extends PictureHelper {
+public class TissuPictureHelper extends PictureHelper<Tissu, TissuDto> {
 
-	private final TissuService tissuService;
-
-	private Tissu tissu;
 
 	public TissuPictureHelper(TissuService tissuService, PreferenceService preferenceService,
 			StageInitializer initializer, ImageService imageService) {
-		super(preferenceService, initializer, imageService);
-		this.tissuService = tissuService;
+		super(preferenceService, initializer, imageService, tissuService);
 	}
 
-	public void setPane(ImageView imagePane, TissuDto dto) {
-		tissu = tissuService.convert(dto);
-		picture = imageService.getImage(tissu);
-		this.imagePane = imagePane;
-		imagePane.setImage(imageService.imageOrDefault(picture));
+	@Override
+	Optional<Photo> getImageFromEntity() {
+		return imageService.getImage(entity);
+	}
+
+	@Override
+	protected void addEntityToImage() {
+		picture.setTissu(entity);
 	}
 
 	public boolean hasImage(TissuDto dto){
 		return imageService.hasImage(dto);
 	}
 
-	protected void setImage() {
-		tissuService.saveOrUpdate(tissu);
-		picture.orElseThrow(RuntimeException::new).setTissu(tissu);
-		imageService.saveOrUpdate(picture.get());
-		imagePane.setImage(new Image(new ByteArrayInputStream(picture.get().getData())));
-	}
-
-	public void addPictureWeb(TissuDto dto) {
-		tissu = tissuService.convert(dto);
-		addPictureWeb();
-	}
-
-	public void addPictureLocal(TissuDto dto) {
-		tissu = tissuService.convert(dto);
-		addPictureLocal();
-	}
-
-	public void addPictureClipBoard(TissuDto dto) {
-		tissu = tissuService.convert(dto);
-		addPictureFromClipboard();
-	}
 }

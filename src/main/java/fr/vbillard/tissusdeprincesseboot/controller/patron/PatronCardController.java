@@ -73,7 +73,7 @@ public class PatronCardController implements IController {
 		typeSupportIcn.setIcon(setIconTypeSupport(patron.getTypeSupport()));
 
 		Optional<Photo> pictures = imageService.getImage(mapper.map(patron, Patron.class));
-		image.setImage(imageService.imageOrDefault(pictures));
+		image.setImage(imageService.imageOrDefault(pictures.orElse(null)));
 	}
 
 	MaterialDesignIcon mat = null;

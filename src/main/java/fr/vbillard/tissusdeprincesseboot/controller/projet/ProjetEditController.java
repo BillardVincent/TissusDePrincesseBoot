@@ -133,7 +133,7 @@ public class ProjetEditController implements IController {
 
 
 		Optional<Photo> picturePatron = imageService.getImage(patron);
-		patronPicture.setImage(imageService.imageOrDefault(picturePatron));
+		patronPicture.setImage(imageService.imageOrDefault(picturePatron.orElse(null)));
 
 		ProjectStatus status = ProjectStatus.getEnum(projet.getProjectStatus());
 

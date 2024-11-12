@@ -49,10 +49,10 @@ class PictureColorDialog extends HBox {
     PictureColorDialog(@NonNull Window window, Image image) {
         this.image = image;
         currentColorProperty = new SimpleObjectProperty<>(Color.WHITE);
-        customColorProperty = new SimpleObjectProperty<>(Color.TRANSPARENT);
+        customColorProperty = new SimpleObjectProperty<>(Color.WHITE);
         webField = null;
         showUseBtn = true;
-        showOpacitySlider = true;
+        showOpacitySlider = false;
         keyEventListener = var1x -> {
             if (var1x.getCode() == KeyCode.ESCAPE) {
                 dialog.setScene(null);
